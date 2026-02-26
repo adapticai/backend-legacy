@@ -33,16 +33,19 @@ function parseSchema(schemaPath: string): Map<string, Set<string>> {
   const models = schemaContent.split(/\n\s*model\s+/).slice(1);
   const modelMap = new Map<string, Set<string>>();
 
-  models.forEach(model => {
+  models.forEach((model) => {
     const lines = model.split('\n');
     const modelName = lines[0].split(/\s+/)[0];
     const scalarArrayFields = new Set<string>();
 
-    lines.slice(1).forEach(line => {
+    lines.slice(1).forEach((line) => {
       const match = line.match(/^\s*(\w+)\s+([\w\[\]]+)/);
       if (match) {
         const [, fieldName, fieldType] = match;
-        if (fieldType.endsWith('[]') && SCALAR_TYPES.includes(fieldType.slice(0, -2))) {
+        if (
+          fieldType.endsWith('[]') &&
+          SCALAR_TYPES.includes(fieldType.slice(0, -2))
+        ) {
           scalarArrayFields.add(fieldName);
         }
       }
@@ -67,10 +70,12 @@ export function isScalarArrayType(typeName: string): boolean {
     return isScalarType(baseType);
   }
 
-  if (typeName.includes('ListFilter') ||
+  if (
+    typeName.includes('ListFilter') ||
     typeName.includes('NullableListFilter') ||
     typeName.includes('CreateNestedMany') ||
-    typeName.includes('UpdateManyNested')) {
+    typeName.includes('UpdateManyNested')
+  ) {
     return true;
   }
 
@@ -81,19 +86,27 @@ export function isInputObjectType(typeName: string): boolean {
   return typeName.endsWith('Input');
 }
 
-function generateInputTypeNames(modelMap: Map<string, Set<string>>): Set<string> {
+function generateInputTypeNames(
+  modelMap: Map<string, Set<string>>
+): Set<string> {
   const inputTypeNames = new Set<string>();
 
-  const crudOperations = ['Create', 'CreateMany', 'Update', 'UpdateMany', 'Upsert'];
+  const crudOperations = [
+    'Create',
+    'CreateMany',
+    'Update',
+    'UpdateMany',
+    'Upsert',
+  ];
   const whereOperations = ['Where', 'WhereUnique', 'WhereInput'];
 
   modelMap.forEach((fields, modelName) => {
-    fields.forEach(fieldName => {
-      crudOperations.forEach(operation => {
+    fields.forEach((fieldName) => {
+      crudOperations.forEach((operation) => {
         inputTypeNames.add(`${modelName}${operation}${fieldName}Input`);
       });
 
-      whereOperations.forEach(operation => {
+      whereOperations.forEach((operation) => {
         inputTypeNames.add(`${modelName}${operation}${fieldName}Input`);
       });
 
@@ -160,7 +173,7 @@ export function updateGraphQLScalars(schemaPath: string): Set<string> {
   const modelMap = parseSchema(schemaPath);
   const generatedInputTypes = generateInputTypeNames(modelMap);
 
-  generatedInputTypes.forEach(inputType => GRAPHQL_SCALARS.add(inputType));
+  generatedInputTypes.forEach((inputType) => GRAPHQL_SCALARS.add(inputType));
 
   return GRAPHQL_SCALARS;
 }
@@ -169,14 +182,21 @@ const MAX_RECURSION_DEPTH = 10;
 const schemaPath = path.join(__dirname, '../../prisma/schema.prisma');
 const updatedScalars = updateGraphQLScalars(schemaPath);
 
-export function getInputTypeDefinition(typeFilePath: string | number | Buffer | URL): FieldDefinition[] {
+export function getInputTypeDefinition(
+  typeFilePath: string | number | Buffer | URL
+): FieldDefinition[] {
   if (!fs.existsSync(typeFilePath as string)) {
     logger.warn(`Warning: Input type file does not exist: ${typeFilePath}`);
     return [];
   }
 
   const content = fs.readFileSync(typeFilePath, 'utf-8');
-  const sourceFile = ts.createSourceFile(typeFilePath as string, content, ts.ScriptTarget.Latest, true);
+  const sourceFile = ts.createSourceFile(
+    typeFilePath as string,
+    content,
+    ts.ScriptTarget.Latest,
+    true
+  );
 
   const fields: FieldDefinition[] = [];
   const visitedNodes = new Set<ts.Node>();
@@ -184,7 +204,9 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
 
   const visitor = (node: ts.Node, depth = 0) => {
     if (depth > MAX_RECURSION_DEPTH) {
-      logger.warn(`Max recursion depth exceeded for node: ${node.getText(sourceFile)} `);
+      logger.warn(
+        `Max recursion depth exceeded for node: ${node.getText(sourceFile)} `
+      );
       return;
     }
 
@@ -201,7 +223,11 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     ts.forEachChild(node, (child) => visitor(child, depth + 1));
   };
 
-  function extractField(node: ts.PropertySignature | ts.PropertyDeclaration, sf: ts.SourceFile, depth: number): FieldDefinition | null {
+  function extractField(
+    node: ts.PropertySignature | ts.PropertyDeclaration,
+    sf: ts.SourceFile,
+    depth: number
+  ): FieldDefinition | null {
     const fieldName = node.name.getText(sf);
     const fieldTypeNode = node.type;
     if (!fieldTypeNode) return null;
@@ -221,7 +247,9 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     depth = 0
   ): FieldType | null {
     if (depth > MAX_RECURSION_DEPTH) {
-      logger.warn(`Max recursion depth exceeded for node: ${typeNode.getText(sf)}`);
+      logger.warn(
+        `Max recursion depth exceeded for node: ${typeNode.getText(sf)}`
+      );
       return null;
     }
 
@@ -235,7 +263,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
 
     // Handle nullable types
     if (ts.isUnionTypeNode(typeNode)) {
-      const types = typeNode.types.filter(t => !isNullOrUndefined(t, sf));
+      const types = typeNode.types.filter((t) => !isNullOrUndefined(t, sf));
       isNullable = types.length !== typeNode.types.length;
       baseType = types.length === 1 ? types[0] : typeNode;
     }
@@ -249,7 +277,11 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     if (ts.isTypeReferenceNode(baseType)) {
       const typeName = baseType.typeName.getText(sf);
 
-      if (typeName.includes('FieldUpdateOperationsInput') || typeName === 'BoolFieldUpdateOperationsInput' || typeName === 'Prisma.InputJsonValue') {
+      if (
+        typeName.includes('FieldUpdateOperationsInput') ||
+        typeName === 'BoolFieldUpdateOperationsInput' ||
+        typeName === 'Prisma.InputJsonValue'
+      ) {
         isFieldUpdate = true;
       }
       if (isSetObjectType(typeName)) {
@@ -266,7 +298,14 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
         isScalar = false;
       }
 
-      let fieldType = handleTypeReference(baseType, sf, isList, isNullable, depth, visitedTypeNames);
+      let fieldType = handleTypeReference(
+        baseType,
+        sf,
+        isList,
+        isNullable,
+        depth,
+        visitedTypeNames
+      );
       fieldType = detectAdditionalListPatterns(fieldType, baseType, sf);
       return fieldType;
     }
@@ -290,7 +329,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isNullable,
       isFieldUpdate,
       isFilterObject,
-      isSetObject
+      isSetObject,
     };
 
     field = detectAdditionalListPatterns(field, baseType, sf, typeText);
@@ -308,7 +347,8 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
   ): FieldType {
     const typeName = node.typeName.getText(sf);
     const consideredScalar = isScalarType(typeName);
-    const isFieldUpdate = typeName.includes('FieldUpdateOperationsInput') ||
+    const isFieldUpdate =
+      typeName.includes('FieldUpdateOperationsInput') ||
       typeName.includes('BoolFieldUpdateOperationsInput') ||
       typeName.includes('Prisma.InputJsonValue');
 
@@ -337,7 +377,9 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
 
     let ofType: FieldType[] | undefined;
     if (node.typeArguments && node.typeArguments.length > 0) {
-      const genericArgs = node.typeArguments.map(arg => extractTypeInfo(arg, sf, depth + 1));
+      const genericArgs = node.typeArguments.map((arg) =>
+        extractTypeInfo(arg, sf, depth + 1)
+      );
       ofType = genericArgs.filter((arg): arg is FieldType => arg !== null);
     }
 
@@ -349,7 +391,7 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       isFieldUpdate,
       isFilterObject,
       ofType,
-      isSetObject
+      isSetObject,
     };
 
     // If not scalar, filter, and ofType is empty, try to resolve interface/type alias fields
@@ -358,10 +400,15 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       const cleanTypeName = capitalizeFirstLetter(typeName);
       if (!visitedTypeNames.has(cleanTypeName)) {
         visitedTypeNames.add(cleanTypeName);
-        const nestedFields = extractObjectDefinitionFields(cleanTypeName, sf, depth + 1, visitedTypeNames);
+        const nestedFields = extractObjectDefinitionFields(
+          cleanTypeName,
+          sf,
+          depth + 1,
+          visitedTypeNames
+        );
         if (nestedFields.length > 0) {
           // Convert the nested fields into a field type's ofType array
-          fieldType.ofType = nestedFields.map(f => f.type);
+          fieldType.ofType = nestedFields.map((f) => f.type);
         }
       }
     }
@@ -378,9 +425,10 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     if (depth > MAX_RECURSION_DEPTH) return [];
 
     // Try to find InterfaceDeclaration or TypeAliasDeclaration matching typeName
-    const foundNode = sf.statements.find(stmt =>
-      (ts.isInterfaceDeclaration(stmt) || ts.isTypeAliasDeclaration(stmt)) &&
-      stmt.name?.getText(sf) === typeName
+    const foundNode = sf.statements.find(
+      (stmt) =>
+        (ts.isInterfaceDeclaration(stmt) || ts.isTypeAliasDeclaration(stmt)) &&
+        stmt.name?.getText(sf) === typeName
     );
 
     if (!foundNode) return [];
@@ -414,7 +462,11 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     return resultFields;
   }
 
-  function handleLiteralType(node: ts.LiteralTypeNode, isList: boolean, isNullable: boolean): FieldType {
+  function handleLiteralType(
+    node: ts.LiteralTypeNode,
+    isList: boolean,
+    isNullable: boolean
+  ): FieldType {
     const literal = node.literal;
     let literalType: string;
 
@@ -422,7 +474,10 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
       literalType = 'string';
     } else if (ts.isNumericLiteral(literal)) {
       literalType = 'number';
-    } else if (literal.kind === ts.SyntaxKind.TrueKeyword || literal.kind === ts.SyntaxKind.FalseKeyword) {
+    } else if (
+      literal.kind === ts.SyntaxKind.TrueKeyword ||
+      literal.kind === ts.SyntaxKind.FalseKeyword
+    ) {
       literalType = 'boolean';
     } else {
       literalType = 'unknown';
@@ -443,7 +498,9 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     sf: ts.SourceFile,
     typeText?: string
   ): FieldType {
-    const typeName = ts.isTypeReferenceNode(typeNode) ? typeNode.typeName.getText(sf) : (typeText ?? typeNode.getText(sf));
+    const typeName = ts.isTypeReferenceNode(typeNode)
+      ? typeNode.typeName.getText(sf)
+      : (typeText ?? typeNode.getText(sf));
 
     if (!field.isList) {
       if (typeName.includes('[]')) {
@@ -466,12 +523,18 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
     return field;
   }
 
-  function extractArrayInfo(typeNode: ts.TypeNode, sf: ts.SourceFile): { isList: boolean; baseType: ts.TypeNode } {
+  function extractArrayInfo(
+    typeNode: ts.TypeNode,
+    sf: ts.SourceFile
+  ): { isList: boolean; baseType: ts.TypeNode } {
     let isList = false;
     let baseType = typeNode;
 
-    while (ts.isArrayTypeNode(baseType) ||
-      (ts.isTypeReferenceNode(baseType) && baseType.typeName.getText(sf) === 'Array')) {
+    while (
+      ts.isArrayTypeNode(baseType) ||
+      (ts.isTypeReferenceNode(baseType) &&
+        baseType.typeName.getText(sf) === 'Array')
+    ) {
       isList = true;
       if (ts.isArrayTypeNode(baseType)) {
         baseType = baseType.elementType;
@@ -496,7 +559,10 @@ export function getInputTypeDefinition(typeFilePath: string | number | Buffer | 
   return fields;
 }
 
-function isNullOrUndefined(type: ts.TypeNode, sourceFile: ts.SourceFile): boolean {
+function isNullOrUndefined(
+  type: ts.TypeNode,
+  sourceFile: ts.SourceFile
+): boolean {
   const typeText = type.getText(sourceFile);
   return typeText === 'null' || typeText === 'undefined';
 }

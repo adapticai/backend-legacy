@@ -20,6 +20,7 @@ Use this checklist to verify the validation system is properly integrated and wo
 ## Testing Checklist
 
 ### Unit Tests
+
 - [ ] Run `npm test src/tests/input-validator.test.ts`
 - [ ] Run `npm test src/tests/graphql-validation-plugin.test.ts`
 - [ ] Verify all tests pass
@@ -27,80 +28,101 @@ Use this checklist to verify the validation system is properly integrated and wo
 ### Integration Tests
 
 #### Test 1: Percentage Validation
+
 ```graphql
 mutation {
   # Replace with actual mutation from your schema
-  updateConfiguration(data: {
-    tradeAllocationPct: 150  # Should fail
-  }) {
+  updateConfiguration(
+    data: {
+      tradeAllocationPct: 150 # Should fail
+    }
+  ) {
     id
   }
 }
 ```
+
 - [ ] Returns validation error
 - [ ] Error code is `BAD_USER_INPUT`
 - [ ] `validationErrors` array present in response
 - [ ] Error message indicates value must be 0-100
 
 #### Test 2: Positive Number Validation
+
 ```graphql
 mutation {
   # Replace with actual mutation
-  createTrade(data: {
-    quantity: -5  # Should fail
-  }) {
+  createTrade(
+    data: {
+      quantity: -5 # Should fail
+    }
+  ) {
     id
   }
 }
 ```
+
 - [ ] Returns validation error
 - [ ] Error indicates value must be positive
 
 #### Test 3: Non-Empty String Validation
+
 ```graphql
 mutation {
   # Replace with actual mutation
-  createPortfolio(data: {
-    name: ""  # Should fail
-  }) {
+  createPortfolio(
+    data: {
+      name: "" # Should fail
+    }
+  ) {
     id
   }
 }
 ```
+
 - [ ] Returns validation error
 - [ ] Error indicates field cannot be empty
 
 #### Test 4: Multiple Errors
+
 ```graphql
 mutation {
-  updateSettings(data: {
-    tradeAllocationPct: 150  # Invalid
-    quantity: -5              # Invalid
-    name: ""                  # Invalid
-  }) {
+  updateSettings(
+    data: {
+      tradeAllocationPct: 150 # Invalid
+      quantity: -5 # Invalid
+      name: "" # Invalid
+    }
+  ) {
     id
   }
 }
 ```
+
 - [ ] Returns single error with multiple `validationErrors`
 - [ ] All 3 field errors present in response
 
 #### Test 5: Valid Data Passes
+
 ```graphql
 mutation {
-  updateSettings(data: {
-    tradeAllocationPct: 50   # Valid
-    quantity: 10             # Valid
-    name: "Test"             # Valid
-  }) {
+  updateSettings(
+    data: {
+      tradeAllocationPct: 50 # Valid
+      quantity: 10 # Valid
+      name: "Test" # Valid
+    }
+  ) {
     id
   }
 }
 ```
+
 - [ ] No validation error
 - [ ] Mutation executes successfully
 
 #### Test 6: Queries Unaffected
+
 ```graphql
 query {
   configurations {
@@ -109,12 +131,14 @@ query {
   }
 }
 ```
+
 - [ ] Query executes normally
 - [ ] No validation overhead
 
 ## Verification Checklist
 
 ### Error Format
+
 - [ ] Errors have `code: "BAD_USER_INPUT"`
 - [ ] Errors have `validationErrors` array
 - [ ] Each validation error has:
@@ -124,6 +148,7 @@ query {
   - [ ] `constraint` (validation type)
 
 ### Performance
+
 - [ ] Queries execute at normal speed
 - [ ] Mutations have < 1ms validation overhead
 - [ ] Server logs show no errors
@@ -169,6 +194,7 @@ If validation isn't working:
 ## Success Criteria
 
 ✅ Integration complete when:
+
 - [ ] Plugin added to server.ts
 - [ ] Server restarts without errors
 - [ ] Invalid data returns validation errors

@@ -5,6 +5,7 @@ This guide explains how to configure environment variables for the Adaptic backe
 ## Quick Start
 
 1. Copy the example environment file:
+
    ```bash
    cp .env.example .env
    ```
@@ -21,27 +22,27 @@ These variables must be configured for the application to run:
 
 #### Authentication & Security
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `ALLOWED_ORIGINS` | CORS allowed origins (comma-separated) | `http://localhost:3000,http://localhost:3001` |
-| `JWT_SECRET` | Secret key for JWT token generation (min 32 chars) | Generate with `openssl rand -base64 32` |
-| `JWT_SALT` | Salt for password hashing (min 32 chars) | Generate with `openssl rand -base64 32` |
-| `NEXTAUTH_SECRET` | NextAuth secret (should match JWT_SECRET) | Same as JWT_SECRET |
-| `NEXT_PUBLIC_SERVER_AUTH_TOKEN` | Server authentication token for GraphQL | Custom token string |
+| Variable                        | Description                                        | Example                                       |
+| ------------------------------- | -------------------------------------------------- | --------------------------------------------- |
+| `ALLOWED_ORIGINS`               | CORS allowed origins (comma-separated)             | `http://localhost:3000,http://localhost:3001` |
+| `JWT_SECRET`                    | Secret key for JWT token generation (min 32 chars) | Generate with `openssl rand -base64 32`       |
+| `JWT_SALT`                      | Salt for password hashing (min 32 chars)           | Generate with `openssl rand -base64 32`       |
+| `NEXTAUTH_SECRET`               | NextAuth secret (should match JWT_SECRET)          | Same as JWT_SECRET                            |
+| `NEXT_PUBLIC_SERVER_AUTH_TOKEN` | Server authentication token for GraphQL            | Custom token string                           |
 
 #### Database
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `DATABASE_URL` | Primary database connection URL | `postgresql://user:pass@localhost:5432/adaptic?schema=public` |
+| Variable              | Description                        | Example                                                       |
+| --------------------- | ---------------------------------- | ------------------------------------------------------------- |
+| `DATABASE_URL`        | Primary database connection URL    | `postgresql://user:pass@localhost:5432/adaptic?schema=public` |
 | `DIRECT_DATABASE_URL` | Direct database URL for migrations | `postgresql://user:pass@localhost:5432/adaptic?schema=public` |
 
 #### GraphQL Endpoints
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `BACKEND_HTTPS_URL` | GraphQL HTTP endpoint | `http://localhost:4000/graphql` |
-| `BACKEND_WS_URL` | GraphQL WebSocket endpoint | `ws://localhost:4000/subscriptions` |
+| Variable            | Description                | Example                             |
+| ------------------- | -------------------------- | ----------------------------------- |
+| `BACKEND_HTTPS_URL` | GraphQL HTTP endpoint      | `http://localhost:4000/graphql`     |
+| `BACKEND_WS_URL`    | GraphQL WebSocket endpoint | `ws://localhost:4000/subscriptions` |
 
 ### Optional Variables
 
@@ -49,36 +50,36 @@ These variables must be configured for the application to run:
 
 Required only if using AWS services (S3, Lambda):
 
-| Variable | Description |
-|----------|-------------|
-| `MY_AWS_USERNAME` | AWS IAM username |
-| `MY_AWS_PASSWORD` | AWS IAM password |
-| `MY_AWS_ACCESS_KEY_ID` | AWS access key ID |
-| `MY_AWS_SECRET_ACCESS_KEY` | AWS secret access key |
-| `MY_AWS_REGION` | AWS region (default: ap-southeast-2) |
-| `MY_AWS_ID` | AWS account ID |
-| `MY_AWS_ROLE_ARN` | IAM role ARN for Lambda functions |
-| `MY_AWS_S3_BUCKET` | S3 bucket name for functions |
+| Variable                   | Description                          |
+| -------------------------- | ------------------------------------ |
+| `MY_AWS_USERNAME`          | AWS IAM username                     |
+| `MY_AWS_PASSWORD`          | AWS IAM password                     |
+| `MY_AWS_ACCESS_KEY_ID`     | AWS access key ID                    |
+| `MY_AWS_SECRET_ACCESS_KEY` | AWS secret access key                |
+| `MY_AWS_REGION`            | AWS region (default: ap-southeast-2) |
+| `MY_AWS_ID`                | AWS account ID                       |
+| `MY_AWS_ROLE_ARN`          | IAM role ARN for Lambda functions    |
+| `MY_AWS_S3_BUCKET`         | S3 bucket name for functions         |
 
 #### Prisma Pulse
 
-| Variable | Description |
-|----------|-------------|
+| Variable        | Description                                        |
+| --------------- | -------------------------------------------------- |
 | `PULSE_API_KEY` | Prisma Pulse API key for real-time database events |
 
 #### Railway
 
 Required only for Railway deployments:
 
-| Variable | Description |
-|----------|-------------|
-| `RAILWAY_TOKEN` | Railway authentication token |
-| `RAILWAY_API_TOKEN` | Railway API token |
+| Variable            | Description                  |
+| ------------------- | ---------------------------- |
+| `RAILWAY_TOKEN`     | Railway authentication token |
+| `RAILWAY_API_TOKEN` | Railway API token            |
 
 #### Application
 
-| Variable | Description | Default |
-|----------|-------------|---------|
+| Variable           | Description           | Default   |
+| ------------------ | --------------------- | --------- |
 | `GLOBAL_NAMESPACE` | Application namespace | `adaptic` |
 
 ## Local Development Setup
@@ -158,6 +159,7 @@ If using Prisma Accelerate:
 ## Environment-Specific Configuration
 
 ### Local Development
+
 ```env
 ALLOWED_ORIGINS="http://localhost:3000,http://localhost:3001"
 BACKEND_HTTPS_URL="http://localhost:4000/graphql"
@@ -166,6 +168,7 @@ DATABASE_URL="postgresql://localhost:5432/adaptic?schema=public"
 ```
 
 ### Development/Staging
+
 ```env
 ALLOWED_ORIGINS="https://adaptic-dev.netlify.app"
 BACKEND_HTTPS_URL="https://adaptic-dev.netlify.app/graphql"
@@ -174,6 +177,7 @@ DATABASE_URL="<railway-or-prisma-accelerate-url>"
 ```
 
 ### Production
+
 ```env
 ALLOWED_ORIGINS="https://app.adaptic.ai,https://adaptic.ai"
 BACKEND_HTTPS_URL="https://api.adaptic.ai/graphql"

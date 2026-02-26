@@ -6,15 +6,15 @@ import type {
   InMemoryCache as InMemoryCacheType,
   HttpLink as HttpLinkType,
   NormalizedCacheObject,
-} from "@apollo/client";
+} from '@apollo/client';
 
 // Import runtime implementations.
-import { ApolloClient, gql, ApolloError } from "@apollo/client/core";
-import { split } from "@apollo/client/link/core";
-import { setContext } from "@apollo/client/link/context";
-import { onError } from "@apollo/client/link/error";
-import { HttpLink } from "@apollo/client/link/http";
-import { InMemoryCache } from "@apollo/client/cache/inmemory/inMemoryCache";
+import { ApolloClient, gql, ApolloError } from '@apollo/client/core';
+import { split } from '@apollo/client/link/core';
+import { setContext } from '@apollo/client/link/context';
+import { onError } from '@apollo/client/link/error';
+import { HttpLink } from '@apollo/client/link/http';
+import { InMemoryCache } from '@apollo/client/cache/inmemory/inMemoryCache';
 
 // Re‑export the runtime implementations.
 export {

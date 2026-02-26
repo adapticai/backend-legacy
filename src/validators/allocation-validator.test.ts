@@ -1,7 +1,7 @@
 import {
   validateAllocationPercentages,
   assertValidAllocation,
-  AllocationValues
+  AllocationValues,
 } from './allocation-validator';
 
 describe('Allocation Validator', () => {
@@ -13,7 +13,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -38,7 +38,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -54,7 +54,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -70,7 +70,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -89,7 +89,7 @@ describe('Allocation Validator', () => {
         futures: -5,
         etfs: 10,
         forex: 0,
-        crypto: -15
+        crypto: -15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -97,12 +97,12 @@ describe('Allocation Validator', () => {
       expect(result.isValid).toBe(false);
       expect(result.errors.length).toBeGreaterThan(0);
 
-      const negativeErrors = result.errors.filter(
-        error => error.message.includes('cannot be negative')
+      const negativeErrors = result.errors.filter((error) =>
+        error.message.includes('cannot be negative')
       );
       expect(negativeErrors).toHaveLength(2);
-      expect(negativeErrors.map(e => e.field)).toContain('futures');
-      expect(negativeErrors.map(e => e.field)).toContain('crypto');
+      expect(negativeErrors.map((e) => e.field)).toContain('futures');
+      expect(negativeErrors.map((e) => e.field)).toContain('crypto');
     });
 
     it('should reject allocation with non-numeric values', () => {
@@ -112,7 +112,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -130,7 +130,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -147,7 +147,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       const result = validateAllocationPercentages(allocation);
@@ -156,12 +156,14 @@ describe('Allocation Validator', () => {
       expect(result.errors.length).toBeGreaterThanOrEqual(2);
 
       const hasNegativeError = result.errors.some(
-        error => error.field === 'equities' &&
-                error.message.includes('cannot be negative')
+        (error) =>
+          error.field === 'equities' &&
+          error.message.includes('cannot be negative')
       );
       const hasSumError = result.errors.some(
-        error => error.field === 'allocation' &&
-                error.message.includes('must sum to 100%')
+        (error) =>
+          error.field === 'allocation' &&
+          error.message.includes('must sum to 100%')
       );
 
       expect(hasNegativeError).toBe(true);
@@ -177,7 +179,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       expect(() => assertValidAllocation(allocation)).not.toThrow();
@@ -190,7 +192,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       expect(() => assertValidAllocation(allocation)).toThrow(
@@ -205,7 +207,7 @@ describe('Allocation Validator', () => {
         futures: 0,
         etfs: 10,
         forex: 0,
-        crypto: 15
+        crypto: 15,
       };
 
       expect(() => assertValidAllocation(allocation)).toThrow(

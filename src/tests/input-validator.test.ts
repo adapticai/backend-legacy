@@ -20,20 +20,30 @@ describe('Input Validator', () => {
     });
 
     it('should reject percentages below 0', () => {
-      expect(() => validatePercentage(-1, 'testField')).toThrow(ValidationError);
-      expect(() => validatePercentage(-0.1, 'testField')).toThrow(ValidationError);
+      expect(() => validatePercentage(-1, 'testField')).toThrow(
+        ValidationError
+      );
+      expect(() => validatePercentage(-0.1, 'testField')).toThrow(
+        ValidationError
+      );
     });
 
     it('should reject percentages above 100', () => {
-      expect(() => validatePercentage(101, 'testField')).toThrow(ValidationError);
-      expect(() => validatePercentage(100.1, 'testField')).toThrow(ValidationError);
+      expect(() => validatePercentage(101, 'testField')).toThrow(
+        ValidationError
+      );
+      expect(() => validatePercentage(100.1, 'testField')).toThrow(
+        ValidationError
+      );
     });
 
     it('should reject non-numeric values', () => {
-      expect(() => validatePercentage(NaN, 'testField')).toThrow(ValidationError);
-      expect(() => validatePercentage('50' as unknown as number, 'testField')).toThrow(
+      expect(() => validatePercentage(NaN, 'testField')).toThrow(
         ValidationError
       );
+      expect(() =>
+        validatePercentage('50' as unknown as number, 'testField')
+      ).toThrow(ValidationError);
     });
 
     it('should include field name and constraint in error', () => {
@@ -58,19 +68,27 @@ describe('Input Validator', () => {
     });
 
     it('should reject zero', () => {
-      expect(() => validatePositiveNumber(0, 'testField')).toThrow(ValidationError);
+      expect(() => validatePositiveNumber(0, 'testField')).toThrow(
+        ValidationError
+      );
     });
 
     it('should reject negative numbers', () => {
-      expect(() => validatePositiveNumber(-1, 'testField')).toThrow(ValidationError);
-      expect(() => validatePositiveNumber(-0.1, 'testField')).toThrow(ValidationError);
+      expect(() => validatePositiveNumber(-1, 'testField')).toThrow(
+        ValidationError
+      );
+      expect(() => validatePositiveNumber(-0.1, 'testField')).toThrow(
+        ValidationError
+      );
     });
 
     it('should reject non-numeric values', () => {
-      expect(() => validatePositiveNumber(NaN, 'testField')).toThrow(ValidationError);
-      expect(() => validatePositiveNumber('5' as unknown as number, 'testField')).toThrow(
+      expect(() => validatePositiveNumber(NaN, 'testField')).toThrow(
         ValidationError
       );
+      expect(() =>
+        validatePositiveNumber('5' as unknown as number, 'testField')
+      ).toThrow(ValidationError);
     });
 
     it('should include field name and constraint in error', () => {
@@ -103,8 +121,12 @@ describe('Input Validator', () => {
     });
 
     it('should reject non-string values', () => {
-      expect(() => validateEmail(123 as unknown as string)).toThrow(ValidationError);
-      expect(() => validateEmail(null as unknown as string)).toThrow(ValidationError);
+      expect(() => validateEmail(123 as unknown as string)).toThrow(
+        ValidationError
+      );
+      expect(() => validateEmail(null as unknown as string)).toThrow(
+        ValidationError
+      );
     });
   });
 
@@ -112,7 +134,9 @@ describe('Input Validator', () => {
     it('should accept valid URLs', () => {
       expect(() => validateUrl('https://example.com')).not.toThrow();
       expect(() => validateUrl('http://localhost:3000')).not.toThrow();
-      expect(() => validateUrl('https://example.com/path?query=value')).not.toThrow();
+      expect(() =>
+        validateUrl('https://example.com/path?query=value')
+      ).not.toThrow();
     });
 
     it('should reject invalid URLs', () => {
@@ -122,8 +146,12 @@ describe('Input Validator', () => {
     });
 
     it('should reject non-string values', () => {
-      expect(() => validateUrl(123 as unknown as string)).toThrow(ValidationError);
-      expect(() => validateUrl(null as unknown as string)).toThrow(ValidationError);
+      expect(() => validateUrl(123 as unknown as string)).toThrow(
+        ValidationError
+      );
+      expect(() => validateUrl(null as unknown as string)).toThrow(
+        ValidationError
+      );
     });
   });
 
@@ -136,16 +164,18 @@ describe('Input Validator', () => {
 
     it('should reject empty strings', () => {
       expect(() => validateNonEmpty('', 'testField')).toThrow(ValidationError);
-      expect(() => validateNonEmpty('   ', 'testField')).toThrow(ValidationError);
+      expect(() => validateNonEmpty('   ', 'testField')).toThrow(
+        ValidationError
+      );
     });
 
     it('should reject non-string values', () => {
-      expect(() => validateNonEmpty(123 as unknown as string, 'testField')).toThrow(
-        ValidationError
-      );
-      expect(() => validateNonEmpty(null as unknown as string, 'testField')).toThrow(
-        ValidationError
-      );
+      expect(() =>
+        validateNonEmpty(123 as unknown as string, 'testField')
+      ).toThrow(ValidationError);
+      expect(() =>
+        validateNonEmpty(null as unknown as string, 'testField')
+      ).toThrow(ValidationError);
     });
 
     it('should include field name in error', () => {

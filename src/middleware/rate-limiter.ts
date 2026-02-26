@@ -68,7 +68,9 @@ function createRateLimiter(config: RateLimitConfig) {
   return (req: Request, res: Response, next: NextFunction): void => {
     const identifier = req.ip || req.connection.remoteAddress || 'unknown';
     const authenticated = isAuthenticated(req);
-    const effectiveMax = authenticated ? config.maxAuthenticated : config.maxUnauthenticated;
+    const effectiveMax = authenticated
+      ? config.maxAuthenticated
+      : config.maxUnauthenticated;
     const storeKey = `${identifier}:${authenticated ? 'auth' : 'anon'}`;
     const now = Date.now();
 
@@ -115,7 +117,9 @@ export const graphqlRateLimiter = createRateLimiter({
   maxUnauthenticated: parseInt(process.env.RATE_LIMIT_MAX_UNAUTH || '200', 10),
   standardHeaders: true,
   legacyHeaders: false,
-  message: { errors: [{ message: 'Too many requests, please try again later.' }] },
+  message: {
+    errors: [{ message: 'Too many requests, please try again later.' }],
+  },
 });
 
 /**

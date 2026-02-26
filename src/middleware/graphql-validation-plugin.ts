@@ -99,7 +99,10 @@ function validateObject(
 
     // Recursively validate nested objects
     if (typeof value === 'object' && !Array.isArray(value)) {
-      const nestedErrors = validateObject(value as Record<string, unknown>, fieldPath);
+      const nestedErrors = validateObject(
+        value as Record<string, unknown>,
+        fieldPath
+      );
       errors.push(...nestedErrors);
       continue;
     }
@@ -142,7 +145,9 @@ function validateObject(
  */
 export function createValidationPlugin(): ApolloServerPlugin {
   return {
-    async requestDidStart(): Promise<GraphQLRequestListener<Record<string, unknown>>> {
+    async requestDidStart(): Promise<
+      GraphQLRequestListener<Record<string, unknown>>
+    > {
       return {
         async didResolveOperation(requestContext) {
           const { operation, request } = requestContext;
@@ -156,7 +161,9 @@ export function createValidationPlugin(): ApolloServerPlugin {
           const errors: ValidationErrorDetail[] = [];
 
           // Validate each mutation's variables
-          for (const [variableName, variableValue] of Object.entries(variables)) {
+          for (const [variableName, variableValue] of Object.entries(
+            variables
+          )) {
             if (variableValue && typeof variableValue === 'object') {
               // Check if this is a data object (common pattern in mutations)
               const dataObj = variableValue as Record<string, unknown>;

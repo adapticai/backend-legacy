@@ -28,16 +28,16 @@ clean -> generate -> fix-imports -> generate:selections -> generate:functions ->
 
 ## Core Technology Stack
 
-| Layer | Technology | Version |
-|---|---|---|
-| HTTP Server | Express | 4 |
-| GraphQL | Apollo Server | 5 |
-| Schema Generation | TypeGraphQL | 2.0.0-rc.2 |
-| ORM | Prisma | 6.19.2 |
-| Database | PostgreSQL | via Prisma Accelerate |
-| Auth | JWT + Google OAuth | - |
-| Subscriptions | graphql-ws | WebSocket transport |
-| TypeScript | | 5.9.3 |
+| Layer             | Technology         | Version               |
+| ----------------- | ------------------ | --------------------- |
+| HTTP Server       | Express            | 4                     |
+| GraphQL           | Apollo Server      | 5                     |
+| Schema Generation | TypeGraphQL        | 2.0.0-rc.2            |
+| ORM               | Prisma             | 6.19.2                |
+| Database          | PostgreSQL         | via Prisma Accelerate |
+| Auth              | JWT + Google OAuth | -                     |
+| Subscriptions     | graphql-ws         | WebSocket transport   |
+| TypeScript        |                    | 5.9.3                 |
 
 ---
 
@@ -55,17 +55,17 @@ clean -> generate -> fix-imports -> generate:selections -> generate:functions ->
 
 ### Model Domains
 
-| Domain | Models |
-|---|---|
-| Identity & Auth | User, Session, Authenticator, Account |
-| Brokerage | AlpacaAccount |
-| Portfolio | Allocation, Position, Trade, Order, Action |
-| Assets | Asset |
-| Market Data | NewsArticle, MarketSentiment |
-| ML / Training | ML training data models |
-| Institutional | Institutional sentiment models |
-| Analytics | Analytics models |
-| Options | OptionsPosition, OptionsContract, OptionsStrategy, GreeksSnapshot |
+| Domain          | Models                                                            |
+| --------------- | ----------------------------------------------------------------- |
+| Identity & Auth | User, Session, Authenticator, Account                             |
+| Brokerage       | AlpacaAccount                                                     |
+| Portfolio       | Allocation, Position, Trade, Order, Action                        |
+| Assets          | Asset                                                             |
+| Market Data     | NewsArticle, MarketSentiment                                      |
+| ML / Training   | ML training data models                                           |
+| Institutional   | Institutional sentiment models                                    |
+| Analytics       | Analytics models                                                  |
+| Options         | OptionsPosition, OptionsContract, OptionsStrategy, GreeksSnapshot |
 
 ### Schema File
 
@@ -73,12 +73,12 @@ clean -> generate -> fix-imports -> generate:selections -> generate:functions ->
 
 ### Recent Migrations (Feb 6, 2026)
 
-| Migration | Purpose |
-|---|---|
-| `trade_timestamp_string_to_datetime` | Converted Trade.timestamp from String to DateTime |
-| `add_allocation_validation` | Added allocation sum validation constraints |
-| `fix_updated_at_patterns` | Corrected @default(now()) to @updatedAt on 8+ models |
-| `add_missing_foreign_key_indexes` | Added indexes on FK columns lacking them |
+| Migration                            | Purpose                                              |
+| ------------------------------------ | ---------------------------------------------------- |
+| `trade_timestamp_string_to_datetime` | Converted Trade.timestamp from String to DateTime    |
+| `add_allocation_validation`          | Added allocation sum validation constraints          |
+| `fix_updated_at_patterns`            | Corrected @default(now()) to @updatedAt on 8+ models |
+| `add_missing_foreign_key_indexes`    | Added indexes on FK columns lacking them             |
 
 ---
 
@@ -86,16 +86,16 @@ clean -> generate -> fix-imports -> generate:selections -> generate:functions ->
 
 The following security measures were implemented as part of the P0 audit remediation:
 
-| Feature | Location | Details |
-|---|---|---|
-| JWT secret management | `src/config/jwtConfig.ts` | Production requires JWT_SECRET env var, minimum 32 characters |
-| Input validation middleware | `src/middleware/input-validator.ts` | Validates mutation inputs before processing |
-| GraphQL validation plugin | `src/middleware/graphql-validation-plugin.ts` | Validates GraphQL operations at the schema level |
-| Query depth limiter | `src/plugins/query-depth-limiter.ts` | Configurable via GRAPHQL_MAX_DEPTH env var |
-| Error sanitizer | `src/plugins/error-sanitizer.ts` | Strips stack traces and internal details in production |
-| Rate limiting | `src/middleware/rate-limiter.ts` | Configurable via RATE_LIMIT_MAX env var |
-| CORS configuration | `src/server.ts` | Environment-based origin whitelist via ALLOWED_ORIGINS |
-| Allocation validator | `src/validators/allocation-validator.ts` | Ensures allocation sums are valid |
+| Feature                     | Location                                      | Details                                                       |
+| --------------------------- | --------------------------------------------- | ------------------------------------------------------------- |
+| JWT secret management       | `src/config/jwtConfig.ts`                     | Production requires JWT_SECRET env var, minimum 32 characters |
+| Input validation middleware | `src/middleware/input-validator.ts`           | Validates mutation inputs before processing                   |
+| GraphQL validation plugin   | `src/middleware/graphql-validation-plugin.ts` | Validates GraphQL operations at the schema level              |
+| Query depth limiter         | `src/plugins/query-depth-limiter.ts`          | Configurable via GRAPHQL_MAX_DEPTH env var                    |
+| Error sanitizer             | `src/plugins/error-sanitizer.ts`              | Strips stack traces and internal details in production        |
+| Rate limiting               | `src/middleware/rate-limiter.ts`              | Configurable via RATE_LIMIT_MAX env var                       |
+| CORS configuration          | `src/server.ts`                               | Environment-based origin whitelist via ALLOWED_ORIGINS        |
+| Allocation validator        | `src/validators/allocation-validator.ts`      | Ensures allocation sums are valid                             |
 
 ---
 
@@ -187,14 +187,14 @@ All Prisma model types are exported under a `types` namespace. These are THE can
 Accessed as `adaptic.<model>.<operation>()`:
 
 ```typescript
-adaptic.user.create(data)
-adaptic.user.get(id)
-adaptic.user.getAll()
-adaptic.user.findMany(where)
-adaptic.user.update(id, data)
-adaptic.user.delete(id)
-adaptic.user.createMany(data)
-adaptic.trade.get(id)
+adaptic.user.create(data);
+adaptic.user.get(id);
+adaptic.user.getAll();
+adaptic.user.findMany(where);
+adaptic.user.update(id, data);
+adaptic.user.delete(id);
+adaptic.user.createMany(data);
+adaptic.trade.get(id);
 // ... 57 models x 7 operations
 ```
 
@@ -209,6 +209,7 @@ String representations of model types for LLM context injection.
 ### Apollo Client Factory
 
 Singleton Apollo Client with:
+
 - Connection pooling
 - Retry logic with exponential backoff
 - Token validation
@@ -222,22 +223,22 @@ Direct Prisma client access with Accelerate extension.
 
 ## Key Files
 
-| File | Purpose |
-|---|---|
-| `src/server.ts` | Apollo GraphQL server setup with Express |
-| `src/auth.ts` | JWT authentication middleware |
-| `src/config/jwtConfig.ts` | JWT secret management (production enforcement) |
-| `src/client.ts` | Apollo Client factory (singleton, retries, Prisma Accelerate) |
-| `src/prismaClient.ts` | Prisma singleton with Accelerate extension |
-| `prisma/schema.prisma` | Database schema (all 54 models, 53 enums) |
-| `src/modules/` | Code generators (generateSelections, generator, generateStrings) |
-| `fix-import-paths.cjs` | Post-generation import path correction |
-| `src/middleware/input-validator.ts` | Input validation middleware |
-| `src/middleware/graphql-validation-plugin.ts` | GraphQL validation plugin |
-| `src/middleware/rate-limiter.ts` | Rate limiting middleware |
-| `src/plugins/query-depth-limiter.ts` | Query depth limiting plugin |
-| `src/plugins/error-sanitizer.ts` | Error sanitization plugin |
-| `src/validators/allocation-validator.ts` | Allocation validation logic |
+| File                                          | Purpose                                                          |
+| --------------------------------------------- | ---------------------------------------------------------------- |
+| `src/server.ts`                               | Apollo GraphQL server setup with Express                         |
+| `src/auth.ts`                                 | JWT authentication middleware                                    |
+| `src/config/jwtConfig.ts`                     | JWT secret management (production enforcement)                   |
+| `src/client.ts`                               | Apollo Client factory (singleton, retries, Prisma Accelerate)    |
+| `src/prismaClient.ts`                         | Prisma singleton with Accelerate extension                       |
+| `prisma/schema.prisma`                        | Database schema (all 54 models, 53 enums)                        |
+| `src/modules/`                                | Code generators (generateSelections, generator, generateStrings) |
+| `fix-import-paths.cjs`                        | Post-generation import path correction                           |
+| `src/middleware/input-validator.ts`           | Input validation middleware                                      |
+| `src/middleware/graphql-validation-plugin.ts` | GraphQL validation plugin                                        |
+| `src/middleware/rate-limiter.ts`              | Rate limiting middleware                                         |
+| `src/plugins/query-depth-limiter.ts`          | Query depth limiting plugin                                      |
+| `src/plugins/error-sanitizer.ts`              | Error sanitization plugin                                        |
+| `src/validators/allocation-validator.ts`      | Allocation validation logic                                      |
 
 ---
 
@@ -253,15 +254,15 @@ Direct Prisma client access with Accelerate extension.
 
 ## Code Quality
 
-| Metric | Status |
-|---|---|
-| `any` types in source code | **Zero** (only present in generated vendor code) |
-| eslint-disable comments | **Zero** |
-| TODO/FIXME in production code | **Zero** |
-| console.log instances | **33** (needs Pino migration) |
-| Formal ESLint config | **Configured** (flat config, eslint.config.mjs) |
-| Pre-commit hooks | **Configured** (Husky + lint-staged) |
-| Formal test runner | **Vitest** (npm test script configured) |
+| Metric                        | Status                                           |
+| ----------------------------- | ------------------------------------------------ |
+| `any` types in source code    | **Zero** (only present in generated vendor code) |
+| eslint-disable comments       | **Zero**                                         |
+| TODO/FIXME in production code | **Zero**                                         |
+| console.log instances         | **33** (needs Pino migration)                    |
+| Formal ESLint config          | **Configured** (flat config, eslint.config.mjs)  |
+| Pre-commit hooks              | **Configured** (Husky + lint-staged)             |
+| Formal test runner            | **Vitest** (npm test script configured)          |
 
 ### Tests
 
@@ -279,27 +280,27 @@ Direct Prisma client access with Accelerate extension.
 
 ### CRITICAL - Security
 
-| Issue | Detail |
-|---|---|
+| Issue                             | Detail                                                                                   |
+| --------------------------------- | ---------------------------------------------------------------------------------------- |
 | .env may contain real credentials | Environment file potentially committed with real secrets; needs removal from git history |
 
 ### HIGH - Stability & Quality
 
-| Issue | Detail |
-|---|---|
-| TypeGraphQL RC in production | Using 2.0.0-rc.2 (release candidate, not stable) |
-| 33 console.log calls | Need migration to Pino structured logging |
-| ~~No formal ESLint config~~ | **RESOLVED** - ESLint flat config added (eslint.config.mjs) with rules matching engine conventions |
-| ~~No pre-commit hooks~~ | **RESOLVED** - Husky + lint-staged configured, runs ESLint and TypeScript type checking on staged files |
-| ~~No formal test runner~~ | **RESOLVED** - Vitest configured with npm test script, existing tests runnable |
-| Prisma version drift | package.json specifies ^6.13.0 but actual installed version is 6.19.2 |
+| Issue                        | Detail                                                                                                  |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------- |
+| TypeGraphQL RC in production | Using 2.0.0-rc.2 (release candidate, not stable)                                                        |
+| 33 console.log calls         | Need migration to Pino structured logging                                                               |
+| ~~No formal ESLint config~~  | **RESOLVED** - ESLint flat config added (eslint.config.mjs) with rules matching engine conventions      |
+| ~~No pre-commit hooks~~      | **RESOLVED** - Husky + lint-staged configured, runs ESLint and TypeScript type checking on staged files |
+| ~~No formal test runner~~    | **RESOLVED** - Vitest configured with npm test script, existing tests runnable                          |
+| Prisma version drift         | package.json specifies ^6.13.0 but actual installed version is 6.19.2                                   |
 
 ### MEDIUM - Operations
 
-| Issue | Detail |
-|---|---|
+| Issue                        | Detail                                                                                                                       |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | ~~No health check endpoint~~ | **RESOLVED** - GET /health endpoint added, returns database connectivity status, server uptime, memory usage, version number |
-| Database restart uses exec() | Railway CLI invoked via exec() for DB restarts (fragile) |
+| Database restart uses exec() | Railway CLI invoked via exec() for DB restarts (fragile)                                                                     |
 
 ---
 

@@ -4,7 +4,10 @@ import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
 import { ExpressInstrumentation } from '@opentelemetry/instrumentation-express';
 import { GraphQLInstrumentation } from '@opentelemetry/instrumentation-graphql';
 import { resourceFromAttributes } from '@opentelemetry/resources';
-import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
+import {
+  ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
+} from '@opentelemetry/semantic-conventions';
 import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node';
 import { logger } from '../utils/logger';
 
@@ -28,7 +31,9 @@ function getPackageVersion(): string {
  * Defaults to http://localhost:4318/v1/traces (standard OTLP HTTP endpoint).
  */
 function getOtlpEndpoint(): string {
-  return process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4318/v1/traces';
+  return (
+    process.env.OTEL_EXPORTER_OTLP_ENDPOINT || 'http://localhost:4318/v1/traces'
+  );
 }
 
 /**
@@ -125,7 +130,10 @@ export async function shutdownTracing(): Promise<void> {
       logger.info('OpenTelemetry tracing shut down successfully');
     } catch (shutdownError) {
       logger.error('Error shutting down OpenTelemetry tracing', {
-        error: shutdownError instanceof Error ? shutdownError.message : String(shutdownError),
+        error:
+          shutdownError instanceof Error
+            ? shutdownError.message
+            : String(shutdownError),
       });
     }
   }

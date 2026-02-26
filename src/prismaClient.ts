@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { withAccelerate } from "@prisma/extension-accelerate";
+import { PrismaClient } from '@prisma/client';
+import { withAccelerate } from '@prisma/extension-accelerate';
 import { logger } from './utils/logger';
 
 /**
@@ -39,9 +39,12 @@ function resolvePoolSize(): number {
     if (!isNaN(parsed) && parsed > 0) {
       return parsed;
     }
-    logger.warn('Invalid DATABASE_POOL_SIZE value, falling back to tier default', {
-      value: envPoolSize,
-    });
+    logger.warn(
+      'Invalid DATABASE_POOL_SIZE value, falling back to tier default',
+      {
+        value: envPoolSize,
+      }
+    );
   }
 
   const nodeEnv = process.env.NODE_ENV || 'development';
@@ -60,9 +63,12 @@ function resolvePoolTimeout(): number {
     if (!isNaN(parsed) && parsed > 0) {
       return parsed;
     }
-    logger.warn('Invalid DATABASE_POOL_TIMEOUT_MS value, falling back to default', {
-      value: envTimeout,
-    });
+    logger.warn(
+      'Invalid DATABASE_POOL_TIMEOUT_MS value, falling back to default',
+      {
+        value: envTimeout,
+      }
+    );
   }
   return DEFAULT_POOL_TIMEOUT_MS;
 }

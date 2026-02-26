@@ -23,7 +23,10 @@ import { queryDepthLimiterPlugin } from './query-depth-limiter';
 import { createErrorSanitizer } from './error-sanitizer';
 
 // Example: This is how your server configuration should look
-function createExampleServer(schema: GraphQLSchema, httpServer: HttpServer): ApolloServer<BaseContext> {
+function createExampleServer(
+  schema: GraphQLSchema,
+  httpServer: HttpServer
+): ApolloServer<BaseContext> {
   // BEFORE (current server.ts - lines 74-132):
   // const server = new ApolloServer({
   //   schema,

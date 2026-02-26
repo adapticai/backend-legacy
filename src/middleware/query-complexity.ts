@@ -79,7 +79,7 @@ export function checkQueryComplexity(
   schema: GraphQLSchema,
   document: DocumentNode,
   variables: Record<string, unknown>,
-  isAuthenticated: boolean,
+  isAuthenticated: boolean
 ): ComplexityCheckResult {
   const maxComplexity = getMaxComplexity(isAuthenticated);
 
@@ -101,7 +101,10 @@ export function checkQueryComplexity(
     };
   } catch (estimationError) {
     logger.warn('Failed to estimate query complexity', {
-      error: estimationError instanceof Error ? estimationError.message : String(estimationError),
+      error:
+        estimationError instanceof Error
+          ? estimationError.message
+          : String(estimationError),
     });
     // On failure, allow the query to proceed to avoid blocking legitimate requests
     return {
@@ -121,19 +124,38 @@ export function checkQueryComplexity(
 function computeQueryDepth(document: DocumentNode): number {
   let maxDepth = 0;
 
-  function traverse(node: { selectionSet?: { selections: ReadonlyArray<{ selectionSet?: unknown }> } }, depth: number): void {
+  function traverse(
+    node: {
+      selectionSet?: { selections: ReadonlyArray<{ selectionSet?: unknown }> };
+    },
+    depth: number
+  ): void {
     if (depth > maxDepth) {
       maxDepth = depth;
     }
     if (node.selectionSet) {
       for (const selection of node.selectionSet.selections) {
-        traverse(selection as { selectionSet?: { selections: ReadonlyArray<{ selectionSet?: unknown }> } }, depth + 1);
+        traverse(
+          selection as {
+            selectionSet?: {
+              selections: ReadonlyArray<{ selectionSet?: unknown }>;
+            };
+          },
+          depth + 1
+        );
       }
     }
   }
 
   for (const definition of document.definitions) {
-    traverse(definition as { selectionSet?: { selections: ReadonlyArray<{ selectionSet?: unknown }> } }, 0);
+    traverse(
+      definition as {
+        selectionSet?: {
+          selections: ReadonlyArray<{ selectionSet?: unknown }>;
+        };
+      },
+      0
+    );
   }
 
   return maxDepth;
@@ -179,7 +201,10 @@ export function createQueryComplexityPlugin(schema: GraphQLSchema): {
           if (!isEnabled()) return;
 
           const { document, request, contextValue } = requestContext;
-          const variables = (request.variables || {}) as Record<string, unknown>;
+          const variables = (request.variables || {}) as Record<
+            string,
+            unknown
+          >;
           const isAuthenticated = Boolean(contextValue.user);
 
           // Check depth limit
@@ -192,12 +217,17 @@ export function createQueryComplexityPlugin(schema: GraphQLSchema): {
               isAuthenticated,
             });
             throw new Error(
-              `Query depth of ${depth} exceeds maximum allowed depth of ${maxDepth}`,
+              `Query depth of ${depth} exceeds maximum allowed depth of ${maxDepth}`
             );
           }
 
           // Check complexity limit
-          const result = checkQueryComplexity(schema, document, variables, isAuthenticated);
+          const result = checkQueryComplexity(
+            schema,
+            document,
+            variables,
+            isAuthenticated
+          );
           if (result.exceeded) {
             logger.warn('Query complexity exceeded', {
               complexity: result.complexity,
@@ -205,7 +235,7 @@ export function createQueryComplexityPlugin(schema: GraphQLSchema): {
               isAuthenticated,
             });
             throw new Error(
-              `Query complexity of ${result.complexity} exceeds maximum allowed complexity of ${result.maxComplexity}`,
+              `Query complexity of ${result.complexity} exceeds maximum allowed complexity of ${result.maxComplexity}`
             );
           }
 

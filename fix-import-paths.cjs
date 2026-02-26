@@ -1,10 +1,19 @@
 const fs = require('fs');
 const path = require('path');
 
-const generatedDir = path.join(__dirname, 'src', 'generated', 'typegraphql-prisma');
+const generatedDir = path.join(
+  __dirname,
+  'src',
+  'generated',
+  'typegraphql-prisma'
+);
 const modelsDir = path.join(generatedDir, 'models');
 const outputsDir = path.join(generatedDir, 'resolvers', 'outputs');
-const distGeneratedDir = path.join(__dirname, 'generated', 'typegraphql-prisma');
+const distGeneratedDir = path.join(
+  __dirname,
+  'generated',
+  'typegraphql-prisma'
+);
 
 // Safely get files in a directory
 function getFilesRecursively(dir) {
@@ -31,7 +40,10 @@ function fixImportPaths(filePath, modelFiles) {
 
       let fixedData = data;
       modelFiles.forEach((model) => {
-        const regex = new RegExp(`from ['"]\\.\\.\\/outputs\\/${model}['"]`, 'g');
+        const regex = new RegExp(
+          `from ['"]\\.\\.\\/outputs\\/${model}['"]`,
+          'g'
+        );
         fixedData = fixedData.replace(regex, `from "../../models/${model}"`);
       });
 
@@ -49,7 +61,10 @@ function replaceFindUnique(filePath) {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) return reject(err);
 
-      const fixedData = data.replace(/\bfindUniqueOrThrow\s*\(/g, 'findUnique(');
+      const fixedData = data.replace(
+        /\bfindUniqueOrThrow\s*\(/g,
+        'findUnique('
+      );
       fs.writeFile(filePath, fixedData, 'utf8', (err) => {
         if (err) return reject(err);
         resolve(filePath);
@@ -58,9 +73,13 @@ function replaceFindUnique(filePath) {
   });
 }
 
-const modelFiles = getFilesRecursively(modelsDir).map((file) => path.basename(file, '.ts'));
+const modelFiles = getFilesRecursively(modelsDir).map((file) =>
+  path.basename(file, '.ts')
+);
 const outputFiles = getFilesRecursively(outputsDir);
-const allFiles = getFilesRecursively(generatedDir).concat(getFilesRecursively(distGeneratedDir));
+const allFiles = getFilesRecursively(generatedDir).concat(
+  getFilesRecursively(distGeneratedDir)
+);
 
 // Fix imports and findUniqueOrThrow replacements
 Promise.allSettled(outputFiles.map((file) => fixImportPaths(file, modelFiles)))

@@ -22,19 +22,22 @@ function generateUUID(): string {
     return crypto.randomUUID();
   }
   // Fallback for older Node.js versions
-  return (1e7 + -1e3 + -4e3 + -8e3 + -1e11).toString().replace(/[018]/g, (c: string) =>
-    (
-      parseInt(c, 16) ^
-      (crypto.randomBytes(1)[0] & (15 >> (parseInt(c, 16) / 4)))
-    ).toString(16)
-  );
+  return (1e7 + -1e3 + -4e3 + -8e3 + -1e11)
+    .toString()
+    .replace(/[018]/g, (c: string) =>
+      (
+        parseInt(c, 16) ^
+        (crypto.randomBytes(1)[0] & (15 >> (parseInt(c, 16) / 4)))
+      ).toString(16)
+    );
 }
 
 /**
  * Base64 URL Encode
  */
 function base64UrlEncode(buffer: Buffer): string {
-  return buffer.toString('base64')
+  return buffer
+    .toString('base64')
     .replace(/=/g, '')
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
@@ -55,10 +58,13 @@ function base64UrlDecode(str: string): Buffer {
 /**
  * Encrypt a JSON payload into JWE using 'dir' and 'A256GCM'
  */
-async function encryptJWT(payload: Record<string, any>, encryptionKey: Buffer): Promise<string> {
+async function encryptJWT(
+  payload: Record<string, any>,
+  encryptionKey: Buffer
+): Promise<string> {
   const header = {
     alg: 'dir',
-    enc: 'A256GCM'
+    enc: 'A256GCM',
   };
   const iv = crypto.randomBytes(12); // 96-bit nonce for GCM
 
@@ -72,7 +78,7 @@ async function encryptJWT(payload: Record<string, any>, encryptionKey: Buffer): 
     '', // Encrypted Key (empty for 'dir')
     base64UrlEncode(iv), // IV
     base64UrlEncode(ciphertext), // Ciphertext
-    base64UrlEncode(authTag) // Authentication Tag
+    base64UrlEncode(authTag), // Authentication Tag
   ].join('.');
 
   return jwe;
@@ -81,13 +87,22 @@ async function encryptJWT(payload: Record<string, any>, encryptionKey: Buffer): 
 /**
  * Decrypt a JWE string into a JSON payload using 'dir' and 'A256GCM'
  */
-async function decryptJWT(jwe: string, encryptionKey: Buffer): Promise<Record<string, any>> {
+async function decryptJWT(
+  jwe: string,
+  encryptionKey: Buffer
+): Promise<Record<string, any>> {
   const parts = jwe.split('.');
   if (parts.length !== 5) {
     throw new Error('Invalid JWE format');
   }
 
-  const [encodedHeader, encryptedKey, encodedIV, encodedCiphertext, encodedAuthTag] = parts;
+  const [
+    encodedHeader,
+    encryptedKey,
+    encodedIV,
+    encodedCiphertext,
+    encodedAuthTag,
+  ] = parts;
 
   if (encryptedKey !== '') {
     throw new Error('Encrypted Key must be empty for "dir" algorithm');
@@ -119,11 +134,20 @@ async function decryptJWT(jwe: string, encryptionKey: Buffer): Promise<Record<st
 /**
  * HKDF key derivation using SHA-256
  */
-async function getDerivedEncryptionKey(keyMaterial: string | Buffer, salt: string): Promise<Buffer> {
+async function getDerivedEncryptionKey(
+  keyMaterial: string | Buffer,
+  salt: string
+): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    const ikm = typeof keyMaterial === 'string' ? Buffer.from(keyMaterial, 'utf8') : keyMaterial;
+    const ikm =
+      typeof keyMaterial === 'string'
+        ? Buffer.from(keyMaterial, 'utf8')
+        : keyMaterial;
     const saltBuffer = Buffer.from(salt, 'utf8');
-    const info = Buffer.from(`NextAuth.js Generated Encryption Key${salt ? ` (${salt})` : ''}`, 'utf8');
+    const info = Buffer.from(
+      `NextAuth.js Generated Encryption Key${salt ? ` (${salt})` : ''}`,
+      'utf8'
+    );
 
     crypto.hkdf('sha256', ikm, saltBuffer, info, 32, (err, derivedKey) => {
       if (err || !derivedKey) {
@@ -155,7 +179,7 @@ export async function encode(params: JWTEncodeParams): Promise<string> {
     ...token,
     iat: now(),
     exp: now() + maxAge,
-    jti: generateUUID()
+    jti: generateUUID(),
   };
   return await encryptJWT(payload, encryptionSecret);
 }
@@ -172,7 +196,9 @@ interface JWTDecodeParams {
 /**
  * Decode a JWE string into a JWT payload
  */
-export async function decode(params: JWTDecodeParams): Promise<Record<string, any> | null> {
+export async function decode(
+  params: JWTDecodeParams
+): Promise<Record<string, any> | null> {
   const { token, secret, salt = '' } = params;
   if (!token) return null;
   try {
@@ -210,13 +236,15 @@ const defaultLogger: LoggerInstance = {
 /**
  * Request Types
  */
-type IncomingRequest = {
-  cookies?: Record<string, string>;
-  headers?: IncomingHttpHeaders;
-} | {
-  headers: IncomingHttpHeaders;
-  cookies?: string;
-};
+type IncomingRequest =
+  | {
+      cookies?: Record<string, string>;
+      headers?: IncomingHttpHeaders;
+    }
+  | {
+      headers: IncomingHttpHeaders;
+      cookies?: string;
+    };
 
 /**
  * GetToken Parameters
@@ -246,7 +274,7 @@ interface GetTokenParams<R extends boolean = false> {
    * Defaults to the `JWT_SALT` environment variable.
    */
   salt?: string;
-  decode?: JWTOptions["decode"];
+  decode?: JWTOptions['decode'];
   logger?: LoggerInstance;
 }
 
@@ -258,16 +286,27 @@ class SessionStore {
   secure: boolean;
   value: string | null;
 
-  constructor(options: { name: string; options: { secure: boolean } }, request: IncomingRequest, logger: LoggerInstance) {
+  constructor(
+    options: { name: string; options: { secure: boolean } },
+    request: IncomingRequest,
+    logger: LoggerInstance
+  ) {
     this.name = options.name;
     this.secure = options.options.secure;
     this.value = this.parseCookie(request.cookies, request.headers);
     logger.info(`SessionStore initialized with cookie name: ${this.name}`);
   }
 
-  private parseCookie(cookies: unknown, headers: IncomingHttpHeaders = {}): string | null {
+  private parseCookie(
+    cookies: unknown,
+    headers: IncomingHttpHeaders = {}
+  ): string | null {
     // If cookies are provided as an object
-    if (typeof cookies === 'object' && cookies !== null && !Array.isArray(cookies)) {
+    if (
+      typeof cookies === 'object' &&
+      cookies !== null &&
+      !Array.isArray(cookies)
+    ) {
       const cookieObj = cookies as Record<string, string>;
       return cookieObj[this.name] || null;
     }
@@ -275,7 +314,7 @@ class SessionStore {
     // If cookies are provided as a string
     if (typeof cookies === 'string') {
       const parsedCookies: Record<string, string> = {};
-      cookies.split(';').forEach(cookie => {
+      cookies.split(';').forEach((cookie) => {
         const [key, ...val] = cookie.trim().split('=');
         parsedCookies[key] = val.join('=');
       });
@@ -285,7 +324,7 @@ class SessionStore {
     // Fallback: Try to parse from headers
     if (headers && headers.cookie && typeof headers.cookie === 'string') {
       const parsedCookies: Record<string, string> = {};
-      headers.cookie.split(';').forEach(cookie => {
+      headers.cookie.split(';').forEach((cookie) => {
         const [key, ...val] = cookie.trim().split('=');
         parsedCookies[key] = decodeURIComponent(val.join('='));
       });
@@ -304,13 +343,17 @@ export async function getToken<R extends boolean = false>(
 ): Promise<R extends true ? string : Record<string, any> | null> {
   const {
     req,
-    secureCookie = (process.env.NEXTAUTH_URL?.startsWith('https://') ?? false) || !!process.env.VERCEL,
-    cookieName = secureCookie ? '__Secure-next-auth.session-token' : 'next-auth.session-token',
+    secureCookie = (process.env.NEXTAUTH_URL?.startsWith('https://') ??
+      false) ||
+      !!process.env.VERCEL,
+    cookieName = secureCookie
+      ? '__Secure-next-auth.session-token'
+      : 'next-auth.session-token',
     raw = false,
     decode: _decode = decode,
     logger = defaultLogger,
     secret = jwtSecret,
-    salt = process.env.JWT_SALT || ''
+    salt = process.env.JWT_SALT || '',
   } = params;
 
   if (!req) throw new Error('Must pass `req` to JWT getToken()');
@@ -325,7 +368,11 @@ export async function getToken<R extends boolean = false>(
 
   // Check Authorization header for Bearer token
   const authorizationHeader = req.headers && req.headers['authorization'];
-  if (!token && typeof authorizationHeader === 'string' && authorizationHeader.startsWith('Bearer ')) {
+  if (
+    !token &&
+    typeof authorizationHeader === 'string' &&
+    authorizationHeader.startsWith('Bearer ')
+  ) {
     const urlEncodedToken = authorizationHeader.split(' ')[1];
     token = decodeURIComponent(urlEncodedToken);
     logger.info('Token found in Authorization header');
@@ -350,4 +397,3 @@ export async function getToken<R extends boolean = false>(
     return null as R extends true ? string : Record<string, any> | null;
   }
 }
-

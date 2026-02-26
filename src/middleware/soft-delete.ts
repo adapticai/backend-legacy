@@ -87,7 +87,10 @@ function isSoftDeleteModel(modelName: string): boolean {
 
 /** Minimal Prisma delegate interface for soft-delete operations */
 interface PrismaModelDelegate {
-  update: (args: { where: { id: string }; data: { deletedAt: Date } }) => Promise<unknown>;
+  update: (args: {
+    where: { id: string };
+    data: { deletedAt: Date };
+  }) => Promise<unknown>;
 }
 
 /**
@@ -110,7 +113,10 @@ async function softDeleteRecord(
   id: string,
   modelName: string
 ): Promise<unknown> {
-  logger.info('Soft delete: Setting deletedAt on record', { model: modelName, id });
+  logger.info('Soft delete: Setting deletedAt on record', {
+    model: modelName,
+    id,
+  });
   return delegate.update({
     where: { id },
     data: { deletedAt: new Date() },
@@ -119,7 +125,10 @@ async function softDeleteRecord(
 
 /** Minimal Prisma delegate interface for restore operations */
 interface PrismaRestoreDelegate {
-  update: (args: { where: { id: string }; data: { deletedAt: null } }) => Promise<unknown>;
+  update: (args: {
+    where: { id: string };
+    data: { deletedAt: null };
+  }) => Promise<unknown>;
 }
 
 /**
@@ -141,7 +150,10 @@ async function restoreRecord(
   id: string,
   modelName: string
 ): Promise<unknown> {
-  logger.info('Soft delete: Restoring record (clearing deletedAt)', { model: modelName, id });
+  logger.info('Soft delete: Restoring record (clearing deletedAt)', {
+    model: modelName,
+    id,
+  });
   return delegate.update({
     where: { id },
     data: { deletedAt: null },
@@ -176,7 +188,9 @@ const TABLE_NAME_MAP: Record<string, string> = {
  * ```
  */
 async function hardDelete(
-  prisma: { $executeRawUnsafe: (query: string, ...values: unknown[]) => Promise<number> },
+  prisma: {
+    $executeRawUnsafe: (query: string, ...values: unknown[]) => Promise<number>;
+  },
   model: string,
   id: string
 ): Promise<number> {

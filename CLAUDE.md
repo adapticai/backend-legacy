@@ -3,6 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build Commands
+
 - Build: `npm run build`
 - Development: `npm run dev`
 - Clean: `npm run clean`
@@ -14,6 +15,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Test: Run individual test with `npx jest src/tests/[test-file].test.ts`
 
 ## Code Style Guidelines
+
 - TypeScript with strict typing enabled
 - ES2018 target with 2-space indentation, 80 char line width
 - Single quotes for strings, semicolons required

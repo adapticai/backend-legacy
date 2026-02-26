@@ -35,7 +35,9 @@ async function migrateOpenaiModelEnum() {
       WHERE "openaiModel" IN ('GPT_4O', 'GPT_4O_MINI', 'O1_PREVIEW', 'O1_MINI', 'O1', 'O3_MINI')
     `;
 
-    logger.info(`Updated ${result} users to NULL (will be set to GPT_5_MINI after schema migration)`);
+    logger.info(
+      `Updated ${result} users to NULL (will be set to GPT_5_MINI after schema migration)`
+    );
     logger.info('Migration completed successfully!');
   } catch (error) {
     logger.error('Migration failed', { error: String(error) });

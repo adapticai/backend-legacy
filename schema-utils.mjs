@@ -18,10 +18,12 @@ export function findChangedModels(schema, prevSchema) {
   const prevSchemaModels = parseModels(prevSchema);
   const changedModels = new Set();
 
-  const prevSchemaMap = new Map(prevSchemaModels.map(model => [model.name, model.content]));
+  const prevSchemaMap = new Map(
+    prevSchemaModels.map((model) => [model.name, model.content])
+  );
 
   // Compare models
-  schemaModels.forEach(model => {
+  schemaModels.forEach((model) => {
     const prevModelContent = prevSchemaMap.get(model.name);
 
     if (!prevModelContent || prevModelContent !== model.content) {

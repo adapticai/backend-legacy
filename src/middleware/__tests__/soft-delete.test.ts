@@ -93,7 +93,9 @@ describe('Soft Delete Utilities', () => {
 
   describe('softDeleteRecord', () => {
     it('should call update with deletedAt set to current date', async () => {
-      const mockUpdate = vi.fn().mockResolvedValue({ id: 'user-123', deletedAt: new Date() });
+      const mockUpdate = vi
+        .fn()
+        .mockResolvedValue({ id: 'user-123', deletedAt: new Date() });
       const mockDelegate = { update: mockUpdate };
 
       await softDeleteRecord(mockDelegate, 'user-123', 'User');
@@ -116,7 +118,9 @@ describe('Soft Delete Utilities', () => {
 
   describe('restoreRecord', () => {
     it('should call update with deletedAt set to null', async () => {
-      const mockUpdate = vi.fn().mockResolvedValue({ id: 'user-123', deletedAt: null });
+      const mockUpdate = vi
+        .fn()
+        .mockResolvedValue({ id: 'user-123', deletedAt: null });
       const mockDelegate = { update: mockUpdate };
 
       await restoreRecord(mockDelegate, 'user-123', 'User');
@@ -176,9 +180,9 @@ describe('Soft Delete Utilities', () => {
     it('should throw an error for unsupported models', async () => {
       const mockPrisma = { $executeRawUnsafe: vi.fn() };
 
-      await expect(hardDelete(mockPrisma, 'Alert', 'alert-123')).rejects.toThrow(
-        'Model "Alert" does not support hard delete'
-      );
+      await expect(
+        hardDelete(mockPrisma, 'Alert', 'alert-123')
+      ).rejects.toThrow('Model "Alert" does not support hard delete');
       expect(mockPrisma.$executeRawUnsafe).not.toHaveBeenCalled();
     });
 

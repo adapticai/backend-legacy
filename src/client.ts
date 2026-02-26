@@ -8,9 +8,9 @@ import type {
   InMemoryCache as InMemoryCacheType,
   NormalizedCacheObject,
   DefaultOptions,
-} from "@apollo/client";
+} from '@apollo/client';
 
-import { HttpLink as HttpLinkType } from "@apollo/client/link/http";
+import { HttpLink as HttpLinkType } from '@apollo/client/link/http';
 
 export type {
   ApolloClientType,
@@ -21,14 +21,14 @@ export type {
 
 // === Define an interface for the expected runtime exports ===
 export interface ApolloModules {
-  ApolloClient: typeof import("@apollo/client").ApolloClient;
-  InMemoryCache: typeof import("@apollo/client/cache/inmemory/inMemoryCache").InMemoryCache;
-  HttpLink: typeof import("@apollo/client/link/http").HttpLink;
-  gql: typeof import("@apollo/client").gql;
-  ApolloError: typeof import("@apollo/client").ApolloError;
-  split: typeof import("@apollo/client").split;
-  setContext: typeof import("@apollo/client/link/context").setContext;
-  onError: typeof import("@apollo/client/link/error").onError;
+  ApolloClient: typeof import('@apollo/client').ApolloClient;
+  InMemoryCache: typeof import('@apollo/client/cache/inmemory/inMemoryCache').InMemoryCache;
+  HttpLink: typeof import('@apollo/client/link/http').HttpLink;
+  gql: typeof import('@apollo/client').gql;
+  ApolloError: typeof import('@apollo/client').ApolloError;
+  split: typeof import('@apollo/client').split;
+  setContext: typeof import('@apollo/client/link/context').setContext;
+  onError: typeof import('@apollo/client/link/error').onError;
 }
 
 // === Connection Pool Configuration ===
@@ -40,10 +40,10 @@ interface ConnectionPoolConfig {
 }
 
 const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
-  maxConcurrentOperations: 100,  // Maximum concurrent operations to the database
-  retryAttempts: 3,            // Number of retry attempts for failed operations
-  retryDelay: 1000,             // Base delay in ms between retries (will use exponential backoff)
-  connectionTimeout: 10000,    // Connection timeout in ms
+  maxConcurrentOperations: 100, // Maximum concurrent operations to the database
+  retryAttempts: 3, // Number of retry attempts for failed operations
+  retryDelay: 1000, // Base delay in ms between retries (will use exponential backoff)
+  connectionTimeout: 10000, // Connection timeout in ms
 };
 
 // === Token Provider Type ===
@@ -65,12 +65,12 @@ let customTokenProvider: TokenProvider | undefined;
  * Dynamically loads the correct Apollo modules based on the runtime environment.
  */
 async function loadApolloModules(): Promise<ApolloModules> {
-  if (typeof window === "undefined" || process.env.AWS_EXECUTION_ENV) {
+  if (typeof window === 'undefined' || process.env.AWS_EXECUTION_ENV) {
     // Server-side (or Lambda): load the CommonJS‑based implementation.
-    return (await import("./apollo-client.server")) as ApolloModules;
+    return (await import('./apollo-client.server')) as ApolloModules;
   } else {
     // Client-side: load the ESM‑based implementation.
-    return (await import("./apollo-client.client")) as ApolloModules;
+    return (await import('./apollo-client.client')) as ApolloModules;
   }
 }
 
@@ -78,9 +78,13 @@ async function loadApolloModules(): Promise<ApolloModules> {
  * Configures the connection pool for Apollo Client.
  * Call this function to customize connection pooling behavior.
  */
-export function configureConnectionPool(config: Partial<ConnectionPoolConfig>): void {
+export function configureConnectionPool(
+  config: Partial<ConnectionPoolConfig>
+): void {
   poolConfig = { ...poolConfig, ...config };
-  logger.info('Apollo client connection pool configured', { poolConfig: JSON.stringify(poolConfig) });
+  logger.info('Apollo client connection pool configured', {
+    poolConfig: JSON.stringify(poolConfig),
+  });
 }
 
 /**
@@ -100,7 +104,9 @@ export function setTokenProvider(provider: TokenProvider): void {
   customTokenProvider = provider;
   // Reset the client so it picks up the new token provider
   if (apolloClient) {
-    logger.info('Token provider updated, Apollo client will be recreated on next request');
+    logger.info(
+      'Token provider updated, Apollo client will be recreated on next request'
+    );
     apolloClient = undefined;
   }
 }
@@ -115,7 +121,7 @@ function isValidJwtFormat(token: string): boolean {
   if (parts.length !== 3) return false;
   // Check that each part is base64url encoded (alphanumeric, -, _, no padding needed)
   const base64UrlRegex = /^[A-Za-z0-9_-]+$/;
-  return parts.every(part => base64UrlRegex.test(part));
+  return parts.every((part) => base64UrlRegex.test(part));
 }
 
 /**
@@ -130,13 +136,18 @@ async function getAuthToken(): Promise<string> {
     try {
       token = await Promise.resolve(customTokenProvider());
     } catch (error) {
-      logger.error('[Apollo Client] Error getting token from custom provider', { error: String(error) });
+      logger.error('[Apollo Client] Error getting token from custom provider', {
+        error: String(error),
+      });
     }
   }
 
   // Fall back to environment variables
   if (!token) {
-    token = process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN || process.env.SERVER_AUTH_TOKEN || '';
+    token =
+      process.env.NEXT_PUBLIC_SERVER_AUTH_TOKEN ||
+      process.env.SERVER_AUTH_TOKEN ||
+      '';
   }
 
   // Validate the token format
@@ -149,8 +160,8 @@ async function getAuthToken(): Promise<string> {
 
     logger.warn(
       '[Apollo Client] Token does not appear to be a valid JWT format. ' +
-      'Expected format: header.payload.signature (three base64url-encoded parts). ' +
-      'Token will not be sent. Please check your NEXT_PUBLIC_SERVER_AUTH_TOKEN or SERVER_AUTH_TOKEN environment variable.'
+        'Expected format: header.payload.signature (three base64url-encoded parts). ' +
+        'Token will not be sent. Please check your NEXT_PUBLIC_SERVER_AUTH_TOKEN or SERVER_AUTH_TOKEN environment variable.'
     );
     return '';
   }
@@ -163,7 +174,10 @@ async function getAuthToken(): Promise<string> {
  */
 function processQueue(): void {
   // Process queue until we reach max concurrent operations or queue is empty
-  while (pendingOperations < poolConfig.maxConcurrentOperations && operationQueue.length > 0) {
+  while (
+    pendingOperations < poolConfig.maxConcurrentOperations &&
+    operationQueue.length > 0
+  ) {
     const operation = operationQueue.shift();
     if (operation) {
       pendingOperations++;
@@ -178,19 +192,26 @@ function processQueue(): void {
 /**
  * Adds an operation to the queue with retry capability.
  */
-async function enqueueOperation<T>(operation: () => Promise<T>, attempt = 0): Promise<T> {
+async function enqueueOperation<T>(
+  operation: () => Promise<T>,
+  attempt = 0
+): Promise<T> {
   return new Promise((resolve, reject) => {
     const executeWithRetry = async (): Promise<void> => {
       try {
         const result = await operation();
         resolve(result);
       } catch (error) {
-        if (attempt < poolConfig.retryAttempts &&
-          (error instanceof Error && error.message.includes("Accelerate") ||
-            error instanceof Error && error.message.includes("code: 1016"))) {
+        if (
+          attempt < poolConfig.retryAttempts &&
+          ((error instanceof Error && error.message.includes('Accelerate')) ||
+            (error instanceof Error && error.message.includes('code: 1016')))
+        ) {
           // Only retry specific database connection errors
           const delay = poolConfig.retryDelay * Math.pow(2, attempt); // Exponential backoff
-          logger.warn(`Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`);
+          logger.warn(
+            `Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`
+          );
           setTimeout(() => {
             enqueueOperation(operation, attempt + 1)
               .then(resolve)
@@ -212,7 +233,9 @@ async function enqueueOperation<T>(operation: () => Promise<T>, attempt = 0): Pr
  * **IMPORTANT:** Because module loading is asynchronous,
  * make sure to await this function before using the client.
  */
-export async function getApolloClient(): Promise<ApolloClientType<NormalizedCacheObject>> {
+export async function getApolloClient(): Promise<
+  ApolloClientType<NormalizedCacheObject>
+> {
   if (apolloClient) {
     return apolloClient;
   }
@@ -222,12 +245,17 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
       apolloModules = await loadApolloModules();
     }
 
-    const { ApolloClient, InMemoryCache, HttpLink, setContext, onError } = apolloModules;
+    const { ApolloClient, InMemoryCache, HttpLink, setContext, onError } =
+      apolloModules;
 
     // Determine the GraphQL endpoint.
-    const isProduction = process.env.NODE_ENV === "production";
-    const httpUrl = process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL || process.env.BACKEND_HTTPS_URL ||
-      (isProduction ? "https://api.adaptic.ai/graphql" : "http://localhost:4000/graphql");
+    const isProduction = process.env.NODE_ENV === 'production';
+    const httpUrl =
+      process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL ||
+      process.env.BACKEND_HTTPS_URL ||
+      (isProduction
+        ? 'https://api.adaptic.ai/graphql'
+        : 'http://localhost:4000/graphql');
 
     // Create the HTTP link with appropriate fetch policies and timeouts
     const httpLinkInstance = new HttpLink({
@@ -235,7 +263,7 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
       fetch,
       fetchOptions: {
         timeout: poolConfig.connectionTimeout,
-      }
+      },
     });
 
     // Create the auth link with async token retrieval and validation.
@@ -246,8 +274,8 @@ export async function getApolloClient(): Promise<ApolloClientType<NormalizedCach
       return {
         headers: {
           ...headers,
-          authorization: token ? `Bearer ${token}` : "",
-          connection: "keep-alive",
+          authorization: token ? `Bearer ${token}` : '',
+          connection: 'keep-alive',
         },
       };
     });

@@ -1,7 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const generatedDir = path.join(__dirname, 'src', 'generated', 'typegraphql-prisma');
+const generatedDir = path.join(
+  __dirname,
+  'src',
+  'generated',
+  'typegraphql-prisma'
+);
 const modelsDir = path.join(generatedDir, 'models');
 const outputsDir = path.join(generatedDir, 'resolvers', 'outputs');
 

@@ -34,16 +34,24 @@ function formatLogEntry(
 function createLogger(service: string): Logger {
   return {
     info: (message: string, meta?: Record<string, unknown>): void => {
-      process.stdout.write(formatLogEntry('info', service, message, meta) + '\n');
+      process.stdout.write(
+        formatLogEntry('info', service, message, meta) + '\n'
+      );
     },
     warn: (message: string, meta?: Record<string, unknown>): void => {
-      process.stdout.write(formatLogEntry('warn', service, message, meta) + '\n');
+      process.stdout.write(
+        formatLogEntry('warn', service, message, meta) + '\n'
+      );
     },
     error: (message: string, meta?: Record<string, unknown>): void => {
-      process.stderr.write(formatLogEntry('error', service, message, meta) + '\n');
+      process.stderr.write(
+        formatLogEntry('error', service, message, meta) + '\n'
+      );
     },
     debug: (message: string, meta?: Record<string, unknown>): void => {
-      process.stdout.write(formatLogEntry('debug', service, message, meta) + '\n');
+      process.stdout.write(
+        formatLogEntry('debug', service, message, meta) + '\n'
+      );
     },
   };
 }

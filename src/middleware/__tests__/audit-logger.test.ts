@@ -93,7 +93,9 @@ describe('extractUserId', () => {
   });
 
   it('should prefer sub over id', () => {
-    expect(extractUserId({ sub: 'sub-value', id: 'id-value' })).toBe('sub-value');
+    expect(extractUserId({ sub: 'sub-value', id: 'id-value' })).toBe(
+      'sub-value'
+    );
   });
 
   it('should return the string directly for string users', () => {

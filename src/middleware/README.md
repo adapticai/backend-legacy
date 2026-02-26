@@ -21,7 +21,10 @@ Core validation functions for common data types and patterns.
 **Example Usage:**
 
 ```typescript
-import { validatePercentage, validatePositiveNumber } from './middleware/input-validator';
+import {
+  validatePercentage,
+  validatePositiveNumber,
+} from './middleware/input-validator';
 
 // Single field validation
 try {
@@ -51,14 +54,14 @@ Apollo Server plugin that automatically validates mutation inputs based on field
 
 The plugin applies validation rules based on field name patterns:
 
-| Pattern | Validation | Examples |
-|---------|-----------|----------|
-| `*Pct` | 0-100 percentage | `allocationPct`, `tradePct` |
-| `*Percent`, `*Percentage` | 0-100 percentage | `tradePercent`, `profitPercentage` |
-| `quantity` | Positive number | `quantity` |
-| `*Threshold` | Positive number (allows 0) | `volumeThreshold`, `priceThreshold` |
-| `count` | Positive number | `count` |
-| `name`, `title`, `description`, `symbol`, `type`, `status` | Non-empty string | `name`, `title` |
+| Pattern                                                    | Validation                 | Examples                            |
+| ---------------------------------------------------------- | -------------------------- | ----------------------------------- |
+| `*Pct`                                                     | 0-100 percentage           | `allocationPct`, `tradePct`         |
+| `*Percent`, `*Percentage`                                  | 0-100 percentage           | `tradePercent`, `profitPercentage`  |
+| `quantity`                                                 | Positive number            | `quantity`                          |
+| `*Threshold`                                               | Positive number (allows 0) | `volumeThreshold`, `priceThreshold` |
+| `count`                                                    | Positive number            | `count`                             |
+| `name`, `title`, `description`, `symbol`, `type`, `status` | Non-empty string           | `name`, `title`                     |
 
 **Integration:**
 

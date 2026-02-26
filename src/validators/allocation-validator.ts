@@ -46,14 +46,14 @@ export function validateAllocationPercentages(
     { name: 'futures', value: futures },
     { name: 'etfs', value: etfs },
     { name: 'forex', value: forex },
-    { name: 'crypto', value: crypto }
+    { name: 'crypto', value: crypto },
   ];
 
   for (const field of fields) {
     if (typeof field.value !== 'number' || isNaN(field.value)) {
       errors.push({
         field: field.name,
-        message: `${field.name} must be a valid number`
+        message: `${field.name} must be a valid number`,
       });
     }
   }
@@ -68,7 +68,7 @@ export function validateAllocationPercentages(
     if (field.value < 0) {
       errors.push({
         field: field.name,
-        message: `${field.name} cannot be negative`
+        message: `${field.name} cannot be negative`,
       });
     }
   }
@@ -83,15 +83,16 @@ export function validateAllocationPercentages(
   if (sum < MIN_SUM || sum > MAX_SUM) {
     errors.push({
       field: 'allocation',
-      message: `Total allocation must sum to 100% (current: ${sum.toFixed(2)}%). ` +
-               `Please adjust: equities (${equities}%) + optionsContracts (${optionsContracts}%) + ` +
-               `futures (${futures}%) + etfs (${etfs}%) + forex (${forex}%) + crypto (${crypto}%)`
+      message:
+        `Total allocation must sum to 100% (current: ${sum.toFixed(2)}%). ` +
+        `Please adjust: equities (${equities}%) + optionsContracts (${optionsContracts}%) + ` +
+        `futures (${futures}%) + etfs (${etfs}%) + forex (${forex}%) + crypto (${crypto}%)`,
     });
   }
 
   return {
     isValid: errors.length === 0,
-    errors
+    errors,
   };
 }
 
@@ -105,7 +106,7 @@ export function assertValidAllocation(values: AllocationValues): void {
 
   if (!result.isValid) {
     const errorMessages = result.errors
-      .map(error => `${error.field}: ${error.message}`)
+      .map((error) => `${error.field}: ${error.message}`)
       .join('; ');
 
     throw new Error(`Allocation validation failed: ${errorMessages}`);

@@ -30,14 +30,17 @@ const client = await getApolloClient();
 You can customize the connection pool settings to match your specific needs:
 
 ```typescript
-import { configureConnectionPool, getApolloClient } from '@adaptic/backend-legacy';
+import {
+  configureConnectionPool,
+  getApolloClient,
+} from '@adaptic/backend-legacy';
 
 // Optional: Configure connection pool before getting the client
 configureConnectionPool({
-  maxConcurrentOperations: 100,   // Limit concurrent database operations
-  retryAttempts: 5,             // Number of automatic retry attempts
-  retryDelay: 500,              // Base delay between retries (ms)
-  connectionTimeout: 15000      // Connection timeout (ms)
+  maxConcurrentOperations: 100, // Limit concurrent database operations
+  retryAttempts: 5, // Number of automatic retry attempts
+  retryDelay: 500, // Base delay between retries (ms)
+  connectionTimeout: 15000, // Connection timeout (ms)
 });
 
 // Get the configured client
@@ -134,17 +137,17 @@ The @adaptic/backend-legacy package provides typed CRUD operations for all conte
 
 Every content model provides these 9 standardized CRUD operations:
 
-| Function | Purpose | Returns |
-|----------|---------|---------|
-| `create(props, client?)` | Create a single record | `ModelType` |
-| `createMany(props[], client?)` | Create multiple records | `{ count: number }` |
-| `update(props, client?)` | Update an existing record | `ModelType` |
-| `updateMany(props[], client?)` | Update multiple records | `{ count: number }` |
-| `upsert(props, client?)` | Create or update a record | `ModelType` |
-| `delete(props, client?)` | Delete a single record | `ModelType` |
-| `get(props, client?, whereInput?)` | Get a single record | `ModelType \| null` |
-| `getAll(client?)` | Get all records | `ModelType[] \| null` |
-| `findMany(props, client?, whereInput?)` | Find multiple records | `ModelType[] \| null` |
+| Function                                | Purpose                   | Returns               |
+| --------------------------------------- | ------------------------- | --------------------- |
+| `create(props, client?)`                | Create a single record    | `ModelType`           |
+| `createMany(props[], client?)`          | Create multiple records   | `{ count: number }`   |
+| `update(props, client?)`                | Update an existing record | `ModelType`           |
+| `updateMany(props[], client?)`          | Update multiple records   | `{ count: number }`   |
+| `upsert(props, client?)`                | Create or update a record | `ModelType`           |
+| `delete(props, client?)`                | Delete a single record    | `ModelType`           |
+| `get(props, client?, whereInput?)`      | Get a single record       | `ModelType \| null`   |
+| `getAll(client?)`                       | Get all records           | `ModelType[] \| null` |
+| `findMany(props, client?, whereInput?)` | Find multiple records     | `ModelType[] \| null` |
 
 ### Complete Model List
 
@@ -154,50 +157,50 @@ Access all 34 content models through the `adaptic` object:
 import adaptic from '@adaptic/backend-legacy';
 
 // Core Trading Models
-adaptic.user              // User management
-adaptic.alpacaAccount     // Trading accounts
-adaptic.allocation        // Asset allocation settings
-adaptic.asset             // Financial instruments
-adaptic.trade             // Executed trades
-adaptic.action            // Trade actions
-adaptic.alert             // System notifications
+adaptic.user; // User management
+adaptic.alpacaAccount; // Trading accounts
+adaptic.allocation; // Asset allocation settings
+adaptic.asset; // Financial instruments
+adaptic.trade; // Executed trades
+adaptic.action; // Trade actions
+adaptic.alert; // System notifications
 
 // Authentication & Sessions
-adaptic.session           // User sessions
-adaptic.account           // External auth accounts
-adaptic.authenticator     // MFA devices
-adaptic.verificationToken // Verification tokens
-adaptic.customer          // Customer entities
+adaptic.session; // User sessions
+adaptic.account; // External auth accounts
+adaptic.authenticator; // MFA devices
+adaptic.verificationToken; // Verification tokens
+adaptic.customer; // Customer entities
 
 // News & Market Data
-adaptic.newsArticle       // Financial news
-adaptic.newsArticleAssetSentiment // News sentiment
-adaptic.marketSentiment   // Market sentiment
-adaptic.economicEvent     // Economic events
+adaptic.newsArticle; // Financial news
+adaptic.newsArticleAssetSentiment; // News sentiment
+adaptic.marketSentiment; // Market sentiment
+adaptic.economicEvent; // Economic events
 
 // Institutional Data
-adaptic.institutionalHolding // SEC holdings
-adaptic.institutionalFlowSignal // Flow analysis
-adaptic.institutionalSentimentHistory // Historical sentiment
-adaptic.institutionalSentimentMetrics // Processing metrics
-adaptic.institutionalSentimentErrors // Error tracking
-adaptic.institutionalSentimentAlerts // Data quality alerts
+adaptic.institutionalHolding; // SEC holdings
+adaptic.institutionalFlowSignal; // Flow analysis
+adaptic.institutionalSentimentHistory; // Historical sentiment
+adaptic.institutionalSentimentMetrics; // Processing metrics
+adaptic.institutionalSentimentErrors; // Error tracking
+adaptic.institutionalSentimentAlerts; // Data quality alerts
 
 // Analytics & ML
-adaptic.analyticsSnapshot // Analytics metadata
-adaptic.analyticsConfiguration // Analytics config
-adaptic.mLTrainingData    // Training data
-adaptic.modelArtifact     // ML artifacts
-adaptic.modelVersion      // Model versions
-adaptic.modelVersionArtifact // Model-artifact links
-adaptic.aBTest            // A/B testing
-adaptic.featureImportanceAnalysis // Model interpretability
+adaptic.analyticsSnapshot; // Analytics metadata
+adaptic.analyticsConfiguration; // Analytics config
+adaptic.mLTrainingData; // Training data
+adaptic.modelArtifact; // ML artifacts
+adaptic.modelVersion; // Model versions
+adaptic.modelVersionArtifact; // Model-artifact links
+adaptic.aBTest; // A/B testing
+adaptic.featureImportanceAnalysis; // Model interpretability
 
 // System Management
-adaptic.configuration     // System config
-adaptic.systemAlert       // System alerts
-adaptic.connectionHealthSnapshot // Health monitoring
-adaptic.scheduledOptionOrder // Scheduled orders
+adaptic.configuration; // System config
+adaptic.systemAlert; // System alerts
+adaptic.connectionHealthSnapshot; // Health monitoring
+adaptic.scheduledOptionOrder; // Scheduled orders
 ```
 
 ### Importing Types
@@ -208,9 +211,9 @@ import { types } from '@adaptic/backend-legacy';
 
 // Use the imported types
 const user: types.User = {
-  name: "John Doe",
-  email: "john@example.com",
-  role: "USER"
+  name: 'John Doe',
+  email: 'john@example.com',
+  role: 'USER',
 };
 ```
 
@@ -226,9 +229,9 @@ import { getApolloClient } from '@adaptic/backend-legacy';
 const client = await getApolloClient();
 
 // Pass the shared client to all operations
-const user = await adaptic.user.get({ id: "1234" }, client);
-const asset = await adaptic.asset.get({ symbol: "AAPL" }, client);
-const trades = await adaptic.trade.findMany({ symbol: "AAPL" }, client);
+const user = await adaptic.user.get({ id: '1234' }, client);
+const asset = await adaptic.asset.get({ symbol: 'AAPL' }, client);
+const trades = await adaptic.trade.findMany({ symbol: 'AAPL' }, client);
 ```
 
 ## Content Models
@@ -236,6 +239,7 @@ const trades = await adaptic.trade.findMany({ symbol: "AAPL" }, client);
 The @adaptic/backend-legacy package provides access to 34 content models representing various aspects of financial trading, analytics, and system management:
 
 ### Core Trading Models
+
 - **User** - Trading platform users with roles and permissions
 - **AlpacaAccount** - Trading accounts with configuration and allocation settings
 - **Allocation** - Asset class allocation settings (stocks, crypto, options, ETFs)
@@ -245,6 +249,7 @@ The @adaptic/backend-legacy package provides access to 34 content models represe
 - **Alert** - System notifications and warnings
 
 ### Authentication & Sessions
+
 - **Session** - User authentication sessions
 - **Account** - External authentication accounts (OAuth providers)
 - **Authenticator** - Multi-factor authentication devices
@@ -252,12 +257,14 @@ The @adaptic/backend-legacy package provides access to 34 content models represe
 - **Customer** - Customer entities with subscription plans
 
 ### News & Market Data
+
 - **NewsArticle** - Financial news articles with sentiment analysis
 - **NewsArticleAssetSentiment** - Asset-specific sentiment from news
 - **MarketSentiment** - Overall market sentiment analysis
 - **EconomicEvent** - Economic events affecting markets
 
 ### Institutional Data
+
 - **InstitutionalHolding** - SEC EDGAR institutional holding data
 - **InstitutionalFlowSignal** - Institutional trading flow analysis
 - **InstitutionalSentimentHistory** - Historical institutional sentiment
@@ -266,6 +273,7 @@ The @adaptic/backend-legacy package provides access to 34 content models represe
 - **InstitutionalSentimentAlerts** - Data quality alerts
 
 ### Analytics & ML
+
 - **AnalyticsSnapshot** - Volatility models and analytics metadata
 - **AnalyticsConfiguration** - Analytics parameter configuration
 - **MLTrainingData** - Training data for model retraining
@@ -276,6 +284,7 @@ The @adaptic/backend-legacy package provides access to 34 content models represe
 - **FeatureImportanceAnalysis** - Model interpretability analysis
 
 ### System Management
+
 - **Configuration** - System configuration settings
 - **SystemAlert** - System alerts and notifications
 - **ConnectionHealthSnapshot** - Connection health monitoring
@@ -286,6 +295,7 @@ The @adaptic/backend-legacy package provides access to 34 content models represe
 The system includes 27 enums for type safety and consistency:
 
 ### Trading & Market Enums
+
 - **TradeSignal** - 35 signal types (GOLDEN_CROSS, RSI_OVERBOUGHT, MACD_CROSSOVER, etc.)
 - **TradeStrategy** - 12 trading strategies (TECHNICAL_ANALYSIS, MOMENTUM_STRATEGY, etc.)
 - **AssetType** - 20 asset types (STOCK, ETF, CRYPTOCURRENCY, OPTION, etc.)
@@ -296,6 +306,7 @@ The system includes 27 enums for type safety and consistency:
 - **ScheduledOptionOrderStatus** - 3 order statuses (PENDING, EXECUTED, CANCELED)
 
 ### Market Analysis Enums
+
 - **MarketSentimentLevel** - 7 sentiment levels (VERY_BEARISH to VERY_BULLISH)
 - **TradeExitReason** - 9 exit reasons (STOP_LOSS, TAKE_PROFIT, TRAILING_STOP, etc.)
 - **TradeOutcomeQuality** - 5 quality levels (EXCELLENT, GOOD, FAIR, POOR, VERY_POOR)
@@ -306,6 +317,7 @@ The system includes 27 enums for type safety and consistency:
 - **MarketCondition** - 8 market conditions (NORMAL, VOLATILE, PRE_MARKET, etc.)
 
 ### System & Configuration Enums
+
 - **UserRole** - 3 user roles (OWNER, ADMIN, USER)
 - **SubscriptionPlan** - 3 plans (FREE, PRO, INSTITUTION)
 - **AlertType** - 4 alert types (SUCCESS, WARNING, ERROR, INFO)
@@ -316,6 +328,7 @@ The system includes 27 enums for type safety and consistency:
 - **ConfigType** - 5 configuration types (ANALYTICS, RISK_MANAGEMENT, TRADING, etc.)
 
 ### ML & Analytics Enums
+
 - **OpenaiModel** - 6 OpenAI models (GPT_4O, GPT_4O_MINI, O1, O1_MINI, etc.)
 - **ModelVersionStatus** - 5 model statuses (TRAINING, VALIDATION, DEPLOYED, etc.)
 - **DeploymentEnvironment** - 3 environments (DEVELOPMENT, STAGING, PRODUCTION)
@@ -343,6 +356,7 @@ The system provides different creation methods based on your needs. You simply p
 Use when: You want to create a new record and you're sure it doesn't already exist.
 
 **Function Signature:**
+
 ```typescript
 async create(props: ModelType, globalClient?: ApolloClientType): Promise<ModelType>
 ```
@@ -354,29 +368,38 @@ import { getApolloClient } from '@adaptic/backend-legacy';
 const client = await getApolloClient();
 
 // Create a new user
-const newUser = await adaptic.user.create({
-  name: "John Doe",
-  email: "john@example.com",
-  role: "USER"
-}, client);
+const newUser = await adaptic.user.create(
+  {
+    name: 'John Doe',
+    email: 'john@example.com',
+    role: 'USER',
+  },
+  client
+);
 
 // Create an asset with a relation (using an ID reference)
-const newAsset = await adaptic.asset.create({
-  symbol: "AAPL",
-  name: "Apple Inc.",
-  type: "STOCK"
-}, client);
+const newAsset = await adaptic.asset.create(
+  {
+    symbol: 'AAPL',
+    name: 'Apple Inc.',
+    type: 'STOCK',
+  },
+  client
+);
 
 // Create a trade with nested action creation
-const newTrade = await adaptic.trade.create({
-  symbol: "AAPL",
-  signal: "GOLDEN_CROSS",
-  strategy: "TECHNICAL_ANALYSIS",
-  analysis: "Golden cross pattern detected...",
-  summary: "Long position on AAPL",
-  confidence: 0.85,
-  alpacaAccountId: "account123"
-}, client);
+const newTrade = await adaptic.trade.create(
+  {
+    symbol: 'AAPL',
+    signal: 'GOLDEN_CROSS',
+    strategy: 'TECHNICAL_ANALYSIS',
+    analysis: 'Golden cross pattern detected...',
+    summary: 'Long position on AAPL',
+    confidence: 0.85,
+    alpacaAccountId: 'account123',
+  },
+  client
+);
 ```
 
 #### `createMany`: Create Multiple Records in a Batch
@@ -384,17 +407,21 @@ const newTrade = await adaptic.trade.create({
 Use when: You need to create multiple records of the same type efficiently.
 
 **Function Signature:**
+
 ```typescript
 async createMany(props: ModelType[], globalClient?: ApolloClientType): Promise<{ count: number } | null>
 ```
 
 ```typescript
 // Create multiple assets in a single operation
-const result = await adaptic.asset.createMany([
-  { symbol: "AAPL", name: "Apple Inc.", type: "STOCK" },
-  { symbol: "MSFT", name: "Microsoft Corporation", type: "STOCK" },
-  { symbol: "GOOGL", name: "Alphabet Inc.", type: "STOCK" }
-], client);
+const result = await adaptic.asset.createMany(
+  [
+    { symbol: 'AAPL', name: 'Apple Inc.', type: 'STOCK' },
+    { symbol: 'MSFT', name: 'Microsoft Corporation', type: 'STOCK' },
+    { symbol: 'GOOGL', name: 'Alphabet Inc.', type: 'STOCK' },
+  ],
+  client
+);
 
 console.log(`Created ${result.count} assets`);
 ```
@@ -408,6 +435,7 @@ Choose the appropriate update method based on your scenario. For all update meth
 Use when: You know the record exists and have its unique identifier.
 
 **Function Signature:**
+
 ```typescript
 async update(props: ModelType, globalClient?: ApolloClientType): Promise<ModelType>
 ```
@@ -415,18 +443,24 @@ async update(props: ModelType, globalClient?: ApolloClientType): Promise<ModelTy
 ```typescript
 // Update a user by ID - just pass a user object with the ID and fields to update
 // The library handles converting this to the proper GraphQL where/data input format
-const updatedUser = await adaptic.user.update({
-  id: "user123",
-  name: "John Smith", // Updated field
-  bio: "Software engineer" // Add new field value
-}, client);
+const updatedUser = await adaptic.user.update(
+  {
+    id: 'user123',
+    name: 'John Smith', // Updated field
+    bio: 'Software engineer', // Add new field value
+  },
+  client
+);
 
 // Update a trade by ID
-const updatedTrade = await adaptic.trade.update({
-  id: "trade456",
-  summary: "Updated trade summary",
-  status: "COMPLETED"
-}, client);
+const updatedTrade = await adaptic.trade.update(
+  {
+    id: 'trade456',
+    summary: 'Updated trade summary',
+    status: 'COMPLETED',
+  },
+  client
+);
 ```
 
 #### `upsert`: Create or Update a Record
@@ -434,6 +468,7 @@ const updatedTrade = await adaptic.trade.update({
 Use when: You're not sure if the record exists and want to either create it or update it if it does.
 
 **Function Signature:**
+
 ```typescript
 async upsert(props: ModelType, globalClient?: ApolloClientType): Promise<ModelType>
 ```
@@ -441,21 +476,28 @@ async upsert(props: ModelType, globalClient?: ApolloClientType): Promise<ModelTy
 ```typescript
 // Create a user if not exists, or update if exists
 // The library automatically extracts the unique identifier and other fields
-const user = await adaptic.user.upsert({
-  email: "john@example.com", // Unique identifier to find the record
-  name: "John Doe",          // Data for create/update
-  jobTitle: "Developer"      // Data for create/update
-}, client);
+const user = await adaptic.user.upsert(
+  {
+    email: 'john@example.com', // Unique identifier to find the record
+    name: 'John Doe', // Data for create/update
+    jobTitle: 'Developer', // Data for create/update
+  },
+  client
+);
 
 // Upsert an asset by symbol
-const asset = await adaptic.asset.upsert({
-  symbol: "AAPL",           // Unique identifier
-  name: "Apple Inc.",       // Updated name if exists
-  type: "STOCK"             // Type will be set for new or updated record
-}, client);
+const asset = await adaptic.asset.upsert(
+  {
+    symbol: 'AAPL', // Unique identifier
+    name: 'Apple Inc.', // Updated name if exists
+    type: 'STOCK', // Type will be set for new or updated record
+  },
+  client
+);
 ```
 
 > **When to use update vs. upsert:**
+>
 > - Use `update` when you're certain the record exists and only want to modify it
 > - Use `upsert` when you want to create a record if it doesn't exist or update it if it does
 > - `upsert` is more forgiving but slightly less efficient than a direct `update` or `create`
@@ -465,17 +507,21 @@ const asset = await adaptic.asset.upsert({
 Use when: You need to apply the same update to multiple records that match certain criteria.
 
 **Function Signature:**
+
 ```typescript
 async updateMany(props: ModelType[], globalClient?: ApolloClientType): Promise<{ count: number } | null>
 ```
 
 ```typescript
 // Update status of multiple trades (each with unique ID)
-const result = await adaptic.trade.updateMany([
-  { id: "trade1", status: "COMPLETED" },
-  { id: "trade2", status: "COMPLETED" },
-  { id: "trade3", status: "CANCELED" }
-], client);
+const result = await adaptic.trade.updateMany(
+  [
+    { id: 'trade1', status: 'COMPLETED' },
+    { id: 'trade2', status: 'COMPLETED' },
+    { id: 'trade3', status: 'CANCELED' },
+  ],
+  client
+);
 
 console.log(`Updated ${result.count} trades`);
 ```
@@ -489,22 +535,26 @@ Different methods for retrieving data. For the basic operations (`get`, `getAll`
 Use when: You need to fetch a specific record using a unique field.
 
 **Function Signature:**
+
 ```typescript
 async get(props: ModelType, globalClient?: ApolloClientType, whereInput?: any): Promise<ModelType | null>
 ```
 
 ```typescript
 // Get a user by ID
-const user = await adaptic.user.get({ id: "user123" }, client);
+const user = await adaptic.user.get({ id: 'user123' }, client);
 
 // Get a user by email (unique field)
-const userByEmail = await adaptic.user.get({ email: "john@example.com" }, client);
+const userByEmail = await adaptic.user.get(
+  { email: 'john@example.com' },
+  client
+);
 
 // Get an asset by symbol (unique field)
-const asset = await adaptic.asset.get({ symbol: "AAPL" }, client);
+const asset = await adaptic.asset.get({ symbol: 'AAPL' }, client);
 
 // Using explicit whereInput parameter (third parameter)
-const trade = await adaptic.trade.get({}, client, { id: "trade-abc-123" });
+const trade = await adaptic.trade.get({}, client, { id: 'trade-abc-123' });
 ```
 
 #### `getAll`: Retrieve All Records of a Type
@@ -512,6 +562,7 @@ const trade = await adaptic.trade.get({}, client, { id: "trade-abc-123" });
 Use when: You need a complete list of records of a certain type.
 
 **Function Signature:**
+
 ```typescript
 async getAll(globalClient?: ApolloClientType): Promise<ModelType[] | null>
 ```
@@ -532,41 +583,39 @@ const allTrades = await adaptic.trade.getAll(client);
 Use when: You need to find records matching specific conditions.
 
 **Function Signature:**
+
 ```typescript
 async findMany(props: ModelType, globalClient?: ApolloClientType, whereInput?: any): Promise<ModelType[] | null>
 ```
 
 ```typescript
 // Find trades for a specific symbol (using props parameter)
-const appleTrades = await adaptic.trade.findMany({ symbol: "AAPL" }, client);
+const appleTrades = await adaptic.trade.findMany({ symbol: 'AAPL' }, client);
 
 // Find users with a specific role (using props parameter)
-const adminUsers = await adaptic.user.findMany({ role: "ADMIN" }, client);
+const adminUsers = await adaptic.user.findMany({ role: 'ADMIN' }, client);
 
 // Using explicit whereInput for complex filtering (third parameter)
 const recentTrades = await adaptic.trade.findMany({}, client, {
   createdAt: {
-    gte: new Date(Date.now() - 86400000) // Trades from last 24 hours
+    gte: new Date(Date.now() - 86400000), // Trades from last 24 hours
   },
-  status: "COMPLETED"
+  status: 'COMPLETED',
 });
 
 // Using array conditions and logical operators
 const specificAssets = await adaptic.asset.findMany({}, client, {
-  OR: [
-    { symbol: "AAPL" },
-    { symbol: "MSFT" }
-  ],
-  type: "STOCK"
+  OR: [{ symbol: 'AAPL' }, { symbol: 'MSFT' }],
+  type: 'STOCK',
 });
 
 // Find records with nested relation conditions
 const usersWithCompletedTrades = await adaptic.user.findMany({}, client, {
   alpacaAccounts: {
     some: {
-      realTime: true
-    }
-  }
+      realTime: true,
+    },
+  },
 });
 ```
 
@@ -584,7 +633,7 @@ The following examples show how to structure the `whereInput` object when using 
 ```typescript
 // Find assets with symbol="AAPL"
 const assets = await adaptic.asset.findMany({}, client, {
-  symbol: "AAPL"
+  symbol: 'AAPL',
 });
 ```
 
@@ -594,12 +643,13 @@ const assets = await adaptic.asset.findMany({}, client, {
 // Find trades with price >= 100
 const trades = await adaptic.trade.findMany({}, client, {
   price: {
-    gte: 100  // greater than or equal
-  }
+    gte: 100, // greater than or equal
+  },
 });
 ```
 
 Available comparison operators:
+
 - `equals`: Exact match
 - `not`: Not equal
 - `in`: Value in array
@@ -617,23 +667,17 @@ Available comparison operators:
 ```typescript
 // Find assets that are STOCK OR CRYPTO
 const assets = await adaptic.asset.findMany({}, client, {
-  OR: [
-    { type: "STOCK" },
-    { type: "CRYPTO" }
-  ]
+  OR: [{ type: 'STOCK' }, { type: 'CRYPTO' }],
 });
 
 // Find users who are ADMIN AND have a specific email domain
 const users = await adaptic.user.findMany({}, client, {
-  AND: [
-    { role: "ADMIN" },
-    { email: { endsWith: "@company.com" } }
-  ]
+  AND: [{ role: 'ADMIN' }, { email: { endsWith: '@company.com' } }],
 });
 
 // Find users who are NOT basic users
 const nonBasicUsers = await adaptic.user.findMany({}, client, {
-  NOT: { role: "USER" }
+  NOT: { role: 'USER' },
 });
 ```
 
@@ -643,33 +687,33 @@ const nonBasicUsers = await adaptic.user.findMany({}, client, {
 // Find assets that have at least one related news article
 const assetsWithNews = await adaptic.asset.findMany({}, client, {
   newsArticles: {
-    some: {} // Any news article
-  }
+    some: {}, // Any news article
+  },
 });
 
 // Find users with completed trades
 const usersWithCompletedTrades = await adaptic.user.findMany({}, client, {
   trades: {
     some: {
-      status: "COMPLETED"
-    }
-  }
+      status: 'COMPLETED',
+    },
+  },
 });
 
 // Find assets with no related news
 const assetsWithoutNews = await adaptic.asset.findMany({}, client, {
   newsArticles: {
-    none: {}
-  }
+    none: {},
+  },
 });
 
 // Find users where ALL trades are completed
 const usersWithAllCompletedTrades = await adaptic.user.findMany({}, client, {
   trades: {
     every: {
-      status: "COMPLETED"
-    }
-  }
+      status: 'COMPLETED',
+    },
+  },
 });
 ```
 
@@ -680,19 +724,20 @@ const usersWithAllCompletedTrades = await adaptic.user.findMany({}, client, {
 Use when: You want to remove a specific record.
 
 **Function Signature:**
+
 ```typescript
 async delete(props: ModelType, globalClient?: ApolloClientType): Promise<ModelType>
 ```
 
 ```typescript
 // Delete a user by ID
-const deletedUser = await adaptic.user.delete({ id: "user123" }, client);
+const deletedUser = await adaptic.user.delete({ id: 'user123' }, client);
 
 // Delete a trade by ID
-const deletedTrade = await adaptic.trade.delete({ id: "trade456" }, client);
+const deletedTrade = await adaptic.trade.delete({ id: 'trade456' }, client);
 
 // Delete an asset by symbol
-const deletedAsset = await adaptic.asset.delete({ symbol: "AAPL" }, client);
+const deletedAsset = await adaptic.asset.delete({ symbol: 'AAPL' }, client);
 ```
 
 ### Batch Operations for Efficiency
@@ -701,7 +746,7 @@ To further reduce database load, consider batching related operations together:
 
 ```typescript
 // Instead of multiple separate queries:
-const user = await adaptic.user.get({ id: "1234" }, client);
+const user = await adaptic.user.get({ id: '1234' }, client);
 const trades = await adaptic.trade.findMany({ userId: user.id }, client);
 
 // Use a more efficient query that includes related data:
@@ -724,7 +769,7 @@ const COMBINED_QUERY = gql`
 
 const result = await client.query({
   query: COMBINED_QUERY,
-  variables: { id: "1234" }
+  variables: { id: '1234' },
 });
 ```
 
@@ -742,10 +787,10 @@ async function fetchData() {
     const { ApolloError } = await getApolloModules();
 
     // The connection pool will automatically retry if database connection errors occur
-    const user = await adaptic.user.get({ id: "1234" }, client);
+    const user = await adaptic.user.get({ id: '1234' }, client);
 
     if (!user) {
-      console.log("User not found");
+      console.log('User not found');
       return;
     }
 
@@ -753,9 +798,9 @@ async function fetchData() {
   } catch (error) {
     // This will only be triggered after all retry attempts have failed
     if (error instanceof ApolloError) {
-      console.error("GraphQL error after all retries:", error.message);
+      console.error('GraphQL error after all retries:', error.message);
     } else {
-      console.error("Unexpected error:", error);
+      console.error('Unexpected error:', error);
     }
   }
 }

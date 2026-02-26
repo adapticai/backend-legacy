@@ -9,7 +9,11 @@
  * mutation operations and logs them to the AuditLog table.
  */
 
-import type { ApolloServerPlugin, GraphQLRequestContext, GraphQLRequestListener } from '@apollo/server';
+import type {
+  ApolloServerPlugin,
+  GraphQLRequestContext,
+  GraphQLRequestListener,
+} from '@apollo/server';
 import type { PrismaClient } from '@prisma/client';
 import { logger } from '../utils/logger';
 
@@ -57,7 +61,9 @@ const EXCLUDED_MODELS = new Set([
  * @param operationName - The name of the GraphQL field being executed
  * @returns Parsed mutation data or null if not a recognized mutation pattern
  */
-function parseMutationOperation(operationName: string): MutationAuditData | null {
+function parseMutationOperation(
+  operationName: string
+): MutationAuditData | null {
   const createPattern = /^(createOne|createMany|upsertOne)(\w+)$/;
   const updatePattern = /^(updateOne|updateMany|upsertOne)(\w+)$/;
   const deletePattern = /^(deleteOne|deleteMany)(\w+)$/;
@@ -99,7 +105,9 @@ function parseMutationOperation(operationName: string): MutationAuditData | null
  * @param user - The user object from GraphQL context
  * @returns The user ID string or null
  */
-function extractUserId(user: AuditUser | string | null | undefined): string | null {
+function extractUserId(
+  user: AuditUser | string | null | undefined
+): string | null {
   if (!user) return null;
   if (typeof user === 'string') return user;
   return user.sub || user.id || null;
@@ -112,7 +120,9 @@ function extractUserId(user: AuditUser | string | null | undefined): string | nu
  * @param data - The result data from the mutation
  * @returns The record ID as a string, or 'unknown'
  */
-function extractRecordId(data: Record<string, unknown> | null | undefined): string {
+function extractRecordId(
+  data: Record<string, unknown> | null | undefined
+): string {
   if (!data) return 'unknown';
 
   // The result is typically nested under the mutation name
@@ -120,7 +130,11 @@ function extractRecordId(data: Record<string, unknown> | null | undefined): stri
   if (values.length === 0) return 'unknown';
 
   const result = values[0];
-  if (result && typeof result === 'object' && 'id' in (result as Record<string, unknown>)) {
+  if (
+    result &&
+    typeof result === 'object' &&
+    'id' in (result as Record<string, unknown>)
+  ) {
     return String((result as Record<string, unknown>).id);
   }
 
@@ -181,13 +195,18 @@ export function createAuditLogPlugin(): ApolloServerPlugin<AuditContext> {
 
           const definitions = document.definitions;
           const operationDef = definitions.find(
-            (def) => def.kind === 'OperationDefinition' && def.operation === 'mutation'
+            (def) =>
+              def.kind === 'OperationDefinition' && def.operation === 'mutation'
           );
 
-          if (!operationDef || operationDef.kind !== 'OperationDefinition') return;
+          if (!operationDef || operationDef.kind !== 'OperationDefinition')
+            return;
 
           // Skip if there were errors (we only audit successful mutations)
-          if (response.body.kind === 'single' && response.body.singleResult.errors?.length) {
+          if (
+            response.body.kind === 'single' &&
+            response.body.singleResult.errors?.length
+          ) {
             return;
           }
 
@@ -210,27 +229,41 @@ export function createAuditLogPlugin(): ApolloServerPlugin<AuditContext> {
             if (EXCLUDED_MODELS.has(auditData.modelName)) continue;
 
             const userId = extractUserId(contextValue.user);
-            const variables = request.variables as Record<string, unknown> | null | undefined;
-            const changedFields = extractChangedFields(auditData.operationType, variables);
+            const variables = request.variables as
+              | Record<string, unknown>
+              | null
+              | undefined;
+            const changedFields = extractChangedFields(
+              auditData.operationType,
+              variables
+            );
 
             // Extract record ID from response data
             let recordId = 'unknown';
-            if (response.body.kind === 'single' && response.body.singleResult.data) {
+            if (
+              response.body.kind === 'single' &&
+              response.body.singleResult.data
+            ) {
               recordId = extractRecordId(
                 response.body.singleResult.data as Record<string, unknown>
               );
             }
 
             // Extract IP address from request context
-            const ipAddress = contextValue.req?.ip ||
-              (contextValue.req?.headers?.['x-forwarded-for'] as string | undefined) ||
+            const ipAddress =
+              contextValue.req?.ip ||
+              (contextValue.req?.headers?.['x-forwarded-for'] as
+                | string
+                | undefined) ||
               null;
 
             try {
               const prismaRecord = prisma as unknown as Record<string, unknown>;
               if (prismaRecord.auditLog) {
                 const auditLogDelegate = prismaRecord.auditLog as {
-                  create: (args: { data: Record<string, unknown> }) => Promise<unknown>;
+                  create: (args: {
+                    data: Record<string, unknown>;
+                  }) => Promise<unknown>;
                 };
                 await auditLogDelegate.create({
                   data: {
@@ -247,7 +280,9 @@ export function createAuditLogPlugin(): ApolloServerPlugin<AuditContext> {
                   },
                 });
               } else {
-                logger.warn('Audit logger: AuditLog model not available on Prisma client');
+                logger.warn(
+                  'Audit logger: AuditLog model not available on Prisma client'
+                );
               }
             } catch (error) {
               // Audit logging failures should never break the main request
@@ -264,4 +299,9 @@ export function createAuditLogPlugin(): ApolloServerPlugin<AuditContext> {
   };
 }
 
-export { parseMutationOperation, extractUserId, extractRecordId, extractChangedFields };
+export {
+  parseMutationOperation,
+  extractUserId,
+  extractRecordId,
+  extractChangedFields,
+};

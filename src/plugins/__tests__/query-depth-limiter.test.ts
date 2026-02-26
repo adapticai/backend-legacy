@@ -111,7 +111,8 @@ describe('Query Depth Limiter', () => {
 
   describe('error messages', () => {
     it('should provide clear error message when depth exceeded', () => {
-      const expectedError = 'Query depth of 8 exceeds maximum allowed depth of 6';
+      const expectedError =
+        'Query depth of 8 exceeds maximum allowed depth of 6';
       expect(expectedError).toContain('exceeds maximum allowed depth');
     });
 

@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { getInputTypeDefinition, isScalarType, isScalarArrayType, isInputObjectType, isSetObjectType, GRAPHQL_SCALARS } from '../modules/parser';
+import {
+  getInputTypeDefinition,
+  isScalarType,
+  isScalarArrayType,
+  isInputObjectType,
+  isSetObjectType,
+  GRAPHQL_SCALARS,
+} from '../modules/parser';
 import path from 'path';
 import fs from 'fs';
 
@@ -103,7 +110,10 @@ describe('Parser Module', () => {
     });
 
     it('should parse fields from an existing generated model file', () => {
-      const userModelPath = path.join(__dirname, '../../src/generated/typegraphql-prisma/models/User.ts');
+      const userModelPath = path.join(
+        __dirname,
+        '../../src/generated/typegraphql-prisma/models/User.ts'
+      );
       if (fs.existsSync(userModelPath)) {
         const fields = getInputTypeDefinition(userModelPath);
         expect(Array.isArray(fields)).toBe(true);

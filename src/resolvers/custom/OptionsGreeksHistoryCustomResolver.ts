@@ -14,18 +14,18 @@ interface GraphQLContext {
  * Provides system-wide analytics and summary statistics
  * Note: GraphQL query name remains 'optionsGreeksHistorySystemSummary' for backwards compatibility
  */
-@TypeGraphQL.Resolver(_of => PortfolioGreeksHistory)
+@TypeGraphQL.Resolver((_of) => PortfolioGreeksHistory)
 export class OptionsGreeksHistoryCustomResolver {
   /**
    * Get system-wide summary statistics for OptionsGreeksHistory
    * Executes aggregation query to get total accounts, snapshots, and time range
    */
-  @TypeGraphQL.Query(_returns => OptionsGreeksHistorySystemSummary, {
+  @TypeGraphQL.Query((_returns) => OptionsGreeksHistorySystemSummary, {
     nullable: false,
     description: 'Get system-wide summary statistics for Greeks history data',
   })
   async optionsGreeksHistorySystemSummary(
-    @TypeGraphQL.Ctx() ctx: GraphQLContext,
+    @TypeGraphQL.Ctx() ctx: GraphQLContext
   ): Promise<OptionsGreeksHistorySystemSummary> {
     const prisma = getPrismaFromContext(ctx);
 

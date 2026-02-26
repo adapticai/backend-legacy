@@ -73,13 +73,15 @@ export class ValidationExamplesResolver {
     // - portfolioName (non-empty)
 
     // Add custom business logic validation
-    const totalAllocation = input.equitiesPct + input.optionsPct + input.cryptoPct;
+    const totalAllocation =
+      input.equitiesPct + input.optionsPct + input.cryptoPct;
     if (totalAllocation !== 100) {
       throw new ValidationError('Total allocation must equal 100%', [
         {
           field: 'totalAllocation',
           value: totalAllocation,
-          message: 'Sum of equitiesPct, optionsPct, and cryptoPct must equal 100',
+          message:
+            'Sum of equitiesPct, optionsPct, and cryptoPct must equal 100',
           constraint: 'sum',
         },
       ]);
@@ -258,7 +260,8 @@ export class CustomValidators {
     crypto: number
   ): void {
     const total = equities + options + crypto;
-    if (Math.abs(total - 100) > 0.01) { // Allow small floating point errors
+    if (Math.abs(total - 100) > 0.01) {
+      // Allow small floating point errors
       throw new ValidationError('Invalid portfolio allocation', [
         {
           field: 'totalAllocation',

@@ -92,9 +92,11 @@
 ## Validation Rules Implemented
 
 ### 1. Percentage Fields (0-100)
+
 **Patterns**: `*Pct`, `*Percent`, `*Percentage`
 
 **Schema fields that will be validated**:
+
 - `cryptoTradeAllocationPct`
 - `tradeAllocationPct`
 - `minPercentageChange`
@@ -110,23 +112,29 @@
 - `equities`, `optionsContracts`, `stocks`, `options`, etc.
 
 ### 2. Positive Numbers (> 0)
+
 **Patterns**: `quantity`, `count`
 
 **Applies to**:
+
 - All `quantity` fields in trade mutations
 - All `count` fields
 
 ### 3. Threshold Fields (≥ 0)
+
 **Pattern**: `*Threshold`
 
 **Schema fields**:
+
 - `volumeThreshold`
 - Any custom threshold fields
 
 ### 4. Required Strings (non-empty)
+
 **Patterns**: `name`, `title`, `description`, `symbol`, `type`, `status`
 
 **Applies to**:
+
 - Portfolio names
 - Trade titles
 - Symbol identifiers
@@ -134,16 +142,20 @@
 - Type fields
 
 ### 5. Email & URL Validation
+
 **Functions**: `validateEmail()`, `validateUrl()`
 
 **For custom resolvers requiring**:
+
 - Email address validation
 - URL format validation
 
 ### 6. Confidence Scores (0-1)
+
 **Function**: `validateConfidenceScore()`
 
 **For ML-related fields**:
+
 - Model confidence scores
 - Probability values
 
@@ -167,11 +179,13 @@ When a mutation with invalid data is submitted:
 
 ```graphql
 mutation {
-  updateConfiguration(data: {
-    tradeAllocationPct: 150  # Invalid: > 100
-    quantity: -5              # Invalid: negative
-    name: ""                  # Invalid: empty
-  }) {
+  updateConfiguration(
+    data: {
+      tradeAllocationPct: 150 # Invalid: > 100
+      quantity: -5 # Invalid: negative
+      name: "" # Invalid: empty
+    }
+  ) {
     id
   }
 }
@@ -215,6 +229,7 @@ The client receives:
 ## How to Integrate (2 steps)
 
 ### Step 1: Add Import
+
 In `/Users/jstein/adapticai/backend-legacy/src/server.ts`:
 
 ```typescript
@@ -222,6 +237,7 @@ import { createValidationPlugin } from './middleware/graphql-validation-plugin';
 ```
 
 ### Step 2: Add Plugin
+
 In the Apollo Server configuration:
 
 ```typescript

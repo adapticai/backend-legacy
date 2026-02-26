@@ -43,31 +43,45 @@ let dbUnreachableCount = 0;
 let lastRestartAttempt = 0;
 async function restartDatabase(): Promise<void> {
   return new Promise<void>((resolve, reject) => {
-    logger.info('Attempting to redeploy the Railway Postgres service in production');
+    logger.info(
+      'Attempting to redeploy the Railway Postgres service in production'
+    );
 
     // Check for both types of tokens
     const projectToken = process.env.RAILWAY_TOKEN;
     const apiToken = process.env.RAILWAY_API_TOKEN;
 
     if (!projectToken && !apiToken) {
-      return reject(new Error('Neither RAILWAY_TOKEN nor RAILWAY_API_TOKEN found in environment variables'));
+      return reject(
+        new Error(
+          'Neither RAILWAY_TOKEN nor RAILWAY_API_TOKEN found in environment variables'
+        )
+      );
     }
 
     // Simplified command based on Railway CLI documentation
     const deployCommand = `RAILWAY_TOKEN=${projectToken || ''} RAILWAY_API_TOKEN=${apiToken || ''} railway redeploy --service Postgres -y`;
 
-    exec(deployCommand, {
-      env: process.env,
-      shell: '/bin/sh'
-    }, (error, stdout, stderr) => {
-      if (error) {
-        logger.error('Failed to redeploy DB via Railway CLI', { error: String(error), stdout, stderr });
-        return reject(error);
-      }
+    exec(
+      deployCommand,
+      {
+        env: process.env,
+        shell: '/bin/sh',
+      },
+      (error, stdout, stderr) => {
+        if (error) {
+          logger.error('Failed to redeploy DB via Railway CLI', {
+            error: String(error),
+            stdout,
+            stderr,
+          });
+          return reject(error);
+        }
 
-      logger.info('Railway deployment output', { stdout });
-      resolve();
-    });
+        logger.info('Railway deployment output', { stdout });
+        resolve();
+      }
+    );
   });
 }
 
@@ -80,7 +94,9 @@ const startServer = async () => {
   const app = express();
   const httpServer = createServer(app);
 
-  app.use('/api', (req, res, next) => authMiddleware(req as AuthenticatedRequest, res, next));
+  app.use('/api', (req, res, next) =>
+    authMiddleware(req as AuthenticatedRequest, res, next)
+  );
 
   const server = new ApolloServer({
     schema,
@@ -109,17 +125,26 @@ const startServer = async () => {
               // Reset the counter after attempting a restart
               dbUnreachableCount = 0;
             } catch (restartError) {
-              logger.error('Error trying to restart DB', { restartError: String(restartError) });
+              logger.error('Error trying to restart DB', {
+                restartError: String(restartError),
+              });
               // If the restart fails, we can try again after a delay
-              const backoffTime = Math.min(30000, 1000 * Math.pow(2, dbUnreachableCount - 3)); // Exponential backoff with a max of 30 seconds
-              logger.info('Waiting before next restart attempt', { backoffSeconds: backoffTime / 1000 });
+              const backoffTime = Math.min(
+                30000,
+                1000 * Math.pow(2, dbUnreachableCount - 3)
+              ); // Exponential backoff with a max of 30 seconds
+              logger.info('Waiting before next restart attempt', {
+                backoffSeconds: backoffTime / 1000,
+              });
               setTimeout(() => {
                 restartDatabase()
                   .then(() => {
                     dbUnreachableCount = 0; // Reset the counter after a successful restart
                   })
                   .catch((restartError) => {
-                    logger.error('Error trying to restart DB', { restartError: String(restartError) });
+                    logger.error('Error trying to restart DB', {
+                      restartError: String(restartError),
+                    });
                     // We do not reset the counter here if the restart fails,
                     // so it can try again next time.
                   });
@@ -151,7 +176,7 @@ const startServer = async () => {
   app.use(createHealthRouter());
 
   // Configure CORS with allowed origins
-  const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://adaptic.ai', 'https://api.adaptic.ai'];
+  const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:4000', 'https://adaptic.ai', 'https://api.adaptic.ai'];
   const envOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()) : [];
   const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
 
@@ -179,14 +204,18 @@ const startServer = async () => {
       context: async ({ req }: { req: Request }) => {
         // Ensure we're using the global prisma instance and never disconnecting it between requests
         if (!global.prisma) {
-          logger.warn('Prisma client not found in global scope, reinitializing');
+          logger.warn(
+            'Prisma client not found in global scope, reinitializing'
+          );
           global.prisma = prisma;
         }
 
         // Extract token from Authorization header
         const authHeader = req.headers.authorization || '';
         // Only try to verify token if it's in proper Bearer format
-        const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : '';
+        const token = authHeader.startsWith('Bearer ')
+          ? authHeader.split(' ')[1]
+          : '';
 
         let user = null;
         if (token) {
@@ -200,10 +229,18 @@ const startServer = async () => {
             const tokenParts = token.split('.');
             if (tokenParts.length !== 3) {
               // Log only once per unique malformed token to avoid log spam
-              const tokenPreview = token.length > 20 ? `${token.substring(0, 20)}...` : token;
-              logger.warn('Received malformed token (not a valid JWT format)', { tokenPreview });
+              const tokenPreview =
+                token.length > 20 ? `${token.substring(0, 20)}...` : token;
+              logger.warn('Received malformed token (not a valid JWT format)', {
+                tokenPreview,
+              });
               // Continue without authentication - don't fail the request
-              return { prisma: global.prisma, req, authError: 'Malformed token: expected JWT format (header.payload.signature)' };
+              return {
+                prisma: global.prisma,
+                req,
+                authError:
+                  'Malformed token: expected JWT format (header.payload.signature)',
+              };
             }
 
             // For regular JWT tokens, verify using the centralized secret
@@ -217,7 +254,8 @@ const startServer = async () => {
               }
             } catch (e) {
               // Only log verification failures at warn level with minimal info
-              const errorMessage = e instanceof Error ? e.message : 'Unknown error';
+              const errorMessage =
+                e instanceof Error ? e.message : 'Unknown error';
               logger.warn('JWT verification failed', { errorMessage });
               return { prisma: global.prisma, req, authError: 'Invalid token' };
             }
@@ -225,14 +263,21 @@ const startServer = async () => {
         }
         return { prisma: global.prisma, req, user };
       },
-    }),
+    })
   );
 
   // Custom error handling middleware for express
-  app.use((err: Error, req: express.Request, res: express.Response, _next: express.NextFunction) => {
-    logger.error('Express error', { error: err.message, stack: err.stack });
-    res.status(500).json({ error: 'An internal server error occurred' });
-  });
+  app.use(
+    (
+      err: Error,
+      req: express.Request,
+      res: express.Response,
+      _next: express.NextFunction
+    ) => {
+      logger.error('Express error', { error: err.message, stack: err.stack });
+      res.status(500).json({ error: 'An internal server error occurred' });
+    }
+  );
 
   app.use((req, res, next) => {
     logger.debug('Incoming request', { method: req.method, url: req.url });
@@ -250,19 +295,27 @@ const startServer = async () => {
       context: async (ctx, _msg, _args) => {
         // Ensure we're using the global prisma instance for WebSocket connections too
         if (!global.prisma) {
-          logger.warn('Prisma client not found in global scope for WebSocket context, reinitializing');
+          logger.warn(
+            'Prisma client not found in global scope for WebSocket context, reinitializing'
+          );
           global.prisma = prisma;
         }
 
-        const authHeader = (ctx.connectionParams as { authorization?: string })?.authorization || '';
-        const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : '';
+        const authHeader =
+          (ctx.connectionParams as { authorization?: string })?.authorization ||
+          '';
+        const token = authHeader.startsWith('Bearer ')
+          ? authHeader.split(' ')[1]
+          : '';
 
         let user = null;
         if (token) {
           // Check if token is a Google OAuth token (starts with ya29.)
           if (token.startsWith('ya29.')) {
             // For Google OAuth tokens, we should validate differently or pass them through
-            logger.info('Detected Google OAuth token in WebSocket, skipping JWT verification');
+            logger.info(
+              'Detected Google OAuth token in WebSocket, skipping JWT verification'
+            );
             user = { provider: 'google', token };
           } else {
             // For regular JWT tokens, verify using the centralized secret
@@ -275,8 +328,11 @@ const startServer = async () => {
                 user = jwt.verify(token, jwtSecret);
               }
             } catch (e) {
-              const errorMessage = e instanceof Error ? e.message : 'Unknown error';
-              logger.warn('WebSocket JWT verification failed', { errorMessage });
+              const errorMessage =
+                e instanceof Error ? e.message : 'Unknown error';
+              logger.warn('WebSocket JWT verification failed', {
+                errorMessage,
+              });
               return { prisma: global.prisma, authError: 'Invalid token' };
             }
           }
@@ -289,22 +345,34 @@ const startServer = async () => {
 
   const PORT = process.env.PORT || 4000;
   httpServer.listen(PORT, () => {
-    logger.info('Server ready', { graphql: `http://localhost:${PORT}/graphql`, health: `http://localhost:${PORT}/health` });
-    logger.info('Subscriptions ready', { endpoint: `ws://localhost:${PORT}/subscriptions` });
+    logger.info('Server ready', {
+      graphql: `http://localhost:${PORT}/graphql`,
+      health: `http://localhost:${PORT}/health`,
+    });
+    logger.info('Subscriptions ready', {
+      endpoint: `ws://localhost:${PORT}/subscriptions`,
+    });
   });
 };
 
 startServer().catch((error) => {
-  logger.error('Error starting the server', { error: error instanceof Error ? error.message : String(error) });
+  logger.error('Error starting the server', {
+    error: error instanceof Error ? error.message : String(error),
+  });
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, _promise) => {
-  logger.error('Unhandled Rejection', { reason: reason instanceof Error ? reason.message : String(reason) });
+  logger.error('Unhandled Rejection', {
+    reason: reason instanceof Error ? reason.message : String(reason),
+  });
 });
 
 process.on('uncaughtException', (error) => {
-  logger.error('Uncaught Exception', { error: error.message, stack: error.stack });
+  logger.error('Uncaught Exception', {
+    error: error.message,
+    stack: error.stack,
+  });
 });
 
 // Only disconnect Prisma when the process is truly shutting down
@@ -314,7 +382,9 @@ process.on('SIGINT', async () => {
     await global.prisma?.$disconnect();
     logger.info('Database connections closed successfully');
   } catch (e) {
-    logger.error('Error disconnecting from database', { error: e instanceof Error ? e.message : String(e) });
+    logger.error('Error disconnecting from database', {
+      error: e instanceof Error ? e.message : String(e),
+    });
   }
   process.exit(0);
 });
@@ -326,7 +396,9 @@ process.on('SIGTERM', async () => {
     await global.prisma?.$disconnect();
     logger.info('Database connections closed successfully');
   } catch (e) {
-    logger.error('Error disconnecting from database', { error: e instanceof Error ? e.message : String(e) });
+    logger.error('Error disconnecting from database', {
+      error: e instanceof Error ? e.message : String(e),
+    });
   }
   process.exit(0);
 });

@@ -59,6 +59,7 @@ This migration adds missing database indexes for foreign key columns and common 
 ## Performance Impact
 
 These indexes will improve:
+
 - JOIN operations between related tables
 - Lookups by foreign key values
 - Filtered queries combining foreign keys with status fields

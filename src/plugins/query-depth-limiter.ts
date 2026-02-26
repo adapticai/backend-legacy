@@ -169,10 +169,13 @@ function truncateQuery(query: string, maxLength: number = 200): string {
 export function queryDepthLimiterPlugin(
   options: QueryDepthLimiterOptions = {}
 ): ApolloServerPlugin<DepthLimiterContext> {
-  const maxDepth = options.maxDepth ?? parseInt(process.env.GRAPHQL_MAX_DEPTH || '6', 10);
+  const maxDepth =
+    options.maxDepth ?? parseInt(process.env.GRAPHQL_MAX_DEPTH || '6', 10);
 
   return {
-    async requestDidStart(): Promise<GraphQLRequestListener<DepthLimiterContext>> {
+    async requestDidStart(): Promise<
+      GraphQLRequestListener<DepthLimiterContext>
+    > {
       return {
         async didResolveOperation(requestContext) {
           const { document, request, contextValue } = requestContext;
@@ -188,8 +191,12 @@ export function queryDepthLimiterPlugin(
             const truncatedQuery = truncateQuery(query);
 
             // Extract user context for logging
-            const userId = contextValue?.user?.sub || contextValue?.user?.email || 'anonymous';
-            const requestId = contextValue?.req?.headers?.['x-request-id'] || 'unknown';
+            const userId =
+              contextValue?.user?.sub ||
+              contextValue?.user?.email ||
+              'anonymous';
+            const requestId =
+              contextValue?.req?.headers?.['x-request-id'] || 'unknown';
 
             // Log the rejected query
             logger.error('[QueryDepthLimiter] Query rejected', {

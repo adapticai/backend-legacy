@@ -28,8 +28,8 @@ query GetOptionsGreeksHistorySystemSummary {
 
 ```typescript
 {
-  totalAccounts: number;      // Total number of unique contracts with Greeks history
-  totalSnapshots: number;     // Total number of Greeks snapshots across all contracts
+  totalAccounts: number; // Total number of unique contracts with Greeks history
+  totalSnapshots: number; // Total number of Greeks snapshots across all contracts
   oldestSnapshot: Date | null; // Timestamp of the oldest Greeks snapshot
   newestSnapshot: Date | null; // Timestamp of the newest Greeks snapshot
 }
@@ -84,6 +84,7 @@ The custom resolvers will be automatically exported from the package.
 ### Build Process
 
 The custom resolvers are:
+
 1. Compiled by TypeScript during `yarn build`
 2. Exported through `/src/index.ts` (auto-generated)
 3. Available through the `@adaptic/backend-legacy` package

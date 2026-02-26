@@ -67,7 +67,11 @@ export class InMemoryAPQCache {
     return entry.value;
   }
 
-  async set(key: string, value: string, options?: { ttl?: number | null }): Promise<void> {
+  async set(
+    key: string,
+    value: string,
+    options?: { ttl?: number | null }
+  ): Promise<void> {
     // Evict oldest entry if at capacity
     if (this.cache.size >= this.maxSize && !this.cache.has(key)) {
       const oldestKey = this.cache.keys().next().value;
@@ -137,7 +141,9 @@ export function createAPQCache(): InMemoryAPQCache | undefined {
   const maxSize = getMaxCacheSize();
   const cache = new InMemoryAPQCache(maxSize);
 
-  logger.info('Automatic Persisted Queries (APQ) enabled', { maxCacheSize: maxSize });
+  logger.info('Automatic Persisted Queries (APQ) enabled', {
+    maxCacheSize: maxSize,
+  });
   return cache;
 }
 
@@ -146,7 +152,9 @@ export function createAPQCache(): InMemoryAPQCache | undefined {
  * When APQ is disabled, this returns the cache control disabled plugin
  * to explicitly disable caching behavior.
  */
-export function getCacheControlPlugin(): ReturnType<typeof ApolloServerPluginCacheControlDisabled> | undefined {
+export function getCacheControlPlugin():
+  | ReturnType<typeof ApolloServerPluginCacheControlDisabled>
+  | undefined {
   if (!isAPQEnabled()) {
     return ApolloServerPluginCacheControlDisabled();
   }

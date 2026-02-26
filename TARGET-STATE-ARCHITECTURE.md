@@ -39,11 +39,13 @@
 **Status:** MOSTLY RESOLVED (git history cleanup remaining)
 
 **Resolution (2026-02-08):**
+
 - `.env` is listed in `.gitignore` and is not tracked by git
 - `.env.example` created with placeholder values and comments for all required env vars
 - Rate limiting env vars (RATE_LIMIT_MAX, RATE_LIMIT_MAX_UNAUTH) documented in `.env.example`
 
 **Remaining work (requires manual intervention outside CI):**
+
 - Remove `.env` from git history using `git filter-branch` or BFG Repo-Cleaner
 - Rotate any credentials that may have been exposed in git history
 - All secrets should be managed via Railway dashboard and GitHub Secrets
@@ -107,6 +109,7 @@
 **Resolution:** All hand-written source files now use the structured logger from `src/utils/logger.ts` instead of `console.log`. The logger outputs JSON-formatted log entries with level, message, timestamp, and service name. Zero `console.log` calls remain in hand-written production code (only one commented-out reference exists in `src/plugins/integration-example.ts` as documentation).
 
 **Remaining opportunities:**
+
 - Request correlation IDs propagated through GraphQL context
 - Pretty-print mode for development (currently JSON in all environments)
 
@@ -117,6 +120,7 @@
 **Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
 
 **Resolution:** Health check endpoint added at `GET /health`. Returns:
+
 - HTTP 200 when healthy, 503 when unhealthy
 - Database connectivity status (Prisma `$queryRaw` ping)
 - Server uptime
@@ -134,6 +138,7 @@
 **Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
 
 **Resolution:** Vitest test framework configured:
+
 - Vitest configuration added in `vitest.config.ts`
 - `npm test` script added to package.json
 - Existing 3+ test files now runnable via `npm test`
@@ -141,6 +146,7 @@
 - Test framework ready for expanded integration test coverage
 
 **Remaining work:**
+
 - Integration tests for CRUD operations, authentication flow, code generation pipeline
 - Coverage reporting configuration
 - CI integration for automated test runs on every PR
@@ -154,6 +160,7 @@
 **Status:** RESOLVED (Wave 4, 2026-02-08)
 
 **Resolution:** Validation script created at `scripts/validate-schema.sh` with npm script `npm run validate:schema`. The script performs three checks:
+
 1. `npx prisma validate` - verifies schema syntax
 2. `npx prisma generate` - verifies code generation succeeds
 3. `git diff --quiet src/generated/` - drift detection (checks for uncommitted changes in generated files)
@@ -161,6 +168,7 @@
 Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 
 **Remaining work:**
+
 - Integrate into CI pipeline (GitHub Actions workflow)
 - Add PR comment with schema diff summary
 - Add migration name convention check
@@ -174,6 +182,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Current state:** Using TypeGraphQL 2.0.0-rc.2, a release candidate, in production.
 
 **Target state:**
+
 - Upgrade to stable TypeGraphQL 2.0.0 when released
 - If stable release is not available, pin the exact RC version and document the risk
 - Verify all generated code is compatible with the new version
@@ -188,6 +197,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** RESOLVED (Wave 4, 2026-02-08)
 
 **Resolution:** Rate limiter in `src/middleware/rate-limiter.ts` enhanced with:
+
 - Separate rate limits for authenticated vs. unauthenticated requests (Bearer token detection)
 - GraphQL: 1000 auth / 200 unauth per 15 min (configurable via RATE_LIMIT_MAX and RATE_LIMIT_MAX_UNAUTH)
 - Auth endpoint: 50 auth / 20 unauth per 15 min
@@ -202,6 +212,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
 
 **Resolution:** ESLint configuration added:
+
 - ESLint flat config format in `eslint.config.mjs`
 - Rules enforce: no `any`, no `console.log` in production, no floating promises
 - `npm run lint` script added to package.json
@@ -217,6 +228,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (Wave 3B, 2026-02-08)
 
 **Resolution:** Pre-commit hooks configured:
+
 - Husky + lint-staged configured
 - Pre-commit hook runs ESLint on staged files
 - Pre-commit hook runs TypeScript type checking
@@ -234,6 +246,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - `AuditLog` Prisma model added to `prisma/schema.prisma` with fields: userId, operationType (CREATE/UPDATE/DELETE), modelName, recordId, changedFields (JSON), operationName, ipAddress, metadata
 - `AuditOperationType` enum added (CREATE, UPDATE, DELETE)
 - Apollo Server plugin (`src/middleware/audit-logger.ts`) intercepts all GraphQL mutations and writes audit entries
@@ -245,6 +258,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - 25 unit tests in `src/middleware/__tests__/audit-logger.test.ts`
 
 **Remaining work:**
+
 - Admin GraphQL query endpoint for browsing audit logs
 - Append-only enforcement via database role permissions (SQL REVOKE commented in migration)
 
@@ -255,6 +269,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - `deletedAt DateTime?` field added to 4 critical models: User, AlpacaAccount, Trade, Action
 - Note: Position and Order do not exist as standalone Prisma models (managed via Alpaca API); removed from scope
 - Soft-delete utility module at `src/middleware/soft-delete.ts` provides:
@@ -269,6 +284,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - 21 unit tests in `src/middleware/__tests__/soft-delete.test.ts`
 
 **Remaining work:**
+
 - Integrate soft-delete utilities into TypeGraphQL-generated resolvers
 - Admin GraphQL endpoint for viewing and restoring soft-deleted records
 - Cascading soft deletes for related records
@@ -280,6 +296,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - Raw SQL migration `20260208100001_add_database_constraints` adds CHECK constraints:
   - **Percentage ranges (0-100):** Trade confidence (0-1), AlpacaAccount tradeAllocationPct, cryptoTradeAllocationPct, all Allocation fields (equities, optionsContracts, futures, etfs, forex, crypto)
   - **Positive values:** Trade entryPrice, exitPrice, entryQty, exitQty, entryValue, exitValue; OptionsPosition quantity, entryPrice; OptionsTradeExecution quantity, executionPrice
@@ -289,6 +306,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - Constraints complement existing application-level validation in `src/middleware/input-validator.ts`
 
 **Remaining work:**
+
 - Enum validation constraints (status fields) - lower priority since Prisma already enforces enum types
 
 ---
@@ -298,6 +316,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - Tracing infrastructure created in `src/config/tracing.ts`
 - Configures NodeSDK with OTLP HTTP exporter for sending traces to any OpenTelemetry collector (Jaeger, Grafana Tempo, etc.)
 - HTTP instrumentation for incoming/outgoing requests (health/metrics endpoints excluded)
@@ -310,6 +329,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - Graceful shutdown via `shutdownTracing()` for SIGTERM/SIGINT handlers
 
 **Remaining work:**
+
 - Wire `initTracing()` into `src/server.ts` startup (must be called before Express/Apollo imports)
 - Add Prisma instrumentation when `@prisma/instrumentation` package becomes stable
 - Configure sampling rate for high-traffic deployments
@@ -322,6 +342,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - Metrics infrastructure created in `src/config/metrics.ts` using prom-client
 - Dedicated Prometheus registry with service label
 - HTTP metrics: `http_requests_total` (counter), `http_request_duration_seconds` (histogram)
@@ -335,6 +356,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - Environment variable: `PROMETHEUS_METRICS_ENABLED` (defaults to on in production/staging)
 
 **Remaining work:**
+
 - Wire `initMetrics()`, `metricsMiddleware`, `createMetricsPlugin`, and `createMetricsRouter` into `src/server.ts`
 - Configure Prometheus scrape target in deployment infrastructure
 - Create Grafana dashboards for key metrics
@@ -347,6 +369,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** RESOLVED (2026-02-08)
 
 **Resolution:**
+
 - dotenv upgraded from `^16.4.7` to `^17.0.0` in `package.json`
 - Installed version: 17.2.4, aligning with lumic-utils
 - Build and all 162 tests pass after upgrade
@@ -359,6 +382,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - `src/prismaClient.ts` rewritten with environment-aware connection pool configuration:
   - `DATABASE_POOL_SIZE` environment variable for explicit override
   - Tier defaults: development=5, staging=10, production=20
@@ -372,6 +396,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - 10 unit tests in `src/tests/connection-pool.test.ts`
 
 **Remaining work:**
+
 - Document DATABASE_POOL_SIZE and DATABASE_POOL_TIMEOUT_MS in `.env.example`
 - Load testing to validate optimal pool sizes per tier
 
@@ -382,6 +407,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - APQ infrastructure created in `src/config/persisted-queries.ts`
 - In-memory LRU cache (`InMemoryAPQCache`) with configurable max size (default: 1000 entries)
 - TTL support for cache entries (default: no expiry)
@@ -391,6 +417,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - `getCacheControlPlugin()` for explicit cache control when APQ is disabled
 
 **Remaining work:**
+
 - Wire `createAPQCache()` into Apollo Server configuration in `src/server.ts`
 - Add Redis-backed cache for multi-instance deployments
 - Implement strict query allowlist mode for institutional deployments
@@ -404,6 +431,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - Query complexity analysis implemented in `src/middleware/query-complexity.ts`
 - Uses `graphql-query-complexity` library with two estimators:
   - `fieldExtensionsEstimator`: Reads complexity from field extensions (schema directives)
@@ -417,6 +445,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - Environment variable: `GRAPHQL_COMPLEXITY_ENABLED` (defaults to on in production/staging)
 
 **Remaining work:**
+
 - Wire `createQueryComplexityPlugin` into Apollo Server configuration in `src/server.ts`
 - Add per-field complexity weights via schema directives for high-cost resolvers
 - Add complexity monitoring metrics (integrate with Prometheus)
@@ -428,6 +457,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - `vitest.config.ts` updated with coverage configuration:
   - Provider: v8 (via `@vitest/coverage-v8`)
   - Reporters: text, text-summary, json, json-summary, lcov, html
@@ -438,6 +468,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - CI workflow uploads coverage reports as artifacts with 14-day retention
 
 **Remaining work:**
+
 - Add coverage badge to README (using lcov report + shields.io)
 - Increase thresholds as test coverage improves
 
@@ -448,6 +479,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 **Status:** IMPLEMENTED (2026-02-08)
 
 **Resolution:**
+
 - GitHub Actions CI workflow created at `.github/workflows/ci.yml`
 - `verify-generated-code` job runs the full code generation pipeline:
   1. `prisma validate` - verifies schema syntax
@@ -462,6 +494,7 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 - Triggered on PRs to main/develop and pushes to main
 
 **Remaining work:**
+
 - Add PR comment with schema diff summary (nice-to-have)
 
 ---
@@ -472,12 +505,12 @@ Exit codes: 0 (all pass), 1 (validation/generation failure), 2 (drift detected).
 
 backend-legacy's Prisma models are THE canonical type definitions for the entire monorepo.
 
-| Rule | Detail |
-|---|---|
-| Single source of truth | All model types originate from `prisma/schema.prisma` |
-| No redefinition | `@adaptic/engine` and `@adaptic/utils` must import types from `@adaptic/backend-legacy`, never redefine them |
-| Type re-export | backend-legacy exports all types under the `types` namespace |
-| Generated types | TypeGraphQL-Prisma generates the TypeScript interfaces; hand-written types are not authoritative |
+| Rule                   | Detail                                                                                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Single source of truth | All model types originate from `prisma/schema.prisma`                                                        |
+| No redefinition        | `@adaptic/engine` and `@adaptic/utils` must import types from `@adaptic/backend-legacy`, never redefine them |
+| Type re-export         | backend-legacy exports all types under the `types` namespace                                                 |
+| Generated types        | TypeGraphQL-Prisma generates the TypeScript interfaces; hand-written types are not authoritative             |
 
 ### Selection Set Sync
 
@@ -511,6 +544,7 @@ The recommended implementation order balances security urgency with development 
 **Status:** All 10 items resolved. Only remaining action is manual git history cleanup for .env file.
 
 **Completed:**
+
 - JWT secret management (jwtConfig.ts)
 - JWT_SECRET production enforcement
 - Allocation validation
@@ -531,6 +565,7 @@ Establish quality infrastructure and production stability.
 **Status:** 7 of 8 items completed (Waves 3B + 4, 2026-02-08)
 
 **Completed:**
+
 - Structured logging migration (item 11, Wave 4)
 - Health check endpoint (item 12, Wave 3B)
 - Formal test runner - Vitest (item 13, Wave 3B)
@@ -540,6 +575,7 @@ Establish quality infrastructure and production stability.
 - Pre-commit hooks (item 18, Wave 3B)
 
 **Remaining:**
+
 - TypeGraphQL upgrade to stable (item 15, waiting on release)
 
 ---
@@ -560,6 +596,7 @@ Audit logging, soft deletes, database constraints, observability, dependency ali
 **Status:** 8 of 8 items completed (Waves 5 + 6, 2026-02-08)
 
 **Completed:**
+
 - Audit logging (item 19, Wave 5)
 - Soft deletes (item 20, Wave 5)
 - Database constraints (item 21, Wave 5)
@@ -578,6 +615,7 @@ Query complexity analysis, test coverage reporting, CI generated code verificati
 **Status:** 3 of 3 items completed (Wave 6, 2026-02-08)
 
 **Completed:**
+
 - Query complexity analysis (item 27, Wave 6)
 - Test coverage reporting (item 28, Wave 6)
 - CI generated code verification (item 29, Wave 6)
@@ -586,18 +624,20 @@ Query complexity analysis, test coverage reporting, CI generated code verificati
 
 ## Resolution Summary
 
-| Priority | Total Items | Resolved | Remaining |
-|---|---|---|---|
-| P0 | 10 | 10 | 0 (git history cleanup is manual) |
-| P1 | 8 | 7 | 1 (TypeGraphQL waiting on release) |
-| P2 | 8 | 8 | 0 |
-| P3 | 3 | 3 | 0 |
+| Priority | Total Items | Resolved | Remaining                          |
+| -------- | ----------- | -------- | ---------------------------------- |
+| P0       | 10          | 10       | 0 (git history cleanup is manual)  |
+| P1       | 8           | 7        | 1 (TypeGraphQL waiting on release) |
+| P2       | 8           | 8        | 0                                  |
+| P3       | 3           | 3        | 0                                  |
 
 **P0 Items Resolved (Wave 4, 2026-02-08):**
+
 - Item 4: .env gitignore verified, .env.example with rate limit vars added
 - Item 10: Prisma version already aligned at ^6.19.2
 
 **P1 Items Resolved (Waves 3B + 4, 2026-02-08):**
+
 - Item 11: Structured logging migration (all hand-written files use logger)
 - Item 12: Health check endpoint
 - Item 13: Formal test runner (Vitest)
@@ -607,9 +647,11 @@ Query complexity analysis, test coverage reporting, CI generated code verificati
 - Item 18: Pre-commit hooks
 
 **P1 Items Remaining:**
+
 - Item 15: TypeGraphQL upgrade (waiting on stable 2.0.0 release)
 
 **P2 Items Resolved (Wave 5, 2026-02-08):**
+
 - Item 19: Audit logging (AuditLog model + Apollo plugin + 25 tests)
 - Item 20: Soft deletes (deletedAt on 4 models + utility functions + 21 tests)
 - Item 21: Database constraints (CHECK constraints for prices, quantities, strings + migration)
@@ -617,11 +659,13 @@ Query complexity analysis, test coverage reporting, CI generated code verificati
 - Item 25: Connection pool tuning (tier-based defaults + env overrides + pool exhaustion logging + 10 tests)
 
 **P2 Items Resolved (Wave 6, 2026-02-08):**
+
 - Item 22: OpenTelemetry tracing (`src/config/tracing.ts` - NodeSDK + OTLP exporter + HTTP/Express/GraphQL instrumentation)
 - Item 23: Prometheus metrics (`src/config/metrics.ts` - prom-client registry + HTTP/GraphQL/DB metrics + /metrics endpoint)
 - Item 26: GraphQL persisted queries (`src/config/persisted-queries.ts` - LRU APQ cache + Apollo Server integration)
 
 **P3 Items Resolved (Wave 6, 2026-02-08):**
+
 - Item 27: Query complexity analysis (`src/middleware/query-complexity.ts` - graphql-query-complexity + depth limiting + Apollo plugin)
 - Item 28: Test coverage reporting (`vitest.config.ts` coverage config + `@vitest/coverage-v8` + `npm run test:coverage` script)
 - Item 29: CI generated code verification (`.github/workflows/ci.yml` - lint, typecheck, test, coverage, generated code drift detection)

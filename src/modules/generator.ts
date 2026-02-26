@@ -9,8 +9,20 @@ import { logger } from '../utils/logger';
 
 type ModelName = keyof typeof selectionSets;
 
-type OperationType = 'create' | 'createMany' | 'update' | 'updateWithoutId' | 'updateMany' | 'where' | 'findMany' | 'none' | 'upsert' | 'delete' | 'deleteMany' | 'get' | 'getAll';
-
+type OperationType =
+  | 'create'
+  | 'createMany'
+  | 'update'
+  | 'updateWithoutId'
+  | 'updateMany'
+  | 'where'
+  | 'findMany'
+  | 'none'
+  | 'upsert'
+  | 'delete'
+  | 'deleteMany'
+  | 'get'
+  | 'getAll';
 
 /**
  * Constructs a variables object for GraphQL operations.
@@ -142,17 +154,24 @@ const handleCreateOperation = (
     }
 
     const nestedInputTypeName = capitalizeFirstLetter(field.type.name);
-    const nestedInputTypePath = path.join(inputsPath || '', `${nestedInputTypeName}.ts`);
+    const nestedInputTypePath = path.join(
+      inputsPath || '',
+      `${nestedInputTypeName}.ts`
+    );
 
     if (!fs.existsSync(nestedInputTypePath)) {
-      logger.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
+      logger.warn(
+        `Nested model input type file does not exist: ${nestedInputTypePath}`
+      );
       return '';
     }
 
     const nestedItems = getInputTypeDefinition(nestedInputTypePath);
 
     // Try to find 'connectOrCreate' field
-    const connectOrCreateField = nestedItems.find((item) => item.name === 'connectOrCreate');
+    const connectOrCreateField = nestedItems.find(
+      (item) => item.name === 'connectOrCreate'
+    );
     if (!connectOrCreateField) {
       logger.warn(`No 'connectOrCreate' field found in ${nestedInputTypePath}`);
       return '';
@@ -161,27 +180,49 @@ const handleCreateOperation = (
     const operationField = connectOrCreateField;
     const operationFieldName = 'connectOrCreate';
     const operationInputTypeName = operationField.type.name;
-    const operationInputTypePath = path.join(inputsPath || '', `${operationInputTypeName}.ts`);
+    const operationInputTypePath = path.join(
+      inputsPath || '',
+      `${operationInputTypeName}.ts`
+    );
     const operationInputItems = getInputTypeDefinition(operationInputTypePath);
 
-    const whereField = operationInputItems.find((item) => item.name === 'where');
-    const createField = operationInputItems.find((item) => item.name === 'create') || operationInputItems.find((item) => item.name === 'data');
+    const whereField = operationInputItems.find(
+      (item) => item.name === 'where'
+    );
+    const createField =
+      operationInputItems.find((item) => item.name === 'create') ||
+      operationInputItems.find((item) => item.name === 'data');
 
     if (!whereField || !createField) {
-      logger.warn(`Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`);
+      logger.warn(
+        `Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`
+      );
       return '';
     }
 
     const whereInputTypeName = whereField?.type.name;
-    const whereInputTypePath = path.join(inputsPath || '', `${whereInputTypeName}.ts`);
+    const whereInputTypePath = path.join(
+      inputsPath || '',
+      `${whereInputTypeName}.ts`
+    );
     const whereFields = getInputTypeDefinition(whereInputTypePath);
 
     const createInputTypeName = createField?.type.name;
-    const createInputTypePath = path.join(inputsPath || '', `${createInputTypeName}.ts`);
+    const createInputTypePath = path.join(
+      inputsPath || '',
+      `${createInputTypeName}.ts`
+    );
     const createFields = getInputTypeDefinition(createInputTypePath);
 
-    if (createFields.length === 0 || !createFields || !whereFields || whereFields.length === 0) {
-      logger.warn(`No fields found in create input type: ${createInputTypePath}`);
+    if (
+      createFields.length === 0 ||
+      !createFields ||
+      !whereFields ||
+      whereFields.length === 0
+    ) {
+      logger.warn(
+        `No fields found in create input type: ${createInputTypePath}`
+      );
       return '';
     }
 
@@ -198,7 +239,9 @@ const handleCreateOperation = (
     ${indent}}
     : { ${operationFieldName}: {\n`;
 
-    const closingLine = field.type.isList ? `${indent}  }))\n` : `${indent}  }\n`;
+    const closingLine = field.type.isList
+      ? `${indent}  }))\n`
+      : `${indent}  }\n`;
 
     if (depth + 2 >= maxDepth) {
       return '';
@@ -211,10 +254,19 @@ const handleCreateOperation = (
       whereFields
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
-            const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (isUniqueField(whereField.name) && whereField.type.isScalar && whereField.type.isFilterObject) {
+            const nestedAccessor = field.type.isList
+              ? `item.${whereField.name}`
+              : `${accessor}.${whereField.name}`;
+            if (
+              isUniqueField(whereField.name) &&
+              whereField.type.isScalar &&
+              whereField.type.isFilterObject
+            ) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
-            } else if (whereField.type.isScalar && isUniqueField(whereField.name)) {
+            } else if (
+              whereField.type.isScalar &&
+              isUniqueField(whereField.name)
+            ) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
               if (depth + 1 >= maxDepth) {
@@ -225,7 +277,7 @@ const handleCreateOperation = (
           }
         })
         .join('') +
-      `${indent}    },\n`
+      `${indent}    },\n`;
 
     if (createFields && createFields.length > 0) {
       if (depth + 2 >= maxDepth) {
@@ -238,7 +290,9 @@ const handleCreateOperation = (
             if (['id', 'createdAt', 'updatedAt'].includes(createField.name)) {
               return ''; // Skip meta fields
             }
-            const nestedAccessor = field.type.isList ? `item.${createField.name}` : `${accessor}.${createField.name}`;
+            const nestedAccessor = field.type.isList
+              ? `item.${createField.name}`
+              : `${accessor}.${createField.name}`;
 
             if (createField.type.isScalar && createField.type.isSetObject) {
               return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
@@ -275,7 +329,11 @@ const handleUpdateOperation = (
   }
 
   // Scalar or updatable fields:
-  if (field.type.isScalar && field.type.isFieldUpdate || field.type.isFieldUpdate || field.type.isScalar && field.type.isSetObject) {
+  if (
+    (field.type.isScalar && field.type.isFieldUpdate) ||
+    field.type.isFieldUpdate ||
+    (field.type.isScalar && field.type.isSetObject)
+  ) {
     return `${indent}${field.name}: ${accessor} !== undefined ? {\n${indent}          set: ${accessor} \n ${indent}        } : undefined,\n`;
   } else {
     if (depth + 1 >= maxDepth) {
@@ -283,10 +341,15 @@ const handleUpdateOperation = (
     }
 
     const nestedInputTypeName = capitalizeFirstLetter(field.type.name);
-    const nestedInputTypePath = path.join(inputsPath || '', `${nestedInputTypeName}.ts`);
+    const nestedInputTypePath = path.join(
+      inputsPath || '',
+      `${nestedInputTypeName}.ts`
+    );
 
     if (!fs.existsSync(nestedInputTypePath)) {
-      logger.warn(`Nested model input type file does not exist: ${nestedInputTypePath}`);
+      logger.warn(
+        `Nested model input type file does not exist: ${nestedInputTypePath}`
+      );
       return '';
     }
 
@@ -302,36 +365,61 @@ const handleUpdateOperation = (
     const operationField = upsertField;
     const operationFieldName = 'upsert';
     const operationInputTypeName = operationField.type.name;
-    const operationInputTypePath = path.join(inputsPath || '', `${operationInputTypeName}.ts`);
+    const operationInputTypePath = path.join(
+      inputsPath || '',
+      `${operationInputTypeName}.ts`
+    );
     const operationInputItems = getInputTypeDefinition(operationInputTypePath);
 
-    const whereField = operationInputItems.find((item) => item.name === 'where');
-    const updateField = operationInputItems.find((item) => item.name === 'update' || item.name === 'data');
-    const createField = operationInputItems.find((item) => item.name === 'create') || operationInputItems.find((item) => item.name === 'data');
+    const whereField = operationInputItems.find(
+      (item) => item.name === 'where'
+    );
+    const updateField = operationInputItems.find(
+      (item) => item.name === 'update' || item.name === 'data'
+    );
+    const createField =
+      operationInputItems.find((item) => item.name === 'create') ||
+      operationInputItems.find((item) => item.name === 'data');
 
     if (!whereField || !updateField) {
-      logger.warn(`Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`);
+      logger.warn(
+        `Missing 'where', 'update', or 'create' fields in ${operationInputTypePath}`
+      );
       return '';
     }
 
     const whereInputTypeName = whereField?.type.name;
-    const whereInputTypePath = path.join(inputsPath || '', `${whereInputTypeName}.ts`);
+    const whereInputTypePath = path.join(
+      inputsPath || '',
+      `${whereInputTypeName}.ts`
+    );
     const whereFields = getInputTypeDefinition(whereInputTypePath);
 
     const updateInputTypeName = updateField?.type.name;
-    const updateInputTypePath = path.join(inputsPath || '', `${updateInputTypeName}.ts`);
+    const updateInputTypePath = path.join(
+      inputsPath || '',
+      `${updateInputTypeName}.ts`
+    );
     const updateFields = getInputTypeDefinition(updateInputTypePath);
 
     const createInputTypeName = createField?.type.name;
-    const createInputTypePath = path.join(inputsPath || '', `${createInputTypeName}.ts`);
+    const createInputTypePath = path.join(
+      inputsPath || '',
+      `${createInputTypeName}.ts`
+    );
     const createFields = getInputTypeDefinition(createInputTypePath);
 
     if (
-      !updateFields || updateFields.length === 0 ||
-      !createFields || createFields.length === 0 ||
-      !whereFields || whereFields.length === 0
+      !updateFields ||
+      updateFields.length === 0 ||
+      !createFields ||
+      createFields.length === 0 ||
+      !whereFields ||
+      whereFields.length === 0
     ) {
-      logger.warn(`No fields found in update input type: ${updateInputTypePath}`);
+      logger.warn(
+        `No fields found in update input type: ${updateInputTypePath}`
+      );
       return '';
     }
 
@@ -352,7 +440,9 @@ ${indent}  id: ${accessor}.id
 ${indent}}
 } : { ${operationFieldName}: {\n`;
 
-    const closingLine = field.type.isList ? `${indent}  }))\n` : `${indent}  }\n`;
+    const closingLine = field.type.isList
+      ? `${indent}  }))\n`
+      : `${indent}  }\n`;
 
     if (depth + 2 >= maxDepth) {
       return '';
@@ -365,10 +455,19 @@ ${indent}}
       whereFields
         .map((whereField) => {
           if (isUniqueField(whereField.name)) {
-            const nestedAccessor = field.type.isList ? `item.${whereField.name}` : `${accessor}.${whereField.name}`;
-            if (isUniqueField(whereField.name) && (whereField.type.isScalar && whereField.type.isFilterObject || whereField.type.isFilterObject)) {
+            const nestedAccessor = field.type.isList
+              ? `item.${whereField.name}`
+              : `${accessor}.${whereField.name}`;
+            if (
+              isUniqueField(whereField.name) &&
+              ((whereField.type.isScalar && whereField.type.isFilterObject) ||
+                whereField.type.isFilterObject)
+            ) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          equals: ${nestedAccessor}\n${indent}        } : undefined,\n`;
-            } else if (isUniqueField(whereField.name) && whereField.type.isScalar) {
+            } else if (
+              isUniqueField(whereField.name) &&
+              whereField.type.isScalar
+            ) {
               return `${indent}      ${whereField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
             } else {
               if (depth + 1 >= maxDepth) {
@@ -382,7 +481,11 @@ ${indent}}
         .join('') +
       `${indent}    },\n`;
 
-    if (operationFieldName === 'upsert' && updateFields && updateFields.length > 0) {
+    if (
+      operationFieldName === 'upsert' &&
+      updateFields &&
+      updateFields.length > 0
+    ) {
       if (depth + 2 >= maxDepth) {
         return '';
       }
@@ -390,10 +493,15 @@ ${indent}}
         `${indent}    update: {\n` +
         updateFields
           .map((updateField) => {
-            const nestedAccessor = field.type.isList ? `item.${updateField.name}` : `${accessor}.${updateField.name}`;
+            const nestedAccessor = field.type.isList
+              ? `item.${updateField.name}`
+              : `${accessor}.${updateField.name}`;
             if (updateField.type.isScalar) {
               return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
-            } else if (updateField.type.isFieldUpdate || updateField.type.isScalar && updateField.type.isSetObject) {
+            } else if (
+              updateField.type.isFieldUpdate ||
+              (updateField.type.isScalar && updateField.type.isSetObject)
+            ) {
               if (['id', 'createdAt', 'updatedAt'].includes(updateField.name)) {
                 return '';
               }
@@ -414,7 +522,11 @@ ${indent}}
         `${indent}    },\n`;
     }
 
-    if (operationFieldName === 'upsert' && createFields && createFields.length > 0) {
+    if (
+      operationFieldName === 'upsert' &&
+      createFields &&
+      createFields.length > 0
+    ) {
       if (depth + 2 >= maxDepth) {
         return '';
       }
@@ -425,7 +537,9 @@ ${indent}}
             if (['id', 'createdAt', 'updatedAt'].includes(createField.name)) {
               return ''; // Skip meta fields
             }
-            const nestedAccessor = field.type.isList ? `item.${createField.name}` : `${accessor}.${createField.name}`;
+            const nestedAccessor = field.type.isList
+              ? `item.${createField.name}`
+              : `${accessor}.${createField.name}`;
             if (createField.type.isScalar && createField.type.isSetObject) {
               return `${indent}      ${createField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor} \n ${indent}        } : undefined,\n`;
             } else if (createField.type.isScalar) {
@@ -446,7 +560,6 @@ ${indent}}
     return code;
   }
 };
-
 
 /**
  * Generates the JSON object string for the 'where' field in a GraphQL query.
@@ -490,18 +603,26 @@ const handleWhereOperation = (
       return '';
     }
 
-    const nestedFilterTypeName = capitalizeFirstLetter(field.type.name) + 'Filter';
-    const nestedFilterTypePath = path.join(inputsPath || '', `${nestedFilterTypeName}.ts`);
+    const nestedFilterTypeName =
+      capitalizeFirstLetter(field.type.name) + 'Filter';
+    const nestedFilterTypePath = path.join(
+      inputsPath || '',
+      `${nestedFilterTypeName}.ts`
+    );
 
     if (!fs.existsSync(nestedFilterTypePath)) {
-      logger.warn(`Nested filter type file does not exist: ${nestedFilterTypePath}`);
+      logger.warn(
+        `Nested filter type file does not exist: ${nestedFilterTypePath}`
+      );
       return '';
     }
 
     const nestedFilterFields = getInputTypeDefinition(nestedFilterTypePath);
 
     if (nestedFilterFields.length === 0) {
-      logger.warn(`No fields found in nested filter type: ${nestedFilterTypePath}`);
+      logger.warn(
+        `No fields found in nested filter type: ${nestedFilterTypePath}`
+      );
       return '';
     }
 
@@ -509,7 +630,8 @@ const handleWhereOperation = (
 
     if (field.type.isList) {
       // If the field is a list, use some or every conditions
-      condition += `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
+      condition +=
+        `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
         `${indent}  some: {\n` +
         nestedFilterFields
           .map((nestedField) => {
@@ -528,7 +650,8 @@ const handleWhereOperation = (
         `${indent}} : undefined,\n`;
     } else {
       // If the field is a single relation, apply the nested filter directly
-      condition += `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
+      condition +=
+        `${indent}${field.name}: ${accessor} !== undefined ? {\n` +
         nestedFilterFields
           .map((nestedField) => {
             const nestedAccessor = `${accessor}.${nestedField.name}`;
@@ -556,12 +679,23 @@ const handleWhereOperation = (
  */
 const isReservedField = (name: string): boolean => {
   const reservedFields = [
-    'AND', 'OR', 'NOT',
-    'connect', 'disconnect', 'set',
-    'update', 'create', 'delete',
-    'connectOrCreate', 'upsert',
-    'createMany', 'deleteMany', 'updateMany',
-    'some', 'none', 'every'
+    'AND',
+    'OR',
+    'NOT',
+    'connect',
+    'disconnect',
+    'set',
+    'update',
+    'create',
+    'delete',
+    'connectOrCreate',
+    'upsert',
+    'createMany',
+    'deleteMany',
+    'updateMany',
+    'some',
+    'none',
+    'every',
   ];
   return reservedFields.includes(name);
 };
@@ -579,7 +713,23 @@ const isUniqueField = (name: string): boolean => {
   }
 
   // return true if the field matches any of the unique fields
-  const uniqueFields = ['id', 'email', 'username', 'alpacaAccountId', 'tradeId', 'alpacaOrderId', 'providerAccountId', 'slug', 'name', 'title', 'url', 'key', 'handle', 'symbol', 'clientOrderId'];
+  const uniqueFields = [
+    'id',
+    'email',
+    'username',
+    'alpacaAccountId',
+    'tradeId',
+    'alpacaOrderId',
+    'providerAccountId',
+    'slug',
+    'name',
+    'title',
+    'url',
+    'key',
+    'handle',
+    'symbol',
+    'clientOrderId',
+  ];
   return uniqueFields.includes(name);
 };
 
@@ -597,7 +747,9 @@ export const generateModelFunctions = (
   inputsPath: string,
   functionsOutputPath: string
 ): string | null => {
-  const capitalModelName = capitalizeFirstLetter(modelName) as ModelName as string;
+  const capitalModelName = capitalizeFirstLetter(
+    modelName
+  ) as ModelName as string;
   const pluralModelName = pluralize(capitalModelName); // Accurate pluralization
 
   const inputTypes: InputTypePaths = {
@@ -620,11 +772,11 @@ export const generateModelFunctions = (
     where: path.join(inputsPath, inputTypes.where),
   };
 
-
   // Add validation import for Allocation model
-  const allocationValidationImport = capitalModelName === 'Allocation'
-    ? `import { assertValidAllocation } from './validators/allocation-validator';\n`
-    : '';
+  const allocationValidationImport =
+    capitalModelName === 'Allocation'
+      ? `import { assertValidAllocation } from './validators/allocation-validator';\n`
+      : '';
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
@@ -660,7 +812,9 @@ ${allocationValidationImport}  `;
      * @returns The created ${capitalModelName} or null.
      */
     async create(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-      ${capitalModelName === 'Allocation' ? `// Validate allocation percentages before creating
+      ${
+        capitalModelName === 'Allocation'
+          ? `// Validate allocation percentages before creating
       assertValidAllocation({
         equities: props.equities,
         optionsContracts: props.optionsContracts,
@@ -670,7 +824,9 @@ ${allocationValidationImport}  `;
         crypto: props.crypto
       });
 
-      ` : ''}// Maximum number of retries for database connection issues
+      `
+          : ''
+      }// Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
       let lastError: any = null;
@@ -698,13 +854,13 @@ ${allocationValidationImport}  `;
           const variables = {
             data: {
               ${constructVariablesObject(
-    'props',
-    inputTypePaths.create,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'create'
-  )}
+                'props',
+                inputTypePaths.create,
+                capitalModelName,
+                inputsPath,
+                modelsPath,
+                'create'
+              )}
             },
           };
 
@@ -787,13 +943,13 @@ ${allocationValidationImport}  `;
         const variables = {
           data: props.map(prop => ({
     ${constructVariablesObject(
-    'prop',
-    inputTypePaths.createMany,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'createMany'
-  )}      })),
+      'prop',
+      inputTypePaths.createMany,
+      capitalModelName,
+      inputsPath,
+      modelsPath,
+      'createMany'
+    )}      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -848,7 +1004,9 @@ ${allocationValidationImport}  `;
    * @returns The updated ${capitalModelName} or null.
    */
   async update(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<${capitalModelName}Type> {
-    ${capitalModelName === 'Allocation' ? `// Validate allocation percentages before updating
+    ${
+      capitalModelName === 'Allocation'
+        ? `// Validate allocation percentages before updating
     assertValidAllocation({
       equities: props.equities,
       optionsContracts: props.optionsContracts,
@@ -858,7 +1016,9 @@ ${allocationValidationImport}  `;
       crypto: props.crypto
     });
 
-    ` : ''}// Maximum number of retries for database connection issues
+    `
+        : ''
+    }// Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
     let lastError: any = null;
@@ -885,22 +1045,22 @@ ${allocationValidationImport}  `;
         const variables = {
           where: {
           ${constructVariablesObject(
-    'props',
-    inputTypePaths.whereUnique,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'where'
-  )}      },
+            'props',
+            inputTypePaths.whereUnique,
+            capitalModelName,
+            inputsPath,
+            modelsPath,
+            'where'
+          )}      },
           data: {
     ${constructVariablesObject(
-    'props',
-    inputTypePaths.update,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'update'
-  )}      },
+      'props',
+      inputTypePaths.update,
+      capitalModelName,
+      inputsPath,
+      modelsPath,
+      'update'
+    )}      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -982,31 +1142,31 @@ ${allocationValidationImport}  `;
         const variables = {
           where: {
           ${constructVariablesObject(
-    'props',
-    inputTypePaths.whereUnique,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'where'
-  )}      },
+            'props',
+            inputTypePaths.whereUnique,
+            capitalModelName,
+            inputsPath,
+            modelsPath,
+            'where'
+          )}      },
           create: {
       ${constructVariablesObject(
-    'props',
-    inputTypePaths.create,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'create'
-  )}      },
+        'props',
+        inputTypePaths.create,
+        capitalModelName,
+        inputsPath,
+        modelsPath,
+        'create'
+      )}      },
           update: {
     ${constructVariablesObject(
-    'props',
-    inputTypePaths.update,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'updateWithoutId'
-  )}      },
+      'props',
+      inputTypePaths.update,
+      capitalModelName,
+      inputsPath,
+      modelsPath,
+      'updateWithoutId'
+    )}      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1088,23 +1248,23 @@ ${allocationValidationImport}  `;
         const variables = props.map(prop => ({
           where: {
             ${constructVariablesObject(
-    'prop',
-    inputTypePaths.whereUnique,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'where'
-  )}
+              'prop',
+              inputTypePaths.whereUnique,
+              capitalModelName,
+              inputsPath,
+              modelsPath,
+              'where'
+            )}
           },
           data: {
             ${constructVariablesObject(
-    'prop',
-    inputTypePaths.update,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'updateMany'
-  )}
+              'prop',
+              inputTypePaths.update,
+              capitalModelName,
+              inputsPath,
+              modelsPath,
+              'updateMany'
+            )}
           },
         }));
 
@@ -1270,13 +1430,13 @@ ${allocationValidationImport}  `;
         const variables = {
           where: whereInput ? whereInput : {
           ${constructVariablesObject(
-    'props',
-    inputTypePaths.whereUnique,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'where'
-  )}},
+            'props',
+            inputTypePaths.whereUnique,
+            capitalModelName,
+            inputsPath,
+            modelsPath,
+            'where'
+          )}},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -1430,13 +1590,13 @@ ${allocationValidationImport}  `;
         const variables = {
           where: whereInput ? whereInput : {
     ${constructVariablesObject(
-    'props',
-    inputTypePaths.where,
-    capitalModelName,
-    inputsPath,
-    modelsPath,
-    'findMany'
-  )}      },
+      'props',
+      inputTypePaths.where,
+      capitalModelName,
+      inputsPath,
+      modelsPath,
+      'findMany'
+    )}      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1494,7 +1654,9 @@ ${allocationValidationImport}  `;
   try {
     fs.writeFileSync(outputFilePath, operations, 'utf-8');
   } catch (error) {
-    logger.error(`Failed to write functions for model ${modelName}`, { error: String(error) });
+    logger.error(`Failed to write functions for model ${modelName}`, {
+      error: String(error),
+    });
     return null;
   }
 

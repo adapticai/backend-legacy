@@ -25,10 +25,7 @@ export {
 } from './graphql-validation-plugin';
 
 // Export authentication middleware
-export {
-  authMiddleware,
-  AuthenticatedRequest,
-} from './auth';
+export { authMiddleware, AuthenticatedRequest } from './auth';
 
 // Export audit logging plugin
 export {

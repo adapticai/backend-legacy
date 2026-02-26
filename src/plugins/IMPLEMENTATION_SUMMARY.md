@@ -58,42 +58,44 @@ Successfully implemented GraphQL query depth limiting and error message sanitiza
 ✅ **No `any` types** - Uses proper GraphQL AST types from the `graphql` package
 ✅ **Configurable** - Via `GRAPHQL_MAX_DEPTH` environment variable
 ✅ **Comprehensive** - Handles:
-  - Nested field queries
-  - Named fragments
-  - Inline fragments
-  - Circular fragment references (prevents infinite loops)
-  - Introspection queries (skipped from depth calculation)
-✅ **Logging** - Includes:
-  - Query depth and limit
-  - Query name (if available)
-  - User ID (from context)
-  - Request ID (from headers)
-  - Truncated query string
-  - Timestamp
+
+- Nested field queries
+- Named fragments
+- Inline fragments
+- Circular fragment references (prevents infinite loops)
+- Introspection queries (skipped from depth calculation)
+  ✅ **Logging** - Includes:
+- Query depth and limit
+- Query name (if available)
+- User ID (from context)
+- Request ID (from headers)
+- Truncated query string
+- Timestamp
 
 ### Error Sanitizer
 
 ✅ **No `any` types** - Proper TypeScript interfaces throughout
 ✅ **Environment-aware** - Automatically detects `NODE_ENV`
 ✅ **Secure** - In production:
-  - Replaces internal errors with "Internal server error"
-  - Strips all stack traces
-  - Removes sensitive extensions
-  - Preserves only safe error codes
-✅ **Developer-friendly** - In development:
-  - Shows full error details
-  - Includes stack traces
-  - Preserves all extensions
-✅ **Safe error codes**:
-  - `GRAPHQL_PARSE_FAILED`
-  - `GRAPHQL_VALIDATION_FAILED`
-  - `BAD_USER_INPUT`
-  - `UNAUTHENTICATED`
-  - `FORBIDDEN`
-  - `PERSISTED_QUERY_NOT_FOUND`
-  - `PERSISTED_QUERY_NOT_SUPPORTED`
-  - `BAD_REQUEST`
-  - `QUERY_DEPTH_LIMIT_EXCEEDED`
+
+- Replaces internal errors with "Internal server error"
+- Strips all stack traces
+- Removes sensitive extensions
+- Preserves only safe error codes
+  ✅ **Developer-friendly** - In development:
+- Shows full error details
+- Includes stack traces
+- Preserves all extensions
+  ✅ **Safe error codes**:
+- `GRAPHQL_PARSE_FAILED`
+- `GRAPHQL_VALIDATION_FAILED`
+- `BAD_USER_INPUT`
+- `UNAUTHENTICATED`
+- `FORBIDDEN`
+- `PERSISTED_QUERY_NOT_FOUND`
+- `PERSISTED_QUERY_NOT_SUPPORTED`
+- `BAD_REQUEST`
+- `QUERY_DEPTH_LIMIT_EXCEEDED`
 
 ## Integration Instructions
 
@@ -137,7 +139,7 @@ formatError: (err, error) => {
 
   // Then sanitize
   return sanitizer(err, error);
-}
+};
 ```
 
 ### Step 4: Configure Environment Variables
@@ -173,6 +175,7 @@ npx jest src/plugins/__tests__/error-sanitizer.test.ts
 ## Type Safety
 
 ✅ **All type-safe**:
+
 - No `any` types used
 - Uses `graphql` package's built-in AST types (`DocumentNode`, `FieldNode`, etc.)
 - Proper TypeScript interfaces for context
@@ -210,11 +213,13 @@ All files successfully compile with TypeScript:
 After deployment, monitor for:
 
 1. **Query depth violations**:
+
    ```
    [QueryDepthLimiter] Query rejected { depth: 8, maxDepth: 6, ... }
    ```
 
 2. **Sanitized errors**:
+
    ```
    [GraphQL Error] { message: "...", code: "INTERNAL_SERVER_ERROR", ... }
    ```
@@ -224,6 +229,7 @@ After deployment, monitor for:
 ## Support
 
 For questions or issues:
+
 - See `src/plugins/README.md` for detailed documentation
 - Check `src/plugins/integration-example.ts` for integration guidance
 - Review test files for expected behavior examples

@@ -9,17 +9,24 @@
  * We use Record<string, unknown> for the parameter to accept all generated Prisma
  * input shapes without needing to enumerate every possible field type.
  */
-export function removeUndefinedProps(obj: Record<string, unknown> | Record<string, unknown>[] | unknown): Record<string, unknown> | undefined {
+export function removeUndefinedProps(
+  obj: Record<string, unknown> | Record<string, unknown>[] | unknown
+): Record<string, unknown> | undefined {
   if (Array.isArray(obj)) {
     return obj
-      .map(item => removeUndefinedProps(item))
+      .map((item) => removeUndefinedProps(item))
       .filter(
-        item =>
+        (item) =>
           item !== undefined &&
           item !== null &&
-          (typeof item !== 'object' || Object.keys(item as Record<string, unknown>).length > 0)
+          (typeof item !== 'object' ||
+            Object.keys(item as Record<string, unknown>).length > 0)
       ) as unknown as Record<string, unknown>;
-  } else if (typeof obj === 'object' && obj !== null && !(obj instanceof Date)) {
+  } else if (
+    typeof obj === 'object' &&
+    obj !== null &&
+    !(obj instanceof Date)
+  ) {
     const record = obj as Record<string, unknown>;
     return Object.keys(record).reduce((acc: Record<string, unknown>, key) => {
       const value = record[key];
@@ -27,14 +34,26 @@ export function removeUndefinedProps(obj: Record<string, unknown> | Record<strin
       if (value !== undefined && value !== null) {
         let cleanedValue: unknown;
 
-        if (key === 'where' && typeof value === 'object' && value !== null && !(value instanceof Date)) {
+        if (
+          key === 'where' &&
+          typeof value === 'object' &&
+          value !== null &&
+          !(value instanceof Date)
+        ) {
           const whereObj = value as Record<string, unknown>;
-          if (Object.prototype.hasOwnProperty.call(whereObj, 'id') && whereObj.id !== undefined) {
+          if (
+            Object.prototype.hasOwnProperty.call(whereObj, 'id') &&
+            whereObj.id !== undefined
+          ) {
             // Retain only the 'id' field within 'where'
-            cleanedValue = { id: removeUndefinedProps(whereObj.id as Record<string, unknown>) };
+            cleanedValue = {
+              id: removeUndefinedProps(whereObj.id as Record<string, unknown>),
+            };
           } else {
             // Process 'where' object normally if 'id' is undefined or doesn't exist
-            cleanedValue = removeUndefinedProps(value as Record<string, unknown>);
+            cleanedValue = removeUndefinedProps(
+              value as Record<string, unknown>
+            );
           }
         } else {
           // Process other keys normally
@@ -44,7 +63,9 @@ export function removeUndefinedProps(obj: Record<string, unknown> | Record<strin
         if (
           cleanedValue !== undefined &&
           cleanedValue !== null &&
-          (typeof cleanedValue !== 'object' || cleanedValue instanceof Date || Object.keys(cleanedValue as Record<string, unknown>).length > 0)
+          (typeof cleanedValue !== 'object' ||
+            cleanedValue instanceof Date ||
+            Object.keys(cleanedValue as Record<string, unknown>).length > 0)
         ) {
           acc[key] = cleanedValue;
         }
@@ -54,5 +75,7 @@ export function removeUndefinedProps(obj: Record<string, unknown> | Record<strin
     }, {});
   }
 
-  return obj !== undefined && obj !== null ? obj as Record<string, unknown> : undefined;
+  return obj !== undefined && obj !== null
+    ? (obj as Record<string, unknown>)
+    : undefined;
 }

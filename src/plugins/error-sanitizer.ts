@@ -192,9 +192,7 @@ export function createErrorSanitizer() {
       logger.error('[Non-GraphQL Error]', { error: String(error) });
 
       return {
-        message: isProduction
-          ? 'Internal server error'
-          : String(error),
+        message: isProduction ? 'Internal server error' : String(error),
         extensions: {
           code: 'INTERNAL_SERVER_ERROR',
         },

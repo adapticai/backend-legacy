@@ -55,8 +55,8 @@ const parseMetaTags = (documentation?: string): MetaTags => {
   if (excludeMatch) {
     meta.GQL!.EXCLUDE = excludeMatch[1]
       .split(',')
-      .map(field => field.trim().replace(/['"]/g, ''))
-      .filter(field => field.length > 0);
+      .map((field) => field.trim().replace(/['"]/g, ''))
+      .filter((field) => field.length > 0);
   }
 
   // Parse INCLUDE
@@ -64,8 +64,8 @@ const parseMetaTags = (documentation?: string): MetaTags => {
   if (includeMatch) {
     meta.GQL!.INCLUDE = includeMatch[1]
       .split(',')
-      .map(field => field.trim().replace(/['"]/g, ''))
-      .filter(field => field.length > 0);
+      .map((field) => field.trim().replace(/['"]/g, ''))
+      .filter((field) => field.length > 0);
   }
 
   // Parse MAX_DEPTH
@@ -108,7 +108,9 @@ const generateSelectionSet = (
   const indent = '  '.repeat(currentDepth);
 
   // Filter fields based on parent's EXCLUDE directive
-  const availableFields = model.fields.filter(field => !parentExcludes.includes(field.name));
+  const availableFields = model.fields.filter(
+    (field) => !parentExcludes.includes(field.name)
+  );
 
   for (const field of availableFields) {
     const meta = parseMetaTags(field.documentation);
@@ -127,7 +129,9 @@ const generateSelectionSet = (
     }
 
     // Handle relations
-    const relatedModel = dmmf.datamodel.models.find(m => m.name === field.type);
+    const relatedModel = dmmf.datamodel.models.find(
+      (m) => m.name === field.type
+    );
     if (!relatedModel) continue;
 
     // Pass down any EXCLUDE fields from the current field's meta
@@ -161,12 +165,20 @@ const main = async () => {
 
     const schema = await fs.readFile(SCHEMA_PATH, 'utf-8');
     const dmmf = await getDMMF({ datamodel: schema });
-    const enumNames = new Set(dmmf.datamodel.enums.map(e => e.name));
+    const enumNames = new Set(dmmf.datamodel.enums.map((e) => e.name));
     const cache = new Map<string, string>();
 
     // Generate selection sets
     for (const model of dmmf.datamodel.models) {
-      const selectionSet = generateSelectionSet(model, dmmf, 1, MAX_DEPTH, enumNames, new Set(), cache);
+      const selectionSet = generateSelectionSet(
+        model,
+        dmmf,
+        1,
+        MAX_DEPTH,
+        enumNames,
+        new Set(),
+        cache
+      );
       const fileName = `${model.name}.ts`;
       const filePath = path.join(OUTPUT_DIR, fileName);
 
@@ -176,15 +188,14 @@ const main = async () => {
 
     // Generate index file
     const imports = dmmf.datamodel.models
-      .map(model => `import { ${model.name} } from './${model.name}';`)
+      .map((model) => `import { ${model.name} } from './${model.name}';`)
       .join('\n');
 
     const exports = `export const selectionSets: Record<string, string> = {
-${dmmf.datamodel.models.map(model => `  ${model.name},`).join('\n')}
+${dmmf.datamodel.models.map((model) => `  ${model.name},`).join('\n')}
 };\n\nexport default selectionSets;\n`;
 
     await fs.writeFile(INDEX_FILE, `${imports}\n\n${exports}`, 'utf-8');
-
   } catch (error) {
     logger.error('Error generating selection sets', { error: String(error) });
     process.exit(1);

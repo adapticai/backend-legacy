@@ -66,7 +66,9 @@ const shouldExcludeField = (fieldName: string): boolean => {
   );
 };
 
-const parseMetaTags = (documentation?: string): { meta: { [key: string]: any }; description: string } => {
+const parseMetaTags = (
+  documentation?: string
+): { meta: { [key: string]: any }; description: string } => {
   const meta: { [key: string]: any } = {};
   if (!documentation) return { meta, description: '' };
 
@@ -83,7 +85,10 @@ const parseMetaTags = (documentation?: string): { meta: { [key: string]: any }; 
     if (value.toLowerCase() === 'true') parsedValue = true;
     else if (value.toLowerCase() === 'false') parsedValue = false;
     else if (value.startsWith('[') && value.endsWith(']')) {
-      parsedValue = value.slice(1, -1).split(',').map((s) => s.trim().replace(/['"]/g, ''));
+      parsedValue = value
+        .slice(1, -1)
+        .split(',')
+        .map((s) => s.trim().replace(/['"]/g, ''));
     } else {
       parsedValue = value.replace(/['"]/g, '');
     }
@@ -107,9 +112,10 @@ const generateEnumDeclarations = (enums: DMMF.DatamodelEnum[]): string => {
     // Process each enum member
     const values = enumObj.values
       .map((v) => {
-        const valueDocumentation = 'documentation' in v && v.documentation
-          ? `  /// ${v.documentation}\n`
-          : '';
+        const valueDocumentation =
+          'documentation' in v && v.documentation
+            ? `  /// ${v.documentation}\n`
+            : '';
         return `${valueDocumentation}  ${v.name}`;
       })
       .join('\n\n');
@@ -152,7 +158,7 @@ const generateTypeString = (
   const fieldsDeclarations: string[] = [];
 
   const fieldsToProcess = specificIncludeFields
-    ? model.fields.filter(f => specificIncludeFields.includes(f.name))
+    ? model.fields.filter((f) => specificIncludeFields.includes(f.name))
     : model.fields;
 
   for (const field of fieldsToProcess) {
@@ -163,7 +169,9 @@ const generateTypeString = (
 
     if (metaTags['TYPESTRING.SKIP'] === true && !shouldProcess) continue;
 
-    const includeFields = metaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
+    const includeFields = metaTags['TYPESTRING.INCLUDE'] as
+      | string[]
+      | undefined;
 
     const isOptional = field.isRequired ? '' : '?';
     const isArray = field.isList ? '[]' : '';
@@ -200,13 +208,23 @@ const generateTypeString = (
           if (includeFields && includeFields.length > 0) {
             nestedType = `{\n${includeFields
               .map((f) => {
-                const nestedField = relatedModel.fields.find((nf) => nf.name === f);
+                const nestedField = relatedModel.fields.find(
+                  (nf) => nf.name === f
+                );
                 if (!nestedField) return '';
 
-                const { meta: nestedMetaTags, description: nestedDescription } = parseMetaTags(nestedField.documentation);
-                const nestedShouldProcess = shouldProcessField(nestedField, nestedMetaTags);
+                const { meta: nestedMetaTags, description: nestedDescription } =
+                  parseMetaTags(nestedField.documentation);
+                const nestedShouldProcess = shouldProcessField(
+                  nestedField,
+                  nestedMetaTags
+                );
 
-                if (nestedMetaTags['TYPESTRING.SKIP'] === true && !nestedShouldProcess) return '';
+                if (
+                  nestedMetaTags['TYPESTRING.SKIP'] === true &&
+                  !nestedShouldProcess
+                )
+                  return '';
 
                 const nestedIsOptional = nestedField.isRequired ? '' : '?';
                 const nestedIsArray = nestedField.isList ? '[]' : '';
@@ -217,9 +235,17 @@ const generateTypeString = (
                   : '';
 
                 if (nestedField.kind === 'scalar') {
-                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums, enums);
+                  nestedTsType = prismaFieldToTsType(
+                    nestedField,
+                    includedEnums,
+                    enums
+                  );
                 } else if (nestedField.kind === 'enum') {
-                  nestedTsType = prismaFieldToTsType(nestedField, includedEnums, enums);
+                  nestedTsType = prismaFieldToTsType(
+                    nestedField,
+                    includedEnums,
+                    enums
+                  );
                 } else if (nestedField.kind === 'object') {
                   if (ancestors.has(nestedField.type)) {
                     logger.info(
@@ -229,7 +255,9 @@ const generateTypeString = (
                   } else {
                     const deeperRelatedModel = models.get(nestedField.type);
                     if (deeperRelatedModel) {
-                      const deeperIncludeFields = nestedMetaTags['TYPESTRING.INCLUDE'] as string[] | undefined;
+                      const deeperIncludeFields = nestedMetaTags[
+                        'TYPESTRING.INCLUDE'
+                      ] as string[] | undefined;
                       nestedTsType = generateTypeString(
                         deeperRelatedModel,
                         models,
@@ -250,7 +278,7 @@ const generateTypeString = (
 
                 return `${nestedFieldDescription}${indent(indentLevel + 2)}${nestedField.name}${nestedIsOptional}: ${nestedTsType}${nestedIsArray};`;
               })
-              .filter(line => line !== '')
+              .filter((line) => line !== '')
               .join('\n')}\n${indent(indentLevel + 1)}}`;
           } else {
             nestedType = generateTypeString(
@@ -316,8 +344,8 @@ const generateTypeStrings = async () => {
 
     const allEnums = [
       ...dmmf.datamodel.enums,
-      ...((dmmf.schema.enumTypes.prisma ?? []).map(schemaEnumToDatamodelEnum)),
-      ...((dmmf.schema.enumTypes.model ?? []).map(schemaEnumToDatamodelEnum))
+      ...(dmmf.schema.enumTypes.prisma ?? []).map(schemaEnumToDatamodelEnum),
+      ...(dmmf.schema.enumTypes.model ?? []).map(schemaEnumToDatamodelEnum),
     ];
 
     const enumsMap = new Map(allEnums.map((e) => [e.name, e]));
@@ -344,7 +372,9 @@ const generateTypeStrings = async () => {
       const typeDeclaration = `export type ${model.name} = ${typeBody};\n\n`;
 
       // Retrieve the enums for this model
-      const modelEnums = Array.from(includedEnums).map((name) => enumsMap.get(name) as DMMF.DatamodelEnum);
+      const modelEnums = Array.from(includedEnums).map(
+        (name) => enumsMap.get(name) as DMMF.DatamodelEnum
+      );
       const enumDeclarations = generateEnumDeclarations(modelEnums);
 
       const typeString = instructionLine + typeDeclaration + enumDeclarations;
@@ -368,7 +398,10 @@ const generateTypeStrings = async () => {
 
     const indexContent =
       Array.from(models.keys())
-        .map((modelName) => `import { ${modelName}TypeString } from './${modelName}';`)
+        .map(
+          (modelName) =>
+            `import { ${modelName}TypeString } from './${modelName}';`
+        )
         .join('\n') +
       `\n\nexport const typeStrings = {\n` +
       exportStatements.join('\n') +

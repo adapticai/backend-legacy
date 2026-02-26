@@ -6,8 +6,14 @@ import { exit } from 'process';
 import { logger } from '../utils/logger';
 
 // Define paths
-const MODELS_PATH = path.join(__dirname, '../generated/typegraphql-prisma/models');
-const INPUTS_PATH = path.join(__dirname, '../generated/typegraphql-prisma/resolvers/inputs');
+const MODELS_PATH = path.join(
+  __dirname,
+  '../generated/typegraphql-prisma/models'
+);
+const INPUTS_PATH = path.join(
+  __dirname,
+  '../generated/typegraphql-prisma/resolvers/inputs'
+);
 const FUNCTIONS_OUTPUT_PATH = path.join(__dirname, '../');
 
 // Ensure the output directory exists
@@ -18,7 +24,16 @@ if (!fs.existsSync(FUNCTIONS_OUTPUT_PATH)) {
 // Delete all files within the output directory (excluding the server.ts and utils.ts files, and ignore directories)
 const files = fs.readdirSync(FUNCTIONS_OUTPUT_PATH);
 for (const file of files) {
-  if (file !== 'server.ts' && file !== 'utils.ts' && file !== 'client.ts' && file !== 'apollo-client.client.ts' && file !== 'apollo-client.server.ts' && file !== 'prismaClient.ts' && file !== 'getToken.ts' && file !== 'health.ts') {
+  if (
+    file !== 'server.ts' &&
+    file !== 'utils.ts' &&
+    file !== 'client.ts' &&
+    file !== 'apollo-client.client.ts' &&
+    file !== 'apollo-client.server.ts' &&
+    file !== 'prismaClient.ts' &&
+    file !== 'getToken.ts' &&
+    file !== 'health.ts'
+  ) {
     const filePath = path.join(FUNCTIONS_OUTPUT_PATH, file);
     const stat = fs.statSync(filePath as fs.PathLike);
     if (stat.isFile()) {
@@ -74,8 +89,10 @@ try {
   } else {
     // If models directory doesn't exist, use previously generated files
     logger.warn(`Models directory at ${MODELS_PATH} does not exist.`);
-    logger.warn('Using existing generated files or trying alternative approach.');
-    
+    logger.warn(
+      'Using existing generated files or trying alternative approach.'
+    );
+
     // Try looking for model references in the Prisma schema
     const schemaPath = path.join(__dirname, '../../prisma/schema.prisma');
     if (fs.existsSync(schemaPath)) {
@@ -83,7 +100,7 @@ try {
       const modelMatches = schemaContent.match(/model\s+(\w+)\s+{/g);
       if (modelMatches) {
         modelFiles = modelMatches
-          .map(match => match.replace(/model\s+(\w+)\s+{/, '$1.ts'))
+          .map((match) => match.replace(/model\s+(\w+)\s+{/, '$1.ts'))
           .filter(Boolean);
       }
     }
@@ -96,16 +113,28 @@ try {
 if (modelFiles.length === 0) {
   // Look at the files in the output directory that might be model files
   try {
-    const existingFiles = fs.readdirSync(FUNCTIONS_OUTPUT_PATH)
-      .filter(file => 
-        file.endsWith('.ts') && 
-        !['index.ts', 'server.ts', 'utils.ts', 'client.ts', 'apollo-client.client.ts', 
-         'apollo-client.server.ts', 'prismaClient.ts', 'getToken.ts'].includes(file)
+    const existingFiles = fs
+      .readdirSync(FUNCTIONS_OUTPUT_PATH)
+      .filter(
+        (file) =>
+          file.endsWith('.ts') &&
+          ![
+            'index.ts',
+            'server.ts',
+            'utils.ts',
+            'client.ts',
+            'apollo-client.client.ts',
+            'apollo-client.server.ts',
+            'prismaClient.ts',
+            'getToken.ts',
+          ].includes(file)
       );
-    
+
     if (existingFiles.length > 0) {
       modelFiles = existingFiles;
-      logger.warn(`Using ${existingFiles.length} existing model files from the output directory.`);
+      logger.warn(
+        `Using ${existingFiles.length} existing model files from the output directory.`
+      );
     } else {
       logger.error('No model files found or extractable from schema.');
       // Don't exit, just continue with an empty set
@@ -118,9 +147,15 @@ if (modelFiles.length === 0) {
 // Iterate over the models and generate functions
 modelFiles.forEach((file) => {
   const modelName = path.basename(file, '.ts');
-  const capitalModelName = modelName.charAt(0).toUpperCase() + modelName.slice(1);
+  const capitalModelName =
+    modelName.charAt(0).toUpperCase() + modelName.slice(1);
 
-  const modelFunctions = generateModelFunctions(capitalModelName, MODELS_PATH, INPUTS_PATH, FUNCTIONS_OUTPUT_PATH);
+  const modelFunctions = generateModelFunctions(
+    capitalModelName,
+    MODELS_PATH,
+    INPUTS_PATH,
+    FUNCTIONS_OUTPUT_PATH
+  );
 
   if (modelFunctions === null) {
     // Skip models that couldn't generate functions
@@ -129,7 +164,9 @@ modelFiles.forEach((file) => {
 
   // Add import and export statements
   importStatements.push(`import { ${modelName} } from './${modelName}';`);
-  exportStatements.push(`  ${modelName[0].toLowerCase()}${modelName.slice(1)}: ${modelName},`);
+  exportStatements.push(
+    `  ${modelName[0].toLowerCase()}${modelName.slice(1)}: ${modelName},`
+  );
 });
 
 // Append import statements to indexContent

@@ -98,7 +98,6 @@ Your backend server should now be up and running, ready to handle GraphQL reques
 You can import and use the type definitions provided by the `@adaptic/backend-legacy` package to ensure type safety in your application. Here’s how to do it:
 
 - **User Authentication**
-
   - `username`: String (required)
   - `password`: String (required)
 
@@ -117,7 +116,6 @@ const myWorkspace: Workspace = {
 ```
 
 - **User Authentication**
-
   - On successful authentication:
     ```json
     {
@@ -131,7 +129,7 @@ const myWorkspace: Workspace = {
 
 When performing a GraphQL query or mutation, you can use the imported type definitions to ensure your variables and data are correctly typed:
 
-```typescript
+````typescript
 import { gql } from '@apollo/client';
 import { WorkspaceInput } from '@adaptic/backend-legacy/types';
 
@@ -164,7 +162,7 @@ const createWorkspace = async () => {
   });
   console.log(response.data);
 };
-```
+````
 
 ### Code Examples
 
@@ -177,7 +175,7 @@ const authenticateUser = async (username, password) => {
   const response = await fetch('http://localhost:PORT/graphql', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       query: `
@@ -190,25 +188,25 @@ const authenticateUser = async (username, password) => {
             }
           }
         }
-      `
-    })
-  })
-  const data = await response.json()
-  return data
-}
+      `,
+    }),
+  });
+  const data = await response.json();
+  return data;
+};
 
 // Usage
-authenticateUser('testuser', 'password123').then(console.log)
+authenticateUser('testuser', 'password123').then(console.log);
 ```
 
 #### GraphQL Query
 
 ```javascript
-const fetchUserData = async userId => {
+const fetchUserData = async (userId) => {
   const response = await fetch('http://localhost:PORT/graphql', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       query: `
@@ -219,15 +217,15 @@ const fetchUserData = async userId => {
             email
           }
         }
-      `
-    })
-  })
-  const data = await response.json()
-  return data
-}
+      `,
+    }),
+  });
+  const data = await response.json();
+  return data;
+};
 
 // Usage
-fetchUserData('USER_ID').then(console.log)
+fetchUserData('USER_ID').then(console.log);
 ```
 
 ## Contributing

@@ -1,5 +1,8 @@
 import { GraphQLError } from 'graphql';
-import { createValidationPlugin, VALIDATION_RULES } from '../middleware/graphql-validation-plugin';
+import {
+  createValidationPlugin,
+  VALIDATION_RULES,
+} from '../middleware/graphql-validation-plugin';
 
 describe('GraphQL Validation Plugin', () => {
   describe('VALIDATION_RULES', () => {
@@ -14,7 +17,9 @@ describe('GraphQL Validation Plugin', () => {
     });
 
     it('should have rules for quantity fields', () => {
-      const quantityRules = VALIDATION_RULES.filter((rule) => rule.pattern.test('quantity'));
+      const quantityRules = VALIDATION_RULES.filter((rule) =>
+        rule.pattern.test('quantity')
+      );
       expect(quantityRules.length).toBeGreaterThan(0);
     });
 
@@ -53,7 +58,9 @@ describe('GraphQL Validation Plugin', () => {
 
   describe('Validation behavior', () => {
     let plugin: ReturnType<typeof createValidationPlugin>;
-    let listener: Awaited<ReturnType<NonNullable<typeof plugin.requestDidStart>>>;
+    let listener: Awaited<
+      ReturnType<NonNullable<typeof plugin.requestDidStart>>
+    >;
 
     beforeEach(async () => {
       plugin = createValidationPlugin();
@@ -89,9 +96,9 @@ describe('GraphQL Validation Plugin', () => {
         },
       };
 
-      await expect(listener.didResolveOperation!(requestContext as any)).rejects.toThrow(
-        GraphQLError
-      );
+      await expect(
+        listener.didResolveOperation!(requestContext as any)
+      ).rejects.toThrow(GraphQLError);
     });
 
     it('should accept valid percentage values', async () => {
@@ -136,7 +143,9 @@ describe('GraphQL Validation Plugin', () => {
         if (error instanceof GraphQLError) {
           expect(error.extensions.code).toBe('BAD_USER_INPUT');
           expect(error.extensions.validationErrors).toBeDefined();
-          expect((error.extensions.validationErrors as any[]).length).toBeGreaterThan(0);
+          expect(
+            (error.extensions.validationErrors as any[]).length
+          ).toBeGreaterThan(0);
         }
       }
     });
@@ -204,9 +213,9 @@ describe('GraphQL Validation Plugin', () => {
         },
       };
 
-      await expect(listener.didResolveOperation!(requestContext as any)).rejects.toThrow(
-        GraphQLError
-      );
+      await expect(
+        listener.didResolveOperation!(requestContext as any)
+      ).rejects.toThrow(GraphQLError);
     });
 
     it('should accept zero for threshold fields', async () => {
@@ -246,9 +255,9 @@ describe('GraphQL Validation Plugin', () => {
         },
       };
 
-      await expect(listener.didResolveOperation!(requestContext as any)).rejects.toThrow(
-        GraphQLError
-      );
+      await expect(
+        listener.didResolveOperation!(requestContext as any)
+      ).rejects.toThrow(GraphQLError);
     });
 
     it('should handle empty variables object', async () => {

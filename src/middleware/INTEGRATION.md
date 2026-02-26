@@ -46,7 +46,9 @@ const startServer = async () => {
   const app = express();
   const httpServer = createServer(app);
 
-  app.use('/api', (req, res, next) => authMiddleware(req as AuthenticatedRequest, res, next));
+  app.use('/api', (req, res, next) =>
+    authMiddleware(req as AuthenticatedRequest, res, next)
+  );
 
   const server = new ApolloServer({
     schema,
@@ -94,9 +96,9 @@ After integration, test with a mutation that includes invalid data:
 mutation {
   createOneConfiguration(
     data: {
-      tradeAllocationPct: 150  # Invalid: > 100
-      quantity: -5              # Invalid: negative
-      name: ""                  # Invalid: empty
+      tradeAllocationPct: 150 # Invalid: > 100
+      quantity: -5 # Invalid: negative
+      name: "" # Invalid: empty
     }
   ) {
     id
@@ -159,15 +161,15 @@ if (error.extensions?.code === 'BAD_USER_INPUT') {
 
 The plugin automatically validates these field patterns:
 
-| Field Pattern | Validation | Example Fields |
-|--------------|------------|----------------|
-| `*Pct` | 0-100 | `allocationPct`, `tradePct` |
-| `*Percent`, `*Percentage` | 0-100 | `tradePercent`, `profitPercentage` |
-| `quantity` | > 0 | `quantity` |
-| `*Threshold` | > 0 (allows 0) | `volumeThreshold` |
-| `count` | > 0 | `count` |
-| `name`, `title`, `description` | Non-empty | `name`, `title` |
-| `symbol`, `type`, `status` | Non-empty | `symbol`, `type` |
+| Field Pattern                  | Validation     | Example Fields                     |
+| ------------------------------ | -------------- | ---------------------------------- |
+| `*Pct`                         | 0-100          | `allocationPct`, `tradePct`        |
+| `*Percent`, `*Percentage`      | 0-100          | `tradePercent`, `profitPercentage` |
+| `quantity`                     | > 0            | `quantity`                         |
+| `*Threshold`                   | > 0 (allows 0) | `volumeThreshold`                  |
+| `count`                        | > 0            | `count`                            |
+| `name`, `title`, `description` | Non-empty      | `name`, `title`                    |
+| `symbol`, `type`, `status`     | Non-empty      | `symbol`, `type`                   |
 
 ## Customization
 

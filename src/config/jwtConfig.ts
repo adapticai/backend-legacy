@@ -12,7 +12,8 @@
 import { logger } from '../utils/logger';
 
 const MINIMUM_SECRET_LENGTH = 32;
-const DEV_FALLBACK_SECRET = 'development_secret_key_for_local_testing_only_do_not_use_in_production';
+const DEV_FALLBACK_SECRET =
+  'development_secret_key_for_local_testing_only_do_not_use_in_production';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -23,9 +24,9 @@ function resolveJwtSecret(): string {
     if (isProduction) {
       logger.error(
         '[SECURITY] FATAL: JWT_SECRET environment variable is not set. ' +
-        'The server cannot start in production without a valid JWT_SECRET. ' +
-        'Set JWT_SECRET to a cryptographically random string of at least ' +
-        `${MINIMUM_SECRET_LENGTH} characters.`
+          'The server cannot start in production without a valid JWT_SECRET. ' +
+          'Set JWT_SECRET to a cryptographically random string of at least ' +
+          `${MINIMUM_SECRET_LENGTH} characters.`
       );
       throw new Error(
         'JWT_SECRET is required in production. Set the JWT_SECRET environment variable.'
@@ -34,8 +35,8 @@ function resolveJwtSecret(): string {
 
     logger.warn(
       '[SECURITY] WARNING: JWT_SECRET is not set. Using an insecure development ' +
-      'fallback. This is acceptable for local development only. ' +
-      'Do NOT deploy to production without setting JWT_SECRET.'
+        'fallback. This is acceptable for local development only. ' +
+        'Do NOT deploy to production without setting JWT_SECRET.'
     );
     return DEV_FALLBACK_SECRET;
   }
@@ -44,18 +45,18 @@ function resolveJwtSecret(): string {
     if (isProduction) {
       logger.error(
         `[SECURITY] FATAL: JWT_SECRET is too short (${secret.length} characters). ` +
-        `A minimum of ${MINIMUM_SECRET_LENGTH} characters is required in production.`
+          `A minimum of ${MINIMUM_SECRET_LENGTH} characters is required in production.`
       );
       throw new Error(
         `JWT_SECRET must be at least ${MINIMUM_SECRET_LENGTH} characters in production. ` +
-        `Current length: ${secret.length}.`
+          `Current length: ${secret.length}.`
       );
     }
 
     logger.warn(
       `[SECURITY] WARNING: JWT_SECRET is only ${secret.length} characters. ` +
-      `A minimum of ${MINIMUM_SECRET_LENGTH} characters is recommended. ` +
-      'This warning will become a fatal error in production.'
+        `A minimum of ${MINIMUM_SECRET_LENGTH} characters is recommended. ` +
+        'This warning will become a fatal error in production.'
     );
   }
 

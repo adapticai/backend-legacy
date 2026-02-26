@@ -9,6 +9,7 @@ This directory contains security and operational plugins for Apollo Server.
 Prevents overly complex queries that could cause performance issues by limiting the maximum depth of nested fields in GraphQL queries.
 
 **Features:**
+
 - Configurable maximum query depth (default: 6, via `GRAPHQL_MAX_DEPTH` env var)
 - Handles fragments (both named and inline)
 - Prevents circular fragment recursion
@@ -62,6 +63,7 @@ When a query exceeds the depth limit, clients receive:
 Sanitizes error messages to prevent information leakage in production while maintaining helpful debugging in development.
 
 **Features:**
+
 - Strips stack traces in production
 - Replaces internal error messages with generic "Internal server error"
 - Preserves safe validation errors (e.g., `BAD_USER_INPUT`, `GRAPHQL_VALIDATION_FAILED`)
@@ -84,14 +86,15 @@ const server = new ApolloServer({
 
 **Behavior:**
 
-| Environment | Internal Errors | Validation Errors | Stack Traces | Logging |
-|-------------|----------------|-------------------|--------------|---------|
-| Development | Full details | Full details | Included | Full details |
-| Production | "Internal server error" | Original message | Stripped | Full details (server-side) |
+| Environment | Internal Errors         | Validation Errors | Stack Traces | Logging                    |
+| ----------- | ----------------------- | ----------------- | ------------ | -------------------------- |
+| Development | Full details            | Full details      | Included     | Full details               |
+| Production  | "Internal server error" | Original message  | Stripped     | Full details (server-side) |
 
 **Safe Error Codes:**
 
 The following error codes are considered safe and will be returned as-is:
+
 - `GRAPHQL_PARSE_FAILED`
 - `GRAPHQL_VALIDATION_FAILED`
 - `BAD_USER_INPUT`
@@ -144,6 +147,7 @@ Set `NODE_ENV=production` and trigger an internal error to verify sanitization.
 Both plugins log important information:
 
 **Query Depth Limiter:**
+
 ```
 [QueryDepthLimiter] Query rejected {
   depth: 8,
@@ -156,6 +160,7 @@ Both plugins log important information:
 ```
 
 **Error Sanitizer:**
+
 ```
 [GraphQL Error] {
   message: "Cannot read property 'x' of undefined",

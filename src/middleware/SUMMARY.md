@@ -78,25 +78,30 @@ Input validation middleware has been successfully implemented for GraphQL mutati
 ## Validation Rules Implemented
 
 ### Percentage Fields (0-100 range)
+
 - **Patterns**: `*Pct`, `*Percent`, `*Percentage`
 - **Examples**: `allocationPct`, `tradePercent`, `profitPercentage`
 - **Applies to**: `cryptoTradeAllocationPct`, `tradeAllocationPct`, `minPercentageChange`, `portfolioTrailPercent`, etc.
 
 ### Positive Numbers (> 0)
+
 - **Patterns**: `quantity`, `*Threshold` (allows 0), `count`
 - **Examples**: `quantity`, `volumeThreshold`, `count`
 - **Applies to**: All quantity and threshold fields in mutations
 
 ### Non-Empty Strings
+
 - **Patterns**: `name`, `title`, `description`, `symbol`, `type`, `status`
 - **Examples**: Portfolio names, trade titles, symbol identifiers
 - **Applies to**: All required string fields
 
 ### Confidence Scores (0-1 range)
+
 - **Function**: `validateConfidenceScore()`
 - **Used for**: ML model confidence values
 
 ### Email & URL Validation
+
 - **Functions**: `validateEmail()`, `validateUrl()`
 - **Format validation**: Basic regex for emails, URL constructor for URLs
 
@@ -117,6 +122,7 @@ Input validation middleware has been successfully implemented for GraphQL mutati
 ## Integration Status
 
 ### ✅ Completed
+
 - [x] Core validation functions implemented
 - [x] GraphQL validation plugin implemented
 - [x] Type definitions created
@@ -127,6 +133,7 @@ Input validation middleware has been successfully implemented for GraphQL mutati
 - [x] TypeScript compilation verified
 
 ### 🔄 Pending
+
 - [ ] Integration into `server.ts` (requires manual step)
 - [ ] Testing with real mutations
 - [ ] Frontend error handling updates (optional)
@@ -136,11 +143,13 @@ Input validation middleware has been successfully implemented for GraphQL mutati
 ### Quick Start (5 minutes)
 
 1. Add import to `src/server.ts`:
+
 ```typescript
 import { createValidationPlugin } from './middleware/graphql-validation-plugin';
 ```
 
 2. Add plugin to Apollo Server plugins array:
+
 ```typescript
 plugins: [
   ApolloServerPluginDrainHttpServer({ httpServer }),
@@ -214,6 +223,7 @@ npm test src/tests/graphql-validation-plugin.test.ts
 ## Dependencies
 
 All dependencies are already installed:
+
 - `graphql` (for GraphQLError)
 - `@apollo/server` (for plugin types)
 - `type-graphql` (for decorators in examples)
@@ -250,6 +260,7 @@ src/tests/
 ## Questions?
 
 See the documentation files:
+
 - **Usage questions**: `README.md`
 - **Integration questions**: `INTEGRATION.md`
 - **Code examples**: `validation-examples.ts`

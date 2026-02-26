@@ -117,7 +117,9 @@ function generateModelsSection() {
   enums.forEach(async (enumName) => {
     // Dynamic import to retrieve enum keys (for documentation only)
     // (Note: dynamic import here returns a Promise in ESM; if needed, adjust for async.)
-    const enumValues = Object.keys(await import(path.join(enumsDir, `${enumName}.mjs`)));
+    const enumValues = Object.keys(
+      await import(path.join(enumsDir, `${enumName}.mjs`))
+    );
     section += `| ${enumName} |\n`;
   });
 
@@ -155,7 +157,12 @@ const readmePath = path.join(distDir, 'README.md');
 // The ESM (formerly server) folder will now be named "esm"
 const esmDir = path.join(distDir, 'esm');
 // Models & enums remain in their generated subfolders
-const modelsDir = path.join(distDir, 'generated', 'typegraphql-prisma', 'models');
+const modelsDir = path.join(
+  distDir,
+  'generated',
+  'typegraphql-prisma',
+  'models'
+);
 const enumsDir = path.join(distDir, 'generated', 'typegraphql-prisma', 'enums');
 
 // -----------------------------------------------------------------------------
@@ -167,7 +174,9 @@ try {
     fs.renameSync(serverDir, esmDir);
     console.log('Renamed "server" folder to "esm".');
   } else {
-    console.log('No "server" folder found; assuming "esm" folder already exists.');
+    console.log(
+      'No "server" folder found; assuming "esm" folder already exists.'
+    );
   }
 } catch (err) {
   console.error('Error renaming "server" folder to "esm":', err);
@@ -178,7 +187,10 @@ try {
 // Step 1: Copy package-npm.json and README-npm.md to dist as package.json and README.md
 // -----------------------------------------------------------------------------
 try {
-  fs.copyFileSync(path.join(projectRoot, 'package-npm.json'), path.join(distDir, 'package.json'));
+  fs.copyFileSync(
+    path.join(projectRoot, 'package-npm.json'),
+    path.join(distDir, 'package.json')
+  );
   fs.copyFileSync(path.join(projectRoot, 'README-npm.md'), readmePath);
   console.log('Copied package.json and README.md to dist.');
 } catch (err) {
@@ -199,19 +211,23 @@ try {
   // - Files in the root (non‑esm) are renamed to .cjs (CommonJS).
   // - Files in the esm folder are renamed to .mjs (ESM).
   packageJson.exports = {
-    ".": {
-      "import": "./esm/index.mjs",
-      "require": "./index.cjs",
-      "types": "./index.d.ts"
+    '.': {
+      import: './esm/index.mjs',
+      require: './index.cjs',
+      types: './index.d.ts',
     },
-    "./*": {
-      "import": "./esm/*.mjs",
-      "require": "./*.cjs",
-      "types": "./*.d.ts"
-    }
+    './*': {
+      import: './esm/*.mjs',
+      require: './*.cjs',
+      types: './*.d.ts',
+    },
   };
 
-  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2), 'utf8');
+  fs.writeFileSync(
+    packageJsonPath,
+    JSON.stringify(packageJson, null, 2),
+    'utf8'
+  );
   console.log('Updated package.json exports for ESM and CJS, including types.');
 } catch (err) {
   console.error('Error updating package.json exports:', err);
@@ -247,7 +263,9 @@ try {
 try {
   const allFiles = getFilesRecursively(distDir);
   // Exclude files that start with the esm folder path
-  const cjsFiles = allFiles.filter((file) => !file.startsWith(esmDir) && file.endsWith('.js'));
+  const cjsFiles = allFiles.filter(
+    (file) => !file.startsWith(esmDir) && file.endsWith('.js')
+  );
   cjsFiles.forEach((file) => {
     const newFile = file.replace(/\.js$/, '.cjs');
     fs.renameSync(file, newFile);
@@ -268,9 +286,14 @@ try {
   const esmIndexPath = path.join(esmDir, 'index.mjs');
   if (fs.existsSync(esmIndexPath)) {
     let content = fs.readFileSync(esmIndexPath, 'utf8');
-    content = content.replace(/\.\/generated\/typeStrings\/index/g, './generated/typeStrings/index.mjs');
+    content = content.replace(
+      /\.\/generated\/typeStrings\/index/g,
+      './generated/typeStrings/index.mjs'
+    );
     fs.writeFileSync(esmIndexPath, content, 'utf8');
-    console.log('Updated import in esm/index.mjs for "./generated/typeStrings/index" to use .mjs extension.');
+    console.log(
+      'Updated import in esm/index.mjs for "./generated/typeStrings/index" to use .mjs extension.'
+    );
   } else {
     console.log('esm/index.mjs not found, skipping update for esm/index.mjs.');
   }
@@ -285,7 +308,10 @@ try {
 try {
   let readmeContent = fs.readFileSync(readmePath, 'utf8');
   // Remove any existing Models and CRUD Resolvers section
-  readmeContent = readmeContent.replace(/### Models and CRUD Resolvers[\s\S]*?(?=###|$)/, '');
+  readmeContent = readmeContent.replace(
+    /### Models and CRUD Resolvers[\s\S]*?(?=###|$)/,
+    ''
+  );
   // Append the new section
   readmeContent += `\n${generateModelsSection()}\n`;
   fs.writeFileSync(readmePath, readmeContent, 'utf8');
@@ -308,7 +334,10 @@ try {
 
 try {
   let readmeContent = fs.readFileSync(readmePath, 'utf8');
-  readmeContent = readmeContent.replace(/Adaptic/g, capitalizeFirstLetter(GLOBAL_NAMESPACE));
+  readmeContent = readmeContent.replace(
+    /Adaptic/g,
+    capitalizeFirstLetter(GLOBAL_NAMESPACE)
+  );
   fs.writeFileSync(readmePath, readmeContent, 'utf8');
   console.log('Updated README.md with GLOBAL_NAMESPACE (capitalized).');
 } catch (err) {
@@ -318,7 +347,10 @@ try {
 
 try {
   let readmeContent = fs.readFileSync(readmePath, 'utf8');
-  readmeContent = readmeContent.replace(/ADAPTIC/g, GLOBAL_NAMESPACE.toUpperCase());
+  readmeContent = readmeContent.replace(
+    /ADAPTIC/g,
+    GLOBAL_NAMESPACE.toUpperCase()
+  );
   fs.writeFileSync(readmePath, readmeContent, 'utf8');
   console.log('Updated README.md with GLOBAL_NAMESPACE (uppercase).');
 } catch (err) {
@@ -386,11 +418,16 @@ try {
 
 // 6a: Update import statements in .mjs files (including index.mjs but excluding other known entry files)
 try {
-  const mjsFiles = getFilesRecursively(distDir).filter((file) => file.endsWith('.mjs'));
+  const mjsFiles = getFilesRecursively(distDir).filter((file) =>
+    file.endsWith('.mjs')
+  );
   mjsFiles.forEach((file) => {
     const baseName = path.basename(file);
     // Don't skip index.mjs since we need to update its imports too
-    if (['utils.mjs', 'client.mjs', 'prismaClient.mjs'].includes(baseName) && baseName !== 'index.mjs') {
+    if (
+      ['utils.mjs', 'client.mjs', 'prismaClient.mjs'].includes(baseName) &&
+      baseName !== 'index.mjs'
+    ) {
       return;
     }
     let content;
@@ -438,8 +475,8 @@ try {
     {
       regex: /import\s+{ getToken }\s+from\s+(['"])\.\/getToken\1;/g,
       replacement: 'import { getToken } from "./getToken.mjs";',
-      description: 'getToken import'
-    }
+      description: 'getToken import',
+    },
   ]);
 } catch (err) {
   console.error('Error updating import in esm/client.mjs for getToken:', err);
@@ -451,18 +488,23 @@ try {
   const clientMjsPath = path.join(esmDir, 'client.mjs');
   updateFile(clientMjsPath, [
     {
-      regex: /import\s+({[^}]*}|(?:\*\s+as\s+\w+)|\w+)\s+from\s+(['"])(\.\/apollo-client\.server)(?!\.mjs)(['"]);?/g,
+      regex:
+        /import\s+({[^}]*}|(?:\*\s+as\s+\w+)|\w+)\s+from\s+(['"])(\.\/apollo-client\.server)(?!\.mjs)(['"]);?/g,
       replacement: 'import $1 from $2./apollo-client.server.mjs$4;',
-      description: 'apollo-client.server import'
+      description: 'apollo-client.server import',
     },
     {
-      regex: /return\s*\(\s*await\s*import\s*\(\s*(['"])(\.\/apollo-client\.server)(?!\.mjs)(['"])\s*\)\s*\)/g,
+      regex:
+        /return\s*\(\s*await\s*import\s*\(\s*(['"])(\.\/apollo-client\.server)(?!\.mjs)(['"])\s*\)\s*\)/g,
       replacement: 'return (await import($1./apollo-client.server.mjs$3))',
-      description: 'apollo-client.server dynamic import'
-    }
+      description: 'apollo-client.server dynamic import',
+    },
   ]);
 } catch (err) {
-  console.error('Error updating import in esm/client.mjs for apollo-client.server:', err);
+  console.error(
+    'Error updating import in esm/client.mjs for apollo-client.server:',
+    err
+  );
   process.exit(1);
 }
 
@@ -471,24 +513,31 @@ try {
   const clientMjsPath = path.join(esmDir, 'client.mjs');
   updateFile(clientMjsPath, [
     {
-      regex: /import\s+({[^}]*}|(?:\*\s+as\s+\w+)|\w+)\s+from\s+(['"])(\.\/apollo-client\.client)(?!\.mjs)(['"]);?/g,
+      regex:
+        /import\s+({[^}]*}|(?:\*\s+as\s+\w+)|\w+)\s+from\s+(['"])(\.\/apollo-client\.client)(?!\.mjs)(['"]);?/g,
       replacement: 'import $1 from $2./apollo-client.client.mjs$4;',
-      description: 'apollo-client.client import'
+      description: 'apollo-client.client import',
     },
     {
-      regex: /return\s*\(\s*await\s*import\s*\(\s*(['"])(\.\/apollo-client\.client)(?!\.mjs)(['"])\s*\)\s*\)/g,
+      regex:
+        /return\s*\(\s*await\s*import\s*\(\s*(['"])(\.\/apollo-client\.client)(?!\.mjs)(['"])\s*\)\s*\)/g,
       replacement: 'return (await import($1./apollo-client.client.mjs$3))',
-      description: 'apollo-client.client dynamic import'
-    }
+      description: 'apollo-client.client dynamic import',
+    },
   ]);
 } catch (err) {
-  console.error('Error updating import in esm/client.mjs for apollo-client.client:', err);
+  console.error(
+    'Error updating import in esm/client.mjs for apollo-client.client:',
+    err
+  );
   process.exit(1);
 }
 
 // 6e: Update require() calls in .cjs files (excluding known files)
 try {
-  const cjsFiles = getFilesRecursively(distDir).filter((file) => file.endsWith('.cjs'));
+  const cjsFiles = getFilesRecursively(distDir).filter((file) =>
+    file.endsWith('.cjs')
+  );
   cjsFiles.forEach((file) => {
     const baseName = path.basename(file);
     if (['utils.cjs', 'client.cjs', 'prismaClient.cjs'].includes(baseName)) {
@@ -521,8 +570,8 @@ try {
     {
       regex: /require\s*\(\s*(['"])\.\/getToken\1\s*\)/g,
       replacement: 'require($1./getToken.cjs$1)',
-      description: 'getToken require'
-    }
+      description: 'getToken require',
+    },
   ]);
 } catch (err) {
   console.error('Error updating require() in client.cjs for getToken:', err);
@@ -534,13 +583,17 @@ try {
   const clientCjsPath = path.join(distDir, 'client.cjs');
   updateFile(clientCjsPath, [
     {
-      regex: /require\s*\(\s*(['"])(\.\/apollo-client\.server)(?!\.cjs)(['"])\s*\)/g,
+      regex:
+        /require\s*\(\s*(['"])(\.\/apollo-client\.server)(?!\.cjs)(['"])\s*\)/g,
       replacement: 'require($1./apollo-client.server.cjs$3)',
-      description: 'apollo-client.server require'
-    }
+      description: 'apollo-client.server require',
+    },
   ]);
 } catch (err) {
-  console.error('Error updating require() in client.cjs for apollo-client.server:', err);
+  console.error(
+    'Error updating require() in client.cjs for apollo-client.server:',
+    err
+  );
   process.exit(1);
 }
 
@@ -549,35 +602,46 @@ try {
   const clientCjsPath = path.join(distDir, 'client.cjs');
   updateFile(clientCjsPath, [
     {
-      regex: /require\s*\(\s*(['"])(\.\/apollo-client\.client)(?!\.cjs)(['"])\s*\)/g,
+      regex:
+        /require\s*\(\s*(['"])(\.\/apollo-client\.client)(?!\.cjs)(['"])\s*\)/g,
       replacement: 'require($1./apollo-client.client.cjs$3)',
-      description: 'apollo-client.client require'
-    }
+      description: 'apollo-client.client require',
+    },
   ]);
 } catch (err) {
-  console.error('Error updating require() in client.cjs for apollo-client.client:', err);
+  console.error(
+    'Error updating require() in client.cjs for apollo-client.client:',
+    err
+  );
   process.exit(1);
 }
 
 // 6i: Update require() in apollo-client.server.mjs to use import syntax
 try {
-  const apolloClientServerMjsPath = path.join(esmDir, 'apollo-client.server.mjs');
+  const apolloClientServerMjsPath = path.join(
+    esmDir,
+    'apollo-client.server.mjs'
+  );
   updateFile(apolloClientServerMjsPath, [
     {
       regex: /const pkg = require\("@apollo\/client"\);/g,
       replacement: 'import * as pkg from "@apollo/client";',
-      description: 'apollo-client.server mjs require-to-import'
+      description: 'apollo-client.server mjs require-to-import',
     },
     {
-      regex: /const contextPkg = require\(['"]@apollo\/client\/link\/context\/context\.cjs['"]\);/g,
-      replacement: 'import * as contextPkg from "@apollo/client/link/context/context.cjs";',
-      description: 'apollo-client.server contextPkg require-to-import'
+      regex:
+        /const contextPkg = require\(['"]@apollo\/client\/link\/context\/context\.cjs['"]\);/g,
+      replacement:
+        'import * as contextPkg from "@apollo/client/link/context/context.cjs";',
+      description: 'apollo-client.server contextPkg require-to-import',
     },
     {
-      regex: /const errorPkg = require\(['"]@apollo\/client\/link\/error\/error\.cjs['"]\);/g,
-      replacement: 'import * as errorPkg from "@apollo/client/link/error/error.cjs";',
-      description: 'apollo-client.server errorPkg require-to-import'
-    }
+      regex:
+        /const errorPkg = require\(['"]@apollo\/client\/link\/error\/error\.cjs['"]\);/g,
+      replacement:
+        'import * as errorPkg from "@apollo/client/link/error/error.cjs";',
+      description: 'apollo-client.server errorPkg require-to-import',
+    },
   ]);
 } catch (err) {
   console.error('Error updating require() in apollo-client.server.mjs:', err);
@@ -586,13 +650,16 @@ try {
 
 // 6j: Update require() in apollo-client.client.mjs to use import syntax
 try {
-  const apolloClientClientMjsPath = path.join(esmDir, 'apollo-client.client.mjs');
+  const apolloClientClientMjsPath = path.join(
+    esmDir,
+    'apollo-client.client.mjs'
+  );
   updateFile(apolloClientClientMjsPath, [
     {
       regex: /const pkg = require\("@apollo\/client"\);/g,
       replacement: 'import * as pkg from "@apollo/client";',
-      description: 'apollo-client.client mjs require-to-import'
-    }
+      description: 'apollo-client.client mjs require-to-import',
+    },
   ]);
 } catch (err) {
   console.error('Error updating require() in apollo-client.client.mjs:', err);
@@ -603,7 +670,12 @@ try {
 // Step 7: Replace all instances of "findUniqueOrThrow" with "findUnique" in resolvers
 // -----------------------------------------------------------------------------
 try {
-  const resolversDir = path.join(distDir, 'generated', 'typegraphql-prisma', 'resolvers');
+  const resolversDir = path.join(
+    distDir,
+    'generated',
+    'typegraphql-prisma',
+    'resolvers'
+  );
   const resolverFiles = getFilesRecursively(resolversDir);
   resolverFiles.forEach((file) => {
     if (/\.(mjs|cjs|js)$/.test(file)) {
@@ -617,7 +689,9 @@ try {
       const newContent = content.replace(/findUniqueOrThrow/g, 'findUnique');
       if (newContent !== content) {
         fs.writeFileSync(file, newContent, 'utf8');
-        console.log(`Replaced "findUniqueOrThrow" with "findUnique" in ${file}`);
+        console.log(
+          `Replaced "findUniqueOrThrow" with "findUnique" in ${file}`
+        );
       }
     }
   });
@@ -636,7 +710,10 @@ try {
   const clientMjsPath = path.join(esmDir, 'client.mjs');
 
   // Check if client.mjs exists, if not, look for client.js and rename it
-  if (!fs.existsSync(clientMjsPath) && fs.existsSync(path.join(esmDir, 'client.js'))) {
+  if (
+    !fs.existsSync(clientMjsPath) &&
+    fs.existsSync(path.join(esmDir, 'client.js'))
+  ) {
     fs.renameSync(path.join(esmDir, 'client.js'), clientMjsPath);
     console.log('Renamed client.js to client.mjs');
   }
@@ -655,7 +732,9 @@ try {
 
   // Verify client.mjs exists, if not, create it
   if (!fs.existsSync(clientMjsPath)) {
-    console.error('ERROR: client.mjs still not found. Creating a placeholder to prevent runtime errors.');
+    console.error(
+      'ERROR: client.mjs still not found. Creating a placeholder to prevent runtime errors.'
+    );
     // Get the content from client.ts to create client.mjs
     const clientTsPath = path.join(projectRoot, 'src', 'client.ts');
     if (fs.existsSync(clientTsPath)) {
@@ -691,20 +770,41 @@ export const client = Promise.resolve(null);
   }
 
   // Ensure apollo-client.client.mjs and apollo-client.server.mjs exist too
-  const apolloClientClientMjsPath = path.join(esmDir, 'apollo-client.client.mjs');
-  const apolloClientServerMjsPath = path.join(esmDir, 'apollo-client.server.mjs');
+  const apolloClientClientMjsPath = path.join(
+    esmDir,
+    'apollo-client.client.mjs'
+  );
+  const apolloClientServerMjsPath = path.join(
+    esmDir,
+    'apollo-client.server.mjs'
+  );
 
-  if (!fs.existsSync(apolloClientClientMjsPath) && fs.existsSync(path.join(esmDir, 'apollo-client.client.js'))) {
-    fs.renameSync(path.join(esmDir, 'apollo-client.client.js'), apolloClientClientMjsPath);
+  if (
+    !fs.existsSync(apolloClientClientMjsPath) &&
+    fs.existsSync(path.join(esmDir, 'apollo-client.client.js'))
+  ) {
+    fs.renameSync(
+      path.join(esmDir, 'apollo-client.client.js'),
+      apolloClientClientMjsPath
+    );
     console.log('Renamed apollo-client.client.js to apollo-client.client.mjs');
   }
 
-  if (!fs.existsSync(apolloClientServerMjsPath) && fs.existsSync(path.join(esmDir, 'apollo-client.server.js'))) {
-    fs.renameSync(path.join(esmDir, 'apollo-client.server.js'), apolloClientServerMjsPath);
+  if (
+    !fs.existsSync(apolloClientServerMjsPath) &&
+    fs.existsSync(path.join(esmDir, 'apollo-client.server.js'))
+  ) {
+    fs.renameSync(
+      path.join(esmDir, 'apollo-client.server.js'),
+      apolloClientServerMjsPath
+    );
     console.log('Renamed apollo-client.server.js to apollo-client.server.mjs');
   }
 } catch (err) {
-  console.error('Error ensuring client.mjs exists and is properly referenced:', err);
+  console.error(
+    'Error ensuring client.mjs exists and is properly referenced:',
+    err
+  );
   process.exit(1);
 }
 
@@ -761,22 +861,16 @@ function fixMjsFileImports(filePath) {
   const before = content;
 
   // Fix all from "..." patterns with double quotes
-  content = content.replace(
-    /from "(\.\.?\/[^"]+)"/g,
-    (match, importPath) => {
-      const fixed = resolveEsmImportPath(importPath, fileDir);
-      return fixed === importPath ? match : `from "${fixed}"`;
-    }
-  );
+  content = content.replace(/from "(\.\.?\/[^"]+)"/g, (match, importPath) => {
+    const fixed = resolveEsmImportPath(importPath, fileDir);
+    return fixed === importPath ? match : `from "${fixed}"`;
+  });
 
   // Fix all from '...' patterns with single quotes
-  content = content.replace(
-    /from '(\.\.?\/[^']+)'/g,
-    (match, importPath) => {
-      const fixed = resolveEsmImportPath(importPath, fileDir);
-      return fixed === importPath ? match : `from '${fixed}'`;
-    }
-  );
+  content = content.replace(/from '(\.\.?\/[^']+)'/g, (match, importPath) => {
+    const fixed = resolveEsmImportPath(importPath, fileDir);
+    return fixed === importPath ? match : `from '${fixed}'`;
+  });
 
   if (content !== before) {
     fs.writeFileSync(filePath, content, 'utf8');

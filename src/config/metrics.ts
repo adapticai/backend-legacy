@@ -147,7 +147,8 @@ function isMetricsEnabled(): boolean {
 export function initMetrics(): boolean {
   if (!isMetricsEnabled()) {
     logger.info('Prometheus metrics collection is disabled', {
-      reason: 'PROMETHEUS_METRICS_ENABLED not set or environment is development',
+      reason:
+        'PROMETHEUS_METRICS_ENABLED not set or environment is development',
     });
     return false;
   }
@@ -175,7 +176,11 @@ export function initMetrics(): boolean {
  *
  * Should be mounted early in the middleware chain to capture all requests.
  */
-export function metricsMiddleware(req: Request, res: Response, next: () => void): void {
+export function metricsMiddleware(
+  req: Request,
+  res: Response,
+  next: () => void
+): void {
   if (!isMetricsEnabled()) {
     next();
     return;
@@ -191,7 +196,10 @@ export function metricsMiddleware(req: Request, res: Response, next: () => void)
     const statusCode = String(res.statusCode);
 
     httpRequestsTotal.inc({ method, route, status_code: statusCode });
-    httpRequestDuration.observe({ method, route, status_code: statusCode }, durationSeconds);
+    httpRequestDuration.observe(
+      { method, route, status_code: statusCode },
+      durationSeconds
+    );
   });
 
   next();
@@ -216,7 +224,14 @@ export function createMetricsPlugin(): {
     willSendResponse: (requestContext: {
       operationName?: string | null;
       operation?: { operation: string } | null;
-      response: { body: { kind: string; singleResult?: { errors?: ReadonlyArray<{ extensions?: { code?: string } }> } } };
+      response: {
+        body: {
+          kind: string;
+          singleResult?: {
+            errors?: ReadonlyArray<{ extensions?: { code?: string } }>;
+          };
+        };
+      };
     }) => Promise<void>;
   }>;
 } {
@@ -230,11 +245,12 @@ export function createMetricsPlugin(): {
           const durationSeconds = durationNs / 1e9;
 
           const operationName = requestContext.operationName || 'anonymous';
-          const operationType = requestContext.operation?.operation || 'unknown';
+          const operationType =
+            requestContext.operation?.operation || 'unknown';
 
           graphqlOperationDuration.observe(
             { operation_type: operationType, operation_name: operationName },
-            durationSeconds,
+            durationSeconds
           );
 
           const responseBody = requestContext.response.body;
@@ -243,9 +259,14 @@ export function createMetricsPlugin(): {
             responseBody.singleResult?.errors &&
             responseBody.singleResult.errors.length > 0;
 
-          if (hasErrors && responseBody.kind === 'single' && responseBody.singleResult?.errors) {
+          if (
+            hasErrors &&
+            responseBody.kind === 'single' &&
+            responseBody.singleResult?.errors
+          ) {
             for (const error of responseBody.singleResult.errors) {
-              const errorCode = error.extensions?.code || 'INTERNAL_SERVER_ERROR';
+              const errorCode =
+                error.extensions?.code || 'INTERNAL_SERVER_ERROR';
               graphqlErrorsTotal.inc({
                 operation_type: operationType,
                 operation_name: operationName,
@@ -286,18 +307,24 @@ export function createMetricsPlugin(): {
 export function createMetricsRouter(): Router {
   const router = Router();
 
-  router.get('/metrics', async (_req: Request, res: Response): Promise<void> => {
-    try {
-      const metrics = await metricsRegistry.metrics();
-      res.set('Content-Type', metricsRegistry.contentType);
-      res.status(200).send(metrics);
-    } catch (metricsError) {
-      logger.error('Failed to generate metrics', {
-        error: metricsError instanceof Error ? metricsError.message : String(metricsError),
-      });
-      res.status(500).send('Failed to generate metrics');
+  router.get(
+    '/metrics',
+    async (_req: Request, res: Response): Promise<void> => {
+      try {
+        const metrics = await metricsRegistry.metrics();
+        res.set('Content-Type', metricsRegistry.contentType);
+        res.status(200).send(metrics);
+      } catch (metricsError) {
+        logger.error('Failed to generate metrics', {
+          error:
+            metricsError instanceof Error
+              ? metricsError.message
+              : String(metricsError),
+        });
+        res.status(500).send('Failed to generate metrics');
+      }
     }
-  });
+  );
 
   return router;
 }

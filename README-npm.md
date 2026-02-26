@@ -11,6 +11,7 @@ It's primary goal, is to enabled developers to quickly scaffold and interact wit
 This package streamlines the development process by offering a unified `adaptic` namespace, encompassing model-specific functions, types, and enums, ensuring consistency and type safety across your application.
 
 ## Features
+
 This package offers a robust backend solution tailored for the Adaptic AI platform, featuring:
 
 - **Dynamic Model Functions**: Automatically generated CRUD functions for each content model.
@@ -46,6 +47,7 @@ BACKEND_WS_URL=wss://api.example.com/subscriptions
 To install the `@adaptic/backend-legacy` package, follow these steps:
 
 1. **Install NPM Package**:
+
    ```bash
    npm @adaptic/backend-legacy
    ```
@@ -69,43 +71,42 @@ All the dynamically generated functions for each content model are available und
 import adaptic, { types, enums } from '@adaptic/backend-legacy';
 
 export const main = async () => {
-// Example: Create a new User
-const userProps = {
-  name: 'John Doe',
-  email: 'john@gmail.com',
-  image: 'https://example.com/johndoe.jpg',
-  role: 'ADMIN',
-} as types.User;
-
-
-try {
-  const createdUser = await adaptic.User.create(userProps) as types.User;
-  console.log('Created User:', createdUser);
-} catch (error) {
-  console.error('Error creating user:', error);
-};
-
-// Example: Update a User
-const updateUser = async () => {
-  const updateProps: types.User = {
-    id: 'USER_ID',
-    email: 'newemail@example.com',
-  };
+  // Example: Create a new User
+  const userProps = {
+    name: 'John Doe',
+    email: 'john@gmail.com',
+    image: 'https://example.com/johndoe.jpg',
+    role: 'ADMIN',
+  } as types.User;
 
   try {
-    const updatedUser = await adaptic.User.update(updateProps) as types.User;
-    console.log('Updated User:', updatedUser);
+    const createdUser = (await adaptic.User.create(userProps)) as types.User;
+    console.log('Created User:', createdUser);
   } catch (error) {
-    console.error('Error updating user:', error);
+    console.error('Error creating user:', error);
   }
+
+  // Example: Update a User
+  const updateUser = async () => {
+    const updateProps: types.User = {
+      id: 'USER_ID',
+      email: 'newemail@example.com',
+    };
+
+    try {
+      const updatedUser = (await adaptic.User.update(
+        updateProps
+      )) as types.User;
+      console.log('Updated User:', updatedUser);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
+  // Execute functions
+  createUser();
+  updateUser();
 };
-
-// Execute functions
-createUser();
-updateUser();
-
-};
-
 ```
 
 #### Server-Side Usage (Within a Lambda Function)
@@ -121,10 +122,20 @@ export const handler = async (event) => {
   const data = JSON.parse(event.body);
 
   // Validate the input
-  if (!data.name || !data.type || !data.version || !data.url || !data.website || !data.description) {
+  if (
+    !data.name ||
+    !data.type ||
+    !data.version ||
+    !data.url ||
+    !data.website ||
+    !data.description
+  ) {
     return {
       statusCode: 400,
-      body: JSON.stringify({ error: 'Missing required fields: name, type, version, url, website, description' }),
+      body: JSON.stringify({
+        error:
+          'Missing required fields: name, type, version, url, website, description',
+      }),
     };
   }
 
@@ -148,7 +159,10 @@ export const handler = async (event) => {
     console.error('Error in createOneDependency:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'An error occurred', details: error.message }),
+      body: JSON.stringify({
+        error: 'An error occurred',
+        details: error.message,
+      }),
     };
   }
 };
@@ -201,7 +215,6 @@ TypeStrings are stringified versions of the various model types (including any n
 Their purpose is to provide a reference to the type of data being requested, which can be passed on to an LLM (Language Learning Model) as a reference within a prompt or query. This is useful when asking the LLM to return a specific type of data that should conform to the model's structure.
 
 ```typescript
-
 // typeStrings-example.ts
 
 import { typeStrings } from '@adaptic/backend-legacy';
@@ -214,7 +227,6 @@ const prompt = `
 \${typeStrings.User}
 
 `;
-
 ```
 
 ### Model CRUD Resolvers
