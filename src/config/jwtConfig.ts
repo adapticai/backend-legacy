@@ -18,7 +18,8 @@ const DEV_FALLBACK_SECRET =
 const isProduction = process.env.NODE_ENV === 'production';
 
 function resolveJwtSecret(): string {
-  const secret = process.env.JWT_SECRET;
+  // Try JWT_SECRET first, then fall back to NEXTAUTH_SECRET for compatibility
+  const secret = process.env.JWT_SECRET || process.env.NEXTAUTH_SECRET;
 
   if (!secret) {
     if (isProduction) {
