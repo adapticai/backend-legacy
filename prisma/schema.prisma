@@ -285,13 +285,25 @@ enum AssetType {
   OTHER
 }
 
-// Specifies the type of Alpaca account being used.
-enum AlpacaAccountType {
+// Specifies the type of brokerage account being used.
+enum BrokerageAccountType {
   /// A simulated trading account for testing strategies without real money.
   PAPER
 
   /// A live trading account with real funds.
   LIVE
+}
+
+// Specifies the brokerage provider for an account.
+enum BrokerageProvider {
+  /// Alpaca Markets broker.
+  ALPACA
+
+  /// Interactive Brokers.
+  IBKR
+
+  /// Coinbase exchange.
+  COINBASE
 }
 
 // Enumerates the possible actions that can be performed on an action under a trade.
@@ -829,7 +841,336 @@ enum AuthProvider {
   // Add more providers as needed
 }
 
+// Defines roles within an organization.
+enum OrgRole {
+  /// Full control, billing, can delete org.
+  OWNER
+
+  /// Manage members, funds, settings.
+  ADMIN
+
+  /// Trade execution, position management.
+  PORTFOLIO_MANAGER
+
+  /// Compliance monitoring, reporting.
+  COMPLIANCE_OFFICER
+
+  /// Investor verification.
+  KYC_AML_OFFICER
+
+  /// Read-only audit access.
+  AUDITOR
+
+  /// Basic access, no special privileges.
+  MEMBER
+}
+
+// Defines roles within a fund (scoped access).
+enum FundRole {
+  /// Full fund management.
+  MANAGER
+
+  /// Can execute trades.
+  TRADER
+
+  /// Fund-level compliance.
+  COMPLIANCE
+
+  /// Read-only fund audit.
+  AUDITOR
+
+  /// Read-only dashboard access.
+  VIEWER
+}
+
+// Defines the lifecycle status of a fund.
+enum FundStatus {
+  /// Fund is being configured.
+  SETUP
+
+  /// Fund is operational.
+  ACTIVE
+
+  /// Fund is temporarily inactive.
+  PAUSED
+
+  /// Fund is permanently closed.
+  CLOSED
+}
+
+// Defines the type of investor.
+enum InvestorType {
+  /// Individual retail investor.
+  INDIVIDUAL
+
+  /// Institutional investor (e.g., pension fund, endowment).
+  INSTITUTIONAL
+
+  /// Fund of funds investor.
+  FUND_OF_FUNDS
+}
+
+// Defines the KYC verification status of an investor.
+enum KycStatus {
+  /// KYC verification pending.
+  PENDING
+
+  /// KYC under review.
+  IN_REVIEW
+
+  /// KYC approved.
+  APPROVED
+
+  /// KYC rejected.
+  REJECTED
+
+  /// KYC approval expired.
+  EXPIRED
+}
+
+// Defines the status of an investment in a fund.
+enum InvestmentStatus {
+  /// Investment is active.
+  ACTIVE
+
+  /// Investment has been redeemed.
+  REDEEMED
+
+  /// Investment is suspended.
+  SUSPENDED
+}
+
 /// ### Models
+
+// Represents an organization (ManCo / fund operator firm).
+model Organization {
+  /// Unique identifier for the organization. TYPESTRING.SKIP=true
+  id        String   @id @default(uuid()) @db.Uuid
+
+  /// The name of the organization.
+  name      String
+
+  /// URL-friendly identifier for the organization, must be unique.
+  slug      String   @unique
+
+  /// URL to the organization's logo image.
+  logoUrl   String?
+
+  /// The organization's website URL.
+  website   String?
+
+  /// Timestamp when the organization was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the organization was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the organization was soft-deleted. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  /// List of members in this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
+  members   OrgMembership[]
+
+  /// List of funds operated by this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
+  funds     Fund[]
+
+  @@map(name: "organizations")
+}
+
+// Represents a user's membership in an organization.
+model OrgMembership {
+  /// Unique identifier for the membership. TYPESTRING.SKIP=true
+  id             String       @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
+  organizationId String       @db.Uuid
+
+  /// Relation to the Organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['members']
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
+  userId         String       @db.Uuid
+
+  /// Relation to the User. TYPESTRING.SKIP=true GQL.EXCLUDE=['orgMemberships']
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// The role assigned to this member within the organization.
+  role           OrgRole      @default(MEMBER)
+
+  /// Fine-grained permission overrides. TYPESTRING.SKIP=true
+  permissions    String[]     @default([])
+
+  /// Timestamp when the membership was created. TYPESTRING.SKIP=true
+  createdAt      DateTime     @default(now())
+
+  /// Timestamp when the membership was last updated. TYPESTRING.SKIP=true
+  updatedAt      DateTime     @updatedAt
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map(name: "org_memberships")
+}
+
+// Represents a fund operated by an organization.
+model Fund {
+  /// Unique identifier for the fund. TYPESTRING.SKIP=true
+  id             String       @id @default(uuid()) @db.Uuid
+
+  /// The name of the fund.
+  name           String
+
+  /// URL-friendly identifier for the fund, unique within its organization.
+  slug           String
+
+  /// A description of the fund.
+  description    String?
+
+  /// The lifecycle status of the fund.
+  status         FundStatus   @default(SETUP)
+
+  /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
+  organizationId String       @db.Uuid
+
+  /// Relation to the Organization that operates this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['funds']
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Timestamp when the fund was created. TYPESTRING.SKIP=true
+  createdAt      DateTime     @default(now())
+
+  /// Timestamp when the fund was last updated. TYPESTRING.SKIP=true
+  updatedAt      DateTime     @updatedAt
+
+  /// Timestamp when the fund was soft-deleted. TYPESTRING.SKIP=true
+  deletedAt      DateTime?
+
+  /// List of brokerage accounts connected to this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
+  brokerageAccounts BrokerageAccount[]
+
+  /// List of team assignments for this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
+  assignments       FundAssignment[]
+
+  /// List of investments in this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
+  investments       Investment[]
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@map(name: "funds")
+}
+
+// Represents a user's assignment to a specific fund (including cross-org collaborators).
+model FundAssignment {
+  /// Unique identifier for the assignment. TYPESTRING.SKIP=true
+  id          String   @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
+  fundId      String   @db.Uuid
+
+  /// Relation to the Fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['assignments']
+  fund        Fund     @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
+  userId      String   @db.Uuid
+
+  /// Relation to the User. TYPESTRING.SKIP=true GQL.EXCLUDE=['fundAssignments']
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// The role assigned to this user within the fund.
+  role        FundRole @default(VIEWER)
+
+  /// Fine-grained permission overrides. TYPESTRING.SKIP=true
+  permissions String[] @default([])
+
+  /// Timestamp when the assignment was created. TYPESTRING.SKIP=true
+  createdAt   DateTime @default(now())
+
+  /// Timestamp when the assignment was last updated. TYPESTRING.SKIP=true
+  updatedAt   DateTime @updatedAt
+
+  @@unique([fundId, userId])
+  @@index([userId])
+  @@map(name: "fund_assignments")
+}
+
+// Represents an investor who may hold units in one or more funds.
+model Investor {
+  /// Unique identifier for the investor. TYPESTRING.SKIP=true
+  id            String       @id @default(uuid()) @db.Uuid
+
+  /// The name of the investor.
+  name          String
+
+  /// The investor's email address.
+  email         String?
+
+  /// The type of investor.
+  type          InvestorType @default(INDIVIDUAL)
+
+  /// The KYC verification status of the investor.
+  kycStatus     KycStatus    @default(PENDING)
+
+  /// The investor's blockchain wallet address.
+  walletAddress String?
+
+  /// Optional foreign key to a User for platform access. TYPESTRING.SKIP=true
+  userId        String?      @unique @db.Uuid
+
+  /// Optional relation to a User for platform access. TYPESTRING.SKIP=true GQL.EXCLUDE=['investorProfile']
+  user          User?        @relation(fields: [userId], references: [id])
+
+  /// Timestamp when the investor record was created. TYPESTRING.SKIP=true
+  createdAt     DateTime     @default(now())
+
+  /// Timestamp when the investor record was last updated. TYPESTRING.SKIP=true
+  updatedAt     DateTime     @updatedAt
+
+  /// Timestamp when the investor was soft-deleted. TYPESTRING.SKIP=true
+  deletedAt     DateTime?
+
+  /// List of investments held by this investor. TYPESTRING.SKIP=true GQL.EXCLUDE=['investor']
+  investments   Investment[]
+
+  @@index([userId])
+  @@index([email])
+  @@map(name: "investors")
+}
+
+// Represents an investment (tokenized units) held by an investor in a fund.
+model Investment {
+  /// Unique identifier for the investment. TYPESTRING.SKIP=true
+  id         String           @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
+  fundId     String           @db.Uuid
+
+  /// Relation to the Fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['investments']
+  fund       Fund             @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Investor. TYPESTRING.SKIP=true
+  investorId String           @db.Uuid
+
+  /// Relation to the Investor. TYPESTRING.SKIP=true GQL.EXCLUDE=['investments']
+  investor   Investor         @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  /// Number of tokenized units held.
+  units      Float
+
+  /// Timestamp when the investment was made.
+  investedAt DateTime         @default(now())
+
+  /// The status of this investment.
+  status     InvestmentStatus @default(ACTIVE)
+
+  /// Timestamp when the investment record was created. TYPESTRING.SKIP=true
+  createdAt  DateTime         @default(now())
+
+  /// Timestamp when the investment record was last updated. TYPESTRING.SKIP=true
+  updatedAt  DateTime         @updatedAt
+
+  @@unique([fundId, investorId])
+  @@index([fundId])
+  @@index([investorId])
+  @@map(name: "investments")
+}
 
 // Represents a configuration setting in the system.
 model Configuration {
@@ -906,7 +1247,7 @@ model Session {
   /// Expiration date and time of the session.
   expires DateTime
 
-  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['alpacaAccounts']
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['orgMemberships','fundAssignments']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Timestamp when the session was created. TYPESTRING.SKIP=true
@@ -954,16 +1295,13 @@ model User {
   /// The user's job title or position.
   jobTitle String?
 
-  /// The type of Alpaca account the user currently holds.
-  currentAccount AlpacaAccountType @default(PAPER)
-
   /// Relation to the Customer model. TYPESTRING.INCLUDE=['id','name','plan'] GQL.EXCLUDE=['users']
   customer Customer? @relation(fields: [customerId], references: [id])
 
   /// Foreign key referencing the Customer. TYPESTRING.SKIP=true
   customerId Int?
 
-  /// List of accounts associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccounts','user']
+  /// List of accounts associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
   accounts Account[]
 
   /// List of sessions associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
@@ -975,8 +1313,14 @@ model User {
   /// The subscription plan the user is enrolled in.
   plan SubscriptionPlan?
 
-  /// List of Alpaca accounts linked to the user. TYPESTRING.INCLUDE=['id','type'] GQL.EXCLUDE=['user']
-  alpacaAccounts AlpacaAccount[]
+  /// List of organization memberships. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  orgMemberships OrgMembership[]
+
+  /// List of fund assignments (including cross-org collaborations). TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  fundAssignments FundAssignment[]
+
+  /// Optional investor profile linked to this user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  investorProfile Investor?
 
   /// OpenAI API key for the user.
   openaiAPIKey String?
@@ -1099,21 +1443,24 @@ model AccountLinkingRequest {
   @@map(name: "account_linking_requests")
 }
 
-// Represents an Alpaca trading account linked to a user.
-model AlpacaAccount {
-  /// Unique identifier for the Alpaca account. TYPESTRING.SKIP=true
+// Represents a brokerage trading account linked to a fund.
+model BrokerageAccount {
+  /// Unique identifier for the brokerage account. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// The type of Alpaca account (PAPER or LIVE).
-  type AlpacaAccountType @default(PAPER)
+  /// The brokerage provider for this account.
+  provider BrokerageProvider @default(ALPACA)
 
-  /// API key for authenticating requests to Alpaca. TYPESTRING.SKIP=true
-  APIKey String
+  /// The type of brokerage account (PAPER or LIVE).
+  type BrokerageAccountType @default(PAPER)
 
-  /// API secret for authenticating requests to Alpaca. TYPESTRING.SKIP=true
-  APISecret String
+  /// API key for authenticating requests to the broker. TYPESTRING.SKIP=true
+  apiKey String
 
-  /// JSON configuration settings for the Alpaca account.
+  /// API secret for authenticating requests to the broker. TYPESTRING.SKIP=true
+  apiSecret String
+
+  /// JSON configuration settings for the brokerage account.
   configuration Json?
 
   /// Opt-in for preparing orders for the next trading day. TYPESTRING.SKIP=true
@@ -1149,56 +1496,65 @@ model AlpacaAccount {
   /// Opt-in for enabling the portfolio-level trailing stop service within Adaptic's Realtime Trade Engine. TYPESTRING.SKIP=true
   enablePortfolioTrailingStop Boolean @default(false)
 
-  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine. TYPESTRING.SKIP=true
   portfolioTrailPercent Float @default(4.0)
 
-  /// The portfolio-level profit threshold percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  /// The portfolio-level profit threshold percentage used by the Realtime Trade Engine. TYPESTRING.SKIP=true
   portfolioProfitThresholdPercent Float @default(2.0)
 
-  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  /// The portfolio-level trailing stop percentage for reducing the trailing stop. TYPESTRING.SKIP=true
   reducedPortfolioTrailPercent Float @default(0.5)
 
-  /// The initial trailing stop percentage used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// The initial trailing stop percentage used by the Position Trailing Stop Service. TYPESTRING.SKIP=true
   defaultTrailingStopPercentage100 Float @default(4.0)
 
-  /// The first profit threshold at which to reduce the trailing stop used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// The first profit threshold at which to reduce the trailing stop. TYPESTRING.SKIP=true
   firstTrailReductionThreshold100 Float @default(2.0)
 
-  /// The second profit threshold at which to further reduce the trailing stop used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// The second profit threshold at which to further reduce the trailing stop. TYPESTRING.SKIP=true
   secondTrailReductionThreshold100 Float @default(5.0)
 
-  /// The trailing stop percentage to use when profit exceeds the first threshold used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// The trailing stop percentage to use when profit exceeds the first threshold. TYPESTRING.SKIP=true
   firstReducedTrailPercentage100 Float @default(1.0)
 
-  /// The trailing stop percentage to use when profit exceeds the second threshold used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// The trailing stop percentage to use when profit exceeds the second threshold. TYPESTRING.SKIP=true
   secondReducedTrailPercentage100 Float @default(0.5)
 
-  /// The minimum change in trailing stop percent to warrant an adjustment used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// The minimum change in trailing stop percent to warrant an adjustment. TYPESTRING.SKIP=true
   minimumPriceChangePercent100 Float @default(0.5)
 
-  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts', 'customer', 'accounts', 'sessions', 'authenticators']
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Relation to the Fund that owns this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccounts']
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
 
-  /// Foreign key referencing the User. TYPESTRING.SKIP=true
-  userId String @db.Uuid
+  /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
+  fundId String @db.Uuid
 
-  /// Timestamp when the Alpaca account was created. TYPESTRING.SKIP=true
+  /// Timestamp when the brokerage account was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the Alpaca account was last updated. TYPESTRING.SKIP=true
+  /// Timestamp when the brokerage account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// Timestamp when the Alpaca account was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  /// Timestamp when the brokerage account was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
   deletedAt DateTime?
 
-  /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
+  /// List of alerts generated for this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount']
   alerts Alert[]
 
-  @@index([userId])
-  @@map(name: "alpaca_accounts")
+  /// List of trades executed on this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount']
+  trades Trade[]
+
+  /// List of options positions on this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount']
+  optionsPositions OptionsPosition[]
+
+  /// List of options trade executions on this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount']
+  optionsTradeExecutions OptionsTradeExecution[]
+
+  @@index([fundId])
+  @@map(name: "brokerage_accounts")
 }
 
-// Allocation settings for the Alpaca account.
+// Allocation settings for a brokerage account.
 model Allocation {
   /// Unique identifier for the allocation settings. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
@@ -1227,11 +1583,11 @@ model Allocation {
   /// DEPRECATED: Legacy field for options allocation. Use 'optionsContracts' instead.
   options Float? @default(10)
 
-  /// Reference to the Alpaca account associated with the allocation settings. TYPESTRING.SKIP=true
-  alpacaAccountId String @unique @db.Uuid
+  /// Reference to the brokerage account associated with the allocation settings. TYPESTRING.SKIP=true
+  brokerageAccountId String @unique @db.Uuid
 
-  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.EXCLUDE=['allocation']
-  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  /// Relation to the BrokerageAccount model. TYPESTRING.SKIP=true GQL.EXCLUDE=['allocation']
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id], onDelete: Cascade)
 
   /// Timestamp when the allocation settings were created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
@@ -1239,7 +1595,7 @@ model Allocation {
   /// Timestamp when the allocation settings were last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  @@index([alpacaAccountId])
+  @@index([brokerageAccountId])
   @@map(name: "allocations")
 }
 
@@ -1569,13 +1925,16 @@ model Asset {
   @@map(name: "assets")
 }
 
-// Represents a trade executed through an Alpaca account.
+// Represents a trade executed through a brokerage account.
 model Trade {
   /// Unique identifier for the trade. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the Alpaca account used for the trade. TYPESTRING.SKIP=true
-  alpacaAccountId String @db.Uuid
+  /// Reference to the brokerage account used for the trade. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
+
+  /// Relation to the BrokerageAccount. TYPESTRING.SKIP=true GQL.EXCLUDE=['trades']
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id])
 
   /// Signal that triggered the trade.
   signal TradeSignal @default(PRICE_ACTION)
@@ -1658,8 +2017,8 @@ model Trade {
   /// Thresholds used for this trade as JSON. TYPESTRING.SKIP=true
   thresholdsJson String? @map("thresholds")
 
-  @@index([alpacaAccountId])
-  @@index([alpacaAccountId, status])
+  @@index([brokerageAccountId])
+  @@index([brokerageAccountId, status])
   @@index([symbol])
   @@map(name: "trades")
 }
@@ -1712,8 +2071,8 @@ model Alert {
   /// Unique identifier for the alert. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the Alpaca account associated with the alert. TYPESTRING.SKIP=true
-  alpacaAccountId String @db.Uuid
+  /// Reference to the brokerage account associated with the alert. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
 
   /// Title/summary of the alert.
   title String?
@@ -1757,11 +2116,11 @@ model Alert {
   /// Timestamp when the alert was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
-  alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  /// Relation to the BrokerageAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id], onDelete: Cascade)
 
-  @@index([alpacaAccountId])
-  @@index([alpacaAccountId, status])
+  @@index([brokerageAccountId])
+  @@index([brokerageAccountId, status])
   @@index([type])
   @@index([category])
   @@map(name: "alerts")
@@ -3002,8 +3361,11 @@ model OptionsPosition {
   /// Unique identifier for the options position. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the Alpaca account
-  alpacaAccountId String @db.Uuid
+  /// Reference to the brokerage account. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
+
+  /// Relation to BrokerageAccount. TYPESTRING.SKIP=true GQL.EXCLUDE=['optionsPositions']
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id])
 
   /// Reference to the options contract
   contractId String @db.Uuid
@@ -3094,7 +3456,7 @@ model OptionsPosition {
   executions OptionsTradeExecution[]
 
   /// Indexes for performance optimization
-  @@index([alpacaAccountId, status])
+  @@index([brokerageAccountId, status])
   @@index([contractId])
   @@index([status])
   @@index([entryTime])
@@ -3269,8 +3631,11 @@ model OptionsTradeExecution {
   /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions']
   contract OptionsContract @relation(fields: [contractId], references: [id])
 
-  /// Reference to the Alpaca account
-  alpacaAccountId String @db.Uuid
+  /// Reference to the brokerage account. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
+
+  /// Relation to BrokerageAccount. TYPESTRING.SKIP=true GQL.EXCLUDE=['optionsTradeExecutions']
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id])
 
   /// Broker order ID
   brokerOrderId String?
@@ -3339,7 +3704,7 @@ model OptionsTradeExecution {
   /// Indexes for performance optimization
   @@index([positionId])
   @@index([contractId])
-  @@index([alpacaAccountId, executionTime])
+  @@index([brokerageAccountId, executionTime])
   @@index([executionTime])
   @@index([brokerOrderId])
   @@map("options_trade_executions")
@@ -3892,8 +4257,11 @@ model TradeAuditEvent {
   /// Symbol being traded
   symbol String @db.VarChar(50)
 
-  /// Account identifier
+  /// Brokerage account identifier
   accountId String @db.VarChar(255)
+
+  /// Fund identifier (optional)
+  fundId String? @db.VarChar(36)
 
   /// Trade identifier (optional)
   tradeId String? @db.VarChar(255)
@@ -4197,6 +4565,9 @@ model Event {
 
   /// Account identifier (optional)
   accountId String? @db.VarChar(255)
+
+  /// Fund identifier (optional)
+  fundId String? @db.VarChar(36)
 
   /// Trade identifier (optional)
   tradeId String? @db.VarChar(255)
