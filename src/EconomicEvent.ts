@@ -65,7 +65,11 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+
             },
           };
 
@@ -147,7 +151,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      title: prop.title !== undefined ? prop.title : undefined,
+  description: prop.description !== undefined ? prop.description : undefined,
+  date: prop.date !== undefined ? prop.date : undefined,
+  importance: prop.importance !== undefined ? prop.importance : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -228,9 +236,34 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
+           } : undefined,
+  date: props.date !== undefined ? {
+            set: props.date 
+           } : undefined,
+  importance: props.importance !== undefined ? {
+            set: props.importance 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -311,11 +344,31 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
+      },
           create: {
-            },
+        title: props.title !== undefined ? props.title : undefined,
+  description: props.description !== undefined ? props.description : undefined,
+  date: props.date !== undefined ? props.date : undefined,
+  importance: props.importance !== undefined ? props.importance : undefined,
+      },
           update: {
-          },
+      title: props.title !== undefined ? {
+            set: props.title 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
+           } : undefined,
+  date: props.date !== undefined ? {
+            set: props.date 
+           } : undefined,
+  importance: props.importance !== undefined ? {
+            set: props.importance 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -396,10 +449,35 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  title: prop.title !== undefined ? {
+    equals: prop.title 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  title: prop.title !== undefined ? {
+            set: prop.title 
+           } : undefined,
+  description: prop.description !== undefined ? {
+            set: prop.description 
+           } : undefined,
+  date: prop.date !== undefined ? {
+            set: prop.date 
+           } : undefined,
+  importance: prop.importance !== undefined ? {
+            set: prop.importance 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+
           },
         }));
 
@@ -564,7 +642,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -717,7 +799,13 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  title: props.title !== undefined ? {
+    equals: props.title 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

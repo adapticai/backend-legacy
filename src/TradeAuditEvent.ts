@@ -83,7 +83,30 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  eventType: props.eventType !== undefined ? props.eventType : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  accountId: props.accountId !== undefined ? props.accountId : undefined,
+  fundId: props.fundId !== undefined ? props.fundId : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  orderId: props.orderId !== undefined ? props.orderId : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  systemId: props.systemId !== undefined ? props.systemId : undefined,
+  signatureJson: props.signatureJson !== undefined ? props.signatureJson : undefined,
+  custodyJson: props.custodyJson !== undefined ? props.custodyJson : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? props.retentionPolicyId : undefined,
+  immutable: props.immutable !== undefined ? props.immutable : undefined,
+  encrypted: props.encrypted !== undefined ? props.encrypted : undefined,
+  complianceTags: props.complianceTags !== undefined ? props.complianceTags : undefined,
+  customTags: props.customTags !== undefined ? props.customTags : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
+  eventCategory: props.eventCategory !== undefined ? props.eventCategory : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  passed: props.passed !== undefined ? props.passed : undefined,
+  retentionDate: props.retentionDate !== undefined ? props.retentionDate : undefined,
+
             },
           };
 
@@ -165,7 +188,30 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  eventId: prop.eventId !== undefined ? prop.eventId : undefined,
+  eventType: prop.eventType !== undefined ? prop.eventType : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  accountId: prop.accountId !== undefined ? prop.accountId : undefined,
+  fundId: prop.fundId !== undefined ? prop.fundId : undefined,
+  tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  orderId: prop.orderId !== undefined ? prop.orderId : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
+  systemId: prop.systemId !== undefined ? prop.systemId : undefined,
+  signatureJson: prop.signatureJson !== undefined ? prop.signatureJson : undefined,
+  custodyJson: prop.custodyJson !== undefined ? prop.custodyJson : undefined,
+  retentionPolicyId: prop.retentionPolicyId !== undefined ? prop.retentionPolicyId : undefined,
+  immutable: prop.immutable !== undefined ? prop.immutable : undefined,
+  encrypted: prop.encrypted !== undefined ? prop.encrypted : undefined,
+  complianceTags: prop.complianceTags !== undefined ? prop.complianceTags : undefined,
+  customTags: prop.customTags !== undefined ? prop.customTags : undefined,
+  eventData: prop.eventData !== undefined ? prop.eventData : undefined,
+  eventCategory: prop.eventCategory !== undefined ? prop.eventCategory : undefined,
+  severity: prop.severity !== undefined ? prop.severity : undefined,
+  passed: prop.passed !== undefined ? prop.passed : undefined,
+  retentionDate: prop.retentionDate !== undefined ? prop.retentionDate : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -246,9 +292,113 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  fundId: props.fundId !== undefined ? {
+    equals: props.fundId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  systemId: props.systemId !== undefined ? {
+    equals: props.systemId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  eventId: props.eventId !== undefined ? {
+            set: props.eventId 
+           } : undefined,
+  eventType: props.eventType !== undefined ? {
+            set: props.eventType 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  fundId: props.fundId !== undefined ? {
+            set: props.fundId 
+           } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+            set: props.tradeId 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  orderId: props.orderId !== undefined ? {
+            set: props.orderId 
+           } : undefined,
+  userId: props.userId !== undefined ? {
+            set: props.userId 
+           } : undefined,
+  systemId: props.systemId !== undefined ? {
+            set: props.systemId 
+           } : undefined,
+  signatureJson: props.signatureJson !== undefined ? {
+            set: props.signatureJson 
+           } : undefined,
+  custodyJson: props.custodyJson !== undefined ? {
+            set: props.custodyJson 
+           } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+            set: props.retentionPolicyId 
+           } : undefined,
+  immutable: props.immutable !== undefined ? {
+            set: props.immutable 
+           } : undefined,
+  encrypted: props.encrypted !== undefined ? {
+            set: props.encrypted 
+           } : undefined,
+  complianceTags: props.complianceTags !== undefined ? {
+            set: props.complianceTags 
+           } : undefined,
+  customTags: props.customTags !== undefined ? {
+            set: props.customTags 
+           } : undefined,
+  eventData: props.eventData !== undefined ? {
+            set: props.eventData 
+           } : undefined,
+  eventCategory: props.eventCategory !== undefined ? {
+            set: props.eventCategory 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  passed: props.passed !== undefined ? {
+            set: props.passed 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  retentionDate: props.retentionDate !== undefined ? {
+            set: props.retentionDate 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -329,11 +479,132 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  fundId: props.fundId !== undefined ? {
+    equals: props.fundId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  systemId: props.systemId !== undefined ? {
+    equals: props.systemId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+      },
           create: {
-            },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  eventType: props.eventType !== undefined ? props.eventType : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  accountId: props.accountId !== undefined ? props.accountId : undefined,
+  fundId: props.fundId !== undefined ? props.fundId : undefined,
+  tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  orderId: props.orderId !== undefined ? props.orderId : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
+  systemId: props.systemId !== undefined ? props.systemId : undefined,
+  signatureJson: props.signatureJson !== undefined ? props.signatureJson : undefined,
+  custodyJson: props.custodyJson !== undefined ? props.custodyJson : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? props.retentionPolicyId : undefined,
+  immutable: props.immutable !== undefined ? props.immutable : undefined,
+  encrypted: props.encrypted !== undefined ? props.encrypted : undefined,
+  complianceTags: props.complianceTags !== undefined ? props.complianceTags : undefined,
+  customTags: props.customTags !== undefined ? props.customTags : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
+  eventCategory: props.eventCategory !== undefined ? props.eventCategory : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  passed: props.passed !== undefined ? props.passed : undefined,
+  retentionDate: props.retentionDate !== undefined ? props.retentionDate : undefined,
+      },
           update: {
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  eventId: props.eventId !== undefined ? {
+            set: props.eventId 
+           } : undefined,
+  eventType: props.eventType !== undefined ? {
+            set: props.eventType 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  fundId: props.fundId !== undefined ? {
+            set: props.fundId 
+           } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+            set: props.tradeId 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  orderId: props.orderId !== undefined ? {
+            set: props.orderId 
+           } : undefined,
+  userId: props.userId !== undefined ? {
+            set: props.userId 
+           } : undefined,
+  systemId: props.systemId !== undefined ? {
+            set: props.systemId 
+           } : undefined,
+  signatureJson: props.signatureJson !== undefined ? {
+            set: props.signatureJson 
+           } : undefined,
+  custodyJson: props.custodyJson !== undefined ? {
+            set: props.custodyJson 
+           } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+            set: props.retentionPolicyId 
+           } : undefined,
+  immutable: props.immutable !== undefined ? {
+            set: props.immutable 
+           } : undefined,
+  encrypted: props.encrypted !== undefined ? {
+            set: props.encrypted 
+           } : undefined,
+  complianceTags: props.complianceTags !== undefined ? {
+            set: props.complianceTags 
+           } : undefined,
+  customTags: props.customTags !== undefined ? {
+            set: props.customTags 
+           } : undefined,
+  eventData: props.eventData !== undefined ? {
+            set: props.eventData 
+           } : undefined,
+  eventCategory: props.eventCategory !== undefined ? {
+            set: props.eventCategory 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  passed: props.passed !== undefined ? {
+            set: props.passed 
+           } : undefined,
+  retentionDate: props.retentionDate !== undefined ? {
+            set: props.retentionDate 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -414,10 +685,114 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  eventId: prop.eventId !== undefined ? prop.eventId : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+  accountId: prop.accountId !== undefined ? {
+    equals: prop.accountId 
+  } : undefined,
+  fundId: prop.fundId !== undefined ? {
+    equals: prop.fundId 
+  } : undefined,
+  tradeId: prop.tradeId !== undefined ? {
+    equals: prop.tradeId 
+  } : undefined,
+  signalId: prop.signalId !== undefined ? {
+    equals: prop.signalId 
+  } : undefined,
+  orderId: prop.orderId !== undefined ? {
+    equals: prop.orderId 
+  } : undefined,
+  userId: prop.userId !== undefined ? {
+    equals: prop.userId 
+  } : undefined,
+  systemId: prop.systemId !== undefined ? {
+    equals: prop.systemId 
+  } : undefined,
+  retentionPolicyId: prop.retentionPolicyId !== undefined ? {
+    equals: prop.retentionPolicyId 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  eventId: prop.eventId !== undefined ? {
+            set: prop.eventId 
+           } : undefined,
+  eventType: prop.eventType !== undefined ? {
+            set: prop.eventType 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  accountId: prop.accountId !== undefined ? {
+            set: prop.accountId 
+           } : undefined,
+  fundId: prop.fundId !== undefined ? {
+            set: prop.fundId 
+           } : undefined,
+  tradeId: prop.tradeId !== undefined ? {
+            set: prop.tradeId 
+           } : undefined,
+  signalId: prop.signalId !== undefined ? {
+            set: prop.signalId 
+           } : undefined,
+  orderId: prop.orderId !== undefined ? {
+            set: prop.orderId 
+           } : undefined,
+  userId: prop.userId !== undefined ? {
+            set: prop.userId 
+           } : undefined,
+  systemId: prop.systemId !== undefined ? {
+            set: prop.systemId 
+           } : undefined,
+  signatureJson: prop.signatureJson !== undefined ? {
+            set: prop.signatureJson 
+           } : undefined,
+  custodyJson: prop.custodyJson !== undefined ? {
+            set: prop.custodyJson 
+           } : undefined,
+  retentionPolicyId: prop.retentionPolicyId !== undefined ? {
+            set: prop.retentionPolicyId 
+           } : undefined,
+  immutable: prop.immutable !== undefined ? {
+            set: prop.immutable 
+           } : undefined,
+  encrypted: prop.encrypted !== undefined ? {
+            set: prop.encrypted 
+           } : undefined,
+  complianceTags: prop.complianceTags !== undefined ? {
+            set: prop.complianceTags 
+           } : undefined,
+  customTags: prop.customTags !== undefined ? {
+            set: prop.customTags 
+           } : undefined,
+  eventData: prop.eventData !== undefined ? {
+            set: prop.eventData 
+           } : undefined,
+  eventCategory: prop.eventCategory !== undefined ? {
+            set: prop.eventCategory 
+           } : undefined,
+  severity: prop.severity !== undefined ? {
+            set: prop.severity 
+           } : undefined,
+  passed: prop.passed !== undefined ? {
+            set: prop.passed 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  retentionDate: prop.retentionDate !== undefined ? {
+            set: prop.retentionDate 
+           } : undefined,
+
           },
         }));
 
@@ -582,7 +957,36 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  eventId: props.eventId !== undefined ? props.eventId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  fundId: props.fundId !== undefined ? {
+    equals: props.fundId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  systemId: props.systemId !== undefined ? {
+    equals: props.systemId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -735,7 +1139,40 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  eventId: props.eventId !== undefined ? {
+    equals: props.eventId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  fundId: props.fundId !== undefined ? {
+    equals: props.fundId 
+  } : undefined,
+  tradeId: props.tradeId !== undefined ? {
+    equals: props.tradeId 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  orderId: props.orderId !== undefined ? {
+    equals: props.orderId 
+  } : undefined,
+  userId: props.userId !== undefined ? {
+    equals: props.userId 
+  } : undefined,
+  systemId: props.systemId !== undefined ? {
+    equals: props.systemId 
+  } : undefined,
+  retentionPolicyId: props.retentionPolicyId !== undefined ? {
+    equals: props.retentionPolicyId 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

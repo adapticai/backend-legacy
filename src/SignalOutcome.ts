@@ -73,7 +73,18 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  signalType: props.signalType !== undefined ? props.signalType : undefined,
+  outcome: props.outcome !== undefined ? props.outcome : undefined,
+  timeToOutcome: props.timeToOutcome !== undefined ? props.timeToOutcome : undefined,
+  outcomeTimestamp: props.outcomeTimestamp !== undefined ? props.outcomeTimestamp : undefined,
+  outcomeReason: props.outcomeReason !== undefined ? props.outcomeReason : undefined,
+  generatedAt: props.generatedAt !== undefined ? props.generatedAt : undefined,
+  marketConditions: props.marketConditions !== undefined ? props.marketConditions : undefined,
+
             },
           };
 
@@ -155,7 +166,18 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  generatorSource: prop.generatorSource !== undefined ? prop.generatorSource : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  signalType: prop.signalType !== undefined ? prop.signalType : undefined,
+  outcome: prop.outcome !== undefined ? prop.outcome : undefined,
+  timeToOutcome: prop.timeToOutcome !== undefined ? prop.timeToOutcome : undefined,
+  outcomeTimestamp: prop.outcomeTimestamp !== undefined ? prop.outcomeTimestamp : undefined,
+  outcomeReason: prop.outcomeReason !== undefined ? prop.outcomeReason : undefined,
+  generatedAt: prop.generatedAt !== undefined ? prop.generatedAt : undefined,
+  marketConditions: prop.marketConditions !== undefined ? prop.marketConditions : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -236,9 +258,61 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  signalType: props.signalType !== undefined ? {
+            set: props.signalType 
+           } : undefined,
+  originalConfidence: props.originalConfidence !== undefined ? {
+            set: props.originalConfidence 
+           } : undefined,
+  priorityScore: props.priorityScore !== undefined ? {
+            set: props.priorityScore 
+           } : undefined,
+  outcome: props.outcome !== undefined ? {
+            set: props.outcome 
+           } : undefined,
+  pnlPercentage: props.pnlPercentage !== undefined ? {
+            set: props.pnlPercentage 
+           } : undefined,
+  timeToOutcome: props.timeToOutcome !== undefined ? {
+            set: props.timeToOutcome 
+           } : undefined,
+  outcomeTimestamp: props.outcomeTimestamp !== undefined ? {
+            set: props.outcomeTimestamp 
+           } : undefined,
+  outcomeReason: props.outcomeReason !== undefined ? {
+            set: props.outcomeReason 
+           } : undefined,
+  generatedAt: props.generatedAt !== undefined ? {
+            set: props.generatedAt 
+           } : undefined,
+  marketConditions: props.marketConditions !== undefined ? {
+            set: props.marketConditions 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -319,11 +393,71 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           create: {
-            },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  signalType: props.signalType !== undefined ? props.signalType : undefined,
+  outcome: props.outcome !== undefined ? props.outcome : undefined,
+  timeToOutcome: props.timeToOutcome !== undefined ? props.timeToOutcome : undefined,
+  outcomeTimestamp: props.outcomeTimestamp !== undefined ? props.outcomeTimestamp : undefined,
+  outcomeReason: props.outcomeReason !== undefined ? props.outcomeReason : undefined,
+  generatedAt: props.generatedAt !== undefined ? props.generatedAt : undefined,
+  marketConditions: props.marketConditions !== undefined ? props.marketConditions : undefined,
+      },
           update: {
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  signalType: props.signalType !== undefined ? {
+            set: props.signalType 
+           } : undefined,
+  originalConfidence: props.originalConfidence !== undefined ? {
+            set: props.originalConfidence 
+           } : undefined,
+  priorityScore: props.priorityScore !== undefined ? {
+            set: props.priorityScore 
+           } : undefined,
+  outcome: props.outcome !== undefined ? {
+            set: props.outcome 
+           } : undefined,
+  pnlPercentage: props.pnlPercentage !== undefined ? {
+            set: props.pnlPercentage 
+           } : undefined,
+  timeToOutcome: props.timeToOutcome !== undefined ? {
+            set: props.timeToOutcome 
+           } : undefined,
+  outcomeTimestamp: props.outcomeTimestamp !== undefined ? {
+            set: props.outcomeTimestamp 
+           } : undefined,
+  outcomeReason: props.outcomeReason !== undefined ? {
+            set: props.outcomeReason 
+           } : undefined,
+  generatedAt: props.generatedAt !== undefined ? {
+            set: props.generatedAt 
+           } : undefined,
+  marketConditions: props.marketConditions !== undefined ? {
+            set: props.marketConditions 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -404,10 +538,62 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  signalId: prop.signalId !== undefined ? {
+    equals: prop.signalId 
+  } : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  signalId: prop.signalId !== undefined ? {
+            set: prop.signalId 
+           } : undefined,
+  generatorSource: prop.generatorSource !== undefined ? {
+            set: prop.generatorSource 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  signalType: prop.signalType !== undefined ? {
+            set: prop.signalType 
+           } : undefined,
+  originalConfidence: prop.originalConfidence !== undefined ? {
+            set: prop.originalConfidence 
+           } : undefined,
+  priorityScore: prop.priorityScore !== undefined ? {
+            set: prop.priorityScore 
+           } : undefined,
+  outcome: prop.outcome !== undefined ? {
+            set: prop.outcome 
+           } : undefined,
+  pnlPercentage: prop.pnlPercentage !== undefined ? {
+            set: prop.pnlPercentage 
+           } : undefined,
+  timeToOutcome: prop.timeToOutcome !== undefined ? {
+            set: prop.timeToOutcome 
+           } : undefined,
+  outcomeTimestamp: prop.outcomeTimestamp !== undefined ? {
+            set: prop.outcomeTimestamp 
+           } : undefined,
+  outcomeReason: prop.outcomeReason !== undefined ? {
+            set: prop.outcomeReason 
+           } : undefined,
+  generatedAt: prop.generatedAt !== undefined ? {
+            set: prop.generatedAt 
+           } : undefined,
+  marketConditions: prop.marketConditions !== undefined ? {
+            set: prop.marketConditions 
+           } : undefined,
+
           },
         }));
 
@@ -572,7 +758,14 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -725,7 +918,16 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

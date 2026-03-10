@@ -28,130 +28,130 @@ export type {
 } from './client';
 
 
-import { Organization } from './Organization';
-import { OrgMembership } from './OrgMembership';
-import { Fund } from './Fund';
-import { FundAssignment } from './FundAssignment';
-import { Investor } from './Investor';
-import { Investment } from './Investment';
-import { Configuration } from './Configuration';
-import { MarketSentiment } from './MarketSentiment';
-import { Session } from './Session';
-import { User } from './User';
-import { LinkedProvider } from './LinkedProvider';
-import { AccountLinkingRequest } from './AccountLinkingRequest';
-import { BrokerageAccount } from './BrokerageAccount';
-import { Allocation } from './Allocation';
-import { Authenticator } from './Authenticator';
+import { ABTest } from './ABTest';
 import { Account } from './Account';
-import { VerificationToken } from './VerificationToken';
-import { Customer } from './Customer';
-import { Asset } from './Asset';
-import { Trade } from './Trade';
+import { AccountLinkingRequest } from './AccountLinkingRequest';
 import { Action } from './Action';
 import { Alert } from './Alert';
-import { NewsArticle } from './NewsArticle';
-import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
-import { EconomicEvent } from './EconomicEvent';
-import { ScheduledOptionOrder } from './ScheduledOptionOrder';
-import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
-import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
-import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
-import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
-import { AnalyticsSnapshot } from './AnalyticsSnapshot';
+import { Allocation } from './Allocation';
 import { AnalyticsConfiguration } from './AnalyticsConfiguration';
-import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
-import { InstitutionalHolding } from './InstitutionalHolding';
-import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
-import { MLTrainingData } from './MLTrainingData';
-import { ModelArtifact } from './ModelArtifact';
-import { ModelVersionArtifact } from './ModelVersionArtifact';
-import { ModelVersion } from './ModelVersion';
-import { ABTest } from './ABTest';
-import { SystemAlert } from './SystemAlert';
-import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
-import { OptionsContract } from './OptionsContract';
-import { OptionsPosition } from './OptionsPosition';
-import { OptionsGreeksHistory } from './OptionsGreeksHistory';
-import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
-import { OptionsTradeExecution } from './OptionsTradeExecution';
-import { DeadLetterMessage } from './DeadLetterMessage';
-import { SyncEvent } from './SyncEvent';
+import { AnalyticsSnapshot } from './AnalyticsSnapshot';
+import { Asset } from './Asset';
+import { AuditLog } from './AuditLog';
+import { Authenticator } from './Authenticator';
+import { BrokerageAccount } from './BrokerageAccount';
+import { Configuration } from './Configuration';
 import { ConflictEvent } from './ConflictEvent';
-import { SignalLineage } from './SignalLineage';
-import { TradeAuditEvent } from './TradeAuditEvent';
-import { SignalGeneratorMetrics } from './SignalGeneratorMetrics';
-import { SignalPriorityQueue } from './SignalPriorityQueue';
-import { SignalOutcome } from './SignalOutcome';
+import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
+import { Customer } from './Customer';
+import { DeadLetterMessage } from './DeadLetterMessage';
+import { EconomicEvent } from './EconomicEvent';
 import { Event } from './Event';
 import { EventSnapshot } from './EventSnapshot';
-import { TradeExecutionHistory } from './TradeExecutionHistory';
-import { WaitlistEntry } from './WaitlistEntry';
+import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
+import { Fund } from './Fund';
+import { FundAssignment } from './FundAssignment';
+import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
+import { InstitutionalHolding } from './InstitutionalHolding';
+import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
+import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
+import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
+import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
+import { Investment } from './Investment';
+import { Investor } from './Investor';
 import { InviteToken } from './InviteToken';
-import { AuditLog } from './AuditLog';
+import { LinkedProvider } from './LinkedProvider';
+import { MLTrainingData } from './MLTrainingData';
+import { MarketSentiment } from './MarketSentiment';
+import { ModelArtifact } from './ModelArtifact';
+import { ModelVersion } from './ModelVersion';
+import { ModelVersionArtifact } from './ModelVersionArtifact';
+import { NewsArticle } from './NewsArticle';
+import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
+import { OptionsContract } from './OptionsContract';
+import { OptionsGreeksHistory } from './OptionsGreeksHistory';
+import { OptionsPosition } from './OptionsPosition';
+import { OptionsTradeExecution } from './OptionsTradeExecution';
+import { OrgMembership } from './OrgMembership';
+import { Organization } from './Organization';
+import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
+import { ScheduledOptionOrder } from './ScheduledOptionOrder';
+import { Session } from './Session';
+import { SignalGeneratorMetrics } from './SignalGeneratorMetrics';
+import { SignalLineage } from './SignalLineage';
+import { SignalOutcome } from './SignalOutcome';
+import { SignalPriorityQueue } from './SignalPriorityQueue';
+import { SyncEvent } from './SyncEvent';
+import { SystemAlert } from './SystemAlert';
+import { Trade } from './Trade';
+import { TradeAuditEvent } from './TradeAuditEvent';
+import { TradeExecutionHistory } from './TradeExecutionHistory';
+import { User } from './User';
+import { VerificationToken } from './VerificationToken';
+import { WaitlistEntry } from './WaitlistEntry';
 
 const adaptic = {
-  organization: Organization,
-  orgMembership: OrgMembership,
-  fund: Fund,
-  fundAssignment: FundAssignment,
-  investor: Investor,
-  investment: Investment,
-  configuration: Configuration,
-  marketSentiment: MarketSentiment,
-  session: Session,
-  user: User,
-  linkedProvider: LinkedProvider,
-  accountLinkingRequest: AccountLinkingRequest,
-  brokerageAccount: BrokerageAccount,
-  allocation: Allocation,
-  authenticator: Authenticator,
+  aBTest: ABTest,
   account: Account,
-  verificationToken: VerificationToken,
-  customer: Customer,
-  asset: Asset,
-  trade: Trade,
+  accountLinkingRequest: AccountLinkingRequest,
   action: Action,
   alert: Alert,
-  newsArticle: NewsArticle,
-  newsArticleAssetSentiment: NewsArticleAssetSentiment,
-  economicEvent: EconomicEvent,
-  scheduledOptionOrder: ScheduledOptionOrder,
-  institutionalSentimentHistory: InstitutionalSentimentHistory,
-  institutionalSentimentMetrics: InstitutionalSentimentMetrics,
-  institutionalSentimentErrors: InstitutionalSentimentErrors,
-  institutionalSentimentAlerts: InstitutionalSentimentAlerts,
-  analyticsSnapshot: AnalyticsSnapshot,
+  allocation: Allocation,
   analyticsConfiguration: AnalyticsConfiguration,
-  connectionHealthSnapshot: ConnectionHealthSnapshot,
-  institutionalHolding: InstitutionalHolding,
-  institutionalFlowSignal: InstitutionalFlowSignal,
-  mLTrainingData: MLTrainingData,
-  modelArtifact: ModelArtifact,
-  modelVersionArtifact: ModelVersionArtifact,
-  modelVersion: ModelVersion,
-  aBTest: ABTest,
-  systemAlert: SystemAlert,
-  featureImportanceAnalysis: FeatureImportanceAnalysis,
-  optionsContract: OptionsContract,
-  optionsPosition: OptionsPosition,
-  optionsGreeksHistory: OptionsGreeksHistory,
-  portfolioGreeksHistory: PortfolioGreeksHistory,
-  optionsTradeExecution: OptionsTradeExecution,
-  deadLetterMessage: DeadLetterMessage,
-  syncEvent: SyncEvent,
+  analyticsSnapshot: AnalyticsSnapshot,
+  asset: Asset,
+  auditLog: AuditLog,
+  authenticator: Authenticator,
+  brokerageAccount: BrokerageAccount,
+  configuration: Configuration,
   conflictEvent: ConflictEvent,
-  signalLineage: SignalLineage,
-  tradeAuditEvent: TradeAuditEvent,
-  signalGeneratorMetrics: SignalGeneratorMetrics,
-  signalPriorityQueue: SignalPriorityQueue,
-  signalOutcome: SignalOutcome,
+  connectionHealthSnapshot: ConnectionHealthSnapshot,
+  customer: Customer,
+  deadLetterMessage: DeadLetterMessage,
+  economicEvent: EconomicEvent,
   event: Event,
   eventSnapshot: EventSnapshot,
-  tradeExecutionHistory: TradeExecutionHistory,
-  waitlistEntry: WaitlistEntry,
+  featureImportanceAnalysis: FeatureImportanceAnalysis,
+  fund: Fund,
+  fundAssignment: FundAssignment,
+  institutionalFlowSignal: InstitutionalFlowSignal,
+  institutionalHolding: InstitutionalHolding,
+  institutionalSentimentAlerts: InstitutionalSentimentAlerts,
+  institutionalSentimentErrors: InstitutionalSentimentErrors,
+  institutionalSentimentHistory: InstitutionalSentimentHistory,
+  institutionalSentimentMetrics: InstitutionalSentimentMetrics,
+  investment: Investment,
+  investor: Investor,
   inviteToken: InviteToken,
-  auditLog: AuditLog,
+  linkedProvider: LinkedProvider,
+  mLTrainingData: MLTrainingData,
+  marketSentiment: MarketSentiment,
+  modelArtifact: ModelArtifact,
+  modelVersion: ModelVersion,
+  modelVersionArtifact: ModelVersionArtifact,
+  newsArticle: NewsArticle,
+  newsArticleAssetSentiment: NewsArticleAssetSentiment,
+  optionsContract: OptionsContract,
+  optionsGreeksHistory: OptionsGreeksHistory,
+  optionsPosition: OptionsPosition,
+  optionsTradeExecution: OptionsTradeExecution,
+  orgMembership: OrgMembership,
+  organization: Organization,
+  portfolioGreeksHistory: PortfolioGreeksHistory,
+  scheduledOptionOrder: ScheduledOptionOrder,
+  session: Session,
+  signalGeneratorMetrics: SignalGeneratorMetrics,
+  signalLineage: SignalLineage,
+  signalOutcome: SignalOutcome,
+  signalPriorityQueue: SignalPriorityQueue,
+  syncEvent: SyncEvent,
+  systemAlert: SystemAlert,
+  trade: Trade,
+  tradeAuditEvent: TradeAuditEvent,
+  tradeExecutionHistory: TradeExecutionHistory,
+  user: User,
+  verificationToken: VerificationToken,
+  waitlistEntry: WaitlistEntry,
 };
 
 export default adaptic;

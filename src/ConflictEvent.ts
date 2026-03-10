@@ -68,7 +68,16 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  entityType: props.entityType !== undefined ? props.entityType : undefined,
+  entityId: props.entityId !== undefined ? props.entityId : undefined,
+  serverVersion: props.serverVersion !== undefined ? props.serverVersion : undefined,
+  clientVersion: props.clientVersion !== undefined ? props.clientVersion : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  resolved: props.resolved !== undefined ? props.resolved : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? props.resolutionTime : undefined,
+
             },
           };
 
@@ -150,7 +159,16 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  entityType: prop.entityType !== undefined ? prop.entityType : undefined,
+  entityId: prop.entityId !== undefined ? prop.entityId : undefined,
+  serverVersion: prop.serverVersion !== undefined ? prop.serverVersion : undefined,
+  clientVersion: prop.clientVersion !== undefined ? prop.clientVersion : undefined,
+  strategy: prop.strategy !== undefined ? prop.strategy : undefined,
+  resolved: prop.resolved !== undefined ? prop.resolved : undefined,
+  resolution: prop.resolution !== undefined ? prop.resolution : undefined,
+  resolutionTime: prop.resolutionTime !== undefined ? prop.resolutionTime : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -231,9 +249,43 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  entityType: props.entityType !== undefined ? {
+            set: props.entityType 
+           } : undefined,
+  entityId: props.entityId !== undefined ? {
+            set: props.entityId 
+           } : undefined,
+  serverVersion: props.serverVersion !== undefined ? {
+            set: props.serverVersion 
+           } : undefined,
+  clientVersion: props.clientVersion !== undefined ? {
+            set: props.clientVersion 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  resolved: props.resolved !== undefined ? {
+            set: props.resolved 
+           } : undefined,
+  resolution: props.resolution !== undefined ? {
+            set: props.resolution 
+           } : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? {
+            set: props.resolutionTime 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -314,11 +366,51 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+      },
           create: {
-            },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  entityType: props.entityType !== undefined ? props.entityType : undefined,
+  entityId: props.entityId !== undefined ? props.entityId : undefined,
+  serverVersion: props.serverVersion !== undefined ? props.serverVersion : undefined,
+  clientVersion: props.clientVersion !== undefined ? props.clientVersion : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  resolved: props.resolved !== undefined ? props.resolved : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? props.resolutionTime : undefined,
+      },
           update: {
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  entityType: props.entityType !== undefined ? {
+            set: props.entityType 
+           } : undefined,
+  entityId: props.entityId !== undefined ? {
+            set: props.entityId 
+           } : undefined,
+  serverVersion: props.serverVersion !== undefined ? {
+            set: props.serverVersion 
+           } : undefined,
+  clientVersion: props.clientVersion !== undefined ? {
+            set: props.clientVersion 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  resolved: props.resolved !== undefined ? {
+            set: props.resolved 
+           } : undefined,
+  resolution: props.resolution !== undefined ? {
+            set: props.resolution 
+           } : undefined,
+  resolutionTime: props.resolutionTime !== undefined ? {
+            set: props.resolutionTime 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -399,10 +491,44 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  entityId: prop.entityId !== undefined ? {
+    equals: prop.entityId 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  entityType: prop.entityType !== undefined ? {
+            set: prop.entityType 
+           } : undefined,
+  entityId: prop.entityId !== undefined ? {
+            set: prop.entityId 
+           } : undefined,
+  serverVersion: prop.serverVersion !== undefined ? {
+            set: prop.serverVersion 
+           } : undefined,
+  clientVersion: prop.clientVersion !== undefined ? {
+            set: prop.clientVersion 
+           } : undefined,
+  strategy: prop.strategy !== undefined ? {
+            set: prop.strategy 
+           } : undefined,
+  resolved: prop.resolved !== undefined ? {
+            set: prop.resolved 
+           } : undefined,
+  resolution: prop.resolution !== undefined ? {
+            set: prop.resolution 
+           } : undefined,
+  resolutionTime: prop.resolutionTime !== undefined ? {
+            set: prop.resolutionTime 
+           } : undefined,
+
           },
         }));
 
@@ -567,7 +693,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -720,7 +850,13 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  entityId: props.entityId !== undefined ? {
+    equals: props.entityId 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

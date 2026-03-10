@@ -82,7 +82,17 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                accountId: props.accountId !== undefined ? props.accountId : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  contractId: props.contractId !== undefined ? props.contractId : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  underlying: props.underlying !== undefined ? props.underlying : undefined,
+  positionCount: props.positionCount !== undefined ? props.positionCount : undefined,
+  underlyingSymbols: props.underlyingSymbols !== undefined ? props.underlyingSymbols : undefined,
+  expirationDates: props.expirationDates !== undefined ? props.expirationDates : undefined,
+  marketHours: props.marketHours !== undefined ? props.marketHours : undefined,
+  source: props.source !== undefined ? props.source : undefined,
+
             },
           };
 
@@ -164,7 +174,17 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      accountId: prop.accountId !== undefined ? prop.accountId : undefined,
+  timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  contractId: prop.contractId !== undefined ? prop.contractId : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  underlying: prop.underlying !== undefined ? prop.underlying : undefined,
+  positionCount: prop.positionCount !== undefined ? prop.positionCount : undefined,
+  underlyingSymbols: prop.underlyingSymbols !== undefined ? prop.underlyingSymbols : undefined,
+  expirationDates: prop.expirationDates !== undefined ? prop.expirationDates : undefined,
+  marketHours: prop.marketHours !== undefined ? prop.marketHours : undefined,
+  source: prop.source !== undefined ? prop.source : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -245,9 +265,88 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  contractId: props.contractId !== undefined ? {
+            set: props.contractId 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  underlying: props.underlying !== undefined ? {
+            set: props.underlying 
+           } : undefined,
+  delta: props.delta !== undefined ? {
+            set: props.delta 
+           } : undefined,
+  gamma: props.gamma !== undefined ? {
+            set: props.gamma 
+           } : undefined,
+  theta: props.theta !== undefined ? {
+            set: props.theta 
+           } : undefined,
+  vega: props.vega !== undefined ? {
+            set: props.vega 
+           } : undefined,
+  rho: props.rho !== undefined ? {
+            set: props.rho 
+           } : undefined,
+  totalDelta: props.totalDelta !== undefined ? {
+            set: props.totalDelta 
+           } : undefined,
+  totalGamma: props.totalGamma !== undefined ? {
+            set: props.totalGamma 
+           } : undefined,
+  totalTheta: props.totalTheta !== undefined ? {
+            set: props.totalTheta 
+           } : undefined,
+  totalVega: props.totalVega !== undefined ? {
+            set: props.totalVega 
+           } : undefined,
+  totalRho: props.totalRho !== undefined ? {
+            set: props.totalRho 
+           } : undefined,
+  positionCount: props.positionCount !== undefined ? {
+            set: props.positionCount 
+           } : undefined,
+  underlyingSymbols: props.underlyingSymbols !== undefined ? {
+            set: props.underlyingSymbols 
+           } : undefined,
+  expirationDates: props.expirationDates !== undefined ? {
+            set: props.expirationDates 
+           } : undefined,
+  marketHours: props.marketHours !== undefined ? {
+            set: props.marketHours 
+           } : undefined,
+  vix: props.vix !== undefined ? {
+            set: props.vix 
+           } : undefined,
+  spyPrice: props.spyPrice !== undefined ? {
+            set: props.spyPrice 
+           } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -328,11 +427,94 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           create: {
-            },
+        accountId: props.accountId !== undefined ? props.accountId : undefined,
+  timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  contractId: props.contractId !== undefined ? props.contractId : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  underlying: props.underlying !== undefined ? props.underlying : undefined,
+  positionCount: props.positionCount !== undefined ? props.positionCount : undefined,
+  underlyingSymbols: props.underlyingSymbols !== undefined ? props.underlyingSymbols : undefined,
+  expirationDates: props.expirationDates !== undefined ? props.expirationDates : undefined,
+  marketHours: props.marketHours !== undefined ? props.marketHours : undefined,
+  source: props.source !== undefined ? props.source : undefined,
+      },
           update: {
-          },
+      accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  contractId: props.contractId !== undefined ? {
+            set: props.contractId 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  underlying: props.underlying !== undefined ? {
+            set: props.underlying 
+           } : undefined,
+  delta: props.delta !== undefined ? {
+            set: props.delta 
+           } : undefined,
+  gamma: props.gamma !== undefined ? {
+            set: props.gamma 
+           } : undefined,
+  theta: props.theta !== undefined ? {
+            set: props.theta 
+           } : undefined,
+  vega: props.vega !== undefined ? {
+            set: props.vega 
+           } : undefined,
+  rho: props.rho !== undefined ? {
+            set: props.rho 
+           } : undefined,
+  totalDelta: props.totalDelta !== undefined ? {
+            set: props.totalDelta 
+           } : undefined,
+  totalGamma: props.totalGamma !== undefined ? {
+            set: props.totalGamma 
+           } : undefined,
+  totalTheta: props.totalTheta !== undefined ? {
+            set: props.totalTheta 
+           } : undefined,
+  totalVega: props.totalVega !== undefined ? {
+            set: props.totalVega 
+           } : undefined,
+  totalRho: props.totalRho !== undefined ? {
+            set: props.totalRho 
+           } : undefined,
+  positionCount: props.positionCount !== undefined ? {
+            set: props.positionCount 
+           } : undefined,
+  underlyingSymbols: props.underlyingSymbols !== undefined ? {
+            set: props.underlyingSymbols 
+           } : undefined,
+  expirationDates: props.expirationDates !== undefined ? {
+            set: props.expirationDates 
+           } : undefined,
+  marketHours: props.marketHours !== undefined ? {
+            set: props.marketHours 
+           } : undefined,
+  vix: props.vix !== undefined ? {
+            set: props.vix 
+           } : undefined,
+  spyPrice: props.spyPrice !== undefined ? {
+            set: props.spyPrice 
+           } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -413,10 +595,89 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  accountId: prop.accountId !== undefined ? {
+    equals: prop.accountId 
+  } : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  accountId: prop.accountId !== undefined ? {
+            set: prop.accountId 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  contractId: prop.contractId !== undefined ? {
+            set: prop.contractId 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  underlying: prop.underlying !== undefined ? {
+            set: prop.underlying 
+           } : undefined,
+  delta: prop.delta !== undefined ? {
+            set: prop.delta 
+           } : undefined,
+  gamma: prop.gamma !== undefined ? {
+            set: prop.gamma 
+           } : undefined,
+  theta: prop.theta !== undefined ? {
+            set: prop.theta 
+           } : undefined,
+  vega: prop.vega !== undefined ? {
+            set: prop.vega 
+           } : undefined,
+  rho: prop.rho !== undefined ? {
+            set: prop.rho 
+           } : undefined,
+  totalDelta: prop.totalDelta !== undefined ? {
+            set: prop.totalDelta 
+           } : undefined,
+  totalGamma: prop.totalGamma !== undefined ? {
+            set: prop.totalGamma 
+           } : undefined,
+  totalTheta: prop.totalTheta !== undefined ? {
+            set: prop.totalTheta 
+           } : undefined,
+  totalVega: prop.totalVega !== undefined ? {
+            set: prop.totalVega 
+           } : undefined,
+  totalRho: prop.totalRho !== undefined ? {
+            set: prop.totalRho 
+           } : undefined,
+  positionCount: prop.positionCount !== undefined ? {
+            set: prop.positionCount 
+           } : undefined,
+  underlyingSymbols: prop.underlyingSymbols !== undefined ? {
+            set: prop.underlyingSymbols 
+           } : undefined,
+  expirationDates: prop.expirationDates !== undefined ? {
+            set: prop.expirationDates 
+           } : undefined,
+  marketHours: prop.marketHours !== undefined ? {
+            set: prop.marketHours 
+           } : undefined,
+  vix: prop.vix !== undefined ? {
+            set: prop.vix 
+           } : undefined,
+  spyPrice: prop.spyPrice !== undefined ? {
+            set: prop.spyPrice 
+           } : undefined,
+  source: prop.source !== undefined ? {
+            set: prop.source 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+
           },
         }));
 
@@ -581,7 +842,14 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -734,7 +1002,16 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

@@ -92,7 +92,37 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  accountId: props.accountId !== undefined ? props.accountId : undefined,
+  ticker: props.ticker !== undefined ? props.ticker : undefined,
+  action: props.action !== undefined ? props.action : undefined,
+  quantity: props.quantity !== undefined ? props.quantity : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  orderType: props.orderType !== undefined ? props.orderType : undefined,
+  errorMessage: props.errorMessage !== undefined ? props.errorMessage : undefined,
+  errorCode: props.errorCode !== undefined ? props.errorCode : undefined,
+  errorStack: props.errorStack !== undefined ? props.errorStack : undefined,
+  retryCount: props.retryCount !== undefined ? props.retryCount : undefined,
+  maxRetries: props.maxRetries !== undefined ? props.maxRetries : undefined,
+  lastRetryAt: props.lastRetryAt !== undefined ? props.lastRetryAt : undefined,
+  nextRetryAt: props.nextRetryAt !== undefined ? props.nextRetryAt : undefined,
+  backoffMs: props.backoffMs !== undefined ? props.backoffMs : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? props.resolvedAt : undefined,
+  resolvedBy: props.resolvedBy !== undefined ? props.resolvedBy : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
+  tradeContext: props.tradeContext !== undefined ? props.tradeContext : undefined,
+  accountState: props.accountState !== undefined ? props.accountState : undefined,
+  marketContext: props.marketContext !== undefined ? props.marketContext : undefined,
+  validationErrors: props.validationErrors !== undefined ? props.validationErrors : undefined,
+  failureCategory: props.failureCategory !== undefined ? props.failureCategory : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
+  createdBy: props.createdBy !== undefined ? props.createdBy : undefined,
+  notes: props.notes !== undefined ? props.notes : undefined,
+
             },
           };
 
@@ -174,7 +204,37 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  accountId: prop.accountId !== undefined ? prop.accountId : undefined,
+  ticker: prop.ticker !== undefined ? prop.ticker : undefined,
+  action: prop.action !== undefined ? prop.action : undefined,
+  quantity: prop.quantity !== undefined ? prop.quantity : undefined,
+  expirationDate: prop.expirationDate !== undefined ? prop.expirationDate : undefined,
+  optionType: prop.optionType !== undefined ? prop.optionType : undefined,
+  strategy: prop.strategy !== undefined ? prop.strategy : undefined,
+  orderType: prop.orderType !== undefined ? prop.orderType : undefined,
+  errorMessage: prop.errorMessage !== undefined ? prop.errorMessage : undefined,
+  errorCode: prop.errorCode !== undefined ? prop.errorCode : undefined,
+  errorStack: prop.errorStack !== undefined ? prop.errorStack : undefined,
+  retryCount: prop.retryCount !== undefined ? prop.retryCount : undefined,
+  maxRetries: prop.maxRetries !== undefined ? prop.maxRetries : undefined,
+  lastRetryAt: prop.lastRetryAt !== undefined ? prop.lastRetryAt : undefined,
+  nextRetryAt: prop.nextRetryAt !== undefined ? prop.nextRetryAt : undefined,
+  backoffMs: prop.backoffMs !== undefined ? prop.backoffMs : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
+  resolvedAt: prop.resolvedAt !== undefined ? prop.resolvedAt : undefined,
+  resolvedBy: prop.resolvedBy !== undefined ? prop.resolvedBy : undefined,
+  resolution: prop.resolution !== undefined ? prop.resolution : undefined,
+  tradeContext: prop.tradeContext !== undefined ? prop.tradeContext : undefined,
+  accountState: prop.accountState !== undefined ? prop.accountState : undefined,
+  marketContext: prop.marketContext !== undefined ? prop.marketContext : undefined,
+  validationErrors: prop.validationErrors !== undefined ? prop.validationErrors : undefined,
+  failureCategory: prop.failureCategory !== undefined ? prop.failureCategory : undefined,
+  severity: prop.severity !== undefined ? prop.severity : undefined,
+  tags: prop.tags !== undefined ? prop.tags : undefined,
+  createdBy: prop.createdBy !== undefined ? prop.createdBy : undefined,
+  notes: prop.notes !== undefined ? prop.notes : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -255,9 +315,115 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  ticker: props.ticker !== undefined ? {
+            set: props.ticker 
+           } : undefined,
+  action: props.action !== undefined ? {
+            set: props.action 
+           } : undefined,
+  quantity: props.quantity !== undefined ? {
+            set: props.quantity 
+           } : undefined,
+  strikePrice: props.strikePrice !== undefined ? {
+            set: props.strikePrice 
+           } : undefined,
+  expirationDate: props.expirationDate !== undefined ? {
+            set: props.expirationDate 
+           } : undefined,
+  optionType: props.optionType !== undefined ? {
+            set: props.optionType 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  orderType: props.orderType !== undefined ? {
+            set: props.orderType 
+           } : undefined,
+  limitPrice: props.limitPrice !== undefined ? {
+            set: props.limitPrice 
+           } : undefined,
+  errorMessage: props.errorMessage !== undefined ? {
+            set: props.errorMessage 
+           } : undefined,
+  errorCode: props.errorCode !== undefined ? {
+            set: props.errorCode 
+           } : undefined,
+  errorStack: props.errorStack !== undefined ? {
+            set: props.errorStack 
+           } : undefined,
+  retryCount: props.retryCount !== undefined ? {
+            set: props.retryCount 
+           } : undefined,
+  maxRetries: props.maxRetries !== undefined ? {
+            set: props.maxRetries 
+           } : undefined,
+  lastRetryAt: props.lastRetryAt !== undefined ? {
+            set: props.lastRetryAt 
+           } : undefined,
+  nextRetryAt: props.nextRetryAt !== undefined ? {
+            set: props.nextRetryAt 
+           } : undefined,
+  backoffMs: props.backoffMs !== undefined ? {
+            set: props.backoffMs 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? {
+            set: props.resolvedAt 
+           } : undefined,
+  resolvedBy: props.resolvedBy !== undefined ? {
+            set: props.resolvedBy 
+           } : undefined,
+  resolution: props.resolution !== undefined ? {
+            set: props.resolution 
+           } : undefined,
+  tradeContext: props.tradeContext !== undefined ? {
+            set: props.tradeContext 
+           } : undefined,
+  accountState: props.accountState !== undefined ? {
+            set: props.accountState 
+           } : undefined,
+  marketContext: props.marketContext !== undefined ? {
+            set: props.marketContext 
+           } : undefined,
+  validationErrors: props.validationErrors !== undefined ? {
+            set: props.validationErrors 
+           } : undefined,
+  failureCategory: props.failureCategory !== undefined ? {
+            set: props.failureCategory 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  tags: props.tags !== undefined ? {
+            set: props.tags 
+           } : undefined,
+  createdBy: props.createdBy !== undefined ? {
+            set: props.createdBy 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+  notes: props.notes !== undefined ? {
+            set: props.notes 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -338,11 +504,141 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+      },
           create: {
-            },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  accountId: props.accountId !== undefined ? props.accountId : undefined,
+  ticker: props.ticker !== undefined ? props.ticker : undefined,
+  action: props.action !== undefined ? props.action : undefined,
+  quantity: props.quantity !== undefined ? props.quantity : undefined,
+  expirationDate: props.expirationDate !== undefined ? props.expirationDate : undefined,
+  optionType: props.optionType !== undefined ? props.optionType : undefined,
+  strategy: props.strategy !== undefined ? props.strategy : undefined,
+  orderType: props.orderType !== undefined ? props.orderType : undefined,
+  errorMessage: props.errorMessage !== undefined ? props.errorMessage : undefined,
+  errorCode: props.errorCode !== undefined ? props.errorCode : undefined,
+  errorStack: props.errorStack !== undefined ? props.errorStack : undefined,
+  retryCount: props.retryCount !== undefined ? props.retryCount : undefined,
+  maxRetries: props.maxRetries !== undefined ? props.maxRetries : undefined,
+  lastRetryAt: props.lastRetryAt !== undefined ? props.lastRetryAt : undefined,
+  nextRetryAt: props.nextRetryAt !== undefined ? props.nextRetryAt : undefined,
+  backoffMs: props.backoffMs !== undefined ? props.backoffMs : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? props.resolvedAt : undefined,
+  resolvedBy: props.resolvedBy !== undefined ? props.resolvedBy : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
+  tradeContext: props.tradeContext !== undefined ? props.tradeContext : undefined,
+  accountState: props.accountState !== undefined ? props.accountState : undefined,
+  marketContext: props.marketContext !== undefined ? props.marketContext : undefined,
+  validationErrors: props.validationErrors !== undefined ? props.validationErrors : undefined,
+  failureCategory: props.failureCategory !== undefined ? props.failureCategory : undefined,
+  severity: props.severity !== undefined ? props.severity : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
+  createdBy: props.createdBy !== undefined ? props.createdBy : undefined,
+  notes: props.notes !== undefined ? props.notes : undefined,
+      },
           update: {
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  accountId: props.accountId !== undefined ? {
+            set: props.accountId 
+           } : undefined,
+  ticker: props.ticker !== undefined ? {
+            set: props.ticker 
+           } : undefined,
+  action: props.action !== undefined ? {
+            set: props.action 
+           } : undefined,
+  quantity: props.quantity !== undefined ? {
+            set: props.quantity 
+           } : undefined,
+  strikePrice: props.strikePrice !== undefined ? {
+            set: props.strikePrice 
+           } : undefined,
+  expirationDate: props.expirationDate !== undefined ? {
+            set: props.expirationDate 
+           } : undefined,
+  optionType: props.optionType !== undefined ? {
+            set: props.optionType 
+           } : undefined,
+  strategy: props.strategy !== undefined ? {
+            set: props.strategy 
+           } : undefined,
+  orderType: props.orderType !== undefined ? {
+            set: props.orderType 
+           } : undefined,
+  limitPrice: props.limitPrice !== undefined ? {
+            set: props.limitPrice 
+           } : undefined,
+  errorMessage: props.errorMessage !== undefined ? {
+            set: props.errorMessage 
+           } : undefined,
+  errorCode: props.errorCode !== undefined ? {
+            set: props.errorCode 
+           } : undefined,
+  errorStack: props.errorStack !== undefined ? {
+            set: props.errorStack 
+           } : undefined,
+  retryCount: props.retryCount !== undefined ? {
+            set: props.retryCount 
+           } : undefined,
+  maxRetries: props.maxRetries !== undefined ? {
+            set: props.maxRetries 
+           } : undefined,
+  lastRetryAt: props.lastRetryAt !== undefined ? {
+            set: props.lastRetryAt 
+           } : undefined,
+  nextRetryAt: props.nextRetryAt !== undefined ? {
+            set: props.nextRetryAt 
+           } : undefined,
+  backoffMs: props.backoffMs !== undefined ? {
+            set: props.backoffMs 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+  resolvedAt: props.resolvedAt !== undefined ? {
+            set: props.resolvedAt 
+           } : undefined,
+  resolvedBy: props.resolvedBy !== undefined ? {
+            set: props.resolvedBy 
+           } : undefined,
+  resolution: props.resolution !== undefined ? {
+            set: props.resolution 
+           } : undefined,
+  tradeContext: props.tradeContext !== undefined ? {
+            set: props.tradeContext 
+           } : undefined,
+  accountState: props.accountState !== undefined ? {
+            set: props.accountState 
+           } : undefined,
+  marketContext: props.marketContext !== undefined ? {
+            set: props.marketContext 
+           } : undefined,
+  validationErrors: props.validationErrors !== undefined ? {
+            set: props.validationErrors 
+           } : undefined,
+  failureCategory: props.failureCategory !== undefined ? {
+            set: props.failureCategory 
+           } : undefined,
+  severity: props.severity !== undefined ? {
+            set: props.severity 
+           } : undefined,
+  tags: props.tags !== undefined ? {
+            set: props.tags 
+           } : undefined,
+  createdBy: props.createdBy !== undefined ? {
+            set: props.createdBy 
+           } : undefined,
+  notes: props.notes !== undefined ? {
+            set: props.notes 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -423,10 +719,116 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  accountId: prop.accountId !== undefined ? {
+    equals: prop.accountId 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  accountId: prop.accountId !== undefined ? {
+            set: prop.accountId 
+           } : undefined,
+  ticker: prop.ticker !== undefined ? {
+            set: prop.ticker 
+           } : undefined,
+  action: prop.action !== undefined ? {
+            set: prop.action 
+           } : undefined,
+  quantity: prop.quantity !== undefined ? {
+            set: prop.quantity 
+           } : undefined,
+  strikePrice: prop.strikePrice !== undefined ? {
+            set: prop.strikePrice 
+           } : undefined,
+  expirationDate: prop.expirationDate !== undefined ? {
+            set: prop.expirationDate 
+           } : undefined,
+  optionType: prop.optionType !== undefined ? {
+            set: prop.optionType 
+           } : undefined,
+  strategy: prop.strategy !== undefined ? {
+            set: prop.strategy 
+           } : undefined,
+  orderType: prop.orderType !== undefined ? {
+            set: prop.orderType 
+           } : undefined,
+  limitPrice: prop.limitPrice !== undefined ? {
+            set: prop.limitPrice 
+           } : undefined,
+  errorMessage: prop.errorMessage !== undefined ? {
+            set: prop.errorMessage 
+           } : undefined,
+  errorCode: prop.errorCode !== undefined ? {
+            set: prop.errorCode 
+           } : undefined,
+  errorStack: prop.errorStack !== undefined ? {
+            set: prop.errorStack 
+           } : undefined,
+  retryCount: prop.retryCount !== undefined ? {
+            set: prop.retryCount 
+           } : undefined,
+  maxRetries: prop.maxRetries !== undefined ? {
+            set: prop.maxRetries 
+           } : undefined,
+  lastRetryAt: prop.lastRetryAt !== undefined ? {
+            set: prop.lastRetryAt 
+           } : undefined,
+  nextRetryAt: prop.nextRetryAt !== undefined ? {
+            set: prop.nextRetryAt 
+           } : undefined,
+  backoffMs: prop.backoffMs !== undefined ? {
+            set: prop.backoffMs 
+           } : undefined,
+  status: prop.status !== undefined ? {
+            set: prop.status 
+           } : undefined,
+  resolvedAt: prop.resolvedAt !== undefined ? {
+            set: prop.resolvedAt 
+           } : undefined,
+  resolvedBy: prop.resolvedBy !== undefined ? {
+            set: prop.resolvedBy 
+           } : undefined,
+  resolution: prop.resolution !== undefined ? {
+            set: prop.resolution 
+           } : undefined,
+  tradeContext: prop.tradeContext !== undefined ? {
+            set: prop.tradeContext 
+           } : undefined,
+  accountState: prop.accountState !== undefined ? {
+            set: prop.accountState 
+           } : undefined,
+  marketContext: prop.marketContext !== undefined ? {
+            set: prop.marketContext 
+           } : undefined,
+  validationErrors: prop.validationErrors !== undefined ? {
+            set: prop.validationErrors 
+           } : undefined,
+  failureCategory: prop.failureCategory !== undefined ? {
+            set: prop.failureCategory 
+           } : undefined,
+  severity: prop.severity !== undefined ? {
+            set: prop.severity 
+           } : undefined,
+  tags: prop.tags !== undefined ? {
+            set: prop.tags 
+           } : undefined,
+  createdBy: prop.createdBy !== undefined ? {
+            set: prop.createdBy 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+  notes: prop.notes !== undefined ? {
+            set: prop.notes 
+           } : undefined,
+
           },
         }));
 
@@ -591,7 +993,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -744,7 +1150,13 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  accountId: props.accountId !== undefined ? {
+    equals: props.accountId 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

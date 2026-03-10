@@ -78,7 +78,17 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  totalSignals: props.totalSignals !== undefined ? props.totalSignals : undefined,
+  successfulSignals: props.successfulSignals !== undefined ? props.successfulSignals : undefined,
+  failedSignals: props.failedSignals !== undefined ? props.failedSignals : undefined,
+  lookbackPeriodDays: props.lookbackPeriodDays !== undefined ? props.lookbackPeriodDays : undefined,
+  healthScore: props.healthScore !== undefined ? props.healthScore : undefined,
+  healthStatus: props.healthStatus !== undefined ? props.healthStatus : undefined,
+  healthIssues: props.healthIssues !== undefined ? props.healthIssues : undefined,
+
             },
           };
 
@@ -160,7 +170,17 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  generatorSource: prop.generatorSource !== undefined ? prop.generatorSource : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  totalSignals: prop.totalSignals !== undefined ? prop.totalSignals : undefined,
+  successfulSignals: prop.successfulSignals !== undefined ? prop.successfulSignals : undefined,
+  failedSignals: prop.failedSignals !== undefined ? prop.failedSignals : undefined,
+  lookbackPeriodDays: prop.lookbackPeriodDays !== undefined ? prop.lookbackPeriodDays : undefined,
+  healthScore: prop.healthScore !== undefined ? prop.healthScore : undefined,
+  healthStatus: prop.healthStatus !== undefined ? prop.healthStatus : undefined,
+  healthIssues: prop.healthIssues !== undefined ? prop.healthIssues : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -241,9 +261,73 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  totalSignals: props.totalSignals !== undefined ? {
+            set: props.totalSignals 
+           } : undefined,
+  successfulSignals: props.successfulSignals !== undefined ? {
+            set: props.successfulSignals 
+           } : undefined,
+  failedSignals: props.failedSignals !== undefined ? {
+            set: props.failedSignals 
+           } : undefined,
+  winRate: props.winRate !== undefined ? {
+            set: props.winRate 
+           } : undefined,
+  sharpeRatio: props.sharpeRatio !== undefined ? {
+            set: props.sharpeRatio 
+           } : undefined,
+  profitFactor: props.profitFactor !== undefined ? {
+            set: props.profitFactor 
+           } : undefined,
+  averageReturn: props.averageReturn !== undefined ? {
+            set: props.averageReturn 
+           } : undefined,
+  maxDrawdown: props.maxDrawdown !== undefined ? {
+            set: props.maxDrawdown 
+           } : undefined,
+  averageTimeToProfit: props.averageTimeToProfit !== undefined ? {
+            set: props.averageTimeToProfit 
+           } : undefined,
+  calibrationAccuracy: props.calibrationAccuracy !== undefined ? {
+            set: props.calibrationAccuracy 
+           } : undefined,
+  performanceTrend: props.performanceTrend !== undefined ? {
+            set: props.performanceTrend 
+           } : undefined,
+  lookbackPeriodDays: props.lookbackPeriodDays !== undefined ? {
+            set: props.lookbackPeriodDays 
+           } : undefined,
+  healthScore: props.healthScore !== undefined ? {
+            set: props.healthScore 
+           } : undefined,
+  healthStatus: props.healthStatus !== undefined ? {
+            set: props.healthStatus 
+           } : undefined,
+  healthIssues: props.healthIssues !== undefined ? {
+            set: props.healthIssues 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -324,11 +408,79 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           create: {
-            },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  totalSignals: props.totalSignals !== undefined ? props.totalSignals : undefined,
+  successfulSignals: props.successfulSignals !== undefined ? props.successfulSignals : undefined,
+  failedSignals: props.failedSignals !== undefined ? props.failedSignals : undefined,
+  lookbackPeriodDays: props.lookbackPeriodDays !== undefined ? props.lookbackPeriodDays : undefined,
+  healthScore: props.healthScore !== undefined ? props.healthScore : undefined,
+  healthStatus: props.healthStatus !== undefined ? props.healthStatus : undefined,
+  healthIssues: props.healthIssues !== undefined ? props.healthIssues : undefined,
+      },
           update: {
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  totalSignals: props.totalSignals !== undefined ? {
+            set: props.totalSignals 
+           } : undefined,
+  successfulSignals: props.successfulSignals !== undefined ? {
+            set: props.successfulSignals 
+           } : undefined,
+  failedSignals: props.failedSignals !== undefined ? {
+            set: props.failedSignals 
+           } : undefined,
+  winRate: props.winRate !== undefined ? {
+            set: props.winRate 
+           } : undefined,
+  sharpeRatio: props.sharpeRatio !== undefined ? {
+            set: props.sharpeRatio 
+           } : undefined,
+  profitFactor: props.profitFactor !== undefined ? {
+            set: props.profitFactor 
+           } : undefined,
+  averageReturn: props.averageReturn !== undefined ? {
+            set: props.averageReturn 
+           } : undefined,
+  maxDrawdown: props.maxDrawdown !== undefined ? {
+            set: props.maxDrawdown 
+           } : undefined,
+  averageTimeToProfit: props.averageTimeToProfit !== undefined ? {
+            set: props.averageTimeToProfit 
+           } : undefined,
+  calibrationAccuracy: props.calibrationAccuracy !== undefined ? {
+            set: props.calibrationAccuracy 
+           } : undefined,
+  performanceTrend: props.performanceTrend !== undefined ? {
+            set: props.performanceTrend 
+           } : undefined,
+  lookbackPeriodDays: props.lookbackPeriodDays !== undefined ? {
+            set: props.lookbackPeriodDays 
+           } : undefined,
+  healthScore: props.healthScore !== undefined ? {
+            set: props.healthScore 
+           } : undefined,
+  healthStatus: props.healthStatus !== undefined ? {
+            set: props.healthStatus 
+           } : undefined,
+  healthIssues: props.healthIssues !== undefined ? {
+            set: props.healthIssues 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -409,10 +561,74 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  generatorSource: prop.generatorSource !== undefined ? {
+            set: prop.generatorSource 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  totalSignals: prop.totalSignals !== undefined ? {
+            set: prop.totalSignals 
+           } : undefined,
+  successfulSignals: prop.successfulSignals !== undefined ? {
+            set: prop.successfulSignals 
+           } : undefined,
+  failedSignals: prop.failedSignals !== undefined ? {
+            set: prop.failedSignals 
+           } : undefined,
+  winRate: prop.winRate !== undefined ? {
+            set: prop.winRate 
+           } : undefined,
+  sharpeRatio: prop.sharpeRatio !== undefined ? {
+            set: prop.sharpeRatio 
+           } : undefined,
+  profitFactor: prop.profitFactor !== undefined ? {
+            set: prop.profitFactor 
+           } : undefined,
+  averageReturn: prop.averageReturn !== undefined ? {
+            set: prop.averageReturn 
+           } : undefined,
+  maxDrawdown: prop.maxDrawdown !== undefined ? {
+            set: prop.maxDrawdown 
+           } : undefined,
+  averageTimeToProfit: prop.averageTimeToProfit !== undefined ? {
+            set: prop.averageTimeToProfit 
+           } : undefined,
+  calibrationAccuracy: prop.calibrationAccuracy !== undefined ? {
+            set: prop.calibrationAccuracy 
+           } : undefined,
+  performanceTrend: prop.performanceTrend !== undefined ? {
+            set: prop.performanceTrend 
+           } : undefined,
+  lookbackPeriodDays: prop.lookbackPeriodDays !== undefined ? {
+            set: prop.lookbackPeriodDays 
+           } : undefined,
+  healthScore: prop.healthScore !== undefined ? {
+            set: prop.healthScore 
+           } : undefined,
+  healthStatus: prop.healthStatus !== undefined ? {
+            set: prop.healthStatus 
+           } : undefined,
+  healthIssues: prop.healthIssues !== undefined ? {
+            set: prop.healthIssues 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+
           },
         }));
 
@@ -577,7 +793,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -730,7 +950,13 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

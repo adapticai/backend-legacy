@@ -347,7 +347,523 @@ id
 
           const variables = {
             data: {
-              
+                name: props.name !== undefined ? props.name : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
+  image: props.image !== undefined ? props.image : undefined,
+  deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
+  role: props.role !== undefined ? props.role : undefined,
+  bio: props.bio !== undefined ? props.bio : undefined,
+  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
+  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
+  customer: props.customer ? 
+    typeof props.customer === 'object' && Object.keys(props.customer).length === 1 && Object.keys(props.customer)[0] === 'id'
+    ? { connect: {
+        id: props.customer.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.customer.id !== undefined ? props.customer.id : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? props.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? props.customer.stripeSubscriptionId : undefined,
+        authUserId: props.customer.authUserId !== undefined ? {
+            equals: props.customer.authUserId 
+           } : undefined,
+        name: props.customer.name !== undefined ? {
+            equals: props.customer.name 
+           } : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? {
+            equals: props.customer.stripePriceId 
+           } : undefined,
+      },
+      create: {
+        authUserId: props.customer.authUserId !== undefined ? props.customer.authUserId : undefined,
+        name: props.customer.name !== undefined ? props.customer.name : undefined,
+        plan: props.customer.plan !== undefined ? props.customer.plan : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? props.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? props.customer.stripeSubscriptionId : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? props.customer.stripePriceId : undefined,
+        stripeCurrentPeriodEnd: props.customer.stripeCurrentPeriodEnd !== undefined ? props.customer.stripeCurrentPeriodEnd : undefined,
+      },
+    }
+  } : undefined,
+  accounts: props.accounts ? 
+    Array.isArray(props.accounts) && props.accounts.length > 0 &&  props.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.accounts.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.accounts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        type: item.type !== undefined ? item.type : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+        access_token: item.access_token !== undefined ? item.access_token : undefined,
+        expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+        token_type: item.token_type !== undefined ? item.token_type : undefined,
+        scope: item.scope !== undefined ? item.scope : undefined,
+        id_token: item.id_token !== undefined ? item.id_token : undefined,
+        session_state: item.session_state !== undefined ? item.session_state : undefined,
+      },
+    }))
+  } : undefined,
+  sessions: props.sessions ? 
+    Array.isArray(props.sessions) && props.sessions.length > 0 &&  props.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.sessions.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.sessions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+        expires: item.expires !== undefined ? item.expires : undefined,
+      },
+    }))
+  } : undefined,
+  authenticators: props.authenticators ? 
+    Array.isArray(props.authenticators) && props.authenticators.length > 0 &&  props.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.authenticators.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.authenticators.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+        publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+        counter: item.counter !== undefined ? item.counter : undefined,
+      },
+    }))
+  } : undefined,
+  orgMemberships: props.orgMemberships ? 
+    Array.isArray(props.orgMemberships) && props.orgMemberships.length > 0 &&  props.orgMemberships.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.orgMemberships.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.orgMemberships.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        organizationId: item.organizationId !== undefined ? {
+            equals: item.organizationId 
+           } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    organization: item.organization ? 
+      typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && Object.keys(item.organization)[0] === 'id'
+    ? { connect: {
+          id: item.organization.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.organization.id !== undefined ? item.organization.id : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name 
+             } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  fundAssignments: props.fundAssignments ? 
+    Array.isArray(props.fundAssignments) && props.fundAssignments.length > 0 &&  props.fundAssignments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.fundAssignments.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.fundAssignments.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        fundId: item.fundId !== undefined ? {
+            equals: item.fundId 
+           } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+          id: item.fund.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.fund.id !== undefined ? item.fund.id : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name 
+             } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug 
+             } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId 
+             } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  investorProfile: props.investorProfile ? 
+    typeof props.investorProfile === 'object' && Object.keys(props.investorProfile).length === 1 && Object.keys(props.investorProfile)[0] === 'id'
+    ? { connect: {
+        id: props.investorProfile.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.investorProfile.id !== undefined ? props.investorProfile.id : undefined,
+        userId: props.investorProfile.userId !== undefined ? props.investorProfile.userId : undefined,
+        name: props.investorProfile.name !== undefined ? {
+            equals: props.investorProfile.name 
+           } : undefined,
+        email: props.investorProfile.email !== undefined ? {
+            equals: props.investorProfile.email 
+           } : undefined,
+      },
+      create: {
+        name: props.investorProfile.name !== undefined ? props.investorProfile.name : undefined,
+        email: props.investorProfile.email !== undefined ? props.investorProfile.email : undefined,
+        type: props.investorProfile.type !== undefined ? props.investorProfile.type : undefined,
+        kycStatus: props.investorProfile.kycStatus !== undefined ? props.investorProfile.kycStatus : undefined,
+        walletAddress: props.investorProfile.walletAddress !== undefined ? props.investorProfile.walletAddress : undefined,
+        deletedAt: props.investorProfile.deletedAt !== undefined ? props.investorProfile.deletedAt : undefined,
+    investments: props.investorProfile.investments ? 
+      Array.isArray(props.investorProfile.investments) && props.investorProfile.investments.length > 0 &&  props.investorProfile.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.investorProfile.investments.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId 
+             } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId 
+             } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  linkedProviders: props.linkedProviders ? 
+    Array.isArray(props.linkedProviders) && props.linkedProviders.length > 0 &&  props.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.linkedProviders.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.linkedProviders.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId 
+           } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email 
+           } : undefined,
+      },
+      create: {
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+        refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+      },
+    }))
+  } : undefined,
+  accountLinkingRequests: props.accountLinkingRequests ? 
+    Array.isArray(props.accountLinkingRequests) && props.accountLinkingRequests.length > 0 &&  props.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.accountLinkingRequests.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.accountLinkingRequests.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email 
+           } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId 
+           } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+        userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+        ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+        approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+      },
+    }))
+  } : undefined,
+  reviewedWaitlistEntries: props.reviewedWaitlistEntries ? 
+    Array.isArray(props.reviewedWaitlistEntries) && props.reviewedWaitlistEntries.length > 0 &&  props.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.reviewedWaitlistEntries.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.reviewedWaitlistEntries.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        fullName: item.fullName !== undefined ? item.fullName : undefined,
+        companyName: item.companyName !== undefined ? item.companyName : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+        jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+    inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+          id: item.inviteToken.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email 
+             } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+
             },
           };
 
@@ -429,7 +945,19 @@ id
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      name: prop.name !== undefined ? prop.name : undefined,
+  email: prop.email !== undefined ? prop.email : undefined,
+  emailVerified: prop.emailVerified !== undefined ? prop.emailVerified : undefined,
+  image: prop.image !== undefined ? prop.image : undefined,
+  deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
+  role: prop.role !== undefined ? prop.role : undefined,
+  bio: prop.bio !== undefined ? prop.bio : undefined,
+  jobTitle: prop.jobTitle !== undefined ? prop.jobTitle : undefined,
+  customerId: prop.customerId !== undefined ? prop.customerId : undefined,
+  plan: prop.plan !== undefined ? prop.plan : undefined,
+  openaiAPIKey: prop.openaiAPIKey !== undefined ? prop.openaiAPIKey : undefined,
+  openaiModel: prop.openaiModel !== undefined ? prop.openaiModel : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -510,9 +1038,1419 @@ id
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
+      },
           data: {
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  name: props.name !== undefined ? {
+            set: props.name 
+           } : undefined,
+  email: props.email !== undefined ? {
+            set: props.email 
+           } : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+            set: props.emailVerified 
+           } : undefined,
+  image: props.image !== undefined ? {
+            set: props.image 
+           } : undefined,
+  createdAt: props.createdAt !== undefined ? {
+            set: props.createdAt 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+  deletedAt: props.deletedAt !== undefined ? {
+            set: props.deletedAt 
+           } : undefined,
+  role: props.role !== undefined ? {
+            set: props.role 
+           } : undefined,
+  bio: props.bio !== undefined ? {
+            set: props.bio 
+           } : undefined,
+  jobTitle: props.jobTitle !== undefined ? {
+            set: props.jobTitle 
+           } : undefined,
+  plan: props.plan !== undefined ? {
+            set: props.plan 
+           } : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? {
+            set: props.openaiAPIKey 
+           } : undefined,
+  openaiModel: props.openaiModel !== undefined ? {
+            set: props.openaiModel 
+           } : undefined,
+  customer: props.customer ? 
+  typeof props.customer === 'object' && Object.keys(props.customer).length === 1 && (Object.keys(props.customer)[0] === 'id' || Object.keys(props.customer)[0] === 'symbol')
+? {
+  connect: {
+    id: props.customer.id
+  }
+} : { upsert: {
+      where: {
+        id: props.customer.id !== undefined ? {
+            equals: props.customer.id
+          } : undefined,
+        authUserId: props.customer.authUserId !== undefined ? {
+            equals: props.customer.authUserId
+          } : undefined,
+        name: props.customer.name !== undefined ? {
+            equals: props.customer.name
+          } : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? {
+            equals: props.customer.stripeCustomerId
+          } : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? {
+            equals: props.customer.stripeSubscriptionId
+          } : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? {
+            equals: props.customer.stripePriceId
+          } : undefined,
+      },
+      update: {
+        authUserId: props.customer.authUserId !== undefined ? {
+            set: props.customer.authUserId
+          } : undefined,
+        name: props.customer.name !== undefined ? {
+            set: props.customer.name
+          } : undefined,
+        plan: props.customer.plan !== undefined ? {
+            set: props.customer.plan
+          } : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? {
+            set: props.customer.stripeCustomerId
+          } : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? {
+            set: props.customer.stripeSubscriptionId
+          } : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? {
+            set: props.customer.stripePriceId
+          } : undefined,
+        stripeCurrentPeriodEnd: props.customer.stripeCurrentPeriodEnd !== undefined ? {
+            set: props.customer.stripeCurrentPeriodEnd
+          } : undefined,
+      },
+      create: {
+        authUserId: props.customer.authUserId !== undefined ? props.customer.authUserId : undefined,
+        name: props.customer.name !== undefined ? props.customer.name : undefined,
+        plan: props.customer.plan !== undefined ? props.customer.plan : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? props.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? props.customer.stripeSubscriptionId : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? props.customer.stripePriceId : undefined,
+        stripeCurrentPeriodEnd: props.customer.stripeCurrentPeriodEnd !== undefined ? props.customer.stripeCurrentPeriodEnd : undefined,
+      },
+    }
+  } : undefined,
+  accounts: props.accounts ? 
+  Array.isArray(props.accounts) && props.accounts.length > 0 && props.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.accounts.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.accounts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        type: item.type !== undefined ? {
+            set: item.type
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        refresh_token: item.refresh_token !== undefined ? {
+            set: item.refresh_token
+          } : undefined,
+        access_token: item.access_token !== undefined ? {
+            set: item.access_token
+          } : undefined,
+        expires_at: item.expires_at !== undefined ? {
+            set: item.expires_at
+          } : undefined,
+        token_type: item.token_type !== undefined ? {
+            set: item.token_type
+          } : undefined,
+        scope: item.scope !== undefined ? {
+            set: item.scope
+          } : undefined,
+        id_token: item.id_token !== undefined ? {
+            set: item.id_token
+          } : undefined,
+        session_state: item.session_state !== undefined ? {
+            set: item.session_state
+          } : undefined,
+      },
+      create: {
+        type: item.type !== undefined ? item.type : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+        access_token: item.access_token !== undefined ? item.access_token : undefined,
+        expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+        token_type: item.token_type !== undefined ? item.token_type : undefined,
+        scope: item.scope !== undefined ? item.scope : undefined,
+        id_token: item.id_token !== undefined ? item.id_token : undefined,
+        session_state: item.session_state !== undefined ? item.session_state : undefined,
+      },
+    }))
+  } : undefined,
+  sessions: props.sessions ? 
+  Array.isArray(props.sessions) && props.sessions.length > 0 && props.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.sessions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.sessions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        sessionToken: item.sessionToken !== undefined ? {
+            set: item.sessionToken
+          } : undefined,
+        expires: item.expires !== undefined ? {
+            set: item.expires
+          } : undefined,
+      },
+      create: {
+        sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+        expires: item.expires !== undefined ? item.expires : undefined,
+      },
+    }))
+  } : undefined,
+  authenticators: props.authenticators ? 
+  Array.isArray(props.authenticators) && props.authenticators.length > 0 && props.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.authenticators.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.authenticators.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        credentialID: item.credentialID !== undefined ? {
+            set: item.credentialID
+          } : undefined,
+        publicKey: item.publicKey !== undefined ? {
+            set: item.publicKey
+          } : undefined,
+        counter: item.counter !== undefined ? {
+            set: item.counter
+          } : undefined,
+      },
+      create: {
+        credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+        publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+        counter: item.counter !== undefined ? item.counter : undefined,
+      },
+    }))
+  } : undefined,
+  orgMemberships: props.orgMemberships ? 
+  Array.isArray(props.orgMemberships) && props.orgMemberships.length > 0 && props.orgMemberships.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.orgMemberships.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.orgMemberships.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        organizationId: item.organizationId !== undefined ? {
+            equals: item.organizationId
+          } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role
+          } : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions
+          } : undefined,
+    organization: item.organization ? 
+    typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && (Object.keys(item.organization)[0] === 'id' || Object.keys(item.organization)[0] === 'symbol')
+? {
+    connect: {
+      id: item.organization.id
+    }
+} : { upsert: {
+        where: {
+          id: item.organization.id !== undefined ? {
+              equals: item.organization.id
+            } : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name
+            } : undefined,
+          slug: item.organization.slug !== undefined ? {
+              equals: item.organization.slug
+            } : undefined,
+        },
+        update: {
+          id: item.organization.id !== undefined ? {
+              set: item.organization.id
+            } : undefined,
+          name: item.organization.name !== undefined ? {
+              set: item.organization.name
+            } : undefined,
+          slug: item.organization.slug !== undefined ? {
+              set: item.organization.slug
+            } : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? {
+              set: item.organization.logoUrl
+            } : undefined,
+          website: item.organization.website !== undefined ? {
+              set: item.organization.website
+            } : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? {
+              set: item.organization.deletedAt
+            } : undefined,
+      funds: item.organization.funds ? 
+      Array.isArray(item.organization.funds) && item.organization.funds.length > 0 && item.organization.funds.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.organization.funds.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
           },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    organization: item.organization ? 
+      typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && Object.keys(item.organization)[0] === 'id'
+    ? { connect: {
+          id: item.organization.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.organization.id !== undefined ? item.organization.id : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name 
+             } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  fundAssignments: props.fundAssignments ? 
+  Array.isArray(props.fundAssignments) && props.fundAssignments.length > 0 && props.fundAssignments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.fundAssignments.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.fundAssignments.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        fundId: item.fundId !== undefined ? {
+            equals: item.fundId
+          } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role
+          } : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions
+          } : undefined,
+    fund: item.fund ? 
+    typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && (Object.keys(item.fund)[0] === 'id' || Object.keys(item.fund)[0] === 'symbol')
+? {
+    connect: {
+      id: item.fund.id
+    }
+} : { upsert: {
+        where: {
+          id: item.fund.id !== undefined ? {
+              equals: item.fund.id
+            } : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name
+            } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug
+            } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId
+            } : undefined,
+        },
+        update: {
+          id: item.fund.id !== undefined ? {
+              set: item.fund.id
+            } : undefined,
+          name: item.fund.name !== undefined ? {
+              set: item.fund.name
+            } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              set: item.fund.slug
+            } : undefined,
+          description: item.fund.description !== undefined ? {
+              set: item.fund.description
+            } : undefined,
+          status: item.fund.status !== undefined ? {
+              set: item.fund.status
+            } : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? {
+              set: item.fund.deletedAt
+            } : undefined,
+      organization: item.fund.organization ? 
+      typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && (Object.keys(item.fund.organization)[0] === 'id' || Object.keys(item.fund.organization)[0] === 'symbol')
+? {
+      connect: {
+        id: item.fund.organization.id
+      }
+} : { upsert: {
+          where: {
+            id: item.fund.organization.id !== undefined ? {
+                equals: item.fund.organization.id
+              } : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name
+              } : undefined,
+            slug: item.fund.organization.slug !== undefined ? {
+                equals: item.fund.organization.slug
+              } : undefined,
+          },
+          update: {
+            id: item.fund.organization.id !== undefined ? {
+                set: item.fund.organization.id
+              } : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                set: item.fund.organization.name
+              } : undefined,
+            slug: item.fund.organization.slug !== undefined ? {
+                set: item.fund.organization.slug
+              } : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? {
+                set: item.fund.organization.logoUrl
+              } : undefined,
+            website: item.fund.organization.website !== undefined ? {
+                set: item.fund.organization.website
+              } : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? {
+                set: item.fund.organization.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+      Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 && item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.fund.brokerageAccounts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            apiKey: item.apiKey !== undefined ? {
+                set: item.apiKey
+              } : undefined,
+            apiSecret: item.apiSecret !== undefined ? {
+                set: item.apiSecret
+              } : undefined,
+            configuration: item.configuration !== undefined ? {
+                set: item.configuration
+              } : undefined,
+            marketOpen: item.marketOpen !== undefined ? {
+                set: item.marketOpen
+              } : undefined,
+            realTime: item.realTime !== undefined ? {
+                set: item.realTime
+              } : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+                set: item.cryptoTradingEnabled
+              } : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs
+              } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? {
+                set: item.cryptoTradeAllocationPct
+              } : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
+                set: item.tradeAllocationPct
+              } : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? {
+                set: item.autoAllocation
+              } : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? {
+                set: item.minPercentageChange
+              } : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? {
+                set: item.volumeThreshold
+              } : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? {
+                set: item.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? {
+                set: item.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
+                set: item.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+      Array.isArray(item.fund.investments) && item.fund.investments.length > 0 && item.fund.investments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.fund.investments.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            investedAt: item.investedAt !== undefined ? {
+                set: item.investedAt
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+          id: item.fund.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.fund.id !== undefined ? item.fund.id : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name 
+             } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug 
+             } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId 
+             } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  investorProfile: props.investorProfile ? 
+  typeof props.investorProfile === 'object' && Object.keys(props.investorProfile).length === 1 && (Object.keys(props.investorProfile)[0] === 'id' || Object.keys(props.investorProfile)[0] === 'symbol')
+? {
+  connect: {
+    id: props.investorProfile.id
+  }
+} : { upsert: {
+      where: {
+        id: props.investorProfile.id !== undefined ? {
+            equals: props.investorProfile.id
+          } : undefined,
+        name: props.investorProfile.name !== undefined ? {
+            equals: props.investorProfile.name
+          } : undefined,
+        email: props.investorProfile.email !== undefined ? {
+            equals: props.investorProfile.email
+          } : undefined,
+        userId: props.investorProfile.userId !== undefined ? {
+            equals: props.investorProfile.userId
+          } : undefined,
+      },
+      update: {
+        id: props.investorProfile.id !== undefined ? {
+            set: props.investorProfile.id
+          } : undefined,
+        name: props.investorProfile.name !== undefined ? {
+            set: props.investorProfile.name
+          } : undefined,
+        email: props.investorProfile.email !== undefined ? {
+            set: props.investorProfile.email
+          } : undefined,
+        type: props.investorProfile.type !== undefined ? {
+            set: props.investorProfile.type
+          } : undefined,
+        kycStatus: props.investorProfile.kycStatus !== undefined ? {
+            set: props.investorProfile.kycStatus
+          } : undefined,
+        walletAddress: props.investorProfile.walletAddress !== undefined ? {
+            set: props.investorProfile.walletAddress
+          } : undefined,
+        deletedAt: props.investorProfile.deletedAt !== undefined ? {
+            set: props.investorProfile.deletedAt
+          } : undefined,
+    investments: props.investorProfile.investments ? 
+    Array.isArray(props.investorProfile.investments) && props.investorProfile.investments.length > 0 && props.investorProfile.investments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.investorProfile.investments.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId
+            } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          units: item.units !== undefined ? {
+              set: item.units
+            } : undefined,
+          investedAt: item.investedAt !== undefined ? {
+              set: item.investedAt
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+      fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && (Object.keys(item.fund)[0] === 'id' || Object.keys(item.fund)[0] === 'symbol')
+? {
+      connect: {
+        id: item.fund.id
+      }
+} : { upsert: {
+          where: {
+            id: item.fund.id !== undefined ? {
+                equals: item.fund.id
+              } : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name
+              } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug
+              } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId
+              } : undefined,
+          },
+          update: {
+            id: item.fund.id !== undefined ? {
+                set: item.fund.id
+              } : undefined,
+            name: item.fund.name !== undefined ? {
+                set: item.fund.name
+              } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                set: item.fund.slug
+              } : undefined,
+            description: item.fund.description !== undefined ? {
+                set: item.fund.description
+              } : undefined,
+            status: item.fund.status !== undefined ? {
+                set: item.fund.status
+              } : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? {
+                set: item.fund.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: props.investorProfile.name !== undefined ? props.investorProfile.name : undefined,
+        email: props.investorProfile.email !== undefined ? props.investorProfile.email : undefined,
+        type: props.investorProfile.type !== undefined ? props.investorProfile.type : undefined,
+        kycStatus: props.investorProfile.kycStatus !== undefined ? props.investorProfile.kycStatus : undefined,
+        walletAddress: props.investorProfile.walletAddress !== undefined ? props.investorProfile.walletAddress : undefined,
+        deletedAt: props.investorProfile.deletedAt !== undefined ? props.investorProfile.deletedAt : undefined,
+    investments: props.investorProfile.investments ? 
+      Array.isArray(props.investorProfile.investments) && props.investorProfile.investments.length > 0 &&  props.investorProfile.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.investorProfile.investments.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId 
+             } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId 
+             } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  linkedProviders: props.linkedProviders ? 
+  Array.isArray(props.linkedProviders) && props.linkedProviders.length > 0 && props.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.linkedProviders.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.linkedProviders.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId
+          } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        accessToken: item.accessToken !== undefined ? {
+            set: item.accessToken
+          } : undefined,
+        refreshToken: item.refreshToken !== undefined ? {
+            set: item.refreshToken
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
+          } : undefined,
+        linkedAt: item.linkedAt !== undefined ? {
+            set: item.linkedAt
+          } : undefined,
+      },
+      create: {
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+        refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+      },
+    }))
+  } : undefined,
+  accountLinkingRequests: props.accountLinkingRequests ? 
+  Array.isArray(props.accountLinkingRequests) && props.accountLinkingRequests.length > 0 && props.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.accountLinkingRequests.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.accountLinkingRequests.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        verificationToken: item.verificationToken !== undefined ? {
+            set: item.verificationToken
+          } : undefined,
+        userAgent: item.userAgent !== undefined ? {
+            set: item.userAgent
+          } : undefined,
+        ipAddress: item.ipAddress !== undefined ? {
+            set: item.ipAddress
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
+          } : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? {
+            set: item.verifiedAt
+          } : undefined,
+        approvedAt: item.approvedAt !== undefined ? {
+            set: item.approvedAt
+          } : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? {
+            set: item.rejectedAt
+          } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+        userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+        ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+        approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+      },
+    }))
+  } : undefined,
+  reviewedWaitlistEntries: props.reviewedWaitlistEntries ? 
+  Array.isArray(props.reviewedWaitlistEntries) && props.reviewedWaitlistEntries.length > 0 && props.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.reviewedWaitlistEntries.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.reviewedWaitlistEntries.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        reviewedById: item.reviewedById !== undefined ? {
+            equals: item.reviewedById
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        fullName: item.fullName !== undefined ? {
+            set: item.fullName
+          } : undefined,
+        companyName: item.companyName !== undefined ? {
+            set: item.companyName
+          } : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? {
+            set: item.companyWebsite
+          } : undefined,
+        jobRole: item.jobRole !== undefined ? {
+            set: item.jobRole
+          } : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+            set: item.professionalInvestorConfirmed
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        queuePosition: item.queuePosition !== undefined ? {
+            set: item.queuePosition
+          } : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? {
+            set: item.reviewedAt
+          } : undefined,
+    inviteToken: item.inviteToken ? 
+    typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && (Object.keys(item.inviteToken)[0] === 'id' || Object.keys(item.inviteToken)[0] === 'symbol')
+? {
+    connect: {
+      id: item.inviteToken.id
+    }
+} : { upsert: {
+        where: {
+          id: item.inviteToken.id !== undefined ? {
+              equals: item.inviteToken.id
+            } : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email
+            } : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? {
+              equals: item.inviteToken.waitlistEntryId
+            } : undefined,
+        },
+        update: {
+          id: item.inviteToken.id !== undefined ? {
+              set: item.inviteToken.id
+            } : undefined,
+          token: item.inviteToken.token !== undefined ? {
+              set: item.inviteToken.token
+            } : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              set: item.inviteToken.email
+            } : undefined,
+          used: item.inviteToken.used !== undefined ? {
+              set: item.inviteToken.used
+            } : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? {
+              set: item.inviteToken.usedAt
+            } : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? {
+              set: item.inviteToken.expiresAt
+            } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        fullName: item.fullName !== undefined ? item.fullName : undefined,
+        companyName: item.companyName !== undefined ? item.companyName : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+        jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+    inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+          id: item.inviteToken.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email 
+             } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -593,11 +2531,1928 @@ id
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
+      },
           create: {
-            },
-          update: {
+        name: props.name !== undefined ? props.name : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  emailVerified: props.emailVerified !== undefined ? props.emailVerified : undefined,
+  image: props.image !== undefined ? props.image : undefined,
+  deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
+  role: props.role !== undefined ? props.role : undefined,
+  bio: props.bio !== undefined ? props.bio : undefined,
+  jobTitle: props.jobTitle !== undefined ? props.jobTitle : undefined,
+  plan: props.plan !== undefined ? props.plan : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? props.openaiAPIKey : undefined,
+  openaiModel: props.openaiModel !== undefined ? props.openaiModel : undefined,
+  customer: props.customer ? 
+    typeof props.customer === 'object' && Object.keys(props.customer).length === 1 && Object.keys(props.customer)[0] === 'id'
+    ? { connect: {
+        id: props.customer.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.customer.id !== undefined ? props.customer.id : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? props.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? props.customer.stripeSubscriptionId : undefined,
+        authUserId: props.customer.authUserId !== undefined ? {
+            equals: props.customer.authUserId 
+           } : undefined,
+        name: props.customer.name !== undefined ? {
+            equals: props.customer.name 
+           } : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? {
+            equals: props.customer.stripePriceId 
+           } : undefined,
+      },
+      create: {
+        authUserId: props.customer.authUserId !== undefined ? props.customer.authUserId : undefined,
+        name: props.customer.name !== undefined ? props.customer.name : undefined,
+        plan: props.customer.plan !== undefined ? props.customer.plan : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? props.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? props.customer.stripeSubscriptionId : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? props.customer.stripePriceId : undefined,
+        stripeCurrentPeriodEnd: props.customer.stripeCurrentPeriodEnd !== undefined ? props.customer.stripeCurrentPeriodEnd : undefined,
+      },
+    }
+  } : undefined,
+  accounts: props.accounts ? 
+    Array.isArray(props.accounts) && props.accounts.length > 0 &&  props.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.accounts.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.accounts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        type: item.type !== undefined ? item.type : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+        access_token: item.access_token !== undefined ? item.access_token : undefined,
+        expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+        token_type: item.token_type !== undefined ? item.token_type : undefined,
+        scope: item.scope !== undefined ? item.scope : undefined,
+        id_token: item.id_token !== undefined ? item.id_token : undefined,
+        session_state: item.session_state !== undefined ? item.session_state : undefined,
+      },
+    }))
+  } : undefined,
+  sessions: props.sessions ? 
+    Array.isArray(props.sessions) && props.sessions.length > 0 &&  props.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.sessions.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.sessions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+        expires: item.expires !== undefined ? item.expires : undefined,
+      },
+    }))
+  } : undefined,
+  authenticators: props.authenticators ? 
+    Array.isArray(props.authenticators) && props.authenticators.length > 0 &&  props.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.authenticators.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.authenticators.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+        publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+        counter: item.counter !== undefined ? item.counter : undefined,
+      },
+    }))
+  } : undefined,
+  orgMemberships: props.orgMemberships ? 
+    Array.isArray(props.orgMemberships) && props.orgMemberships.length > 0 &&  props.orgMemberships.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.orgMemberships.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.orgMemberships.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        organizationId: item.organizationId !== undefined ? {
+            equals: item.organizationId 
+           } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    organization: item.organization ? 
+      typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && Object.keys(item.organization)[0] === 'id'
+    ? { connect: {
+          id: item.organization.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.organization.id !== undefined ? item.organization.id : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name 
+             } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
           },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  fundAssignments: props.fundAssignments ? 
+    Array.isArray(props.fundAssignments) && props.fundAssignments.length > 0 &&  props.fundAssignments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.fundAssignments.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.fundAssignments.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        fundId: item.fundId !== undefined ? {
+            equals: item.fundId 
+           } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+          id: item.fund.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.fund.id !== undefined ? item.fund.id : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name 
+             } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug 
+             } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId 
+             } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  investorProfile: props.investorProfile ? 
+    typeof props.investorProfile === 'object' && Object.keys(props.investorProfile).length === 1 && Object.keys(props.investorProfile)[0] === 'id'
+    ? { connect: {
+        id: props.investorProfile.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.investorProfile.id !== undefined ? props.investorProfile.id : undefined,
+        userId: props.investorProfile.userId !== undefined ? props.investorProfile.userId : undefined,
+        name: props.investorProfile.name !== undefined ? {
+            equals: props.investorProfile.name 
+           } : undefined,
+        email: props.investorProfile.email !== undefined ? {
+            equals: props.investorProfile.email 
+           } : undefined,
+      },
+      create: {
+        name: props.investorProfile.name !== undefined ? props.investorProfile.name : undefined,
+        email: props.investorProfile.email !== undefined ? props.investorProfile.email : undefined,
+        type: props.investorProfile.type !== undefined ? props.investorProfile.type : undefined,
+        kycStatus: props.investorProfile.kycStatus !== undefined ? props.investorProfile.kycStatus : undefined,
+        walletAddress: props.investorProfile.walletAddress !== undefined ? props.investorProfile.walletAddress : undefined,
+        deletedAt: props.investorProfile.deletedAt !== undefined ? props.investorProfile.deletedAt : undefined,
+    investments: props.investorProfile.investments ? 
+      Array.isArray(props.investorProfile.investments) && props.investorProfile.investments.length > 0 &&  props.investorProfile.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.investorProfile.investments.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId 
+             } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId 
+             } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  linkedProviders: props.linkedProviders ? 
+    Array.isArray(props.linkedProviders) && props.linkedProviders.length > 0 &&  props.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.linkedProviders.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.linkedProviders.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId 
+           } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email 
+           } : undefined,
+      },
+      create: {
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+        refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+      },
+    }))
+  } : undefined,
+  accountLinkingRequests: props.accountLinkingRequests ? 
+    Array.isArray(props.accountLinkingRequests) && props.accountLinkingRequests.length > 0 &&  props.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.accountLinkingRequests.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.accountLinkingRequests.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId 
+           } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email 
+           } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId 
+           } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+        userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+        ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+        approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+      },
+    }))
+  } : undefined,
+  reviewedWaitlistEntries: props.reviewedWaitlistEntries ? 
+    Array.isArray(props.reviewedWaitlistEntries) && props.reviewedWaitlistEntries.length > 0 &&  props.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.reviewedWaitlistEntries.map((item: any) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.reviewedWaitlistEntries.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        fullName: item.fullName !== undefined ? item.fullName : undefined,
+        companyName: item.companyName !== undefined ? item.companyName : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+        jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+    inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+          id: item.inviteToken.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email 
+             } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+      },
+          update: {
+      name: props.name !== undefined ? {
+            set: props.name 
+           } : undefined,
+  email: props.email !== undefined ? {
+            set: props.email 
+           } : undefined,
+  emailVerified: props.emailVerified !== undefined ? {
+            set: props.emailVerified 
+           } : undefined,
+  image: props.image !== undefined ? {
+            set: props.image 
+           } : undefined,
+  deletedAt: props.deletedAt !== undefined ? {
+            set: props.deletedAt 
+           } : undefined,
+  role: props.role !== undefined ? {
+            set: props.role 
+           } : undefined,
+  bio: props.bio !== undefined ? {
+            set: props.bio 
+           } : undefined,
+  jobTitle: props.jobTitle !== undefined ? {
+            set: props.jobTitle 
+           } : undefined,
+  plan: props.plan !== undefined ? {
+            set: props.plan 
+           } : undefined,
+  openaiAPIKey: props.openaiAPIKey !== undefined ? {
+            set: props.openaiAPIKey 
+           } : undefined,
+  openaiModel: props.openaiModel !== undefined ? {
+            set: props.openaiModel 
+           } : undefined,
+  customer: props.customer ? 
+  typeof props.customer === 'object' && Object.keys(props.customer).length === 1 && (Object.keys(props.customer)[0] === 'id' || Object.keys(props.customer)[0] === 'symbol')
+? {
+  connect: {
+    id: props.customer.id
+  }
+} : { upsert: {
+      where: {
+        id: props.customer.id !== undefined ? {
+            equals: props.customer.id
+          } : undefined,
+        authUserId: props.customer.authUserId !== undefined ? {
+            equals: props.customer.authUserId
+          } : undefined,
+        name: props.customer.name !== undefined ? {
+            equals: props.customer.name
+          } : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? {
+            equals: props.customer.stripeCustomerId
+          } : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? {
+            equals: props.customer.stripeSubscriptionId
+          } : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? {
+            equals: props.customer.stripePriceId
+          } : undefined,
+      },
+      update: {
+        authUserId: props.customer.authUserId !== undefined ? {
+            set: props.customer.authUserId
+          } : undefined,
+        name: props.customer.name !== undefined ? {
+            set: props.customer.name
+          } : undefined,
+        plan: props.customer.plan !== undefined ? {
+            set: props.customer.plan
+          } : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? {
+            set: props.customer.stripeCustomerId
+          } : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? {
+            set: props.customer.stripeSubscriptionId
+          } : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? {
+            set: props.customer.stripePriceId
+          } : undefined,
+        stripeCurrentPeriodEnd: props.customer.stripeCurrentPeriodEnd !== undefined ? {
+            set: props.customer.stripeCurrentPeriodEnd
+          } : undefined,
+      },
+      create: {
+        authUserId: props.customer.authUserId !== undefined ? props.customer.authUserId : undefined,
+        name: props.customer.name !== undefined ? props.customer.name : undefined,
+        plan: props.customer.plan !== undefined ? props.customer.plan : undefined,
+        stripeCustomerId: props.customer.stripeCustomerId !== undefined ? props.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: props.customer.stripeSubscriptionId !== undefined ? props.customer.stripeSubscriptionId : undefined,
+        stripePriceId: props.customer.stripePriceId !== undefined ? props.customer.stripePriceId : undefined,
+        stripeCurrentPeriodEnd: props.customer.stripeCurrentPeriodEnd !== undefined ? props.customer.stripeCurrentPeriodEnd : undefined,
+      },
+    }
+  } : undefined,
+  accounts: props.accounts ? 
+  Array.isArray(props.accounts) && props.accounts.length > 0 && props.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.accounts.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.accounts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        type: item.type !== undefined ? {
+            set: item.type
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        refresh_token: item.refresh_token !== undefined ? {
+            set: item.refresh_token
+          } : undefined,
+        access_token: item.access_token !== undefined ? {
+            set: item.access_token
+          } : undefined,
+        expires_at: item.expires_at !== undefined ? {
+            set: item.expires_at
+          } : undefined,
+        token_type: item.token_type !== undefined ? {
+            set: item.token_type
+          } : undefined,
+        scope: item.scope !== undefined ? {
+            set: item.scope
+          } : undefined,
+        id_token: item.id_token !== undefined ? {
+            set: item.id_token
+          } : undefined,
+        session_state: item.session_state !== undefined ? {
+            set: item.session_state
+          } : undefined,
+      },
+      create: {
+        type: item.type !== undefined ? item.type : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+        access_token: item.access_token !== undefined ? item.access_token : undefined,
+        expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+        token_type: item.token_type !== undefined ? item.token_type : undefined,
+        scope: item.scope !== undefined ? item.scope : undefined,
+        id_token: item.id_token !== undefined ? item.id_token : undefined,
+        session_state: item.session_state !== undefined ? item.session_state : undefined,
+      },
+    }))
+  } : undefined,
+  sessions: props.sessions ? 
+  Array.isArray(props.sessions) && props.sessions.length > 0 && props.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.sessions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.sessions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        sessionToken: item.sessionToken !== undefined ? {
+            set: item.sessionToken
+          } : undefined,
+        expires: item.expires !== undefined ? {
+            set: item.expires
+          } : undefined,
+      },
+      create: {
+        sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+        expires: item.expires !== undefined ? item.expires : undefined,
+      },
+    }))
+  } : undefined,
+  authenticators: props.authenticators ? 
+  Array.isArray(props.authenticators) && props.authenticators.length > 0 && props.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.authenticators.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.authenticators.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        credentialID: item.credentialID !== undefined ? {
+            set: item.credentialID
+          } : undefined,
+        publicKey: item.publicKey !== undefined ? {
+            set: item.publicKey
+          } : undefined,
+        counter: item.counter !== undefined ? {
+            set: item.counter
+          } : undefined,
+      },
+      create: {
+        credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+        publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+        counter: item.counter !== undefined ? item.counter : undefined,
+      },
+    }))
+  } : undefined,
+  orgMemberships: props.orgMemberships ? 
+  Array.isArray(props.orgMemberships) && props.orgMemberships.length > 0 && props.orgMemberships.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.orgMemberships.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.orgMemberships.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        organizationId: item.organizationId !== undefined ? {
+            equals: item.organizationId
+          } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role
+          } : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions
+          } : undefined,
+    organization: item.organization ? 
+    typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && (Object.keys(item.organization)[0] === 'id' || Object.keys(item.organization)[0] === 'symbol')
+? {
+    connect: {
+      id: item.organization.id
+    }
+} : { upsert: {
+        where: {
+          id: item.organization.id !== undefined ? {
+              equals: item.organization.id
+            } : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name
+            } : undefined,
+          slug: item.organization.slug !== undefined ? {
+              equals: item.organization.slug
+            } : undefined,
+        },
+        update: {
+          id: item.organization.id !== undefined ? {
+              set: item.organization.id
+            } : undefined,
+          name: item.organization.name !== undefined ? {
+              set: item.organization.name
+            } : undefined,
+          slug: item.organization.slug !== undefined ? {
+              set: item.organization.slug
+            } : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? {
+              set: item.organization.logoUrl
+            } : undefined,
+          website: item.organization.website !== undefined ? {
+              set: item.organization.website
+            } : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? {
+              set: item.organization.deletedAt
+            } : undefined,
+      funds: item.organization.funds ? 
+      Array.isArray(item.organization.funds) && item.organization.funds.length > 0 && item.organization.funds.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.organization.funds.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    organization: item.organization ? 
+      typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && Object.keys(item.organization)[0] === 'id'
+    ? { connect: {
+          id: item.organization.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.organization.id !== undefined ? item.organization.id : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name 
+             } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  fundAssignments: props.fundAssignments ? 
+  Array.isArray(props.fundAssignments) && props.fundAssignments.length > 0 && props.fundAssignments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.fundAssignments.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.fundAssignments.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        fundId: item.fundId !== undefined ? {
+            equals: item.fundId
+          } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role
+          } : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions
+          } : undefined,
+    fund: item.fund ? 
+    typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && (Object.keys(item.fund)[0] === 'id' || Object.keys(item.fund)[0] === 'symbol')
+? {
+    connect: {
+      id: item.fund.id
+    }
+} : { upsert: {
+        where: {
+          id: item.fund.id !== undefined ? {
+              equals: item.fund.id
+            } : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name
+            } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug
+            } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId
+            } : undefined,
+        },
+        update: {
+          id: item.fund.id !== undefined ? {
+              set: item.fund.id
+            } : undefined,
+          name: item.fund.name !== undefined ? {
+              set: item.fund.name
+            } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              set: item.fund.slug
+            } : undefined,
+          description: item.fund.description !== undefined ? {
+              set: item.fund.description
+            } : undefined,
+          status: item.fund.status !== undefined ? {
+              set: item.fund.status
+            } : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? {
+              set: item.fund.deletedAt
+            } : undefined,
+      organization: item.fund.organization ? 
+      typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && (Object.keys(item.fund.organization)[0] === 'id' || Object.keys(item.fund.organization)[0] === 'symbol')
+? {
+      connect: {
+        id: item.fund.organization.id
+      }
+} : { upsert: {
+          where: {
+            id: item.fund.organization.id !== undefined ? {
+                equals: item.fund.organization.id
+              } : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name
+              } : undefined,
+            slug: item.fund.organization.slug !== undefined ? {
+                equals: item.fund.organization.slug
+              } : undefined,
+          },
+          update: {
+            id: item.fund.organization.id !== undefined ? {
+                set: item.fund.organization.id
+              } : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                set: item.fund.organization.name
+              } : undefined,
+            slug: item.fund.organization.slug !== undefined ? {
+                set: item.fund.organization.slug
+              } : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? {
+                set: item.fund.organization.logoUrl
+              } : undefined,
+            website: item.fund.organization.website !== undefined ? {
+                set: item.fund.organization.website
+              } : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? {
+                set: item.fund.organization.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+      Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 && item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.fund.brokerageAccounts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            apiKey: item.apiKey !== undefined ? {
+                set: item.apiKey
+              } : undefined,
+            apiSecret: item.apiSecret !== undefined ? {
+                set: item.apiSecret
+              } : undefined,
+            configuration: item.configuration !== undefined ? {
+                set: item.configuration
+              } : undefined,
+            marketOpen: item.marketOpen !== undefined ? {
+                set: item.marketOpen
+              } : undefined,
+            realTime: item.realTime !== undefined ? {
+                set: item.realTime
+              } : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+                set: item.cryptoTradingEnabled
+              } : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs
+              } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? {
+                set: item.cryptoTradeAllocationPct
+              } : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
+                set: item.tradeAllocationPct
+              } : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? {
+                set: item.autoAllocation
+              } : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? {
+                set: item.minPercentageChange
+              } : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? {
+                set: item.volumeThreshold
+              } : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? {
+                set: item.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? {
+                set: item.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
+                set: item.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+      Array.isArray(item.fund.investments) && item.fund.investments.length > 0 && item.fund.investments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.fund.investments.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            investedAt: item.investedAt !== undefined ? {
+                set: item.investedAt
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+          id: item.fund.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.fund.id !== undefined ? item.fund.id : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name 
+             } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug 
+             } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId 
+             } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  investorProfile: props.investorProfile ? 
+  typeof props.investorProfile === 'object' && Object.keys(props.investorProfile).length === 1 && (Object.keys(props.investorProfile)[0] === 'id' || Object.keys(props.investorProfile)[0] === 'symbol')
+? {
+  connect: {
+    id: props.investorProfile.id
+  }
+} : { upsert: {
+      where: {
+        id: props.investorProfile.id !== undefined ? {
+            equals: props.investorProfile.id
+          } : undefined,
+        name: props.investorProfile.name !== undefined ? {
+            equals: props.investorProfile.name
+          } : undefined,
+        email: props.investorProfile.email !== undefined ? {
+            equals: props.investorProfile.email
+          } : undefined,
+        userId: props.investorProfile.userId !== undefined ? {
+            equals: props.investorProfile.userId
+          } : undefined,
+      },
+      update: {
+        id: props.investorProfile.id !== undefined ? {
+            set: props.investorProfile.id
+          } : undefined,
+        name: props.investorProfile.name !== undefined ? {
+            set: props.investorProfile.name
+          } : undefined,
+        email: props.investorProfile.email !== undefined ? {
+            set: props.investorProfile.email
+          } : undefined,
+        type: props.investorProfile.type !== undefined ? {
+            set: props.investorProfile.type
+          } : undefined,
+        kycStatus: props.investorProfile.kycStatus !== undefined ? {
+            set: props.investorProfile.kycStatus
+          } : undefined,
+        walletAddress: props.investorProfile.walletAddress !== undefined ? {
+            set: props.investorProfile.walletAddress
+          } : undefined,
+        deletedAt: props.investorProfile.deletedAt !== undefined ? {
+            set: props.investorProfile.deletedAt
+          } : undefined,
+    investments: props.investorProfile.investments ? 
+    Array.isArray(props.investorProfile.investments) && props.investorProfile.investments.length > 0 && props.investorProfile.investments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.investorProfile.investments.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId
+            } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          units: item.units !== undefined ? {
+              set: item.units
+            } : undefined,
+          investedAt: item.investedAt !== undefined ? {
+              set: item.investedAt
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+      fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && (Object.keys(item.fund)[0] === 'id' || Object.keys(item.fund)[0] === 'symbol')
+? {
+      connect: {
+        id: item.fund.id
+      }
+} : { upsert: {
+          where: {
+            id: item.fund.id !== undefined ? {
+                equals: item.fund.id
+              } : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name
+              } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug
+              } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId
+              } : undefined,
+          },
+          update: {
+            id: item.fund.id !== undefined ? {
+                set: item.fund.id
+              } : undefined,
+            name: item.fund.name !== undefined ? {
+                set: item.fund.name
+              } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                set: item.fund.slug
+              } : undefined,
+            description: item.fund.description !== undefined ? {
+                set: item.fund.description
+              } : undefined,
+            status: item.fund.status !== undefined ? {
+                set: item.fund.status
+              } : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? {
+                set: item.fund.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: props.investorProfile.name !== undefined ? props.investorProfile.name : undefined,
+        email: props.investorProfile.email !== undefined ? props.investorProfile.email : undefined,
+        type: props.investorProfile.type !== undefined ? props.investorProfile.type : undefined,
+        kycStatus: props.investorProfile.kycStatus !== undefined ? props.investorProfile.kycStatus : undefined,
+        walletAddress: props.investorProfile.walletAddress !== undefined ? props.investorProfile.walletAddress : undefined,
+        deletedAt: props.investorProfile.deletedAt !== undefined ? props.investorProfile.deletedAt : undefined,
+    investments: props.investorProfile.investments ? 
+      Array.isArray(props.investorProfile.investments) && props.investorProfile.investments.length > 0 &&  props.investorProfile.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.investorProfile.investments.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId 
+             } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId 
+             } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  linkedProviders: props.linkedProviders ? 
+  Array.isArray(props.linkedProviders) && props.linkedProviders.length > 0 && props.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.linkedProviders.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.linkedProviders.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId
+          } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        accessToken: item.accessToken !== undefined ? {
+            set: item.accessToken
+          } : undefined,
+        refreshToken: item.refreshToken !== undefined ? {
+            set: item.refreshToken
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
+          } : undefined,
+        linkedAt: item.linkedAt !== undefined ? {
+            set: item.linkedAt
+          } : undefined,
+      },
+      create: {
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+        refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+      },
+    }))
+  } : undefined,
+  accountLinkingRequests: props.accountLinkingRequests ? 
+  Array.isArray(props.accountLinkingRequests) && props.accountLinkingRequests.length > 0 && props.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.accountLinkingRequests.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.accountLinkingRequests.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        verificationToken: item.verificationToken !== undefined ? {
+            set: item.verificationToken
+          } : undefined,
+        userAgent: item.userAgent !== undefined ? {
+            set: item.userAgent
+          } : undefined,
+        ipAddress: item.ipAddress !== undefined ? {
+            set: item.ipAddress
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
+          } : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? {
+            set: item.verifiedAt
+          } : undefined,
+        approvedAt: item.approvedAt !== undefined ? {
+            set: item.approvedAt
+          } : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? {
+            set: item.rejectedAt
+          } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+        userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+        ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+        approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+      },
+    }))
+  } : undefined,
+  reviewedWaitlistEntries: props.reviewedWaitlistEntries ? 
+  Array.isArray(props.reviewedWaitlistEntries) && props.reviewedWaitlistEntries.length > 0 && props.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.reviewedWaitlistEntries.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: props.reviewedWaitlistEntries.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        reviewedById: item.reviewedById !== undefined ? {
+            equals: item.reviewedById
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        fullName: item.fullName !== undefined ? {
+            set: item.fullName
+          } : undefined,
+        companyName: item.companyName !== undefined ? {
+            set: item.companyName
+          } : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? {
+            set: item.companyWebsite
+          } : undefined,
+        jobRole: item.jobRole !== undefined ? {
+            set: item.jobRole
+          } : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+            set: item.professionalInvestorConfirmed
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        queuePosition: item.queuePosition !== undefined ? {
+            set: item.queuePosition
+          } : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? {
+            set: item.reviewedAt
+          } : undefined,
+    inviteToken: item.inviteToken ? 
+    typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && (Object.keys(item.inviteToken)[0] === 'id' || Object.keys(item.inviteToken)[0] === 'symbol')
+? {
+    connect: {
+      id: item.inviteToken.id
+    }
+} : { upsert: {
+        where: {
+          id: item.inviteToken.id !== undefined ? {
+              equals: item.inviteToken.id
+            } : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email
+            } : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? {
+              equals: item.inviteToken.waitlistEntryId
+            } : undefined,
+        },
+        update: {
+          id: item.inviteToken.id !== undefined ? {
+              set: item.inviteToken.id
+            } : undefined,
+          token: item.inviteToken.token !== undefined ? {
+              set: item.inviteToken.token
+            } : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              set: item.inviteToken.email
+            } : undefined,
+          used: item.inviteToken.used !== undefined ? {
+              set: item.inviteToken.used
+            } : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? {
+              set: item.inviteToken.usedAt
+            } : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? {
+              set: item.inviteToken.expiresAt
+            } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        fullName: item.fullName !== undefined ? item.fullName : undefined,
+        companyName: item.companyName !== undefined ? item.companyName : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+        jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+    inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+          id: item.inviteToken.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email 
+             } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -678,10 +4533,1420 @@ id
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  email: prop.email !== undefined ? prop.email : undefined,
+  name: prop.name !== undefined ? {
+    equals: prop.name 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  name: prop.name !== undefined ? {
+            set: prop.name 
+           } : undefined,
+  email: prop.email !== undefined ? {
+            set: prop.email 
+           } : undefined,
+  emailVerified: prop.emailVerified !== undefined ? {
+            set: prop.emailVerified 
+           } : undefined,
+  image: prop.image !== undefined ? {
+            set: prop.image 
+           } : undefined,
+  createdAt: prop.createdAt !== undefined ? {
+            set: prop.createdAt 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+  deletedAt: prop.deletedAt !== undefined ? {
+            set: prop.deletedAt 
+           } : undefined,
+  role: prop.role !== undefined ? {
+            set: prop.role 
+           } : undefined,
+  bio: prop.bio !== undefined ? {
+            set: prop.bio 
+           } : undefined,
+  jobTitle: prop.jobTitle !== undefined ? {
+            set: prop.jobTitle 
+           } : undefined,
+  plan: prop.plan !== undefined ? {
+            set: prop.plan 
+           } : undefined,
+  openaiAPIKey: prop.openaiAPIKey !== undefined ? {
+            set: prop.openaiAPIKey 
+           } : undefined,
+  openaiModel: prop.openaiModel !== undefined ? {
+            set: prop.openaiModel 
+           } : undefined,
+  customer: prop.customer ? 
+  typeof prop.customer === 'object' && Object.keys(prop.customer).length === 1 && (Object.keys(prop.customer)[0] === 'id' || Object.keys(prop.customer)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.customer.id
+  }
+} : { upsert: {
+      where: {
+        id: prop.customer.id !== undefined ? {
+            equals: prop.customer.id
+          } : undefined,
+        authUserId: prop.customer.authUserId !== undefined ? {
+            equals: prop.customer.authUserId
+          } : undefined,
+        name: prop.customer.name !== undefined ? {
+            equals: prop.customer.name
+          } : undefined,
+        stripeCustomerId: prop.customer.stripeCustomerId !== undefined ? {
+            equals: prop.customer.stripeCustomerId
+          } : undefined,
+        stripeSubscriptionId: prop.customer.stripeSubscriptionId !== undefined ? {
+            equals: prop.customer.stripeSubscriptionId
+          } : undefined,
+        stripePriceId: prop.customer.stripePriceId !== undefined ? {
+            equals: prop.customer.stripePriceId
+          } : undefined,
+      },
+      update: {
+        authUserId: prop.customer.authUserId !== undefined ? {
+            set: prop.customer.authUserId
+          } : undefined,
+        name: prop.customer.name !== undefined ? {
+            set: prop.customer.name
+          } : undefined,
+        plan: prop.customer.plan !== undefined ? {
+            set: prop.customer.plan
+          } : undefined,
+        stripeCustomerId: prop.customer.stripeCustomerId !== undefined ? {
+            set: prop.customer.stripeCustomerId
+          } : undefined,
+        stripeSubscriptionId: prop.customer.stripeSubscriptionId !== undefined ? {
+            set: prop.customer.stripeSubscriptionId
+          } : undefined,
+        stripePriceId: prop.customer.stripePriceId !== undefined ? {
+            set: prop.customer.stripePriceId
+          } : undefined,
+        stripeCurrentPeriodEnd: prop.customer.stripeCurrentPeriodEnd !== undefined ? {
+            set: prop.customer.stripeCurrentPeriodEnd
+          } : undefined,
+      },
+      create: {
+        authUserId: prop.customer.authUserId !== undefined ? prop.customer.authUserId : undefined,
+        name: prop.customer.name !== undefined ? prop.customer.name : undefined,
+        plan: prop.customer.plan !== undefined ? prop.customer.plan : undefined,
+        stripeCustomerId: prop.customer.stripeCustomerId !== undefined ? prop.customer.stripeCustomerId : undefined,
+        stripeSubscriptionId: prop.customer.stripeSubscriptionId !== undefined ? prop.customer.stripeSubscriptionId : undefined,
+        stripePriceId: prop.customer.stripePriceId !== undefined ? prop.customer.stripePriceId : undefined,
+        stripeCurrentPeriodEnd: prop.customer.stripeCurrentPeriodEnd !== undefined ? prop.customer.stripeCurrentPeriodEnd : undefined,
+      },
+    }
+  } : undefined,
+  accounts: prop.accounts ? 
+  Array.isArray(prop.accounts) && prop.accounts.length > 0 && prop.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.accounts.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.accounts.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        type: item.type !== undefined ? {
+            set: item.type
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        refresh_token: item.refresh_token !== undefined ? {
+            set: item.refresh_token
+          } : undefined,
+        access_token: item.access_token !== undefined ? {
+            set: item.access_token
+          } : undefined,
+        expires_at: item.expires_at !== undefined ? {
+            set: item.expires_at
+          } : undefined,
+        token_type: item.token_type !== undefined ? {
+            set: item.token_type
+          } : undefined,
+        scope: item.scope !== undefined ? {
+            set: item.scope
+          } : undefined,
+        id_token: item.id_token !== undefined ? {
+            set: item.id_token
+          } : undefined,
+        session_state: item.session_state !== undefined ? {
+            set: item.session_state
+          } : undefined,
+      },
+      create: {
+        type: item.type !== undefined ? item.type : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+        access_token: item.access_token !== undefined ? item.access_token : undefined,
+        expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+        token_type: item.token_type !== undefined ? item.token_type : undefined,
+        scope: item.scope !== undefined ? item.scope : undefined,
+        id_token: item.id_token !== undefined ? item.id_token : undefined,
+        session_state: item.session_state !== undefined ? item.session_state : undefined,
+      },
+    }))
+  } : undefined,
+  sessions: prop.sessions ? 
+  Array.isArray(prop.sessions) && prop.sessions.length > 0 && prop.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.sessions.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.sessions.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        sessionToken: item.sessionToken !== undefined ? {
+            set: item.sessionToken
+          } : undefined,
+        expires: item.expires !== undefined ? {
+            set: item.expires
+          } : undefined,
+      },
+      create: {
+        sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+        expires: item.expires !== undefined ? item.expires : undefined,
+      },
+    }))
+  } : undefined,
+  authenticators: prop.authenticators ? 
+  Array.isArray(prop.authenticators) && prop.authenticators.length > 0 && prop.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.authenticators.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.authenticators.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        credentialID: item.credentialID !== undefined ? {
+            set: item.credentialID
+          } : undefined,
+        publicKey: item.publicKey !== undefined ? {
+            set: item.publicKey
+          } : undefined,
+        counter: item.counter !== undefined ? {
+            set: item.counter
+          } : undefined,
+      },
+      create: {
+        credentialID: item.credentialID !== undefined ? item.credentialID : undefined,
+        publicKey: item.publicKey !== undefined ? item.publicKey : undefined,
+        counter: item.counter !== undefined ? item.counter : undefined,
+      },
+    }))
+  } : undefined,
+  orgMemberships: prop.orgMemberships ? 
+  Array.isArray(prop.orgMemberships) && prop.orgMemberships.length > 0 && prop.orgMemberships.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.orgMemberships.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.orgMemberships.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        organizationId: item.organizationId !== undefined ? {
+            equals: item.organizationId
+          } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role
+          } : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions
+          } : undefined,
+    organization: item.organization ? 
+    typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && (Object.keys(item.organization)[0] === 'id' || Object.keys(item.organization)[0] === 'symbol')
+? {
+    connect: {
+      id: item.organization.id
+    }
+} : { upsert: {
+        where: {
+          id: item.organization.id !== undefined ? {
+              equals: item.organization.id
+            } : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name
+            } : undefined,
+          slug: item.organization.slug !== undefined ? {
+              equals: item.organization.slug
+            } : undefined,
+        },
+        update: {
+          id: item.organization.id !== undefined ? {
+              set: item.organization.id
+            } : undefined,
+          name: item.organization.name !== undefined ? {
+              set: item.organization.name
+            } : undefined,
+          slug: item.organization.slug !== undefined ? {
+              set: item.organization.slug
+            } : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? {
+              set: item.organization.logoUrl
+            } : undefined,
+          website: item.organization.website !== undefined ? {
+              set: item.organization.website
+            } : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? {
+              set: item.organization.deletedAt
+            } : undefined,
+      funds: item.organization.funds ? 
+      Array.isArray(item.organization.funds) && item.organization.funds.length > 0 && item.organization.funds.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.organization.funds.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    organization: item.organization ? 
+      typeof item.organization === 'object' && Object.keys(item.organization).length === 1 && Object.keys(item.organization)[0] === 'id'
+    ? { connect: {
+          id: item.organization.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.organization.id !== undefined ? item.organization.id : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          name: item.organization.name !== undefined ? {
+              equals: item.organization.name 
+             } : undefined,
+        },
+        create: {
+          name: item.organization.name !== undefined ? item.organization.name : undefined,
+          slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
+          logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
+          website: item.organization.website !== undefined ? item.organization.website : undefined,
+          deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
+      funds: item.organization.funds ? 
+        Array.isArray(item.organization.funds) && item.organization.funds.length > 0 &&  item.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.organization.funds.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.organization.funds.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  fundAssignments: prop.fundAssignments ? 
+  Array.isArray(prop.fundAssignments) && prop.fundAssignments.length > 0 && prop.fundAssignments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.fundAssignments.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.fundAssignments.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        fundId: item.fundId !== undefined ? {
+            equals: item.fundId
+          } : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        role: item.role !== undefined ? {
+            set: item.role
+          } : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions
+          } : undefined,
+    fund: item.fund ? 
+    typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && (Object.keys(item.fund)[0] === 'id' || Object.keys(item.fund)[0] === 'symbol')
+? {
+    connect: {
+      id: item.fund.id
+    }
+} : { upsert: {
+        where: {
+          id: item.fund.id !== undefined ? {
+              equals: item.fund.id
+            } : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name
+            } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug
+            } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId
+            } : undefined,
+        },
+        update: {
+          id: item.fund.id !== undefined ? {
+              set: item.fund.id
+            } : undefined,
+          name: item.fund.name !== undefined ? {
+              set: item.fund.name
+            } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              set: item.fund.slug
+            } : undefined,
+          description: item.fund.description !== undefined ? {
+              set: item.fund.description
+            } : undefined,
+          status: item.fund.status !== undefined ? {
+              set: item.fund.status
+            } : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? {
+              set: item.fund.deletedAt
+            } : undefined,
+      organization: item.fund.organization ? 
+      typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && (Object.keys(item.fund.organization)[0] === 'id' || Object.keys(item.fund.organization)[0] === 'symbol')
+? {
+      connect: {
+        id: item.fund.organization.id
+      }
+} : { upsert: {
+          where: {
+            id: item.fund.organization.id !== undefined ? {
+                equals: item.fund.organization.id
+              } : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name
+              } : undefined,
+            slug: item.fund.organization.slug !== undefined ? {
+                equals: item.fund.organization.slug
+              } : undefined,
+          },
+          update: {
+            id: item.fund.organization.id !== undefined ? {
+                set: item.fund.organization.id
+              } : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                set: item.fund.organization.name
+              } : undefined,
+            slug: item.fund.organization.slug !== undefined ? {
+                set: item.fund.organization.slug
+              } : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? {
+                set: item.fund.organization.logoUrl
+              } : undefined,
+            website: item.fund.organization.website !== undefined ? {
+                set: item.fund.organization.website
+              } : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? {
+                set: item.fund.organization.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+      Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 && item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.fund.brokerageAccounts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            apiKey: item.apiKey !== undefined ? {
+                set: item.apiKey
+              } : undefined,
+            apiSecret: item.apiSecret !== undefined ? {
+                set: item.apiSecret
+              } : undefined,
+            configuration: item.configuration !== undefined ? {
+                set: item.configuration
+              } : undefined,
+            marketOpen: item.marketOpen !== undefined ? {
+                set: item.marketOpen
+              } : undefined,
+            realTime: item.realTime !== undefined ? {
+                set: item.realTime
+              } : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? {
+                set: item.cryptoTradingEnabled
+              } : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs
+              } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? {
+                set: item.cryptoTradeAllocationPct
+              } : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? {
+                set: item.tradeAllocationPct
+              } : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? {
+                set: item.autoAllocation
+              } : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? {
+                set: item.minPercentageChange
+              } : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? {
+                set: item.volumeThreshold
+              } : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? {
+                set: item.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? {
+                set: item.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? {
+                set: item.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+      Array.isArray(item.fund.investments) && item.fund.investments.length > 0 && item.fund.investments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.fund.investments.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            investedAt: item.investedAt !== undefined ? {
+                set: item.investedAt
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        role: item.role !== undefined ? item.role : undefined,
+        permissions: item.permissions !== undefined ? {
+            set: item.permissions 
+           } : undefined,
+    fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+          id: item.fund.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.fund.id !== undefined ? item.fund.id : undefined,
+          name: item.fund.name !== undefined ? {
+              equals: item.fund.name 
+             } : undefined,
+          slug: item.fund.slug !== undefined ? {
+              equals: item.fund.slug 
+             } : undefined,
+          organizationId: item.fund.organizationId !== undefined ? {
+              equals: item.fund.organizationId 
+             } : undefined,
+        },
+        create: {
+          name: item.fund.name !== undefined ? item.fund.name : undefined,
+          slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+          description: item.fund.description !== undefined ? item.fund.description : undefined,
+          status: item.fund.status !== undefined ? item.fund.status : undefined,
+          deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+      organization: item.fund.organization ? 
+        typeof item.fund.organization === 'object' && Object.keys(item.fund.organization).length === 1 && Object.keys(item.fund.organization)[0] === 'id'
+    ? { connect: {
+            id: item.fund.organization.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.organization.id !== undefined ? item.fund.organization.id : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            name: item.fund.organization.name !== undefined ? {
+                equals: item.fund.organization.name 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.organization.name !== undefined ? item.fund.organization.name : undefined,
+            slug: item.fund.organization.slug !== undefined ? item.fund.organization.slug : undefined,
+            logoUrl: item.fund.organization.logoUrl !== undefined ? item.fund.organization.logoUrl : undefined,
+            website: item.fund.organization.website !== undefined ? item.fund.organization.website : undefined,
+            deletedAt: item.fund.organization.deletedAt !== undefined ? item.fund.organization.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+      brokerageAccounts: item.fund.brokerageAccounts ? 
+        Array.isArray(item.fund.brokerageAccounts) && item.fund.brokerageAccounts.length > 0 &&  item.fund.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.brokerageAccounts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.brokerageAccounts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.provider !== undefined ? item.provider : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            apiKey: item.apiKey !== undefined ? item.apiKey : undefined,
+            apiSecret: item.apiSecret !== undefined ? item.apiSecret : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
+            marketOpen: item.marketOpen !== undefined ? item.marketOpen : undefined,
+            realTime: item.realTime !== undefined ? item.realTime : undefined,
+            cryptoTradingEnabled: item.cryptoTradingEnabled !== undefined ? item.cryptoTradingEnabled : undefined,
+            cryptoTradingPairs: item.cryptoTradingPairs !== undefined ? {
+                set: item.cryptoTradingPairs 
+               } : undefined,
+            cryptoTradeAllocationPct: item.cryptoTradeAllocationPct !== undefined ? item.cryptoTradeAllocationPct : undefined,
+            tradeAllocationPct: item.tradeAllocationPct !== undefined ? item.tradeAllocationPct : undefined,
+            autoAllocation: item.autoAllocation !== undefined ? item.autoAllocation : undefined,
+            minPercentageChange: item.minPercentageChange !== undefined ? item.minPercentageChange : undefined,
+            volumeThreshold: item.volumeThreshold !== undefined ? item.volumeThreshold : undefined,
+            enablePortfolioTrailingStop: item.enablePortfolioTrailingStop !== undefined ? item.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.portfolioTrailPercent !== undefined ? item.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.portfolioProfitThresholdPercent !== undefined ? item.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.reducedPortfolioTrailPercent !== undefined ? item.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.defaultTrailingStopPercentage100 !== undefined ? item.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.firstTrailReductionThreshold100 !== undefined ? item.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.secondTrailReductionThreshold100 !== undefined ? item.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.firstReducedTrailPercentage100 !== undefined ? item.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.secondReducedTrailPercentage100 !== undefined ? item.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.minimumPriceChangePercent100 !== undefined ? item.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investments: item.fund.investments ? 
+        Array.isArray(item.fund.investments) && item.fund.investments.length > 0 &&  item.fund.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.fund.investments.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.fund.investments.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            investorId: item.investorId !== undefined ? {
+                equals: item.investorId 
+               } : undefined,
+          },
+          create: {
+            units: item.units !== undefined ? item.units : undefined,
+            investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+  investorProfile: prop.investorProfile ? 
+  typeof prop.investorProfile === 'object' && Object.keys(prop.investorProfile).length === 1 && (Object.keys(prop.investorProfile)[0] === 'id' || Object.keys(prop.investorProfile)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.investorProfile.id
+  }
+} : { upsert: {
+      where: {
+        id: prop.investorProfile.id !== undefined ? {
+            equals: prop.investorProfile.id
+          } : undefined,
+        name: prop.investorProfile.name !== undefined ? {
+            equals: prop.investorProfile.name
+          } : undefined,
+        email: prop.investorProfile.email !== undefined ? {
+            equals: prop.investorProfile.email
+          } : undefined,
+        userId: prop.investorProfile.userId !== undefined ? {
+            equals: prop.investorProfile.userId
+          } : undefined,
+      },
+      update: {
+        id: prop.investorProfile.id !== undefined ? {
+            set: prop.investorProfile.id
+          } : undefined,
+        name: prop.investorProfile.name !== undefined ? {
+            set: prop.investorProfile.name
+          } : undefined,
+        email: prop.investorProfile.email !== undefined ? {
+            set: prop.investorProfile.email
+          } : undefined,
+        type: prop.investorProfile.type !== undefined ? {
+            set: prop.investorProfile.type
+          } : undefined,
+        kycStatus: prop.investorProfile.kycStatus !== undefined ? {
+            set: prop.investorProfile.kycStatus
+          } : undefined,
+        walletAddress: prop.investorProfile.walletAddress !== undefined ? {
+            set: prop.investorProfile.walletAddress
+          } : undefined,
+        deletedAt: prop.investorProfile.deletedAt !== undefined ? {
+            set: prop.investorProfile.deletedAt
+          } : undefined,
+    investments: prop.investorProfile.investments ? 
+    Array.isArray(prop.investorProfile.investments) && prop.investorProfile.investments.length > 0 && prop.investorProfile.investments.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.investorProfile.investments.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId
+            } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          units: item.units !== undefined ? {
+              set: item.units
+            } : undefined,
+          investedAt: item.investedAt !== undefined ? {
+              set: item.investedAt
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+      fund: item.fund ? 
+      typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && (Object.keys(item.fund)[0] === 'id' || Object.keys(item.fund)[0] === 'symbol')
+? {
+      connect: {
+        id: item.fund.id
+      }
+} : { upsert: {
+          where: {
+            id: item.fund.id !== undefined ? {
+                equals: item.fund.id
+              } : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name
+              } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug
+              } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId
+              } : undefined,
+          },
+          update: {
+            id: item.fund.id !== undefined ? {
+                set: item.fund.id
+              } : undefined,
+            name: item.fund.name !== undefined ? {
+                set: item.fund.name
+              } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                set: item.fund.slug
+              } : undefined,
+            description: item.fund.description !== undefined ? {
+                set: item.fund.description
+              } : undefined,
+            status: item.fund.status !== undefined ? {
+                set: item.fund.status
+              } : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? {
+                set: item.fund.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        name: prop.investorProfile.name !== undefined ? prop.investorProfile.name : undefined,
+        email: prop.investorProfile.email !== undefined ? prop.investorProfile.email : undefined,
+        type: prop.investorProfile.type !== undefined ? prop.investorProfile.type : undefined,
+        kycStatus: prop.investorProfile.kycStatus !== undefined ? prop.investorProfile.kycStatus : undefined,
+        walletAddress: prop.investorProfile.walletAddress !== undefined ? prop.investorProfile.walletAddress : undefined,
+        deletedAt: prop.investorProfile.deletedAt !== undefined ? prop.investorProfile.deletedAt : undefined,
+    investments: prop.investorProfile.investments ? 
+      Array.isArray(prop.investorProfile.investments) && prop.investorProfile.investments.length > 0 &&  prop.investorProfile.investments.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.investorProfile.investments.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.investorProfile.investments.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          fundId: item.fundId !== undefined ? {
+              equals: item.fundId 
+             } : undefined,
+          investorId: item.investorId !== undefined ? {
+              equals: item.investorId 
+             } : undefined,
+        },
+        create: {
+          units: item.units !== undefined ? item.units : undefined,
+          investedAt: item.investedAt !== undefined ? item.investedAt : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+      fund: item.fund ? 
+        typeof item.fund === 'object' && Object.keys(item.fund).length === 1 && Object.keys(item.fund)[0] === 'id'
+    ? { connect: {
+            id: item.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.fund.id !== undefined ? item.fund.id : undefined,
+            name: item.fund.name !== undefined ? {
+                equals: item.fund.name 
+               } : undefined,
+            slug: item.fund.slug !== undefined ? {
+                equals: item.fund.slug 
+               } : undefined,
+            organizationId: item.fund.organizationId !== undefined ? {
+                equals: item.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.fund.name !== undefined ? item.fund.name : undefined,
+            slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
+            description: item.fund.description !== undefined ? item.fund.description : undefined,
+            status: item.fund.status !== undefined ? item.fund.status : undefined,
+            deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
+  linkedProviders: prop.linkedProviders ? 
+  Array.isArray(prop.linkedProviders) && prop.linkedProviders.length > 0 && prop.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.linkedProviders.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.linkedProviders.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId
+          } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        accessToken: item.accessToken !== undefined ? {
+            set: item.accessToken
+          } : undefined,
+        refreshToken: item.refreshToken !== undefined ? {
+            set: item.refreshToken
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
+          } : undefined,
+        linkedAt: item.linkedAt !== undefined ? {
+            set: item.linkedAt
+          } : undefined,
+      },
+      create: {
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        accessToken: item.accessToken !== undefined ? item.accessToken : undefined,
+        refreshToken: item.refreshToken !== undefined ? item.refreshToken : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        linkedAt: item.linkedAt !== undefined ? item.linkedAt : undefined,
+      },
+    }))
+  } : undefined,
+  accountLinkingRequests: prop.accountLinkingRequests ? 
+  Array.isArray(prop.accountLinkingRequests) && prop.accountLinkingRequests.length > 0 && prop.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.accountLinkingRequests.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.accountLinkingRequests.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        userId: item.userId !== undefined ? {
+            equals: item.userId
+          } : undefined,
+        email: item.email !== undefined ? {
+            equals: item.email
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            equals: item.providerAccountId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        provider: item.provider !== undefined ? {
+            set: item.provider
+          } : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? {
+            set: item.providerAccountId
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        verificationToken: item.verificationToken !== undefined ? {
+            set: item.verificationToken
+          } : undefined,
+        userAgent: item.userAgent !== undefined ? {
+            set: item.userAgent
+          } : undefined,
+        ipAddress: item.ipAddress !== undefined ? {
+            set: item.ipAddress
+          } : undefined,
+        expiresAt: item.expiresAt !== undefined ? {
+            set: item.expiresAt
+          } : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? {
+            set: item.verifiedAt
+          } : undefined,
+        approvedAt: item.approvedAt !== undefined ? {
+            set: item.approvedAt
+          } : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? {
+            set: item.rejectedAt
+          } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        provider: item.provider !== undefined ? item.provider : undefined,
+        providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        verificationToken: item.verificationToken !== undefined ? item.verificationToken : undefined,
+        userAgent: item.userAgent !== undefined ? item.userAgent : undefined,
+        ipAddress: item.ipAddress !== undefined ? item.ipAddress : undefined,
+        expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+        verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
+        approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
+        rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+      },
+    }))
+  } : undefined,
+  reviewedWaitlistEntries: prop.reviewedWaitlistEntries ? 
+  Array.isArray(prop.reviewedWaitlistEntries) && prop.reviewedWaitlistEntries.length > 0 && prop.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.reviewedWaitlistEntries.map((item: any) => ({
+    id: item.id
+  }))
+} : { upsert: prop.reviewedWaitlistEntries.map((item: any) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        email: item.email !== undefined ? item.email : undefined,
+        reviewedById: item.reviewedById !== undefined ? {
+            equals: item.reviewedById
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        email: item.email !== undefined ? {
+            set: item.email
+          } : undefined,
+        fullName: item.fullName !== undefined ? {
+            set: item.fullName
+          } : undefined,
+        companyName: item.companyName !== undefined ? {
+            set: item.companyName
+          } : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? {
+            set: item.companyWebsite
+          } : undefined,
+        jobRole: item.jobRole !== undefined ? {
+            set: item.jobRole
+          } : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? {
+            set: item.professionalInvestorConfirmed
+          } : undefined,
+        status: item.status !== undefined ? {
+            set: item.status
+          } : undefined,
+        queuePosition: item.queuePosition !== undefined ? {
+            set: item.queuePosition
+          } : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? {
+            set: item.reviewedAt
+          } : undefined,
+    inviteToken: item.inviteToken ? 
+    typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && (Object.keys(item.inviteToken)[0] === 'id' || Object.keys(item.inviteToken)[0] === 'symbol')
+? {
+    connect: {
+      id: item.inviteToken.id
+    }
+} : { upsert: {
+        where: {
+          id: item.inviteToken.id !== undefined ? {
+              equals: item.inviteToken.id
+            } : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email
+            } : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? {
+              equals: item.inviteToken.waitlistEntryId
+            } : undefined,
+        },
+        update: {
+          id: item.inviteToken.id !== undefined ? {
+              set: item.inviteToken.id
+            } : undefined,
+          token: item.inviteToken.token !== undefined ? {
+              set: item.inviteToken.token
+            } : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              set: item.inviteToken.email
+            } : undefined,
+          used: item.inviteToken.used !== undefined ? {
+              set: item.inviteToken.used
+            } : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? {
+              set: item.inviteToken.usedAt
+            } : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? {
+              set: item.inviteToken.expiresAt
+            } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        email: item.email !== undefined ? item.email : undefined,
+        fullName: item.fullName !== undefined ? item.fullName : undefined,
+        companyName: item.companyName !== undefined ? item.companyName : undefined,
+        companyWebsite: item.companyWebsite !== undefined ? item.companyWebsite : undefined,
+        jobRole: item.jobRole !== undefined ? item.jobRole : undefined,
+        professionalInvestorConfirmed: item.professionalInvestorConfirmed !== undefined ? item.professionalInvestorConfirmed : undefined,
+        status: item.status !== undefined ? item.status : undefined,
+        queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
+        reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+    inviteToken: item.inviteToken ? 
+      typeof item.inviteToken === 'object' && Object.keys(item.inviteToken).length === 1 && Object.keys(item.inviteToken)[0] === 'id'
+    ? { connect: {
+          id: item.inviteToken.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.inviteToken.id !== undefined ? item.inviteToken.id : undefined,
+          waitlistEntryId: item.inviteToken.waitlistEntryId !== undefined ? item.inviteToken.waitlistEntryId : undefined,
+          email: item.inviteToken.email !== undefined ? {
+              equals: item.inviteToken.email 
+             } : undefined,
+        },
+        create: {
+          token: item.inviteToken.token !== undefined ? item.inviteToken.token : undefined,
+          email: item.inviteToken.email !== undefined ? item.inviteToken.email : undefined,
+          used: item.inviteToken.used !== undefined ? item.inviteToken.used : undefined,
+          usedAt: item.inviteToken.usedAt !== undefined ? item.inviteToken.usedAt : undefined,
+          expiresAt: item.inviteToken.expiresAt !== undefined ? item.inviteToken.expiresAt : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
+
           },
         }));
 
@@ -846,7 +6111,12 @@ id
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  email: props.email !== undefined ? props.email : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -999,7 +6269,16 @@ id
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  name: props.name !== undefined ? {
+    equals: props.name 
+  } : undefined,
+  email: props.email !== undefined ? {
+    equals: props.email 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

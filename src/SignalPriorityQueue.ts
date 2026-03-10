@@ -78,7 +78,21 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-              
+                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  signalType: props.signalType !== undefined ? props.signalType : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  priorityTier: props.priorityTier !== undefined ? props.priorityTier : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? props.scoreComponents : undefined,
+  queuePosition: props.queuePosition !== undefined ? props.queuePosition : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  queuedAt: props.queuedAt !== undefined ? props.queuedAt : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? props.processingStartedAt : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? props.processingCompletedAt : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? props.timeInQueueMs : undefined,
+  signalData: props.signalData !== undefined ? props.signalData : undefined,
+
             },
           };
 
@@ -160,7 +174,21 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-          })),
+      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  signalType: prop.signalType !== undefined ? prop.signalType : undefined,
+  generatorSource: prop.generatorSource !== undefined ? prop.generatorSource : undefined,
+  priorityTier: prop.priorityTier !== undefined ? prop.priorityTier : undefined,
+  scoreComponents: prop.scoreComponents !== undefined ? prop.scoreComponents : undefined,
+  queuePosition: prop.queuePosition !== undefined ? prop.queuePosition : undefined,
+  status: prop.status !== undefined ? prop.status : undefined,
+  queuedAt: prop.queuedAt !== undefined ? prop.queuedAt : undefined,
+  processingStartedAt: prop.processingStartedAt !== undefined ? prop.processingStartedAt : undefined,
+  processingCompletedAt: prop.processingCompletedAt !== undefined ? prop.processingCompletedAt : undefined,
+  timeInQueueMs: prop.timeInQueueMs !== undefined ? prop.timeInQueueMs : undefined,
+  signalData: prop.signalData !== undefined ? prop.signalData : undefined,
+      })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -241,9 +269,74 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           data: {
-          },
+      id: props.id !== undefined ? {
+            set: props.id 
+           } : undefined,
+  timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  signalType: props.signalType !== undefined ? {
+            set: props.signalType 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  priorityScore: props.priorityScore !== undefined ? {
+            set: props.priorityScore 
+           } : undefined,
+  generatorWinRate: props.generatorWinRate !== undefined ? {
+            set: props.generatorWinRate 
+           } : undefined,
+  generatorSharpe: props.generatorSharpe !== undefined ? {
+            set: props.generatorSharpe 
+           } : undefined,
+  priorityTier: props.priorityTier !== undefined ? {
+            set: props.priorityTier 
+           } : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? {
+            set: props.scoreComponents 
+           } : undefined,
+  queuePosition: props.queuePosition !== undefined ? {
+            set: props.queuePosition 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+  queuedAt: props.queuedAt !== undefined ? {
+            set: props.queuedAt 
+           } : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? {
+            set: props.processingStartedAt 
+           } : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? {
+            set: props.processingCompletedAt 
+           } : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? {
+            set: props.timeInQueueMs 
+           } : undefined,
+  signalConfidence: props.signalConfidence !== undefined ? {
+            set: props.signalConfidence 
+           } : undefined,
+  signalData: props.signalData !== undefined ? {
+            set: props.signalData 
+           } : undefined,
+  updatedAt: props.updatedAt !== undefined ? {
+            set: props.updatedAt 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -324,11 +417,84 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-                },
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
           create: {
-            },
+        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? props.symbol : undefined,
+  signalType: props.signalType !== undefined ? props.signalType : undefined,
+  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
+  priorityTier: props.priorityTier !== undefined ? props.priorityTier : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? props.scoreComponents : undefined,
+  queuePosition: props.queuePosition !== undefined ? props.queuePosition : undefined,
+  status: props.status !== undefined ? props.status : undefined,
+  queuedAt: props.queuedAt !== undefined ? props.queuedAt : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? props.processingStartedAt : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? props.processingCompletedAt : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? props.timeInQueueMs : undefined,
+  signalData: props.signalData !== undefined ? props.signalData : undefined,
+      },
           update: {
-          },
+      timestamp: props.timestamp !== undefined ? {
+            set: props.timestamp 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  symbol: props.symbol !== undefined ? {
+            set: props.symbol 
+           } : undefined,
+  signalType: props.signalType !== undefined ? {
+            set: props.signalType 
+           } : undefined,
+  generatorSource: props.generatorSource !== undefined ? {
+            set: props.generatorSource 
+           } : undefined,
+  priorityScore: props.priorityScore !== undefined ? {
+            set: props.priorityScore 
+           } : undefined,
+  generatorWinRate: props.generatorWinRate !== undefined ? {
+            set: props.generatorWinRate 
+           } : undefined,
+  generatorSharpe: props.generatorSharpe !== undefined ? {
+            set: props.generatorSharpe 
+           } : undefined,
+  priorityTier: props.priorityTier !== undefined ? {
+            set: props.priorityTier 
+           } : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? {
+            set: props.scoreComponents 
+           } : undefined,
+  queuePosition: props.queuePosition !== undefined ? {
+            set: props.queuePosition 
+           } : undefined,
+  status: props.status !== undefined ? {
+            set: props.status 
+           } : undefined,
+  queuedAt: props.queuedAt !== undefined ? {
+            set: props.queuedAt 
+           } : undefined,
+  processingStartedAt: props.processingStartedAt !== undefined ? {
+            set: props.processingStartedAt 
+           } : undefined,
+  processingCompletedAt: props.processingCompletedAt !== undefined ? {
+            set: props.processingCompletedAt 
+           } : undefined,
+  timeInQueueMs: props.timeInQueueMs !== undefined ? {
+            set: props.timeInQueueMs 
+           } : undefined,
+  signalConfidence: props.signalConfidence !== undefined ? {
+            set: props.signalConfidence 
+           } : undefined,
+  signalData: props.signalData !== undefined ? {
+            set: props.signalData 
+           } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -409,10 +575,75 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-            
+              id: prop.id !== undefined ? prop.id : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  symbol: prop.symbol !== undefined ? {
+    equals: prop.symbol 
+  } : undefined,
+
           },
           data: {
-            
+              id: prop.id !== undefined ? {
+            set: prop.id 
+           } : undefined,
+  timestamp: prop.timestamp !== undefined ? {
+            set: prop.timestamp 
+           } : undefined,
+  signalId: prop.signalId !== undefined ? {
+            set: prop.signalId 
+           } : undefined,
+  symbol: prop.symbol !== undefined ? {
+            set: prop.symbol 
+           } : undefined,
+  signalType: prop.signalType !== undefined ? {
+            set: prop.signalType 
+           } : undefined,
+  generatorSource: prop.generatorSource !== undefined ? {
+            set: prop.generatorSource 
+           } : undefined,
+  priorityScore: prop.priorityScore !== undefined ? {
+            set: prop.priorityScore 
+           } : undefined,
+  generatorWinRate: prop.generatorWinRate !== undefined ? {
+            set: prop.generatorWinRate 
+           } : undefined,
+  generatorSharpe: prop.generatorSharpe !== undefined ? {
+            set: prop.generatorSharpe 
+           } : undefined,
+  priorityTier: prop.priorityTier !== undefined ? {
+            set: prop.priorityTier 
+           } : undefined,
+  scoreComponents: prop.scoreComponents !== undefined ? {
+            set: prop.scoreComponents 
+           } : undefined,
+  queuePosition: prop.queuePosition !== undefined ? {
+            set: prop.queuePosition 
+           } : undefined,
+  status: prop.status !== undefined ? {
+            set: prop.status 
+           } : undefined,
+  queuedAt: prop.queuedAt !== undefined ? {
+            set: prop.queuedAt 
+           } : undefined,
+  processingStartedAt: prop.processingStartedAt !== undefined ? {
+            set: prop.processingStartedAt 
+           } : undefined,
+  processingCompletedAt: prop.processingCompletedAt !== undefined ? {
+            set: prop.processingCompletedAt 
+           } : undefined,
+  timeInQueueMs: prop.timeInQueueMs !== undefined ? {
+            set: prop.timeInQueueMs 
+           } : undefined,
+  signalConfidence: prop.signalConfidence !== undefined ? {
+            set: prop.signalConfidence 
+           } : undefined,
+  signalData: prop.signalData !== undefined ? {
+            set: prop.signalData 
+           } : undefined,
+  updatedAt: prop.updatedAt !== undefined ? {
+            set: prop.updatedAt 
+           } : undefined,
+
           },
         }));
 
@@ -577,7 +808,12 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+            id: props.id !== undefined ? props.id : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+},
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -730,7 +966,16 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-          },
+      id: props.id !== undefined ? {
+    equals: props.id 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
+  symbol: props.symbol !== undefined ? {
+    equals: props.symbol 
+  } : undefined,
+      },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
