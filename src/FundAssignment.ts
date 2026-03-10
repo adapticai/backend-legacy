@@ -1,47 +1,441 @@
 
   
-import { Action as ActionType } from './generated/typegraphql-prisma/models/Action';
+import { FundAssignment as FundAssignmentType } from './generated/typegraphql-prisma/models/FundAssignment';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
   
   /**
-   * CRUD operations for the Action model.
+   * CRUD operations for the FundAssignment model.
    */
 
   const selectionSet = `
     
   id
-  sequence
-  tradeId
-  type
-  primary
-  note
-  status
+  fundId
+  fund {
+    id
+    name
+    slug
+    description
+    status
+    organizationId
+    organization {
+      id
+      name
+      slug
+      logoUrl
+      website
+      createdAt
+      updatedAt
+      deletedAt
+      members {
+        id
+        organizationId
+        userId
+        user {
+id
+        }
+        role
+        permissions
+        createdAt
+        updatedAt
+      }
+    }
+    createdAt
+    updatedAt
+    deletedAt
+    brokerageAccounts {
+      id
+      provider
+      type
+      apiKey
+      apiSecret
+      configuration
+      marketOpen
+      realTime
+      cryptoTradingEnabled
+      cryptoTradingPairs
+      cryptoTradeAllocationPct
+      tradeAllocationPct
+      allocation {
+        id
+        equities
+        optionsContracts
+        futures
+        etfs
+        forex
+        crypto
+        stocks
+        options
+        brokerageAccountId
+        brokerageAccount {
+id
+        }
+        createdAt
+        updatedAt
+      }
+      autoAllocation
+      minPercentageChange
+      volumeThreshold
+      enablePortfolioTrailingStop
+      portfolioTrailPercent
+      portfolioProfitThresholdPercent
+      reducedPortfolioTrailPercent
+      defaultTrailingStopPercentage100
+      firstTrailReductionThreshold100
+      secondTrailReductionThreshold100
+      firstReducedTrailPercentage100
+      secondReducedTrailPercentage100
+      minimumPriceChangePercent100
+      fundId
+      createdAt
+      updatedAt
+      deletedAt
+      alerts {
+        id
+        brokerageAccountId
+        title
+        message
+        type
+        severity
+        category
+        status
+        isRead
+        acknowledgedAt
+        resolvedAt
+        suppressedUntil
+        retryCount
+        metadata
+        createdAt
+        updatedAt
+      }
+      trades {
+        id
+        brokerageAccountId
+        signal
+        strategy
+        analysis
+        summary
+        confidence
+        timestamp
+        createdAt
+        updatedAt
+        status
+        deletedAt
+        symbol
+        actions {
+id
+        }
+        entryPrice
+        exitPrice
+        entryQty
+        exitQty
+        entryValue
+        exitValue
+        entryTime
+        exitTime
+        pnlAmount
+        pnlPercent
+        durationMinutes
+        marketPhase
+        marketVolatility
+        sessionHorizonMinutes
+        thresholdsJson
+      }
+      optionsPositions {
+        id
+        brokerageAccountId
+        contractId
+        contract {
+id
+        }
+        status
+        openingSide
+        quantity
+        entryPrice
+        entryCost
+        entryTime
+        exitPrice
+        exitValue
+        exitTime
+        currentPrice
+        currentValue
+        unrealizedPnL
+        unrealizedPnLPercent
+        realizedPnL
+        realizedPnLPercent
+        totalFees
+        currentDelta
+        currentGamma
+        currentTheta
+        currentVega
+        currentRho
+        currentImpliedVolatility
+        daysHeld
+        exitReason
+        strategyType
+        tradeId
+        metadata
+        createdAt
+        updatedAt
+        executions {
+id
+        }
+      }
+      optionsTradeExecutions {
+        id
+        positionId
+        position {
+id
+        }
+        contractId
+        contract {
+id
+        }
+        brokerageAccountId
+        brokerOrderId
+        executionSide
+        quantity
+        executionPrice
+        executionValue
+        fees
+        executionTime
+        underlyingPriceAtExecution
+        deltaAtExecution
+        gammaAtExecution
+        thetaAtExecution
+        vegaAtExecution
+        rhoAtExecution
+        impliedVolatilityAtExecution
+        orderType
+        limitPrice
+        stopPrice
+        timeInForce
+        venue
+        slippage
+        notes
+        metadata
+        createdAt
+        updatedAt
+      }
+    }
+    investments {
+      id
+      fundId
+      investorId
+      investor {
+        id
+        name
+        email
+        type
+        kycStatus
+        walletAddress
+        userId
+        user {
+id
+        }
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      units
+      investedAt
+      status
+      createdAt
+      updatedAt
+    }
+  }
+  userId
+  user {
+    id
+    name
+    email
+    emailVerified
+    image
+    createdAt
+    updatedAt
+    deletedAt
+    role
+    bio
+    jobTitle
+    customer {
+      id
+      authUserId
+      name
+      plan
+      stripeCustomerId
+      stripeSubscriptionId
+      stripePriceId
+      stripeCurrentPeriodEnd
+      createdAt
+      updatedAt
+    }
+    customerId
+    accounts {
+      id
+      userId
+      type
+      provider
+      providerAccountId
+      refresh_token
+      access_token
+      expires_at
+      token_type
+      scope
+      id_token
+      session_state
+      createdAt
+      updatedAt
+    }
+    sessions {
+      id
+      sessionToken
+      userId
+      expires
+      createdAt
+      updatedAt
+    }
+    authenticators {
+      id
+      userId
+      credentialID
+      publicKey
+      counter
+      createdAt
+      updatedAt
+    }
+    plan
+    orgMemberships {
+      id
+      organizationId
+      organization {
+        id
+        name
+        slug
+        logoUrl
+        website
+        createdAt
+        updatedAt
+        deletedAt
+        funds {
+id
+        }
+      }
+      userId
+      role
+      permissions
+      createdAt
+      updatedAt
+    }
+    investorProfile {
+      id
+      name
+      email
+      type
+      kycStatus
+      walletAddress
+      userId
+      createdAt
+      updatedAt
+      deletedAt
+      investments {
+        id
+        fundId
+        fund {
+id
+        }
+        investorId
+        units
+        investedAt
+        status
+        createdAt
+        updatedAt
+      }
+    }
+    openaiAPIKey
+    openaiModel
+    linkedProviders {
+      id
+      userId
+      provider
+      providerAccountId
+      email
+      accessToken
+      refreshToken
+      expiresAt
+      linkedAt
+      updatedAt
+    }
+    accountLinkingRequests {
+      id
+      userId
+      email
+      provider
+      providerAccountId
+      status
+      verificationToken
+      userAgent
+      ipAddress
+      createdAt
+      expiresAt
+      verifiedAt
+      approvedAt
+      rejectedAt
+    }
+    reviewedWaitlistEntries {
+      id
+      email
+      fullName
+      companyName
+      companyWebsite
+      jobRole
+      professionalInvestorConfirmed
+      status
+      queuePosition
+      createdAt
+      updatedAt
+      reviewedAt
+      reviewedById
+      inviteToken {
+        id
+        token
+        email
+        waitlistEntryId
+        waitlistEntry {
+id
+        }
+        used
+        usedAt
+        expiresAt
+        createdAt
+      }
+    }
+  }
+  role
+  permissions
   createdAt
   updatedAt
-  deletedAt
-  alpacaOrderId
 
   `;
 
-  export const Action = {
+  export const FundAssignment = {
 
     /**
-     * Create a new Action record.
+     * Create a new FundAssignment record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Action or null.
+     * @returns The created FundAssignment or null.
      */
 
     /**
-     * Create a new Action record.
+     * Create a new FundAssignment record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Action or null.
+     * @returns The created FundAssignment or null.
      */
-    async create(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+    async create(props: FundAssignmentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<FundAssignmentType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -59,9 +453,9 @@ import { logger } from './utils/logger';
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_ACTION = gql`
-              mutation createOneAction($data: ActionCreateInput!) {
-                createOneAction(data: $data) {
+          const CREATE_ONE_FUNDASSIGNMENT = gql`
+              mutation createOneFundAssignment($data: FundAssignmentCreateInput!) {
+                createOneFundAssignment(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -76,15 +470,15 @@ import { logger } from './utils/logger';
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_ACTION,
+            mutation: CREATE_ONE_FUNDASSIGNMENT,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneAction) {
-            return response.data.createOneAction;
+          if (response && response.data && response.data.createOneFundAssignment) {
+            return response.data.createOneFundAssignment;
           } else {
             return null as any;
           }
@@ -118,13 +512,13 @@ import { logger } from './utils/logger';
     },
 
   /**
-   * Create multiple Action records.
+   * Create multiple FundAssignment records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Action objects for the new records.
+   * @param props - Array of FundAssignment objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: FundAssignmentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -142,9 +536,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_ACTION = gql`
-          mutation createManyAction($data: [ActionCreateManyInput!]!) {
-            createManyAction(data: $data) {
+        const CREATE_MANY_FUNDASSIGNMENT = gql`
+          mutation createManyFundAssignment($data: [FundAssignmentCreateManyInput!]!) {
+            createManyFundAssignment(data: $data) {
               count
             }
           }`;
@@ -157,15 +551,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_ACTION,
+          mutation: CREATE_MANY_FUNDASSIGNMENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyAction) {
-          return response.data.createManyAction;
+        if (response && response.data && response.data.createManyFundAssignment) {
+          return response.data.createManyFundAssignment;
         } else {
           return null as any;
         }
@@ -199,13 +593,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Update a single Action record.
+   * Update a single FundAssignment record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Action or null.
+   * @returns The updated FundAssignment or null.
    */
-  async update(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async update(props: FundAssignmentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<FundAssignmentType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -223,9 +617,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_ACTION = gql`
-          mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
-            updateOneAction(data: $data, where: $where) {
+        const UPDATE_ONE_FUNDASSIGNMENT = gql`
+          mutation updateOneFundAssignment($data: FundAssignmentUpdateInput!, $where: FundAssignmentWhereUniqueInput!) {
+            updateOneFundAssignment(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -240,15 +634,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_ACTION,
+          mutation: UPDATE_ONE_FUNDASSIGNMENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneAction) {
-          return response.data.updateOneAction;
+        if (response && response.data && response.data.updateOneFundAssignment) {
+          return response.data.updateOneFundAssignment;
         } else {
           return null as any;
         }
@@ -282,13 +676,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Upsert a single Action record.
+   * Upsert a single FundAssignment record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Action or null.
+   * @returns The updated FundAssignment or null.
    */
-  async upsert(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async upsert(props: FundAssignmentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<FundAssignmentType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -306,9 +700,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_ACTION = gql`
-          mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
-            upsertOneAction(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_FUNDASSIGNMENT = gql`
+          mutation upsertOneFundAssignment($where: FundAssignmentWhereUniqueInput!, $create: FundAssignmentCreateInput!, $update: FundAssignmentUpdateInput!) {
+            upsertOneFundAssignment(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -325,15 +719,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_ACTION,
+          mutation: UPSERT_ONE_FUNDASSIGNMENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneAction) {
-          return response.data.upsertOneAction;
+        if (response && response.data && response.data.upsertOneFundAssignment) {
+          return response.data.upsertOneFundAssignment;
         } else {
           return null as any;
         }
@@ -367,13 +761,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Update multiple Action records.
+   * Update multiple FundAssignment records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Action objects for the updated records.
+   * @param props - Array of FundAssignment objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: FundAssignmentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -391,9 +785,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_ACTION = gql`
-          mutation updateManyAction($data: [ActionCreateManyInput!]!) {
-            updateManyAction(data: $data) {
+        const UPDATE_MANY_FUNDASSIGNMENT = gql`
+          mutation updateManyFundAssignment($data: [FundAssignmentCreateManyInput!]!) {
+            updateManyFundAssignment(data: $data) {
               count
             }
           }`;
@@ -410,15 +804,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_ACTION,
+          mutation: UPDATE_MANY_FUNDASSIGNMENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyAction) {
-          return response.data.updateManyAction;
+        if (response && response.data && response.data.updateManyFundAssignment) {
+          return response.data.updateManyFundAssignment;
         } else {
           return null as any;
         }
@@ -452,13 +846,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Delete a single Action record.
+   * Delete a single FundAssignment record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Action or null.
+   * @returns The deleted FundAssignment or null.
    */
-  async delete(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async delete(props: FundAssignmentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<FundAssignmentType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -476,9 +870,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_ACTION = gql`
-          mutation deleteOneAction($where: ActionWhereUniqueInput!) {
-            deleteOneAction(where: $where) {
+        const DELETE_ONE_FUNDASSIGNMENT = gql`
+          mutation deleteOneFundAssignment($where: FundAssignmentWhereUniqueInput!) {
+            deleteOneFundAssignment(where: $where) {
               id
             }
           }`;
@@ -492,15 +886,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_ACTION,
+          mutation: DELETE_ONE_FUNDASSIGNMENT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneAction) {
-          return response.data.deleteOneAction;
+        if (response && response.data && response.data.deleteOneFundAssignment) {
+          return response.data.deleteOneFundAssignment;
         } else {
           return null as any;
         }
@@ -534,14 +928,14 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Retrieve a single Action record by ID.
+   * Retrieve a single FundAssignment record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Action or null.
+   * @returns The retrieved FundAssignment or null.
    */
-  async get(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType | null> {
+  async get(props: FundAssignmentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<FundAssignmentType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -559,9 +953,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ACTION = gql`
-          query getAction($where: ActionWhereUniqueInput!) {
-            getAction(where: $where) {
+        const GET_FUNDASSIGNMENT = gql`
+          query getFundAssignment($where: FundAssignmentWhereUniqueInput!) {
+            getFundAssignment(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -573,18 +967,18 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_ACTION,
+          query: GET_FUNDASSIGNMENT,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getAction ?? null;
+        return response.data?.getFundAssignment ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No FundAssignment found') {
           return null;
         }
 
@@ -615,12 +1009,12 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Retrieve all Actions records.
+   * Retrieve all FundAssignments records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Action records or null.
+   * @returns An array of FundAssignment records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<FundAssignmentType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -638,25 +1032,25 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_ACTION = gql`
-          query getAllAction {
-            actions {
+        const GET_ALL_FUNDASSIGNMENT = gql`
+          query getAllFundAssignment {
+            fundAssignments {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_ACTION,
+          query: GET_ALL_FUNDASSIGNMENT,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.actions ?? null;
+        return response.data?.fundAssignments ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No FundAssignment found') {
           return null;
         }
 
@@ -687,14 +1081,14 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Find multiple Action records based on conditions.
+   * Find multiple FundAssignment records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Action records or null.
+   * @returns An array of found FundAssignment records or null.
    */
-  async findMany(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType[] | null> {
+  async findMany(props: FundAssignmentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<FundAssignmentType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -712,9 +1106,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_ACTION = gql`
-          query findManyAction($where: ActionWhereInput!) {
-            actions(where: $where) {
+        const FIND_MANY_FUNDASSIGNMENT = gql`
+          query findManyFundAssignment($where: FundAssignmentWhereInput!) {
+            fundAssignments(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -727,22 +1121,22 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_ACTION,
+          query: FIND_MANY_FUNDASSIGNMENT,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.actions) {
-          return response.data.actions;
+        if (response && response.data && response.data.fundassignments) {
+          return response.data.fundAssignments;
         } else {
-          return [] as ActionType[];
+          return [] as FundAssignmentType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No FundAssignment found') {
           return null;
         }
 

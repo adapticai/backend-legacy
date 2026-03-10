@@ -68,16 +68,7 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  direction: props.direction !== undefined ? props.direction : undefined,
-  entityType: props.entityType !== undefined ? props.entityType : undefined,
-  entityId: props.entityId !== undefined ? props.entityId : undefined,
-  duration: props.duration !== undefined ? props.duration : undefined,
-  success: props.success !== undefined ? props.success : undefined,
-  error: props.error !== undefined ? props.error : undefined,
-  metadata: props.metadata !== undefined ? props.metadata : undefined,
-
+              
             },
           };
 
@@ -159,16 +150,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  direction: prop.direction !== undefined ? prop.direction : undefined,
-  entityType: prop.entityType !== undefined ? prop.entityType : undefined,
-  entityId: prop.entityId !== undefined ? prop.entityId : undefined,
-  duration: prop.duration !== undefined ? prop.duration : undefined,
-  success: prop.success !== undefined ? prop.success : undefined,
-  error: prop.error !== undefined ? prop.error : undefined,
-  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
-      })),
+          })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -249,43 +231,9 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-  entityId: props.entityId !== undefined ? {
-    equals: props.entityId 
-  } : undefined,
-      },
+                },
           data: {
-      id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-            set: props.timestamp 
-           } : undefined,
-  type: props.type !== undefined ? {
-            set: props.type 
-           } : undefined,
-  direction: props.direction !== undefined ? {
-            set: props.direction 
-           } : undefined,
-  entityType: props.entityType !== undefined ? {
-            set: props.entityType 
-           } : undefined,
-  entityId: props.entityId !== undefined ? {
-            set: props.entityId 
-           } : undefined,
-  duration: props.duration !== undefined ? {
-            set: props.duration 
-           } : undefined,
-  success: props.success !== undefined ? {
-            set: props.success 
-           } : undefined,
-  error: props.error !== undefined ? {
-            set: props.error 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -366,51 +314,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-  entityId: props.entityId !== undefined ? {
-    equals: props.entityId 
-  } : undefined,
-      },
+                },
           create: {
-        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  type: props.type !== undefined ? props.type : undefined,
-  direction: props.direction !== undefined ? props.direction : undefined,
-  entityType: props.entityType !== undefined ? props.entityType : undefined,
-  entityId: props.entityId !== undefined ? props.entityId : undefined,
-  duration: props.duration !== undefined ? props.duration : undefined,
-  success: props.success !== undefined ? props.success : undefined,
-  error: props.error !== undefined ? props.error : undefined,
-  metadata: props.metadata !== undefined ? props.metadata : undefined,
-      },
+            },
           update: {
-      timestamp: props.timestamp !== undefined ? {
-            set: props.timestamp 
-           } : undefined,
-  type: props.type !== undefined ? {
-            set: props.type 
-           } : undefined,
-  direction: props.direction !== undefined ? {
-            set: props.direction 
-           } : undefined,
-  entityType: props.entityType !== undefined ? {
-            set: props.entityType 
-           } : undefined,
-  entityId: props.entityId !== undefined ? {
-            set: props.entityId 
-           } : undefined,
-  duration: props.duration !== undefined ? {
-            set: props.duration 
-           } : undefined,
-  success: props.success !== undefined ? {
-            set: props.success 
-           } : undefined,
-  error: props.error !== undefined ? {
-            set: props.error 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -491,44 +399,10 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-              id: prop.id !== undefined ? prop.id : undefined,
-  entityId: prop.entityId !== undefined ? {
-    equals: prop.entityId 
-  } : undefined,
-
+            
           },
           data: {
-              id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
-  timestamp: prop.timestamp !== undefined ? {
-            set: prop.timestamp 
-           } : undefined,
-  type: prop.type !== undefined ? {
-            set: prop.type 
-           } : undefined,
-  direction: prop.direction !== undefined ? {
-            set: prop.direction 
-           } : undefined,
-  entityType: prop.entityType !== undefined ? {
-            set: prop.entityType 
-           } : undefined,
-  entityId: prop.entityId !== undefined ? {
-            set: prop.entityId 
-           } : undefined,
-  duration: prop.duration !== undefined ? {
-            set: prop.duration 
-           } : undefined,
-  success: prop.success !== undefined ? {
-            set: prop.success 
-           } : undefined,
-  error: prop.error !== undefined ? {
-            set: prop.error 
-           } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
-
+            
           },
         }));
 
@@ -693,11 +567,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-            id: props.id !== undefined ? props.id : undefined,
-  entityId: props.entityId !== undefined ? {
-    equals: props.entityId 
-  } : undefined,
-},
+          },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -850,13 +720,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
-  entityId: props.entityId !== undefined ? {
-    equals: props.entityId 
-  } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

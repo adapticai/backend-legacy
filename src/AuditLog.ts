@@ -68,16 +68,7 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  userId: props.userId !== undefined ? props.userId : undefined,
-  operationType: props.operationType !== undefined ? props.operationType : undefined,
-  modelName: props.modelName !== undefined ? props.modelName : undefined,
-  recordId: props.recordId !== undefined ? props.recordId : undefined,
-  changedFields: props.changedFields !== undefined ? props.changedFields : undefined,
-  operationName: props.operationName !== undefined ? props.operationName : undefined,
-  ipAddress: props.ipAddress !== undefined ? props.ipAddress : undefined,
-  metadata: props.metadata !== undefined ? props.metadata : undefined,
-
+              
             },
           };
 
@@ -159,16 +150,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
-  userId: prop.userId !== undefined ? prop.userId : undefined,
-  operationType: prop.operationType !== undefined ? prop.operationType : undefined,
-  modelName: prop.modelName !== undefined ? prop.modelName : undefined,
-  recordId: prop.recordId !== undefined ? prop.recordId : undefined,
-  changedFields: prop.changedFields !== undefined ? prop.changedFields : undefined,
-  operationName: prop.operationName !== undefined ? prop.operationName : undefined,
-  ipAddress: prop.ipAddress !== undefined ? prop.ipAddress : undefined,
-  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
-      })),
+          })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -249,43 +231,9 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-  recordId: props.recordId !== undefined ? {
-    equals: props.recordId 
-  } : undefined,
-      },
+                },
           data: {
-      id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-            set: props.timestamp 
-           } : undefined,
-  userId: props.userId !== undefined ? {
-            set: props.userId 
-           } : undefined,
-  operationType: props.operationType !== undefined ? {
-            set: props.operationType 
-           } : undefined,
-  modelName: props.modelName !== undefined ? {
-            set: props.modelName 
-           } : undefined,
-  recordId: props.recordId !== undefined ? {
-            set: props.recordId 
-           } : undefined,
-  changedFields: props.changedFields !== undefined ? {
-            set: props.changedFields 
-           } : undefined,
-  operationName: props.operationName !== undefined ? {
-            set: props.operationName 
-           } : undefined,
-  ipAddress: props.ipAddress !== undefined ? {
-            set: props.ipAddress 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -366,51 +314,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-  recordId: props.recordId !== undefined ? {
-    equals: props.recordId 
-  } : undefined,
-      },
+                },
           create: {
-        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  userId: props.userId !== undefined ? props.userId : undefined,
-  operationType: props.operationType !== undefined ? props.operationType : undefined,
-  modelName: props.modelName !== undefined ? props.modelName : undefined,
-  recordId: props.recordId !== undefined ? props.recordId : undefined,
-  changedFields: props.changedFields !== undefined ? props.changedFields : undefined,
-  operationName: props.operationName !== undefined ? props.operationName : undefined,
-  ipAddress: props.ipAddress !== undefined ? props.ipAddress : undefined,
-  metadata: props.metadata !== undefined ? props.metadata : undefined,
-      },
+            },
           update: {
-      timestamp: props.timestamp !== undefined ? {
-            set: props.timestamp 
-           } : undefined,
-  userId: props.userId !== undefined ? {
-            set: props.userId 
-           } : undefined,
-  operationType: props.operationType !== undefined ? {
-            set: props.operationType 
-           } : undefined,
-  modelName: props.modelName !== undefined ? {
-            set: props.modelName 
-           } : undefined,
-  recordId: props.recordId !== undefined ? {
-            set: props.recordId 
-           } : undefined,
-  changedFields: props.changedFields !== undefined ? {
-            set: props.changedFields 
-           } : undefined,
-  operationName: props.operationName !== undefined ? {
-            set: props.operationName 
-           } : undefined,
-  ipAddress: props.ipAddress !== undefined ? {
-            set: props.ipAddress 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -491,44 +399,10 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-              id: prop.id !== undefined ? prop.id : undefined,
-  recordId: prop.recordId !== undefined ? {
-    equals: prop.recordId 
-  } : undefined,
-
+            
           },
           data: {
-              id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
-  timestamp: prop.timestamp !== undefined ? {
-            set: prop.timestamp 
-           } : undefined,
-  userId: prop.userId !== undefined ? {
-            set: prop.userId 
-           } : undefined,
-  operationType: prop.operationType !== undefined ? {
-            set: prop.operationType 
-           } : undefined,
-  modelName: prop.modelName !== undefined ? {
-            set: prop.modelName 
-           } : undefined,
-  recordId: prop.recordId !== undefined ? {
-            set: prop.recordId 
-           } : undefined,
-  changedFields: prop.changedFields !== undefined ? {
-            set: prop.changedFields 
-           } : undefined,
-  operationName: prop.operationName !== undefined ? {
-            set: prop.operationName 
-           } : undefined,
-  ipAddress: prop.ipAddress !== undefined ? {
-            set: prop.ipAddress 
-           } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
-
+            
           },
         }));
 
@@ -693,11 +567,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-            id: props.id !== undefined ? props.id : undefined,
-  recordId: props.recordId !== undefined ? {
-    equals: props.recordId 
-  } : undefined,
-},
+          },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -850,13 +720,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
-  recordId: props.recordId !== undefined ? {
-    equals: props.recordId 
-  } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

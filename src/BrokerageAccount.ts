@@ -1,47 +1,648 @@
 
   
-import { Action as ActionType } from './generated/typegraphql-prisma/models/Action';
+import { BrokerageAccount as BrokerageAccountType } from './generated/typegraphql-prisma/models/BrokerageAccount';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
   
   /**
-   * CRUD operations for the Action model.
+   * CRUD operations for the BrokerageAccount model.
    */
 
   const selectionSet = `
     
   id
-  sequence
-  tradeId
+  provider
   type
-  primary
-  note
-  status
+  apiKey
+  apiSecret
+  configuration
+  marketOpen
+  realTime
+  cryptoTradingEnabled
+  cryptoTradingPairs
+  cryptoTradeAllocationPct
+  tradeAllocationPct
+  allocation {
+    id
+    equities
+    optionsContracts
+    futures
+    etfs
+    forex
+    crypto
+    stocks
+    options
+    brokerageAccountId
+    brokerageAccount {
+id
+    }
+    createdAt
+    updatedAt
+  }
+  autoAllocation
+  minPercentageChange
+  volumeThreshold
+  enablePortfolioTrailingStop
+  portfolioTrailPercent
+  portfolioProfitThresholdPercent
+  reducedPortfolioTrailPercent
+  defaultTrailingStopPercentage100
+  firstTrailReductionThreshold100
+  secondTrailReductionThreshold100
+  firstReducedTrailPercentage100
+  secondReducedTrailPercentage100
+  minimumPriceChangePercent100
+  fund {
+    id
+    name
+    slug
+    description
+    status
+    organizationId
+    organization {
+      id
+      name
+      slug
+      logoUrl
+      website
+      createdAt
+      updatedAt
+      deletedAt
+      members {
+        id
+        organizationId
+        userId
+        user {
+id
+        }
+        role
+        permissions
+        createdAt
+        updatedAt
+      }
+    }
+    createdAt
+    updatedAt
+    deletedAt
+    assignments {
+      id
+      fundId
+      userId
+      user {
+        id
+        name
+        email
+        emailVerified
+        image
+        createdAt
+        updatedAt
+        deletedAt
+        role
+        bio
+        jobTitle
+        customer {
+id
+        }
+        customerId
+        accounts {
+id
+        }
+        sessions {
+id
+        }
+        authenticators {
+id
+        }
+        plan
+        orgMemberships {
+id
+        }
+        investorProfile {
+id
+        }
+        openaiAPIKey
+        openaiModel
+        linkedProviders {
+id
+        }
+        accountLinkingRequests {
+id
+        }
+        reviewedWaitlistEntries {
+id
+        }
+      }
+      role
+      permissions
+      createdAt
+      updatedAt
+    }
+    investments {
+      id
+      fundId
+      investorId
+      investor {
+        id
+        name
+        email
+        type
+        kycStatus
+        walletAddress
+        userId
+        user {
+id
+        }
+        createdAt
+        updatedAt
+        deletedAt
+      }
+      units
+      investedAt
+      status
+      createdAt
+      updatedAt
+    }
+  }
+  fundId
   createdAt
   updatedAt
   deletedAt
-  alpacaOrderId
+  alerts {
+    id
+    brokerageAccountId
+    title
+    message
+    type
+    severity
+    category
+    status
+    isRead
+    acknowledgedAt
+    resolvedAt
+    suppressedUntil
+    retryCount
+    metadata
+    createdAt
+    updatedAt
+  }
+  trades {
+    id
+    brokerageAccountId
+    signal
+    strategy
+    analysis
+    summary
+    confidence
+    timestamp
+    createdAt
+    updatedAt
+    status
+    deletedAt
+    symbol
+    actions {
+      id
+      sequence
+      tradeId
+      type
+      primary
+      note
+      status
+      createdAt
+      updatedAt
+      deletedAt
+      alpacaOrderId
+    }
+    entryPrice
+    exitPrice
+    entryQty
+    exitQty
+    entryValue
+    exitValue
+    entryTime
+    exitTime
+    pnlAmount
+    pnlPercent
+    durationMinutes
+    marketPhase
+    marketVolatility
+    sessionHorizonMinutes
+    thresholdsJson
+  }
+  optionsPositions {
+    id
+    brokerageAccountId
+    contractId
+    contract {
+      id
+      symbol
+      contractSymbol
+      optionType
+      strikePrice
+      expirationDate
+      daysToExpiration
+      lastPrice
+      bidPrice
+      askPrice
+      midPrice
+      bidSize
+      askSize
+      volume
+      openInterest
+      impliedVolatility
+      delta
+      gamma
+      theta
+      vega
+      rho
+      inTheMoney
+      intrinsicValue
+      extrinsicValue
+      theoreticalPrice
+      underlyingPrice
+      metadata
+      dataTimestamp
+      createdAt
+      updatedAt
+      greeksHistory {
+        id
+        contractId
+        timestamp
+        underlyingPrice
+        optionPrice
+        bidPrice
+        askPrice
+        impliedVolatility
+        delta
+        gamma
+        theta
+        vega
+        rho
+        volume
+        openInterest
+        daysToExpiration
+        intrinsicValue
+        extrinsicValue
+        metadata
+        createdAt
+      }
+      executions {
+        id
+        positionId
+        position {
+id
+        }
+        contractId
+        brokerageAccountId
+        brokerageAccount {
+id
+        }
+        brokerOrderId
+        executionSide
+        quantity
+        executionPrice
+        executionValue
+        fees
+        executionTime
+        underlyingPriceAtExecution
+        deltaAtExecution
+        gammaAtExecution
+        thetaAtExecution
+        vegaAtExecution
+        rhoAtExecution
+        impliedVolatilityAtExecution
+        orderType
+        limitPrice
+        stopPrice
+        timeInForce
+        venue
+        slippage
+        notes
+        metadata
+        createdAt
+        updatedAt
+      }
+    }
+    status
+    openingSide
+    quantity
+    entryPrice
+    entryCost
+    entryTime
+    exitPrice
+    exitValue
+    exitTime
+    currentPrice
+    currentValue
+    unrealizedPnL
+    unrealizedPnLPercent
+    realizedPnL
+    realizedPnLPercent
+    totalFees
+    currentDelta
+    currentGamma
+    currentTheta
+    currentVega
+    currentRho
+    currentImpliedVolatility
+    daysHeld
+    exitReason
+    strategyType
+    tradeId
+    metadata
+    createdAt
+    updatedAt
+    executions {
+      id
+      positionId
+      contractId
+      contract {
+        id
+        symbol
+        contractSymbol
+        optionType
+        strikePrice
+        expirationDate
+        daysToExpiration
+        lastPrice
+        bidPrice
+        askPrice
+        midPrice
+        bidSize
+        askSize
+        volume
+        openInterest
+        impliedVolatility
+        delta
+        gamma
+        theta
+        vega
+        rho
+        inTheMoney
+        intrinsicValue
+        extrinsicValue
+        theoreticalPrice
+        underlyingPrice
+        metadata
+        dataTimestamp
+        createdAt
+        updatedAt
+        positions {
+id
+        }
+        greeksHistory {
+id
+        }
+      }
+      brokerageAccountId
+      brokerageAccount {
+id
+      }
+      brokerOrderId
+      executionSide
+      quantity
+      executionPrice
+      executionValue
+      fees
+      executionTime
+      underlyingPriceAtExecution
+      deltaAtExecution
+      gammaAtExecution
+      thetaAtExecution
+      vegaAtExecution
+      rhoAtExecution
+      impliedVolatilityAtExecution
+      orderType
+      limitPrice
+      stopPrice
+      timeInForce
+      venue
+      slippage
+      notes
+      metadata
+      createdAt
+      updatedAt
+    }
+  }
+  optionsTradeExecutions {
+    id
+    positionId
+    position {
+      id
+      brokerageAccountId
+      brokerageAccount {
+id
+      }
+      contractId
+      contract {
+        id
+        symbol
+        contractSymbol
+        optionType
+        strikePrice
+        expirationDate
+        daysToExpiration
+        lastPrice
+        bidPrice
+        askPrice
+        midPrice
+        bidSize
+        askSize
+        volume
+        openInterest
+        impliedVolatility
+        delta
+        gamma
+        theta
+        vega
+        rho
+        inTheMoney
+        intrinsicValue
+        extrinsicValue
+        theoreticalPrice
+        underlyingPrice
+        metadata
+        dataTimestamp
+        createdAt
+        updatedAt
+        greeksHistory {
+id
+        }
+        executions {
+id
+        }
+      }
+      status
+      openingSide
+      quantity
+      entryPrice
+      entryCost
+      entryTime
+      exitPrice
+      exitValue
+      exitTime
+      currentPrice
+      currentValue
+      unrealizedPnL
+      unrealizedPnLPercent
+      realizedPnL
+      realizedPnLPercent
+      totalFees
+      currentDelta
+      currentGamma
+      currentTheta
+      currentVega
+      currentRho
+      currentImpliedVolatility
+      daysHeld
+      exitReason
+      strategyType
+      tradeId
+      metadata
+      createdAt
+      updatedAt
+    }
+    contractId
+    contract {
+      id
+      symbol
+      contractSymbol
+      optionType
+      strikePrice
+      expirationDate
+      daysToExpiration
+      lastPrice
+      bidPrice
+      askPrice
+      midPrice
+      bidSize
+      askSize
+      volume
+      openInterest
+      impliedVolatility
+      delta
+      gamma
+      theta
+      vega
+      rho
+      inTheMoney
+      intrinsicValue
+      extrinsicValue
+      theoreticalPrice
+      underlyingPrice
+      metadata
+      dataTimestamp
+      createdAt
+      updatedAt
+      positions {
+        id
+        brokerageAccountId
+        brokerageAccount {
+id
+        }
+        contractId
+        status
+        openingSide
+        quantity
+        entryPrice
+        entryCost
+        entryTime
+        exitPrice
+        exitValue
+        exitTime
+        currentPrice
+        currentValue
+        unrealizedPnL
+        unrealizedPnLPercent
+        realizedPnL
+        realizedPnLPercent
+        totalFees
+        currentDelta
+        currentGamma
+        currentTheta
+        currentVega
+        currentRho
+        currentImpliedVolatility
+        daysHeld
+        exitReason
+        strategyType
+        tradeId
+        metadata
+        createdAt
+        updatedAt
+        executions {
+id
+        }
+      }
+      greeksHistory {
+        id
+        contractId
+        timestamp
+        underlyingPrice
+        optionPrice
+        bidPrice
+        askPrice
+        impliedVolatility
+        delta
+        gamma
+        theta
+        vega
+        rho
+        volume
+        openInterest
+        daysToExpiration
+        intrinsicValue
+        extrinsicValue
+        metadata
+        createdAt
+      }
+    }
+    brokerageAccountId
+    brokerOrderId
+    executionSide
+    quantity
+    executionPrice
+    executionValue
+    fees
+    executionTime
+    underlyingPriceAtExecution
+    deltaAtExecution
+    gammaAtExecution
+    thetaAtExecution
+    vegaAtExecution
+    rhoAtExecution
+    impliedVolatilityAtExecution
+    orderType
+    limitPrice
+    stopPrice
+    timeInForce
+    venue
+    slippage
+    notes
+    metadata
+    createdAt
+    updatedAt
+  }
 
   `;
 
-  export const Action = {
+  export const BrokerageAccount = {
 
     /**
-     * Create a new Action record.
+     * Create a new BrokerageAccount record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Action or null.
+     * @returns The created BrokerageAccount or null.
      */
 
     /**
-     * Create a new Action record.
+     * Create a new BrokerageAccount record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Action or null.
+     * @returns The created BrokerageAccount or null.
      */
-    async create(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+    async create(props: BrokerageAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<BrokerageAccountType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -59,9 +660,9 @@ import { logger } from './utils/logger';
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_ACTION = gql`
-              mutation createOneAction($data: ActionCreateInput!) {
-                createOneAction(data: $data) {
+          const CREATE_ONE_BROKERAGEACCOUNT = gql`
+              mutation createOneBrokerageAccount($data: BrokerageAccountCreateInput!) {
+                createOneBrokerageAccount(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -76,15 +677,15 @@ import { logger } from './utils/logger';
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_ACTION,
+            mutation: CREATE_ONE_BROKERAGEACCOUNT,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneAction) {
-            return response.data.createOneAction;
+          if (response && response.data && response.data.createOneBrokerageAccount) {
+            return response.data.createOneBrokerageAccount;
           } else {
             return null as any;
           }
@@ -118,13 +719,13 @@ import { logger } from './utils/logger';
     },
 
   /**
-   * Create multiple Action records.
+   * Create multiple BrokerageAccount records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Action objects for the new records.
+   * @param props - Array of BrokerageAccount objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: BrokerageAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -142,9 +743,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_ACTION = gql`
-          mutation createManyAction($data: [ActionCreateManyInput!]!) {
-            createManyAction(data: $data) {
+        const CREATE_MANY_BROKERAGEACCOUNT = gql`
+          mutation createManyBrokerageAccount($data: [BrokerageAccountCreateManyInput!]!) {
+            createManyBrokerageAccount(data: $data) {
               count
             }
           }`;
@@ -157,15 +758,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_ACTION,
+          mutation: CREATE_MANY_BROKERAGEACCOUNT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyAction) {
-          return response.data.createManyAction;
+        if (response && response.data && response.data.createManyBrokerageAccount) {
+          return response.data.createManyBrokerageAccount;
         } else {
           return null as any;
         }
@@ -199,13 +800,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Update a single Action record.
+   * Update a single BrokerageAccount record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Action or null.
+   * @returns The updated BrokerageAccount or null.
    */
-  async update(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async update(props: BrokerageAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<BrokerageAccountType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -223,9 +824,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_ACTION = gql`
-          mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
-            updateOneAction(data: $data, where: $where) {
+        const UPDATE_ONE_BROKERAGEACCOUNT = gql`
+          mutation updateOneBrokerageAccount($data: BrokerageAccountUpdateInput!, $where: BrokerageAccountWhereUniqueInput!) {
+            updateOneBrokerageAccount(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -240,15 +841,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_ACTION,
+          mutation: UPDATE_ONE_BROKERAGEACCOUNT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneAction) {
-          return response.data.updateOneAction;
+        if (response && response.data && response.data.updateOneBrokerageAccount) {
+          return response.data.updateOneBrokerageAccount;
         } else {
           return null as any;
         }
@@ -282,13 +883,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Upsert a single Action record.
+   * Upsert a single BrokerageAccount record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Action or null.
+   * @returns The updated BrokerageAccount or null.
    */
-  async upsert(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async upsert(props: BrokerageAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<BrokerageAccountType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -306,9 +907,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_ACTION = gql`
-          mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
-            upsertOneAction(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_BROKERAGEACCOUNT = gql`
+          mutation upsertOneBrokerageAccount($where: BrokerageAccountWhereUniqueInput!, $create: BrokerageAccountCreateInput!, $update: BrokerageAccountUpdateInput!) {
+            upsertOneBrokerageAccount(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -325,15 +926,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_ACTION,
+          mutation: UPSERT_ONE_BROKERAGEACCOUNT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneAction) {
-          return response.data.upsertOneAction;
+        if (response && response.data && response.data.upsertOneBrokerageAccount) {
+          return response.data.upsertOneBrokerageAccount;
         } else {
           return null as any;
         }
@@ -367,13 +968,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Update multiple Action records.
+   * Update multiple BrokerageAccount records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Action objects for the updated records.
+   * @param props - Array of BrokerageAccount objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: BrokerageAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -391,9 +992,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_ACTION = gql`
-          mutation updateManyAction($data: [ActionCreateManyInput!]!) {
-            updateManyAction(data: $data) {
+        const UPDATE_MANY_BROKERAGEACCOUNT = gql`
+          mutation updateManyBrokerageAccount($data: [BrokerageAccountCreateManyInput!]!) {
+            updateManyBrokerageAccount(data: $data) {
               count
             }
           }`;
@@ -410,15 +1011,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_ACTION,
+          mutation: UPDATE_MANY_BROKERAGEACCOUNT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyAction) {
-          return response.data.updateManyAction;
+        if (response && response.data && response.data.updateManyBrokerageAccount) {
+          return response.data.updateManyBrokerageAccount;
         } else {
           return null as any;
         }
@@ -452,13 +1053,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Delete a single Action record.
+   * Delete a single BrokerageAccount record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Action or null.
+   * @returns The deleted BrokerageAccount or null.
    */
-  async delete(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async delete(props: BrokerageAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<BrokerageAccountType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -476,9 +1077,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_ACTION = gql`
-          mutation deleteOneAction($where: ActionWhereUniqueInput!) {
-            deleteOneAction(where: $where) {
+        const DELETE_ONE_BROKERAGEACCOUNT = gql`
+          mutation deleteOneBrokerageAccount($where: BrokerageAccountWhereUniqueInput!) {
+            deleteOneBrokerageAccount(where: $where) {
               id
             }
           }`;
@@ -492,15 +1093,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_ACTION,
+          mutation: DELETE_ONE_BROKERAGEACCOUNT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneAction) {
-          return response.data.deleteOneAction;
+        if (response && response.data && response.data.deleteOneBrokerageAccount) {
+          return response.data.deleteOneBrokerageAccount;
         } else {
           return null as any;
         }
@@ -534,14 +1135,14 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Retrieve a single Action record by ID.
+   * Retrieve a single BrokerageAccount record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Action or null.
+   * @returns The retrieved BrokerageAccount or null.
    */
-  async get(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType | null> {
+  async get(props: BrokerageAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<BrokerageAccountType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -559,9 +1160,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ACTION = gql`
-          query getAction($where: ActionWhereUniqueInput!) {
-            getAction(where: $where) {
+        const GET_BROKERAGEACCOUNT = gql`
+          query getBrokerageAccount($where: BrokerageAccountWhereUniqueInput!) {
+            getBrokerageAccount(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -573,18 +1174,18 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_ACTION,
+          query: GET_BROKERAGEACCOUNT,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getAction ?? null;
+        return response.data?.getBrokerageAccount ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No BrokerageAccount found') {
           return null;
         }
 
@@ -615,12 +1216,12 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Retrieve all Actions records.
+   * Retrieve all BrokerageAccounts records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Action records or null.
+   * @returns An array of BrokerageAccount records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<BrokerageAccountType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -638,25 +1239,25 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_ACTION = gql`
-          query getAllAction {
-            actions {
+        const GET_ALL_BROKERAGEACCOUNT = gql`
+          query getAllBrokerageAccount {
+            brokerageAccounts {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_ACTION,
+          query: GET_ALL_BROKERAGEACCOUNT,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.actions ?? null;
+        return response.data?.brokerageAccounts ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No BrokerageAccount found') {
           return null;
         }
 
@@ -687,14 +1288,14 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Find multiple Action records based on conditions.
+   * Find multiple BrokerageAccount records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Action records or null.
+   * @returns An array of found BrokerageAccount records or null.
    */
-  async findMany(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType[] | null> {
+  async findMany(props: BrokerageAccountType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<BrokerageAccountType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -712,9 +1313,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_ACTION = gql`
-          query findManyAction($where: ActionWhereInput!) {
-            actions(where: $where) {
+        const FIND_MANY_BROKERAGEACCOUNT = gql`
+          query findManyBrokerageAccount($where: BrokerageAccountWhereInput!) {
+            brokerageAccounts(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -727,22 +1328,22 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_ACTION,
+          query: FIND_MANY_BROKERAGEACCOUNT,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.actions) {
-          return response.data.actions;
+        if (response && response.data && response.data.brokerageaccounts) {
+          return response.data.brokerageAccounts;
         } else {
-          return [] as ActionType[];
+          return [] as BrokerageAccountType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No BrokerageAccount found') {
           return null;
         }
 

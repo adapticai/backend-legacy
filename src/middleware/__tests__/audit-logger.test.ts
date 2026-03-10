@@ -26,11 +26,11 @@ describe('parseMutationOperation', () => {
   });
 
   it('should parse updateOne operations', () => {
-    const result = parseMutationOperation('updateOneAlpacaAccount');
+    const result = parseMutationOperation('updateOneBrokerageAccount');
     expect(result).toEqual({
       operationType: 'UPDATE',
-      modelName: 'AlpacaAccount',
-      operationName: 'updateOneAlpacaAccount',
+      modelName: 'BrokerageAccount',
+      operationName: 'updateOneBrokerageAccount',
     });
   });
 

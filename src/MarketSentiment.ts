@@ -64,10 +64,7 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-                sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  longDescription: props.longDescription !== undefined ? props.longDescription : undefined,
-
+              
             },
           };
 
@@ -149,10 +146,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-      sentiment: prop.sentiment !== undefined ? prop.sentiment : undefined,
-  description: prop.description !== undefined ? prop.description : undefined,
-  longDescription: prop.longDescription !== undefined ? prop.longDescription : undefined,
-      })),
+          })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -233,28 +227,9 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-      },
+                },
           data: {
-      id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
-  sentiment: props.sentiment !== undefined ? {
-            set: props.sentiment 
-           } : undefined,
-  description: props.description !== undefined ? {
-            set: props.description 
-           } : undefined,
-  longDescription: props.longDescription !== undefined ? {
-            set: props.longDescription 
-           } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-            set: props.createdAt 
-           } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-            set: props.updatedAt 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -335,24 +310,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-      },
+                },
           create: {
-        sentiment: props.sentiment !== undefined ? props.sentiment : undefined,
-  description: props.description !== undefined ? props.description : undefined,
-  longDescription: props.longDescription !== undefined ? props.longDescription : undefined,
-      },
+            },
           update: {
-      sentiment: props.sentiment !== undefined ? {
-            set: props.sentiment 
-           } : undefined,
-  description: props.description !== undefined ? {
-            set: props.description 
-           } : undefined,
-  longDescription: props.longDescription !== undefined ? {
-            set: props.longDescription 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -433,29 +395,10 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-              id: prop.id !== undefined ? prop.id : undefined,
-
+            
           },
           data: {
-              id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
-  sentiment: prop.sentiment !== undefined ? {
-            set: prop.sentiment 
-           } : undefined,
-  description: prop.description !== undefined ? {
-            set: prop.description 
-           } : undefined,
-  longDescription: prop.longDescription !== undefined ? {
-            set: prop.longDescription 
-           } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-            set: prop.createdAt 
-           } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-            set: prop.updatedAt 
-           } : undefined,
-
+            
           },
         }));
 
@@ -620,8 +563,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-            id: props.id !== undefined ? props.id : undefined,
-},
+          },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -774,10 +716,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

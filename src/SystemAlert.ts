@@ -81,27 +81,7 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-                type: props.type !== undefined ? props.type : undefined,
-  severity: props.severity !== undefined ? props.severity : undefined,
-  title: props.title !== undefined ? props.title : undefined,
-  message: props.message !== undefined ? props.message : undefined,
-  source: props.source !== undefined ? props.source : undefined,
-  metadataModelName: props.metadataModelName !== undefined ? props.metadataModelName : undefined,
-  metadataVersion: props.metadataVersion !== undefined ? props.metadataVersion : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? props.metadataJobId : undefined,
-  metadataMetrics: props.metadataMetrics !== undefined ? props.metadataMetrics : undefined,
-  metadataErrorDetails: props.metadataErrorDetails !== undefined ? props.metadataErrorDetails : undefined,
-  metadataRecommendations: props.metadataRecommendations !== undefined ? props.metadataRecommendations : undefined,
-  status: props.status !== undefined ? props.status : undefined,
-  acknowledgedBy: props.acknowledgedBy !== undefined ? props.acknowledgedBy : undefined,
-  acknowledgedAt: props.acknowledgedAt !== undefined ? props.acknowledgedAt : undefined,
-  resolvedBy: props.resolvedBy !== undefined ? props.resolvedBy : undefined,
-  resolvedAt: props.resolvedAt !== undefined ? props.resolvedAt : undefined,
-  resolutionNotes: props.resolutionNotes !== undefined ? props.resolutionNotes : undefined,
-  suppressedUntil: props.suppressedUntil !== undefined ? props.suppressedUntil : undefined,
-  escalationLevel: props.escalationLevel !== undefined ? props.escalationLevel : undefined,
-  notificationChannels: props.notificationChannels !== undefined ? props.notificationChannels : undefined,
-
+              
             },
           };
 
@@ -183,27 +163,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-      type: prop.type !== undefined ? prop.type : undefined,
-  severity: prop.severity !== undefined ? prop.severity : undefined,
-  title: prop.title !== undefined ? prop.title : undefined,
-  message: prop.message !== undefined ? prop.message : undefined,
-  source: prop.source !== undefined ? prop.source : undefined,
-  metadataModelName: prop.metadataModelName !== undefined ? prop.metadataModelName : undefined,
-  metadataVersion: prop.metadataVersion !== undefined ? prop.metadataVersion : undefined,
-  metadataJobId: prop.metadataJobId !== undefined ? prop.metadataJobId : undefined,
-  metadataMetrics: prop.metadataMetrics !== undefined ? prop.metadataMetrics : undefined,
-  metadataErrorDetails: prop.metadataErrorDetails !== undefined ? prop.metadataErrorDetails : undefined,
-  metadataRecommendations: prop.metadataRecommendations !== undefined ? prop.metadataRecommendations : undefined,
-  status: prop.status !== undefined ? prop.status : undefined,
-  acknowledgedBy: prop.acknowledgedBy !== undefined ? prop.acknowledgedBy : undefined,
-  acknowledgedAt: prop.acknowledgedAt !== undefined ? prop.acknowledgedAt : undefined,
-  resolvedBy: prop.resolvedBy !== undefined ? prop.resolvedBy : undefined,
-  resolvedAt: prop.resolvedAt !== undefined ? prop.resolvedAt : undefined,
-  resolutionNotes: prop.resolutionNotes !== undefined ? prop.resolutionNotes : undefined,
-  suppressedUntil: prop.suppressedUntil !== undefined ? prop.suppressedUntil : undefined,
-  escalationLevel: prop.escalationLevel !== undefined ? prop.escalationLevel : undefined,
-  notificationChannels: prop.notificationChannels !== undefined ? prop.notificationChannels : undefined,
-      })),
+          })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -284,85 +244,9 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
-  } : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? {
-    equals: props.metadataJobId 
-  } : undefined,
-      },
+                },
           data: {
-      id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
-  type: props.type !== undefined ? {
-            set: props.type 
-           } : undefined,
-  severity: props.severity !== undefined ? {
-            set: props.severity 
-           } : undefined,
-  title: props.title !== undefined ? {
-            set: props.title 
-           } : undefined,
-  message: props.message !== undefined ? {
-            set: props.message 
-           } : undefined,
-  source: props.source !== undefined ? {
-            set: props.source 
-           } : undefined,
-  metadataModelName: props.metadataModelName !== undefined ? {
-            set: props.metadataModelName 
-           } : undefined,
-  metadataVersion: props.metadataVersion !== undefined ? {
-            set: props.metadataVersion 
-           } : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? {
-            set: props.metadataJobId 
-           } : undefined,
-  metadataMetrics: props.metadataMetrics !== undefined ? {
-            set: props.metadataMetrics 
-           } : undefined,
-  metadataErrorDetails: props.metadataErrorDetails !== undefined ? {
-            set: props.metadataErrorDetails 
-           } : undefined,
-  metadataRecommendations: props.metadataRecommendations !== undefined ? {
-            set: props.metadataRecommendations 
-           } : undefined,
-  status: props.status !== undefined ? {
-            set: props.status 
-           } : undefined,
-  acknowledgedBy: props.acknowledgedBy !== undefined ? {
-            set: props.acknowledgedBy 
-           } : undefined,
-  acknowledgedAt: props.acknowledgedAt !== undefined ? {
-            set: props.acknowledgedAt 
-           } : undefined,
-  resolvedBy: props.resolvedBy !== undefined ? {
-            set: props.resolvedBy 
-           } : undefined,
-  resolvedAt: props.resolvedAt !== undefined ? {
-            set: props.resolvedAt 
-           } : undefined,
-  resolutionNotes: props.resolutionNotes !== undefined ? {
-            set: props.resolutionNotes 
-           } : undefined,
-  suppressedUntil: props.suppressedUntil !== undefined ? {
-            set: props.suppressedUntil 
-           } : undefined,
-  escalationLevel: props.escalationLevel !== undefined ? {
-            set: props.escalationLevel 
-           } : undefined,
-  notificationChannels: props.notificationChannels !== undefined ? {
-            set: props.notificationChannels 
-           } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-            set: props.createdAt 
-           } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-            set: props.updatedAt 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -443,98 +327,11 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: {
-            id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
-  } : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? {
-    equals: props.metadataJobId 
-  } : undefined,
-      },
+                },
           create: {
-        type: props.type !== undefined ? props.type : undefined,
-  severity: props.severity !== undefined ? props.severity : undefined,
-  title: props.title !== undefined ? props.title : undefined,
-  message: props.message !== undefined ? props.message : undefined,
-  source: props.source !== undefined ? props.source : undefined,
-  metadataModelName: props.metadataModelName !== undefined ? props.metadataModelName : undefined,
-  metadataVersion: props.metadataVersion !== undefined ? props.metadataVersion : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? props.metadataJobId : undefined,
-  metadataMetrics: props.metadataMetrics !== undefined ? props.metadataMetrics : undefined,
-  metadataErrorDetails: props.metadataErrorDetails !== undefined ? props.metadataErrorDetails : undefined,
-  metadataRecommendations: props.metadataRecommendations !== undefined ? props.metadataRecommendations : undefined,
-  status: props.status !== undefined ? props.status : undefined,
-  acknowledgedBy: props.acknowledgedBy !== undefined ? props.acknowledgedBy : undefined,
-  acknowledgedAt: props.acknowledgedAt !== undefined ? props.acknowledgedAt : undefined,
-  resolvedBy: props.resolvedBy !== undefined ? props.resolvedBy : undefined,
-  resolvedAt: props.resolvedAt !== undefined ? props.resolvedAt : undefined,
-  resolutionNotes: props.resolutionNotes !== undefined ? props.resolutionNotes : undefined,
-  suppressedUntil: props.suppressedUntil !== undefined ? props.suppressedUntil : undefined,
-  escalationLevel: props.escalationLevel !== undefined ? props.escalationLevel : undefined,
-  notificationChannels: props.notificationChannels !== undefined ? props.notificationChannels : undefined,
-      },
+            },
           update: {
-      type: props.type !== undefined ? {
-            set: props.type 
-           } : undefined,
-  severity: props.severity !== undefined ? {
-            set: props.severity 
-           } : undefined,
-  title: props.title !== undefined ? {
-            set: props.title 
-           } : undefined,
-  message: props.message !== undefined ? {
-            set: props.message 
-           } : undefined,
-  source: props.source !== undefined ? {
-            set: props.source 
-           } : undefined,
-  metadataModelName: props.metadataModelName !== undefined ? {
-            set: props.metadataModelName 
-           } : undefined,
-  metadataVersion: props.metadataVersion !== undefined ? {
-            set: props.metadataVersion 
-           } : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? {
-            set: props.metadataJobId 
-           } : undefined,
-  metadataMetrics: props.metadataMetrics !== undefined ? {
-            set: props.metadataMetrics 
-           } : undefined,
-  metadataErrorDetails: props.metadataErrorDetails !== undefined ? {
-            set: props.metadataErrorDetails 
-           } : undefined,
-  metadataRecommendations: props.metadataRecommendations !== undefined ? {
-            set: props.metadataRecommendations 
-           } : undefined,
-  status: props.status !== undefined ? {
-            set: props.status 
-           } : undefined,
-  acknowledgedBy: props.acknowledgedBy !== undefined ? {
-            set: props.acknowledgedBy 
-           } : undefined,
-  acknowledgedAt: props.acknowledgedAt !== undefined ? {
-            set: props.acknowledgedAt 
-           } : undefined,
-  resolvedBy: props.resolvedBy !== undefined ? {
-            set: props.resolvedBy 
-           } : undefined,
-  resolvedAt: props.resolvedAt !== undefined ? {
-            set: props.resolvedAt 
-           } : undefined,
-  resolutionNotes: props.resolutionNotes !== undefined ? {
-            set: props.resolutionNotes 
-           } : undefined,
-  suppressedUntil: props.suppressedUntil !== undefined ? {
-            set: props.suppressedUntil 
-           } : undefined,
-  escalationLevel: props.escalationLevel !== undefined ? {
-            set: props.escalationLevel 
-           } : undefined,
-  notificationChannels: props.notificationChannels !== undefined ? {
-            set: props.notificationChannels 
-           } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -615,86 +412,10 @@ import { logger } from './utils/logger';
 
         const variables = props.map(prop => ({
           where: {
-              id: prop.id !== undefined ? prop.id : undefined,
-  title: prop.title !== undefined ? {
-    equals: prop.title 
-  } : undefined,
-  metadataJobId: prop.metadataJobId !== undefined ? {
-    equals: prop.metadataJobId 
-  } : undefined,
-
+            
           },
           data: {
-              id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
-  type: prop.type !== undefined ? {
-            set: prop.type 
-           } : undefined,
-  severity: prop.severity !== undefined ? {
-            set: prop.severity 
-           } : undefined,
-  title: prop.title !== undefined ? {
-            set: prop.title 
-           } : undefined,
-  message: prop.message !== undefined ? {
-            set: prop.message 
-           } : undefined,
-  source: prop.source !== undefined ? {
-            set: prop.source 
-           } : undefined,
-  metadataModelName: prop.metadataModelName !== undefined ? {
-            set: prop.metadataModelName 
-           } : undefined,
-  metadataVersion: prop.metadataVersion !== undefined ? {
-            set: prop.metadataVersion 
-           } : undefined,
-  metadataJobId: prop.metadataJobId !== undefined ? {
-            set: prop.metadataJobId 
-           } : undefined,
-  metadataMetrics: prop.metadataMetrics !== undefined ? {
-            set: prop.metadataMetrics 
-           } : undefined,
-  metadataErrorDetails: prop.metadataErrorDetails !== undefined ? {
-            set: prop.metadataErrorDetails 
-           } : undefined,
-  metadataRecommendations: prop.metadataRecommendations !== undefined ? {
-            set: prop.metadataRecommendations 
-           } : undefined,
-  status: prop.status !== undefined ? {
-            set: prop.status 
-           } : undefined,
-  acknowledgedBy: prop.acknowledgedBy !== undefined ? {
-            set: prop.acknowledgedBy 
-           } : undefined,
-  acknowledgedAt: prop.acknowledgedAt !== undefined ? {
-            set: prop.acknowledgedAt 
-           } : undefined,
-  resolvedBy: prop.resolvedBy !== undefined ? {
-            set: prop.resolvedBy 
-           } : undefined,
-  resolvedAt: prop.resolvedAt !== undefined ? {
-            set: prop.resolvedAt 
-           } : undefined,
-  resolutionNotes: prop.resolutionNotes !== undefined ? {
-            set: prop.resolutionNotes 
-           } : undefined,
-  suppressedUntil: prop.suppressedUntil !== undefined ? {
-            set: prop.suppressedUntil 
-           } : undefined,
-  escalationLevel: prop.escalationLevel !== undefined ? {
-            set: prop.escalationLevel 
-           } : undefined,
-  notificationChannels: prop.notificationChannels !== undefined ? {
-            set: prop.notificationChannels 
-           } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-            set: prop.createdAt 
-           } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-            set: prop.updatedAt 
-           } : undefined,
-
+            
           },
         }));
 
@@ -859,14 +580,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-            id: props.id !== undefined ? props.id : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
-  } : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? {
-    equals: props.metadataJobId 
-  } : undefined,
-},
+          },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -1019,16 +733,7 @@ import { logger } from './utils/logger';
 
         const variables = {
           where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
-  } : undefined,
-  metadataJobId: props.metadataJobId !== undefined ? {
-    equals: props.metadataJobId 
-  } : undefined,
-      },
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);

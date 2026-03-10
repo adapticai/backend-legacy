@@ -717,7 +717,7 @@ const isUniqueField = (name: string): boolean => {
     'id',
     'email',
     'username',
-    'alpacaAccountId',
+    'brokerageAccountId',
     'tradeId',
     'alpacaOrderId',
     'providerAccountId',

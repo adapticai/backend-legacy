@@ -1,47 +1,307 @@
 
   
-import { Action as ActionType } from './generated/typegraphql-prisma/models/Action';
+import { OrgMembership as OrgMembershipType } from './generated/typegraphql-prisma/models/OrgMembership';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
   
   /**
-   * CRUD operations for the Action model.
+   * CRUD operations for the OrgMembership model.
    */
 
   const selectionSet = `
     
   id
-  sequence
-  tradeId
-  type
-  primary
-  note
-  status
+  organizationId
+  organization {
+    id
+    name
+    slug
+    logoUrl
+    website
+    createdAt
+    updatedAt
+    deletedAt
+    funds {
+      id
+      name
+      slug
+      description
+      status
+      organizationId
+      createdAt
+      updatedAt
+      deletedAt
+      brokerageAccounts {
+        id
+        provider
+        type
+        apiKey
+        apiSecret
+        configuration
+        marketOpen
+        realTime
+        cryptoTradingEnabled
+        cryptoTradingPairs
+        cryptoTradeAllocationPct
+        tradeAllocationPct
+        allocation {
+id
+        }
+        autoAllocation
+        minPercentageChange
+        volumeThreshold
+        enablePortfolioTrailingStop
+        portfolioTrailPercent
+        portfolioProfitThresholdPercent
+        reducedPortfolioTrailPercent
+        defaultTrailingStopPercentage100
+        firstTrailReductionThreshold100
+        secondTrailReductionThreshold100
+        firstReducedTrailPercentage100
+        secondReducedTrailPercentage100
+        minimumPriceChangePercent100
+        fundId
+        createdAt
+        updatedAt
+        deletedAt
+        alerts {
+id
+        }
+        trades {
+id
+        }
+        optionsPositions {
+id
+        }
+        optionsTradeExecutions {
+id
+        }
+      }
+      assignments {
+        id
+        fundId
+        userId
+        user {
+id
+        }
+        role
+        permissions
+        createdAt
+        updatedAt
+      }
+      investments {
+        id
+        fundId
+        investorId
+        investor {
+id
+        }
+        units
+        investedAt
+        status
+        createdAt
+        updatedAt
+      }
+    }
+  }
+  userId
+  user {
+    id
+    name
+    email
+    emailVerified
+    image
+    createdAt
+    updatedAt
+    deletedAt
+    role
+    bio
+    jobTitle
+    customer {
+      id
+      authUserId
+      name
+      plan
+      stripeCustomerId
+      stripeSubscriptionId
+      stripePriceId
+      stripeCurrentPeriodEnd
+      createdAt
+      updatedAt
+    }
+    customerId
+    accounts {
+      id
+      userId
+      type
+      provider
+      providerAccountId
+      refresh_token
+      access_token
+      expires_at
+      token_type
+      scope
+      id_token
+      session_state
+      createdAt
+      updatedAt
+    }
+    sessions {
+      id
+      sessionToken
+      userId
+      expires
+      createdAt
+      updatedAt
+    }
+    authenticators {
+      id
+      userId
+      credentialID
+      publicKey
+      counter
+      createdAt
+      updatedAt
+    }
+    plan
+    fundAssignments {
+      id
+      fundId
+      fund {
+        id
+        name
+        slug
+        description
+        status
+        organizationId
+        organization {
+id
+        }
+        createdAt
+        updatedAt
+        deletedAt
+        brokerageAccounts {
+id
+        }
+        investments {
+id
+        }
+      }
+      userId
+      role
+      permissions
+      createdAt
+      updatedAt
+    }
+    investorProfile {
+      id
+      name
+      email
+      type
+      kycStatus
+      walletAddress
+      userId
+      createdAt
+      updatedAt
+      deletedAt
+      investments {
+        id
+        fundId
+        fund {
+id
+        }
+        investorId
+        units
+        investedAt
+        status
+        createdAt
+        updatedAt
+      }
+    }
+    openaiAPIKey
+    openaiModel
+    linkedProviders {
+      id
+      userId
+      provider
+      providerAccountId
+      email
+      accessToken
+      refreshToken
+      expiresAt
+      linkedAt
+      updatedAt
+    }
+    accountLinkingRequests {
+      id
+      userId
+      email
+      provider
+      providerAccountId
+      status
+      verificationToken
+      userAgent
+      ipAddress
+      createdAt
+      expiresAt
+      verifiedAt
+      approvedAt
+      rejectedAt
+    }
+    reviewedWaitlistEntries {
+      id
+      email
+      fullName
+      companyName
+      companyWebsite
+      jobRole
+      professionalInvestorConfirmed
+      status
+      queuePosition
+      createdAt
+      updatedAt
+      reviewedAt
+      reviewedById
+      inviteToken {
+        id
+        token
+        email
+        waitlistEntryId
+        waitlistEntry {
+id
+        }
+        used
+        usedAt
+        expiresAt
+        createdAt
+      }
+    }
+  }
+  role
+  permissions
   createdAt
   updatedAt
-  deletedAt
-  alpacaOrderId
 
   `;
 
-  export const Action = {
+  export const OrgMembership = {
 
     /**
-     * Create a new Action record.
+     * Create a new OrgMembership record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Action or null.
+     * @returns The created OrgMembership or null.
      */
 
     /**
-     * Create a new Action record.
+     * Create a new OrgMembership record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Action or null.
+     * @returns The created OrgMembership or null.
      */
-    async create(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+    async create(props: OrgMembershipType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrgMembershipType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -59,9 +319,9 @@ import { logger } from './utils/logger';
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_ACTION = gql`
-              mutation createOneAction($data: ActionCreateInput!) {
-                createOneAction(data: $data) {
+          const CREATE_ONE_ORGMEMBERSHIP = gql`
+              mutation createOneOrgMembership($data: OrgMembershipCreateInput!) {
+                createOneOrgMembership(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -76,15 +336,15 @@ import { logger } from './utils/logger';
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_ACTION,
+            mutation: CREATE_ONE_ORGMEMBERSHIP,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneAction) {
-            return response.data.createOneAction;
+          if (response && response.data && response.data.createOneOrgMembership) {
+            return response.data.createOneOrgMembership;
           } else {
             return null as any;
           }
@@ -118,13 +378,13 @@ import { logger } from './utils/logger';
     },
 
   /**
-   * Create multiple Action records.
+   * Create multiple OrgMembership records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Action objects for the new records.
+   * @param props - Array of OrgMembership objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: OrgMembershipType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -142,9 +402,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_ACTION = gql`
-          mutation createManyAction($data: [ActionCreateManyInput!]!) {
-            createManyAction(data: $data) {
+        const CREATE_MANY_ORGMEMBERSHIP = gql`
+          mutation createManyOrgMembership($data: [OrgMembershipCreateManyInput!]!) {
+            createManyOrgMembership(data: $data) {
               count
             }
           }`;
@@ -157,15 +417,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_ACTION,
+          mutation: CREATE_MANY_ORGMEMBERSHIP,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyAction) {
-          return response.data.createManyAction;
+        if (response && response.data && response.data.createManyOrgMembership) {
+          return response.data.createManyOrgMembership;
         } else {
           return null as any;
         }
@@ -199,13 +459,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Update a single Action record.
+   * Update a single OrgMembership record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Action or null.
+   * @returns The updated OrgMembership or null.
    */
-  async update(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async update(props: OrgMembershipType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrgMembershipType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -223,9 +483,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_ACTION = gql`
-          mutation updateOneAction($data: ActionUpdateInput!, $where: ActionWhereUniqueInput!) {
-            updateOneAction(data: $data, where: $where) {
+        const UPDATE_ONE_ORGMEMBERSHIP = gql`
+          mutation updateOneOrgMembership($data: OrgMembershipUpdateInput!, $where: OrgMembershipWhereUniqueInput!) {
+            updateOneOrgMembership(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -240,15 +500,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_ACTION,
+          mutation: UPDATE_ONE_ORGMEMBERSHIP,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneAction) {
-          return response.data.updateOneAction;
+        if (response && response.data && response.data.updateOneOrgMembership) {
+          return response.data.updateOneOrgMembership;
         } else {
           return null as any;
         }
@@ -282,13 +542,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Upsert a single Action record.
+   * Upsert a single OrgMembership record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Action or null.
+   * @returns The updated OrgMembership or null.
    */
-  async upsert(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async upsert(props: OrgMembershipType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrgMembershipType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -306,9 +566,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_ACTION = gql`
-          mutation upsertOneAction($where: ActionWhereUniqueInput!, $create: ActionCreateInput!, $update: ActionUpdateInput!) {
-            upsertOneAction(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_ORGMEMBERSHIP = gql`
+          mutation upsertOneOrgMembership($where: OrgMembershipWhereUniqueInput!, $create: OrgMembershipCreateInput!, $update: OrgMembershipUpdateInput!) {
+            upsertOneOrgMembership(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -325,15 +585,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_ACTION,
+          mutation: UPSERT_ONE_ORGMEMBERSHIP,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneAction) {
-          return response.data.upsertOneAction;
+        if (response && response.data && response.data.upsertOneOrgMembership) {
+          return response.data.upsertOneOrgMembership;
         } else {
           return null as any;
         }
@@ -367,13 +627,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Update multiple Action records.
+   * Update multiple OrgMembership records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Action objects for the updated records.
+   * @param props - Array of OrgMembership objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: OrgMembershipType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -391,9 +651,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_ACTION = gql`
-          mutation updateManyAction($data: [ActionCreateManyInput!]!) {
-            updateManyAction(data: $data) {
+        const UPDATE_MANY_ORGMEMBERSHIP = gql`
+          mutation updateManyOrgMembership($data: [OrgMembershipCreateManyInput!]!) {
+            updateManyOrgMembership(data: $data) {
               count
             }
           }`;
@@ -410,15 +670,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_ACTION,
+          mutation: UPDATE_MANY_ORGMEMBERSHIP,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyAction) {
-          return response.data.updateManyAction;
+        if (response && response.data && response.data.updateManyOrgMembership) {
+          return response.data.updateManyOrgMembership;
         } else {
           return null as any;
         }
@@ -452,13 +712,13 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Delete a single Action record.
+   * Delete a single OrgMembership record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Action or null.
+   * @returns The deleted OrgMembership or null.
    */
-  async delete(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType> {
+  async delete(props: OrgMembershipType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrgMembershipType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -476,9 +736,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_ACTION = gql`
-          mutation deleteOneAction($where: ActionWhereUniqueInput!) {
-            deleteOneAction(where: $where) {
+        const DELETE_ONE_ORGMEMBERSHIP = gql`
+          mutation deleteOneOrgMembership($where: OrgMembershipWhereUniqueInput!) {
+            deleteOneOrgMembership(where: $where) {
               id
             }
           }`;
@@ -492,15 +752,15 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_ACTION,
+          mutation: DELETE_ONE_ORGMEMBERSHIP,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneAction) {
-          return response.data.deleteOneAction;
+        if (response && response.data && response.data.deleteOneOrgMembership) {
+          return response.data.deleteOneOrgMembership;
         } else {
           return null as any;
         }
@@ -534,14 +794,14 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Retrieve a single Action record by ID.
+   * Retrieve a single OrgMembership record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Action or null.
+   * @returns The retrieved OrgMembership or null.
    */
-  async get(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType | null> {
+  async get(props: OrgMembershipType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OrgMembershipType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -559,9 +819,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ACTION = gql`
-          query getAction($where: ActionWhereUniqueInput!) {
-            getAction(where: $where) {
+        const GET_ORGMEMBERSHIP = gql`
+          query getOrgMembership($where: OrgMembershipWhereUniqueInput!) {
+            getOrgMembership(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -573,18 +833,18 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_ACTION,
+          query: GET_ORGMEMBERSHIP,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getAction ?? null;
+        return response.data?.getOrgMembership ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No OrgMembership found') {
           return null;
         }
 
@@ -615,12 +875,12 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Retrieve all Actions records.
+   * Retrieve all OrgMemberships records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Action records or null.
+   * @returns An array of OrgMembership records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<ActionType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<OrgMembershipType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -638,25 +898,25 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_ACTION = gql`
-          query getAllAction {
-            actions {
+        const GET_ALL_ORGMEMBERSHIP = gql`
+          query getAllOrgMembership {
+            orgMemberships {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_ACTION,
+          query: GET_ALL_ORGMEMBERSHIP,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.actions ?? null;
+        return response.data?.orgMemberships ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No OrgMembership found') {
           return null;
         }
 
@@ -687,14 +947,14 @@ import { logger } from './utils/logger';
   },
 
   /**
-   * Find multiple Action records based on conditions.
+   * Find multiple OrgMembership records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Action records or null.
+   * @returns An array of found OrgMembership records or null.
    */
-  async findMany(props: ActionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ActionType[] | null> {
+  async findMany(props: OrgMembershipType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OrgMembershipType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -712,9 +972,9 @@ import { logger } from './utils/logger';
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_ACTION = gql`
-          query findManyAction($where: ActionWhereInput!) {
-            actions(where: $where) {
+        const FIND_MANY_ORGMEMBERSHIP = gql`
+          query findManyOrgMembership($where: OrgMembershipWhereInput!) {
+            orgMemberships(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -727,22 +987,22 @@ import { logger } from './utils/logger';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_ACTION,
+          query: FIND_MANY_ORGMEMBERSHIP,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.actions) {
-          return response.data.actions;
+        if (response && response.data && response.data.orgmemberships) {
+          return response.data.orgMemberships;
         } else {
-          return [] as ActionType[];
+          return [] as OrgMembershipType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Action found') {
+        if (error.message === 'No OrgMembership found') {
           return null;
         }
 

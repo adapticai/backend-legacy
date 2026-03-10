@@ -15,7 +15,7 @@ const EXCLUDED_FIELDS = new Set([
   'createdAt',
   'updatedAt',
   'slug',
-  'alpacaAccountId',
+  'brokerageAccountId',
 ]);
 
 const SCALAR_TYPE_MAP: { [key: string]: string } = {
