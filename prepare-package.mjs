@@ -540,7 +540,7 @@ try {
   );
   cjsFiles.forEach((file) => {
     const baseName = path.basename(file);
-    if (['utils.cjs', 'client.cjs', 'prismaClient.cjs'].includes(baseName)) {
+    if (['utils.cjs', 'prismaClient.cjs'].includes(baseName)) {
       return;
     }
     let content;

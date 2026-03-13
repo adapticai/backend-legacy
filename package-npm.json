@@ -20,6 +20,7 @@
     "esm/",
     "server/",
     "resolvers/",
+    "utils/",
     "*.d.ts",
     "*.js",
     "*.cjs",
