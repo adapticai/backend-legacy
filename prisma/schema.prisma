@@ -841,6 +841,21 @@ enum AuthProvider {
   // Add more providers as needed
 }
 
+// Defines the business structure type of an organization.
+enum OrgBusinessType {
+  /// Fund operator / management company — manages one or more funds.
+  FUND_OPERATOR
+
+  /// Family office — manages a single family's wealth.
+  FAMILY_OFFICE
+
+  /// Sovereign wealth fund.
+  SWF
+
+  /// Private investment office.
+  PRIVATE_OFFICE
+}
+
 // Defines roles within an organization.
 enum OrgRole {
   /// Full control, billing, can delete org.
@@ -959,6 +974,13 @@ model Organization {
   /// The organization's website URL.
   website   String?
 
+  /// Business structure type determining the operational model.
+  businessType OrgBusinessType?
+
+  /// Default trading settings for all funds in this organization.
+  /// Fund-level overrides take precedence over these defaults.
+  tradingDefaults Json?
+
   /// Timestamp when the organization was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -1027,6 +1049,10 @@ model Fund {
 
   /// The lifecycle status of the fund.
   status         FundStatus   @default(SETUP)
+
+  /// Fund-level trading settings overrides.
+  /// Values here take precedence over the organization's tradingDefaults.
+  tradingOverrides Json?
 
   /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
   organizationId String       @db.Uuid
