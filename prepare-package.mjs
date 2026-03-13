@@ -551,8 +551,18 @@ try {
       return;
     }
     const updatedContent = content.replace(
-      /require\s*\(\s*(['"])\.\/([^'"]+)(?!\.cjs)(['"])\s*\)/g,
-      (match, p1, p2, p3) => `require(${p1}./${p2}.cjs${p3})`
+      /require\s*\(\s*(['"])(\.\.?\/[^'"]+)(['"])\s*\)/g,
+      (match, p1, p2, p3) => {
+        // Skip if already has .cjs extension
+        if (p2.endsWith('.cjs')) return match;
+        // Check if the path resolves to a directory (needs /index.cjs)
+        const fileDir = path.dirname(file);
+        const resolvedPath = path.resolve(fileDir, p2);
+        if (fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isDirectory()) {
+          return `require(${p1}${p2}/index.cjs${p3})`;
+        }
+        return `require(${p1}${p2}.cjs${p3})`;
+      }
     );
     fs.writeFileSync(file, updatedContent, 'utf8');
     console.log(`Updated require() calls in ${file}`);
