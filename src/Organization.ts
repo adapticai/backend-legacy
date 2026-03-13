@@ -16,6 +16,8 @@ import { logger } from './utils/logger';
   slug
   logoUrl
   website
+  businessType
+  tradingDefaults
   createdAt
   updatedAt
   deletedAt
@@ -173,6 +175,7 @@ id
     slug
     description
     status
+    tradingOverrides
     organizationId
     createdAt
     updatedAt
@@ -486,6 +489,8 @@ id
   slug: props.slug !== undefined ? props.slug : undefined,
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
   website: props.website !== undefined ? props.website : undefined,
+  businessType: props.businessType !== undefined ? props.businessType : undefined,
+  tradingDefaults: props.tradingDefaults !== undefined ? props.tradingDefaults : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   members: props.members ? 
     Array.isArray(props.members) && props.members.length > 0 &&  props.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -806,6 +811,7 @@ id
         slug: item.slug !== undefined ? item.slug : undefined,
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1211,6 +1217,8 @@ id
   slug: prop.slug !== undefined ? prop.slug : undefined,
   logoUrl: prop.logoUrl !== undefined ? prop.logoUrl : undefined,
   website: prop.website !== undefined ? prop.website : undefined,
+  businessType: prop.businessType !== undefined ? prop.businessType : undefined,
+  tradingDefaults: prop.tradingDefaults !== undefined ? prop.tradingDefaults : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
       })),
         };
@@ -1314,6 +1322,12 @@ id
            } : undefined,
   website: props.website !== undefined ? {
             set: props.website 
+           } : undefined,
+  businessType: props.businessType !== undefined ? {
+            set: props.businessType 
+           } : undefined,
+  tradingDefaults: props.tradingDefaults !== undefined ? {
+            set: props.tradingDefaults 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -2448,6 +2462,9 @@ id
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? {
+            set: item.tradingOverrides
+          } : undefined,
         deletedAt: item.deletedAt !== undefined ? {
             set: item.deletedAt
           } : undefined,
@@ -3489,6 +3506,7 @@ id
         slug: item.slug !== undefined ? item.slug : undefined,
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -3900,6 +3918,8 @@ id
   slug: props.slug !== undefined ? props.slug : undefined,
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
   website: props.website !== undefined ? props.website : undefined,
+  businessType: props.businessType !== undefined ? props.businessType : undefined,
+  tradingDefaults: props.tradingDefaults !== undefined ? props.tradingDefaults : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   members: props.members ? 
     Array.isArray(props.members) && props.members.length > 0 &&  props.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4220,6 +4240,7 @@ id
         slug: item.slug !== undefined ? item.slug : undefined,
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4552,6 +4573,12 @@ id
            } : undefined,
   website: props.website !== undefined ? {
             set: props.website 
+           } : undefined,
+  businessType: props.businessType !== undefined ? {
+            set: props.businessType 
+           } : undefined,
+  tradingDefaults: props.tradingDefaults !== undefined ? {
+            set: props.tradingDefaults 
            } : undefined,
   deletedAt: props.deletedAt !== undefined ? {
             set: props.deletedAt 
@@ -5680,6 +5707,9 @@ id
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? {
+            set: item.tradingOverrides
+          } : undefined,
         deletedAt: item.deletedAt !== undefined ? {
             set: item.deletedAt
           } : undefined,
@@ -6721,6 +6751,7 @@ id
         slug: item.slug !== undefined ? item.slug : undefined,
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -7143,6 +7174,12 @@ id
            } : undefined,
   website: prop.website !== undefined ? {
             set: prop.website 
+           } : undefined,
+  businessType: prop.businessType !== undefined ? {
+            set: prop.businessType 
+           } : undefined,
+  tradingDefaults: prop.tradingDefaults !== undefined ? {
+            set: prop.tradingDefaults 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -8277,6 +8314,9 @@ id
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? {
+            set: item.tradingOverrides
+          } : undefined,
         deletedAt: item.deletedAt !== undefined ? {
             set: item.deletedAt
           } : undefined,
@@ -9318,6 +9358,7 @@ id
         slug: item.slug !== undefined ? item.slug : undefined,
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
+        tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {

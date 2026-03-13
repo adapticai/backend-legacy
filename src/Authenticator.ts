@@ -75,6 +75,8 @@ import { logger } from './utils/logger';
         slug
         logoUrl
         website
+        businessType
+        tradingDefaults
         createdAt
         updatedAt
         deletedAt
@@ -97,6 +99,7 @@ id
         slug
         description
         status
+        tradingOverrides
         organizationId
         organization {
 id
@@ -406,6 +409,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -458,6 +463,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1101,6 +1107,12 @@ id
             website: item.organization.website !== undefined ? {
                 set: item.organization.website
               } : undefined,
+            businessType: item.organization.businessType !== undefined ? {
+                set: item.organization.businessType
+              } : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? {
+                set: item.organization.tradingDefaults
+              } : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? {
                 set: item.organization.deletedAt
               } : undefined,
@@ -1110,6 +1122,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -1139,6 +1153,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -1208,6 +1224,9 @@ id
             status: item.fund.status !== undefined ? {
                 set: item.fund.status
               } : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? {
+                set: item.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -1217,6 +1236,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1251,6 +1271,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1761,6 +1782,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -1813,6 +1836,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2223,6 +2247,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -2275,6 +2301,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2738,6 +2765,12 @@ id
             website: item.organization.website !== undefined ? {
                 set: item.organization.website
               } : undefined,
+            businessType: item.organization.businessType !== undefined ? {
+                set: item.organization.businessType
+              } : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? {
+                set: item.organization.tradingDefaults
+              } : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? {
                 set: item.organization.deletedAt
               } : undefined,
@@ -2747,6 +2780,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -2776,6 +2811,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -2845,6 +2882,9 @@ id
             status: item.fund.status !== undefined ? {
                 set: item.fund.status
               } : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? {
+                set: item.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -2854,6 +2894,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2888,6 +2929,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -3398,6 +3440,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -3450,6 +3494,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4008,6 +4053,12 @@ id
             website: item.organization.website !== undefined ? {
                 set: item.organization.website
               } : undefined,
+            businessType: item.organization.businessType !== undefined ? {
+                set: item.organization.businessType
+              } : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? {
+                set: item.organization.tradingDefaults
+              } : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? {
                 set: item.organization.deletedAt
               } : undefined,
@@ -4017,6 +4068,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -4046,6 +4099,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -4115,6 +4170,9 @@ id
             status: item.fund.status !== undefined ? {
                 set: item.fund.status
               } : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? {
+                set: item.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -4124,6 +4182,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4158,6 +4217,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4668,6 +4728,8 @@ id
             slug: item.organization.slug !== undefined ? item.organization.slug : undefined,
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
+            businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -4720,6 +4782,7 @@ id
             slug: item.fund.slug !== undefined ? item.fund.slug : undefined,
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
+            tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }

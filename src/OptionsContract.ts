@@ -93,6 +93,7 @@ id
         slug
         description
         status
+        tradingOverrides
         organizationId
         organization {
 id
@@ -468,6 +469,7 @@ id
         slug
         description
         status
+        tradingOverrides
         organizationId
         organization {
 id
@@ -777,6 +779,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -1251,6 +1254,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -1928,6 +1932,9 @@ id
             status: item.brokerageAccount.fund.status !== undefined ? {
                 set: item.brokerageAccount.fund.status
               } : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? {
+                set: item.brokerageAccount.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? {
                 set: item.brokerageAccount.fund.deletedAt
               } : undefined,
@@ -1937,6 +1944,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -2314,6 +2322,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -2953,6 +2962,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -3974,6 +3984,9 @@ id
             status: item.brokerageAccount.fund.status !== undefined ? {
                 set: item.brokerageAccount.fund.status
               } : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? {
+                set: item.brokerageAccount.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? {
                 set: item.brokerageAccount.fund.deletedAt
               } : undefined,
@@ -3983,6 +3996,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -4373,6 +4387,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -4688,6 +4703,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -5018,6 +5034,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -5492,6 +5509,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -5981,6 +5999,9 @@ id
             status: item.brokerageAccount.fund.status !== undefined ? {
                 set: item.brokerageAccount.fund.status
               } : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? {
+                set: item.brokerageAccount.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? {
                 set: item.brokerageAccount.fund.deletedAt
               } : undefined,
@@ -5990,6 +6011,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -6367,6 +6389,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -7006,6 +7029,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -8027,6 +8051,9 @@ id
             status: item.brokerageAccount.fund.status !== undefined ? {
                 set: item.brokerageAccount.fund.status
               } : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? {
+                set: item.brokerageAccount.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? {
                 set: item.brokerageAccount.fund.deletedAt
               } : undefined,
@@ -8036,6 +8063,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -8426,6 +8454,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -8741,6 +8770,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -9325,6 +9355,9 @@ id
             status: item.brokerageAccount.fund.status !== undefined ? {
                 set: item.brokerageAccount.fund.status
               } : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? {
+                set: item.brokerageAccount.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? {
                 set: item.brokerageAccount.fund.deletedAt
               } : undefined,
@@ -9334,6 +9367,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -9711,6 +9745,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -10350,6 +10385,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -11371,6 +11407,9 @@ id
             status: item.brokerageAccount.fund.status !== undefined ? {
                 set: item.brokerageAccount.fund.status
               } : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? {
+                set: item.brokerageAccount.fund.tradingOverrides
+              } : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? {
                 set: item.brokerageAccount.fund.deletedAt
               } : undefined,
@@ -11380,6 +11419,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -11770,6 +11810,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
@@ -12085,6 +12126,7 @@ id
             slug: item.brokerageAccount.fund.slug !== undefined ? item.brokerageAccount.fund.slug : undefined,
             description: item.brokerageAccount.fund.description !== undefined ? item.brokerageAccount.fund.description : undefined,
             status: item.brokerageAccount.fund.status !== undefined ? item.brokerageAccount.fund.status : undefined,
+            tradingOverrides: item.brokerageAccount.fund.tradingOverrides !== undefined ? item.brokerageAccount.fund.tradingOverrides : undefined,
             deletedAt: item.brokerageAccount.fund.deletedAt !== undefined ? item.brokerageAccount.fund.deletedAt : undefined,
           },
         }
