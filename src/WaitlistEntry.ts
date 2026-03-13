@@ -161,6 +161,10 @@ id
     }
     openaiAPIKey
     openaiModel
+    passwordHash
+    avatarUrl
+    onboardingComplete
+    signupCategory
     linkedProviders {
       id
       userId
@@ -285,6 +289,10 @@ id
         plan: props.reviewedBy.plan !== undefined ? props.reviewedBy.plan : undefined,
         openaiAPIKey: props.reviewedBy.openaiAPIKey !== undefined ? props.reviewedBy.openaiAPIKey : undefined,
         openaiModel: props.reviewedBy.openaiModel !== undefined ? props.reviewedBy.openaiModel : undefined,
+        passwordHash: props.reviewedBy.passwordHash !== undefined ? props.reviewedBy.passwordHash : undefined,
+        avatarUrl: props.reviewedBy.avatarUrl !== undefined ? props.reviewedBy.avatarUrl : undefined,
+        onboardingComplete: props.reviewedBy.onboardingComplete !== undefined ? props.reviewedBy.onboardingComplete : undefined,
+        signupCategory: props.reviewedBy.signupCategory !== undefined ? props.reviewedBy.signupCategory : undefined,
     customer: props.reviewedBy.customer ? 
       typeof props.reviewedBy.customer === 'object' && Object.keys(props.reviewedBy.customer).length === 1 && Object.keys(props.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -894,6 +902,18 @@ id
         openaiModel: props.reviewedBy.openaiModel !== undefined ? {
             set: props.reviewedBy.openaiModel
           } : undefined,
+        passwordHash: props.reviewedBy.passwordHash !== undefined ? {
+            set: props.reviewedBy.passwordHash
+          } : undefined,
+        avatarUrl: props.reviewedBy.avatarUrl !== undefined ? {
+            set: props.reviewedBy.avatarUrl
+          } : undefined,
+        onboardingComplete: props.reviewedBy.onboardingComplete !== undefined ? {
+            set: props.reviewedBy.onboardingComplete
+          } : undefined,
+        signupCategory: props.reviewedBy.signupCategory !== undefined ? {
+            set: props.reviewedBy.signupCategory
+          } : undefined,
     customer: props.reviewedBy.customer ? 
     typeof props.reviewedBy.customer === 'object' && Object.keys(props.reviewedBy.customer).length === 1 && (Object.keys(props.reviewedBy.customer)[0] === 'id' || Object.keys(props.reviewedBy.customer)[0] === 'symbol')
 ? {
@@ -1547,6 +1567,10 @@ id
         plan: props.reviewedBy.plan !== undefined ? props.reviewedBy.plan : undefined,
         openaiAPIKey: props.reviewedBy.openaiAPIKey !== undefined ? props.reviewedBy.openaiAPIKey : undefined,
         openaiModel: props.reviewedBy.openaiModel !== undefined ? props.reviewedBy.openaiModel : undefined,
+        passwordHash: props.reviewedBy.passwordHash !== undefined ? props.reviewedBy.passwordHash : undefined,
+        avatarUrl: props.reviewedBy.avatarUrl !== undefined ? props.reviewedBy.avatarUrl : undefined,
+        onboardingComplete: props.reviewedBy.onboardingComplete !== undefined ? props.reviewedBy.onboardingComplete : undefined,
+        signupCategory: props.reviewedBy.signupCategory !== undefined ? props.reviewedBy.signupCategory : undefined,
     customer: props.reviewedBy.customer ? 
       typeof props.reviewedBy.customer === 'object' && Object.keys(props.reviewedBy.customer).length === 1 && Object.keys(props.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -2029,6 +2053,10 @@ id
         plan: props.reviewedBy.plan !== undefined ? props.reviewedBy.plan : undefined,
         openaiAPIKey: props.reviewedBy.openaiAPIKey !== undefined ? props.reviewedBy.openaiAPIKey : undefined,
         openaiModel: props.reviewedBy.openaiModel !== undefined ? props.reviewedBy.openaiModel : undefined,
+        passwordHash: props.reviewedBy.passwordHash !== undefined ? props.reviewedBy.passwordHash : undefined,
+        avatarUrl: props.reviewedBy.avatarUrl !== undefined ? props.reviewedBy.avatarUrl : undefined,
+        onboardingComplete: props.reviewedBy.onboardingComplete !== undefined ? props.reviewedBy.onboardingComplete : undefined,
+        signupCategory: props.reviewedBy.signupCategory !== undefined ? props.reviewedBy.signupCategory : undefined,
     customer: props.reviewedBy.customer ? 
       typeof props.reviewedBy.customer === 'object' && Object.keys(props.reviewedBy.customer).length === 1 && Object.keys(props.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -2453,6 +2481,18 @@ id
           } : undefined,
         openaiModel: props.reviewedBy.openaiModel !== undefined ? {
             set: props.reviewedBy.openaiModel
+          } : undefined,
+        passwordHash: props.reviewedBy.passwordHash !== undefined ? {
+            set: props.reviewedBy.passwordHash
+          } : undefined,
+        avatarUrl: props.reviewedBy.avatarUrl !== undefined ? {
+            set: props.reviewedBy.avatarUrl
+          } : undefined,
+        onboardingComplete: props.reviewedBy.onboardingComplete !== undefined ? {
+            set: props.reviewedBy.onboardingComplete
+          } : undefined,
+        signupCategory: props.reviewedBy.signupCategory !== undefined ? {
+            set: props.reviewedBy.signupCategory
           } : undefined,
     customer: props.reviewedBy.customer ? 
     typeof props.reviewedBy.customer === 'object' && Object.keys(props.reviewedBy.customer).length === 1 && (Object.keys(props.reviewedBy.customer)[0] === 'id' || Object.keys(props.reviewedBy.customer)[0] === 'symbol')
@@ -3107,6 +3147,10 @@ id
         plan: props.reviewedBy.plan !== undefined ? props.reviewedBy.plan : undefined,
         openaiAPIKey: props.reviewedBy.openaiAPIKey !== undefined ? props.reviewedBy.openaiAPIKey : undefined,
         openaiModel: props.reviewedBy.openaiModel !== undefined ? props.reviewedBy.openaiModel : undefined,
+        passwordHash: props.reviewedBy.passwordHash !== undefined ? props.reviewedBy.passwordHash : undefined,
+        avatarUrl: props.reviewedBy.avatarUrl !== undefined ? props.reviewedBy.avatarUrl : undefined,
+        onboardingComplete: props.reviewedBy.onboardingComplete !== undefined ? props.reviewedBy.onboardingComplete : undefined,
+        signupCategory: props.reviewedBy.signupCategory !== undefined ? props.reviewedBy.signupCategory : undefined,
     customer: props.reviewedBy.customer ? 
       typeof props.reviewedBy.customer === 'object' && Object.keys(props.reviewedBy.customer).length === 1 && Object.keys(props.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -3648,6 +3692,18 @@ id
           } : undefined,
         openaiModel: prop.reviewedBy.openaiModel !== undefined ? {
             set: prop.reviewedBy.openaiModel
+          } : undefined,
+        passwordHash: prop.reviewedBy.passwordHash !== undefined ? {
+            set: prop.reviewedBy.passwordHash
+          } : undefined,
+        avatarUrl: prop.reviewedBy.avatarUrl !== undefined ? {
+            set: prop.reviewedBy.avatarUrl
+          } : undefined,
+        onboardingComplete: prop.reviewedBy.onboardingComplete !== undefined ? {
+            set: prop.reviewedBy.onboardingComplete
+          } : undefined,
+        signupCategory: prop.reviewedBy.signupCategory !== undefined ? {
+            set: prop.reviewedBy.signupCategory
           } : undefined,
     customer: prop.reviewedBy.customer ? 
     typeof prop.reviewedBy.customer === 'object' && Object.keys(prop.reviewedBy.customer).length === 1 && (Object.keys(prop.reviewedBy.customer)[0] === 'id' || Object.keys(prop.reviewedBy.customer)[0] === 'symbol')
@@ -4302,6 +4358,10 @@ id
         plan: prop.reviewedBy.plan !== undefined ? prop.reviewedBy.plan : undefined,
         openaiAPIKey: prop.reviewedBy.openaiAPIKey !== undefined ? prop.reviewedBy.openaiAPIKey : undefined,
         openaiModel: prop.reviewedBy.openaiModel !== undefined ? prop.reviewedBy.openaiModel : undefined,
+        passwordHash: prop.reviewedBy.passwordHash !== undefined ? prop.reviewedBy.passwordHash : undefined,
+        avatarUrl: prop.reviewedBy.avatarUrl !== undefined ? prop.reviewedBy.avatarUrl : undefined,
+        onboardingComplete: prop.reviewedBy.onboardingComplete !== undefined ? prop.reviewedBy.onboardingComplete : undefined,
+        signupCategory: prop.reviewedBy.signupCategory !== undefined ? prop.reviewedBy.signupCategory : undefined,
     customer: prop.reviewedBy.customer ? 
       typeof prop.reviewedBy.customer === 'object' && Object.keys(prop.reviewedBy.customer).length === 1 && Object.keys(prop.reviewedBy.customer)[0] === 'id'
     ? { connect: {

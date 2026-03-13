@@ -129,6 +129,10 @@ id
       }
       openaiAPIKey
       openaiModel
+      passwordHash
+      avatarUrl
+      onboardingComplete
+      signupCategory
       linkedProviders {
         id
         userId
@@ -265,6 +269,10 @@ id
           plan: props.waitlistEntry.reviewedBy.plan !== undefined ? props.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: props.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? props.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? props.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? props.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? props.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? props.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? props.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
         typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -813,6 +821,18 @@ id
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? {
               set: props.waitlistEntry.reviewedBy.openaiModel
             } : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.passwordHash
+            } : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.avatarUrl
+            } : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.onboardingComplete
+            } : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.signupCategory
+            } : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
       typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && (Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id' || Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'symbol')
 ? {
@@ -1259,6 +1279,10 @@ id
           plan: props.waitlistEntry.reviewedBy.plan !== undefined ? props.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: props.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? props.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? props.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? props.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? props.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? props.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? props.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
         typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -1537,6 +1561,10 @@ id
           plan: props.waitlistEntry.reviewedBy.plan !== undefined ? props.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: props.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? props.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? props.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? props.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? props.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? props.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? props.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
         typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -1921,6 +1949,10 @@ id
           plan: props.waitlistEntry.reviewedBy.plan !== undefined ? props.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: props.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? props.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? props.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? props.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? props.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? props.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? props.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
         typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -2288,6 +2320,18 @@ id
             } : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? {
               set: props.waitlistEntry.reviewedBy.openaiModel
+            } : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.passwordHash
+            } : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.avatarUrl
+            } : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.onboardingComplete
+            } : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? {
+              set: props.waitlistEntry.reviewedBy.signupCategory
             } : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
       typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && (Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id' || Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'symbol')
@@ -2735,6 +2779,10 @@ id
           plan: props.waitlistEntry.reviewedBy.plan !== undefined ? props.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: props.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? props.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? props.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? props.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? props.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? props.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? props.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
         typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -3013,6 +3061,10 @@ id
           plan: props.waitlistEntry.reviewedBy.plan !== undefined ? props.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: props.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? props.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: props.waitlistEntry.reviewedBy.openaiModel !== undefined ? props.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: props.waitlistEntry.reviewedBy.passwordHash !== undefined ? props.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: props.waitlistEntry.reviewedBy.avatarUrl !== undefined ? props.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: props.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? props.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: props.waitlistEntry.reviewedBy.signupCategory !== undefined ? props.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: props.waitlistEntry.reviewedBy.customer ? 
         typeof props.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(props.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -3474,6 +3526,18 @@ id
           openaiModel: prop.waitlistEntry.reviewedBy.openaiModel !== undefined ? {
               set: prop.waitlistEntry.reviewedBy.openaiModel
             } : undefined,
+          passwordHash: prop.waitlistEntry.reviewedBy.passwordHash !== undefined ? {
+              set: prop.waitlistEntry.reviewedBy.passwordHash
+            } : undefined,
+          avatarUrl: prop.waitlistEntry.reviewedBy.avatarUrl !== undefined ? {
+              set: prop.waitlistEntry.reviewedBy.avatarUrl
+            } : undefined,
+          onboardingComplete: prop.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? {
+              set: prop.waitlistEntry.reviewedBy.onboardingComplete
+            } : undefined,
+          signupCategory: prop.waitlistEntry.reviewedBy.signupCategory !== undefined ? {
+              set: prop.waitlistEntry.reviewedBy.signupCategory
+            } : undefined,
       customer: prop.waitlistEntry.reviewedBy.customer ? 
       typeof prop.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(prop.waitlistEntry.reviewedBy.customer).length === 1 && (Object.keys(prop.waitlistEntry.reviewedBy.customer)[0] === 'id' || Object.keys(prop.waitlistEntry.reviewedBy.customer)[0] === 'symbol')
 ? {
@@ -3920,6 +3984,10 @@ id
           plan: prop.waitlistEntry.reviewedBy.plan !== undefined ? prop.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: prop.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? prop.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: prop.waitlistEntry.reviewedBy.openaiModel !== undefined ? prop.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: prop.waitlistEntry.reviewedBy.passwordHash !== undefined ? prop.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: prop.waitlistEntry.reviewedBy.avatarUrl !== undefined ? prop.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: prop.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? prop.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: prop.waitlistEntry.reviewedBy.signupCategory !== undefined ? prop.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: prop.waitlistEntry.reviewedBy.customer ? 
         typeof prop.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(prop.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(prop.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {
@@ -4198,6 +4266,10 @@ id
           plan: prop.waitlistEntry.reviewedBy.plan !== undefined ? prop.waitlistEntry.reviewedBy.plan : undefined,
           openaiAPIKey: prop.waitlistEntry.reviewedBy.openaiAPIKey !== undefined ? prop.waitlistEntry.reviewedBy.openaiAPIKey : undefined,
           openaiModel: prop.waitlistEntry.reviewedBy.openaiModel !== undefined ? prop.waitlistEntry.reviewedBy.openaiModel : undefined,
+          passwordHash: prop.waitlistEntry.reviewedBy.passwordHash !== undefined ? prop.waitlistEntry.reviewedBy.passwordHash : undefined,
+          avatarUrl: prop.waitlistEntry.reviewedBy.avatarUrl !== undefined ? prop.waitlistEntry.reviewedBy.avatarUrl : undefined,
+          onboardingComplete: prop.waitlistEntry.reviewedBy.onboardingComplete !== undefined ? prop.waitlistEntry.reviewedBy.onboardingComplete : undefined,
+          signupCategory: prop.waitlistEntry.reviewedBy.signupCategory !== undefined ? prop.waitlistEntry.reviewedBy.signupCategory : undefined,
       customer: prop.waitlistEntry.reviewedBy.customer ? 
         typeof prop.waitlistEntry.reviewedBy.customer === 'object' && Object.keys(prop.waitlistEntry.reviewedBy.customer).length === 1 && Object.keys(prop.waitlistEntry.reviewedBy.customer)[0] === 'id'
     ? { connect: {

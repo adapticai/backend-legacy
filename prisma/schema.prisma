@@ -1328,6 +1328,18 @@ model User {
   /// OpenAI API Language model selected by the user
   openaiModel OpenaiModel? @default(GPT_5_MINI)
 
+  /// Hashed password for credentials-based login (bcrypt). Null for OAuth-only users. TYPESTRING.SKIP=true
+  passwordHash  String?
+
+  /// S3 avatar URL (uploaded from OAuth provider image).
+  avatarUrl     String?
+
+  /// Whether the user has completed the post-signup onboarding flow.
+  onboardingComplete Boolean @default(true)
+
+  /// Signup category selected during onboarding (investor, fund_operator, family_office, independent_professional).
+  signupCategory String?
+
   /// List of linked authentication providers. TYPESTRING.INCLUDE=['id','provider','email'] GQL.EXCLUDE=['user']
   linkedProviders LinkedProvider[]
 

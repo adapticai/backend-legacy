@@ -158,6 +158,10 @@ id
     }
     openaiAPIKey
     openaiModel
+    passwordHash
+    avatarUrl
+    onboardingComplete
+    signupCategory
     accountLinkingRequests {
       id
       userId
@@ -283,6 +287,10 @@ id
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
         openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
         openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+        passwordHash: props.user.passwordHash !== undefined ? props.user.passwordHash : undefined,
+        avatarUrl: props.user.avatarUrl !== undefined ? props.user.avatarUrl : undefined,
+        onboardingComplete: props.user.onboardingComplete !== undefined ? props.user.onboardingComplete : undefined,
+        signupCategory: props.user.signupCategory !== undefined ? props.user.signupCategory : undefined,
     customer: props.user.customer ? 
       typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
     ? { connect: {
@@ -883,6 +891,18 @@ id
         openaiModel: props.user.openaiModel !== undefined ? {
             set: props.user.openaiModel
           } : undefined,
+        passwordHash: props.user.passwordHash !== undefined ? {
+            set: props.user.passwordHash
+          } : undefined,
+        avatarUrl: props.user.avatarUrl !== undefined ? {
+            set: props.user.avatarUrl
+          } : undefined,
+        onboardingComplete: props.user.onboardingComplete !== undefined ? {
+            set: props.user.onboardingComplete
+          } : undefined,
+        signupCategory: props.user.signupCategory !== undefined ? {
+            set: props.user.signupCategory
+          } : undefined,
     customer: props.user.customer ? 
     typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && (Object.keys(props.user.customer)[0] === 'id' || Object.keys(props.user.customer)[0] === 'symbol')
 ? {
@@ -1609,6 +1629,10 @@ id
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
         openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
         openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+        passwordHash: props.user.passwordHash !== undefined ? props.user.passwordHash : undefined,
+        avatarUrl: props.user.avatarUrl !== undefined ? props.user.avatarUrl : undefined,
+        onboardingComplete: props.user.onboardingComplete !== undefined ? props.user.onboardingComplete : undefined,
+        signupCategory: props.user.signupCategory !== undefined ? props.user.signupCategory : undefined,
     customer: props.user.customer ? 
       typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
     ? { connect: {
@@ -2067,6 +2091,10 @@ id
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
         openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
         openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+        passwordHash: props.user.passwordHash !== undefined ? props.user.passwordHash : undefined,
+        avatarUrl: props.user.avatarUrl !== undefined ? props.user.avatarUrl : undefined,
+        onboardingComplete: props.user.onboardingComplete !== undefined ? props.user.onboardingComplete : undefined,
+        signupCategory: props.user.signupCategory !== undefined ? props.user.signupCategory : undefined,
     customer: props.user.customer ? 
       typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
     ? { connect: {
@@ -2479,6 +2507,18 @@ id
           } : undefined,
         openaiModel: props.user.openaiModel !== undefined ? {
             set: props.user.openaiModel
+          } : undefined,
+        passwordHash: props.user.passwordHash !== undefined ? {
+            set: props.user.passwordHash
+          } : undefined,
+        avatarUrl: props.user.avatarUrl !== undefined ? {
+            set: props.user.avatarUrl
+          } : undefined,
+        onboardingComplete: props.user.onboardingComplete !== undefined ? {
+            set: props.user.onboardingComplete
+          } : undefined,
+        signupCategory: props.user.signupCategory !== undefined ? {
+            set: props.user.signupCategory
           } : undefined,
     customer: props.user.customer ? 
     typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && (Object.keys(props.user.customer)[0] === 'id' || Object.keys(props.user.customer)[0] === 'symbol')
@@ -3206,6 +3246,10 @@ id
         plan: props.user.plan !== undefined ? props.user.plan : undefined,
         openaiAPIKey: props.user.openaiAPIKey !== undefined ? props.user.openaiAPIKey : undefined,
         openaiModel: props.user.openaiModel !== undefined ? props.user.openaiModel : undefined,
+        passwordHash: props.user.passwordHash !== undefined ? props.user.passwordHash : undefined,
+        avatarUrl: props.user.avatarUrl !== undefined ? props.user.avatarUrl : undefined,
+        onboardingComplete: props.user.onboardingComplete !== undefined ? props.user.onboardingComplete : undefined,
+        signupCategory: props.user.signupCategory !== undefined ? props.user.signupCategory : undefined,
     customer: props.user.customer ? 
       typeof props.user.customer === 'object' && Object.keys(props.user.customer).length === 1 && Object.keys(props.user.customer)[0] === 'id'
     ? { connect: {
@@ -3716,6 +3760,18 @@ id
           } : undefined,
         openaiModel: prop.user.openaiModel !== undefined ? {
             set: prop.user.openaiModel
+          } : undefined,
+        passwordHash: prop.user.passwordHash !== undefined ? {
+            set: prop.user.passwordHash
+          } : undefined,
+        avatarUrl: prop.user.avatarUrl !== undefined ? {
+            set: prop.user.avatarUrl
+          } : undefined,
+        onboardingComplete: prop.user.onboardingComplete !== undefined ? {
+            set: prop.user.onboardingComplete
+          } : undefined,
+        signupCategory: prop.user.signupCategory !== undefined ? {
+            set: prop.user.signupCategory
           } : undefined,
     customer: prop.user.customer ? 
     typeof prop.user.customer === 'object' && Object.keys(prop.user.customer).length === 1 && (Object.keys(prop.user.customer)[0] === 'id' || Object.keys(prop.user.customer)[0] === 'symbol')
@@ -4443,6 +4499,10 @@ id
         plan: prop.user.plan !== undefined ? prop.user.plan : undefined,
         openaiAPIKey: prop.user.openaiAPIKey !== undefined ? prop.user.openaiAPIKey : undefined,
         openaiModel: prop.user.openaiModel !== undefined ? prop.user.openaiModel : undefined,
+        passwordHash: prop.user.passwordHash !== undefined ? prop.user.passwordHash : undefined,
+        avatarUrl: prop.user.avatarUrl !== undefined ? prop.user.avatarUrl : undefined,
+        onboardingComplete: prop.user.onboardingComplete !== undefined ? prop.user.onboardingComplete : undefined,
+        signupCategory: prop.user.signupCategory !== undefined ? prop.user.signupCategory : undefined,
     customer: prop.user.customer ? 
       typeof prop.user.customer === 'object' && Object.keys(prop.user.customer).length === 1 && Object.keys(prop.user.customer)[0] === 'id'
     ? { connect: {

@@ -146,6 +146,10 @@ id
     }
     openaiAPIKey
     openaiModel
+    passwordHash
+    avatarUrl
+    onboardingComplete
+    signupCategory
     linkedProviders {
       id
       userId
@@ -283,6 +287,10 @@ id
         plan: item.plan !== undefined ? item.plan : undefined,
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
+        passwordHash: item.passwordHash !== undefined ? item.passwordHash : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? item.avatarUrl : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? item.onboardingComplete : undefined,
+        signupCategory: item.signupCategory !== undefined ? item.signupCategory : undefined,
     accounts: item.accounts ? 
       Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.accounts.map((item: any) => ({
@@ -877,6 +885,18 @@ id
         openaiModel: item.openaiModel !== undefined ? {
             set: item.openaiModel
           } : undefined,
+        passwordHash: item.passwordHash !== undefined ? {
+            set: item.passwordHash
+          } : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? {
+            set: item.avatarUrl
+          } : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? {
+            set: item.onboardingComplete
+          } : undefined,
+        signupCategory: item.signupCategory !== undefined ? {
+            set: item.signupCategory
+          } : undefined,
     accounts: item.accounts ? 
     Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: item.accounts.map((item: any) => ({
@@ -1597,6 +1617,10 @@ id
         plan: item.plan !== undefined ? item.plan : undefined,
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
+        passwordHash: item.passwordHash !== undefined ? item.passwordHash : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? item.avatarUrl : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? item.onboardingComplete : undefined,
+        signupCategory: item.signupCategory !== undefined ? item.signupCategory : undefined,
     accounts: item.accounts ? 
       Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.accounts.map((item: any) => ({
@@ -2055,6 +2079,10 @@ id
         plan: item.plan !== undefined ? item.plan : undefined,
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
+        passwordHash: item.passwordHash !== undefined ? item.passwordHash : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? item.avatarUrl : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? item.onboardingComplete : undefined,
+        signupCategory: item.signupCategory !== undefined ? item.signupCategory : undefined,
     accounts: item.accounts ? 
       Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.accounts.map((item: any) => ({
@@ -2460,6 +2488,18 @@ id
           } : undefined,
         openaiModel: item.openaiModel !== undefined ? {
             set: item.openaiModel
+          } : undefined,
+        passwordHash: item.passwordHash !== undefined ? {
+            set: item.passwordHash
+          } : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? {
+            set: item.avatarUrl
+          } : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? {
+            set: item.onboardingComplete
+          } : undefined,
+        signupCategory: item.signupCategory !== undefined ? {
+            set: item.signupCategory
           } : undefined,
     accounts: item.accounts ? 
     Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -3181,6 +3221,10 @@ id
         plan: item.plan !== undefined ? item.plan : undefined,
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
+        passwordHash: item.passwordHash !== undefined ? item.passwordHash : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? item.avatarUrl : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? item.onboardingComplete : undefined,
+        signupCategory: item.signupCategory !== undefined ? item.signupCategory : undefined,
     accounts: item.accounts ? 
       Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.accounts.map((item: any) => ({
@@ -3687,6 +3731,18 @@ id
         openaiModel: item.openaiModel !== undefined ? {
             set: item.openaiModel
           } : undefined,
+        passwordHash: item.passwordHash !== undefined ? {
+            set: item.passwordHash
+          } : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? {
+            set: item.avatarUrl
+          } : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? {
+            set: item.onboardingComplete
+          } : undefined,
+        signupCategory: item.signupCategory !== undefined ? {
+            set: item.signupCategory
+          } : undefined,
     accounts: item.accounts ? 
     Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: item.accounts.map((item: any) => ({
@@ -4407,6 +4463,10 @@ id
         plan: item.plan !== undefined ? item.plan : undefined,
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
+        passwordHash: item.passwordHash !== undefined ? item.passwordHash : undefined,
+        avatarUrl: item.avatarUrl !== undefined ? item.avatarUrl : undefined,
+        onboardingComplete: item.onboardingComplete !== undefined ? item.onboardingComplete : undefined,
+        signupCategory: item.signupCategory !== undefined ? item.signupCategory : undefined,
     accounts: item.accounts ? 
       Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.accounts.map((item: any) => ({

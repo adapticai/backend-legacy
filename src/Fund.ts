@@ -64,6 +64,10 @@ id
         }
         openaiAPIKey
         openaiModel
+        passwordHash
+        avatarUrl
+        onboardingComplete
+        signupCategory
         linkedProviders {
 id
         }
@@ -500,6 +504,10 @@ id
       }
       openaiAPIKey
       openaiModel
+      passwordHash
+      avatarUrl
+      onboardingComplete
+      signupCategory
       linkedProviders {
         id
         userId
@@ -598,6 +606,10 @@ id
         }
         openaiAPIKey
         openaiModel
+        passwordHash
+        avatarUrl
+        onboardingComplete
+        signupCategory
         linkedProviders {
 id
         }
@@ -737,6 +749,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -1149,6 +1165,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -1463,6 +1483,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -1797,6 +1821,18 @@ id
             openaiModel: item.user.openaiModel !== undefined ? {
                 set: item.user.openaiModel
               } : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? {
+                set: item.user.passwordHash
+              } : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? {
+                set: item.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? {
+                set: item.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? {
+                set: item.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.user.name !== undefined ? item.user.name : undefined,
@@ -1810,6 +1846,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -1845,6 +1885,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -1905,6 +1949,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -3561,6 +3609,18 @@ id
           openaiModel: item.user.openaiModel !== undefined ? {
               set: item.user.openaiModel
             } : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? {
+              set: item.user.passwordHash
+            } : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? {
+              set: item.user.avatarUrl
+            } : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? {
+              set: item.user.onboardingComplete
+            } : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? {
+              set: item.user.signupCategory
+            } : undefined,
       customer: item.user.customer ? 
       typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && (Object.keys(item.user.customer)[0] === 'id' || Object.keys(item.user.customer)[0] === 'symbol')
 ? {
@@ -4031,6 +4091,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -4304,6 +4368,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -4677,6 +4745,18 @@ id
             openaiModel: item.investor.user.openaiModel !== undefined ? {
                 set: item.investor.user.openaiModel
               } : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? {
+                set: item.investor.user.passwordHash
+              } : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? {
+                set: item.investor.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? {
+                set: item.investor.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? {
+                set: item.investor.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.investor.user.name !== undefined ? item.investor.user.name : undefined,
@@ -4690,6 +4770,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -4727,6 +4811,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -4788,6 +4876,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -4962,6 +5054,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5374,6 +5470,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -5688,6 +5788,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5834,6 +5938,18 @@ id
             openaiModel: item.user.openaiModel !== undefined ? {
                 set: item.user.openaiModel
               } : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? {
+                set: item.user.passwordHash
+              } : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? {
+                set: item.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? {
+                set: item.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? {
+                set: item.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.user.name !== undefined ? item.user.name : undefined,
@@ -5847,6 +5963,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5882,6 +6002,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5942,6 +6066,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -7598,6 +7726,18 @@ id
           openaiModel: item.user.openaiModel !== undefined ? {
               set: item.user.openaiModel
             } : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? {
+              set: item.user.passwordHash
+            } : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? {
+              set: item.user.avatarUrl
+            } : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? {
+              set: item.user.onboardingComplete
+            } : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? {
+              set: item.user.signupCategory
+            } : undefined,
       customer: item.user.customer ? 
       typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && (Object.keys(item.user.customer)[0] === 'id' || Object.keys(item.user.customer)[0] === 'symbol')
 ? {
@@ -8068,6 +8208,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -8341,6 +8485,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -8714,6 +8862,18 @@ id
             openaiModel: item.investor.user.openaiModel !== undefined ? {
                 set: item.investor.user.openaiModel
               } : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? {
+                set: item.investor.user.passwordHash
+              } : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? {
+                set: item.investor.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? {
+                set: item.investor.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? {
+                set: item.investor.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.investor.user.name !== undefined ? item.investor.user.name : undefined,
@@ -8727,6 +8887,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -8764,6 +8928,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -8825,6 +8993,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -9072,6 +9244,18 @@ id
             openaiModel: item.user.openaiModel !== undefined ? {
                 set: item.user.openaiModel
               } : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? {
+                set: item.user.passwordHash
+              } : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? {
+                set: item.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? {
+                set: item.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? {
+                set: item.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.user.name !== undefined ? item.user.name : undefined,
@@ -9085,6 +9269,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -9120,6 +9308,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -9180,6 +9372,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -10836,6 +11032,18 @@ id
           openaiModel: item.user.openaiModel !== undefined ? {
               set: item.user.openaiModel
             } : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? {
+              set: item.user.passwordHash
+            } : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? {
+              set: item.user.avatarUrl
+            } : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? {
+              set: item.user.onboardingComplete
+            } : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? {
+              set: item.user.signupCategory
+            } : undefined,
       customer: item.user.customer ? 
       typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && (Object.keys(item.user.customer)[0] === 'id' || Object.keys(item.user.customer)[0] === 'symbol')
 ? {
@@ -11306,6 +11514,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -11579,6 +11791,10 @@ id
           plan: item.user.plan !== undefined ? item.user.plan : undefined,
           openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
           openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+          passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+          avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+          onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+          signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
       customer: item.user.customer ? 
         typeof item.user.customer === 'object' && Object.keys(item.user.customer).length === 1 && Object.keys(item.user.customer)[0] === 'id'
     ? { connect: {
@@ -11952,6 +12168,18 @@ id
             openaiModel: item.investor.user.openaiModel !== undefined ? {
                 set: item.investor.user.openaiModel
               } : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? {
+                set: item.investor.user.passwordHash
+              } : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? {
+                set: item.investor.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? {
+                set: item.investor.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? {
+                set: item.investor.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.investor.user.name !== undefined ? item.investor.user.name : undefined,
@@ -11965,6 +12193,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -12002,6 +12234,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -12063,6 +12299,10 @@ id
             plan: item.investor.user.plan !== undefined ? item.investor.user.plan : undefined,
             openaiAPIKey: item.investor.user.openaiAPIKey !== undefined ? item.investor.user.openaiAPIKey : undefined,
             openaiModel: item.investor.user.openaiModel !== undefined ? item.investor.user.openaiModel : undefined,
+            passwordHash: item.investor.user.passwordHash !== undefined ? item.investor.user.passwordHash : undefined,
+            avatarUrl: item.investor.user.avatarUrl !== undefined ? item.investor.user.avatarUrl : undefined,
+            onboardingComplete: item.investor.user.onboardingComplete !== undefined ? item.investor.user.onboardingComplete : undefined,
+            signupCategory: item.investor.user.signupCategory !== undefined ? item.investor.user.signupCategory : undefined,
           },
         }
       } : undefined,

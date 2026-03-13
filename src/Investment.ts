@@ -258,6 +258,10 @@ id
         }
         openaiAPIKey
         openaiModel
+        passwordHash
+        avatarUrl
+        onboardingComplete
+        signupCategory
         linkedProviders {
 id
         }
@@ -368,6 +372,10 @@ id
       }
       openaiAPIKey
       openaiModel
+      passwordHash
+      avatarUrl
+      onboardingComplete
+      signupCategory
       linkedProviders {
         id
         userId
@@ -801,6 +809,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -860,6 +872,10 @@ id
           plan: props.investor.user.plan !== undefined ? props.investor.user.plan : undefined,
           openaiAPIKey: props.investor.user.openaiAPIKey !== undefined ? props.investor.user.openaiAPIKey : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? props.investor.user.openaiModel : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? props.investor.user.passwordHash : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? props.investor.user.avatarUrl : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? props.investor.user.onboardingComplete : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? props.investor.user.signupCategory : undefined,
       customer: props.investor.user.customer ? 
         typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && Object.keys(props.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -2282,6 +2298,18 @@ id
             openaiModel: item.user.openaiModel !== undefined ? {
                 set: item.user.openaiModel
               } : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? {
+                set: item.user.passwordHash
+              } : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? {
+                set: item.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? {
+                set: item.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? {
+                set: item.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.user.name !== undefined ? item.user.name : undefined,
@@ -2295,6 +2323,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -2330,6 +2362,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -2645,6 +2681,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -2754,6 +2794,18 @@ id
             } : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? {
               set: props.investor.user.openaiModel
+            } : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? {
+              set: props.investor.user.passwordHash
+            } : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? {
+              set: props.investor.user.avatarUrl
+            } : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? {
+              set: props.investor.user.onboardingComplete
+            } : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? {
+              set: props.investor.user.signupCategory
             } : undefined,
       customer: props.investor.user.customer ? 
       typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && (Object.keys(props.investor.user.customer)[0] === 'id' || Object.keys(props.investor.user.customer)[0] === 'symbol')
@@ -3205,6 +3257,10 @@ id
           plan: props.investor.user.plan !== undefined ? props.investor.user.plan : undefined,
           openaiAPIKey: props.investor.user.openaiAPIKey !== undefined ? props.investor.user.openaiAPIKey : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? props.investor.user.openaiModel : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? props.investor.user.passwordHash : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? props.investor.user.avatarUrl : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? props.investor.user.onboardingComplete : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? props.investor.user.signupCategory : undefined,
       customer: props.investor.user.customer ? 
         typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && Object.keys(props.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -3477,6 +3533,10 @@ id
           plan: props.investor.user.plan !== undefined ? props.investor.user.plan : undefined,
           openaiAPIKey: props.investor.user.openaiAPIKey !== undefined ? props.investor.user.openaiAPIKey : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? props.investor.user.openaiModel : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? props.investor.user.passwordHash : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? props.investor.user.avatarUrl : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? props.investor.user.onboardingComplete : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? props.investor.user.signupCategory : undefined,
       customer: props.investor.user.customer ? 
         typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && Object.keys(props.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -4138,6 +4198,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -4197,6 +4261,10 @@ id
           plan: props.investor.user.plan !== undefined ? props.investor.user.plan : undefined,
           openaiAPIKey: props.investor.user.openaiAPIKey !== undefined ? props.investor.user.openaiAPIKey : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? props.investor.user.openaiModel : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? props.investor.user.passwordHash : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? props.investor.user.avatarUrl : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? props.investor.user.onboardingComplete : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? props.investor.user.signupCategory : undefined,
       customer: props.investor.user.customer ? 
         typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && Object.keys(props.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -5435,6 +5503,18 @@ id
             openaiModel: item.user.openaiModel !== undefined ? {
                 set: item.user.openaiModel
               } : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? {
+                set: item.user.passwordHash
+              } : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? {
+                set: item.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? {
+                set: item.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? {
+                set: item.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.user.name !== undefined ? item.user.name : undefined,
@@ -5448,6 +5528,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5483,6 +5567,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5798,6 +5886,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -5907,6 +5999,18 @@ id
             } : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? {
               set: props.investor.user.openaiModel
+            } : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? {
+              set: props.investor.user.passwordHash
+            } : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? {
+              set: props.investor.user.avatarUrl
+            } : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? {
+              set: props.investor.user.onboardingComplete
+            } : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? {
+              set: props.investor.user.signupCategory
             } : undefined,
       customer: props.investor.user.customer ? 
       typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && (Object.keys(props.investor.user.customer)[0] === 'id' || Object.keys(props.investor.user.customer)[0] === 'symbol')
@@ -6358,6 +6462,10 @@ id
           plan: props.investor.user.plan !== undefined ? props.investor.user.plan : undefined,
           openaiAPIKey: props.investor.user.openaiAPIKey !== undefined ? props.investor.user.openaiAPIKey : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? props.investor.user.openaiModel : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? props.investor.user.passwordHash : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? props.investor.user.avatarUrl : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? props.investor.user.onboardingComplete : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? props.investor.user.signupCategory : undefined,
       customer: props.investor.user.customer ? 
         typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && Object.keys(props.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -6630,6 +6738,10 @@ id
           plan: props.investor.user.plan !== undefined ? props.investor.user.plan : undefined,
           openaiAPIKey: props.investor.user.openaiAPIKey !== undefined ? props.investor.user.openaiAPIKey : undefined,
           openaiModel: props.investor.user.openaiModel !== undefined ? props.investor.user.openaiModel : undefined,
+          passwordHash: props.investor.user.passwordHash !== undefined ? props.investor.user.passwordHash : undefined,
+          avatarUrl: props.investor.user.avatarUrl !== undefined ? props.investor.user.avatarUrl : undefined,
+          onboardingComplete: props.investor.user.onboardingComplete !== undefined ? props.investor.user.onboardingComplete : undefined,
+          signupCategory: props.investor.user.signupCategory !== undefined ? props.investor.user.signupCategory : undefined,
       customer: props.investor.user.customer ? 
         typeof props.investor.user.customer === 'object' && Object.keys(props.investor.user.customer).length === 1 && Object.keys(props.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -7966,6 +8078,18 @@ id
             openaiModel: item.user.openaiModel !== undefined ? {
                 set: item.user.openaiModel
               } : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? {
+                set: item.user.passwordHash
+              } : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? {
+                set: item.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? {
+                set: item.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? {
+                set: item.user.signupCategory
+              } : undefined,
           },
           create: {
             name: item.user.name !== undefined ? item.user.name : undefined,
@@ -7979,6 +8103,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -8014,6 +8142,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -8329,6 +8461,10 @@ id
             plan: item.user.plan !== undefined ? item.user.plan : undefined,
             openaiAPIKey: item.user.openaiAPIKey !== undefined ? item.user.openaiAPIKey : undefined,
             openaiModel: item.user.openaiModel !== undefined ? item.user.openaiModel : undefined,
+            passwordHash: item.user.passwordHash !== undefined ? item.user.passwordHash : undefined,
+            avatarUrl: item.user.avatarUrl !== undefined ? item.user.avatarUrl : undefined,
+            onboardingComplete: item.user.onboardingComplete !== undefined ? item.user.onboardingComplete : undefined,
+            signupCategory: item.user.signupCategory !== undefined ? item.user.signupCategory : undefined,
           },
         }
       } : undefined,
@@ -8438,6 +8574,18 @@ id
             } : undefined,
           openaiModel: prop.investor.user.openaiModel !== undefined ? {
               set: prop.investor.user.openaiModel
+            } : undefined,
+          passwordHash: prop.investor.user.passwordHash !== undefined ? {
+              set: prop.investor.user.passwordHash
+            } : undefined,
+          avatarUrl: prop.investor.user.avatarUrl !== undefined ? {
+              set: prop.investor.user.avatarUrl
+            } : undefined,
+          onboardingComplete: prop.investor.user.onboardingComplete !== undefined ? {
+              set: prop.investor.user.onboardingComplete
+            } : undefined,
+          signupCategory: prop.investor.user.signupCategory !== undefined ? {
+              set: prop.investor.user.signupCategory
             } : undefined,
       customer: prop.investor.user.customer ? 
       typeof prop.investor.user.customer === 'object' && Object.keys(prop.investor.user.customer).length === 1 && (Object.keys(prop.investor.user.customer)[0] === 'id' || Object.keys(prop.investor.user.customer)[0] === 'symbol')
@@ -8889,6 +9037,10 @@ id
           plan: prop.investor.user.plan !== undefined ? prop.investor.user.plan : undefined,
           openaiAPIKey: prop.investor.user.openaiAPIKey !== undefined ? prop.investor.user.openaiAPIKey : undefined,
           openaiModel: prop.investor.user.openaiModel !== undefined ? prop.investor.user.openaiModel : undefined,
+          passwordHash: prop.investor.user.passwordHash !== undefined ? prop.investor.user.passwordHash : undefined,
+          avatarUrl: prop.investor.user.avatarUrl !== undefined ? prop.investor.user.avatarUrl : undefined,
+          onboardingComplete: prop.investor.user.onboardingComplete !== undefined ? prop.investor.user.onboardingComplete : undefined,
+          signupCategory: prop.investor.user.signupCategory !== undefined ? prop.investor.user.signupCategory : undefined,
       customer: prop.investor.user.customer ? 
         typeof prop.investor.user.customer === 'object' && Object.keys(prop.investor.user.customer).length === 1 && Object.keys(prop.investor.user.customer)[0] === 'id'
     ? { connect: {
@@ -9161,6 +9313,10 @@ id
           plan: prop.investor.user.plan !== undefined ? prop.investor.user.plan : undefined,
           openaiAPIKey: prop.investor.user.openaiAPIKey !== undefined ? prop.investor.user.openaiAPIKey : undefined,
           openaiModel: prop.investor.user.openaiModel !== undefined ? prop.investor.user.openaiModel : undefined,
+          passwordHash: prop.investor.user.passwordHash !== undefined ? prop.investor.user.passwordHash : undefined,
+          avatarUrl: prop.investor.user.avatarUrl !== undefined ? prop.investor.user.avatarUrl : undefined,
+          onboardingComplete: prop.investor.user.onboardingComplete !== undefined ? prop.investor.user.onboardingComplete : undefined,
+          signupCategory: prop.investor.user.signupCategory !== undefined ? prop.investor.user.signupCategory : undefined,
       customer: prop.investor.user.customer ? 
         typeof prop.investor.user.customer === 'object' && Object.keys(prop.investor.user.customer).length === 1 && Object.keys(prop.investor.user.customer)[0] === 'id'
     ? { connect: {
