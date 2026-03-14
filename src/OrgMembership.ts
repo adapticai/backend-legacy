@@ -20,6 +20,9 @@ import { logger } from './utils/logger';
     logoUrl
     website
     businessType
+    jurisdiction
+    regulatoryStatus
+    description
     tradingDefaults
     createdAt
     updatedAt
@@ -285,6 +288,14 @@ id
         createdAt
       }
     }
+    dashboardLayouts {
+      id
+      userId
+      role
+      layout
+      createdAt
+      updatedAt
+    }
   }
   role
   permissions
@@ -361,6 +372,9 @@ id
         logoUrl: props.organization.logoUrl !== undefined ? props.organization.logoUrl : undefined,
         website: props.organization.website !== undefined ? props.organization.website : undefined,
         businessType: props.organization.businessType !== undefined ? props.organization.businessType : undefined,
+        jurisdiction: props.organization.jurisdiction !== undefined ? props.organization.jurisdiction : undefined,
+        regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
+        description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
@@ -826,6 +840,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -1062,6 +1095,15 @@ id
         businessType: props.organization.businessType !== undefined ? {
             set: props.organization.businessType
           } : undefined,
+        jurisdiction: props.organization.jurisdiction !== undefined ? {
+            set: props.organization.jurisdiction
+          } : undefined,
+        regulatoryStatus: props.organization.regulatoryStatus !== undefined ? {
+            set: props.organization.regulatoryStatus
+          } : undefined,
+        description: props.organization.description !== undefined ? {
+            set: props.organization.description
+          } : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? {
             set: props.organization.tradingDefaults
           } : undefined,
@@ -1410,6 +1452,9 @@ id
         logoUrl: props.organization.logoUrl !== undefined ? props.organization.logoUrl : undefined,
         website: props.organization.website !== undefined ? props.organization.website : undefined,
         businessType: props.organization.businessType !== undefined ? props.organization.businessType : undefined,
+        jurisdiction: props.organization.jurisdiction !== undefined ? props.organization.jurisdiction : undefined,
+        regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
+        description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
@@ -2274,6 +2319,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+    Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 && props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -2604,6 +2678,25 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -2721,6 +2814,9 @@ id
         logoUrl: props.organization.logoUrl !== undefined ? props.organization.logoUrl : undefined,
         website: props.organization.website !== undefined ? props.organization.website : undefined,
         businessType: props.organization.businessType !== undefined ? props.organization.businessType : undefined,
+        jurisdiction: props.organization.jurisdiction !== undefined ? props.organization.jurisdiction : undefined,
+        regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
+        description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
@@ -3189,6 +3285,25 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -3236,6 +3351,15 @@ id
           } : undefined,
         businessType: props.organization.businessType !== undefined ? {
             set: props.organization.businessType
+          } : undefined,
+        jurisdiction: props.organization.jurisdiction !== undefined ? {
+            set: props.organization.jurisdiction
+          } : undefined,
+        regulatoryStatus: props.organization.regulatoryStatus !== undefined ? {
+            set: props.organization.regulatoryStatus
+          } : undefined,
+        description: props.organization.description !== undefined ? {
+            set: props.organization.description
           } : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? {
             set: props.organization.tradingDefaults
@@ -3585,6 +3709,9 @@ id
         logoUrl: props.organization.logoUrl !== undefined ? props.organization.logoUrl : undefined,
         website: props.organization.website !== undefined ? props.organization.website : undefined,
         businessType: props.organization.businessType !== undefined ? props.organization.businessType : undefined,
+        jurisdiction: props.organization.jurisdiction !== undefined ? props.organization.jurisdiction : undefined,
+        regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
+        description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
@@ -4449,6 +4576,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+    Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 && props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -4779,6 +4935,25 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -4924,6 +5099,15 @@ id
           } : undefined,
         businessType: prop.organization.businessType !== undefined ? {
             set: prop.organization.businessType
+          } : undefined,
+        jurisdiction: prop.organization.jurisdiction !== undefined ? {
+            set: prop.organization.jurisdiction
+          } : undefined,
+        regulatoryStatus: prop.organization.regulatoryStatus !== undefined ? {
+            set: prop.organization.regulatoryStatus
+          } : undefined,
+        description: prop.organization.description !== undefined ? {
+            set: prop.organization.description
           } : undefined,
         tradingDefaults: prop.organization.tradingDefaults !== undefined ? {
             set: prop.organization.tradingDefaults
@@ -5273,6 +5457,9 @@ id
         logoUrl: prop.organization.logoUrl !== undefined ? prop.organization.logoUrl : undefined,
         website: prop.organization.website !== undefined ? prop.organization.website : undefined,
         businessType: prop.organization.businessType !== undefined ? prop.organization.businessType : undefined,
+        jurisdiction: prop.organization.jurisdiction !== undefined ? prop.organization.jurisdiction : undefined,
+        regulatoryStatus: prop.organization.regulatoryStatus !== undefined ? prop.organization.regulatoryStatus : undefined,
+        description: prop.organization.description !== undefined ? prop.organization.description : undefined,
         tradingDefaults: prop.organization.tradingDefaults !== undefined ? prop.organization.tradingDefaults : undefined,
         deletedAt: prop.organization.deletedAt !== undefined ? prop.organization.deletedAt : undefined,
     funds: prop.organization.funds ? 
@@ -6137,6 +6324,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: prop.user.dashboardLayouts ? 
+    Array.isArray(prop.user.dashboardLayouts) && prop.user.dashboardLayouts.length > 0 && prop.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -6464,6 +6680,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: prop.user.dashboardLayouts ? 
+      Array.isArray(prop.user.dashboardLayouts) && prop.user.dashboardLayouts.length > 0 &&  prop.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,

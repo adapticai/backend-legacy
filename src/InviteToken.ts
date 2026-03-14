@@ -161,6 +161,14 @@ id
         approvedAt
         rejectedAt
       }
+      dashboardLayouts {
+        id
+        userId
+        role
+        layout
+        createdAt
+        updatedAt
+      }
     }
     inviteToken {
 id
@@ -508,6 +516,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -1266,6 +1293,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 && props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -1518,6 +1574,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -1800,6 +1875,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -2188,6 +2282,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -2766,6 +2879,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 && props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -3018,6 +3160,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -3300,6 +3461,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.dashboardLayouts) && props.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  props.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -3971,6 +4151,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: prop.waitlistEntry.reviewedBy.dashboardLayouts ? 
+      Array.isArray(prop.waitlistEntry.reviewedBy.dashboardLayouts) && prop.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 && prop.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.waitlistEntry.reviewedBy.name !== undefined ? prop.waitlistEntry.reviewedBy.name : undefined,
@@ -4223,6 +4432,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: prop.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.dashboardLayouts) && prop.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  prop.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -4505,6 +4733,25 @@ id
             verifiedAt: item.verifiedAt !== undefined ? item.verifiedAt : undefined,
             approvedAt: item.approvedAt !== undefined ? item.approvedAt : undefined,
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: prop.waitlistEntry.reviewedBy.dashboardLayouts ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.dashboardLayouts) && prop.waitlistEntry.reviewedBy.dashboardLayouts.length > 0 &&  prop.waitlistEntry.reviewedBy.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,

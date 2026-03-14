@@ -78,6 +78,9 @@ import { logger } from './utils/logger';
         logoUrl
         website
         businessType
+        jurisdiction
+        regulatoryStatus
+        description
         tradingDefaults
         createdAt
         updatedAt
@@ -208,6 +211,14 @@ id
         expiresAt
         createdAt
       }
+    }
+    dashboardLayouts {
+      id
+      userId
+      role
+      layout
+      createdAt
+      updatedAt
     }
   }
 
@@ -402,6 +413,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -621,6 +635,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+      Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 &&  item.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -1089,6 +1122,15 @@ id
             businessType: item.organization.businessType !== undefined ? {
                 set: item.organization.businessType
               } : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? {
+                set: item.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? {
+                set: item.organization.regulatoryStatus
+              } : undefined,
+            description: item.organization.description !== undefined ? {
+                set: item.organization.description
+              } : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
@@ -1102,6 +1144,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -1133,6 +1178,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -1625,6 +1673,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+    Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 && item.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: item.name !== undefined ? item.name : undefined,
@@ -1750,6 +1827,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -1969,6 +2049,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+      Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 &&  item.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -2215,6 +2314,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -2434,6 +2536,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+      Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 &&  item.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -2714,6 +2835,15 @@ id
             businessType: item.organization.businessType !== undefined ? {
                 set: item.organization.businessType
               } : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? {
+                set: item.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? {
+                set: item.organization.regulatoryStatus
+              } : undefined,
+            description: item.organization.description !== undefined ? {
+                set: item.organization.description
+              } : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
@@ -2727,6 +2857,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -2758,6 +2891,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -3250,6 +3386,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+    Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 && item.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: item.name !== undefined ? item.name : undefined,
@@ -3375,6 +3540,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -3594,6 +3762,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+      Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 &&  item.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -3974,6 +4161,15 @@ id
             businessType: item.organization.businessType !== undefined ? {
                 set: item.organization.businessType
               } : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? {
+                set: item.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? {
+                set: item.organization.regulatoryStatus
+              } : undefined,
+            description: item.organization.description !== undefined ? {
+                set: item.organization.description
+              } : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
@@ -3987,6 +4183,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -4018,6 +4217,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -4510,6 +4712,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+    Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 && item.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: item.name !== undefined ? item.name : undefined,
@@ -4635,6 +4866,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -4854,6 +5088,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: item.dashboardLayouts ? 
+      Array.isArray(item.dashboardLayouts) && item.dashboardLayouts.length > 0 &&  item.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,

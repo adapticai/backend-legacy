@@ -17,6 +17,9 @@ import { logger } from './utils/logger';
   logoUrl
   website
   businessType
+  jurisdiction
+  regulatoryStatus
+  description
   tradingDefaults
   createdAt
   updatedAt
@@ -162,6 +165,14 @@ id
         inviteToken {
 id
         }
+      }
+      dashboardLayouts {
+        id
+        userId
+        role
+        layout
+        createdAt
+        updatedAt
       }
     }
     role
@@ -406,6 +417,9 @@ id
         reviewedWaitlistEntries {
 id
         }
+        dashboardLayouts {
+id
+        }
       }
       role
       permissions
@@ -490,6 +504,9 @@ id
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
   website: props.website !== undefined ? props.website : undefined,
   businessType: props.businessType !== undefined ? props.businessType : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? props.jurisdiction : undefined,
+  regulatoryStatus: props.regulatoryStatus !== undefined ? props.regulatoryStatus : undefined,
+  description: props.description !== undefined ? props.description : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? props.tradingDefaults : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   members: props.members ? 
@@ -778,6 +795,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -1218,6 +1254,9 @@ id
   logoUrl: prop.logoUrl !== undefined ? prop.logoUrl : undefined,
   website: prop.website !== undefined ? prop.website : undefined,
   businessType: prop.businessType !== undefined ? prop.businessType : undefined,
+  jurisdiction: prop.jurisdiction !== undefined ? prop.jurisdiction : undefined,
+  regulatoryStatus: prop.regulatoryStatus !== undefined ? prop.regulatoryStatus : undefined,
+  description: prop.description !== undefined ? prop.description : undefined,
   tradingDefaults: prop.tradingDefaults !== undefined ? prop.tradingDefaults : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
       })),
@@ -1325,6 +1364,15 @@ id
            } : undefined,
   businessType: props.businessType !== undefined ? {
             set: props.businessType 
+           } : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? {
+            set: props.jurisdiction 
+           } : undefined,
+  regulatoryStatus: props.regulatoryStatus !== undefined ? {
+            set: props.regulatoryStatus 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
            } : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? {
             set: props.tradingDefaults 
@@ -1890,6 +1938,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+      Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 && item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -2142,6 +2219,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -2419,6 +2515,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -3919,6 +4034,9 @@ id
   logoUrl: props.logoUrl !== undefined ? props.logoUrl : undefined,
   website: props.website !== undefined ? props.website : undefined,
   businessType: props.businessType !== undefined ? props.businessType : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? props.jurisdiction : undefined,
+  regulatoryStatus: props.regulatoryStatus !== undefined ? props.regulatoryStatus : undefined,
+  description: props.description !== undefined ? props.description : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? props.tradingDefaults : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   members: props.members ? 
@@ -4207,6 +4325,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -4576,6 +4713,15 @@ id
            } : undefined,
   businessType: props.businessType !== undefined ? {
             set: props.businessType 
+           } : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? {
+            set: props.jurisdiction 
+           } : undefined,
+  regulatoryStatus: props.regulatoryStatus !== undefined ? {
+            set: props.regulatoryStatus 
+           } : undefined,
+  description: props.description !== undefined ? {
+            set: props.description 
            } : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? {
             set: props.tradingDefaults 
@@ -5135,6 +5281,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+      Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 && item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -5387,6 +5562,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -5664,6 +5858,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -7178,6 +7391,15 @@ id
   businessType: prop.businessType !== undefined ? {
             set: prop.businessType 
            } : undefined,
+  jurisdiction: prop.jurisdiction !== undefined ? {
+            set: prop.jurisdiction 
+           } : undefined,
+  regulatoryStatus: prop.regulatoryStatus !== undefined ? {
+            set: prop.regulatoryStatus 
+           } : undefined,
+  description: prop.description !== undefined ? {
+            set: prop.description 
+           } : undefined,
   tradingDefaults: prop.tradingDefaults !== undefined ? {
             set: prop.tradingDefaults 
            } : undefined,
@@ -7742,6 +7964,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+      Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 && item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -7994,6 +8245,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -8271,6 +8541,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: item.user.dashboardLayouts ? 
+        Array.isArray(item.user.dashboardLayouts) && item.user.dashboardLayouts.length > 0 &&  item.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,

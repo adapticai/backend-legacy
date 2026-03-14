@@ -28,6 +28,9 @@ import { logger } from './utils/logger';
       logoUrl
       website
       businessType
+      jurisdiction
+      regulatoryStatus
+      description
       tradingDefaults
       createdAt
       updatedAt
@@ -274,6 +277,9 @@ id
         reviewedWaitlistEntries {
 id
         }
+        dashboardLayouts {
+id
+        }
       }
       role
       permissions
@@ -425,6 +431,14 @@ id
 id
         }
       }
+      dashboardLayouts {
+        id
+        userId
+        role
+        layout
+        createdAt
+        updatedAt
+      }
     }
     createdAt
     updatedAt
@@ -531,6 +545,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -1114,6 +1131,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+        Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 &&  props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -1398,6 +1434,15 @@ id
           businessType: props.fund.organization.businessType !== undefined ? {
               set: props.fund.organization.businessType
             } : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? {
+              set: props.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? {
+              set: props.fund.organization.regulatoryStatus
+            } : undefined,
+          description: props.fund.organization.description !== undefined ? {
+              set: props.fund.organization.description
+            } : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
@@ -1445,6 +1490,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -2417,6 +2465,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -3264,6 +3315,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+      Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 && props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.investor.user.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.investor.user.name !== undefined ? props.investor.user.name : undefined,
@@ -3513,6 +3593,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+        Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 &&  props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -3792,6 +3891,25 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+        Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 &&  props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -3937,6 +4055,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -4523,6 +4644,25 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+        Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 &&  props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -4620,6 +4760,15 @@ id
           businessType: props.fund.organization.businessType !== undefined ? {
               set: props.fund.organization.businessType
             } : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? {
+              set: props.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? {
+              set: props.fund.organization.regulatoryStatus
+            } : undefined,
+          description: props.fund.organization.description !== undefined ? {
+              set: props.fund.organization.description
+            } : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
@@ -4667,6 +4816,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -5639,6 +5791,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -6486,6 +6641,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+      Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 && props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.investor.user.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.investor.user.name !== undefined ? props.investor.user.name : undefined,
@@ -6735,6 +6919,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+        Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 &&  props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -7014,6 +7217,25 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: props.investor.user.dashboardLayouts ? 
+        Array.isArray(props.investor.user.dashboardLayouts) && props.investor.user.dashboardLayouts.length > 0 &&  props.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -7209,6 +7431,15 @@ id
           businessType: prop.fund.organization.businessType !== undefined ? {
               set: prop.fund.organization.businessType
             } : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? {
+              set: prop.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? {
+              set: prop.fund.organization.regulatoryStatus
+            } : undefined,
+          description: prop.fund.organization.description !== undefined ? {
+              set: prop.fund.organization.description
+            } : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? {
               set: prop.fund.organization.tradingDefaults
             } : undefined,
@@ -7256,6 +7487,9 @@ id
           logoUrl: prop.fund.organization.logoUrl !== undefined ? prop.fund.organization.logoUrl : undefined,
           website: prop.fund.organization.website !== undefined ? prop.fund.organization.website : undefined,
           businessType: prop.fund.organization.businessType !== undefined ? prop.fund.organization.businessType : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? prop.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
+          description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
@@ -8228,6 +8462,9 @@ id
           logoUrl: prop.fund.organization.logoUrl !== undefined ? prop.fund.organization.logoUrl : undefined,
           website: prop.fund.organization.website !== undefined ? prop.fund.organization.website : undefined,
           businessType: prop.fund.organization.businessType !== undefined ? prop.fund.organization.businessType : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? prop.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
+          description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
@@ -9075,6 +9312,35 @@ id
           },
         }))
       } : undefined,
+      dashboardLayouts: prop.investor.user.dashboardLayouts ? 
+      Array.isArray(prop.investor.user.dashboardLayouts) && prop.investor.user.dashboardLayouts.length > 0 && prop.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.investor.user.dashboardLayouts.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            layout: item.layout !== undefined ? {
+                set: item.layout
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.investor.user.name !== undefined ? prop.investor.user.name : undefined,
@@ -9324,6 +9590,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: prop.investor.user.dashboardLayouts ? 
+        Array.isArray(prop.investor.user.dashboardLayouts) && prop.investor.user.dashboardLayouts.length > 0 &&  prop.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,
@@ -9600,6 +9885,25 @@ id
             status: item.status !== undefined ? item.status : undefined,
             queuePosition: item.queuePosition !== undefined ? item.queuePosition : undefined,
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
+          },
+        }))
+      } : undefined,
+      dashboardLayouts: prop.investor.user.dashboardLayouts ? 
+        Array.isArray(prop.investor.user.dashboardLayouts) && prop.investor.user.dashboardLayouts.length > 0 &&  prop.investor.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.investor.user.dashboardLayouts.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.investor.user.dashboardLayouts.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            layout: item.layout !== undefined ? item.layout : undefined,
           },
         }))
       } : undefined,

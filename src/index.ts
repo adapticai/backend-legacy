@@ -44,6 +44,7 @@ import { Configuration } from './Configuration';
 import { ConflictEvent } from './ConflictEvent';
 import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
 import { Customer } from './Customer';
+import { DashboardLayout } from './DashboardLayout';
 import { DeadLetterMessage } from './DeadLetterMessage';
 import { EconomicEvent } from './EconomicEvent';
 import { Event } from './Event';
@@ -107,6 +108,7 @@ const adaptic = {
   conflictEvent: ConflictEvent,
   connectionHealthSnapshot: ConnectionHealthSnapshot,
   customer: Customer,
+  dashboardLayout: DashboardLayout,
   deadLetterMessage: DeadLetterMessage,
   economicEvent: EconomicEvent,
   event: Event,

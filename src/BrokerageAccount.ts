@@ -68,6 +68,9 @@ id
       logoUrl
       website
       businessType
+      jurisdiction
+      regulatoryStatus
+      description
       tradingDefaults
       createdAt
       updatedAt
@@ -137,6 +140,9 @@ id
 id
         }
         reviewedWaitlistEntries {
+id
+        }
+        dashboardLayouts {
 id
         }
       }
@@ -773,6 +779,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -1873,6 +1882,15 @@ id
           businessType: props.fund.organization.businessType !== undefined ? {
               set: props.fund.organization.businessType
             } : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? {
+              set: props.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? {
+              set: props.fund.organization.regulatoryStatus
+            } : undefined,
+          description: props.fund.organization.description !== undefined ? {
+              set: props.fund.organization.description
+            } : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
@@ -1920,6 +1938,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -2251,6 +2272,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -5019,6 +5043,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -5915,6 +5942,15 @@ id
           businessType: props.fund.organization.businessType !== undefined ? {
               set: props.fund.organization.businessType
             } : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? {
+              set: props.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? {
+              set: props.fund.organization.regulatoryStatus
+            } : undefined,
+          description: props.fund.organization.description !== undefined ? {
+              set: props.fund.organization.description
+            } : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
@@ -5962,6 +5998,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -6293,6 +6332,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -9186,6 +9228,15 @@ id
           businessType: prop.fund.organization.businessType !== undefined ? {
               set: prop.fund.organization.businessType
             } : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? {
+              set: prop.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? {
+              set: prop.fund.organization.regulatoryStatus
+            } : undefined,
+          description: prop.fund.organization.description !== undefined ? {
+              set: prop.fund.organization.description
+            } : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? {
               set: prop.fund.organization.tradingDefaults
             } : undefined,
@@ -9233,6 +9284,9 @@ id
           logoUrl: prop.fund.organization.logoUrl !== undefined ? prop.fund.organization.logoUrl : undefined,
           website: prop.fund.organization.website !== undefined ? prop.fund.organization.website : undefined,
           businessType: prop.fund.organization.businessType !== undefined ? prop.fund.organization.businessType : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? prop.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
+          description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
@@ -9564,6 +9618,9 @@ id
           logoUrl: prop.fund.organization.logoUrl !== undefined ? prop.fund.organization.logoUrl : undefined,
           website: prop.fund.organization.website !== undefined ? prop.fund.organization.website : undefined,
           businessType: prop.fund.organization.businessType !== undefined ? prop.fund.organization.businessType : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? prop.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
+          description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 

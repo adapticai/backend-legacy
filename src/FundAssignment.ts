@@ -28,6 +28,9 @@ import { logger } from './utils/logger';
       logoUrl
       website
       businessType
+      jurisdiction
+      regulatoryStatus
+      description
       tradingDefaults
       createdAt
       updatedAt
@@ -319,6 +322,9 @@ id
         logoUrl
         website
         businessType
+        jurisdiction
+        regulatoryStatus
+        description
         tradingDefaults
         createdAt
         updatedAt
@@ -419,6 +425,14 @@ id
         expiresAt
         createdAt
       }
+    }
+    dashboardLayouts {
+      id
+      userId
+      role
+      layout
+      createdAt
+      updatedAt
     }
   }
   role
@@ -522,6 +536,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -982,6 +999,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -1148,6 +1168,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -1427,6 +1466,15 @@ id
           businessType: props.fund.organization.businessType !== undefined ? {
               set: props.fund.organization.businessType
             } : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? {
+              set: props.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? {
+              set: props.fund.organization.regulatoryStatus
+            } : undefined,
+          description: props.fund.organization.description !== undefined ? {
+              set: props.fund.organization.description
+            } : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
@@ -1474,6 +1522,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -2406,6 +2457,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -3013,6 +3067,15 @@ id
             businessType: item.organization.businessType !== undefined ? {
                 set: item.organization.businessType
               } : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? {
+                set: item.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? {
+                set: item.organization.regulatoryStatus
+              } : undefined,
+            description: item.organization.description !== undefined ? {
+                set: item.organization.description
+              } : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
@@ -3026,6 +3089,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -3057,6 +3123,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -3432,6 +3501,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+    Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 && props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -3589,6 +3687,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -3758,6 +3859,25 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -3901,6 +4021,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -4361,6 +4484,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -4530,6 +4656,25 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -4621,6 +4766,15 @@ id
           businessType: props.fund.organization.businessType !== undefined ? {
               set: props.fund.organization.businessType
             } : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? {
+              set: props.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? {
+              set: props.fund.organization.regulatoryStatus
+            } : undefined,
+          description: props.fund.organization.description !== undefined ? {
+              set: props.fund.organization.description
+            } : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
@@ -4668,6 +4822,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -5600,6 +5757,9 @@ id
           logoUrl: props.fund.organization.logoUrl !== undefined ? props.fund.organization.logoUrl : undefined,
           website: props.fund.organization.website !== undefined ? props.fund.organization.website : undefined,
           businessType: props.fund.organization.businessType !== undefined ? props.fund.organization.businessType : undefined,
+          jurisdiction: props.fund.organization.jurisdiction !== undefined ? props.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
+          description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
@@ -6207,6 +6367,15 @@ id
             businessType: item.organization.businessType !== undefined ? {
                 set: item.organization.businessType
               } : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? {
+                set: item.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? {
+                set: item.organization.regulatoryStatus
+              } : undefined,
+            description: item.organization.description !== undefined ? {
+                set: item.organization.description
+              } : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
@@ -6220,6 +6389,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -6251,6 +6423,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -6626,6 +6801,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+    Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 && props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -6783,6 +6987,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -6949,6 +7156,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: props.user.dashboardLayouts ? 
+      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,
@@ -7141,6 +7367,15 @@ id
           businessType: prop.fund.organization.businessType !== undefined ? {
               set: prop.fund.organization.businessType
             } : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? {
+              set: prop.fund.organization.jurisdiction
+            } : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? {
+              set: prop.fund.organization.regulatoryStatus
+            } : undefined,
+          description: prop.fund.organization.description !== undefined ? {
+              set: prop.fund.organization.description
+            } : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? {
               set: prop.fund.organization.tradingDefaults
             } : undefined,
@@ -7188,6 +7423,9 @@ id
           logoUrl: prop.fund.organization.logoUrl !== undefined ? prop.fund.organization.logoUrl : undefined,
           website: prop.fund.organization.website !== undefined ? prop.fund.organization.website : undefined,
           businessType: prop.fund.organization.businessType !== undefined ? prop.fund.organization.businessType : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? prop.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
+          description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
@@ -8120,6 +8358,9 @@ id
           logoUrl: prop.fund.organization.logoUrl !== undefined ? prop.fund.organization.logoUrl : undefined,
           website: prop.fund.organization.website !== undefined ? prop.fund.organization.website : undefined,
           businessType: prop.fund.organization.businessType !== undefined ? prop.fund.organization.businessType : undefined,
+          jurisdiction: prop.fund.organization.jurisdiction !== undefined ? prop.fund.organization.jurisdiction : undefined,
+          regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
+          description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
@@ -8727,6 +8968,15 @@ id
             businessType: item.organization.businessType !== undefined ? {
                 set: item.organization.businessType
               } : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? {
+                set: item.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? {
+                set: item.organization.regulatoryStatus
+              } : undefined,
+            description: item.organization.description !== undefined ? {
+                set: item.organization.description
+              } : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
@@ -8740,6 +8990,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -8771,6 +9024,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -9146,6 +9402,35 @@ id
         },
       }))
     } : undefined,
+    dashboardLayouts: prop.user.dashboardLayouts ? 
+    Array.isArray(prop.user.dashboardLayouts) && prop.user.dashboardLayouts.length > 0 && prop.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.dashboardLayouts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          role: item.role !== undefined ? {
+              set: item.role
+            } : undefined,
+          layout: item.layout !== undefined ? {
+              set: item.layout
+            } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -9303,6 +9588,9 @@ id
             logoUrl: item.organization.logoUrl !== undefined ? item.organization.logoUrl : undefined,
             website: item.organization.website !== undefined ? item.organization.website : undefined,
             businessType: item.organization.businessType !== undefined ? item.organization.businessType : undefined,
+            jurisdiction: item.organization.jurisdiction !== undefined ? item.organization.jurisdiction : undefined,
+            regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
+            description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
@@ -9469,6 +9757,25 @@ id
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    dashboardLayouts: prop.user.dashboardLayouts ? 
+      Array.isArray(prop.user.dashboardLayouts) && prop.user.dashboardLayouts.length > 0 &&  prop.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.dashboardLayouts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.user.dashboardLayouts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          role: item.role !== undefined ? item.role : undefined,
+          layout: item.layout !== undefined ? item.layout : undefined,
         },
       }))
     } : undefined,

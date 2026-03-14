@@ -1,30 +1,18 @@
 
   
-import { Account as AccountType } from './generated/typegraphql-prisma/models/Account';
+import { DashboardLayout as DashboardLayoutType } from './generated/typegraphql-prisma/models/DashboardLayout';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
   
   /**
-   * CRUD operations for the Account model.
+   * CRUD operations for the DashboardLayout model.
    */
 
   const selectionSet = `
     
   id
   userId
-  type
-  provider
-  providerAccountId
-  refresh_token
-  access_token
-  expires_at
-  token_type
-  scope
-  id_token
-  session_state
-  createdAt
-  updatedAt
   user {
     id
     name
@@ -50,6 +38,22 @@ import { logger } from './utils/logger';
       updatedAt
     }
     customerId
+    accounts {
+      id
+      userId
+      type
+      provider
+      providerAccountId
+      refresh_token
+      access_token
+      expires_at
+      token_type
+      scope
+      id_token
+      session_state
+      createdAt
+      updatedAt
+    }
     sessions {
       id
       sessionToken
@@ -212,35 +216,31 @@ id
         createdAt
       }
     }
-    dashboardLayouts {
-      id
-      userId
-      role
-      layout
-      createdAt
-      updatedAt
-    }
   }
+  role
+  layout
+  createdAt
+  updatedAt
 
   `;
 
-  export const Account = {
+  export const DashboardLayout = {
 
     /**
-     * Create a new Account record.
+     * Create a new DashboardLayout record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Account or null.
+     * @returns The created DashboardLayout or null.
      */
 
     /**
-     * Create a new Account record.
+     * Create a new DashboardLayout record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Account or null.
+     * @returns The created DashboardLayout or null.
      */
-    async create(props: AccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountType> {
+    async create(props: DashboardLayoutType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DashboardLayoutType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -258,9 +258,9 @@ id
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_ACCOUNT = gql`
-              mutation createOneAccount($data: AccountCreateInput!) {
-                createOneAccount(data: $data) {
+          const CREATE_ONE_DASHBOARDLAYOUT = gql`
+              mutation createOneDashboardLayout($data: DashboardLayoutCreateInput!) {
+                createOneDashboardLayout(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -268,16 +268,8 @@ id
 
           const variables = {
             data: {
-                type: props.type !== undefined ? props.type : undefined,
-  provider: props.provider !== undefined ? props.provider : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
-  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
-  access_token: props.access_token !== undefined ? props.access_token : undefined,
-  expires_at: props.expires_at !== undefined ? props.expires_at : undefined,
-  token_type: props.token_type !== undefined ? props.token_type : undefined,
-  scope: props.scope !== undefined ? props.scope : undefined,
-  id_token: props.id_token !== undefined ? props.id_token : undefined,
-  session_state: props.session_state !== undefined ? props.session_state : undefined,
+                role: props.role !== undefined ? props.role : undefined,
+  layout: props.layout !== undefined ? props.layout : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -339,6 +331,34 @@ id
           stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
     } : undefined,
     sessions: props.user.sessions ? 
       Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -645,25 +665,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: props.user.dashboardLayouts ? 
-      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.user.dashboardLayouts.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
@@ -674,15 +675,15 @@ id
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_ACCOUNT,
+            mutation: CREATE_ONE_DASHBOARDLAYOUT,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneAccount) {
-            return response.data.createOneAccount;
+          if (response && response.data && response.data.createOneDashboardLayout) {
+            return response.data.createOneDashboardLayout;
           } else {
             return null as any;
           }
@@ -716,13 +717,13 @@ id
     },
 
   /**
-   * Create multiple Account records.
+   * Create multiple DashboardLayout records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Account objects for the new records.
+   * @param props - Array of DashboardLayout objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: AccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: DashboardLayoutType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -740,9 +741,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_ACCOUNT = gql`
-          mutation createManyAccount($data: [AccountCreateManyInput!]!) {
-            createManyAccount(data: $data) {
+        const CREATE_MANY_DASHBOARDLAYOUT = gql`
+          mutation createManyDashboardLayout($data: [DashboardLayoutCreateManyInput!]!) {
+            createManyDashboardLayout(data: $data) {
               count
             }
           }`;
@@ -750,31 +751,23 @@ id
         const variables = {
           data: props.map(prop => ({
       userId: prop.userId !== undefined ? prop.userId : undefined,
-  type: prop.type !== undefined ? prop.type : undefined,
-  provider: prop.provider !== undefined ? prop.provider : undefined,
-  providerAccountId: prop.providerAccountId !== undefined ? prop.providerAccountId : undefined,
-  refresh_token: prop.refresh_token !== undefined ? prop.refresh_token : undefined,
-  access_token: prop.access_token !== undefined ? prop.access_token : undefined,
-  expires_at: prop.expires_at !== undefined ? prop.expires_at : undefined,
-  token_type: prop.token_type !== undefined ? prop.token_type : undefined,
-  scope: prop.scope !== undefined ? prop.scope : undefined,
-  id_token: prop.id_token !== undefined ? prop.id_token : undefined,
-  session_state: prop.session_state !== undefined ? prop.session_state : undefined,
+  role: prop.role !== undefined ? prop.role : undefined,
+  layout: prop.layout !== undefined ? prop.layout : undefined,
       })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_ACCOUNT,
+          mutation: CREATE_MANY_DASHBOARDLAYOUT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyAccount) {
-          return response.data.createManyAccount;
+        if (response && response.data && response.data.createManyDashboardLayout) {
+          return response.data.createManyDashboardLayout;
         } else {
           return null as any;
         }
@@ -808,13 +801,13 @@ id
   },
 
   /**
-   * Update a single Account record.
+   * Update a single DashboardLayout record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Account or null.
+   * @returns The updated DashboardLayout or null.
    */
-  async update(props: AccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountType> {
+  async update(props: DashboardLayoutType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DashboardLayoutType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -832,9 +825,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_ACCOUNT = gql`
-          mutation updateOneAccount($data: AccountUpdateInput!, $where: AccountWhereUniqueInput!) {
-            updateOneAccount(data: $data, where: $where) {
+        const UPDATE_ONE_DASHBOARDLAYOUT = gql`
+          mutation updateOneDashboardLayout($data: DashboardLayoutUpdateInput!, $where: DashboardLayoutWhereUniqueInput!) {
+            updateOneDashboardLayout(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -842,7 +835,6 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
@@ -851,35 +843,11 @@ id
       id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  type: props.type !== undefined ? {
-            set: props.type 
+  role: props.role !== undefined ? {
+            set: props.role 
            } : undefined,
-  provider: props.provider !== undefined ? {
-            set: props.provider 
-           } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-            set: props.providerAccountId 
-           } : undefined,
-  refresh_token: props.refresh_token !== undefined ? {
-            set: props.refresh_token 
-           } : undefined,
-  access_token: props.access_token !== undefined ? {
-            set: props.access_token 
-           } : undefined,
-  expires_at: props.expires_at !== undefined ? {
-            set: props.expires_at 
-           } : undefined,
-  token_type: props.token_type !== undefined ? {
-            set: props.token_type 
-           } : undefined,
-  scope: props.scope !== undefined ? {
-            set: props.scope 
-           } : undefined,
-  id_token: props.id_token !== undefined ? {
-            set: props.id_token 
-           } : undefined,
-  session_state: props.session_state !== undefined ? {
-            set: props.session_state 
+  layout: props.layout !== undefined ? {
+            set: props.layout 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -1018,6 +986,68 @@ id
         },
       }
     } : undefined,
+    accounts: props.user.accounts ? 
+    Array.isArray(props.user.accounts) && props.user.accounts.length > 0 && props.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.accounts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider
+            } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId
+            } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token
+            } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token
+            } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at
+            } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type
+            } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope
+            } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token
+            } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state
+            } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
     sessions: props.user.sessions ? 
     Array.isArray(props.user.sessions) && props.user.sessions.length > 0 && props.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.user.sessions.map((item: any) => ({
@@ -1693,35 +1723,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: props.user.dashboardLayouts ? 
-    Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 && props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.user.dashboardLayouts.map((item: any) => ({
-      id: item.id
-    }))
-} : { upsert: props.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId
-            } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id
-            } : undefined,
-          role: item.role !== undefined ? {
-              set: item.role
-            } : undefined,
-          layout: item.layout !== undefined ? {
-              set: item.layout
-            } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1770,6 +1771,34 @@ id
           stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
     } : undefined,
     sessions: props.user.sessions ? 
       Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -2076,25 +2105,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: props.user.dashboardLayouts ? 
-      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.user.dashboardLayouts.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
@@ -2104,15 +2114,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_ACCOUNT,
+          mutation: UPDATE_ONE_DASHBOARDLAYOUT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneAccount) {
-          return response.data.updateOneAccount;
+        if (response && response.data && response.data.updateOneDashboardLayout) {
+          return response.data.updateOneDashboardLayout;
         } else {
           return null as any;
         }
@@ -2146,13 +2156,13 @@ id
   },
 
   /**
-   * Upsert a single Account record.
+   * Upsert a single DashboardLayout record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Account or null.
+   * @returns The updated DashboardLayout or null.
    */
-  async upsert(props: AccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountType> {
+  async upsert(props: DashboardLayoutType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DashboardLayoutType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2170,9 +2180,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_ACCOUNT = gql`
-          mutation upsertOneAccount($where: AccountWhereUniqueInput!, $create: AccountCreateInput!, $update: AccountUpdateInput!) {
-            upsertOneAccount(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_DASHBOARDLAYOUT = gql`
+          mutation upsertOneDashboardLayout($where: DashboardLayoutWhereUniqueInput!, $create: DashboardLayoutCreateInput!, $update: DashboardLayoutUpdateInput!) {
+            upsertOneDashboardLayout(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -2180,22 +2190,13 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
       },
           create: {
-        type: props.type !== undefined ? props.type : undefined,
-  provider: props.provider !== undefined ? props.provider : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
-  refresh_token: props.refresh_token !== undefined ? props.refresh_token : undefined,
-  access_token: props.access_token !== undefined ? props.access_token : undefined,
-  expires_at: props.expires_at !== undefined ? props.expires_at : undefined,
-  token_type: props.token_type !== undefined ? props.token_type : undefined,
-  scope: props.scope !== undefined ? props.scope : undefined,
-  id_token: props.id_token !== undefined ? props.id_token : undefined,
-  session_state: props.session_state !== undefined ? props.session_state : undefined,
+        role: props.role !== undefined ? props.role : undefined,
+  layout: props.layout !== undefined ? props.layout : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -2258,6 +2259,34 @@ id
         },
       }
     } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
     sessions: props.user.sessions ? 
       Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.sessions.map((item: any) => ({
@@ -2563,59 +2592,16 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: props.user.dashboardLayouts ? 
-      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.user.dashboardLayouts.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
       },
           update: {
-      type: props.type !== undefined ? {
-            set: props.type 
+      role: props.role !== undefined ? {
+            set: props.role 
            } : undefined,
-  provider: props.provider !== undefined ? {
-            set: props.provider 
-           } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-            set: props.providerAccountId 
-           } : undefined,
-  refresh_token: props.refresh_token !== undefined ? {
-            set: props.refresh_token 
-           } : undefined,
-  access_token: props.access_token !== undefined ? {
-            set: props.access_token 
-           } : undefined,
-  expires_at: props.expires_at !== undefined ? {
-            set: props.expires_at 
-           } : undefined,
-  token_type: props.token_type !== undefined ? {
-            set: props.token_type 
-           } : undefined,
-  scope: props.scope !== undefined ? {
-            set: props.scope 
-           } : undefined,
-  id_token: props.id_token !== undefined ? {
-            set: props.id_token 
-           } : undefined,
-  session_state: props.session_state !== undefined ? {
-            set: props.session_state 
+  layout: props.layout !== undefined ? {
+            set: props.layout 
            } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
@@ -2748,6 +2734,68 @@ id
         },
       }
     } : undefined,
+    accounts: props.user.accounts ? 
+    Array.isArray(props.user.accounts) && props.user.accounts.length > 0 && props.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.accounts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider
+            } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId
+            } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token
+            } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token
+            } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at
+            } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type
+            } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope
+            } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token
+            } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state
+            } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
     sessions: props.user.sessions ? 
     Array.isArray(props.user.sessions) && props.user.sessions.length > 0 && props.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.user.sessions.map((item: any) => ({
@@ -3423,35 +3471,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: props.user.dashboardLayouts ? 
-    Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 && props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.user.dashboardLayouts.map((item: any) => ({
-      id: item.id
-    }))
-} : { upsert: props.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId
-            } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id
-            } : undefined,
-          role: item.role !== undefined ? {
-              set: item.role
-            } : undefined,
-          layout: item.layout !== undefined ? {
-              set: item.layout
-            } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -3500,6 +3519,34 @@ id
           stripeCurrentPeriodEnd: props.user.customer.stripeCurrentPeriodEnd !== undefined ? props.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
+    } : undefined,
+    accounts: props.user.accounts ? 
+      Array.isArray(props.user.accounts) && props.user.accounts.length > 0 &&  props.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
     } : undefined,
     sessions: props.user.sessions ? 
       Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -3806,25 +3853,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: props.user.dashboardLayouts ? 
-      Array.isArray(props.user.dashboardLayouts) && props.user.dashboardLayouts.length > 0 &&  props.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.user.dashboardLayouts.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: props.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
@@ -3834,15 +3862,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_ACCOUNT,
+          mutation: UPSERT_ONE_DASHBOARDLAYOUT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneAccount) {
-          return response.data.upsertOneAccount;
+        if (response && response.data && response.data.upsertOneDashboardLayout) {
+          return response.data.upsertOneDashboardLayout;
         } else {
           return null as any;
         }
@@ -3876,13 +3904,13 @@ id
   },
 
   /**
-   * Update multiple Account records.
+   * Update multiple DashboardLayout records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Account objects for the updated records.
+   * @param props - Array of DashboardLayout objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: DashboardLayoutType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3900,9 +3928,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_ACCOUNT = gql`
-          mutation updateManyAccount($data: [AccountCreateManyInput!]!) {
-            updateManyAccount(data: $data) {
+        const UPDATE_MANY_DASHBOARDLAYOUT = gql`
+          mutation updateManyDashboardLayout($data: [DashboardLayoutCreateManyInput!]!) {
+            updateManyDashboardLayout(data: $data) {
               count
             }
           }`;
@@ -3910,7 +3938,6 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  providerAccountId: prop.providerAccountId !== undefined ? prop.providerAccountId : undefined,
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
@@ -3920,35 +3947,11 @@ id
               id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  type: prop.type !== undefined ? {
-            set: prop.type 
+  role: prop.role !== undefined ? {
+            set: prop.role 
            } : undefined,
-  provider: prop.provider !== undefined ? {
-            set: prop.provider 
-           } : undefined,
-  providerAccountId: prop.providerAccountId !== undefined ? {
-            set: prop.providerAccountId 
-           } : undefined,
-  refresh_token: prop.refresh_token !== undefined ? {
-            set: prop.refresh_token 
-           } : undefined,
-  access_token: prop.access_token !== undefined ? {
-            set: prop.access_token 
-           } : undefined,
-  expires_at: prop.expires_at !== undefined ? {
-            set: prop.expires_at 
-           } : undefined,
-  token_type: prop.token_type !== undefined ? {
-            set: prop.token_type 
-           } : undefined,
-  scope: prop.scope !== undefined ? {
-            set: prop.scope 
-           } : undefined,
-  id_token: prop.id_token !== undefined ? {
-            set: prop.id_token 
-           } : undefined,
-  session_state: prop.session_state !== undefined ? {
-            set: prop.session_state 
+  layout: prop.layout !== undefined ? {
+            set: prop.layout 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -4086,6 +4089,68 @@ id
           stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
+    } : undefined,
+    accounts: prop.user.accounts ? 
+    Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0 && prop.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.accounts.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          type: item.type !== undefined ? {
+              set: item.type
+            } : undefined,
+          provider: item.provider !== undefined ? {
+              set: item.provider
+            } : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? {
+              set: item.providerAccountId
+            } : undefined,
+          refresh_token: item.refresh_token !== undefined ? {
+              set: item.refresh_token
+            } : undefined,
+          access_token: item.access_token !== undefined ? {
+              set: item.access_token
+            } : undefined,
+          expires_at: item.expires_at !== undefined ? {
+              set: item.expires_at
+            } : undefined,
+          token_type: item.token_type !== undefined ? {
+              set: item.token_type
+            } : undefined,
+          scope: item.scope !== undefined ? {
+              set: item.scope
+            } : undefined,
+          id_token: item.id_token !== undefined ? {
+              set: item.id_token
+            } : undefined,
+          session_state: item.session_state !== undefined ? {
+              set: item.session_state
+            } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
     } : undefined,
     sessions: prop.user.sessions ? 
     Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 && prop.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -4762,35 +4827,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: prop.user.dashboardLayouts ? 
-    Array.isArray(prop.user.dashboardLayouts) && prop.user.dashboardLayouts.length > 0 && prop.user.dashboardLayouts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.user.dashboardLayouts.map((item: any) => ({
-      id: item.id
-    }))
-} : { upsert: prop.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId
-            } : undefined,
-        },
-        update: {
-          id: item.id !== undefined ? {
-              set: item.id
-            } : undefined,
-          role: item.role !== undefined ? {
-              set: item.role
-            } : undefined,
-          layout: item.layout !== undefined ? {
-              set: item.layout
-            } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -4839,6 +4875,34 @@ id
           stripeCurrentPeriodEnd: prop.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.user.customer.stripeCurrentPeriodEnd : undefined,
         },
       }
+    } : undefined,
+    accounts: prop.user.accounts ? 
+      Array.isArray(prop.user.accounts) && prop.user.accounts.length > 0 &&  prop.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.accounts.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.user.accounts.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          type: item.type !== undefined ? item.type : undefined,
+          provider: item.provider !== undefined ? item.provider : undefined,
+          providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
+          refresh_token: item.refresh_token !== undefined ? item.refresh_token : undefined,
+          access_token: item.access_token !== undefined ? item.access_token : undefined,
+          expires_at: item.expires_at !== undefined ? item.expires_at : undefined,
+          token_type: item.token_type !== undefined ? item.token_type : undefined,
+          scope: item.scope !== undefined ? item.scope : undefined,
+          id_token: item.id_token !== undefined ? item.id_token : undefined,
+          session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
     } : undefined,
     sessions: prop.user.sessions ? 
       Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 &&  prop.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5145,25 +5209,6 @@ id
         },
       }))
     } : undefined,
-    dashboardLayouts: prop.user.dashboardLayouts ? 
-      Array.isArray(prop.user.dashboardLayouts) && prop.user.dashboardLayouts.length > 0 &&  prop.user.dashboardLayouts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.user.dashboardLayouts.map((item: any) => ({
-           id: item.id
-        }))
- }
- : { connectOrCreate: prop.user.dashboardLayouts.map((item: any) => ({
-        where: {
-          id: item.id !== undefined ? item.id : undefined,
-          userId: item.userId !== undefined ? {
-              equals: item.userId 
-             } : undefined,
-        },
-        create: {
-          role: item.role !== undefined ? item.role : undefined,
-          layout: item.layout !== undefined ? item.layout : undefined,
-        },
-      }))
-    } : undefined,
       },
     }
   } : undefined,
@@ -5174,15 +5219,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_ACCOUNT,
+          mutation: UPDATE_MANY_DASHBOARDLAYOUT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyAccount) {
-          return response.data.updateManyAccount;
+        if (response && response.data && response.data.updateManyDashboardLayout) {
+          return response.data.updateManyDashboardLayout;
         } else {
           return null as any;
         }
@@ -5216,13 +5261,13 @@ id
   },
 
   /**
-   * Delete a single Account record.
+   * Delete a single DashboardLayout record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Account or null.
+   * @returns The deleted DashboardLayout or null.
    */
-  async delete(props: AccountType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountType> {
+  async delete(props: DashboardLayoutType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DashboardLayoutType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -5240,9 +5285,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_ACCOUNT = gql`
-          mutation deleteOneAccount($where: AccountWhereUniqueInput!) {
-            deleteOneAccount(where: $where) {
+        const DELETE_ONE_DASHBOARDLAYOUT = gql`
+          mutation deleteOneDashboardLayout($where: DashboardLayoutWhereUniqueInput!) {
+            deleteOneDashboardLayout(where: $where) {
               id
             }
           }`;
@@ -5256,15 +5301,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_ACCOUNT,
+          mutation: DELETE_ONE_DASHBOARDLAYOUT,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneAccount) {
-          return response.data.deleteOneAccount;
+        if (response && response.data && response.data.deleteOneDashboardLayout) {
+          return response.data.deleteOneDashboardLayout;
         } else {
           return null as any;
         }
@@ -5298,14 +5343,14 @@ id
   },
 
   /**
-   * Retrieve a single Account record by ID.
+   * Retrieve a single DashboardLayout record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Account or null.
+   * @returns The retrieved DashboardLayout or null.
    */
-  async get(props: AccountType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AccountType | null> {
+  async get(props: DashboardLayoutType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<DashboardLayoutType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -5323,9 +5368,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const GET_ACCOUNT = gql`
-          query getAccount($where: AccountWhereUniqueInput!) {
-            getAccount(where: $where) {
+        const GET_DASHBOARDLAYOUT = gql`
+          query getDashboardLayout($where: DashboardLayoutWhereUniqueInput!) {
+            getDashboardLayout(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -5333,7 +5378,6 @@ id
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? props.providerAccountId : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
@@ -5342,18 +5386,18 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_ACCOUNT,
+          query: GET_DASHBOARDLAYOUT,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getAccount ?? null;
+        return response.data?.getDashboardLayout ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Account found') {
+        if (error.message === 'No DashboardLayout found') {
           return null;
         }
 
@@ -5384,12 +5428,12 @@ id
   },
 
   /**
-   * Retrieve all Accounts records.
+   * Retrieve all DashboardLayouts records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Account records or null.
+   * @returns An array of DashboardLayout records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<DashboardLayoutType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -5407,25 +5451,25 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_ACCOUNT = gql`
-          query getAllAccount {
-            accounts {
+        const GET_ALL_DASHBOARDLAYOUT = gql`
+          query getAllDashboardLayout {
+            dashboardLayouts {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_ACCOUNT,
+          query: GET_ALL_DASHBOARDLAYOUT,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.accounts ?? null;
+        return response.data?.dashboardLayouts ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Account found') {
+        if (error.message === 'No DashboardLayout found') {
           return null;
         }
 
@@ -5456,14 +5500,14 @@ id
   },
 
   /**
-   * Find multiple Account records based on conditions.
+   * Find multiple DashboardLayout records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Account records or null.
+   * @returns An array of found DashboardLayout records or null.
    */
-  async findMany(props: AccountType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AccountType[] | null> {
+  async findMany(props: DashboardLayoutType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<DashboardLayoutType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -5481,9 +5525,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_ACCOUNT = gql`
-          query findManyAccount($where: AccountWhereInput!) {
-            accounts(where: $where) {
+        const FIND_MANY_DASHBOARDLAYOUT = gql`
+          query findManyDashboardLayout($where: DashboardLayoutWhereInput!) {
+            dashboardLayouts(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -5496,31 +5540,28 @@ id
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-    equals: props.providerAccountId 
-  } : undefined,
       },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_ACCOUNT,
+          query: FIND_MANY_DASHBOARDLAYOUT,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.accounts) {
-          return response.data.accounts;
+        if (response && response.data && response.data.dashboardlayouts) {
+          return response.data.dashboardLayouts;
         } else {
-          return [] as AccountType[];
+          return [] as DashboardLayoutType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Account found') {
+        if (error.message === 'No DashboardLayout found') {
           return null;
         }
 

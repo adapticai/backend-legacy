@@ -71,6 +71,9 @@ id
         logoUrl
         website
         businessType
+        jurisdiction
+        regulatoryStatus
+        description
         tradingDefaults
         createdAt
         updatedAt
@@ -567,6 +570,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -1378,6 +1384,15 @@ id
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? {
                 set: props.brokerageAccount.fund.organization.businessType
               } : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? {
+                set: props.brokerageAccount.fund.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? {
+                set: props.brokerageAccount.fund.organization.regulatoryStatus
+              } : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? {
+                set: props.brokerageAccount.fund.organization.description
+              } : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? {
                 set: props.brokerageAccount.fund.organization.tradingDefaults
               } : undefined,
@@ -1391,6 +1406,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -1494,6 +1512,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -2525,6 +2546,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -3077,6 +3101,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -3684,6 +3711,15 @@ id
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? {
                 set: props.brokerageAccount.fund.organization.businessType
               } : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? {
+                set: props.brokerageAccount.fund.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? {
+                set: props.brokerageAccount.fund.organization.regulatoryStatus
+              } : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? {
+                set: props.brokerageAccount.fund.organization.description
+              } : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? {
                 set: props.brokerageAccount.fund.organization.tradingDefaults
               } : undefined,
@@ -3697,6 +3733,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -3800,6 +3839,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -4831,6 +4873,9 @@ id
             logoUrl: props.brokerageAccount.fund.organization.logoUrl !== undefined ? props.brokerageAccount.fund.organization.logoUrl : undefined,
             website: props.brokerageAccount.fund.organization.website !== undefined ? props.brokerageAccount.fund.organization.website : undefined,
             businessType: props.brokerageAccount.fund.organization.businessType !== undefined ? props.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: props.brokerageAccount.fund.organization.jurisdiction !== undefined ? props.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -5561,6 +5606,15 @@ id
             businessType: prop.brokerageAccount.fund.organization.businessType !== undefined ? {
                 set: prop.brokerageAccount.fund.organization.businessType
               } : undefined,
+            jurisdiction: prop.brokerageAccount.fund.organization.jurisdiction !== undefined ? {
+                set: prop.brokerageAccount.fund.organization.jurisdiction
+              } : undefined,
+            regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? {
+                set: prop.brokerageAccount.fund.organization.regulatoryStatus
+              } : undefined,
+            description: prop.brokerageAccount.fund.organization.description !== undefined ? {
+                set: prop.brokerageAccount.fund.organization.description
+              } : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? {
                 set: prop.brokerageAccount.fund.organization.tradingDefaults
               } : undefined,
@@ -5574,6 +5628,9 @@ id
             logoUrl: prop.brokerageAccount.fund.organization.logoUrl !== undefined ? prop.brokerageAccount.fund.organization.logoUrl : undefined,
             website: prop.brokerageAccount.fund.organization.website !== undefined ? prop.brokerageAccount.fund.organization.website : undefined,
             businessType: prop.brokerageAccount.fund.organization.businessType !== undefined ? prop.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: prop.brokerageAccount.fund.organization.jurisdiction !== undefined ? prop.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? prop.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: prop.brokerageAccount.fund.organization.description !== undefined ? prop.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? prop.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? prop.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -5677,6 +5734,9 @@ id
             logoUrl: prop.brokerageAccount.fund.organization.logoUrl !== undefined ? prop.brokerageAccount.fund.organization.logoUrl : undefined,
             website: prop.brokerageAccount.fund.organization.website !== undefined ? prop.brokerageAccount.fund.organization.website : undefined,
             businessType: prop.brokerageAccount.fund.organization.businessType !== undefined ? prop.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: prop.brokerageAccount.fund.organization.jurisdiction !== undefined ? prop.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? prop.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: prop.brokerageAccount.fund.organization.description !== undefined ? prop.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? prop.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? prop.brokerageAccount.fund.organization.deletedAt : undefined,
           },
@@ -6708,6 +6768,9 @@ id
             logoUrl: prop.brokerageAccount.fund.organization.logoUrl !== undefined ? prop.brokerageAccount.fund.organization.logoUrl : undefined,
             website: prop.brokerageAccount.fund.organization.website !== undefined ? prop.brokerageAccount.fund.organization.website : undefined,
             businessType: prop.brokerageAccount.fund.organization.businessType !== undefined ? prop.brokerageAccount.fund.organization.businessType : undefined,
+            jurisdiction: prop.brokerageAccount.fund.organization.jurisdiction !== undefined ? prop.brokerageAccount.fund.organization.jurisdiction : undefined,
+            regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? prop.brokerageAccount.fund.organization.regulatoryStatus : undefined,
+            description: prop.brokerageAccount.fund.organization.description !== undefined ? prop.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? prop.brokerageAccount.fund.organization.tradingDefaults : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? prop.brokerageAccount.fund.organization.deletedAt : undefined,
           },

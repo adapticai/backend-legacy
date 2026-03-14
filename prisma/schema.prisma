@@ -856,6 +856,21 @@ enum OrgBusinessType {
   PRIVATE_OFFICE
 }
 
+// Regulatory registration status for an organization.
+enum RegulatoryStatus {
+  /// Registered with a regulatory authority.
+  REGISTERED
+
+  /// Exempt from registration requirements.
+  EXEMPT
+
+  /// Registration application in progress.
+  PENDING_REGISTRATION
+
+  /// Regulation not applicable to this entity type.
+  NOT_APPLICABLE
+}
+
 // Defines roles within an organization.
 enum OrgRole {
   /// Full control, billing, can delete org.
@@ -976,6 +991,15 @@ model Organization {
 
   /// Business structure type determining the operational model.
   businessType OrgBusinessType?
+
+  /// Jurisdiction country code (ISO 3166-1 alpha-2), e.g. "US", "GB", "SG".
+  jurisdiction String?
+
+  /// Regulatory registration status for this organization.
+  regulatoryStatus RegulatoryStatus?
+
+  /// Brief description of the organization.
+  description String?
 
   /// Default trading settings for all funds in this organization.
   /// Fund-level overrides take precedence over these defaults.
@@ -1375,8 +1399,39 @@ model User {
   /// List of waitlist entries reviewed by this user. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedBy']
   reviewedWaitlistEntries WaitlistEntry[] @relation("WaitlistReviewer")
 
+  /// Saved dashboard layouts per role. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  dashboardLayouts DashboardLayout[]
+
   @@index([customerId])
   @@map(name: "users")
+}
+
+// Persisted dashboard layout preferences per user per role
+model DashboardLayout {
+  /// Unique identifier for the dashboard layout. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the user who owns this layout.
+  userId String @db.Uuid
+
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['dashboardLayouts']
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// The user role this layout applies to (e.g. 'portfolio_manager', 'investor').
+  role String @db.VarChar(50)
+
+  /// JSON array of module layout items: [{ id, x, y, w, h, visible }].
+  layout Json
+
+  /// Timestamp when the layout was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the layout was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, role])
+  @@index([userId])
+  @@map("dashboard_layouts")
 }
 
 // Store linked authentication providers for users
