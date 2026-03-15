@@ -242,7 +242,7 @@ id
      */
     async create(props: AccountLinkingRequestType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountLinkingRequestType> {
       // Maximum number of retries for database connection issues
-      const MAX_RETRIES = 3;
+      const MAX_RETRIES = 2;
       let retryCount = 0;
       let lastError: any = null;
 
@@ -694,8 +694,10 @@ id
 
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
-            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error, retrying...");
+            const baseDelay = Math.pow(2, retryCount) * 500;
+            const jitter = Math.floor(Math.random() * 500);
+            const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+            logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
@@ -719,7 +721,7 @@ id
    */
   async createMany(props: AccountLinkingRequestType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -787,8 +789,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -812,7 +816,7 @@ id
    */
   async update(props: AccountLinkingRequestType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountLinkingRequestType> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -2115,8 +2119,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -2140,7 +2146,7 @@ id
    */
   async upsert(props: AccountLinkingRequestType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountLinkingRequestType> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -3833,8 +3839,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -3858,7 +3866,7 @@ id
    */
   async updateMany(props: AccountLinkingRequestType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -5163,8 +5171,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -5188,7 +5198,7 @@ id
    */
   async delete(props: AccountLinkingRequestType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountLinkingRequestType> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -5245,8 +5255,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -5271,7 +5283,7 @@ id
    */
   async get(props: AccountLinkingRequestType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AccountLinkingRequestType | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -5336,8 +5348,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -5360,7 +5374,7 @@ id
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountLinkingRequestType[] | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -5408,8 +5422,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -5434,7 +5450,7 @@ id
    */
   async findMany(props: AccountLinkingRequestType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AccountLinkingRequestType[] | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -5506,8 +5522,10 @@ id
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }

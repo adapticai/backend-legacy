@@ -143,7 +143,7 @@ import { logger } from './utils/logger';
      */
     async create(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
       // Maximum number of retries for database connection issues
-      const MAX_RETRIES = 3;
+      const MAX_RETRIES = 2;
       let retryCount = 0;
       let lastError: any = null;
 
@@ -352,8 +352,10 @@ import { logger } from './utils/logger';
 
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
-            const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error, retrying...");
+            const baseDelay = Math.pow(2, retryCount) * 500;
+            const jitter = Math.floor(Math.random() * 500);
+            const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+            logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
@@ -377,7 +379,7 @@ import { logger } from './utils/logger';
    */
   async createMany(props: NewsArticleAssetSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -439,8 +441,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -464,7 +468,7 @@ import { logger } from './utils/logger';
    */
   async update(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -1007,8 +1011,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -1032,7 +1038,7 @@ import { logger } from './utils/logger';
    */
   async upsert(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -1725,8 +1731,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -1750,7 +1758,7 @@ import { logger } from './utils/logger';
    */
   async updateMany(props: NewsArticleAssetSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -2295,8 +2303,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -2320,7 +2330,7 @@ import { logger } from './utils/logger';
    */
   async delete(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -2377,8 +2387,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -2403,7 +2415,7 @@ import { logger } from './utils/logger';
    */
   async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -2463,8 +2475,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -2487,7 +2501,7 @@ import { logger } from './utils/logger';
    */
   async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<NewsArticleAssetSentimentType[] | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -2535,8 +2549,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
@@ -2561,7 +2577,7 @@ import { logger } from './utils/logger';
    */
   async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType[] | null> {
     // Maximum number of retries for database connection issues
-    const MAX_RETRIES = 3;
+    const MAX_RETRIES = 2;
     let retryCount = 0;
     let lastError: any = null;
 
@@ -2630,8 +2646,10 @@ import { logger } from './utils/logger';
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
-          const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
