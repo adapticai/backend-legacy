@@ -16,8 +16,8 @@ declare global {
  */
 const POOL_SIZE_DEFAULTS: Record<string, number> = {
   development: 5,
-  staging: 10,
-  production: 20,
+  staging: 15,
+  production: 40,
 };
 
 /** Connection pool timeout in milliseconds. Configurable via DATABASE_POOL_TIMEOUT_MS. */
