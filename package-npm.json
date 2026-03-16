@@ -44,7 +44,7 @@
     }
   },
   "dependencies": {
-    "@prisma/client": "^5.17.0",
+    "@prisma/client": "^6.19.0",
     "reflect-metadata": "^0.2.2",
     "cross-fetch": "^4.0.0"
   },
