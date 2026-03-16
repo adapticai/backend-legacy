@@ -67,7 +67,7 @@ jobs:
 
       - name: Generate code from schema
         run: |
-          SKIP_PRISMA_VERSION_CHECK=true npx prisma generate --no-engine
+          SKIP_PRISMA_VERSION_CHECK=true npx prisma generate
           node fix-import-paths.cjs
           npx ts-node src/modules/generateSelections.ts
           npx ts-node src/modules/index.ts
