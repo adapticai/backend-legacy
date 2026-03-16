@@ -50,7 +50,7 @@ jobs:
 
       - name: Install dependencies in dist folder
         working-directory: dist
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Set up Git user
         run: |
