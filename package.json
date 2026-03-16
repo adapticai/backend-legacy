@@ -77,7 +77,6 @@
     "@opentelemetry/sdk-trace-node": "^2.5.0",
     "@opentelemetry/semantic-conventions": "^1.39.0",
     "@prisma/client": "^6.19.2",
-    "@prisma/extension-accelerate": "^2.0.2",
     "@prisma/extension-pulse": "^1.2.2",
     "@prisma/generator-helper": "^6.19.2",
     "@prisma/internals": "^6.19.2",

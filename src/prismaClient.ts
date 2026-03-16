@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { withAccelerate } from '@prisma/extension-accelerate';
 import { logger } from './utils/logger';
 
 /**
@@ -144,7 +143,7 @@ if (!global.prisma) {
   // via the soft-delete middleware (see src/middleware/soft-delete.ts).
   // Prisma 6 uses client extensions rather than $use() middleware.
 
-  global.prisma = client.$extends(withAccelerate()) as unknown as PrismaClient;
+  global.prisma = client;
 }
 
 // Initialize a singleton PrismaClient with a connection pool that persists across requests
