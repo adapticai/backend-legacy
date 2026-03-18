@@ -1001,6 +1001,30 @@ id
         } catch (error: any) {
           lastError = error;
 
+          // Check for constraint violations FIRST - these are NEVER retryable
+          const isConstraintViolation =
+            error.message?.includes('violates check constraint') ||
+            error.message?.includes('violates unique constraint') ||
+            error.message?.includes('violates foreign key constraint') ||
+            error.message?.includes('unique constraint') ||
+            error.message?.includes('23514') ||
+            error.message?.includes('23505') ||
+            error.message?.includes('P2002') ||
+            error.message?.includes('P2003');
+
+          if (isConstraintViolation) {
+            const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+            logger.error("Non-retryable constraint violation in createOneModelVersionArtifact", {
+              operation: 'createOneModelVersionArtifact',
+              model: 'ModelVersionArtifact',
+              error: String(error),
+              constraintName: constraintMatch ? constraintMatch[1] : undefined,
+              errorCategory: 'CONSTRAINT_VIOLATION',
+              isRetryable: false,
+            });
+            throw error;
+          }
+
           // Check if this is a database connection error that we should retry
           const isConnectionError =
             error.message?.includes('Server has closed the connection') ||
@@ -1012,13 +1036,23 @@ id
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error, retrying...");
+            logger.warn("Database connection error in createOneModelVersionArtifact, retrying...", {
+              operation: 'createOneModelVersionArtifact',
+              model: 'ModelVersionArtifact',
+              attempt: retryCount,
+              maxRetries: MAX_RETRIES,
+            });
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
 
-          // Log the error and rethrow
-          logger.error("Database error occurred", { error: String(error) });
+          // Log structured error details and rethrow
+          logger.error("Database create operation failed", {
+            operation: 'createOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            error: String(error),
+            isRetryable: isConnectionError,
+          });
           throw error;
         }
       }
@@ -1084,6 +1118,30 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in createManyModelVersionArtifact", {
+            operation: 'createManyModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -1095,13 +1153,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in createManyModelVersionArtifact, retrying...", {
+            operation: 'createManyModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database createMany operation failed", {
+          operation: 'createManyModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -4518,6 +4586,31 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateOneModelVersionArtifact", {
+            operation: 'updateOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -4529,13 +4622,25 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateOneModelVersionArtifact, retrying...", {
+            operation: 'updateOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database update operation failed", {
+          operation: 'updateOneModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -8713,6 +8818,31 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in upsertOneModelVersionArtifact", {
+            operation: 'upsertOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -8724,13 +8854,25 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in upsertOneModelVersionArtifact, retrying...", {
+            operation: 'upsertOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database upsert operation failed", {
+          operation: 'upsertOneModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -12149,6 +12291,30 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateManyModelVersionArtifact", {
+            operation: 'updateManyModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -12160,13 +12326,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateManyModelVersionArtifact, retrying...", {
+            operation: 'updateManyModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database updateMany operation failed", {
+          operation: 'updateManyModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -12231,6 +12407,34 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        // (e.g., foreign key constraints preventing deletion)
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('23503') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003') ||
+          error.message?.includes('P2014');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in deleteOneModelVersionArtifact", {
+            operation: 'deleteOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -12242,13 +12446,25 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in deleteOneModelVersionArtifact, retrying...", {
+            operation: 'deleteOneModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database delete operation failed", {
+          operation: 'deleteOneModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -12330,13 +12546,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getModelVersionArtifact, retrying...", {
+            operation: 'getModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database get operation failed", {
+          operation: 'getModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -12402,13 +12628,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getAllModelVersionArtifact, retrying...", {
+            operation: 'getAllModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database getAll operation failed", {
+          operation: 'getAllModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -12497,13 +12733,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in findManyModelVersionArtifact, retrying...", {
+            operation: 'findManyModelVersionArtifact',
+            model: 'ModelVersionArtifact',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database findMany operation failed", {
+          operation: 'findManyModelVersionArtifact',
+          model: 'ModelVersionArtifact',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }

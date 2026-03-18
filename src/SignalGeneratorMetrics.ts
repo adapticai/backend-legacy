@@ -110,6 +110,30 @@ import { logger } from './utils/logger';
         } catch (error: any) {
           lastError = error;
 
+          // Check for constraint violations FIRST - these are NEVER retryable
+          const isConstraintViolation =
+            error.message?.includes('violates check constraint') ||
+            error.message?.includes('violates unique constraint') ||
+            error.message?.includes('violates foreign key constraint') ||
+            error.message?.includes('unique constraint') ||
+            error.message?.includes('23514') ||
+            error.message?.includes('23505') ||
+            error.message?.includes('P2002') ||
+            error.message?.includes('P2003');
+
+          if (isConstraintViolation) {
+            const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+            logger.error("Non-retryable constraint violation in createOneSignalGeneratorMetrics", {
+              operation: 'createOneSignalGeneratorMetrics',
+              model: 'SignalGeneratorMetrics',
+              error: String(error),
+              constraintName: constraintMatch ? constraintMatch[1] : undefined,
+              errorCategory: 'CONSTRAINT_VIOLATION',
+              isRetryable: false,
+            });
+            throw error;
+          }
+
           // Check if this is a database connection error that we should retry
           const isConnectionError =
             error.message?.includes('Server has closed the connection') ||
@@ -121,13 +145,23 @@ import { logger } from './utils/logger';
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error, retrying...");
+            logger.warn("Database connection error in createOneSignalGeneratorMetrics, retrying...", {
+              operation: 'createOneSignalGeneratorMetrics',
+              model: 'SignalGeneratorMetrics',
+              attempt: retryCount,
+              maxRetries: MAX_RETRIES,
+            });
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
 
-          // Log the error and rethrow
-          logger.error("Database error occurred", { error: String(error) });
+          // Log structured error details and rethrow
+          logger.error("Database create operation failed", {
+            operation: 'createOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            error: String(error),
+            isRetryable: isConnectionError,
+          });
           throw error;
         }
       }
@@ -201,6 +235,30 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in createManySignalGeneratorMetrics", {
+            operation: 'createManySignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -212,13 +270,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in createManySignalGeneratorMetrics, retrying...", {
+            operation: 'createManySignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database createMany operation failed", {
+          operation: 'createManySignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -348,6 +416,31 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateOneSignalGeneratorMetrics", {
+            operation: 'updateOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -359,13 +452,25 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateOneSignalGeneratorMetrics, retrying...", {
+            operation: 'updateOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database update operation failed", {
+          operation: 'updateOneSignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -501,6 +606,31 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in upsertOneSignalGeneratorMetrics", {
+            operation: 'upsertOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -512,13 +642,25 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in upsertOneSignalGeneratorMetrics, retrying...", {
+            operation: 'upsertOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database upsert operation failed", {
+          operation: 'upsertOneSignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -650,6 +792,30 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateManySignalGeneratorMetrics", {
+            operation: 'updateManySignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -661,13 +827,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateManySignalGeneratorMetrics, retrying...", {
+            operation: 'updateManySignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database updateMany operation failed", {
+          operation: 'updateManySignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -732,6 +908,34 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        // (e.g., foreign key constraints preventing deletion)
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('23503') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003') ||
+          error.message?.includes('P2014');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in deleteOneSignalGeneratorMetrics", {
+            operation: 'deleteOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -743,13 +947,25 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in deleteOneSignalGeneratorMetrics, retrying...", {
+            operation: 'deleteOneSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database delete operation failed", {
+          operation: 'deleteOneSignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -828,13 +1044,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getSignalGeneratorMetrics, retrying...", {
+            operation: 'getSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database get operation failed", {
+          operation: 'getSignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -900,13 +1126,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getAllSignalGeneratorMetrics, retrying...", {
+            operation: 'getAllSignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database getAll operation failed", {
+          operation: 'getAllSignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -992,13 +1228,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in findManySignalGeneratorMetrics, retrying...", {
+            operation: 'findManySignalGeneratorMetrics',
+            model: 'SignalGeneratorMetrics',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database findMany operation failed", {
+          operation: 'findManySignalGeneratorMetrics',
+          model: 'SignalGeneratorMetrics',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }

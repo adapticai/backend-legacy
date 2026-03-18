@@ -577,6 +577,30 @@ id
         } catch (error: any) {
           lastError = error;
 
+          // Check for constraint violations FIRST - these are NEVER retryable
+          const isConstraintViolation =
+            error.message?.includes('violates check constraint') ||
+            error.message?.includes('violates unique constraint') ||
+            error.message?.includes('violates foreign key constraint') ||
+            error.message?.includes('unique constraint') ||
+            error.message?.includes('23514') ||
+            error.message?.includes('23505') ||
+            error.message?.includes('P2002') ||
+            error.message?.includes('P2003');
+
+          if (isConstraintViolation) {
+            const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+            logger.error("Non-retryable constraint violation in createOneLinkedProvider", {
+              operation: 'createOneLinkedProvider',
+              model: 'LinkedProvider',
+              error: String(error),
+              constraintName: constraintMatch ? constraintMatch[1] : undefined,
+              errorCategory: 'CONSTRAINT_VIOLATION',
+              isRetryable: false,
+            });
+            throw error;
+          }
+
           // Check if this is a database connection error that we should retry
           const isConnectionError =
             error.message?.includes('Server has closed the connection') ||
@@ -588,13 +612,23 @@ id
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error, retrying...");
+            logger.warn("Database connection error in createOneLinkedProvider, retrying...", {
+              operation: 'createOneLinkedProvider',
+              model: 'LinkedProvider',
+              attempt: retryCount,
+              maxRetries: MAX_RETRIES,
+            });
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
 
-          // Log the error and rethrow
-          logger.error("Database error occurred", { error: String(error) });
+          // Log structured error details and rethrow
+          logger.error("Database create operation failed", {
+            operation: 'createOneLinkedProvider',
+            model: 'LinkedProvider',
+            error: String(error),
+            isRetryable: isConnectionError,
+          });
           throw error;
         }
       }
@@ -666,6 +700,30 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in createManyLinkedProvider", {
+            operation: 'createManyLinkedProvider',
+            model: 'LinkedProvider',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -677,13 +735,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in createManyLinkedProvider, retrying...", {
+            operation: 'createManyLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database createMany operation failed", {
+          operation: 'createManyLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -1828,6 +1896,31 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateOneLinkedProvider", {
+            operation: 'updateOneLinkedProvider',
+            model: 'LinkedProvider',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -1839,13 +1932,25 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateOneLinkedProvider, retrying...", {
+            operation: 'updateOneLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database update operation failed", {
+          operation: 'updateOneLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -3301,6 +3406,31 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in upsertOneLinkedProvider", {
+            operation: 'upsertOneLinkedProvider',
+            model: 'LinkedProvider',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -3312,13 +3442,25 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in upsertOneLinkedProvider, retrying...", {
+            operation: 'upsertOneLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database upsert operation failed", {
+          operation: 'upsertOneLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -4465,6 +4607,30 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateManyLinkedProvider", {
+            operation: 'updateManyLinkedProvider',
+            model: 'LinkedProvider',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -4476,13 +4642,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateManyLinkedProvider, retrying...", {
+            operation: 'updateManyLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database updateMany operation failed", {
+          operation: 'updateManyLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -4547,6 +4723,34 @@ id
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        // (e.g., foreign key constraints preventing deletion)
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('23503') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003') ||
+          error.message?.includes('P2014');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in deleteOneLinkedProvider", {
+            operation: 'deleteOneLinkedProvider',
+            model: 'LinkedProvider',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -4558,13 +4762,25 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in deleteOneLinkedProvider, retrying...", {
+            operation: 'deleteOneLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database delete operation failed", {
+          operation: 'deleteOneLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -4649,13 +4865,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getLinkedProvider, retrying...", {
+            operation: 'getLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database get operation failed", {
+          operation: 'getLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -4721,13 +4947,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getAllLinkedProvider, retrying...", {
+            operation: 'getAllLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database getAll operation failed", {
+          operation: 'getAllLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -4819,13 +5055,23 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in findManyLinkedProvider, retrying...", {
+            operation: 'findManyLinkedProvider',
+            model: 'LinkedProvider',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database findMany operation failed", {
+          operation: 'findManyLinkedProvider',
+          model: 'LinkedProvider',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }

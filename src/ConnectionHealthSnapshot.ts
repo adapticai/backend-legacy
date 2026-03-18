@@ -94,6 +94,30 @@ import { logger } from './utils/logger';
         } catch (error: any) {
           lastError = error;
 
+          // Check for constraint violations FIRST - these are NEVER retryable
+          const isConstraintViolation =
+            error.message?.includes('violates check constraint') ||
+            error.message?.includes('violates unique constraint') ||
+            error.message?.includes('violates foreign key constraint') ||
+            error.message?.includes('unique constraint') ||
+            error.message?.includes('23514') ||
+            error.message?.includes('23505') ||
+            error.message?.includes('P2002') ||
+            error.message?.includes('P2003');
+
+          if (isConstraintViolation) {
+            const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+            logger.error("Non-retryable constraint violation in createOneConnectionHealthSnapshot", {
+              operation: 'createOneConnectionHealthSnapshot',
+              model: 'ConnectionHealthSnapshot',
+              error: String(error),
+              constraintName: constraintMatch ? constraintMatch[1] : undefined,
+              errorCategory: 'CONSTRAINT_VIOLATION',
+              isRetryable: false,
+            });
+            throw error;
+          }
+
           // Check if this is a database connection error that we should retry
           const isConnectionError =
             error.message?.includes('Server has closed the connection') ||
@@ -105,13 +129,23 @@ import { logger } from './utils/logger';
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error, retrying...");
+            logger.warn("Database connection error in createOneConnectionHealthSnapshot, retrying...", {
+              operation: 'createOneConnectionHealthSnapshot',
+              model: 'ConnectionHealthSnapshot',
+              attempt: retryCount,
+              maxRetries: MAX_RETRIES,
+            });
             await new Promise(resolve => setTimeout(resolve, delay));
             continue;
           }
 
-          // Log the error and rethrow
-          logger.error("Database error occurred", { error: String(error) });
+          // Log structured error details and rethrow
+          logger.error("Database create operation failed", {
+            operation: 'createOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            error: String(error),
+            isRetryable: isConnectionError,
+          });
           throw error;
         }
       }
@@ -181,6 +215,30 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in createManyConnectionHealthSnapshot", {
+            operation: 'createManyConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -192,13 +250,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in createManyConnectionHealthSnapshot, retrying...", {
+            operation: 'createManyConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database createMany operation failed", {
+          operation: 'createManyConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -289,6 +357,31 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateOneConnectionHealthSnapshot", {
+            operation: 'updateOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -300,13 +393,25 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateOneConnectionHealthSnapshot, retrying...", {
+            operation: 'updateOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database update operation failed", {
+          operation: 'updateOneConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -399,6 +504,31 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in upsertOneConnectionHealthSnapshot", {
+            operation: 'upsertOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -410,13 +540,25 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in upsertOneConnectionHealthSnapshot, retrying...", {
+            operation: 'upsertOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database upsert operation failed", {
+          operation: 'upsertOneConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -509,6 +651,30 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in updateManyConnectionHealthSnapshot", {
+            operation: 'updateManyConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            error: String(error),
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -520,13 +686,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in updateManyConnectionHealthSnapshot, retrying...", {
+            operation: 'updateManyConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database updateMany operation failed", {
+          operation: 'updateManyConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -591,6 +767,34 @@ import { logger } from './utils/logger';
       } catch (error: any) {
         lastError = error;
 
+        // Check for constraint violations FIRST - these are NEVER retryable
+        // (e.g., foreign key constraints preventing deletion)
+        const isConstraintViolation =
+          error.message?.includes('violates check constraint') ||
+          error.message?.includes('violates unique constraint') ||
+          error.message?.includes('violates foreign key constraint') ||
+          error.message?.includes('unique constraint') ||
+          error.message?.includes('23514') ||
+          error.message?.includes('23505') ||
+          error.message?.includes('23503') ||
+          error.message?.includes('P2002') ||
+          error.message?.includes('P2003') ||
+          error.message?.includes('P2014');
+
+        if (isConstraintViolation) {
+          const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
+          logger.error("Non-retryable constraint violation in deleteOneConnectionHealthSnapshot", {
+            operation: 'deleteOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            error: String(error),
+            recordId: props.id,
+            constraintName: constraintMatch ? constraintMatch[1] : undefined,
+            errorCategory: 'CONSTRAINT_VIOLATION',
+            isRetryable: false,
+          });
+          throw error;
+        }
+
         // Check if this is a database connection error that we should retry
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
@@ -602,13 +806,25 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in deleteOneConnectionHealthSnapshot, retrying...", {
+            operation: 'deleteOneConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+            recordId: props.id,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database delete operation failed", {
+          operation: 'deleteOneConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          recordId: props.id,
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -684,13 +900,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getConnectionHealthSnapshot, retrying...", {
+            operation: 'getConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database get operation failed", {
+          operation: 'getConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -756,13 +982,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in getAllConnectionHealthSnapshot, retrying...", {
+            operation: 'getAllConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database getAll operation failed", {
+          operation: 'getAllConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }
@@ -845,13 +1081,23 @@ import { logger } from './utils/logger';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error, retrying...");
+          logger.warn("Database connection error in findManyConnectionHealthSnapshot, retrying...", {
+            operation: 'findManyConnectionHealthSnapshot',
+            model: 'ConnectionHealthSnapshot',
+            attempt: retryCount,
+            maxRetries: MAX_RETRIES,
+          });
           await new Promise(resolve => setTimeout(resolve, delay));
           continue;
         }
 
-        // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        // Log structured error details and rethrow
+        logger.error("Database findMany operation failed", {
+          operation: 'findManyConnectionHealthSnapshot',
+          model: 'ConnectionHealthSnapshot',
+          error: String(error),
+          isRetryable: isConnectionError,
+        });
         throw error;
       }
     }

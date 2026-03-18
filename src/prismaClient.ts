@@ -118,20 +118,52 @@ if (!global.prisma) {
     },
   });
 
-  // Register event-based log handlers for pool exhaustion detection
-  client.$on('error' as never, (e: { message: string }) => {
+  // Register event-based log handlers with structured error diagnostics
+  client.$on('error' as never, (e: { message: string; timestamp: string }) => {
     const message = e.message || '';
-    if (
-      message.includes('pool') ||
-      message.includes('connection') ||
-      message.includes('timeout')
-    ) {
-      logger.error('Database connection pool exhaustion detected', {
-        poolSize,
-        errorMessage: message,
-      });
+
+    // Build structured error information for actionable diagnostics
+    const errorInfo: Record<string, unknown> = {
+      message,
+      timestamp: e.timestamp,
+      poolSize,
+    };
+
+    // Extract Prisma error code (e.g., P2002 unique constraint, P2003 foreign key)
+    const prismaCodeMatch = message.match(/error code:\s*(P\d+)/i)
+      || message.match(/(P\d{4})/);
+    if (prismaCodeMatch) {
+      errorInfo.prismaErrorCode = prismaCodeMatch[1];
+    }
+
+    // Extract Postgres error code (e.g., 23514 check constraint, 23505 unique)
+    const pgCodeMatch = message.match(/(?:error code|code):\s*(\d{5})/);
+    if (pgCodeMatch) {
+      errorInfo.postgresErrorCode = pgCodeMatch[1];
+    }
+
+    // Extract constraint name for violation diagnostics
+    const constraintMatch = message.match(/constraint\s+"([^"]+)"/);
+    if (constraintMatch) {
+      errorInfo.constraintName = constraintMatch[1];
+    }
+
+    // Extract model or table name
+    const modelMatch = message.match(/(?:model|table|relation)\s+"?(\w+)"?/i);
+    if (modelMatch) {
+      errorInfo.model = modelMatch[1];
+    }
+
+    // Categorize for alerting and triage
+    if (message.includes('pool') || message.includes('connection') || message.includes('timeout')) {
+      errorInfo.category = 'CONNECTION_POOL';
+      logger.error('Database connection pool issue detected', errorInfo);
+    } else if (prismaCodeMatch || pgCodeMatch) {
+      errorInfo.category = 'DATA_INTEGRITY';
+      logger.error('Prisma data integrity error', errorInfo);
     } else {
-      logger.error('Prisma client error', { errorMessage: message });
+      errorInfo.category = 'UNKNOWN';
+      logger.error('Prisma client error', errorInfo);
     }
   });
 
