@@ -21,6 +21,7 @@ import { logger } from './utils/logger';
   regulatoryStatus
   description
   tradingDefaults
+  llmDefaults
   createdAt
   updatedAt
   deletedAt
@@ -187,6 +188,7 @@ id
     description
     status
     tradingOverrides
+    llmOverrides
     organizationId
     createdAt
     updatedAt
@@ -508,6 +510,7 @@ id
   regulatoryStatus: props.regulatoryStatus !== undefined ? props.regulatoryStatus : undefined,
   description: props.description !== undefined ? props.description : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? props.tradingDefaults : undefined,
+  llmDefaults: props.llmDefaults !== undefined ? props.llmDefaults : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   members: props.members ? 
     Array.isArray(props.members) && props.members.length > 0 &&  props.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -848,6 +851,7 @@ id
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
         tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1260,6 +1264,7 @@ id
   regulatoryStatus: prop.regulatoryStatus !== undefined ? prop.regulatoryStatus : undefined,
   description: prop.description !== undefined ? prop.description : undefined,
   tradingDefaults: prop.tradingDefaults !== undefined ? prop.tradingDefaults : undefined,
+  llmDefaults: prop.llmDefaults !== undefined ? prop.llmDefaults : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
       })),
         };
@@ -1380,6 +1385,9 @@ id
            } : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? {
             set: props.tradingDefaults 
+           } : undefined,
+  llmDefaults: props.llmDefaults !== undefined ? {
+            set: props.llmDefaults 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -2584,6 +2592,9 @@ id
         tradingOverrides: item.tradingOverrides !== undefined ? {
             set: item.tradingOverrides
           } : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? {
+            set: item.llmOverrides
+          } : undefined,
         deletedAt: item.deletedAt !== undefined ? {
             set: item.deletedAt
           } : undefined,
@@ -3626,6 +3637,7 @@ id
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
         tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4044,6 +4056,7 @@ id
   regulatoryStatus: props.regulatoryStatus !== undefined ? props.regulatoryStatus : undefined,
   description: props.description !== undefined ? props.description : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? props.tradingDefaults : undefined,
+  llmDefaults: props.llmDefaults !== undefined ? props.llmDefaults : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   members: props.members ? 
     Array.isArray(props.members) && props.members.length > 0 &&  props.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4384,6 +4397,7 @@ id
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
         tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4731,6 +4745,9 @@ id
            } : undefined,
   tradingDefaults: props.tradingDefaults !== undefined ? {
             set: props.tradingDefaults 
+           } : undefined,
+  llmDefaults: props.llmDefaults !== undefined ? {
+            set: props.llmDefaults 
            } : undefined,
   deletedAt: props.deletedAt !== undefined ? {
             set: props.deletedAt 
@@ -5929,6 +5946,9 @@ id
         tradingOverrides: item.tradingOverrides !== undefined ? {
             set: item.tradingOverrides
           } : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? {
+            set: item.llmOverrides
+          } : undefined,
         deletedAt: item.deletedAt !== undefined ? {
             set: item.deletedAt
           } : undefined,
@@ -6971,6 +6991,7 @@ id
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
         tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -7410,6 +7431,9 @@ id
            } : undefined,
   tradingDefaults: prop.tradingDefaults !== undefined ? {
             set: prop.tradingDefaults 
+           } : undefined,
+  llmDefaults: prop.llmDefaults !== undefined ? {
+            set: prop.llmDefaults 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -8614,6 +8638,9 @@ id
         tradingOverrides: item.tradingOverrides !== undefined ? {
             set: item.tradingOverrides
           } : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? {
+            set: item.llmOverrides
+          } : undefined,
         deletedAt: item.deletedAt !== undefined ? {
             set: item.deletedAt
           } : undefined,
@@ -9656,6 +9683,7 @@ id
         description: item.description !== undefined ? item.description : undefined,
         status: item.status !== undefined ? item.status : undefined,
         tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+        llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
     brokerageAccounts: item.brokerageAccounts ? 
       Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {

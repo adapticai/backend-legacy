@@ -24,6 +24,7 @@ import { logger } from './utils/logger';
     regulatoryStatus
     description
     tradingDefaults
+    llmDefaults
     createdAt
     updatedAt
     deletedAt
@@ -34,6 +35,7 @@ import { logger } from './utils/logger';
       description
       status
       tradingOverrides
+      llmOverrides
       organizationId
       createdAt
       updatedAt
@@ -181,6 +183,7 @@ id
         description
         status
         tradingOverrides
+        llmOverrides
         organizationId
         organization {
 id
@@ -376,6 +379,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
       Array.isArray(props.organization.funds) && props.organization.funds.length > 0 &&  props.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -402,6 +406,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -675,6 +680,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1111,6 +1117,9 @@ id
         tradingDefaults: props.organization.tradingDefaults !== undefined ? {
             set: props.organization.tradingDefaults
           } : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? {
+            set: props.organization.llmDefaults
+          } : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? {
             set: props.organization.deletedAt
           } : undefined,
@@ -1150,6 +1159,9 @@ id
             } : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? {
               set: item.tradingOverrides
+            } : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? {
+              set: item.llmOverrides
             } : undefined,
           deletedAt: item.deletedAt !== undefined ? {
               set: item.deletedAt
@@ -1354,6 +1366,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1460,6 +1473,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
       Array.isArray(props.organization.funds) && props.organization.funds.length > 0 &&  props.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1486,6 +1500,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1904,6 +1919,9 @@ id
             tradingOverrides: item.fund.tradingOverrides !== undefined ? {
                 set: item.fund.tradingOverrides
               } : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? {
+                set: item.fund.llmOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -1914,6 +1932,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1949,6 +1968,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2514,6 +2534,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2824,6 +2845,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
       Array.isArray(props.organization.funds) && props.organization.funds.length > 0 &&  props.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -2850,6 +2872,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -3123,6 +3146,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -3370,6 +3394,9 @@ id
         tradingDefaults: props.organization.tradingDefaults !== undefined ? {
             set: props.organization.tradingDefaults
           } : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? {
+            set: props.organization.llmDefaults
+          } : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? {
             set: props.organization.deletedAt
           } : undefined,
@@ -3409,6 +3436,9 @@ id
             } : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? {
               set: item.tradingOverrides
+            } : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? {
+              set: item.llmOverrides
             } : undefined,
           deletedAt: item.deletedAt !== undefined ? {
               set: item.deletedAt
@@ -3613,6 +3643,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -3719,6 +3750,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     funds: props.organization.funds ? 
       Array.isArray(props.organization.funds) && props.organization.funds.length > 0 &&  props.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -3745,6 +3777,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4163,6 +4196,9 @@ id
             tradingOverrides: item.fund.tradingOverrides !== undefined ? {
                 set: item.fund.tradingOverrides
               } : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? {
+                set: item.fund.llmOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -4173,6 +4209,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4208,6 +4245,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4773,6 +4811,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -5120,6 +5159,9 @@ id
         tradingDefaults: prop.organization.tradingDefaults !== undefined ? {
             set: prop.organization.tradingDefaults
           } : undefined,
+        llmDefaults: prop.organization.llmDefaults !== undefined ? {
+            set: prop.organization.llmDefaults
+          } : undefined,
         deletedAt: prop.organization.deletedAt !== undefined ? {
             set: prop.organization.deletedAt
           } : undefined,
@@ -5159,6 +5201,9 @@ id
             } : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? {
               set: item.tradingOverrides
+            } : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? {
+              set: item.llmOverrides
             } : undefined,
           deletedAt: item.deletedAt !== undefined ? {
               set: item.deletedAt
@@ -5363,6 +5408,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5469,6 +5515,7 @@ id
         regulatoryStatus: prop.organization.regulatoryStatus !== undefined ? prop.organization.regulatoryStatus : undefined,
         description: prop.organization.description !== undefined ? prop.organization.description : undefined,
         tradingDefaults: prop.organization.tradingDefaults !== undefined ? prop.organization.tradingDefaults : undefined,
+        llmDefaults: prop.organization.llmDefaults !== undefined ? prop.organization.llmDefaults : undefined,
         deletedAt: prop.organization.deletedAt !== undefined ? prop.organization.deletedAt : undefined,
     funds: prop.organization.funds ? 
       Array.isArray(prop.organization.funds) && prop.organization.funds.length > 0 &&  prop.organization.funds.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5495,6 +5542,7 @@ id
           description: item.description !== undefined ? item.description : undefined,
           status: item.status !== undefined ? item.status : undefined,
           tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+          llmOverrides: item.llmOverrides !== undefined ? item.llmOverrides : undefined,
           deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
       brokerageAccounts: item.brokerageAccounts ? 
         Array.isArray(item.brokerageAccounts) && item.brokerageAccounts.length > 0 &&  item.brokerageAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5913,6 +5961,9 @@ id
             tradingOverrides: item.fund.tradingOverrides !== undefined ? {
                 set: item.fund.tradingOverrides
               } : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? {
+                set: item.fund.llmOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -5923,6 +5974,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -5958,6 +6010,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -6523,6 +6576,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }

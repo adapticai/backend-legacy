@@ -175,6 +175,7 @@ import { logger } from './utils/logger';
           description: props.brokerageAccount.fund.description !== undefined ? props.brokerageAccount.fund.description : undefined,
           status: props.brokerageAccount.fund.status !== undefined ? props.brokerageAccount.fund.status : undefined,
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? props.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? props.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? props.brokerageAccount.fund.deletedAt : undefined,
       organization: props.brokerageAccount.fund.organization ? 
         typeof props.brokerageAccount.fund.organization === 'object' && Object.keys(props.brokerageAccount.fund.organization).length === 1 && Object.keys(props.brokerageAccount.fund.organization)[0] === 'id'
@@ -200,6 +201,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -938,6 +940,9 @@ import { logger } from './utils/logger';
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? {
               set: props.brokerageAccount.fund.tradingOverrides
             } : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? {
+              set: props.brokerageAccount.fund.llmOverrides
+            } : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? {
               set: props.brokerageAccount.fund.deletedAt
             } : undefined,
@@ -990,6 +995,9 @@ import { logger } from './utils/logger';
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? {
                 set: props.brokerageAccount.fund.organization.tradingDefaults
               } : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? {
+                set: props.brokerageAccount.fund.organization.llmDefaults
+              } : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? {
                 set: props.brokerageAccount.fund.organization.deletedAt
               } : undefined,
@@ -1004,6 +1012,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -1085,6 +1094,7 @@ import { logger } from './utils/logger';
           description: props.brokerageAccount.fund.description !== undefined ? props.brokerageAccount.fund.description : undefined,
           status: props.brokerageAccount.fund.status !== undefined ? props.brokerageAccount.fund.status : undefined,
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? props.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? props.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? props.brokerageAccount.fund.deletedAt : undefined,
       organization: props.brokerageAccount.fund.organization ? 
         typeof props.brokerageAccount.fund.organization === 'object' && Object.keys(props.brokerageAccount.fund.organization).length === 1 && Object.keys(props.brokerageAccount.fund.organization)[0] === 'id'
@@ -1110,6 +1120,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -2242,6 +2253,7 @@ import { logger } from './utils/logger';
           description: props.brokerageAccount.fund.description !== undefined ? props.brokerageAccount.fund.description : undefined,
           status: props.brokerageAccount.fund.status !== undefined ? props.brokerageAccount.fund.status : undefined,
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? props.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? props.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? props.brokerageAccount.fund.deletedAt : undefined,
       organization: props.brokerageAccount.fund.organization ? 
         typeof props.brokerageAccount.fund.organization === 'object' && Object.keys(props.brokerageAccount.fund.organization).length === 1 && Object.keys(props.brokerageAccount.fund.organization)[0] === 'id'
@@ -2267,6 +2279,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -2774,6 +2787,7 @@ import { logger } from './utils/logger';
           description: props.brokerageAccount.fund.description !== undefined ? props.brokerageAccount.fund.description : undefined,
           status: props.brokerageAccount.fund.status !== undefined ? props.brokerageAccount.fund.status : undefined,
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? props.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? props.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? props.brokerageAccount.fund.deletedAt : undefined,
       organization: props.brokerageAccount.fund.organization ? 
         typeof props.brokerageAccount.fund.organization === 'object' && Object.keys(props.brokerageAccount.fund.organization).length === 1 && Object.keys(props.brokerageAccount.fund.organization)[0] === 'id'
@@ -2799,6 +2813,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -3341,6 +3356,9 @@ import { logger } from './utils/logger';
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? {
               set: props.brokerageAccount.fund.tradingOverrides
             } : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? {
+              set: props.brokerageAccount.fund.llmOverrides
+            } : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? {
               set: props.brokerageAccount.fund.deletedAt
             } : undefined,
@@ -3393,6 +3411,9 @@ import { logger } from './utils/logger';
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? {
                 set: props.brokerageAccount.fund.organization.tradingDefaults
               } : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? {
+                set: props.brokerageAccount.fund.organization.llmDefaults
+              } : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? {
                 set: props.brokerageAccount.fund.organization.deletedAt
               } : undefined,
@@ -3407,6 +3428,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -3488,6 +3510,7 @@ import { logger } from './utils/logger';
           description: props.brokerageAccount.fund.description !== undefined ? props.brokerageAccount.fund.description : undefined,
           status: props.brokerageAccount.fund.status !== undefined ? props.brokerageAccount.fund.status : undefined,
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? props.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? props.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? props.brokerageAccount.fund.deletedAt : undefined,
       organization: props.brokerageAccount.fund.organization ? 
         typeof props.brokerageAccount.fund.organization === 'object' && Object.keys(props.brokerageAccount.fund.organization).length === 1 && Object.keys(props.brokerageAccount.fund.organization)[0] === 'id'
@@ -3513,6 +3536,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -4645,6 +4669,7 @@ import { logger } from './utils/logger';
           description: props.brokerageAccount.fund.description !== undefined ? props.brokerageAccount.fund.description : undefined,
           status: props.brokerageAccount.fund.status !== undefined ? props.brokerageAccount.fund.status : undefined,
           tradingOverrides: props.brokerageAccount.fund.tradingOverrides !== undefined ? props.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: props.brokerageAccount.fund.llmOverrides !== undefined ? props.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: props.brokerageAccount.fund.deletedAt !== undefined ? props.brokerageAccount.fund.deletedAt : undefined,
       organization: props.brokerageAccount.fund.organization ? 
         typeof props.brokerageAccount.fund.organization === 'object' && Object.keys(props.brokerageAccount.fund.organization).length === 1 && Object.keys(props.brokerageAccount.fund.organization)[0] === 'id'
@@ -4670,6 +4695,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: props.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? props.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: props.brokerageAccount.fund.organization.description !== undefined ? props.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: props.brokerageAccount.fund.organization.tradingDefaults !== undefined ? props.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: props.brokerageAccount.fund.organization.llmDefaults !== undefined ? props.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: props.brokerageAccount.fund.organization.deletedAt !== undefined ? props.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -5312,6 +5338,9 @@ import { logger } from './utils/logger';
           tradingOverrides: prop.brokerageAccount.fund.tradingOverrides !== undefined ? {
               set: prop.brokerageAccount.fund.tradingOverrides
             } : undefined,
+          llmOverrides: prop.brokerageAccount.fund.llmOverrides !== undefined ? {
+              set: prop.brokerageAccount.fund.llmOverrides
+            } : undefined,
           deletedAt: prop.brokerageAccount.fund.deletedAt !== undefined ? {
               set: prop.brokerageAccount.fund.deletedAt
             } : undefined,
@@ -5364,6 +5393,9 @@ import { logger } from './utils/logger';
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? {
                 set: prop.brokerageAccount.fund.organization.tradingDefaults
               } : undefined,
+            llmDefaults: prop.brokerageAccount.fund.organization.llmDefaults !== undefined ? {
+                set: prop.brokerageAccount.fund.organization.llmDefaults
+              } : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? {
                 set: prop.brokerageAccount.fund.organization.deletedAt
               } : undefined,
@@ -5378,6 +5410,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? prop.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: prop.brokerageAccount.fund.organization.description !== undefined ? prop.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? prop.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: prop.brokerageAccount.fund.organization.llmDefaults !== undefined ? prop.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? prop.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -5459,6 +5492,7 @@ import { logger } from './utils/logger';
           description: prop.brokerageAccount.fund.description !== undefined ? prop.brokerageAccount.fund.description : undefined,
           status: prop.brokerageAccount.fund.status !== undefined ? prop.brokerageAccount.fund.status : undefined,
           tradingOverrides: prop.brokerageAccount.fund.tradingOverrides !== undefined ? prop.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: prop.brokerageAccount.fund.llmOverrides !== undefined ? prop.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: prop.brokerageAccount.fund.deletedAt !== undefined ? prop.brokerageAccount.fund.deletedAt : undefined,
       organization: prop.brokerageAccount.fund.organization ? 
         typeof prop.brokerageAccount.fund.organization === 'object' && Object.keys(prop.brokerageAccount.fund.organization).length === 1 && Object.keys(prop.brokerageAccount.fund.organization)[0] === 'id'
@@ -5484,6 +5518,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? prop.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: prop.brokerageAccount.fund.organization.description !== undefined ? prop.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? prop.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: prop.brokerageAccount.fund.organization.llmDefaults !== undefined ? prop.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? prop.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }
@@ -6616,6 +6651,7 @@ import { logger } from './utils/logger';
           description: prop.brokerageAccount.fund.description !== undefined ? prop.brokerageAccount.fund.description : undefined,
           status: prop.brokerageAccount.fund.status !== undefined ? prop.brokerageAccount.fund.status : undefined,
           tradingOverrides: prop.brokerageAccount.fund.tradingOverrides !== undefined ? prop.brokerageAccount.fund.tradingOverrides : undefined,
+          llmOverrides: prop.brokerageAccount.fund.llmOverrides !== undefined ? prop.brokerageAccount.fund.llmOverrides : undefined,
           deletedAt: prop.brokerageAccount.fund.deletedAt !== undefined ? prop.brokerageAccount.fund.deletedAt : undefined,
       organization: prop.brokerageAccount.fund.organization ? 
         typeof prop.brokerageAccount.fund.organization === 'object' && Object.keys(prop.brokerageAccount.fund.organization).length === 1 && Object.keys(prop.brokerageAccount.fund.organization)[0] === 'id'
@@ -6641,6 +6677,7 @@ import { logger } from './utils/logger';
             regulatoryStatus: prop.brokerageAccount.fund.organization.regulatoryStatus !== undefined ? prop.brokerageAccount.fund.organization.regulatoryStatus : undefined,
             description: prop.brokerageAccount.fund.organization.description !== undefined ? prop.brokerageAccount.fund.organization.description : undefined,
             tradingDefaults: prop.brokerageAccount.fund.organization.tradingDefaults !== undefined ? prop.brokerageAccount.fund.organization.tradingDefaults : undefined,
+            llmDefaults: prop.brokerageAccount.fund.organization.llmDefaults !== undefined ? prop.brokerageAccount.fund.organization.llmDefaults : undefined,
             deletedAt: prop.brokerageAccount.fund.organization.deletedAt !== undefined ? prop.brokerageAccount.fund.organization.deletedAt : undefined,
           },
         }

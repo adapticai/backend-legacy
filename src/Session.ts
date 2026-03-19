@@ -371,6 +371,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -424,6 +425,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1105,6 +1107,9 @@ id
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? {
+                set: item.organization.llmDefaults
+              } : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? {
                 set: item.organization.deletedAt
               } : undefined,
@@ -1119,6 +1124,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -1153,6 +1159,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -1225,6 +1232,9 @@ id
             tradingOverrides: item.fund.tradingOverrides !== undefined ? {
                 set: item.fund.tradingOverrides
               } : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? {
+                set: item.fund.llmOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -1235,6 +1245,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1270,6 +1281,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -1815,6 +1827,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -1868,6 +1881,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2304,6 +2318,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -2357,6 +2372,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -2855,6 +2871,9 @@ id
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? {
+                set: item.organization.llmDefaults
+              } : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? {
                 set: item.organization.deletedAt
               } : undefined,
@@ -2869,6 +2888,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -2903,6 +2923,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -2975,6 +2996,9 @@ id
             tradingOverrides: item.fund.tradingOverrides !== undefined ? {
                 set: item.fund.tradingOverrides
               } : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? {
+                set: item.fund.llmOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -2985,6 +3009,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -3020,6 +3045,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -3565,6 +3591,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -3618,6 +3645,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4213,6 +4241,9 @@ id
             tradingDefaults: item.organization.tradingDefaults !== undefined ? {
                 set: item.organization.tradingDefaults
               } : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? {
+                set: item.organization.llmDefaults
+              } : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? {
                 set: item.organization.deletedAt
               } : undefined,
@@ -4227,6 +4258,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -4261,6 +4293,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -4333,6 +4366,9 @@ id
             tradingOverrides: item.fund.tradingOverrides !== undefined ? {
                 set: item.fund.tradingOverrides
               } : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? {
+                set: item.fund.llmOverrides
+              } : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? {
                 set: item.fund.deletedAt
               } : undefined,
@@ -4343,6 +4379,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4378,6 +4415,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }
@@ -4923,6 +4961,7 @@ id
             regulatoryStatus: item.organization.regulatoryStatus !== undefined ? item.organization.regulatoryStatus : undefined,
             description: item.organization.description !== undefined ? item.organization.description : undefined,
             tradingDefaults: item.organization.tradingDefaults !== undefined ? item.organization.tradingDefaults : undefined,
+            llmDefaults: item.organization.llmDefaults !== undefined ? item.organization.llmDefaults : undefined,
             deletedAt: item.organization.deletedAt !== undefined ? item.organization.deletedAt : undefined,
           },
         }
@@ -4976,6 +5015,7 @@ id
             description: item.fund.description !== undefined ? item.fund.description : undefined,
             status: item.fund.status !== undefined ? item.fund.status : undefined,
             tradingOverrides: item.fund.tradingOverrides !== undefined ? item.fund.tradingOverrides : undefined,
+            llmOverrides: item.fund.llmOverrides !== undefined ? item.fund.llmOverrides : undefined,
             deletedAt: item.fund.deletedAt !== undefined ? item.fund.deletedAt : undefined,
           },
         }

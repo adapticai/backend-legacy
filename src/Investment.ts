@@ -20,6 +20,7 @@ import { logger } from './utils/logger';
     description
     status
     tradingOverrides
+    llmOverrides
     organizationId
     organization {
       id
@@ -32,6 +33,7 @@ import { logger } from './utils/logger';
       regulatoryStatus
       description
       tradingDefaults
+      llmDefaults
       createdAt
       updatedAt
       deletedAt
@@ -524,6 +526,7 @@ id
         description: props.fund.description !== undefined ? props.fund.description : undefined,
         status: props.fund.status !== undefined ? props.fund.status : undefined,
         tradingOverrides: props.fund.tradingOverrides !== undefined ? props.fund.tradingOverrides : undefined,
+        llmOverrides: props.fund.llmOverrides !== undefined ? props.fund.llmOverrides : undefined,
         deletedAt: props.fund.deletedAt !== undefined ? props.fund.deletedAt : undefined,
     organization: props.fund.organization ? 
       typeof props.fund.organization === 'object' && Object.keys(props.fund.organization).length === 1 && Object.keys(props.fund.organization)[0] === 'id'
@@ -549,6 +552,7 @@ id
           regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
           description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? props.fund.organization.llmDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
         Array.isArray(props.fund.organization.members) && props.fund.organization.members.length > 0 &&  props.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1398,6 +1402,9 @@ id
         tradingOverrides: props.fund.tradingOverrides !== undefined ? {
             set: props.fund.tradingOverrides
           } : undefined,
+        llmOverrides: props.fund.llmOverrides !== undefined ? {
+            set: props.fund.llmOverrides
+          } : undefined,
         deletedAt: props.fund.deletedAt !== undefined ? {
             set: props.fund.deletedAt
           } : undefined,
@@ -1450,6 +1457,9 @@ id
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? {
+              set: props.fund.organization.llmDefaults
+            } : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? {
               set: props.fund.organization.deletedAt
             } : undefined,
@@ -1498,6 +1508,7 @@ id
           regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
           description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? props.fund.organization.llmDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
         Array.isArray(props.fund.organization.members) && props.fund.organization.members.length > 0 &&  props.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -2448,6 +2459,7 @@ id
         description: props.fund.description !== undefined ? props.fund.description : undefined,
         status: props.fund.status !== undefined ? props.fund.status : undefined,
         tradingOverrides: props.fund.tradingOverrides !== undefined ? props.fund.tradingOverrides : undefined,
+        llmOverrides: props.fund.llmOverrides !== undefined ? props.fund.llmOverrides : undefined,
         deletedAt: props.fund.deletedAt !== undefined ? props.fund.deletedAt : undefined,
     organization: props.fund.organization ? 
       typeof props.fund.organization === 'object' && Object.keys(props.fund.organization).length === 1 && Object.keys(props.fund.organization)[0] === 'id'
@@ -2473,6 +2485,7 @@ id
           regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
           description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? props.fund.organization.llmDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
         Array.isArray(props.fund.organization.members) && props.fund.organization.members.length > 0 &&  props.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4040,6 +4053,7 @@ id
         description: props.fund.description !== undefined ? props.fund.description : undefined,
         status: props.fund.status !== undefined ? props.fund.status : undefined,
         tradingOverrides: props.fund.tradingOverrides !== undefined ? props.fund.tradingOverrides : undefined,
+        llmOverrides: props.fund.llmOverrides !== undefined ? props.fund.llmOverrides : undefined,
         deletedAt: props.fund.deletedAt !== undefined ? props.fund.deletedAt : undefined,
     organization: props.fund.organization ? 
       typeof props.fund.organization === 'object' && Object.keys(props.fund.organization).length === 1 && Object.keys(props.fund.organization)[0] === 'id'
@@ -4065,6 +4079,7 @@ id
           regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
           description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? props.fund.organization.llmDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
         Array.isArray(props.fund.organization.members) && props.fund.organization.members.length > 0 &&  props.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -4726,6 +4741,9 @@ id
         tradingOverrides: props.fund.tradingOverrides !== undefined ? {
             set: props.fund.tradingOverrides
           } : undefined,
+        llmOverrides: props.fund.llmOverrides !== undefined ? {
+            set: props.fund.llmOverrides
+          } : undefined,
         deletedAt: props.fund.deletedAt !== undefined ? {
             set: props.fund.deletedAt
           } : undefined,
@@ -4778,6 +4796,9 @@ id
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? {
               set: props.fund.organization.tradingDefaults
             } : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? {
+              set: props.fund.organization.llmDefaults
+            } : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? {
               set: props.fund.organization.deletedAt
             } : undefined,
@@ -4826,6 +4847,7 @@ id
           regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
           description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? props.fund.organization.llmDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
         Array.isArray(props.fund.organization.members) && props.fund.organization.members.length > 0 &&  props.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5776,6 +5798,7 @@ id
         description: props.fund.description !== undefined ? props.fund.description : undefined,
         status: props.fund.status !== undefined ? props.fund.status : undefined,
         tradingOverrides: props.fund.tradingOverrides !== undefined ? props.fund.tradingOverrides : undefined,
+        llmOverrides: props.fund.llmOverrides !== undefined ? props.fund.llmOverrides : undefined,
         deletedAt: props.fund.deletedAt !== undefined ? props.fund.deletedAt : undefined,
     organization: props.fund.organization ? 
       typeof props.fund.organization === 'object' && Object.keys(props.fund.organization).length === 1 && Object.keys(props.fund.organization)[0] === 'id'
@@ -5801,6 +5824,7 @@ id
           regulatoryStatus: props.fund.organization.regulatoryStatus !== undefined ? props.fund.organization.regulatoryStatus : undefined,
           description: props.fund.organization.description !== undefined ? props.fund.organization.description : undefined,
           tradingDefaults: props.fund.organization.tradingDefaults !== undefined ? props.fund.organization.tradingDefaults : undefined,
+          llmDefaults: props.fund.organization.llmDefaults !== undefined ? props.fund.organization.llmDefaults : undefined,
           deletedAt: props.fund.organization.deletedAt !== undefined ? props.fund.organization.deletedAt : undefined,
       members: props.fund.organization.members ? 
         Array.isArray(props.fund.organization.members) && props.fund.organization.members.length > 0 &&  props.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -7399,6 +7423,9 @@ id
         tradingOverrides: prop.fund.tradingOverrides !== undefined ? {
             set: prop.fund.tradingOverrides
           } : undefined,
+        llmOverrides: prop.fund.llmOverrides !== undefined ? {
+            set: prop.fund.llmOverrides
+          } : undefined,
         deletedAt: prop.fund.deletedAt !== undefined ? {
             set: prop.fund.deletedAt
           } : undefined,
@@ -7451,6 +7478,9 @@ id
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? {
               set: prop.fund.organization.tradingDefaults
             } : undefined,
+          llmDefaults: prop.fund.organization.llmDefaults !== undefined ? {
+              set: prop.fund.organization.llmDefaults
+            } : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? {
               set: prop.fund.organization.deletedAt
             } : undefined,
@@ -7499,6 +7529,7 @@ id
           regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
           description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
+          llmDefaults: prop.fund.organization.llmDefaults !== undefined ? prop.fund.organization.llmDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
         Array.isArray(prop.fund.organization.members) && prop.fund.organization.members.length > 0 &&  prop.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -8449,6 +8480,7 @@ id
         description: prop.fund.description !== undefined ? prop.fund.description : undefined,
         status: prop.fund.status !== undefined ? prop.fund.status : undefined,
         tradingOverrides: prop.fund.tradingOverrides !== undefined ? prop.fund.tradingOverrides : undefined,
+        llmOverrides: prop.fund.llmOverrides !== undefined ? prop.fund.llmOverrides : undefined,
         deletedAt: prop.fund.deletedAt !== undefined ? prop.fund.deletedAt : undefined,
     organization: prop.fund.organization ? 
       typeof prop.fund.organization === 'object' && Object.keys(prop.fund.organization).length === 1 && Object.keys(prop.fund.organization)[0] === 'id'
@@ -8474,6 +8506,7 @@ id
           regulatoryStatus: prop.fund.organization.regulatoryStatus !== undefined ? prop.fund.organization.regulatoryStatus : undefined,
           description: prop.fund.organization.description !== undefined ? prop.fund.organization.description : undefined,
           tradingDefaults: prop.fund.organization.tradingDefaults !== undefined ? prop.fund.organization.tradingDefaults : undefined,
+          llmDefaults: prop.fund.organization.llmDefaults !== undefined ? prop.fund.organization.llmDefaults : undefined,
           deletedAt: prop.fund.organization.deletedAt !== undefined ? prop.fund.organization.deletedAt : undefined,
       members: prop.fund.organization.members ? 
         Array.isArray(prop.fund.organization.members) && prop.fund.organization.members.length > 0 &&  prop.fund.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {

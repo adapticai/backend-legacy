@@ -17,6 +17,7 @@ import { logger } from './utils/logger';
   description
   status
   tradingOverrides
+  llmOverrides
   organizationId
   organization {
     id
@@ -29,6 +30,7 @@ import { logger } from './utils/logger';
     regulatoryStatus
     description
     tradingDefaults
+    llmDefaults
     createdAt
     updatedAt
     deletedAt
@@ -702,6 +704,7 @@ id
   description: props.description !== undefined ? props.description : undefined,
   status: props.status !== undefined ? props.status : undefined,
   tradingOverrides: props.tradingOverrides !== undefined ? props.tradingOverrides : undefined,
+  llmOverrides: props.llmOverrides !== undefined ? props.llmOverrides : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   organization: props.organization ? 
     typeof props.organization === 'object' && Object.keys(props.organization).length === 1 && Object.keys(props.organization)[0] === 'id'
@@ -727,6 +730,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     members: props.organization.members ? 
       Array.isArray(props.organization.members) && props.organization.members.length > 0 &&  props.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -1630,6 +1634,7 @@ id
   description: prop.description !== undefined ? prop.description : undefined,
   status: prop.status !== undefined ? prop.status : undefined,
   tradingOverrides: prop.tradingOverrides !== undefined ? prop.tradingOverrides : undefined,
+  llmOverrides: prop.llmOverrides !== undefined ? prop.llmOverrides : undefined,
   organizationId: prop.organizationId !== undefined ? prop.organizationId : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
       })),
@@ -1745,6 +1750,9 @@ id
   tradingOverrides: props.tradingOverrides !== undefined ? {
             set: props.tradingOverrides 
            } : undefined,
+  llmOverrides: props.llmOverrides !== undefined ? {
+            set: props.llmOverrides 
+           } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -1802,6 +1810,9 @@ id
           } : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? {
             set: props.organization.tradingDefaults
+          } : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? {
+            set: props.organization.llmDefaults
           } : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? {
             set: props.organization.deletedAt
@@ -1974,6 +1985,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     members: props.organization.members ? 
       Array.isArray(props.organization.members) && props.organization.members.length > 0 &&  props.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5129,6 +5141,7 @@ id
   description: props.description !== undefined ? props.description : undefined,
   status: props.status !== undefined ? props.status : undefined,
   tradingOverrides: props.tradingOverrides !== undefined ? props.tradingOverrides : undefined,
+  llmOverrides: props.llmOverrides !== undefined ? props.llmOverrides : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   organization: props.organization ? 
     typeof props.organization === 'object' && Object.keys(props.organization).length === 1 && Object.keys(props.organization)[0] === 'id'
@@ -5154,6 +5167,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     members: props.organization.members ? 
       Array.isArray(props.organization.members) && props.organization.members.length > 0 &&  props.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -5985,6 +5999,9 @@ id
   tradingOverrides: props.tradingOverrides !== undefined ? {
             set: props.tradingOverrides 
            } : undefined,
+  llmOverrides: props.llmOverrides !== undefined ? {
+            set: props.llmOverrides 
+           } : undefined,
   deletedAt: props.deletedAt !== undefined ? {
             set: props.deletedAt 
            } : undefined,
@@ -6036,6 +6053,9 @@ id
           } : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? {
             set: props.organization.tradingDefaults
+          } : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? {
+            set: props.organization.llmDefaults
           } : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? {
             set: props.organization.deletedAt
@@ -6208,6 +6228,7 @@ id
         regulatoryStatus: props.organization.regulatoryStatus !== undefined ? props.organization.regulatoryStatus : undefined,
         description: props.organization.description !== undefined ? props.organization.description : undefined,
         tradingDefaults: props.organization.tradingDefaults !== undefined ? props.organization.tradingDefaults : undefined,
+        llmDefaults: props.organization.llmDefaults !== undefined ? props.organization.llmDefaults : undefined,
         deletedAt: props.organization.deletedAt !== undefined ? props.organization.deletedAt : undefined,
     members: props.organization.members ? 
       Array.isArray(props.organization.members) && props.organization.members.length > 0 &&  props.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
@@ -9377,6 +9398,9 @@ id
   tradingOverrides: prop.tradingOverrides !== undefined ? {
             set: prop.tradingOverrides 
            } : undefined,
+  llmOverrides: prop.llmOverrides !== undefined ? {
+            set: prop.llmOverrides 
+           } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -9434,6 +9458,9 @@ id
           } : undefined,
         tradingDefaults: prop.organization.tradingDefaults !== undefined ? {
             set: prop.organization.tradingDefaults
+          } : undefined,
+        llmDefaults: prop.organization.llmDefaults !== undefined ? {
+            set: prop.organization.llmDefaults
           } : undefined,
         deletedAt: prop.organization.deletedAt !== undefined ? {
             set: prop.organization.deletedAt
@@ -9606,6 +9633,7 @@ id
         regulatoryStatus: prop.organization.regulatoryStatus !== undefined ? prop.organization.regulatoryStatus : undefined,
         description: prop.organization.description !== undefined ? prop.organization.description : undefined,
         tradingDefaults: prop.organization.tradingDefaults !== undefined ? prop.organization.tradingDefaults : undefined,
+        llmDefaults: prop.organization.llmDefaults !== undefined ? prop.organization.llmDefaults : undefined,
         deletedAt: prop.organization.deletedAt !== undefined ? prop.organization.deletedAt : undefined,
     members: prop.organization.members ? 
       Array.isArray(prop.organization.members) && prop.organization.members.length > 0 &&  prop.organization.members.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
