@@ -452,6 +452,17 @@ enum OpenaiModel {
   GPT_4_1_NANO
 }
 
+/// Supported LLM providers for multi-provider model routing
+enum LlmProvider {
+  OPENAI
+  ANTHROPIC
+  DEEPSEEK
+  KIMI
+  QWEN
+  XAI
+  GEMINI
+}
+
 // Defines the status of model versions during their lifecycle.
 enum ModelVersionStatus {
   /// Model is currently being trained.
@@ -992,8 +1003,54 @@ model User {
   /// List of waitlist entries reviewed by this user. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedBy']
   reviewedWaitlistEntries WaitlistEntry[] @relation("WaitlistReviewer")
 
+  /// Per-user LLM provider and model configuration. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  llmConfiguration LlmConfiguration?
+
   @@index([customerId])
   @@map(name: "users")
+}
+
+/// Per-user LLM provider and model configuration.
+/// Supports default provider + optional per-tier (mini/normal/advanced) overrides
+/// for mixing providers across tiers.
+///
+/// @description Stores the user's chosen LLM provider configuration including
+/// default provider, per-tier provider overrides, per-tier model overrides,
+/// and encrypted API keys for each provider.
+///
+/// TYPESTRING.SKIP=true
+model LlmConfiguration {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Default provider used for all tiers unless overridden
+  defaultProvider LlmProvider @default(OPENAI)
+
+  /// Per-tier provider overrides (null = inherit from defaultProvider)
+  miniProvider     LlmProvider?
+  normalProvider   LlmProvider?
+  advancedProvider LlmProvider?
+
+  /// Per-tier model overrides (null = use provider's default for that tier)
+  /// These are model ID strings like "gpt-5.4-mini", "claude-sonnet-4-6", etc.
+  miniModel     String?
+  normalModel   String?
+  advancedModel String?
+
+  /// Provider API keys (encrypted at rest)
+  /// TYPESTRING.SKIP=true
+  /// GQL.EXCLUDE=['openaiApiKey','anthropicApiKey','deepseekApiKey','kimiApiKey','qwenApiKey','xaiApiKey','geminiApiKey']
+  openaiApiKey    String?
+  anthropicApiKey String?
+  deepseekApiKey  String?
+  kimiApiKey      String?
+  qwenApiKey      String?
+  xaiApiKey       String?
+  geminiApiKey    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Store linked authentication providers for users
