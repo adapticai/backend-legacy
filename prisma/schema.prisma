@@ -465,6 +465,18 @@ enum OpenaiModel {
   GPT_4_1_NANO
 }
 
+/// Supported LLM providers for multi-provider model routing.
+/// Used in organization-level llmDefaults and fund-level llmOverrides.
+enum LlmProvider {
+  OPENAI
+  ANTHROPIC
+  DEEPSEEK
+  KIMI
+  QWEN
+  XAI
+  GEMINI
+}
+
 // Defines the status of model versions during their lifecycle.
 enum ModelVersionStatus {
   /// Model is currently being trained.
@@ -975,19 +987,19 @@ enum InvestmentStatus {
 // Represents an organization (ManCo / fund operator firm).
 model Organization {
   /// Unique identifier for the organization. TYPESTRING.SKIP=true
-  id        String   @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   /// The name of the organization.
-  name      String
+  name String
 
   /// URL-friendly identifier for the organization, must be unique.
-  slug      String   @unique
+  slug String @unique
 
   /// URL to the organization's logo image.
-  logoUrl   String?
+  logoUrl String?
 
   /// The organization's website URL.
-  website   String?
+  website String?
 
   /// Business structure type determining the operational model.
   businessType OrgBusinessType?
@@ -1005,6 +1017,12 @@ model Organization {
   /// Fund-level overrides take precedence over these defaults.
   tradingDefaults Json?
 
+  /// Default LLM provider/model configuration for all funds in this organization.
+  /// Stores: defaultProvider, miniProvider, normalProvider, advancedProvider,
+  /// miniModel, normalModel, advancedModel, and per-provider API keys.
+  /// Fund-level llmOverrides take precedence over these defaults.
+  llmDefaults Json?
+
   /// Timestamp when the organization was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -1015,10 +1033,10 @@ model Organization {
   deletedAt DateTime?
 
   /// List of members in this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
-  members   OrgMembership[]
+  members OrgMembership[]
 
   /// List of funds operated by this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
-  funds     Fund[]
+  funds Fund[]
 
   @@map(name: "organizations")
 }
@@ -1026,31 +1044,31 @@ model Organization {
 // Represents a user's membership in an organization.
 model OrgMembership {
   /// Unique identifier for the membership. TYPESTRING.SKIP=true
-  id             String       @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
-  organizationId String       @db.Uuid
+  organizationId String @db.Uuid
 
   /// Relation to the Organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['members']
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   /// Foreign key referencing the User. TYPESTRING.SKIP=true
-  userId         String       @db.Uuid
+  userId String @db.Uuid
 
   /// Relation to the User. TYPESTRING.SKIP=true GQL.EXCLUDE=['orgMemberships']
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// The role assigned to this member within the organization.
-  role           OrgRole      @default(MEMBER)
+  role OrgRole @default(MEMBER)
 
   /// Fine-grained permission overrides. TYPESTRING.SKIP=true
-  permissions    String[]     @default([])
+  permissions String[] @default([])
 
   /// Timestamp when the membership was created. TYPESTRING.SKIP=true
-  createdAt      DateTime     @default(now())
+  createdAt DateTime @default(now())
 
   /// Timestamp when the membership was last updated. TYPESTRING.SKIP=true
-  updatedAt      DateTime     @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@unique([organizationId, userId])
   @@index([userId])
@@ -1060,47 +1078,52 @@ model OrgMembership {
 // Represents a fund operated by an organization.
 model Fund {
   /// Unique identifier for the fund. TYPESTRING.SKIP=true
-  id             String       @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   /// The name of the fund.
-  name           String
+  name String
 
   /// URL-friendly identifier for the fund, unique within its organization.
-  slug           String
+  slug String
 
   /// A description of the fund.
-  description    String?
+  description String?
 
   /// The lifecycle status of the fund.
-  status         FundStatus   @default(SETUP)
+  status FundStatus @default(SETUP)
 
   /// Fund-level trading settings overrides.
   /// Values here take precedence over the organization's tradingDefaults.
   tradingOverrides Json?
 
+  /// Fund-level LLM provider/model configuration overrides.
+  /// Values here take precedence over the organization's llmDefaults.
+  /// Same JSON shape as Organization.llmDefaults.
+  llmOverrides Json?
+
   /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
-  organizationId String       @db.Uuid
+  organizationId String @db.Uuid
 
   /// Relation to the Organization that operates this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['funds']
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   /// Timestamp when the fund was created. TYPESTRING.SKIP=true
-  createdAt      DateTime     @default(now())
+  createdAt DateTime @default(now())
 
   /// Timestamp when the fund was last updated. TYPESTRING.SKIP=true
-  updatedAt      DateTime     @updatedAt
+  updatedAt DateTime @updatedAt
 
   /// Timestamp when the fund was soft-deleted. TYPESTRING.SKIP=true
-  deletedAt      DateTime?
+  deletedAt DateTime?
 
   /// List of brokerage accounts connected to this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
   brokerageAccounts BrokerageAccount[]
 
   /// List of team assignments for this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
-  assignments       FundAssignment[]
+  assignments FundAssignment[]
 
   /// List of investments in this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
-  investments       Investment[]
+  investments Investment[]
 
   @@unique([organizationId, slug])
   @@index([organizationId])
@@ -1110,31 +1133,31 @@ model Fund {
 // Represents a user's assignment to a specific fund (including cross-org collaborators).
 model FundAssignment {
   /// Unique identifier for the assignment. TYPESTRING.SKIP=true
-  id          String   @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
-  fundId      String   @db.Uuid
+  fundId String @db.Uuid
 
   /// Relation to the Fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['assignments']
-  fund        Fund     @relation(fields: [fundId], references: [id], onDelete: Cascade)
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
 
   /// Foreign key referencing the User. TYPESTRING.SKIP=true
-  userId      String   @db.Uuid
+  userId String @db.Uuid
 
   /// Relation to the User. TYPESTRING.SKIP=true GQL.EXCLUDE=['fundAssignments']
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// The role assigned to this user within the fund.
-  role        FundRole @default(VIEWER)
+  role FundRole @default(VIEWER)
 
   /// Fine-grained permission overrides. TYPESTRING.SKIP=true
   permissions String[] @default([])
 
   /// Timestamp when the assignment was created. TYPESTRING.SKIP=true
-  createdAt   DateTime @default(now())
+  createdAt DateTime @default(now())
 
   /// Timestamp when the assignment was last updated. TYPESTRING.SKIP=true
-  updatedAt   DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@unique([fundId, userId])
   @@index([userId])
@@ -1144,40 +1167,40 @@ model FundAssignment {
 // Represents an investor who may hold units in one or more funds.
 model Investor {
   /// Unique identifier for the investor. TYPESTRING.SKIP=true
-  id            String       @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   /// The name of the investor.
-  name          String
+  name String
 
   /// The investor's email address.
-  email         String?
+  email String?
 
   /// The type of investor.
-  type          InvestorType @default(INDIVIDUAL)
+  type InvestorType @default(INDIVIDUAL)
 
   /// The KYC verification status of the investor.
-  kycStatus     KycStatus    @default(PENDING)
+  kycStatus KycStatus @default(PENDING)
 
   /// The investor's blockchain wallet address.
   walletAddress String?
 
   /// Optional foreign key to a User for platform access. TYPESTRING.SKIP=true
-  userId        String?      @unique @db.Uuid
+  userId String? @unique @db.Uuid
 
   /// Optional relation to a User for platform access. TYPESTRING.SKIP=true GQL.EXCLUDE=['investorProfile']
-  user          User?        @relation(fields: [userId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   /// Timestamp when the investor record was created. TYPESTRING.SKIP=true
-  createdAt     DateTime     @default(now())
+  createdAt DateTime @default(now())
 
   /// Timestamp when the investor record was last updated. TYPESTRING.SKIP=true
-  updatedAt     DateTime     @updatedAt
+  updatedAt DateTime @updatedAt
 
   /// Timestamp when the investor was soft-deleted. TYPESTRING.SKIP=true
-  deletedAt     DateTime?
+  deletedAt DateTime?
 
   /// List of investments held by this investor. TYPESTRING.SKIP=true GQL.EXCLUDE=['investor']
-  investments   Investment[]
+  investments Investment[]
 
   @@index([userId])
   @@index([email])
@@ -1187,34 +1210,34 @@ model Investor {
 // Represents an investment (tokenized units) held by an investor in a fund.
 model Investment {
   /// Unique identifier for the investment. TYPESTRING.SKIP=true
-  id         String           @id @default(uuid()) @db.Uuid
+  id String @id @default(uuid()) @db.Uuid
 
   /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
-  fundId     String           @db.Uuid
+  fundId String @db.Uuid
 
   /// Relation to the Fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['investments']
-  fund       Fund             @relation(fields: [fundId], references: [id], onDelete: Cascade)
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
 
   /// Foreign key referencing the Investor. TYPESTRING.SKIP=true
-  investorId String           @db.Uuid
+  investorId String @db.Uuid
 
   /// Relation to the Investor. TYPESTRING.SKIP=true GQL.EXCLUDE=['investments']
-  investor   Investor         @relation(fields: [investorId], references: [id], onDelete: Cascade)
+  investor Investor @relation(fields: [investorId], references: [id], onDelete: Cascade)
 
   /// Number of tokenized units held.
-  units      Float
+  units Float
 
   /// Timestamp when the investment was made.
-  investedAt DateTime         @default(now())
+  investedAt DateTime @default(now())
 
   /// The status of this investment.
-  status     InvestmentStatus @default(ACTIVE)
+  status InvestmentStatus @default(ACTIVE)
 
   /// Timestamp when the investment record was created. TYPESTRING.SKIP=true
-  createdAt  DateTime         @default(now())
+  createdAt DateTime @default(now())
 
   /// Timestamp when the investment record was last updated. TYPESTRING.SKIP=true
-  updatedAt  DateTime         @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@unique([fundId, investorId])
   @@index([fundId])
@@ -1379,10 +1402,10 @@ model User {
   openaiModel OpenaiModel? @default(GPT_5_MINI)
 
   /// Hashed password for credentials-based login (bcrypt). Null for OAuth-only users. TYPESTRING.SKIP=true
-  passwordHash  String?
+  passwordHash String?
 
   /// S3 avatar URL (uploaded from OAuth provider image).
-  avatarUrl     String?
+  avatarUrl String?
 
   /// Whether the user has completed the post-signup onboarding flow.
   onboardingComplete Boolean @default(true)
