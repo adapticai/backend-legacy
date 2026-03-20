@@ -1193,6 +1193,9 @@ model AlpacaAccount {
   /// Account-level asset class allocation configuration. TYPESTRING.SKIP=true
   allocation Allocation?
 
+  /// Trading policy governing autonomous decision-making for this account. TYPESTRING.SKIP=true
+  tradingPolicy TradingPolicy?
+
   /// Whether the system should automatically determine allocation percentages based on market conditions. TYPESTRING.SKIP=true
   autoAllocation Boolean @default(true)
 
@@ -4529,4 +4532,252 @@ model AuditLog {
   @@index([recordId])
   @@index([operationType, timestamp])
   @@map(name: "audit_logs")
+}
+
+/// ### Trading Policy & Decision Engine
+
+enum AutonomyMode {
+  ADVISORY_ONLY
+  EXECUTION_ON_APPROVAL
+  SEMI_AUTONOMOUS
+  FULLY_AUTONOMOUS
+  EMERGENCY_SAFE_MODE
+}
+
+enum OverlayType {
+  BLACK_SWAN
+  VOLATILITY_REGIME
+  SECTOR_DETERIORATION
+  DRAWDOWN_BREACH
+  CORRELATION_SPIKE
+  LIQUIDITY_STRESS
+  EXCHANGE_DEGRADATION
+  DATA_QUALITY
+  NEWS_EVENT_RISK
+  RATES_BONDS_STRESS
+  MANUAL_OVERRIDE
+  INCIDENT_RESPONSE
+}
+
+enum OverlaySeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum OverlayStatus {
+  ACTIVE
+  EXPIRED
+  DEACTIVATED
+  SUPERSEDED
+}
+
+enum DecisionOutcome {
+  DO_NOTHING
+  OPEN_POSITION
+  ADD_TO_POSITION
+  REDUCE_POSITION
+  CLOSE_POSITION
+  REVERSE_POSITION
+  MODIFY_ORDERS
+  CANCEL_ORDERS
+  REBALANCE
+  MUTATE_POLICY
+  ESCALATE_FOR_APPROVAL
+  SKIP_INELIGIBLE
+}
+
+enum DecisionRecordStatus {
+  PENDING
+  EXECUTING
+  COMPLETED
+  FAILED
+  CANCELLED
+  ESCALATED
+}
+
+enum DecisionMemoryOutcome {
+  PENDING
+  PROFITABLE
+  UNPROFITABLE
+  STOPPED_OUT
+  CANCELLED
+}
+
+model TradingPolicy {
+  id                String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId   String   @unique @db.Uuid
+  alpacaAccount     AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  version           Int      @default(1)
+  lastModifiedBy    String?
+  lastModifiedAt    DateTime @default(now())
+
+  autonomyMode              AutonomyMode @default(ADVISORY_ONLY)
+  realtimeTradingEnabled    Boolean @default(false)
+  paperTradingOnly          Boolean @default(false)
+  killSwitchEnabled         Boolean @default(false)
+  autonomyPrefs             Json?
+
+  equitiesEnabled           Boolean @default(true)
+  etfsEnabled               Boolean @default(true)
+  cryptoEnabled             Boolean @default(false)
+  optionsEnabled            Boolean @default(false)
+  futuresEnabled            Boolean @default(false)
+  forexEnabled              Boolean @default(false)
+  shortingEnabled           Boolean @default(false)
+  marginEnabled             Boolean @default(false)
+  fractionalSharesEnabled   Boolean @default(true)
+  assetUniversePrefs        Json?
+
+  maxBuyingPowerUtilPct     Float   @default(90)
+  cashFloorPct              Float   @default(10)
+  maxGrossExposurePct       Float   @default(100)
+  maxNetExposurePct         Float   @default(100)
+  maxLeverage               Float   @default(1)
+  maxSymbolConcentrationPct Float   @default(15)
+  maxSectorConcentrationPct Float   @default(30)
+  maxOpenPositions          Int     @default(20)
+  maxOpenOrders             Int     @default(50)
+  riskBudgetPrefs           Json?
+
+  signalConsumptionPrefs    Json?
+  executionPrefs            Json?
+  positionManagementPrefs   Json?
+  portfolioConstructionPrefs Json?
+
+  macroOverlayEnabled                Boolean @default(false)
+  sectorOverlayEnabled               Boolean @default(false)
+  volatilityOverlayEnabled           Boolean @default(false)
+  liquidityStressOverlayEnabled      Boolean @default(false)
+  blackSwanProtectionEnabled         Boolean @default(false)
+  drawdownGuardianEnabled            Boolean @default(false)
+  correlationSpikeProtectionEnabled  Boolean @default(false)
+  newsEventRiskOverlayEnabled        Boolean @default(false)
+  exchangeHealthOverlayEnabled       Boolean @default(false)
+  dataQualitySentinelEnabled         Boolean @default(false)
+  overlayResponsePrefs      Json?
+
+  miniModelProvider         LlmProvider?
+  miniModelId               String?
+  normalModelProvider       LlmProvider?
+  normalModelId             String?
+  advancedModelProvider     LlmProvider?
+  advancedModelId           String?
+  modelPrefs                Json?
+
+  auditNotificationPrefs    Json?
+
+  overlays                  PolicyOverlay[]
+
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@map("trading_policies")
+}
+
+model PolicyOverlay {
+  id                String   @id @default(uuid()) @db.Uuid
+  tradingPolicyId   String   @db.Uuid
+  tradingPolicy     TradingPolicy @relation(fields: [tradingPolicyId], references: [id], onDelete: Cascade)
+
+  overlayType       OverlayType
+  source            String
+  reason            String
+  severity          OverlaySeverity @default(MEDIUM)
+  version           Int      @default(1)
+
+  mutations         Json
+
+  status            OverlayStatus @default(ACTIVE)
+  activatedAt       DateTime @default(now())
+  expiresAt         DateTime?
+  deactivatedAt     DateTime?
+  deactivatedBy     String?
+
+  correlationId     String?
+  triggerEventId    String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([tradingPolicyId, status])
+  @@index([overlayType, status])
+  @@index([expiresAt])
+  @@map("policy_overlays")
+}
+
+model AccountDecisionRecord {
+  id                  String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId     String   @db.Uuid
+  correlationId       String   @unique
+
+  opportunityId       String
+  symbol              String
+  assetClass          String
+  signalAction        String
+  signalConfidence    Float
+
+  decision            DecisionOutcome
+  decisionRationale   String?
+  decisionConfidence  Float?
+
+  actionIntents       Json?
+  validationResults   Json?
+  executionResults    Json?
+
+  effectivePolicySnapshot Json
+  positionsSnapshot       Json?
+  openOrdersSnapshot      Json?
+  exposureSnapshot        Json?
+  overlaysSnapshot        Json?
+
+  modelProvider       String
+  modelId             String
+  modelTier           String
+  routingReason       String?
+  tokenUsage          Json?
+
+  sessionDurationMs   Int?
+  gatingDurationMs    Int?
+  validationDurationMs Int?
+  executionDurationMs Int?
+
+  status              DecisionRecordStatus @default(PENDING)
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([alpacaAccountId, createdAt])
+  @@index([symbol, createdAt])
+  @@index([opportunityId])
+  @@map("account_decision_records")
+}
+
+model DecisionMemorySummary {
+  id                String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId   String   @db.Uuid
+  symbol            String?
+  sector            String?
+  assetClass        String?
+
+  summary           String
+  keyFactors        Json?
+  outcome           DecisionMemoryOutcome @default(PENDING)
+  outcomeDetails    Json?
+
+  decisionRecordId  String?
+  correlationId     String?
+
+  relevanceScore    Float    @default(1.0)
+  expiresAt         DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([alpacaAccountId, symbol, createdAt])
+  @@index([alpacaAccountId, createdAt])
+  @@index([expiresAt])
+  @@map("decision_memory_summaries")
 }
