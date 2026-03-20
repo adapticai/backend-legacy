@@ -34,6 +34,88 @@ import { assertValidAllocation } from './validators/allocation-validator';
     cryptoTradingPairs
     cryptoTradeAllocationPct
     tradeAllocationPct
+    tradingPolicy {
+      id
+      alpacaAccountId
+      alpacaAccount {
+id
+      }
+      version
+      lastModifiedBy
+      lastModifiedAt
+      autonomyMode
+      realtimeTradingEnabled
+      paperTradingOnly
+      killSwitchEnabled
+      autonomyPrefs
+      equitiesEnabled
+      etfsEnabled
+      cryptoEnabled
+      optionsEnabled
+      futuresEnabled
+      forexEnabled
+      shortingEnabled
+      marginEnabled
+      fractionalSharesEnabled
+      assetUniversePrefs
+      maxBuyingPowerUtilPct
+      cashFloorPct
+      maxGrossExposurePct
+      maxNetExposurePct
+      maxLeverage
+      maxSymbolConcentrationPct
+      maxSectorConcentrationPct
+      maxOpenPositions
+      maxOpenOrders
+      riskBudgetPrefs
+      signalConsumptionPrefs
+      executionPrefs
+      positionManagementPrefs
+      portfolioConstructionPrefs
+      macroOverlayEnabled
+      sectorOverlayEnabled
+      volatilityOverlayEnabled
+      liquidityStressOverlayEnabled
+      blackSwanProtectionEnabled
+      drawdownGuardianEnabled
+      correlationSpikeProtectionEnabled
+      newsEventRiskOverlayEnabled
+      exchangeHealthOverlayEnabled
+      dataQualitySentinelEnabled
+      overlayResponsePrefs
+      miniModelProvider
+      miniModelId
+      normalModelProvider
+      normalModelId
+      advancedModelProvider
+      advancedModelId
+      modelPrefs
+      auditNotificationPrefs
+      overlays {
+        id
+        tradingPolicyId
+        tradingPolicy {
+id
+        }
+        overlayType
+        source
+        reason
+        severity
+        version
+        mutations
+        status
+        activatedAt
+        expiresAt
+        deactivatedAt
+        deactivatedBy
+        correlationId
+        triggerEventId
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
     autoAllocation
     minPercentageChange
     volumeThreshold
@@ -109,6 +191,25 @@ import { assertValidAllocation } from './validators/allocation-validator';
         inviteToken {
 id
         }
+      }
+      llmConfiguration {
+        id
+        userId
+        defaultProvider
+        miniProvider
+        normalProvider
+        advancedProvider
+        miniModel
+        normalModel
+        advancedModel
+        anthropicApiKey
+        deepseekApiKey
+        kimiApiKey
+        qwenApiKey
+        xaiApiKey
+        geminiApiKey
+        createdAt
+        updatedAt
       }
     }
     userId
@@ -241,6 +342,117 @@ id
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    tradingPolicy: props.alpacaAccount.tradingPolicy ? 
+      typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.tradingPolicy.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? props.alpacaAccount.tradingPolicy.id : undefined,
+          alpacaAccountId: props.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? props.alpacaAccount.tradingPolicy.alpacaAccountId : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.miniModelId 
+             } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.normalModelId 
+             } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.advancedModelId 
+             } : undefined,
+        },
+        create: {
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? props.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? props.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? props.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? props.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? props.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? props.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? props.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? props.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? props.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? props.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? props.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? props.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -454,6 +666,35 @@ id
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+        typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? props.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? props.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -871,6 +1112,358 @@ id
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? {
             set: props.alpacaAccount.deletedAt
           } : undefined,
+    tradingPolicy: props.alpacaAccount.tradingPolicy ? 
+    typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && (Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id' || Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'symbol')
+? {
+    connect: {
+      id: props.alpacaAccount.tradingPolicy.id
+    }
+} : { upsert: {
+        where: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.id
+            } : undefined,
+          alpacaAccountId: props.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.alpacaAccountId
+            } : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.miniModelId
+            } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.normalModelId
+            } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.advancedModelId
+            } : undefined,
+        },
+        update: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.id
+            } : undefined,
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.version
+            } : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.lastModifiedBy
+            } : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.lastModifiedAt
+            } : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.autonomyMode
+            } : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled
+            } : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.paperTradingOnly
+            } : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.killSwitchEnabled
+            } : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.autonomyPrefs
+            } : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.equitiesEnabled
+            } : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.etfsEnabled
+            } : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.cryptoEnabled
+            } : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.optionsEnabled
+            } : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.futuresEnabled
+            } : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.forexEnabled
+            } : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.shortingEnabled
+            } : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.marginEnabled
+            } : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled
+            } : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.assetUniversePrefs
+            } : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct
+            } : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.cashFloorPct
+            } : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxGrossExposurePct
+            } : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxNetExposurePct
+            } : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxLeverage
+            } : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct
+            } : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct
+            } : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxOpenPositions
+            } : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxOpenOrders
+            } : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.riskBudgetPrefs
+            } : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs
+            } : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.executionPrefs
+            } : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.positionManagementPrefs
+            } : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs
+            } : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.macroOverlayEnabled
+            } : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled
+            } : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled
+            } : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled
+            } : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled
+            } : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled
+            } : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled
+            } : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled
+            } : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled
+            } : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled
+            } : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.overlayResponsePrefs
+            } : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.miniModelProvider
+            } : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.miniModelId
+            } : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.normalModelProvider
+            } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.normalModelId
+            } : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.advancedModelProvider
+            } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.advancedModelId
+            } : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.modelPrefs
+            } : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.auditNotificationPrefs
+            } : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            overlayType: item.overlayType !== undefined ? {
+                set: item.overlayType
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            version: item.version !== undefined ? {
+                set: item.version
+              } : undefined,
+            mutations: item.mutations !== undefined ? {
+                set: item.mutations
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            activatedAt: item.activatedAt !== undefined ? {
+                set: item.activatedAt
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? {
+                set: item.deactivatedAt
+              } : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? {
+                set: item.deactivatedBy
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                set: item.triggerEventId
+              } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? props.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? props.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? props.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? props.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? props.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? props.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? props.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? props.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? props.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? props.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? props.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? props.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: props.alpacaAccount.user ? 
     typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && (Object.keys(props.alpacaAccount.user)[0] === 'id' || Object.keys(props.alpacaAccount.user)[0] === 'symbol')
 ? {
@@ -1301,6 +1894,86 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+      typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && (Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id' || Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'symbol')
+? {
+      connect: {
+        id: props.alpacaAccount.user.llmConfiguration.id
+      }
+} : { upsert: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? {
+                equals: props.alpacaAccount.user.llmConfiguration.id
+              } : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? {
+                equals: props.alpacaAccount.user.llmConfiguration.userId
+              } : undefined,
+          },
+          update: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.id
+              } : undefined,
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.defaultProvider
+              } : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.miniProvider
+              } : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.normalProvider
+              } : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.advancedProvider
+              } : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.miniModel
+              } : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.normalModel
+              } : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.advancedModel
+              } : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.openaiApiKey
+              } : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.anthropicApiKey
+              } : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.deepseekApiKey
+              } : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.kimiApiKey
+              } : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.qwenApiKey
+              } : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.xaiApiKey
+              } : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.geminiApiKey
+              } : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -1502,6 +2175,35 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+        typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? props.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? props.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
       }
     } : undefined,
@@ -1605,6 +2307,117 @@ id
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    tradingPolicy: props.alpacaAccount.tradingPolicy ? 
+      typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.tradingPolicy.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? props.alpacaAccount.tradingPolicy.id : undefined,
+          alpacaAccountId: props.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? props.alpacaAccount.tradingPolicy.alpacaAccountId : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.miniModelId 
+             } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.normalModelId 
+             } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.advancedModelId 
+             } : undefined,
+        },
+        create: {
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? props.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? props.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? props.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? props.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? props.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? props.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? props.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? props.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? props.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? props.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? props.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? props.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -1818,6 +2631,35 @@ id
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+        typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? props.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? props.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -2027,6 +2869,117 @@ id
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    tradingPolicy: props.alpacaAccount.tradingPolicy ? 
+      typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.tradingPolicy.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? props.alpacaAccount.tradingPolicy.id : undefined,
+          alpacaAccountId: props.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? props.alpacaAccount.tradingPolicy.alpacaAccountId : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.miniModelId 
+             } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.normalModelId 
+             } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.advancedModelId 
+             } : undefined,
+        },
+        create: {
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? props.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? props.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? props.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? props.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? props.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? props.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? props.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? props.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? props.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? props.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? props.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? props.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -2241,6 +3194,35 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+        typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? props.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? props.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
       }
     } : undefined,
@@ -2396,6 +3378,358 @@ id
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? {
             set: props.alpacaAccount.deletedAt
           } : undefined,
+    tradingPolicy: props.alpacaAccount.tradingPolicy ? 
+    typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && (Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id' || Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'symbol')
+? {
+    connect: {
+      id: props.alpacaAccount.tradingPolicy.id
+    }
+} : { upsert: {
+        where: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.id
+            } : undefined,
+          alpacaAccountId: props.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.alpacaAccountId
+            } : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.miniModelId
+            } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.normalModelId
+            } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.advancedModelId
+            } : undefined,
+        },
+        update: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.id
+            } : undefined,
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.version
+            } : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.lastModifiedBy
+            } : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.lastModifiedAt
+            } : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.autonomyMode
+            } : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled
+            } : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.paperTradingOnly
+            } : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.killSwitchEnabled
+            } : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.autonomyPrefs
+            } : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.equitiesEnabled
+            } : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.etfsEnabled
+            } : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.cryptoEnabled
+            } : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.optionsEnabled
+            } : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.futuresEnabled
+            } : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.forexEnabled
+            } : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.shortingEnabled
+            } : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.marginEnabled
+            } : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled
+            } : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.assetUniversePrefs
+            } : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct
+            } : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.cashFloorPct
+            } : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxGrossExposurePct
+            } : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxNetExposurePct
+            } : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxLeverage
+            } : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct
+            } : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct
+            } : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxOpenPositions
+            } : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxOpenOrders
+            } : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.riskBudgetPrefs
+            } : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs
+            } : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.executionPrefs
+            } : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.positionManagementPrefs
+            } : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs
+            } : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.macroOverlayEnabled
+            } : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled
+            } : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled
+            } : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled
+            } : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled
+            } : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled
+            } : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled
+            } : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled
+            } : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled
+            } : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled
+            } : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.overlayResponsePrefs
+            } : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.miniModelProvider
+            } : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.miniModelId
+            } : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.normalModelProvider
+            } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.normalModelId
+            } : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.advancedModelProvider
+            } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.advancedModelId
+            } : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.modelPrefs
+            } : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.auditNotificationPrefs
+            } : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            overlayType: item.overlayType !== undefined ? {
+                set: item.overlayType
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            version: item.version !== undefined ? {
+                set: item.version
+              } : undefined,
+            mutations: item.mutations !== undefined ? {
+                set: item.mutations
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            activatedAt: item.activatedAt !== undefined ? {
+                set: item.activatedAt
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? {
+                set: item.deactivatedAt
+              } : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? {
+                set: item.deactivatedBy
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                set: item.triggerEventId
+              } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? props.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? props.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? props.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? props.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? props.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? props.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? props.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? props.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? props.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? props.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? props.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? props.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: props.alpacaAccount.user ? 
     typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && (Object.keys(props.alpacaAccount.user)[0] === 'id' || Object.keys(props.alpacaAccount.user)[0] === 'symbol')
 ? {
@@ -2826,6 +4160,86 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+      typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && (Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id' || Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'symbol')
+? {
+      connect: {
+        id: props.alpacaAccount.user.llmConfiguration.id
+      }
+} : { upsert: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? {
+                equals: props.alpacaAccount.user.llmConfiguration.id
+              } : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? {
+                equals: props.alpacaAccount.user.llmConfiguration.userId
+              } : undefined,
+          },
+          update: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.id
+              } : undefined,
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.defaultProvider
+              } : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.miniProvider
+              } : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.normalProvider
+              } : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.advancedProvider
+              } : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.miniModel
+              } : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.normalModel
+              } : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.advancedModel
+              } : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.openaiApiKey
+              } : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.anthropicApiKey
+              } : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.deepseekApiKey
+              } : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.kimiApiKey
+              } : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.qwenApiKey
+              } : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.xaiApiKey
+              } : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.geminiApiKey
+              } : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -3027,6 +4441,35 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+        typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? props.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? props.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
       }
     } : undefined,
@@ -3130,6 +4573,117 @@ id
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    tradingPolicy: props.alpacaAccount.tradingPolicy ? 
+      typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.tradingPolicy.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.tradingPolicy.id !== undefined ? props.alpacaAccount.tradingPolicy.id : undefined,
+          alpacaAccountId: props.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? props.alpacaAccount.tradingPolicy.alpacaAccountId : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.miniModelId 
+             } : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.normalModelId 
+             } : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: props.alpacaAccount.tradingPolicy.advancedModelId 
+             } : undefined,
+        },
+        create: {
+          version: props.alpacaAccount.tradingPolicy.version !== undefined ? props.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: props.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: props.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? props.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: props.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? props.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: props.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: props.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? props.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? props.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: props.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: props.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? props.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: props.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? props.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: props.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? props.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: props.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? props.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: props.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? props.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: props.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? props.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? props.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: props.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? props.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: props.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: props.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? props.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: props.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? props.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: props.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: props.alpacaAccount.tradingPolicy.miniModelId !== undefined ? props.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: props.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: props.alpacaAccount.tradingPolicy.normalModelId !== undefined ? props.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: props.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? props.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: props.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: props.alpacaAccount.user ? 
       typeof props.alpacaAccount.user === 'object' && Object.keys(props.alpacaAccount.user).length === 1 && Object.keys(props.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -3343,6 +4897,35 @@ id
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.alpacaAccount.user.llmConfiguration ? 
+        typeof props.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(props.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(props.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.user.llmConfiguration.id !== undefined ? props.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: props.alpacaAccount.user.llmConfiguration.userId !== undefined ? props.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? props.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: props.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? props.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: props.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? props.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -3629,6 +5212,358 @@ id
         deletedAt: prop.alpacaAccount.deletedAt !== undefined ? {
             set: prop.alpacaAccount.deletedAt
           } : undefined,
+    tradingPolicy: prop.alpacaAccount.tradingPolicy ? 
+    typeof prop.alpacaAccount.tradingPolicy === 'object' && Object.keys(prop.alpacaAccount.tradingPolicy).length === 1 && (Object.keys(prop.alpacaAccount.tradingPolicy)[0] === 'id' || Object.keys(prop.alpacaAccount.tradingPolicy)[0] === 'symbol')
+? {
+    connect: {
+      id: prop.alpacaAccount.tradingPolicy.id
+    }
+} : { upsert: {
+        where: {
+          id: prop.alpacaAccount.tradingPolicy.id !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.id
+            } : undefined,
+          alpacaAccountId: prop.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.alpacaAccountId
+            } : undefined,
+          miniModelId: prop.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.miniModelId
+            } : undefined,
+          normalModelId: prop.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.normalModelId
+            } : undefined,
+          advancedModelId: prop.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.advancedModelId
+            } : undefined,
+        },
+        update: {
+          id: prop.alpacaAccount.tradingPolicy.id !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.id
+            } : undefined,
+          version: prop.alpacaAccount.tradingPolicy.version !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.version
+            } : undefined,
+          lastModifiedBy: prop.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.lastModifiedBy
+            } : undefined,
+          lastModifiedAt: prop.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.lastModifiedAt
+            } : undefined,
+          autonomyMode: prop.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.autonomyMode
+            } : undefined,
+          realtimeTradingEnabled: prop.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.realtimeTradingEnabled
+            } : undefined,
+          paperTradingOnly: prop.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.paperTradingOnly
+            } : undefined,
+          killSwitchEnabled: prop.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.killSwitchEnabled
+            } : undefined,
+          autonomyPrefs: prop.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.autonomyPrefs
+            } : undefined,
+          equitiesEnabled: prop.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.equitiesEnabled
+            } : undefined,
+          etfsEnabled: prop.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.etfsEnabled
+            } : undefined,
+          cryptoEnabled: prop.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.cryptoEnabled
+            } : undefined,
+          optionsEnabled: prop.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.optionsEnabled
+            } : undefined,
+          futuresEnabled: prop.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.futuresEnabled
+            } : undefined,
+          forexEnabled: prop.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.forexEnabled
+            } : undefined,
+          shortingEnabled: prop.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.shortingEnabled
+            } : undefined,
+          marginEnabled: prop.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.marginEnabled
+            } : undefined,
+          fractionalSharesEnabled: prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled
+            } : undefined,
+          assetUniversePrefs: prop.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.assetUniversePrefs
+            } : undefined,
+          maxBuyingPowerUtilPct: prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct
+            } : undefined,
+          cashFloorPct: prop.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.cashFloorPct
+            } : undefined,
+          maxGrossExposurePct: prop.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxGrossExposurePct
+            } : undefined,
+          maxNetExposurePct: prop.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxNetExposurePct
+            } : undefined,
+          maxLeverage: prop.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxLeverage
+            } : undefined,
+          maxSymbolConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct
+            } : undefined,
+          maxSectorConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct
+            } : undefined,
+          maxOpenPositions: prop.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxOpenPositions
+            } : undefined,
+          maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxOpenOrders
+            } : undefined,
+          riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs
+            } : undefined,
+          signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs
+            } : undefined,
+          executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.executionPrefs
+            } : undefined,
+          positionManagementPrefs: prop.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.positionManagementPrefs
+            } : undefined,
+          portfolioConstructionPrefs: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs
+            } : undefined,
+          macroOverlayEnabled: prop.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.macroOverlayEnabled
+            } : undefined,
+          sectorOverlayEnabled: prop.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.sectorOverlayEnabled
+            } : undefined,
+          volatilityOverlayEnabled: prop.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.volatilityOverlayEnabled
+            } : undefined,
+          liquidityStressOverlayEnabled: prop.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled
+            } : undefined,
+          blackSwanProtectionEnabled: prop.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled
+            } : undefined,
+          drawdownGuardianEnabled: prop.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.drawdownGuardianEnabled
+            } : undefined,
+          correlationSpikeProtectionEnabled: prop.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled
+            } : undefined,
+          newsEventRiskOverlayEnabled: prop.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled
+            } : undefined,
+          exchangeHealthOverlayEnabled: prop.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled
+            } : undefined,
+          dataQualitySentinelEnabled: prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled
+            } : undefined,
+          overlayResponsePrefs: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs
+            } : undefined,
+          miniModelProvider: prop.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.miniModelProvider
+            } : undefined,
+          miniModelId: prop.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.miniModelId
+            } : undefined,
+          normalModelProvider: prop.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.normalModelProvider
+            } : undefined,
+          normalModelId: prop.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.normalModelId
+            } : undefined,
+          advancedModelProvider: prop.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.advancedModelProvider
+            } : undefined,
+          advancedModelId: prop.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.advancedModelId
+            } : undefined,
+          modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.modelPrefs
+            } : undefined,
+          auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs
+            } : undefined,
+      overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
+      Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 && prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            overlayType: item.overlayType !== undefined ? {
+                set: item.overlayType
+              } : undefined,
+            source: item.source !== undefined ? {
+                set: item.source
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            version: item.version !== undefined ? {
+                set: item.version
+              } : undefined,
+            mutations: item.mutations !== undefined ? {
+                set: item.mutations
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            activatedAt: item.activatedAt !== undefined ? {
+                set: item.activatedAt
+              } : undefined,
+            expiresAt: item.expiresAt !== undefined ? {
+                set: item.expiresAt
+              } : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? {
+                set: item.deactivatedAt
+              } : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? {
+                set: item.deactivatedBy
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                set: item.triggerEventId
+              } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          version: prop.alpacaAccount.tradingPolicy.version !== undefined ? prop.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: prop.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? prop.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: prop.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? prop.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: prop.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? prop.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: prop.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: prop.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? prop.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: prop.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: prop.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: prop.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: prop.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: prop.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: prop.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: prop.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: prop.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: prop.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: prop.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: prop.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? prop.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: prop.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? prop.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: prop.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? prop.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: prop.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? prop.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: prop.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? prop.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: prop.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: prop.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: prop.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: prop.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: prop.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: prop.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: prop.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: prop.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: prop.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: prop.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: prop.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? prop.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: prop.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? prop.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: prop.alpacaAccount.tradingPolicy.miniModelId !== undefined ? prop.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: prop.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? prop.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: prop.alpacaAccount.tradingPolicy.normalModelId !== undefined ? prop.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: prop.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? prop.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: prop.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? prop.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: prop.alpacaAccount.user ? 
     typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && (Object.keys(prop.alpacaAccount.user)[0] === 'id' || Object.keys(prop.alpacaAccount.user)[0] === 'symbol')
 ? {
@@ -4059,6 +5994,86 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: prop.alpacaAccount.user.llmConfiguration ? 
+      typeof prop.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(prop.alpacaAccount.user.llmConfiguration).length === 1 && (Object.keys(prop.alpacaAccount.user.llmConfiguration)[0] === 'id' || Object.keys(prop.alpacaAccount.user.llmConfiguration)[0] === 'symbol')
+? {
+      connect: {
+        id: prop.alpacaAccount.user.llmConfiguration.id
+      }
+} : { upsert: {
+          where: {
+            id: prop.alpacaAccount.user.llmConfiguration.id !== undefined ? {
+                equals: prop.alpacaAccount.user.llmConfiguration.id
+              } : undefined,
+            userId: prop.alpacaAccount.user.llmConfiguration.userId !== undefined ? {
+                equals: prop.alpacaAccount.user.llmConfiguration.userId
+              } : undefined,
+          },
+          update: {
+            id: prop.alpacaAccount.user.llmConfiguration.id !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.id
+              } : undefined,
+            defaultProvider: prop.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.defaultProvider
+              } : undefined,
+            miniProvider: prop.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.miniProvider
+              } : undefined,
+            normalProvider: prop.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.normalProvider
+              } : undefined,
+            advancedProvider: prop.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.advancedProvider
+              } : undefined,
+            miniModel: prop.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.miniModel
+              } : undefined,
+            normalModel: prop.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.normalModel
+              } : undefined,
+            advancedModel: prop.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.advancedModel
+              } : undefined,
+            openaiApiKey: prop.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.openaiApiKey
+              } : undefined,
+            anthropicApiKey: prop.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.anthropicApiKey
+              } : undefined,
+            deepseekApiKey: prop.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.deepseekApiKey
+              } : undefined,
+            kimiApiKey: prop.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.kimiApiKey
+              } : undefined,
+            qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.qwenApiKey
+              } : undefined,
+            xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.xaiApiKey
+              } : undefined,
+            geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.geminiApiKey
+              } : undefined,
+          },
+          create: {
+            defaultProvider: prop.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: prop.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: prop.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: prop.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: prop.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: prop.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: prop.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: prop.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: prop.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: prop.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: prop.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
@@ -4260,6 +6275,35 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: prop.alpacaAccount.user.llmConfiguration ? 
+        typeof prop.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(prop.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(prop.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: prop.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.alpacaAccount.user.llmConfiguration.id !== undefined ? prop.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: prop.alpacaAccount.user.llmConfiguration.userId !== undefined ? prop.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: prop.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: prop.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: prop.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: prop.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: prop.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: prop.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: prop.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: prop.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: prop.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: prop.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: prop.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
       }
     } : undefined,
@@ -4363,6 +6407,117 @@ id
         secondReducedTrailPercentage100: prop.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: prop.alpacaAccount.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: prop.alpacaAccount.deletedAt !== undefined ? prop.alpacaAccount.deletedAt : undefined,
+    tradingPolicy: prop.alpacaAccount.tradingPolicy ? 
+      typeof prop.alpacaAccount.tradingPolicy === 'object' && Object.keys(prop.alpacaAccount.tradingPolicy).length === 1 && Object.keys(prop.alpacaAccount.tradingPolicy)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.tradingPolicy.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.alpacaAccount.tradingPolicy.id !== undefined ? prop.alpacaAccount.tradingPolicy.id : undefined,
+          alpacaAccountId: prop.alpacaAccount.tradingPolicy.alpacaAccountId !== undefined ? prop.alpacaAccount.tradingPolicy.alpacaAccountId : undefined,
+          miniModelId: prop.alpacaAccount.tradingPolicy.miniModelId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.miniModelId 
+             } : undefined,
+          normalModelId: prop.alpacaAccount.tradingPolicy.normalModelId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.normalModelId 
+             } : undefined,
+          advancedModelId: prop.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
+              equals: prop.alpacaAccount.tradingPolicy.advancedModelId 
+             } : undefined,
+        },
+        create: {
+          version: prop.alpacaAccount.tradingPolicy.version !== undefined ? prop.alpacaAccount.tradingPolicy.version : undefined,
+          lastModifiedBy: prop.alpacaAccount.tradingPolicy.lastModifiedBy !== undefined ? prop.alpacaAccount.tradingPolicy.lastModifiedBy : undefined,
+          lastModifiedAt: prop.alpacaAccount.tradingPolicy.lastModifiedAt !== undefined ? prop.alpacaAccount.tradingPolicy.lastModifiedAt : undefined,
+          autonomyMode: prop.alpacaAccount.tradingPolicy.autonomyMode !== undefined ? prop.alpacaAccount.tradingPolicy.autonomyMode : undefined,
+          realtimeTradingEnabled: prop.alpacaAccount.tradingPolicy.realtimeTradingEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.realtimeTradingEnabled : undefined,
+          paperTradingOnly: prop.alpacaAccount.tradingPolicy.paperTradingOnly !== undefined ? prop.alpacaAccount.tradingPolicy.paperTradingOnly : undefined,
+          killSwitchEnabled: prop.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.killSwitchEnabled : undefined,
+          autonomyPrefs: prop.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
+          equitiesEnabled: prop.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.equitiesEnabled : undefined,
+          etfsEnabled: prop.alpacaAccount.tradingPolicy.etfsEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.etfsEnabled : undefined,
+          cryptoEnabled: prop.alpacaAccount.tradingPolicy.cryptoEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.cryptoEnabled : undefined,
+          optionsEnabled: prop.alpacaAccount.tradingPolicy.optionsEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.optionsEnabled : undefined,
+          futuresEnabled: prop.alpacaAccount.tradingPolicy.futuresEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.futuresEnabled : undefined,
+          forexEnabled: prop.alpacaAccount.tradingPolicy.forexEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.forexEnabled : undefined,
+          shortingEnabled: prop.alpacaAccount.tradingPolicy.shortingEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.shortingEnabled : undefined,
+          marginEnabled: prop.alpacaAccount.tradingPolicy.marginEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.marginEnabled : undefined,
+          fractionalSharesEnabled: prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled : undefined,
+          assetUniversePrefs: prop.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? prop.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
+          maxBuyingPowerUtilPct: prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+          cashFloorPct: prop.alpacaAccount.tradingPolicy.cashFloorPct !== undefined ? prop.alpacaAccount.tradingPolicy.cashFloorPct : undefined,
+          maxGrossExposurePct: prop.alpacaAccount.tradingPolicy.maxGrossExposurePct !== undefined ? prop.alpacaAccount.tradingPolicy.maxGrossExposurePct : undefined,
+          maxNetExposurePct: prop.alpacaAccount.tradingPolicy.maxNetExposurePct !== undefined ? prop.alpacaAccount.tradingPolicy.maxNetExposurePct : undefined,
+          maxLeverage: prop.alpacaAccount.tradingPolicy.maxLeverage !== undefined ? prop.alpacaAccount.tradingPolicy.maxLeverage : undefined,
+          maxSymbolConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxSymbolConcentrationPct : undefined,
+          maxSectorConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
+          maxOpenPositions: prop.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
+          maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: prop.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
+          macroOverlayEnabled: prop.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.macroOverlayEnabled : undefined,
+          sectorOverlayEnabled: prop.alpacaAccount.tradingPolicy.sectorOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.sectorOverlayEnabled : undefined,
+          volatilityOverlayEnabled: prop.alpacaAccount.tradingPolicy.volatilityOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.volatilityOverlayEnabled : undefined,
+          liquidityStressOverlayEnabled: prop.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+          blackSwanProtectionEnabled: prop.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.blackSwanProtectionEnabled : undefined,
+          drawdownGuardianEnabled: prop.alpacaAccount.tradingPolicy.drawdownGuardianEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.drawdownGuardianEnabled : undefined,
+          correlationSpikeProtectionEnabled: prop.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+          newsEventRiskOverlayEnabled: prop.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+          exchangeHealthOverlayEnabled: prop.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+          dataQualitySentinelEnabled: prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled : undefined,
+          overlayResponsePrefs: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? prop.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
+          miniModelProvider: prop.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? prop.alpacaAccount.tradingPolicy.miniModelProvider : undefined,
+          miniModelId: prop.alpacaAccount.tradingPolicy.miniModelId !== undefined ? prop.alpacaAccount.tradingPolicy.miniModelId : undefined,
+          normalModelProvider: prop.alpacaAccount.tradingPolicy.normalModelProvider !== undefined ? prop.alpacaAccount.tradingPolicy.normalModelProvider : undefined,
+          normalModelId: prop.alpacaAccount.tradingPolicy.normalModelId !== undefined ? prop.alpacaAccount.tradingPolicy.normalModelId : undefined,
+          advancedModelProvider: prop.alpacaAccount.tradingPolicy.advancedModelProvider !== undefined ? prop.alpacaAccount.tradingPolicy.advancedModelProvider : undefined,
+          advancedModelId: prop.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? prop.alpacaAccount.tradingPolicy.advancedModelId : undefined,
+          modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
+      overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
+        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            tradingPolicyId: item.tradingPolicyId !== undefined ? {
+                equals: item.tradingPolicyId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? {
+                equals: item.triggerEventId 
+               } : undefined,
+          },
+          create: {
+            overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+            source: item.source !== undefined ? item.source : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            version: item.version !== undefined ? item.version : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+            expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+            deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+            deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
     user: prop.alpacaAccount.user ? 
       typeof prop.alpacaAccount.user === 'object' && Object.keys(prop.alpacaAccount.user).length === 1 && Object.keys(prop.alpacaAccount.user)[0] === 'id'
     ? { connect: {
@@ -4576,6 +6731,35 @@ id
             reviewedAt: item.reviewedAt !== undefined ? item.reviewedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: prop.alpacaAccount.user.llmConfiguration ? 
+        typeof prop.alpacaAccount.user.llmConfiguration === 'object' && Object.keys(prop.alpacaAccount.user.llmConfiguration).length === 1 && Object.keys(prop.alpacaAccount.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: prop.alpacaAccount.user.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.alpacaAccount.user.llmConfiguration.id !== undefined ? prop.alpacaAccount.user.llmConfiguration.id : undefined,
+            userId: prop.alpacaAccount.user.llmConfiguration.userId !== undefined ? prop.alpacaAccount.user.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: prop.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
+            miniProvider: prop.alpacaAccount.user.llmConfiguration.miniProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.miniProvider : undefined,
+            normalProvider: prop.alpacaAccount.user.llmConfiguration.normalProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.normalProvider : undefined,
+            advancedProvider: prop.alpacaAccount.user.llmConfiguration.advancedProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.advancedProvider : undefined,
+            miniModel: prop.alpacaAccount.user.llmConfiguration.miniModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.miniModel : undefined,
+            normalModel: prop.alpacaAccount.user.llmConfiguration.normalModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.normalModel : undefined,
+            advancedModel: prop.alpacaAccount.user.llmConfiguration.advancedModel !== undefined ? prop.alpacaAccount.user.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: prop.alpacaAccount.user.llmConfiguration.openaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: prop.alpacaAccount.user.llmConfiguration.anthropicApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: prop.alpacaAccount.user.llmConfiguration.deepseekApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: prop.alpacaAccount.user.llmConfiguration.kimiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }

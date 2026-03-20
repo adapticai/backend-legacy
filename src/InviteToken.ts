@@ -104,6 +104,9 @@ import { logger } from './utils/logger';
         allocation {
 id
         }
+        tradingPolicy {
+id
+        }
         autoAllocation
         minPercentageChange
         volumeThreshold
@@ -154,6 +157,25 @@ id
         verifiedAt
         approvedAt
         rejectedAt
+      }
+      llmConfiguration {
+        id
+        userId
+        defaultProvider
+        miniProvider
+        normalProvider
+        advancedProvider
+        miniModel
+        normalModel
+        advancedModel
+        anthropicApiKey
+        deepseekApiKey
+        kimiApiKey
+        qwenApiKey
+        xaiApiKey
+        geminiApiKey
+        createdAt
+        updatedAt
       }
     }
     inviteToken {
@@ -469,6 +491,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -1281,6 +1332,86 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+      typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && (Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id' || Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'symbol')
+? {
+      connect: {
+        id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+      }
+} : { upsert: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? {
+                equals: props.waitlistEntry.reviewedBy.llmConfiguration.id
+              } : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? {
+                equals: props.waitlistEntry.reviewedBy.llmConfiguration.userId
+              } : undefined,
+          },
+          update: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.id
+              } : undefined,
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider
+              } : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider
+              } : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider
+              } : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider
+              } : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel
+              } : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel
+              } : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel
+              } : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey
+              } : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey
+              } : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey
+              } : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey
+              } : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey
+              } : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey
+              } : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey
+              } : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -1500,6 +1631,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -1747,6 +1907,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -2137,6 +2326,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -2701,6 +2919,86 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+      typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && (Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id' || Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'symbol')
+? {
+      connect: {
+        id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+      }
+} : { upsert: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? {
+                equals: props.waitlistEntry.reviewedBy.llmConfiguration.id
+              } : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? {
+                equals: props.waitlistEntry.reviewedBy.llmConfiguration.userId
+              } : undefined,
+          },
+          update: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.id
+              } : undefined,
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider
+              } : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider
+              } : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider
+              } : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider
+              } : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel
+              } : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel
+              } : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel
+              } : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey
+              } : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey
+              } : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey
+              } : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey
+              } : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey
+              } : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey
+              } : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey
+              } : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -2920,6 +3218,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -3167,6 +3494,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: props.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof props.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(props.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: props.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: props.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: props.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? props.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -3861,6 +4217,86 @@ id
           },
         }))
       } : undefined,
+      llmConfiguration: prop.waitlistEntry.reviewedBy.llmConfiguration ? 
+      typeof prop.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && (Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id' || Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'symbol')
+? {
+      connect: {
+        id: prop.waitlistEntry.reviewedBy.llmConfiguration.id
+      }
+} : { upsert: {
+          where: {
+            id: prop.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? {
+                equals: prop.waitlistEntry.reviewedBy.llmConfiguration.id
+              } : undefined,
+            userId: prop.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? {
+                equals: prop.waitlistEntry.reviewedBy.llmConfiguration.userId
+              } : undefined,
+          },
+          update: {
+            id: prop.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.id
+              } : undefined,
+            defaultProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider
+              } : undefined,
+            miniProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider
+              } : undefined,
+            normalProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider
+              } : undefined,
+            advancedProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider
+              } : undefined,
+            miniModel: prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel
+              } : undefined,
+            normalModel: prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel
+              } : undefined,
+            advancedModel: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel
+              } : undefined,
+            openaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey
+              } : undefined,
+            anthropicApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey
+              } : undefined,
+            deepseekApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey
+              } : undefined,
+            kimiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey
+              } : undefined,
+            qwenApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey
+              } : undefined,
+            xaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey
+              } : undefined,
+            geminiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey
+              } : undefined,
+          },
+          create: {
+            defaultProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           name: prop.waitlistEntry.reviewedBy.name !== undefined ? prop.waitlistEntry.reviewedBy.name : undefined,
@@ -4080,6 +4516,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: prop.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof prop.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: prop.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: prop.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -4327,6 +4792,35 @@ id
             rejectedAt: item.rejectedAt !== undefined ? item.rejectedAt : undefined,
           },
         }))
+      } : undefined,
+      llmConfiguration: prop.waitlistEntry.reviewedBy.llmConfiguration ? 
+        typeof prop.waitlistEntry.reviewedBy.llmConfiguration === 'object' && Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration).length === 1 && Object.keys(prop.waitlistEntry.reviewedBy.llmConfiguration)[0] === 'id'
+    ? { connect: {
+            id: prop.waitlistEntry.reviewedBy.llmConfiguration.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.waitlistEntry.reviewedBy.llmConfiguration.id !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.id : undefined,
+            userId: prop.waitlistEntry.reviewedBy.llmConfiguration.userId !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.userId : undefined,
+          },
+          create: {
+            defaultProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.defaultProvider : undefined,
+            miniProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.miniProvider : undefined,
+            normalProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.normalProvider : undefined,
+            advancedProvider: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.advancedProvider : undefined,
+            miniModel: prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.miniModel : undefined,
+            normalModel: prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.normalModel : undefined,
+            advancedModel: prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.advancedModel : undefined,
+            openaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.openaiApiKey : undefined,
+            anthropicApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.anthropicApiKey : undefined,
+            deepseekApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.deepseekApiKey : undefined,
+            kimiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.kimiApiKey : undefined,
+            qwenApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.qwenApiKey : undefined,
+            xaiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.xaiApiKey : undefined,
+            geminiApiKey: prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey !== undefined ? prop.waitlistEntry.reviewedBy.llmConfiguration.geminiApiKey : undefined,
+          },
+        }
       } : undefined,
         },
       }

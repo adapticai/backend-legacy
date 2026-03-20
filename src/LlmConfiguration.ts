@@ -1,20 +1,18 @@
 
   
-import { Session as SessionType } from './generated/typegraphql-prisma/models/Session';
+import { LlmConfiguration as LlmConfigurationType } from './generated/typegraphql-prisma/models/LlmConfiguration';
 import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
   
   /**
-   * CRUD operations for the Session model.
+   * CRUD operations for the LlmConfiguration model.
    */
 
   const selectionSet = `
     
   id
-  sessionToken
   userId
-  expires
   user {
     id
     name
@@ -58,7 +56,12 @@ import { logger } from './utils/logger';
       updatedAt
     }
     sessions {
-id
+      id
+      sessionToken
+      userId
+      expires
+      createdAt
+      updatedAt
     }
     authenticators {
       id
@@ -70,6 +73,134 @@ id
       updatedAt
     }
     plan
+    alpacaAccounts {
+      id
+      type
+      APIKey
+      APISecret
+      configuration
+      marketOpen
+      realTime
+      cryptoTradingEnabled
+      cryptoTradingPairs
+      cryptoTradeAllocationPct
+      tradeAllocationPct
+      allocation {
+        id
+        equities
+        optionsContracts
+        futures
+        etfs
+        forex
+        crypto
+        stocks
+        options
+        alpacaAccountId
+        alpacaAccount {
+id
+        }
+        createdAt
+        updatedAt
+      }
+      tradingPolicy {
+        id
+        alpacaAccountId
+        alpacaAccount {
+id
+        }
+        version
+        lastModifiedBy
+        lastModifiedAt
+        autonomyMode
+        realtimeTradingEnabled
+        paperTradingOnly
+        killSwitchEnabled
+        autonomyPrefs
+        equitiesEnabled
+        etfsEnabled
+        cryptoEnabled
+        optionsEnabled
+        futuresEnabled
+        forexEnabled
+        shortingEnabled
+        marginEnabled
+        fractionalSharesEnabled
+        assetUniversePrefs
+        maxBuyingPowerUtilPct
+        cashFloorPct
+        maxGrossExposurePct
+        maxNetExposurePct
+        maxLeverage
+        maxSymbolConcentrationPct
+        maxSectorConcentrationPct
+        maxOpenPositions
+        maxOpenOrders
+        riskBudgetPrefs
+        signalConsumptionPrefs
+        executionPrefs
+        positionManagementPrefs
+        portfolioConstructionPrefs
+        macroOverlayEnabled
+        sectorOverlayEnabled
+        volatilityOverlayEnabled
+        liquidityStressOverlayEnabled
+        blackSwanProtectionEnabled
+        drawdownGuardianEnabled
+        correlationSpikeProtectionEnabled
+        newsEventRiskOverlayEnabled
+        exchangeHealthOverlayEnabled
+        dataQualitySentinelEnabled
+        overlayResponsePrefs
+        miniModelProvider
+        miniModelId
+        normalModelProvider
+        normalModelId
+        advancedModelProvider
+        advancedModelId
+        modelPrefs
+        auditNotificationPrefs
+        overlays {
+id
+        }
+        createdAt
+        updatedAt
+      }
+      autoAllocation
+      minPercentageChange
+      volumeThreshold
+      enablePortfolioTrailingStop
+      portfolioTrailPercent
+      portfolioProfitThresholdPercent
+      reducedPortfolioTrailPercent
+      defaultTrailingStopPercentage100
+      firstTrailReductionThreshold100
+      secondTrailReductionThreshold100
+      firstReducedTrailPercentage100
+      secondReducedTrailPercentage100
+      minimumPriceChangePercent100
+      userId
+      createdAt
+      updatedAt
+      deletedAt
+      alerts {
+        id
+        alpacaAccountId
+        title
+        message
+        type
+        severity
+        category
+        status
+        isRead
+        acknowledgedAt
+        resolvedAt
+        suppressedUntil
+        retryCount
+        metadata
+        createdAt
+        updatedAt
+      }
+    }
     openaiAPIKey
     openaiModel
     linkedProviders {
@@ -129,47 +260,44 @@ id
       }
     }
     llmConfiguration {
-      id
-      userId
-      defaultProvider
-      miniProvider
-      normalProvider
-      advancedProvider
-      miniModel
-      normalModel
-      advancedModel
-      anthropicApiKey
-      deepseekApiKey
-      kimiApiKey
-      qwenApiKey
-      xaiApiKey
-      geminiApiKey
-      createdAt
-      updatedAt
+id
     }
   }
+  defaultProvider
+  miniProvider
+  normalProvider
+  advancedProvider
+  miniModel
+  normalModel
+  advancedModel
+  anthropicApiKey
+  deepseekApiKey
+  kimiApiKey
+  qwenApiKey
+  xaiApiKey
+  geminiApiKey
   createdAt
   updatedAt
 
   `;
 
-  export const Session = {
+  export const LlmConfiguration = {
 
     /**
-     * Create a new Session record.
+     * Create a new LlmConfiguration record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Session or null.
+     * @returns The created LlmConfiguration or null.
      */
 
     /**
-     * Create a new Session record.
+     * Create a new LlmConfiguration record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Session or null.
+     * @returns The created LlmConfiguration or null.
      */
-    async create(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+    async create(props: LlmConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LlmConfigurationType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -187,9 +315,9 @@ id
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_SESSION = gql`
-              mutation createOneSession($data: SessionCreateInput!) {
-                createOneSession(data: $data) {
+          const CREATE_ONE_LLMCONFIGURATION = gql`
+              mutation createOneLlmConfiguration($data: LlmConfigurationCreateInput!) {
+                createOneLlmConfiguration(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -197,8 +325,20 @@ id
 
           const variables = {
             data: {
-                sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
+                defaultProvider: props.defaultProvider !== undefined ? props.defaultProvider : undefined,
+  miniProvider: props.miniProvider !== undefined ? props.miniProvider : undefined,
+  normalProvider: props.normalProvider !== undefined ? props.normalProvider : undefined,
+  advancedProvider: props.advancedProvider !== undefined ? props.advancedProvider : undefined,
+  miniModel: props.miniModel !== undefined ? props.miniModel : undefined,
+  normalModel: props.normalModel !== undefined ? props.normalModel : undefined,
+  advancedModel: props.advancedModel !== undefined ? props.advancedModel : undefined,
+  openaiApiKey: props.openaiApiKey !== undefined ? props.openaiApiKey : undefined,
+  anthropicApiKey: props.anthropicApiKey !== undefined ? props.anthropicApiKey : undefined,
+  deepseekApiKey: props.deepseekApiKey !== undefined ? props.deepseekApiKey : undefined,
+  kimiApiKey: props.kimiApiKey !== undefined ? props.kimiApiKey : undefined,
+  qwenApiKey: props.qwenApiKey !== undefined ? props.qwenApiKey : undefined,
+  xaiApiKey: props.xaiApiKey !== undefined ? props.xaiApiKey : undefined,
+  geminiApiKey: props.geminiApiKey !== undefined ? props.geminiApiKey : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -283,6 +423,25 @@ id
           scope: item.scope !== undefined ? item.scope : undefined,
           id_token: item.id_token !== undefined ? item.id_token : undefined,
           session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
         },
       }))
     } : undefined,
@@ -590,35 +749,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: props.user.llmConfiguration ? 
-      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
-    ? { connect: {
-          id: props.user.llmConfiguration.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
-          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
-        },
-        create: {
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
     }
   } : undefined,
@@ -629,15 +759,15 @@ id
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_SESSION,
+            mutation: CREATE_ONE_LLMCONFIGURATION,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneSession) {
-            return response.data.createOneSession;
+          if (response && response.data && response.data.createOneLlmConfiguration) {
+            return response.data.createOneLlmConfiguration;
           } else {
             return null as any;
           }
@@ -657,9 +787,9 @@ id
 
           if (isConstraintViolation) {
             const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-            logger.error("Non-retryable constraint violation in createOneSession", {
-              operation: 'createOneSession',
-              model: 'Session',
+            logger.error("Non-retryable constraint violation in createOneLlmConfiguration", {
+              operation: 'createOneLlmConfiguration',
+              model: 'LlmConfiguration',
               error: String(error),
               constraintName: constraintMatch ? constraintMatch[1] : undefined,
               errorCategory: 'CONSTRAINT_VIOLATION',
@@ -679,9 +809,9 @@ id
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error in createOneSession, retrying...", {
-              operation: 'createOneSession',
-              model: 'Session',
+            logger.warn("Database connection error in createOneLlmConfiguration, retrying...", {
+              operation: 'createOneLlmConfiguration',
+              model: 'LlmConfiguration',
               attempt: retryCount,
               maxRetries: MAX_RETRIES,
             });
@@ -691,8 +821,8 @@ id
 
           // Log structured error details and rethrow
           logger.error("Database create operation failed", {
-            operation: 'createOneSession',
-            model: 'Session',
+            operation: 'createOneLlmConfiguration',
+            model: 'LlmConfiguration',
             error: String(error),
             isRetryable: isConnectionError,
           });
@@ -705,13 +835,13 @@ id
     },
 
   /**
-   * Create multiple Session records.
+   * Create multiple LlmConfiguration records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Session objects for the new records.
+   * @param props - Array of LlmConfiguration objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async createMany(props: SessionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: LlmConfigurationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -729,33 +859,45 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_SESSION = gql`
-          mutation createManySession($data: [SessionCreateManyInput!]!) {
-            createManySession(data: $data) {
+        const CREATE_MANY_LLMCONFIGURATION = gql`
+          mutation createManyLlmConfiguration($data: [LlmConfigurationCreateManyInput!]!) {
+            createManyLlmConfiguration(data: $data) {
               count
             }
           }`;
 
         const variables = {
           data: props.map(prop => ({
-      sessionToken: prop.sessionToken !== undefined ? prop.sessionToken : undefined,
-  userId: prop.userId !== undefined ? prop.userId : undefined,
-  expires: prop.expires !== undefined ? prop.expires : undefined,
+      userId: prop.userId !== undefined ? prop.userId : undefined,
+  defaultProvider: prop.defaultProvider !== undefined ? prop.defaultProvider : undefined,
+  miniProvider: prop.miniProvider !== undefined ? prop.miniProvider : undefined,
+  normalProvider: prop.normalProvider !== undefined ? prop.normalProvider : undefined,
+  advancedProvider: prop.advancedProvider !== undefined ? prop.advancedProvider : undefined,
+  miniModel: prop.miniModel !== undefined ? prop.miniModel : undefined,
+  normalModel: prop.normalModel !== undefined ? prop.normalModel : undefined,
+  advancedModel: prop.advancedModel !== undefined ? prop.advancedModel : undefined,
+  openaiApiKey: prop.openaiApiKey !== undefined ? prop.openaiApiKey : undefined,
+  anthropicApiKey: prop.anthropicApiKey !== undefined ? prop.anthropicApiKey : undefined,
+  deepseekApiKey: prop.deepseekApiKey !== undefined ? prop.deepseekApiKey : undefined,
+  kimiApiKey: prop.kimiApiKey !== undefined ? prop.kimiApiKey : undefined,
+  qwenApiKey: prop.qwenApiKey !== undefined ? prop.qwenApiKey : undefined,
+  xaiApiKey: prop.xaiApiKey !== undefined ? prop.xaiApiKey : undefined,
+  geminiApiKey: prop.geminiApiKey !== undefined ? prop.geminiApiKey : undefined,
       })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_SESSION,
+          mutation: CREATE_MANY_LLMCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManySession) {
-          return response.data.createManySession;
+        if (response && response.data && response.data.createManyLlmConfiguration) {
+          return response.data.createManyLlmConfiguration;
         } else {
           return null as any;
         }
@@ -775,9 +917,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManySession", {
-            operation: 'createManySession',
-            model: 'Session',
+          logger.error("Non-retryable constraint violation in createManyLlmConfiguration", {
+            operation: 'createManyLlmConfiguration',
+            model: 'LlmConfiguration',
             error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
@@ -797,9 +939,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in createManySession, retrying...", {
-            operation: 'createManySession',
-            model: 'Session',
+          logger.warn("Database connection error in createManyLlmConfiguration, retrying...", {
+            operation: 'createManyLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -809,8 +951,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database createMany operation failed", {
-          operation: 'createManySession',
-          model: 'Session',
+          operation: 'createManyLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           isRetryable: isConnectionError,
         });
@@ -823,13 +965,13 @@ id
   },
 
   /**
-   * Update a single Session record.
+   * Update a single LlmConfiguration record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Session or null.
+   * @returns The updated LlmConfiguration or null.
    */
-  async update(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+  async update(props: LlmConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LlmConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -847,9 +989,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_SESSION = gql`
-          mutation updateOneSession($data: SessionUpdateInput!, $where: SessionWhereUniqueInput!) {
-            updateOneSession(data: $data, where: $where) {
+        const UPDATE_ONE_LLMCONFIGURATION = gql`
+          mutation updateOneLlmConfiguration($data: LlmConfigurationUpdateInput!, $where: LlmConfigurationWhereUniqueInput!) {
+            updateOneLlmConfiguration(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -857,19 +999,53 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
-  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
       },
           data: {
       id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  sessionToken: props.sessionToken !== undefined ? {
-            set: props.sessionToken 
+  defaultProvider: props.defaultProvider !== undefined ? {
+            set: props.defaultProvider 
            } : undefined,
-  expires: props.expires !== undefined ? {
-            set: props.expires 
+  miniProvider: props.miniProvider !== undefined ? {
+            set: props.miniProvider 
+           } : undefined,
+  normalProvider: props.normalProvider !== undefined ? {
+            set: props.normalProvider 
+           } : undefined,
+  advancedProvider: props.advancedProvider !== undefined ? {
+            set: props.advancedProvider 
+           } : undefined,
+  miniModel: props.miniModel !== undefined ? {
+            set: props.miniModel 
+           } : undefined,
+  normalModel: props.normalModel !== undefined ? {
+            set: props.normalModel 
+           } : undefined,
+  advancedModel: props.advancedModel !== undefined ? {
+            set: props.advancedModel 
+           } : undefined,
+  openaiApiKey: props.openaiApiKey !== undefined ? {
+            set: props.openaiApiKey 
+           } : undefined,
+  anthropicApiKey: props.anthropicApiKey !== undefined ? {
+            set: props.anthropicApiKey 
+           } : undefined,
+  deepseekApiKey: props.deepseekApiKey !== undefined ? {
+            set: props.deepseekApiKey 
+           } : undefined,
+  kimiApiKey: props.kimiApiKey !== undefined ? {
+            set: props.kimiApiKey 
+           } : undefined,
+  qwenApiKey: props.qwenApiKey !== undefined ? {
+            set: props.qwenApiKey 
+           } : undefined,
+  xaiApiKey: props.xaiApiKey !== undefined ? {
+            set: props.xaiApiKey 
+           } : undefined,
+  geminiApiKey: props.geminiApiKey !== undefined ? {
+            set: props.geminiApiKey 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -1061,6 +1237,35 @@ id
         },
       }))
     } : undefined,
+    sessions: props.user.sessions ? 
+    Array.isArray(props.user.sessions) && props.user.sessions.length > 0 && props.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.sessions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          sessionToken: item.sessionToken !== undefined ? {
+              set: item.sessionToken
+            } : undefined,
+          expires: item.expires !== undefined ? {
+              set: item.expires
+            } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
     authenticators: props.user.authenticators ? 
     Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 && props.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.user.authenticators.map((item: any) => ({
@@ -1962,86 +2167,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: props.user.llmConfiguration ? 
-    typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && (Object.keys(props.user.llmConfiguration)[0] === 'id' || Object.keys(props.user.llmConfiguration)[0] === 'symbol')
-? {
-    connect: {
-      id: props.user.llmConfiguration.id
-    }
-} : { upsert: {
-        where: {
-          id: props.user.llmConfiguration.id !== undefined ? {
-              equals: props.user.llmConfiguration.id
-            } : undefined,
-          userId: props.user.llmConfiguration.userId !== undefined ? {
-              equals: props.user.llmConfiguration.userId
-            } : undefined,
-        },
-        update: {
-          id: props.user.llmConfiguration.id !== undefined ? {
-              set: props.user.llmConfiguration.id
-            } : undefined,
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? {
-              set: props.user.llmConfiguration.defaultProvider
-            } : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? {
-              set: props.user.llmConfiguration.miniProvider
-            } : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? {
-              set: props.user.llmConfiguration.normalProvider
-            } : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? {
-              set: props.user.llmConfiguration.advancedProvider
-            } : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? {
-              set: props.user.llmConfiguration.miniModel
-            } : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? {
-              set: props.user.llmConfiguration.normalModel
-            } : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? {
-              set: props.user.llmConfiguration.advancedModel
-            } : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.openaiApiKey
-            } : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? {
-              set: props.user.llmConfiguration.anthropicApiKey
-            } : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? {
-              set: props.user.llmConfiguration.deepseekApiKey
-            } : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.kimiApiKey
-            } : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? {
-              set: props.user.llmConfiguration.qwenApiKey
-            } : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.xaiApiKey
-            } : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.geminiApiKey
-            } : undefined,
-        },
-        create: {
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -2113,6 +2238,25 @@ id
           scope: item.scope !== undefined ? item.scope : undefined,
           id_token: item.id_token !== undefined ? item.id_token : undefined,
           session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
         },
       }))
     } : undefined,
@@ -2420,35 +2564,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: props.user.llmConfiguration ? 
-      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
-    ? { connect: {
-          id: props.user.llmConfiguration.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
-          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
-        },
-        create: {
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
     }
   } : undefined,
@@ -2458,15 +2573,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_SESSION,
+          mutation: UPDATE_ONE_LLMCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneSession) {
-          return response.data.updateOneSession;
+        if (response && response.data && response.data.updateOneLlmConfiguration) {
+          return response.data.updateOneLlmConfiguration;
         } else {
           return null as any;
         }
@@ -2486,9 +2601,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in updateOneSession", {
-            operation: 'updateOneSession',
-            model: 'Session',
+          logger.error("Non-retryable constraint violation in updateOneLlmConfiguration", {
+            operation: 'updateOneLlmConfiguration',
+            model: 'LlmConfiguration',
             error: String(error),
             recordId: props.id,
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
@@ -2509,9 +2624,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in updateOneSession, retrying...", {
-            operation: 'updateOneSession',
-            model: 'Session',
+          logger.warn("Database connection error in updateOneLlmConfiguration, retrying...", {
+            operation: 'updateOneLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
             recordId: props.id,
@@ -2522,8 +2637,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database update operation failed", {
-          operation: 'updateOneSession',
-          model: 'Session',
+          operation: 'updateOneLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           recordId: props.id,
           isRetryable: isConnectionError,
@@ -2537,13 +2652,13 @@ id
   },
 
   /**
-   * Upsert a single Session record.
+   * Upsert a single LlmConfiguration record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Session or null.
+   * @returns The updated LlmConfiguration or null.
    */
-  async upsert(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+  async upsert(props: LlmConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LlmConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2561,9 +2676,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_SESSION = gql`
-          mutation upsertOneSession($where: SessionWhereUniqueInput!, $create: SessionCreateInput!, $update: SessionUpdateInput!) {
-            upsertOneSession(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_LLMCONFIGURATION = gql`
+          mutation upsertOneLlmConfiguration($where: LlmConfigurationWhereUniqueInput!, $create: LlmConfigurationCreateInput!, $update: LlmConfigurationUpdateInput!) {
+            upsertOneLlmConfiguration(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -2571,13 +2686,23 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
-  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
       },
           create: {
-        sessionToken: props.sessionToken !== undefined ? props.sessionToken : undefined,
-  expires: props.expires !== undefined ? props.expires : undefined,
+        defaultProvider: props.defaultProvider !== undefined ? props.defaultProvider : undefined,
+  miniProvider: props.miniProvider !== undefined ? props.miniProvider : undefined,
+  normalProvider: props.normalProvider !== undefined ? props.normalProvider : undefined,
+  advancedProvider: props.advancedProvider !== undefined ? props.advancedProvider : undefined,
+  miniModel: props.miniModel !== undefined ? props.miniModel : undefined,
+  normalModel: props.normalModel !== undefined ? props.normalModel : undefined,
+  advancedModel: props.advancedModel !== undefined ? props.advancedModel : undefined,
+  openaiApiKey: props.openaiApiKey !== undefined ? props.openaiApiKey : undefined,
+  anthropicApiKey: props.anthropicApiKey !== undefined ? props.anthropicApiKey : undefined,
+  deepseekApiKey: props.deepseekApiKey !== undefined ? props.deepseekApiKey : undefined,
+  kimiApiKey: props.kimiApiKey !== undefined ? props.kimiApiKey : undefined,
+  qwenApiKey: props.qwenApiKey !== undefined ? props.qwenApiKey : undefined,
+  xaiApiKey: props.xaiApiKey !== undefined ? props.xaiApiKey : undefined,
+  geminiApiKey: props.geminiApiKey !== undefined ? props.geminiApiKey : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -2665,6 +2790,25 @@ id
         },
       }))
     } : undefined,
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
     authenticators: props.user.authenticators ? 
       Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 &&  props.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.user.authenticators.map((item: any) => ({
@@ -2969,45 +3113,52 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: props.user.llmConfiguration ? 
-      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
-    ? { connect: {
-          id: props.user.llmConfiguration.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
-          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
-        },
-        create: {
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
     }
   } : undefined,
       },
           update: {
-      sessionToken: props.sessionToken !== undefined ? {
-            set: props.sessionToken 
+      defaultProvider: props.defaultProvider !== undefined ? {
+            set: props.defaultProvider 
            } : undefined,
-  expires: props.expires !== undefined ? {
-            set: props.expires 
+  miniProvider: props.miniProvider !== undefined ? {
+            set: props.miniProvider 
+           } : undefined,
+  normalProvider: props.normalProvider !== undefined ? {
+            set: props.normalProvider 
+           } : undefined,
+  advancedProvider: props.advancedProvider !== undefined ? {
+            set: props.advancedProvider 
+           } : undefined,
+  miniModel: props.miniModel !== undefined ? {
+            set: props.miniModel 
+           } : undefined,
+  normalModel: props.normalModel !== undefined ? {
+            set: props.normalModel 
+           } : undefined,
+  advancedModel: props.advancedModel !== undefined ? {
+            set: props.advancedModel 
+           } : undefined,
+  openaiApiKey: props.openaiApiKey !== undefined ? {
+            set: props.openaiApiKey 
+           } : undefined,
+  anthropicApiKey: props.anthropicApiKey !== undefined ? {
+            set: props.anthropicApiKey 
+           } : undefined,
+  deepseekApiKey: props.deepseekApiKey !== undefined ? {
+            set: props.deepseekApiKey 
+           } : undefined,
+  kimiApiKey: props.kimiApiKey !== undefined ? {
+            set: props.kimiApiKey 
+           } : undefined,
+  qwenApiKey: props.qwenApiKey !== undefined ? {
+            set: props.qwenApiKey 
+           } : undefined,
+  xaiApiKey: props.xaiApiKey !== undefined ? {
+            set: props.xaiApiKey 
+           } : undefined,
+  geminiApiKey: props.geminiApiKey !== undefined ? {
+            set: props.geminiApiKey 
            } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
@@ -3193,6 +3344,35 @@ id
         },
       }))
     } : undefined,
+    sessions: props.user.sessions ? 
+    Array.isArray(props.user.sessions) && props.user.sessions.length > 0 && props.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.user.sessions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          sessionToken: item.sessionToken !== undefined ? {
+              set: item.sessionToken
+            } : undefined,
+          expires: item.expires !== undefined ? {
+              set: item.expires
+            } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
+        },
+      }))
+    } : undefined,
     authenticators: props.user.authenticators ? 
     Array.isArray(props.user.authenticators) && props.user.authenticators.length > 0 && props.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.user.authenticators.map((item: any) => ({
@@ -4094,86 +4274,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: props.user.llmConfiguration ? 
-    typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && (Object.keys(props.user.llmConfiguration)[0] === 'id' || Object.keys(props.user.llmConfiguration)[0] === 'symbol')
-? {
-    connect: {
-      id: props.user.llmConfiguration.id
-    }
-} : { upsert: {
-        where: {
-          id: props.user.llmConfiguration.id !== undefined ? {
-              equals: props.user.llmConfiguration.id
-            } : undefined,
-          userId: props.user.llmConfiguration.userId !== undefined ? {
-              equals: props.user.llmConfiguration.userId
-            } : undefined,
-        },
-        update: {
-          id: props.user.llmConfiguration.id !== undefined ? {
-              set: props.user.llmConfiguration.id
-            } : undefined,
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? {
-              set: props.user.llmConfiguration.defaultProvider
-            } : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? {
-              set: props.user.llmConfiguration.miniProvider
-            } : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? {
-              set: props.user.llmConfiguration.normalProvider
-            } : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? {
-              set: props.user.llmConfiguration.advancedProvider
-            } : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? {
-              set: props.user.llmConfiguration.miniModel
-            } : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? {
-              set: props.user.llmConfiguration.normalModel
-            } : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? {
-              set: props.user.llmConfiguration.advancedModel
-            } : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.openaiApiKey
-            } : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? {
-              set: props.user.llmConfiguration.anthropicApiKey
-            } : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? {
-              set: props.user.llmConfiguration.deepseekApiKey
-            } : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.kimiApiKey
-            } : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? {
-              set: props.user.llmConfiguration.qwenApiKey
-            } : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.xaiApiKey
-            } : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? {
-              set: props.user.llmConfiguration.geminiApiKey
-            } : undefined,
-        },
-        create: {
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -4245,6 +4345,25 @@ id
           scope: item.scope !== undefined ? item.scope : undefined,
           id_token: item.id_token !== undefined ? item.id_token : undefined,
           session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: props.user.sessions ? 
+      Array.isArray(props.user.sessions) && props.user.sessions.length > 0 &&  props.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
         },
       }))
     } : undefined,
@@ -4552,35 +4671,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: props.user.llmConfiguration ? 
-      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
-    ? { connect: {
-          id: props.user.llmConfiguration.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
-          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
-        },
-        create: {
-          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
-          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
-          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
     }
   } : undefined,
@@ -4590,15 +4680,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_SESSION,
+          mutation: UPSERT_ONE_LLMCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneSession) {
-          return response.data.upsertOneSession;
+        if (response && response.data && response.data.upsertOneLlmConfiguration) {
+          return response.data.upsertOneLlmConfiguration;
         } else {
           return null as any;
         }
@@ -4618,9 +4708,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in upsertOneSession", {
-            operation: 'upsertOneSession',
-            model: 'Session',
+          logger.error("Non-retryable constraint violation in upsertOneLlmConfiguration", {
+            operation: 'upsertOneLlmConfiguration',
+            model: 'LlmConfiguration',
             error: String(error),
             recordId: props.id,
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
@@ -4641,9 +4731,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in upsertOneSession, retrying...", {
-            operation: 'upsertOneSession',
-            model: 'Session',
+          logger.warn("Database connection error in upsertOneLlmConfiguration, retrying...", {
+            operation: 'upsertOneLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
             recordId: props.id,
@@ -4654,8 +4744,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database upsert operation failed", {
-          operation: 'upsertOneSession',
-          model: 'Session',
+          operation: 'upsertOneLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           recordId: props.id,
           isRetryable: isConnectionError,
@@ -4669,13 +4759,13 @@ id
   },
 
   /**
-   * Update multiple Session records.
+   * Update multiple LlmConfiguration records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Session objects for the updated records.
+   * @param props - Array of LlmConfiguration objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: SessionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: LlmConfigurationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -4693,9 +4783,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_SESSION = gql`
-          mutation updateManySession($data: [SessionCreateManyInput!]!) {
-            updateManySession(data: $data) {
+        const UPDATE_MANY_LLMCONFIGURATION = gql`
+          mutation updateManyLlmConfiguration($data: [LlmConfigurationCreateManyInput!]!) {
+            updateManyLlmConfiguration(data: $data) {
               count
             }
           }`;
@@ -4703,20 +4793,54 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId 
-  } : undefined,
+  userId: prop.userId !== undefined ? prop.userId : undefined,
 
           },
           data: {
               id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  sessionToken: prop.sessionToken !== undefined ? {
-            set: prop.sessionToken 
+  defaultProvider: prop.defaultProvider !== undefined ? {
+            set: prop.defaultProvider 
            } : undefined,
-  expires: prop.expires !== undefined ? {
-            set: prop.expires 
+  miniProvider: prop.miniProvider !== undefined ? {
+            set: prop.miniProvider 
+           } : undefined,
+  normalProvider: prop.normalProvider !== undefined ? {
+            set: prop.normalProvider 
+           } : undefined,
+  advancedProvider: prop.advancedProvider !== undefined ? {
+            set: prop.advancedProvider 
+           } : undefined,
+  miniModel: prop.miniModel !== undefined ? {
+            set: prop.miniModel 
+           } : undefined,
+  normalModel: prop.normalModel !== undefined ? {
+            set: prop.normalModel 
+           } : undefined,
+  advancedModel: prop.advancedModel !== undefined ? {
+            set: prop.advancedModel 
+           } : undefined,
+  openaiApiKey: prop.openaiApiKey !== undefined ? {
+            set: prop.openaiApiKey 
+           } : undefined,
+  anthropicApiKey: prop.anthropicApiKey !== undefined ? {
+            set: prop.anthropicApiKey 
+           } : undefined,
+  deepseekApiKey: prop.deepseekApiKey !== undefined ? {
+            set: prop.deepseekApiKey 
+           } : undefined,
+  kimiApiKey: prop.kimiApiKey !== undefined ? {
+            set: prop.kimiApiKey 
+           } : undefined,
+  qwenApiKey: prop.qwenApiKey !== undefined ? {
+            set: prop.qwenApiKey 
+           } : undefined,
+  xaiApiKey: prop.xaiApiKey !== undefined ? {
+            set: prop.xaiApiKey 
+           } : undefined,
+  geminiApiKey: prop.geminiApiKey !== undefined ? {
+            set: prop.geminiApiKey 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -4905,6 +5029,35 @@ id
           scope: item.scope !== undefined ? item.scope : undefined,
           id_token: item.id_token !== undefined ? item.id_token : undefined,
           session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: prop.user.sessions ? 
+    Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 && prop.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.user.sessions.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          sessionToken: item.sessionToken !== undefined ? {
+              set: item.sessionToken
+            } : undefined,
+          expires: item.expires !== undefined ? {
+              set: item.expires
+            } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
         },
       }))
     } : undefined,
@@ -5809,86 +5962,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: prop.user.llmConfiguration ? 
-    typeof prop.user.llmConfiguration === 'object' && Object.keys(prop.user.llmConfiguration).length === 1 && (Object.keys(prop.user.llmConfiguration)[0] === 'id' || Object.keys(prop.user.llmConfiguration)[0] === 'symbol')
-? {
-    connect: {
-      id: prop.user.llmConfiguration.id
-    }
-} : { upsert: {
-        where: {
-          id: prop.user.llmConfiguration.id !== undefined ? {
-              equals: prop.user.llmConfiguration.id
-            } : undefined,
-          userId: prop.user.llmConfiguration.userId !== undefined ? {
-              equals: prop.user.llmConfiguration.userId
-            } : undefined,
-        },
-        update: {
-          id: prop.user.llmConfiguration.id !== undefined ? {
-              set: prop.user.llmConfiguration.id
-            } : undefined,
-          defaultProvider: prop.user.llmConfiguration.defaultProvider !== undefined ? {
-              set: prop.user.llmConfiguration.defaultProvider
-            } : undefined,
-          miniProvider: prop.user.llmConfiguration.miniProvider !== undefined ? {
-              set: prop.user.llmConfiguration.miniProvider
-            } : undefined,
-          normalProvider: prop.user.llmConfiguration.normalProvider !== undefined ? {
-              set: prop.user.llmConfiguration.normalProvider
-            } : undefined,
-          advancedProvider: prop.user.llmConfiguration.advancedProvider !== undefined ? {
-              set: prop.user.llmConfiguration.advancedProvider
-            } : undefined,
-          miniModel: prop.user.llmConfiguration.miniModel !== undefined ? {
-              set: prop.user.llmConfiguration.miniModel
-            } : undefined,
-          normalModel: prop.user.llmConfiguration.normalModel !== undefined ? {
-              set: prop.user.llmConfiguration.normalModel
-            } : undefined,
-          advancedModel: prop.user.llmConfiguration.advancedModel !== undefined ? {
-              set: prop.user.llmConfiguration.advancedModel
-            } : undefined,
-          openaiApiKey: prop.user.llmConfiguration.openaiApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.openaiApiKey
-            } : undefined,
-          anthropicApiKey: prop.user.llmConfiguration.anthropicApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.anthropicApiKey
-            } : undefined,
-          deepseekApiKey: prop.user.llmConfiguration.deepseekApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.deepseekApiKey
-            } : undefined,
-          kimiApiKey: prop.user.llmConfiguration.kimiApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.kimiApiKey
-            } : undefined,
-          qwenApiKey: prop.user.llmConfiguration.qwenApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.qwenApiKey
-            } : undefined,
-          xaiApiKey: prop.user.llmConfiguration.xaiApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.xaiApiKey
-            } : undefined,
-          geminiApiKey: prop.user.llmConfiguration.geminiApiKey !== undefined ? {
-              set: prop.user.llmConfiguration.geminiApiKey
-            } : undefined,
-        },
-        create: {
-          defaultProvider: prop.user.llmConfiguration.defaultProvider !== undefined ? prop.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: prop.user.llmConfiguration.miniProvider !== undefined ? prop.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: prop.user.llmConfiguration.normalProvider !== undefined ? prop.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: prop.user.llmConfiguration.advancedProvider !== undefined ? prop.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: prop.user.llmConfiguration.miniModel !== undefined ? prop.user.llmConfiguration.miniModel : undefined,
-          normalModel: prop.user.llmConfiguration.normalModel !== undefined ? prop.user.llmConfiguration.normalModel : undefined,
-          advancedModel: prop.user.llmConfiguration.advancedModel !== undefined ? prop.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: prop.user.llmConfiguration.openaiApiKey !== undefined ? prop.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: prop.user.llmConfiguration.anthropicApiKey !== undefined ? prop.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: prop.user.llmConfiguration.deepseekApiKey !== undefined ? prop.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: prop.user.llmConfiguration.kimiApiKey !== undefined ? prop.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: prop.user.llmConfiguration.qwenApiKey !== undefined ? prop.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: prop.user.llmConfiguration.xaiApiKey !== undefined ? prop.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: prop.user.llmConfiguration.geminiApiKey !== undefined ? prop.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -5960,6 +6033,25 @@ id
           scope: item.scope !== undefined ? item.scope : undefined,
           id_token: item.id_token !== undefined ? item.id_token : undefined,
           session_state: item.session_state !== undefined ? item.session_state : undefined,
+        },
+      }))
+    } : undefined,
+    sessions: prop.user.sessions ? 
+      Array.isArray(prop.user.sessions) && prop.user.sessions.length > 0 &&  prop.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.user.sessions.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.user.sessions.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          userId: item.userId !== undefined ? {
+              equals: item.userId 
+             } : undefined,
+        },
+        create: {
+          sessionToken: item.sessionToken !== undefined ? item.sessionToken : undefined,
+          expires: item.expires !== undefined ? item.expires : undefined,
         },
       }))
     } : undefined,
@@ -6267,35 +6359,6 @@ id
         },
       }))
     } : undefined,
-    llmConfiguration: prop.user.llmConfiguration ? 
-      typeof prop.user.llmConfiguration === 'object' && Object.keys(prop.user.llmConfiguration).length === 1 && Object.keys(prop.user.llmConfiguration)[0] === 'id'
-    ? { connect: {
-          id: prop.user.llmConfiguration.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: prop.user.llmConfiguration.id !== undefined ? prop.user.llmConfiguration.id : undefined,
-          userId: prop.user.llmConfiguration.userId !== undefined ? prop.user.llmConfiguration.userId : undefined,
-        },
-        create: {
-          defaultProvider: prop.user.llmConfiguration.defaultProvider !== undefined ? prop.user.llmConfiguration.defaultProvider : undefined,
-          miniProvider: prop.user.llmConfiguration.miniProvider !== undefined ? prop.user.llmConfiguration.miniProvider : undefined,
-          normalProvider: prop.user.llmConfiguration.normalProvider !== undefined ? prop.user.llmConfiguration.normalProvider : undefined,
-          advancedProvider: prop.user.llmConfiguration.advancedProvider !== undefined ? prop.user.llmConfiguration.advancedProvider : undefined,
-          miniModel: prop.user.llmConfiguration.miniModel !== undefined ? prop.user.llmConfiguration.miniModel : undefined,
-          normalModel: prop.user.llmConfiguration.normalModel !== undefined ? prop.user.llmConfiguration.normalModel : undefined,
-          advancedModel: prop.user.llmConfiguration.advancedModel !== undefined ? prop.user.llmConfiguration.advancedModel : undefined,
-          openaiApiKey: prop.user.llmConfiguration.openaiApiKey !== undefined ? prop.user.llmConfiguration.openaiApiKey : undefined,
-          anthropicApiKey: prop.user.llmConfiguration.anthropicApiKey !== undefined ? prop.user.llmConfiguration.anthropicApiKey : undefined,
-          deepseekApiKey: prop.user.llmConfiguration.deepseekApiKey !== undefined ? prop.user.llmConfiguration.deepseekApiKey : undefined,
-          kimiApiKey: prop.user.llmConfiguration.kimiApiKey !== undefined ? prop.user.llmConfiguration.kimiApiKey : undefined,
-          qwenApiKey: prop.user.llmConfiguration.qwenApiKey !== undefined ? prop.user.llmConfiguration.qwenApiKey : undefined,
-          xaiApiKey: prop.user.llmConfiguration.xaiApiKey !== undefined ? prop.user.llmConfiguration.xaiApiKey : undefined,
-          geminiApiKey: prop.user.llmConfiguration.geminiApiKey !== undefined ? prop.user.llmConfiguration.geminiApiKey : undefined,
-        },
-      }
-    } : undefined,
       },
     }
   } : undefined,
@@ -6306,15 +6369,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_SESSION,
+          mutation: UPDATE_MANY_LLMCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManySession) {
-          return response.data.updateManySession;
+        if (response && response.data && response.data.updateManyLlmConfiguration) {
+          return response.data.updateManyLlmConfiguration;
         } else {
           return null as any;
         }
@@ -6334,9 +6397,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in updateManySession", {
-            operation: 'updateManySession',
-            model: 'Session',
+          logger.error("Non-retryable constraint violation in updateManyLlmConfiguration", {
+            operation: 'updateManyLlmConfiguration',
+            model: 'LlmConfiguration',
             error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
@@ -6356,9 +6419,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in updateManySession, retrying...", {
-            operation: 'updateManySession',
-            model: 'Session',
+          logger.warn("Database connection error in updateManyLlmConfiguration, retrying...", {
+            operation: 'updateManyLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -6368,8 +6431,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database updateMany operation failed", {
-          operation: 'updateManySession',
-          model: 'Session',
+          operation: 'updateManyLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           isRetryable: isConnectionError,
         });
@@ -6382,13 +6445,13 @@ id
   },
 
   /**
-   * Delete a single Session record.
+   * Delete a single LlmConfiguration record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Session or null.
+   * @returns The deleted LlmConfiguration or null.
    */
-  async delete(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType> {
+  async delete(props: LlmConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LlmConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -6406,9 +6469,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_SESSION = gql`
-          mutation deleteOneSession($where: SessionWhereUniqueInput!) {
-            deleteOneSession(where: $where) {
+        const DELETE_ONE_LLMCONFIGURATION = gql`
+          mutation deleteOneLlmConfiguration($where: LlmConfigurationWhereUniqueInput!) {
+            deleteOneLlmConfiguration(where: $where) {
               id
             }
           }`;
@@ -6422,15 +6485,15 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_SESSION,
+          mutation: DELETE_ONE_LLMCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneSession) {
-          return response.data.deleteOneSession;
+        if (response && response.data && response.data.deleteOneLlmConfiguration) {
+          return response.data.deleteOneLlmConfiguration;
         } else {
           return null as any;
         }
@@ -6453,9 +6516,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in deleteOneSession", {
-            operation: 'deleteOneSession',
-            model: 'Session',
+          logger.error("Non-retryable constraint violation in deleteOneLlmConfiguration", {
+            operation: 'deleteOneLlmConfiguration',
+            model: 'LlmConfiguration',
             error: String(error),
             recordId: props.id,
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
@@ -6476,9 +6539,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in deleteOneSession, retrying...", {
-            operation: 'deleteOneSession',
-            model: 'Session',
+          logger.warn("Database connection error in deleteOneLlmConfiguration, retrying...", {
+            operation: 'deleteOneLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
             recordId: props.id,
@@ -6489,8 +6552,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database delete operation failed", {
-          operation: 'deleteOneSession',
-          model: 'Session',
+          operation: 'deleteOneLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           recordId: props.id,
           isRetryable: isConnectionError,
@@ -6504,14 +6567,14 @@ id
   },
 
   /**
-   * Retrieve a single Session record by ID.
+   * Retrieve a single LlmConfiguration record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Session or null.
+   * @returns The retrieved LlmConfiguration or null.
    */
-  async get(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SessionType | null> {
+  async get(props: LlmConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<LlmConfigurationType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -6529,9 +6592,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const GET_SESSION = gql`
-          query getSession($where: SessionWhereUniqueInput!) {
-            getSession(where: $where) {
+        const GET_LLMCONFIGURATION = gql`
+          query getLlmConfiguration($where: LlmConfigurationWhereUniqueInput!) {
+            getLlmConfiguration(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -6539,26 +6602,24 @@ id
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
-  } : undefined,
+  userId: props.userId !== undefined ? props.userId : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_SESSION,
+          query: GET_LLMCONFIGURATION,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getSession ?? null;
+        return response.data?.getLlmConfiguration ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Session found') {
+        if (error.message === 'No LlmConfiguration found') {
           return null;
         }
 
@@ -6573,9 +6634,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in getSession, retrying...", {
-            operation: 'getSession',
-            model: 'Session',
+          logger.warn("Database connection error in getLlmConfiguration, retrying...", {
+            operation: 'getLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -6585,8 +6646,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database get operation failed", {
-          operation: 'getSession',
-          model: 'Session',
+          operation: 'getLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           isRetryable: isConnectionError,
         });
@@ -6599,12 +6660,12 @@ id
   },
 
   /**
-   * Retrieve all Sessions records.
+   * Retrieve all LlmConfigurations records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Session records or null.
+   * @returns An array of LlmConfiguration records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SessionType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<LlmConfigurationType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -6622,25 +6683,25 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_SESSION = gql`
-          query getAllSession {
-            sessions {
+        const GET_ALL_LLMCONFIGURATION = gql`
+          query getAllLlmConfiguration {
+            llmConfigurations {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_SESSION,
+          query: GET_ALL_LLMCONFIGURATION,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.sessions ?? null;
+        return response.data?.llmConfigurations ?? null;
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Session found') {
+        if (error.message === 'No LlmConfiguration found') {
           return null;
         }
 
@@ -6655,9 +6716,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in getAllSession, retrying...", {
-            operation: 'getAllSession',
-            model: 'Session',
+          logger.warn("Database connection error in getAllLlmConfiguration, retrying...", {
+            operation: 'getAllLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -6667,8 +6728,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database getAll operation failed", {
-          operation: 'getAllSession',
-          model: 'Session',
+          operation: 'getAllLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           isRetryable: isConnectionError,
         });
@@ -6681,14 +6742,14 @@ id
   },
 
   /**
-   * Find multiple Session records based on conditions.
+   * Find multiple LlmConfiguration records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Session records or null.
+   * @returns An array of found LlmConfiguration records or null.
    */
-  async findMany(props: SessionType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SessionType[] | null> {
+  async findMany(props: LlmConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<LlmConfigurationType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -6706,9 +6767,9 @@ id
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_SESSION = gql`
-          query findManySession($where: SessionWhereInput!) {
-            sessions(where: $where) {
+        const FIND_MANY_LLMCONFIGURATION = gql`
+          query findManyLlmConfiguration($where: LlmConfigurationWhereInput!) {
+            llmConfigurations(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -6727,22 +6788,22 @@ id
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: FIND_MANY_SESSION,
+          query: FIND_MANY_LLMCONFIGURATION,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.sessions) {
-          return response.data.sessions;
+        if (response && response.data && response.data.llmconfigurations) {
+          return response.data.llmConfigurations;
         } else {
-          return [] as SessionType[];
+          return [] as LlmConfigurationType[];
         }
       } catch (error: any) {
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Session found') {
+        if (error.message === 'No LlmConfiguration found') {
           return null;
         }
 
@@ -6757,9 +6818,9 @@ id
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in findManySession, retrying...", {
-            operation: 'findManySession',
-            model: 'Session',
+          logger.warn("Database connection error in findManyLlmConfiguration, retrying...", {
+            operation: 'findManyLlmConfiguration',
+            model: 'LlmConfiguration',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -6769,8 +6830,8 @@ id
 
         // Log structured error details and rethrow
         logger.error("Database findMany operation failed", {
-          operation: 'findManySession',
-          model: 'Session',
+          operation: 'findManyLlmConfiguration',
+          model: 'LlmConfiguration',
           error: String(error),
           isRetryable: isConnectionError,
         });

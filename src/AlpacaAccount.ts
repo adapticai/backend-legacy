@@ -39,6 +39,88 @@ id
     createdAt
     updatedAt
   }
+  tradingPolicy {
+    id
+    alpacaAccountId
+    alpacaAccount {
+id
+    }
+    version
+    lastModifiedBy
+    lastModifiedAt
+    autonomyMode
+    realtimeTradingEnabled
+    paperTradingOnly
+    killSwitchEnabled
+    autonomyPrefs
+    equitiesEnabled
+    etfsEnabled
+    cryptoEnabled
+    optionsEnabled
+    futuresEnabled
+    forexEnabled
+    shortingEnabled
+    marginEnabled
+    fractionalSharesEnabled
+    assetUniversePrefs
+    maxBuyingPowerUtilPct
+    cashFloorPct
+    maxGrossExposurePct
+    maxNetExposurePct
+    maxLeverage
+    maxSymbolConcentrationPct
+    maxSectorConcentrationPct
+    maxOpenPositions
+    maxOpenOrders
+    riskBudgetPrefs
+    signalConsumptionPrefs
+    executionPrefs
+    positionManagementPrefs
+    portfolioConstructionPrefs
+    macroOverlayEnabled
+    sectorOverlayEnabled
+    volatilityOverlayEnabled
+    liquidityStressOverlayEnabled
+    blackSwanProtectionEnabled
+    drawdownGuardianEnabled
+    correlationSpikeProtectionEnabled
+    newsEventRiskOverlayEnabled
+    exchangeHealthOverlayEnabled
+    dataQualitySentinelEnabled
+    overlayResponsePrefs
+    miniModelProvider
+    miniModelId
+    normalModelProvider
+    normalModelId
+    advancedModelProvider
+    advancedModelId
+    modelPrefs
+    auditNotificationPrefs
+    overlays {
+      id
+      tradingPolicyId
+      tradingPolicy {
+id
+      }
+      overlayType
+      source
+      reason
+      severity
+      version
+      mutations
+      status
+      activatedAt
+      expiresAt
+      deactivatedAt
+      deactivatedBy
+      correlationId
+      triggerEventId
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
   autoAllocation
   minPercentageChange
   volumeThreshold
@@ -124,6 +206,25 @@ id
         expiresAt
         createdAt
       }
+    }
+    llmConfiguration {
+      id
+      userId
+      defaultProvider
+      miniProvider
+      normalProvider
+      advancedProvider
+      miniModel
+      normalModel
+      advancedModel
+      anthropicApiKey
+      deepseekApiKey
+      kimiApiKey
+      qwenApiKey
+      xaiApiKey
+      geminiApiKey
+      createdAt
+      updatedAt
     }
   }
   userId
@@ -241,6 +342,117 @@ id
         crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
         stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
         options: props.allocation.options !== undefined ? props.allocation.options : undefined,
+      },
+    }
+  } : undefined,
+  tradingPolicy: props.tradingPolicy ? 
+    typeof props.tradingPolicy === 'object' && Object.keys(props.tradingPolicy).length === 1 && Object.keys(props.tradingPolicy)[0] === 'id'
+    ? { connect: {
+        id: props.tradingPolicy.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.tradingPolicy.id !== undefined ? props.tradingPolicy.id : undefined,
+        alpacaAccountId: props.tradingPolicy.alpacaAccountId !== undefined ? props.tradingPolicy.alpacaAccountId : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? {
+            equals: props.tradingPolicy.miniModelId 
+           } : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? {
+            equals: props.tradingPolicy.normalModelId 
+           } : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
+            equals: props.tradingPolicy.advancedModelId 
+           } : undefined,
+      },
+      create: {
+        version: props.tradingPolicy.version !== undefined ? props.tradingPolicy.version : undefined,
+        lastModifiedBy: props.tradingPolicy.lastModifiedBy !== undefined ? props.tradingPolicy.lastModifiedBy : undefined,
+        lastModifiedAt: props.tradingPolicy.lastModifiedAt !== undefined ? props.tradingPolicy.lastModifiedAt : undefined,
+        autonomyMode: props.tradingPolicy.autonomyMode !== undefined ? props.tradingPolicy.autonomyMode : undefined,
+        realtimeTradingEnabled: props.tradingPolicy.realtimeTradingEnabled !== undefined ? props.tradingPolicy.realtimeTradingEnabled : undefined,
+        paperTradingOnly: props.tradingPolicy.paperTradingOnly !== undefined ? props.tradingPolicy.paperTradingOnly : undefined,
+        killSwitchEnabled: props.tradingPolicy.killSwitchEnabled !== undefined ? props.tradingPolicy.killSwitchEnabled : undefined,
+        autonomyPrefs: props.tradingPolicy.autonomyPrefs !== undefined ? props.tradingPolicy.autonomyPrefs : undefined,
+        equitiesEnabled: props.tradingPolicy.equitiesEnabled !== undefined ? props.tradingPolicy.equitiesEnabled : undefined,
+        etfsEnabled: props.tradingPolicy.etfsEnabled !== undefined ? props.tradingPolicy.etfsEnabled : undefined,
+        cryptoEnabled: props.tradingPolicy.cryptoEnabled !== undefined ? props.tradingPolicy.cryptoEnabled : undefined,
+        optionsEnabled: props.tradingPolicy.optionsEnabled !== undefined ? props.tradingPolicy.optionsEnabled : undefined,
+        futuresEnabled: props.tradingPolicy.futuresEnabled !== undefined ? props.tradingPolicy.futuresEnabled : undefined,
+        forexEnabled: props.tradingPolicy.forexEnabled !== undefined ? props.tradingPolicy.forexEnabled : undefined,
+        shortingEnabled: props.tradingPolicy.shortingEnabled !== undefined ? props.tradingPolicy.shortingEnabled : undefined,
+        marginEnabled: props.tradingPolicy.marginEnabled !== undefined ? props.tradingPolicy.marginEnabled : undefined,
+        fractionalSharesEnabled: props.tradingPolicy.fractionalSharesEnabled !== undefined ? props.tradingPolicy.fractionalSharesEnabled : undefined,
+        assetUniversePrefs: props.tradingPolicy.assetUniversePrefs !== undefined ? props.tradingPolicy.assetUniversePrefs : undefined,
+        maxBuyingPowerUtilPct: props.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+        cashFloorPct: props.tradingPolicy.cashFloorPct !== undefined ? props.tradingPolicy.cashFloorPct : undefined,
+        maxGrossExposurePct: props.tradingPolicy.maxGrossExposurePct !== undefined ? props.tradingPolicy.maxGrossExposurePct : undefined,
+        maxNetExposurePct: props.tradingPolicy.maxNetExposurePct !== undefined ? props.tradingPolicy.maxNetExposurePct : undefined,
+        maxLeverage: props.tradingPolicy.maxLeverage !== undefined ? props.tradingPolicy.maxLeverage : undefined,
+        maxSymbolConcentrationPct: props.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.tradingPolicy.maxSymbolConcentrationPct : undefined,
+        maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
+        maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
+        maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
+        signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
+        executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
+        positionManagementPrefs: props.tradingPolicy.positionManagementPrefs !== undefined ? props.tradingPolicy.positionManagementPrefs : undefined,
+        portfolioConstructionPrefs: props.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.tradingPolicy.portfolioConstructionPrefs : undefined,
+        macroOverlayEnabled: props.tradingPolicy.macroOverlayEnabled !== undefined ? props.tradingPolicy.macroOverlayEnabled : undefined,
+        sectorOverlayEnabled: props.tradingPolicy.sectorOverlayEnabled !== undefined ? props.tradingPolicy.sectorOverlayEnabled : undefined,
+        volatilityOverlayEnabled: props.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.tradingPolicy.volatilityOverlayEnabled : undefined,
+        liquidityStressOverlayEnabled: props.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+        blackSwanProtectionEnabled: props.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.tradingPolicy.blackSwanProtectionEnabled : undefined,
+        drawdownGuardianEnabled: props.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.tradingPolicy.drawdownGuardianEnabled : undefined,
+        correlationSpikeProtectionEnabled: props.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+        newsEventRiskOverlayEnabled: props.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+        exchangeHealthOverlayEnabled: props.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+        dataQualitySentinelEnabled: props.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.tradingPolicy.dataQualitySentinelEnabled : undefined,
+        overlayResponsePrefs: props.tradingPolicy.overlayResponsePrefs !== undefined ? props.tradingPolicy.overlayResponsePrefs : undefined,
+        miniModelProvider: props.tradingPolicy.miniModelProvider !== undefined ? props.tradingPolicy.miniModelProvider : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? props.tradingPolicy.miniModelId : undefined,
+        normalModelProvider: props.tradingPolicy.normalModelProvider !== undefined ? props.tradingPolicy.normalModelProvider : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? props.tradingPolicy.normalModelId : undefined,
+        advancedModelProvider: props.tradingPolicy.advancedModelProvider !== undefined ? props.tradingPolicy.advancedModelProvider : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
+        modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
+        auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+    overlays: props.tradingPolicy.overlays ? 
+      Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.tradingPolicy.overlays.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId 
+             } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId 
+             } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -480,6 +692,35 @@ id
       } : undefined,
         },
       }))
+    } : undefined,
+    llmConfiguration: props.user.llmConfiguration ? 
+      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+          id: props.user.llmConfiguration.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
+          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
+        },
+        create: {
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -917,6 +1158,358 @@ id
       },
     }
   } : undefined,
+  tradingPolicy: props.tradingPolicy ? 
+  typeof props.tradingPolicy === 'object' && Object.keys(props.tradingPolicy).length === 1 && (Object.keys(props.tradingPolicy)[0] === 'id' || Object.keys(props.tradingPolicy)[0] === 'symbol')
+? {
+  connect: {
+    id: props.tradingPolicy.id
+  }
+} : { upsert: {
+      where: {
+        id: props.tradingPolicy.id !== undefined ? {
+            equals: props.tradingPolicy.id
+          } : undefined,
+        alpacaAccountId: props.tradingPolicy.alpacaAccountId !== undefined ? {
+            equals: props.tradingPolicy.alpacaAccountId
+          } : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? {
+            equals: props.tradingPolicy.miniModelId
+          } : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? {
+            equals: props.tradingPolicy.normalModelId
+          } : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
+            equals: props.tradingPolicy.advancedModelId
+          } : undefined,
+      },
+      update: {
+        id: props.tradingPolicy.id !== undefined ? {
+            set: props.tradingPolicy.id
+          } : undefined,
+        version: props.tradingPolicy.version !== undefined ? {
+            set: props.tradingPolicy.version
+          } : undefined,
+        lastModifiedBy: props.tradingPolicy.lastModifiedBy !== undefined ? {
+            set: props.tradingPolicy.lastModifiedBy
+          } : undefined,
+        lastModifiedAt: props.tradingPolicy.lastModifiedAt !== undefined ? {
+            set: props.tradingPolicy.lastModifiedAt
+          } : undefined,
+        autonomyMode: props.tradingPolicy.autonomyMode !== undefined ? {
+            set: props.tradingPolicy.autonomyMode
+          } : undefined,
+        realtimeTradingEnabled: props.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+            set: props.tradingPolicy.realtimeTradingEnabled
+          } : undefined,
+        paperTradingOnly: props.tradingPolicy.paperTradingOnly !== undefined ? {
+            set: props.tradingPolicy.paperTradingOnly
+          } : undefined,
+        killSwitchEnabled: props.tradingPolicy.killSwitchEnabled !== undefined ? {
+            set: props.tradingPolicy.killSwitchEnabled
+          } : undefined,
+        autonomyPrefs: props.tradingPolicy.autonomyPrefs !== undefined ? {
+            set: props.tradingPolicy.autonomyPrefs
+          } : undefined,
+        equitiesEnabled: props.tradingPolicy.equitiesEnabled !== undefined ? {
+            set: props.tradingPolicy.equitiesEnabled
+          } : undefined,
+        etfsEnabled: props.tradingPolicy.etfsEnabled !== undefined ? {
+            set: props.tradingPolicy.etfsEnabled
+          } : undefined,
+        cryptoEnabled: props.tradingPolicy.cryptoEnabled !== undefined ? {
+            set: props.tradingPolicy.cryptoEnabled
+          } : undefined,
+        optionsEnabled: props.tradingPolicy.optionsEnabled !== undefined ? {
+            set: props.tradingPolicy.optionsEnabled
+          } : undefined,
+        futuresEnabled: props.tradingPolicy.futuresEnabled !== undefined ? {
+            set: props.tradingPolicy.futuresEnabled
+          } : undefined,
+        forexEnabled: props.tradingPolicy.forexEnabled !== undefined ? {
+            set: props.tradingPolicy.forexEnabled
+          } : undefined,
+        shortingEnabled: props.tradingPolicy.shortingEnabled !== undefined ? {
+            set: props.tradingPolicy.shortingEnabled
+          } : undefined,
+        marginEnabled: props.tradingPolicy.marginEnabled !== undefined ? {
+            set: props.tradingPolicy.marginEnabled
+          } : undefined,
+        fractionalSharesEnabled: props.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+            set: props.tradingPolicy.fractionalSharesEnabled
+          } : undefined,
+        assetUniversePrefs: props.tradingPolicy.assetUniversePrefs !== undefined ? {
+            set: props.tradingPolicy.assetUniversePrefs
+          } : undefined,
+        maxBuyingPowerUtilPct: props.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+            set: props.tradingPolicy.maxBuyingPowerUtilPct
+          } : undefined,
+        cashFloorPct: props.tradingPolicy.cashFloorPct !== undefined ? {
+            set: props.tradingPolicy.cashFloorPct
+          } : undefined,
+        maxGrossExposurePct: props.tradingPolicy.maxGrossExposurePct !== undefined ? {
+            set: props.tradingPolicy.maxGrossExposurePct
+          } : undefined,
+        maxNetExposurePct: props.tradingPolicy.maxNetExposurePct !== undefined ? {
+            set: props.tradingPolicy.maxNetExposurePct
+          } : undefined,
+        maxLeverage: props.tradingPolicy.maxLeverage !== undefined ? {
+            set: props.tradingPolicy.maxLeverage
+          } : undefined,
+        maxSymbolConcentrationPct: props.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+            set: props.tradingPolicy.maxSymbolConcentrationPct
+          } : undefined,
+        maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+            set: props.tradingPolicy.maxSectorConcentrationPct
+          } : undefined,
+        maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? {
+            set: props.tradingPolicy.maxOpenPositions
+          } : undefined,
+        maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? {
+            set: props.tradingPolicy.maxOpenOrders
+          } : undefined,
+        riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? {
+            set: props.tradingPolicy.riskBudgetPrefs
+          } : undefined,
+        signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? {
+            set: props.tradingPolicy.signalConsumptionPrefs
+          } : undefined,
+        executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? {
+            set: props.tradingPolicy.executionPrefs
+          } : undefined,
+        positionManagementPrefs: props.tradingPolicy.positionManagementPrefs !== undefined ? {
+            set: props.tradingPolicy.positionManagementPrefs
+          } : undefined,
+        portfolioConstructionPrefs: props.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
+            set: props.tradingPolicy.portfolioConstructionPrefs
+          } : undefined,
+        macroOverlayEnabled: props.tradingPolicy.macroOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.macroOverlayEnabled
+          } : undefined,
+        sectorOverlayEnabled: props.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.sectorOverlayEnabled
+          } : undefined,
+        volatilityOverlayEnabled: props.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.volatilityOverlayEnabled
+          } : undefined,
+        liquidityStressOverlayEnabled: props.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.liquidityStressOverlayEnabled
+          } : undefined,
+        blackSwanProtectionEnabled: props.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+            set: props.tradingPolicy.blackSwanProtectionEnabled
+          } : undefined,
+        drawdownGuardianEnabled: props.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+            set: props.tradingPolicy.drawdownGuardianEnabled
+          } : undefined,
+        correlationSpikeProtectionEnabled: props.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+            set: props.tradingPolicy.correlationSpikeProtectionEnabled
+          } : undefined,
+        newsEventRiskOverlayEnabled: props.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.newsEventRiskOverlayEnabled
+          } : undefined,
+        exchangeHealthOverlayEnabled: props.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.exchangeHealthOverlayEnabled
+          } : undefined,
+        dataQualitySentinelEnabled: props.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+            set: props.tradingPolicy.dataQualitySentinelEnabled
+          } : undefined,
+        overlayResponsePrefs: props.tradingPolicy.overlayResponsePrefs !== undefined ? {
+            set: props.tradingPolicy.overlayResponsePrefs
+          } : undefined,
+        miniModelProvider: props.tradingPolicy.miniModelProvider !== undefined ? {
+            set: props.tradingPolicy.miniModelProvider
+          } : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? {
+            set: props.tradingPolicy.miniModelId
+          } : undefined,
+        normalModelProvider: props.tradingPolicy.normalModelProvider !== undefined ? {
+            set: props.tradingPolicy.normalModelProvider
+          } : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? {
+            set: props.tradingPolicy.normalModelId
+          } : undefined,
+        advancedModelProvider: props.tradingPolicy.advancedModelProvider !== undefined ? {
+            set: props.tradingPolicy.advancedModelProvider
+          } : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
+            set: props.tradingPolicy.advancedModelId
+          } : undefined,
+        modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? {
+            set: props.tradingPolicy.modelPrefs
+          } : undefined,
+        auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? {
+            set: props.tradingPolicy.auditNotificationPrefs
+          } : undefined,
+    overlays: props.tradingPolicy.overlays ? 
+    Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 && props.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.tradingPolicy.overlays.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId
+            } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId
+            } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          overlayType: item.overlayType !== undefined ? {
+              set: item.overlayType
+            } : undefined,
+          source: item.source !== undefined ? {
+              set: item.source
+            } : undefined,
+          reason: item.reason !== undefined ? {
+              set: item.reason
+            } : undefined,
+          severity: item.severity !== undefined ? {
+              set: item.severity
+            } : undefined,
+          version: item.version !== undefined ? {
+              set: item.version
+            } : undefined,
+          mutations: item.mutations !== undefined ? {
+              set: item.mutations
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          activatedAt: item.activatedAt !== undefined ? {
+              set: item.activatedAt
+            } : undefined,
+          expiresAt: item.expiresAt !== undefined ? {
+              set: item.expiresAt
+            } : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? {
+              set: item.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? {
+              set: item.deactivatedBy
+            } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              set: item.correlationId
+            } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              set: item.triggerEventId
+            } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        version: props.tradingPolicy.version !== undefined ? props.tradingPolicy.version : undefined,
+        lastModifiedBy: props.tradingPolicy.lastModifiedBy !== undefined ? props.tradingPolicy.lastModifiedBy : undefined,
+        lastModifiedAt: props.tradingPolicy.lastModifiedAt !== undefined ? props.tradingPolicy.lastModifiedAt : undefined,
+        autonomyMode: props.tradingPolicy.autonomyMode !== undefined ? props.tradingPolicy.autonomyMode : undefined,
+        realtimeTradingEnabled: props.tradingPolicy.realtimeTradingEnabled !== undefined ? props.tradingPolicy.realtimeTradingEnabled : undefined,
+        paperTradingOnly: props.tradingPolicy.paperTradingOnly !== undefined ? props.tradingPolicy.paperTradingOnly : undefined,
+        killSwitchEnabled: props.tradingPolicy.killSwitchEnabled !== undefined ? props.tradingPolicy.killSwitchEnabled : undefined,
+        autonomyPrefs: props.tradingPolicy.autonomyPrefs !== undefined ? props.tradingPolicy.autonomyPrefs : undefined,
+        equitiesEnabled: props.tradingPolicy.equitiesEnabled !== undefined ? props.tradingPolicy.equitiesEnabled : undefined,
+        etfsEnabled: props.tradingPolicy.etfsEnabled !== undefined ? props.tradingPolicy.etfsEnabled : undefined,
+        cryptoEnabled: props.tradingPolicy.cryptoEnabled !== undefined ? props.tradingPolicy.cryptoEnabled : undefined,
+        optionsEnabled: props.tradingPolicy.optionsEnabled !== undefined ? props.tradingPolicy.optionsEnabled : undefined,
+        futuresEnabled: props.tradingPolicy.futuresEnabled !== undefined ? props.tradingPolicy.futuresEnabled : undefined,
+        forexEnabled: props.tradingPolicy.forexEnabled !== undefined ? props.tradingPolicy.forexEnabled : undefined,
+        shortingEnabled: props.tradingPolicy.shortingEnabled !== undefined ? props.tradingPolicy.shortingEnabled : undefined,
+        marginEnabled: props.tradingPolicy.marginEnabled !== undefined ? props.tradingPolicy.marginEnabled : undefined,
+        fractionalSharesEnabled: props.tradingPolicy.fractionalSharesEnabled !== undefined ? props.tradingPolicy.fractionalSharesEnabled : undefined,
+        assetUniversePrefs: props.tradingPolicy.assetUniversePrefs !== undefined ? props.tradingPolicy.assetUniversePrefs : undefined,
+        maxBuyingPowerUtilPct: props.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+        cashFloorPct: props.tradingPolicy.cashFloorPct !== undefined ? props.tradingPolicy.cashFloorPct : undefined,
+        maxGrossExposurePct: props.tradingPolicy.maxGrossExposurePct !== undefined ? props.tradingPolicy.maxGrossExposurePct : undefined,
+        maxNetExposurePct: props.tradingPolicy.maxNetExposurePct !== undefined ? props.tradingPolicy.maxNetExposurePct : undefined,
+        maxLeverage: props.tradingPolicy.maxLeverage !== undefined ? props.tradingPolicy.maxLeverage : undefined,
+        maxSymbolConcentrationPct: props.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.tradingPolicy.maxSymbolConcentrationPct : undefined,
+        maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
+        maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
+        maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
+        signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
+        executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
+        positionManagementPrefs: props.tradingPolicy.positionManagementPrefs !== undefined ? props.tradingPolicy.positionManagementPrefs : undefined,
+        portfolioConstructionPrefs: props.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.tradingPolicy.portfolioConstructionPrefs : undefined,
+        macroOverlayEnabled: props.tradingPolicy.macroOverlayEnabled !== undefined ? props.tradingPolicy.macroOverlayEnabled : undefined,
+        sectorOverlayEnabled: props.tradingPolicy.sectorOverlayEnabled !== undefined ? props.tradingPolicy.sectorOverlayEnabled : undefined,
+        volatilityOverlayEnabled: props.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.tradingPolicy.volatilityOverlayEnabled : undefined,
+        liquidityStressOverlayEnabled: props.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+        blackSwanProtectionEnabled: props.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.tradingPolicy.blackSwanProtectionEnabled : undefined,
+        drawdownGuardianEnabled: props.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.tradingPolicy.drawdownGuardianEnabled : undefined,
+        correlationSpikeProtectionEnabled: props.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+        newsEventRiskOverlayEnabled: props.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+        exchangeHealthOverlayEnabled: props.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+        dataQualitySentinelEnabled: props.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.tradingPolicy.dataQualitySentinelEnabled : undefined,
+        overlayResponsePrefs: props.tradingPolicy.overlayResponsePrefs !== undefined ? props.tradingPolicy.overlayResponsePrefs : undefined,
+        miniModelProvider: props.tradingPolicy.miniModelProvider !== undefined ? props.tradingPolicy.miniModelProvider : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? props.tradingPolicy.miniModelId : undefined,
+        normalModelProvider: props.tradingPolicy.normalModelProvider !== undefined ? props.tradingPolicy.normalModelProvider : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? props.tradingPolicy.normalModelId : undefined,
+        advancedModelProvider: props.tradingPolicy.advancedModelProvider !== undefined ? props.tradingPolicy.advancedModelProvider : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
+        modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
+        auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+    overlays: props.tradingPolicy.overlays ? 
+      Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.tradingPolicy.overlays.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId 
+             } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId 
+             } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
 ? {
@@ -1417,6 +2010,86 @@ id
         },
       }))
     } : undefined,
+    llmConfiguration: props.user.llmConfiguration ? 
+    typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && (Object.keys(props.user.llmConfiguration)[0] === 'id' || Object.keys(props.user.llmConfiguration)[0] === 'symbol')
+? {
+    connect: {
+      id: props.user.llmConfiguration.id
+    }
+} : { upsert: {
+        where: {
+          id: props.user.llmConfiguration.id !== undefined ? {
+              equals: props.user.llmConfiguration.id
+            } : undefined,
+          userId: props.user.llmConfiguration.userId !== undefined ? {
+              equals: props.user.llmConfiguration.userId
+            } : undefined,
+        },
+        update: {
+          id: props.user.llmConfiguration.id !== undefined ? {
+              set: props.user.llmConfiguration.id
+            } : undefined,
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? {
+              set: props.user.llmConfiguration.defaultProvider
+            } : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? {
+              set: props.user.llmConfiguration.miniProvider
+            } : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? {
+              set: props.user.llmConfiguration.normalProvider
+            } : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? {
+              set: props.user.llmConfiguration.advancedProvider
+            } : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? {
+              set: props.user.llmConfiguration.miniModel
+            } : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? {
+              set: props.user.llmConfiguration.normalModel
+            } : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? {
+              set: props.user.llmConfiguration.advancedModel
+            } : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.openaiApiKey
+            } : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? {
+              set: props.user.llmConfiguration.anthropicApiKey
+            } : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? {
+              set: props.user.llmConfiguration.deepseekApiKey
+            } : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.kimiApiKey
+            } : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? {
+              set: props.user.llmConfiguration.qwenApiKey
+            } : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.xaiApiKey
+            } : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.geminiApiKey
+            } : undefined,
+        },
+        create: {
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -1640,6 +2313,35 @@ id
       } : undefined,
         },
       }))
+    } : undefined,
+    llmConfiguration: props.user.llmConfiguration ? 
+      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+          id: props.user.llmConfiguration.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
+          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
+        },
+        create: {
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -1889,6 +2591,117 @@ id
       },
     }
   } : undefined,
+  tradingPolicy: props.tradingPolicy ? 
+    typeof props.tradingPolicy === 'object' && Object.keys(props.tradingPolicy).length === 1 && Object.keys(props.tradingPolicy)[0] === 'id'
+    ? { connect: {
+        id: props.tradingPolicy.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.tradingPolicy.id !== undefined ? props.tradingPolicy.id : undefined,
+        alpacaAccountId: props.tradingPolicy.alpacaAccountId !== undefined ? props.tradingPolicy.alpacaAccountId : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? {
+            equals: props.tradingPolicy.miniModelId 
+           } : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? {
+            equals: props.tradingPolicy.normalModelId 
+           } : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
+            equals: props.tradingPolicy.advancedModelId 
+           } : undefined,
+      },
+      create: {
+        version: props.tradingPolicy.version !== undefined ? props.tradingPolicy.version : undefined,
+        lastModifiedBy: props.tradingPolicy.lastModifiedBy !== undefined ? props.tradingPolicy.lastModifiedBy : undefined,
+        lastModifiedAt: props.tradingPolicy.lastModifiedAt !== undefined ? props.tradingPolicy.lastModifiedAt : undefined,
+        autonomyMode: props.tradingPolicy.autonomyMode !== undefined ? props.tradingPolicy.autonomyMode : undefined,
+        realtimeTradingEnabled: props.tradingPolicy.realtimeTradingEnabled !== undefined ? props.tradingPolicy.realtimeTradingEnabled : undefined,
+        paperTradingOnly: props.tradingPolicy.paperTradingOnly !== undefined ? props.tradingPolicy.paperTradingOnly : undefined,
+        killSwitchEnabled: props.tradingPolicy.killSwitchEnabled !== undefined ? props.tradingPolicy.killSwitchEnabled : undefined,
+        autonomyPrefs: props.tradingPolicy.autonomyPrefs !== undefined ? props.tradingPolicy.autonomyPrefs : undefined,
+        equitiesEnabled: props.tradingPolicy.equitiesEnabled !== undefined ? props.tradingPolicy.equitiesEnabled : undefined,
+        etfsEnabled: props.tradingPolicy.etfsEnabled !== undefined ? props.tradingPolicy.etfsEnabled : undefined,
+        cryptoEnabled: props.tradingPolicy.cryptoEnabled !== undefined ? props.tradingPolicy.cryptoEnabled : undefined,
+        optionsEnabled: props.tradingPolicy.optionsEnabled !== undefined ? props.tradingPolicy.optionsEnabled : undefined,
+        futuresEnabled: props.tradingPolicy.futuresEnabled !== undefined ? props.tradingPolicy.futuresEnabled : undefined,
+        forexEnabled: props.tradingPolicy.forexEnabled !== undefined ? props.tradingPolicy.forexEnabled : undefined,
+        shortingEnabled: props.tradingPolicy.shortingEnabled !== undefined ? props.tradingPolicy.shortingEnabled : undefined,
+        marginEnabled: props.tradingPolicy.marginEnabled !== undefined ? props.tradingPolicy.marginEnabled : undefined,
+        fractionalSharesEnabled: props.tradingPolicy.fractionalSharesEnabled !== undefined ? props.tradingPolicy.fractionalSharesEnabled : undefined,
+        assetUniversePrefs: props.tradingPolicy.assetUniversePrefs !== undefined ? props.tradingPolicy.assetUniversePrefs : undefined,
+        maxBuyingPowerUtilPct: props.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+        cashFloorPct: props.tradingPolicy.cashFloorPct !== undefined ? props.tradingPolicy.cashFloorPct : undefined,
+        maxGrossExposurePct: props.tradingPolicy.maxGrossExposurePct !== undefined ? props.tradingPolicy.maxGrossExposurePct : undefined,
+        maxNetExposurePct: props.tradingPolicy.maxNetExposurePct !== undefined ? props.tradingPolicy.maxNetExposurePct : undefined,
+        maxLeverage: props.tradingPolicy.maxLeverage !== undefined ? props.tradingPolicy.maxLeverage : undefined,
+        maxSymbolConcentrationPct: props.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.tradingPolicy.maxSymbolConcentrationPct : undefined,
+        maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
+        maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
+        maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
+        signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
+        executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
+        positionManagementPrefs: props.tradingPolicy.positionManagementPrefs !== undefined ? props.tradingPolicy.positionManagementPrefs : undefined,
+        portfolioConstructionPrefs: props.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.tradingPolicy.portfolioConstructionPrefs : undefined,
+        macroOverlayEnabled: props.tradingPolicy.macroOverlayEnabled !== undefined ? props.tradingPolicy.macroOverlayEnabled : undefined,
+        sectorOverlayEnabled: props.tradingPolicy.sectorOverlayEnabled !== undefined ? props.tradingPolicy.sectorOverlayEnabled : undefined,
+        volatilityOverlayEnabled: props.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.tradingPolicy.volatilityOverlayEnabled : undefined,
+        liquidityStressOverlayEnabled: props.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+        blackSwanProtectionEnabled: props.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.tradingPolicy.blackSwanProtectionEnabled : undefined,
+        drawdownGuardianEnabled: props.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.tradingPolicy.drawdownGuardianEnabled : undefined,
+        correlationSpikeProtectionEnabled: props.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+        newsEventRiskOverlayEnabled: props.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+        exchangeHealthOverlayEnabled: props.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+        dataQualitySentinelEnabled: props.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.tradingPolicy.dataQualitySentinelEnabled : undefined,
+        overlayResponsePrefs: props.tradingPolicy.overlayResponsePrefs !== undefined ? props.tradingPolicy.overlayResponsePrefs : undefined,
+        miniModelProvider: props.tradingPolicy.miniModelProvider !== undefined ? props.tradingPolicy.miniModelProvider : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? props.tradingPolicy.miniModelId : undefined,
+        normalModelProvider: props.tradingPolicy.normalModelProvider !== undefined ? props.tradingPolicy.normalModelProvider : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? props.tradingPolicy.normalModelId : undefined,
+        advancedModelProvider: props.tradingPolicy.advancedModelProvider !== undefined ? props.tradingPolicy.advancedModelProvider : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
+        modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
+        auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+    overlays: props.tradingPolicy.overlays ? 
+      Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.tradingPolicy.overlays.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId 
+             } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId 
+             } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
+      },
+    }
+  } : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -2126,6 +2939,35 @@ id
         },
       }))
     } : undefined,
+    llmConfiguration: props.user.llmConfiguration ? 
+      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+          id: props.user.llmConfiguration.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
+          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
+        },
+        create: {
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -2288,6 +3130,358 @@ id
         crypto: props.allocation.crypto !== undefined ? props.allocation.crypto : undefined,
         stocks: props.allocation.stocks !== undefined ? props.allocation.stocks : undefined,
         options: props.allocation.options !== undefined ? props.allocation.options : undefined,
+      },
+    }
+  } : undefined,
+  tradingPolicy: props.tradingPolicy ? 
+  typeof props.tradingPolicy === 'object' && Object.keys(props.tradingPolicy).length === 1 && (Object.keys(props.tradingPolicy)[0] === 'id' || Object.keys(props.tradingPolicy)[0] === 'symbol')
+? {
+  connect: {
+    id: props.tradingPolicy.id
+  }
+} : { upsert: {
+      where: {
+        id: props.tradingPolicy.id !== undefined ? {
+            equals: props.tradingPolicy.id
+          } : undefined,
+        alpacaAccountId: props.tradingPolicy.alpacaAccountId !== undefined ? {
+            equals: props.tradingPolicy.alpacaAccountId
+          } : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? {
+            equals: props.tradingPolicy.miniModelId
+          } : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? {
+            equals: props.tradingPolicy.normalModelId
+          } : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
+            equals: props.tradingPolicy.advancedModelId
+          } : undefined,
+      },
+      update: {
+        id: props.tradingPolicy.id !== undefined ? {
+            set: props.tradingPolicy.id
+          } : undefined,
+        version: props.tradingPolicy.version !== undefined ? {
+            set: props.tradingPolicy.version
+          } : undefined,
+        lastModifiedBy: props.tradingPolicy.lastModifiedBy !== undefined ? {
+            set: props.tradingPolicy.lastModifiedBy
+          } : undefined,
+        lastModifiedAt: props.tradingPolicy.lastModifiedAt !== undefined ? {
+            set: props.tradingPolicy.lastModifiedAt
+          } : undefined,
+        autonomyMode: props.tradingPolicy.autonomyMode !== undefined ? {
+            set: props.tradingPolicy.autonomyMode
+          } : undefined,
+        realtimeTradingEnabled: props.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+            set: props.tradingPolicy.realtimeTradingEnabled
+          } : undefined,
+        paperTradingOnly: props.tradingPolicy.paperTradingOnly !== undefined ? {
+            set: props.tradingPolicy.paperTradingOnly
+          } : undefined,
+        killSwitchEnabled: props.tradingPolicy.killSwitchEnabled !== undefined ? {
+            set: props.tradingPolicy.killSwitchEnabled
+          } : undefined,
+        autonomyPrefs: props.tradingPolicy.autonomyPrefs !== undefined ? {
+            set: props.tradingPolicy.autonomyPrefs
+          } : undefined,
+        equitiesEnabled: props.tradingPolicy.equitiesEnabled !== undefined ? {
+            set: props.tradingPolicy.equitiesEnabled
+          } : undefined,
+        etfsEnabled: props.tradingPolicy.etfsEnabled !== undefined ? {
+            set: props.tradingPolicy.etfsEnabled
+          } : undefined,
+        cryptoEnabled: props.tradingPolicy.cryptoEnabled !== undefined ? {
+            set: props.tradingPolicy.cryptoEnabled
+          } : undefined,
+        optionsEnabled: props.tradingPolicy.optionsEnabled !== undefined ? {
+            set: props.tradingPolicy.optionsEnabled
+          } : undefined,
+        futuresEnabled: props.tradingPolicy.futuresEnabled !== undefined ? {
+            set: props.tradingPolicy.futuresEnabled
+          } : undefined,
+        forexEnabled: props.tradingPolicy.forexEnabled !== undefined ? {
+            set: props.tradingPolicy.forexEnabled
+          } : undefined,
+        shortingEnabled: props.tradingPolicy.shortingEnabled !== undefined ? {
+            set: props.tradingPolicy.shortingEnabled
+          } : undefined,
+        marginEnabled: props.tradingPolicy.marginEnabled !== undefined ? {
+            set: props.tradingPolicy.marginEnabled
+          } : undefined,
+        fractionalSharesEnabled: props.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+            set: props.tradingPolicy.fractionalSharesEnabled
+          } : undefined,
+        assetUniversePrefs: props.tradingPolicy.assetUniversePrefs !== undefined ? {
+            set: props.tradingPolicy.assetUniversePrefs
+          } : undefined,
+        maxBuyingPowerUtilPct: props.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+            set: props.tradingPolicy.maxBuyingPowerUtilPct
+          } : undefined,
+        cashFloorPct: props.tradingPolicy.cashFloorPct !== undefined ? {
+            set: props.tradingPolicy.cashFloorPct
+          } : undefined,
+        maxGrossExposurePct: props.tradingPolicy.maxGrossExposurePct !== undefined ? {
+            set: props.tradingPolicy.maxGrossExposurePct
+          } : undefined,
+        maxNetExposurePct: props.tradingPolicy.maxNetExposurePct !== undefined ? {
+            set: props.tradingPolicy.maxNetExposurePct
+          } : undefined,
+        maxLeverage: props.tradingPolicy.maxLeverage !== undefined ? {
+            set: props.tradingPolicy.maxLeverage
+          } : undefined,
+        maxSymbolConcentrationPct: props.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+            set: props.tradingPolicy.maxSymbolConcentrationPct
+          } : undefined,
+        maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+            set: props.tradingPolicy.maxSectorConcentrationPct
+          } : undefined,
+        maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? {
+            set: props.tradingPolicy.maxOpenPositions
+          } : undefined,
+        maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? {
+            set: props.tradingPolicy.maxOpenOrders
+          } : undefined,
+        riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? {
+            set: props.tradingPolicy.riskBudgetPrefs
+          } : undefined,
+        signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? {
+            set: props.tradingPolicy.signalConsumptionPrefs
+          } : undefined,
+        executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? {
+            set: props.tradingPolicy.executionPrefs
+          } : undefined,
+        positionManagementPrefs: props.tradingPolicy.positionManagementPrefs !== undefined ? {
+            set: props.tradingPolicy.positionManagementPrefs
+          } : undefined,
+        portfolioConstructionPrefs: props.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
+            set: props.tradingPolicy.portfolioConstructionPrefs
+          } : undefined,
+        macroOverlayEnabled: props.tradingPolicy.macroOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.macroOverlayEnabled
+          } : undefined,
+        sectorOverlayEnabled: props.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.sectorOverlayEnabled
+          } : undefined,
+        volatilityOverlayEnabled: props.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.volatilityOverlayEnabled
+          } : undefined,
+        liquidityStressOverlayEnabled: props.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.liquidityStressOverlayEnabled
+          } : undefined,
+        blackSwanProtectionEnabled: props.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+            set: props.tradingPolicy.blackSwanProtectionEnabled
+          } : undefined,
+        drawdownGuardianEnabled: props.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+            set: props.tradingPolicy.drawdownGuardianEnabled
+          } : undefined,
+        correlationSpikeProtectionEnabled: props.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+            set: props.tradingPolicy.correlationSpikeProtectionEnabled
+          } : undefined,
+        newsEventRiskOverlayEnabled: props.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.newsEventRiskOverlayEnabled
+          } : undefined,
+        exchangeHealthOverlayEnabled: props.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+            set: props.tradingPolicy.exchangeHealthOverlayEnabled
+          } : undefined,
+        dataQualitySentinelEnabled: props.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+            set: props.tradingPolicy.dataQualitySentinelEnabled
+          } : undefined,
+        overlayResponsePrefs: props.tradingPolicy.overlayResponsePrefs !== undefined ? {
+            set: props.tradingPolicy.overlayResponsePrefs
+          } : undefined,
+        miniModelProvider: props.tradingPolicy.miniModelProvider !== undefined ? {
+            set: props.tradingPolicy.miniModelProvider
+          } : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? {
+            set: props.tradingPolicy.miniModelId
+          } : undefined,
+        normalModelProvider: props.tradingPolicy.normalModelProvider !== undefined ? {
+            set: props.tradingPolicy.normalModelProvider
+          } : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? {
+            set: props.tradingPolicy.normalModelId
+          } : undefined,
+        advancedModelProvider: props.tradingPolicy.advancedModelProvider !== undefined ? {
+            set: props.tradingPolicy.advancedModelProvider
+          } : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
+            set: props.tradingPolicy.advancedModelId
+          } : undefined,
+        modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? {
+            set: props.tradingPolicy.modelPrefs
+          } : undefined,
+        auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? {
+            set: props.tradingPolicy.auditNotificationPrefs
+          } : undefined,
+    overlays: props.tradingPolicy.overlays ? 
+    Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 && props.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.tradingPolicy.overlays.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: props.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId
+            } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId
+            } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          overlayType: item.overlayType !== undefined ? {
+              set: item.overlayType
+            } : undefined,
+          source: item.source !== undefined ? {
+              set: item.source
+            } : undefined,
+          reason: item.reason !== undefined ? {
+              set: item.reason
+            } : undefined,
+          severity: item.severity !== undefined ? {
+              set: item.severity
+            } : undefined,
+          version: item.version !== undefined ? {
+              set: item.version
+            } : undefined,
+          mutations: item.mutations !== undefined ? {
+              set: item.mutations
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          activatedAt: item.activatedAt !== undefined ? {
+              set: item.activatedAt
+            } : undefined,
+          expiresAt: item.expiresAt !== undefined ? {
+              set: item.expiresAt
+            } : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? {
+              set: item.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? {
+              set: item.deactivatedBy
+            } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              set: item.correlationId
+            } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              set: item.triggerEventId
+            } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        version: props.tradingPolicy.version !== undefined ? props.tradingPolicy.version : undefined,
+        lastModifiedBy: props.tradingPolicy.lastModifiedBy !== undefined ? props.tradingPolicy.lastModifiedBy : undefined,
+        lastModifiedAt: props.tradingPolicy.lastModifiedAt !== undefined ? props.tradingPolicy.lastModifiedAt : undefined,
+        autonomyMode: props.tradingPolicy.autonomyMode !== undefined ? props.tradingPolicy.autonomyMode : undefined,
+        realtimeTradingEnabled: props.tradingPolicy.realtimeTradingEnabled !== undefined ? props.tradingPolicy.realtimeTradingEnabled : undefined,
+        paperTradingOnly: props.tradingPolicy.paperTradingOnly !== undefined ? props.tradingPolicy.paperTradingOnly : undefined,
+        killSwitchEnabled: props.tradingPolicy.killSwitchEnabled !== undefined ? props.tradingPolicy.killSwitchEnabled : undefined,
+        autonomyPrefs: props.tradingPolicy.autonomyPrefs !== undefined ? props.tradingPolicy.autonomyPrefs : undefined,
+        equitiesEnabled: props.tradingPolicy.equitiesEnabled !== undefined ? props.tradingPolicy.equitiesEnabled : undefined,
+        etfsEnabled: props.tradingPolicy.etfsEnabled !== undefined ? props.tradingPolicy.etfsEnabled : undefined,
+        cryptoEnabled: props.tradingPolicy.cryptoEnabled !== undefined ? props.tradingPolicy.cryptoEnabled : undefined,
+        optionsEnabled: props.tradingPolicy.optionsEnabled !== undefined ? props.tradingPolicy.optionsEnabled : undefined,
+        futuresEnabled: props.tradingPolicy.futuresEnabled !== undefined ? props.tradingPolicy.futuresEnabled : undefined,
+        forexEnabled: props.tradingPolicy.forexEnabled !== undefined ? props.tradingPolicy.forexEnabled : undefined,
+        shortingEnabled: props.tradingPolicy.shortingEnabled !== undefined ? props.tradingPolicy.shortingEnabled : undefined,
+        marginEnabled: props.tradingPolicy.marginEnabled !== undefined ? props.tradingPolicy.marginEnabled : undefined,
+        fractionalSharesEnabled: props.tradingPolicy.fractionalSharesEnabled !== undefined ? props.tradingPolicy.fractionalSharesEnabled : undefined,
+        assetUniversePrefs: props.tradingPolicy.assetUniversePrefs !== undefined ? props.tradingPolicy.assetUniversePrefs : undefined,
+        maxBuyingPowerUtilPct: props.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? props.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+        cashFloorPct: props.tradingPolicy.cashFloorPct !== undefined ? props.tradingPolicy.cashFloorPct : undefined,
+        maxGrossExposurePct: props.tradingPolicy.maxGrossExposurePct !== undefined ? props.tradingPolicy.maxGrossExposurePct : undefined,
+        maxNetExposurePct: props.tradingPolicy.maxNetExposurePct !== undefined ? props.tradingPolicy.maxNetExposurePct : undefined,
+        maxLeverage: props.tradingPolicy.maxLeverage !== undefined ? props.tradingPolicy.maxLeverage : undefined,
+        maxSymbolConcentrationPct: props.tradingPolicy.maxSymbolConcentrationPct !== undefined ? props.tradingPolicy.maxSymbolConcentrationPct : undefined,
+        maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
+        maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
+        maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
+        signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
+        executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
+        positionManagementPrefs: props.tradingPolicy.positionManagementPrefs !== undefined ? props.tradingPolicy.positionManagementPrefs : undefined,
+        portfolioConstructionPrefs: props.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.tradingPolicy.portfolioConstructionPrefs : undefined,
+        macroOverlayEnabled: props.tradingPolicy.macroOverlayEnabled !== undefined ? props.tradingPolicy.macroOverlayEnabled : undefined,
+        sectorOverlayEnabled: props.tradingPolicy.sectorOverlayEnabled !== undefined ? props.tradingPolicy.sectorOverlayEnabled : undefined,
+        volatilityOverlayEnabled: props.tradingPolicy.volatilityOverlayEnabled !== undefined ? props.tradingPolicy.volatilityOverlayEnabled : undefined,
+        liquidityStressOverlayEnabled: props.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? props.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+        blackSwanProtectionEnabled: props.tradingPolicy.blackSwanProtectionEnabled !== undefined ? props.tradingPolicy.blackSwanProtectionEnabled : undefined,
+        drawdownGuardianEnabled: props.tradingPolicy.drawdownGuardianEnabled !== undefined ? props.tradingPolicy.drawdownGuardianEnabled : undefined,
+        correlationSpikeProtectionEnabled: props.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? props.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+        newsEventRiskOverlayEnabled: props.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? props.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+        exchangeHealthOverlayEnabled: props.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? props.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+        dataQualitySentinelEnabled: props.tradingPolicy.dataQualitySentinelEnabled !== undefined ? props.tradingPolicy.dataQualitySentinelEnabled : undefined,
+        overlayResponsePrefs: props.tradingPolicy.overlayResponsePrefs !== undefined ? props.tradingPolicy.overlayResponsePrefs : undefined,
+        miniModelProvider: props.tradingPolicy.miniModelProvider !== undefined ? props.tradingPolicy.miniModelProvider : undefined,
+        miniModelId: props.tradingPolicy.miniModelId !== undefined ? props.tradingPolicy.miniModelId : undefined,
+        normalModelProvider: props.tradingPolicy.normalModelProvider !== undefined ? props.tradingPolicy.normalModelProvider : undefined,
+        normalModelId: props.tradingPolicy.normalModelId !== undefined ? props.tradingPolicy.normalModelId : undefined,
+        advancedModelProvider: props.tradingPolicy.advancedModelProvider !== undefined ? props.tradingPolicy.advancedModelProvider : undefined,
+        advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
+        modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
+        auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+    overlays: props.tradingPolicy.overlays ? 
+      Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.tradingPolicy.overlays.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId 
+             } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId 
+             } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -2791,6 +3985,86 @@ id
         },
       }))
     } : undefined,
+    llmConfiguration: props.user.llmConfiguration ? 
+    typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && (Object.keys(props.user.llmConfiguration)[0] === 'id' || Object.keys(props.user.llmConfiguration)[0] === 'symbol')
+? {
+    connect: {
+      id: props.user.llmConfiguration.id
+    }
+} : { upsert: {
+        where: {
+          id: props.user.llmConfiguration.id !== undefined ? {
+              equals: props.user.llmConfiguration.id
+            } : undefined,
+          userId: props.user.llmConfiguration.userId !== undefined ? {
+              equals: props.user.llmConfiguration.userId
+            } : undefined,
+        },
+        update: {
+          id: props.user.llmConfiguration.id !== undefined ? {
+              set: props.user.llmConfiguration.id
+            } : undefined,
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? {
+              set: props.user.llmConfiguration.defaultProvider
+            } : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? {
+              set: props.user.llmConfiguration.miniProvider
+            } : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? {
+              set: props.user.llmConfiguration.normalProvider
+            } : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? {
+              set: props.user.llmConfiguration.advancedProvider
+            } : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? {
+              set: props.user.llmConfiguration.miniModel
+            } : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? {
+              set: props.user.llmConfiguration.normalModel
+            } : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? {
+              set: props.user.llmConfiguration.advancedModel
+            } : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.openaiApiKey
+            } : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? {
+              set: props.user.llmConfiguration.anthropicApiKey
+            } : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? {
+              set: props.user.llmConfiguration.deepseekApiKey
+            } : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.kimiApiKey
+            } : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? {
+              set: props.user.llmConfiguration.qwenApiKey
+            } : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.xaiApiKey
+            } : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? {
+              set: props.user.llmConfiguration.geminiApiKey
+            } : undefined,
+        },
+        create: {
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: props.user.name !== undefined ? props.user.name : undefined,
@@ -3014,6 +4288,35 @@ id
       } : undefined,
         },
       }))
+    } : undefined,
+    llmConfiguration: props.user.llmConfiguration ? 
+      typeof props.user.llmConfiguration === 'object' && Object.keys(props.user.llmConfiguration).length === 1 && Object.keys(props.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+          id: props.user.llmConfiguration.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.user.llmConfiguration.id !== undefined ? props.user.llmConfiguration.id : undefined,
+          userId: props.user.llmConfiguration.userId !== undefined ? props.user.llmConfiguration.userId : undefined,
+        },
+        create: {
+          defaultProvider: props.user.llmConfiguration.defaultProvider !== undefined ? props.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: props.user.llmConfiguration.miniProvider !== undefined ? props.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: props.user.llmConfiguration.normalProvider !== undefined ? props.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: props.user.llmConfiguration.advancedProvider !== undefined ? props.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: props.user.llmConfiguration.miniModel !== undefined ? props.user.llmConfiguration.miniModel : undefined,
+          normalModel: props.user.llmConfiguration.normalModel !== undefined ? props.user.llmConfiguration.normalModel : undefined,
+          advancedModel: props.user.llmConfiguration.advancedModel !== undefined ? props.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: props.user.llmConfiguration.openaiApiKey !== undefined ? props.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: props.user.llmConfiguration.anthropicApiKey !== undefined ? props.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: props.user.llmConfiguration.deepseekApiKey !== undefined ? props.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: props.user.llmConfiguration.kimiApiKey !== undefined ? props.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: props.user.llmConfiguration.qwenApiKey !== undefined ? props.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: props.user.llmConfiguration.xaiApiKey !== undefined ? props.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: props.user.llmConfiguration.geminiApiKey !== undefined ? props.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -3349,6 +4652,358 @@ id
         crypto: prop.allocation.crypto !== undefined ? prop.allocation.crypto : undefined,
         stocks: prop.allocation.stocks !== undefined ? prop.allocation.stocks : undefined,
         options: prop.allocation.options !== undefined ? prop.allocation.options : undefined,
+      },
+    }
+  } : undefined,
+  tradingPolicy: prop.tradingPolicy ? 
+  typeof prop.tradingPolicy === 'object' && Object.keys(prop.tradingPolicy).length === 1 && (Object.keys(prop.tradingPolicy)[0] === 'id' || Object.keys(prop.tradingPolicy)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.tradingPolicy.id
+  }
+} : { upsert: {
+      where: {
+        id: prop.tradingPolicy.id !== undefined ? {
+            equals: prop.tradingPolicy.id
+          } : undefined,
+        alpacaAccountId: prop.tradingPolicy.alpacaAccountId !== undefined ? {
+            equals: prop.tradingPolicy.alpacaAccountId
+          } : undefined,
+        miniModelId: prop.tradingPolicy.miniModelId !== undefined ? {
+            equals: prop.tradingPolicy.miniModelId
+          } : undefined,
+        normalModelId: prop.tradingPolicy.normalModelId !== undefined ? {
+            equals: prop.tradingPolicy.normalModelId
+          } : undefined,
+        advancedModelId: prop.tradingPolicy.advancedModelId !== undefined ? {
+            equals: prop.tradingPolicy.advancedModelId
+          } : undefined,
+      },
+      update: {
+        id: prop.tradingPolicy.id !== undefined ? {
+            set: prop.tradingPolicy.id
+          } : undefined,
+        version: prop.tradingPolicy.version !== undefined ? {
+            set: prop.tradingPolicy.version
+          } : undefined,
+        lastModifiedBy: prop.tradingPolicy.lastModifiedBy !== undefined ? {
+            set: prop.tradingPolicy.lastModifiedBy
+          } : undefined,
+        lastModifiedAt: prop.tradingPolicy.lastModifiedAt !== undefined ? {
+            set: prop.tradingPolicy.lastModifiedAt
+          } : undefined,
+        autonomyMode: prop.tradingPolicy.autonomyMode !== undefined ? {
+            set: prop.tradingPolicy.autonomyMode
+          } : undefined,
+        realtimeTradingEnabled: prop.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+            set: prop.tradingPolicy.realtimeTradingEnabled
+          } : undefined,
+        paperTradingOnly: prop.tradingPolicy.paperTradingOnly !== undefined ? {
+            set: prop.tradingPolicy.paperTradingOnly
+          } : undefined,
+        killSwitchEnabled: prop.tradingPolicy.killSwitchEnabled !== undefined ? {
+            set: prop.tradingPolicy.killSwitchEnabled
+          } : undefined,
+        autonomyPrefs: prop.tradingPolicy.autonomyPrefs !== undefined ? {
+            set: prop.tradingPolicy.autonomyPrefs
+          } : undefined,
+        equitiesEnabled: prop.tradingPolicy.equitiesEnabled !== undefined ? {
+            set: prop.tradingPolicy.equitiesEnabled
+          } : undefined,
+        etfsEnabled: prop.tradingPolicy.etfsEnabled !== undefined ? {
+            set: prop.tradingPolicy.etfsEnabled
+          } : undefined,
+        cryptoEnabled: prop.tradingPolicy.cryptoEnabled !== undefined ? {
+            set: prop.tradingPolicy.cryptoEnabled
+          } : undefined,
+        optionsEnabled: prop.tradingPolicy.optionsEnabled !== undefined ? {
+            set: prop.tradingPolicy.optionsEnabled
+          } : undefined,
+        futuresEnabled: prop.tradingPolicy.futuresEnabled !== undefined ? {
+            set: prop.tradingPolicy.futuresEnabled
+          } : undefined,
+        forexEnabled: prop.tradingPolicy.forexEnabled !== undefined ? {
+            set: prop.tradingPolicy.forexEnabled
+          } : undefined,
+        shortingEnabled: prop.tradingPolicy.shortingEnabled !== undefined ? {
+            set: prop.tradingPolicy.shortingEnabled
+          } : undefined,
+        marginEnabled: prop.tradingPolicy.marginEnabled !== undefined ? {
+            set: prop.tradingPolicy.marginEnabled
+          } : undefined,
+        fractionalSharesEnabled: prop.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+            set: prop.tradingPolicy.fractionalSharesEnabled
+          } : undefined,
+        assetUniversePrefs: prop.tradingPolicy.assetUniversePrefs !== undefined ? {
+            set: prop.tradingPolicy.assetUniversePrefs
+          } : undefined,
+        maxBuyingPowerUtilPct: prop.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+            set: prop.tradingPolicy.maxBuyingPowerUtilPct
+          } : undefined,
+        cashFloorPct: prop.tradingPolicy.cashFloorPct !== undefined ? {
+            set: prop.tradingPolicy.cashFloorPct
+          } : undefined,
+        maxGrossExposurePct: prop.tradingPolicy.maxGrossExposurePct !== undefined ? {
+            set: prop.tradingPolicy.maxGrossExposurePct
+          } : undefined,
+        maxNetExposurePct: prop.tradingPolicy.maxNetExposurePct !== undefined ? {
+            set: prop.tradingPolicy.maxNetExposurePct
+          } : undefined,
+        maxLeverage: prop.tradingPolicy.maxLeverage !== undefined ? {
+            set: prop.tradingPolicy.maxLeverage
+          } : undefined,
+        maxSymbolConcentrationPct: prop.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+            set: prop.tradingPolicy.maxSymbolConcentrationPct
+          } : undefined,
+        maxSectorConcentrationPct: prop.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+            set: prop.tradingPolicy.maxSectorConcentrationPct
+          } : undefined,
+        maxOpenPositions: prop.tradingPolicy.maxOpenPositions !== undefined ? {
+            set: prop.tradingPolicy.maxOpenPositions
+          } : undefined,
+        maxOpenOrders: prop.tradingPolicy.maxOpenOrders !== undefined ? {
+            set: prop.tradingPolicy.maxOpenOrders
+          } : undefined,
+        riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? {
+            set: prop.tradingPolicy.riskBudgetPrefs
+          } : undefined,
+        signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? {
+            set: prop.tradingPolicy.signalConsumptionPrefs
+          } : undefined,
+        executionPrefs: prop.tradingPolicy.executionPrefs !== undefined ? {
+            set: prop.tradingPolicy.executionPrefs
+          } : undefined,
+        positionManagementPrefs: prop.tradingPolicy.positionManagementPrefs !== undefined ? {
+            set: prop.tradingPolicy.positionManagementPrefs
+          } : undefined,
+        portfolioConstructionPrefs: prop.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
+            set: prop.tradingPolicy.portfolioConstructionPrefs
+          } : undefined,
+        macroOverlayEnabled: prop.tradingPolicy.macroOverlayEnabled !== undefined ? {
+            set: prop.tradingPolicy.macroOverlayEnabled
+          } : undefined,
+        sectorOverlayEnabled: prop.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+            set: prop.tradingPolicy.sectorOverlayEnabled
+          } : undefined,
+        volatilityOverlayEnabled: prop.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+            set: prop.tradingPolicy.volatilityOverlayEnabled
+          } : undefined,
+        liquidityStressOverlayEnabled: prop.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+            set: prop.tradingPolicy.liquidityStressOverlayEnabled
+          } : undefined,
+        blackSwanProtectionEnabled: prop.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+            set: prop.tradingPolicy.blackSwanProtectionEnabled
+          } : undefined,
+        drawdownGuardianEnabled: prop.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+            set: prop.tradingPolicy.drawdownGuardianEnabled
+          } : undefined,
+        correlationSpikeProtectionEnabled: prop.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+            set: prop.tradingPolicy.correlationSpikeProtectionEnabled
+          } : undefined,
+        newsEventRiskOverlayEnabled: prop.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+            set: prop.tradingPolicy.newsEventRiskOverlayEnabled
+          } : undefined,
+        exchangeHealthOverlayEnabled: prop.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+            set: prop.tradingPolicy.exchangeHealthOverlayEnabled
+          } : undefined,
+        dataQualitySentinelEnabled: prop.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+            set: prop.tradingPolicy.dataQualitySentinelEnabled
+          } : undefined,
+        overlayResponsePrefs: prop.tradingPolicy.overlayResponsePrefs !== undefined ? {
+            set: prop.tradingPolicy.overlayResponsePrefs
+          } : undefined,
+        miniModelProvider: prop.tradingPolicy.miniModelProvider !== undefined ? {
+            set: prop.tradingPolicy.miniModelProvider
+          } : undefined,
+        miniModelId: prop.tradingPolicy.miniModelId !== undefined ? {
+            set: prop.tradingPolicy.miniModelId
+          } : undefined,
+        normalModelProvider: prop.tradingPolicy.normalModelProvider !== undefined ? {
+            set: prop.tradingPolicy.normalModelProvider
+          } : undefined,
+        normalModelId: prop.tradingPolicy.normalModelId !== undefined ? {
+            set: prop.tradingPolicy.normalModelId
+          } : undefined,
+        advancedModelProvider: prop.tradingPolicy.advancedModelProvider !== undefined ? {
+            set: prop.tradingPolicy.advancedModelProvider
+          } : undefined,
+        advancedModelId: prop.tradingPolicy.advancedModelId !== undefined ? {
+            set: prop.tradingPolicy.advancedModelId
+          } : undefined,
+        modelPrefs: prop.tradingPolicy.modelPrefs !== undefined ? {
+            set: prop.tradingPolicy.modelPrefs
+          } : undefined,
+        auditNotificationPrefs: prop.tradingPolicy.auditNotificationPrefs !== undefined ? {
+            set: prop.tradingPolicy.auditNotificationPrefs
+          } : undefined,
+    overlays: prop.tradingPolicy.overlays ? 
+    Array.isArray(prop.tradingPolicy.overlays) && prop.tradingPolicy.overlays.length > 0 && prop.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.tradingPolicy.overlays.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: prop.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId
+            } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId
+            } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          overlayType: item.overlayType !== undefined ? {
+              set: item.overlayType
+            } : undefined,
+          source: item.source !== undefined ? {
+              set: item.source
+            } : undefined,
+          reason: item.reason !== undefined ? {
+              set: item.reason
+            } : undefined,
+          severity: item.severity !== undefined ? {
+              set: item.severity
+            } : undefined,
+          version: item.version !== undefined ? {
+              set: item.version
+            } : undefined,
+          mutations: item.mutations !== undefined ? {
+              set: item.mutations
+            } : undefined,
+          status: item.status !== undefined ? {
+              set: item.status
+            } : undefined,
+          activatedAt: item.activatedAt !== undefined ? {
+              set: item.activatedAt
+            } : undefined,
+          expiresAt: item.expiresAt !== undefined ? {
+              set: item.expiresAt
+            } : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? {
+              set: item.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? {
+              set: item.deactivatedBy
+            } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              set: item.correlationId
+            } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              set: item.triggerEventId
+            } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
+      },
+      create: {
+        version: prop.tradingPolicy.version !== undefined ? prop.tradingPolicy.version : undefined,
+        lastModifiedBy: prop.tradingPolicy.lastModifiedBy !== undefined ? prop.tradingPolicy.lastModifiedBy : undefined,
+        lastModifiedAt: prop.tradingPolicy.lastModifiedAt !== undefined ? prop.tradingPolicy.lastModifiedAt : undefined,
+        autonomyMode: prop.tradingPolicy.autonomyMode !== undefined ? prop.tradingPolicy.autonomyMode : undefined,
+        realtimeTradingEnabled: prop.tradingPolicy.realtimeTradingEnabled !== undefined ? prop.tradingPolicy.realtimeTradingEnabled : undefined,
+        paperTradingOnly: prop.tradingPolicy.paperTradingOnly !== undefined ? prop.tradingPolicy.paperTradingOnly : undefined,
+        killSwitchEnabled: prop.tradingPolicy.killSwitchEnabled !== undefined ? prop.tradingPolicy.killSwitchEnabled : undefined,
+        autonomyPrefs: prop.tradingPolicy.autonomyPrefs !== undefined ? prop.tradingPolicy.autonomyPrefs : undefined,
+        equitiesEnabled: prop.tradingPolicy.equitiesEnabled !== undefined ? prop.tradingPolicy.equitiesEnabled : undefined,
+        etfsEnabled: prop.tradingPolicy.etfsEnabled !== undefined ? prop.tradingPolicy.etfsEnabled : undefined,
+        cryptoEnabled: prop.tradingPolicy.cryptoEnabled !== undefined ? prop.tradingPolicy.cryptoEnabled : undefined,
+        optionsEnabled: prop.tradingPolicy.optionsEnabled !== undefined ? prop.tradingPolicy.optionsEnabled : undefined,
+        futuresEnabled: prop.tradingPolicy.futuresEnabled !== undefined ? prop.tradingPolicy.futuresEnabled : undefined,
+        forexEnabled: prop.tradingPolicy.forexEnabled !== undefined ? prop.tradingPolicy.forexEnabled : undefined,
+        shortingEnabled: prop.tradingPolicy.shortingEnabled !== undefined ? prop.tradingPolicy.shortingEnabled : undefined,
+        marginEnabled: prop.tradingPolicy.marginEnabled !== undefined ? prop.tradingPolicy.marginEnabled : undefined,
+        fractionalSharesEnabled: prop.tradingPolicy.fractionalSharesEnabled !== undefined ? prop.tradingPolicy.fractionalSharesEnabled : undefined,
+        assetUniversePrefs: prop.tradingPolicy.assetUniversePrefs !== undefined ? prop.tradingPolicy.assetUniversePrefs : undefined,
+        maxBuyingPowerUtilPct: prop.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? prop.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+        cashFloorPct: prop.tradingPolicy.cashFloorPct !== undefined ? prop.tradingPolicy.cashFloorPct : undefined,
+        maxGrossExposurePct: prop.tradingPolicy.maxGrossExposurePct !== undefined ? prop.tradingPolicy.maxGrossExposurePct : undefined,
+        maxNetExposurePct: prop.tradingPolicy.maxNetExposurePct !== undefined ? prop.tradingPolicy.maxNetExposurePct : undefined,
+        maxLeverage: prop.tradingPolicy.maxLeverage !== undefined ? prop.tradingPolicy.maxLeverage : undefined,
+        maxSymbolConcentrationPct: prop.tradingPolicy.maxSymbolConcentrationPct !== undefined ? prop.tradingPolicy.maxSymbolConcentrationPct : undefined,
+        maxSectorConcentrationPct: prop.tradingPolicy.maxSectorConcentrationPct !== undefined ? prop.tradingPolicy.maxSectorConcentrationPct : undefined,
+        maxOpenPositions: prop.tradingPolicy.maxOpenPositions !== undefined ? prop.tradingPolicy.maxOpenPositions : undefined,
+        maxOpenOrders: prop.tradingPolicy.maxOpenOrders !== undefined ? prop.tradingPolicy.maxOpenOrders : undefined,
+        riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
+        signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
+        executionPrefs: prop.tradingPolicy.executionPrefs !== undefined ? prop.tradingPolicy.executionPrefs : undefined,
+        positionManagementPrefs: prop.tradingPolicy.positionManagementPrefs !== undefined ? prop.tradingPolicy.positionManagementPrefs : undefined,
+        portfolioConstructionPrefs: prop.tradingPolicy.portfolioConstructionPrefs !== undefined ? prop.tradingPolicy.portfolioConstructionPrefs : undefined,
+        macroOverlayEnabled: prop.tradingPolicy.macroOverlayEnabled !== undefined ? prop.tradingPolicy.macroOverlayEnabled : undefined,
+        sectorOverlayEnabled: prop.tradingPolicy.sectorOverlayEnabled !== undefined ? prop.tradingPolicy.sectorOverlayEnabled : undefined,
+        volatilityOverlayEnabled: prop.tradingPolicy.volatilityOverlayEnabled !== undefined ? prop.tradingPolicy.volatilityOverlayEnabled : undefined,
+        liquidityStressOverlayEnabled: prop.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? prop.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+        blackSwanProtectionEnabled: prop.tradingPolicy.blackSwanProtectionEnabled !== undefined ? prop.tradingPolicy.blackSwanProtectionEnabled : undefined,
+        drawdownGuardianEnabled: prop.tradingPolicy.drawdownGuardianEnabled !== undefined ? prop.tradingPolicy.drawdownGuardianEnabled : undefined,
+        correlationSpikeProtectionEnabled: prop.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? prop.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+        newsEventRiskOverlayEnabled: prop.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? prop.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+        exchangeHealthOverlayEnabled: prop.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? prop.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+        dataQualitySentinelEnabled: prop.tradingPolicy.dataQualitySentinelEnabled !== undefined ? prop.tradingPolicy.dataQualitySentinelEnabled : undefined,
+        overlayResponsePrefs: prop.tradingPolicy.overlayResponsePrefs !== undefined ? prop.tradingPolicy.overlayResponsePrefs : undefined,
+        miniModelProvider: prop.tradingPolicy.miniModelProvider !== undefined ? prop.tradingPolicy.miniModelProvider : undefined,
+        miniModelId: prop.tradingPolicy.miniModelId !== undefined ? prop.tradingPolicy.miniModelId : undefined,
+        normalModelProvider: prop.tradingPolicy.normalModelProvider !== undefined ? prop.tradingPolicy.normalModelProvider : undefined,
+        normalModelId: prop.tradingPolicy.normalModelId !== undefined ? prop.tradingPolicy.normalModelId : undefined,
+        advancedModelProvider: prop.tradingPolicy.advancedModelProvider !== undefined ? prop.tradingPolicy.advancedModelProvider : undefined,
+        advancedModelId: prop.tradingPolicy.advancedModelId !== undefined ? prop.tradingPolicy.advancedModelId : undefined,
+        modelPrefs: prop.tradingPolicy.modelPrefs !== undefined ? prop.tradingPolicy.modelPrefs : undefined,
+        auditNotificationPrefs: prop.tradingPolicy.auditNotificationPrefs !== undefined ? prop.tradingPolicy.auditNotificationPrefs : undefined,
+    overlays: prop.tradingPolicy.overlays ? 
+      Array.isArray(prop.tradingPolicy.overlays) && prop.tradingPolicy.overlays.length > 0 &&  prop.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.tradingPolicy.overlays.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.tradingPolicy.overlays.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          tradingPolicyId: item.tradingPolicyId !== undefined ? {
+              equals: item.tradingPolicyId 
+             } : undefined,
+          correlationId: item.correlationId !== undefined ? {
+              equals: item.correlationId 
+             } : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? {
+              equals: item.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
+          source: item.source !== undefined ? item.source : undefined,
+          reason: item.reason !== undefined ? item.reason : undefined,
+          severity: item.severity !== undefined ? item.severity : undefined,
+          version: item.version !== undefined ? item.version : undefined,
+          mutations: item.mutations !== undefined ? item.mutations : undefined,
+          status: item.status !== undefined ? item.status : undefined,
+          activatedAt: item.activatedAt !== undefined ? item.activatedAt : undefined,
+          expiresAt: item.expiresAt !== undefined ? item.expiresAt : undefined,
+          deactivatedAt: item.deactivatedAt !== undefined ? item.deactivatedAt : undefined,
+          deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
+          correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -3852,6 +5507,86 @@ id
         },
       }))
     } : undefined,
+    llmConfiguration: prop.user.llmConfiguration ? 
+    typeof prop.user.llmConfiguration === 'object' && Object.keys(prop.user.llmConfiguration).length === 1 && (Object.keys(prop.user.llmConfiguration)[0] === 'id' || Object.keys(prop.user.llmConfiguration)[0] === 'symbol')
+? {
+    connect: {
+      id: prop.user.llmConfiguration.id
+    }
+} : { upsert: {
+        where: {
+          id: prop.user.llmConfiguration.id !== undefined ? {
+              equals: prop.user.llmConfiguration.id
+            } : undefined,
+          userId: prop.user.llmConfiguration.userId !== undefined ? {
+              equals: prop.user.llmConfiguration.userId
+            } : undefined,
+        },
+        update: {
+          id: prop.user.llmConfiguration.id !== undefined ? {
+              set: prop.user.llmConfiguration.id
+            } : undefined,
+          defaultProvider: prop.user.llmConfiguration.defaultProvider !== undefined ? {
+              set: prop.user.llmConfiguration.defaultProvider
+            } : undefined,
+          miniProvider: prop.user.llmConfiguration.miniProvider !== undefined ? {
+              set: prop.user.llmConfiguration.miniProvider
+            } : undefined,
+          normalProvider: prop.user.llmConfiguration.normalProvider !== undefined ? {
+              set: prop.user.llmConfiguration.normalProvider
+            } : undefined,
+          advancedProvider: prop.user.llmConfiguration.advancedProvider !== undefined ? {
+              set: prop.user.llmConfiguration.advancedProvider
+            } : undefined,
+          miniModel: prop.user.llmConfiguration.miniModel !== undefined ? {
+              set: prop.user.llmConfiguration.miniModel
+            } : undefined,
+          normalModel: prop.user.llmConfiguration.normalModel !== undefined ? {
+              set: prop.user.llmConfiguration.normalModel
+            } : undefined,
+          advancedModel: prop.user.llmConfiguration.advancedModel !== undefined ? {
+              set: prop.user.llmConfiguration.advancedModel
+            } : undefined,
+          openaiApiKey: prop.user.llmConfiguration.openaiApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.openaiApiKey
+            } : undefined,
+          anthropicApiKey: prop.user.llmConfiguration.anthropicApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.anthropicApiKey
+            } : undefined,
+          deepseekApiKey: prop.user.llmConfiguration.deepseekApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.deepseekApiKey
+            } : undefined,
+          kimiApiKey: prop.user.llmConfiguration.kimiApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.kimiApiKey
+            } : undefined,
+          qwenApiKey: prop.user.llmConfiguration.qwenApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.qwenApiKey
+            } : undefined,
+          xaiApiKey: prop.user.llmConfiguration.xaiApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.xaiApiKey
+            } : undefined,
+          geminiApiKey: prop.user.llmConfiguration.geminiApiKey !== undefined ? {
+              set: prop.user.llmConfiguration.geminiApiKey
+            } : undefined,
+        },
+        create: {
+          defaultProvider: prop.user.llmConfiguration.defaultProvider !== undefined ? prop.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: prop.user.llmConfiguration.miniProvider !== undefined ? prop.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: prop.user.llmConfiguration.normalProvider !== undefined ? prop.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: prop.user.llmConfiguration.advancedProvider !== undefined ? prop.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: prop.user.llmConfiguration.miniModel !== undefined ? prop.user.llmConfiguration.miniModel : undefined,
+          normalModel: prop.user.llmConfiguration.normalModel !== undefined ? prop.user.llmConfiguration.normalModel : undefined,
+          advancedModel: prop.user.llmConfiguration.advancedModel !== undefined ? prop.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: prop.user.llmConfiguration.openaiApiKey !== undefined ? prop.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: prop.user.llmConfiguration.anthropicApiKey !== undefined ? prop.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: prop.user.llmConfiguration.deepseekApiKey !== undefined ? prop.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: prop.user.llmConfiguration.kimiApiKey !== undefined ? prop.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: prop.user.llmConfiguration.qwenApiKey !== undefined ? prop.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: prop.user.llmConfiguration.xaiApiKey !== undefined ? prop.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: prop.user.llmConfiguration.geminiApiKey !== undefined ? prop.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         name: prop.user.name !== undefined ? prop.user.name : undefined,
@@ -4075,6 +5810,35 @@ id
       } : undefined,
         },
       }))
+    } : undefined,
+    llmConfiguration: prop.user.llmConfiguration ? 
+      typeof prop.user.llmConfiguration === 'object' && Object.keys(prop.user.llmConfiguration).length === 1 && Object.keys(prop.user.llmConfiguration)[0] === 'id'
+    ? { connect: {
+          id: prop.user.llmConfiguration.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.user.llmConfiguration.id !== undefined ? prop.user.llmConfiguration.id : undefined,
+          userId: prop.user.llmConfiguration.userId !== undefined ? prop.user.llmConfiguration.userId : undefined,
+        },
+        create: {
+          defaultProvider: prop.user.llmConfiguration.defaultProvider !== undefined ? prop.user.llmConfiguration.defaultProvider : undefined,
+          miniProvider: prop.user.llmConfiguration.miniProvider !== undefined ? prop.user.llmConfiguration.miniProvider : undefined,
+          normalProvider: prop.user.llmConfiguration.normalProvider !== undefined ? prop.user.llmConfiguration.normalProvider : undefined,
+          advancedProvider: prop.user.llmConfiguration.advancedProvider !== undefined ? prop.user.llmConfiguration.advancedProvider : undefined,
+          miniModel: prop.user.llmConfiguration.miniModel !== undefined ? prop.user.llmConfiguration.miniModel : undefined,
+          normalModel: prop.user.llmConfiguration.normalModel !== undefined ? prop.user.llmConfiguration.normalModel : undefined,
+          advancedModel: prop.user.llmConfiguration.advancedModel !== undefined ? prop.user.llmConfiguration.advancedModel : undefined,
+          openaiApiKey: prop.user.llmConfiguration.openaiApiKey !== undefined ? prop.user.llmConfiguration.openaiApiKey : undefined,
+          anthropicApiKey: prop.user.llmConfiguration.anthropicApiKey !== undefined ? prop.user.llmConfiguration.anthropicApiKey : undefined,
+          deepseekApiKey: prop.user.llmConfiguration.deepseekApiKey !== undefined ? prop.user.llmConfiguration.deepseekApiKey : undefined,
+          kimiApiKey: prop.user.llmConfiguration.kimiApiKey !== undefined ? prop.user.llmConfiguration.kimiApiKey : undefined,
+          qwenApiKey: prop.user.llmConfiguration.qwenApiKey !== undefined ? prop.user.llmConfiguration.qwenApiKey : undefined,
+          xaiApiKey: prop.user.llmConfiguration.xaiApiKey !== undefined ? prop.user.llmConfiguration.xaiApiKey : undefined,
+          geminiApiKey: prop.user.llmConfiguration.geminiApiKey !== undefined ? prop.user.llmConfiguration.geminiApiKey : undefined,
+        },
+      }
     } : undefined,
       },
     }

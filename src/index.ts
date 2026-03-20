@@ -30,6 +30,7 @@ export type {
 
 import { ABTest } from './ABTest';
 import { Account } from './Account';
+import { AccountDecisionRecord } from './AccountDecisionRecord';
 import { AccountLinkingRequest } from './AccountLinkingRequest';
 import { Action } from './Action';
 import { Alert } from './Alert';
@@ -45,6 +46,7 @@ import { ConflictEvent } from './ConflictEvent';
 import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
 import { Customer } from './Customer';
 import { DeadLetterMessage } from './DeadLetterMessage';
+import { DecisionMemorySummary } from './DecisionMemorySummary';
 import { EconomicEvent } from './EconomicEvent';
 import { Event } from './Event';
 import { EventSnapshot } from './EventSnapshot';
@@ -57,6 +59,7 @@ import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
 import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
 import { InviteToken } from './InviteToken';
 import { LinkedProvider } from './LinkedProvider';
+import { LlmConfiguration } from './LlmConfiguration';
 import { MLTrainingData } from './MLTrainingData';
 import { MarketSentiment } from './MarketSentiment';
 import { ModelArtifact } from './ModelArtifact';
@@ -68,6 +71,7 @@ import { OptionsContract } from './OptionsContract';
 import { OptionsGreeksHistory } from './OptionsGreeksHistory';
 import { OptionsPosition } from './OptionsPosition';
 import { OptionsTradeExecution } from './OptionsTradeExecution';
+import { PolicyOverlay } from './PolicyOverlay';
 import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
@@ -80,6 +84,7 @@ import { SystemAlert } from './SystemAlert';
 import { Trade } from './Trade';
 import { TradeAuditEvent } from './TradeAuditEvent';
 import { TradeExecutionHistory } from './TradeExecutionHistory';
+import { TradingPolicy } from './TradingPolicy';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
 import { WaitlistEntry } from './WaitlistEntry';
@@ -87,6 +92,7 @@ import { WaitlistEntry } from './WaitlistEntry';
 const adaptic = {
   aBTest: ABTest,
   account: Account,
+  accountDecisionRecord: AccountDecisionRecord,
   accountLinkingRequest: AccountLinkingRequest,
   action: Action,
   alert: Alert,
@@ -102,6 +108,7 @@ const adaptic = {
   connectionHealthSnapshot: ConnectionHealthSnapshot,
   customer: Customer,
   deadLetterMessage: DeadLetterMessage,
+  decisionMemorySummary: DecisionMemorySummary,
   economicEvent: EconomicEvent,
   event: Event,
   eventSnapshot: EventSnapshot,
@@ -114,6 +121,7 @@ const adaptic = {
   institutionalSentimentMetrics: InstitutionalSentimentMetrics,
   inviteToken: InviteToken,
   linkedProvider: LinkedProvider,
+  llmConfiguration: LlmConfiguration,
   mLTrainingData: MLTrainingData,
   marketSentiment: MarketSentiment,
   modelArtifact: ModelArtifact,
@@ -125,6 +133,7 @@ const adaptic = {
   optionsGreeksHistory: OptionsGreeksHistory,
   optionsPosition: OptionsPosition,
   optionsTradeExecution: OptionsTradeExecution,
+  policyOverlay: PolicyOverlay,
   portfolioGreeksHistory: PortfolioGreeksHistory,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
@@ -137,6 +146,7 @@ const adaptic = {
   trade: Trade,
   tradeAuditEvent: TradeAuditEvent,
   tradeExecutionHistory: TradeExecutionHistory,
+  tradingPolicy: TradingPolicy,
   user: User,
   verificationToken: VerificationToken,
   waitlistEntry: WaitlistEntry,
