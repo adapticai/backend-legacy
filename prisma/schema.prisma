@@ -4781,3 +4781,30 @@ model DecisionMemorySummary {
   @@index([expiresAt])
   @@map("decision_memory_summaries")
 }
+
+enum EquityBarTimespan {
+  second
+  minute
+  hour
+  day
+}
+
+model EquityBar {
+  id        String            @id @default(cuid())
+  symbol    String
+  timeStamp BigInt
+  timespan  EquityBarTimespan
+  open      Float
+  high      Float
+  low       Float
+  close     Float
+  vol       Float
+  vwap      Float?
+  trades    Int?
+  source    String
+  createdAt DateTime          @default(now())
+
+  @@unique([symbol, timeStamp, timespan])
+  @@index([symbol, timespan, timeStamp])
+  @@index([timeStamp])
+}

@@ -48,6 +48,7 @@ import { Customer } from './Customer';
 import { DeadLetterMessage } from './DeadLetterMessage';
 import { DecisionMemorySummary } from './DecisionMemorySummary';
 import { EconomicEvent } from './EconomicEvent';
+import { EquityBar } from './EquityBar';
 import { Event } from './Event';
 import { EventSnapshot } from './EventSnapshot';
 import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
@@ -110,6 +111,7 @@ const adaptic = {
   deadLetterMessage: DeadLetterMessage,
   decisionMemorySummary: DecisionMemorySummary,
   economicEvent: EconomicEvent,
+  equityBar: EquityBar,
   event: Event,
   eventSnapshot: EventSnapshot,
   featureImportanceAnalysis: FeatureImportanceAnalysis,
