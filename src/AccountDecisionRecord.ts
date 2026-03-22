@@ -390,6 +390,9 @@ import { logger } from './utils/logger';
   modelId: props.modelId !== undefined ? {
     equals: props.modelId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -616,6 +619,9 @@ import { logger } from './utils/logger';
   } : undefined,
   modelId: props.modelId !== undefined ? {
     equals: props.modelId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
           create: {
@@ -864,6 +870,9 @@ import { logger } from './utils/logger';
   } : undefined,
   modelId: prop.modelId !== undefined ? {
     equals: prop.modelId 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
   } : undefined,
 
           },
@@ -1214,6 +1223,9 @@ import { logger } from './utils/logger';
   modelId: props.modelId !== undefined ? {
     equals: props.modelId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -1404,6 +1416,9 @@ import { logger } from './utils/logger';
   } : undefined,
   modelId: props.modelId !== undefined ? {
     equals: props.modelId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

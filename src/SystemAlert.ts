@@ -353,11 +353,17 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
   metadataJobId: props.metadataJobId !== undefined ? {
     equals: props.metadataJobId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
           data: {
@@ -549,11 +555,17 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
   metadataJobId: props.metadataJobId !== undefined ? {
     equals: props.metadataJobId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
           create: {
@@ -758,11 +770,17 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
+  type: prop.type !== undefined ? {
+    equals: prop.type 
+  } : undefined,
   title: prop.title !== undefined ? {
     equals: prop.title 
   } : undefined,
   metadataJobId: prop.metadataJobId !== undefined ? {
     equals: prop.metadataJobId 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
   } : undefined,
 
           },
@@ -1076,11 +1094,17 @@ import { logger } from './utils/logger';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
   metadataJobId: props.metadataJobId !== undefined ? {
     equals: props.metadataJobId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
 },
         };
@@ -1258,11 +1282,17 @@ import { logger } from './utils/logger';
       id: props.id !== undefined ? {
     equals: props.id 
   } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
   metadataJobId: props.metadataJobId !== undefined ? {
     equals: props.metadataJobId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

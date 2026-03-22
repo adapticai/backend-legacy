@@ -371,6 +371,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
                } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -466,6 +469,9 @@ id
                } : undefined,
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -760,6 +766,9 @@ id
   } : undefined,
   contractId: props.contractId !== undefined ? {
     equals: props.contractId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
           data: {
@@ -1144,6 +1153,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId
               } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status
+              } : undefined,
             tradeId: item.position.tradeId !== undefined ? {
                 equals: item.position.tradeId
               } : undefined,
@@ -1279,6 +1291,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
                } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -1381,6 +1396,9 @@ id
                } : undefined,
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
+               } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
                } : undefined,
           },
           create: {
@@ -1612,6 +1630,9 @@ id
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
@@ -1826,6 +1847,9 @@ id
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -1919,6 +1943,9 @@ id
                } : undefined,
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -2089,6 +2116,9 @@ id
   contractId: props.contractId !== undefined ? {
     equals: props.contractId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           create: {
         alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
@@ -2198,6 +2228,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
                } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -2293,6 +2326,9 @@ id
                } : undefined,
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -2712,6 +2748,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId
               } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status
+              } : undefined,
             tradeId: item.position.tradeId !== undefined ? {
                 equals: item.position.tradeId
               } : undefined,
@@ -2847,6 +2886,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
                } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -2949,6 +2991,9 @@ id
                } : undefined,
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
+               } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
                } : undefined,
           },
           create: {
@@ -3180,6 +3225,9 @@ id
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
@@ -3394,6 +3442,9 @@ id
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -3487,6 +3538,9 @@ id
                } : undefined,
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -3656,6 +3710,9 @@ id
   } : undefined,
   contractId: prop.contractId !== undefined ? {
     equals: prop.contractId 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
   } : undefined,
 
           },
@@ -4041,6 +4098,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId
               } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status
+              } : undefined,
             tradeId: item.position.tradeId !== undefined ? {
                 equals: item.position.tradeId
               } : undefined,
@@ -4176,6 +4236,9 @@ id
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
                } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -4278,6 +4341,9 @@ id
                } : undefined,
             contractId: item.position.contractId !== undefined ? {
                 equals: item.position.contractId 
+               } : undefined,
+            status: item.position.status !== undefined ? {
+                equals: item.position.status 
                } : undefined,
           },
           create: {
@@ -4509,6 +4575,9 @@ id
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             tradeId: item.tradeId !== undefined ? {
                 equals: item.tradeId
               } : undefined,
@@ -4723,6 +4792,9 @@ id
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -4816,6 +4888,9 @@ id
                } : undefined,
             contractId: item.contractId !== undefined ? {
                 equals: item.contractId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -5107,6 +5182,9 @@ id
   contractId: props.contractId !== undefined ? {
     equals: props.contractId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -5288,6 +5366,9 @@ id
   } : undefined,
   contractId: props.contractId !== undefined ? {
     equals: props.contractId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

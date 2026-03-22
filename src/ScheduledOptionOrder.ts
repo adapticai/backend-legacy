@@ -297,6 +297,9 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -427,6 +430,9 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           create: {
         payload: props.payload !== undefined ? props.payload : undefined,
@@ -558,6 +564,9 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
+  } : undefined,
 
           },
           data: {
@@ -810,6 +819,9 @@ import { logger } from './utils/logger';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -985,6 +997,9 @@ import { logger } from './utils/logger';
           where: whereInput ? whereInput : {
       id: props.id !== undefined ? {
     equals: props.id 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

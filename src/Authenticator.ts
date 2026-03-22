@@ -397,6 +397,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -440,6 +443,9 @@ id
  : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
@@ -584,6 +590,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -652,6 +664,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -678,6 +693,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -1140,6 +1158,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId
             } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -1227,6 +1248,9 @@ id
 } : { upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
+            } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
             } : undefined,
@@ -1614,6 +1638,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -1813,6 +1843,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -1905,6 +1941,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -1968,6 +2007,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           reviewedById: item.reviewedById !== undefined ? {
               equals: item.reviewedById
             } : undefined,
@@ -2226,6 +2268,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -2269,6 +2314,9 @@ id
  : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
@@ -2413,6 +2461,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -2481,6 +2535,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -2507,6 +2564,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -2775,6 +2835,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -2818,6 +2881,9 @@ id
  : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
@@ -2962,6 +3028,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -3030,6 +3102,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -3056,6 +3131,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -3270,6 +3348,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId
             } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -3357,6 +3438,9 @@ id
 } : { upsert: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
+            } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
             } : undefined,
@@ -3744,6 +3828,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -3943,6 +4033,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -4035,6 +4131,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -4098,6 +4197,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           reviewedById: item.reviewedById !== undefined ? {
               equals: item.reviewedById
             } : undefined,
@@ -4356,6 +4458,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -4399,6 +4504,9 @@ id
  : { connectOrCreate: props.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
@@ -4543,6 +4651,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -4611,6 +4725,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -4637,6 +4754,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -4983,6 +5103,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId
             } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -5070,6 +5193,9 @@ id
 } : { upsert: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
+            } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
             } : undefined,
@@ -5457,6 +5583,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -5656,6 +5788,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -5748,6 +5886,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -5811,6 +5952,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           reviewedById: item.reviewedById !== undefined ? {
               equals: item.reviewedById
             } : undefined,
@@ -6069,6 +6213,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -6112,6 +6259,9 @@ id
  : { connectOrCreate: prop.user.alpacaAccounts.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
@@ -6256,6 +6406,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -6324,6 +6480,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -6350,6 +6509,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,

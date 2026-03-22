@@ -216,6 +216,9 @@ import { logger } from './utils/logger';
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
           name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type 
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -672,6 +675,9 @@ import { logger } from './utils/logger';
           name: item.asset.name !== undefined ? {
               equals: item.asset.name
             } : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type
+            } : undefined,
         },
         update: {
           id: item.asset.id !== undefined ? {
@@ -1054,6 +1060,9 @@ import { logger } from './utils/logger';
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
           name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type 
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1330,6 +1339,9 @@ import { logger } from './utils/logger';
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
           name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type 
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -1523,6 +1535,9 @@ import { logger } from './utils/logger';
             } : undefined,
           name: item.asset.name !== undefined ? {
               equals: item.asset.name
+            } : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type
             } : undefined,
         },
         update: {
@@ -1906,6 +1921,9 @@ import { logger } from './utils/logger';
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
           name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type 
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
@@ -2233,6 +2251,9 @@ import { logger } from './utils/logger';
           name: item.asset.name !== undefined ? {
               equals: item.asset.name
             } : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type
+            } : undefined,
         },
         update: {
           id: item.asset.id !== undefined ? {
@@ -2615,6 +2636,9 @@ import { logger } from './utils/logger';
           id: item.asset.id !== undefined ? item.asset.id : undefined,
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,
           name: item.asset.name !== undefined ? item.asset.name : undefined,
+          type: item.asset.type !== undefined ? {
+              equals: item.asset.type 
+             } : undefined,
         },
         create: {
           symbol: item.asset.symbol !== undefined ? item.asset.symbol : undefined,

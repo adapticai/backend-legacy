@@ -729,6 +729,8 @@ const isUniqueField = (name: string): boolean => {
     'handle',
     'symbol',
     'clientOrderId',
+    'status',
+    'type',
   ];
   return uniqueFields.includes(name);
 };

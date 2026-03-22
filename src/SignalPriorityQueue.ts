@@ -342,6 +342,9 @@ import { logger } from './utils/logger';
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -526,6 +529,9 @@ import { logger } from './utils/logger';
   signalId: props.signalId !== undefined ? props.signalId : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
           create: {
@@ -721,6 +727,9 @@ import { logger } from './utils/logger';
   signalId: prop.signalId !== undefined ? prop.signalId : undefined,
   symbol: prop.symbol !== undefined ? {
     equals: prop.symbol 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
   } : undefined,
 
           },
@@ -1029,6 +1038,9 @@ import { logger } from './utils/logger';
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -1210,6 +1222,9 @@ import { logger } from './utils/logger';
   } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

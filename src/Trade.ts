@@ -137,6 +137,12 @@ import { logger } from './utils/logger';
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId 
            } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type 
+           } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status 
+           } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -409,6 +415,9 @@ import { logger } from './utils/logger';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
@@ -509,6 +518,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
+          } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
       },
       update: {
@@ -670,6 +685,9 @@ import { logger } from './utils/logger';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
@@ -712,6 +730,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId 
+           } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type 
+           } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status 
            } : undefined,
       },
       create: {
@@ -813,6 +837,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
+          } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
       },
       update: {
@@ -974,6 +1004,9 @@ import { logger } from './utils/logger';
   alpacaAccountId: prop.alpacaAccountId !== undefined ? {
     equals: prop.alpacaAccountId 
   } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
+  } : undefined,
   symbol: prop.symbol !== undefined ? {
     equals: prop.symbol 
   } : undefined,
@@ -1075,6 +1108,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
+          } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
       },
       update: {
@@ -1357,6 +1396,9 @@ import { logger } from './utils/logger';
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
@@ -1538,6 +1580,9 @@ import { logger } from './utils/logger';
   } : undefined,
   alpacaAccountId: props.alpacaAccountId !== undefined ? {
     equals: props.alpacaAccountId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 

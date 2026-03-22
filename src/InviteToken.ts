@@ -248,6 +248,9 @@ id
       where: {
         id: props.waitlistEntry.id !== undefined ? props.waitlistEntry.id : undefined,
         email: props.waitlistEntry.email !== undefined ? props.waitlistEntry.email : undefined,
+        status: props.waitlistEntry.status !== undefined ? {
+            equals: props.waitlistEntry.status 
+           } : undefined,
       },
       create: {
         email: props.waitlistEntry.email !== undefined ? props.waitlistEntry.email : undefined,
@@ -331,6 +334,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -394,6 +400,9 @@ id
  : { connectOrCreate: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -475,6 +484,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -806,6 +818,9 @@ id
         email: props.waitlistEntry.email !== undefined ? {
             equals: props.waitlistEntry.email
           } : undefined,
+        status: props.waitlistEntry.status !== undefined ? {
+            equals: props.waitlistEntry.status
+          } : undefined,
         reviewedById: props.waitlistEntry.reviewedById !== undefined ? {
             equals: props.waitlistEntry.reviewedById
           } : undefined,
@@ -975,6 +990,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -1095,6 +1113,9 @@ id
 } : { upsert: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId
               } : undefined,
@@ -1277,6 +1298,9 @@ id
               } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
           },
           update: {
@@ -1471,6 +1495,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -1534,6 +1561,9 @@ id
  : { connectOrCreate: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -1615,6 +1645,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -1747,6 +1780,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -1810,6 +1846,9 @@ id
  : { connectOrCreate: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -1891,6 +1930,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -2083,6 +2125,9 @@ id
       where: {
         id: props.waitlistEntry.id !== undefined ? props.waitlistEntry.id : undefined,
         email: props.waitlistEntry.email !== undefined ? props.waitlistEntry.email : undefined,
+        status: props.waitlistEntry.status !== undefined ? {
+            equals: props.waitlistEntry.status 
+           } : undefined,
       },
       create: {
         email: props.waitlistEntry.email !== undefined ? props.waitlistEntry.email : undefined,
@@ -2166,6 +2211,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -2229,6 +2277,9 @@ id
  : { connectOrCreate: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -2311,6 +2362,9 @@ id
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -2392,6 +2446,9 @@ id
           } : undefined,
         email: props.waitlistEntry.email !== undefined ? {
             equals: props.waitlistEntry.email
+          } : undefined,
+        status: props.waitlistEntry.status !== undefined ? {
+            equals: props.waitlistEntry.status
           } : undefined,
         reviewedById: props.waitlistEntry.reviewedById !== undefined ? {
             equals: props.waitlistEntry.reviewedById
@@ -2562,6 +2619,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -2682,6 +2742,9 @@ id
 } : { upsert: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId
               } : undefined,
@@ -2864,6 +2927,9 @@ id
               } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
           },
           update: {
@@ -3058,6 +3124,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -3121,6 +3190,9 @@ id
  : { connectOrCreate: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -3202,6 +3274,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -3334,6 +3409,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -3397,6 +3475,9 @@ id
  : { connectOrCreate: props.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -3478,6 +3559,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -3691,6 +3775,9 @@ id
         email: prop.waitlistEntry.email !== undefined ? {
             equals: prop.waitlistEntry.email
           } : undefined,
+        status: prop.waitlistEntry.status !== undefined ? {
+            equals: prop.waitlistEntry.status
+          } : undefined,
         reviewedById: prop.waitlistEntry.reviewedById !== undefined ? {
             equals: prop.waitlistEntry.reviewedById
           } : undefined,
@@ -3860,6 +3947,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -3980,6 +4070,9 @@ id
 } : { upsert: prop.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId
               } : undefined,
@@ -4162,6 +4255,9 @@ id
               } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
           },
           update: {
@@ -4356,6 +4452,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -4419,6 +4518,9 @@ id
  : { connectOrCreate: prop.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -4500,6 +4602,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -4632,6 +4737,9 @@ id
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -4695,6 +4803,9 @@ id
  : { connectOrCreate: prop.waitlistEntry.reviewedBy.alpacaAccounts.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
@@ -4776,6 +4887,9 @@ id
                } : undefined,
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {

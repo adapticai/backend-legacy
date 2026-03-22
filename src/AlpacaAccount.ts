@@ -429,6 +429,9 @@ id
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId 
              } : undefined,
@@ -527,6 +530,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
+             } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
              } : undefined,
         },
         create: {
@@ -630,6 +636,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -656,6 +665,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -739,6 +751,12 @@ id
            } : undefined,
         title: item.title !== undefined ? {
             equals: item.title 
+           } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type 
+           } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status 
            } : undefined,
       },
       create: {
@@ -1016,6 +1034,9 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
@@ -1350,6 +1371,9 @@ id
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId
             } : undefined,
@@ -1482,6 +1506,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
+             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
              } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId 
@@ -1643,6 +1670,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
+            } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
             } : undefined,
         },
         update: {
@@ -1828,6 +1858,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -1891,6 +1924,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           reviewedById: item.reviewedById !== undefined ? {
               equals: item.reviewedById
             } : undefined,
@@ -2149,6 +2185,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -2251,6 +2290,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -2277,6 +2319,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -2359,6 +2404,12 @@ id
           } : undefined,
         title: item.title !== undefined ? {
             equals: item.title
+          } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
       },
       update: {
@@ -2537,6 +2588,9 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
@@ -2675,6 +2729,9 @@ id
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId 
              } : undefined,
@@ -2773,6 +2830,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId 
+             } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
              } : undefined,
         },
         create: {
@@ -2876,6 +2936,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -2902,6 +2965,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -2985,6 +3051,12 @@ id
            } : undefined,
         title: item.title !== undefined ? {
             equals: item.title 
+           } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type 
+           } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status 
            } : undefined,
       },
       create: {
@@ -3325,6 +3397,9 @@ id
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId
             } : undefined,
@@ -3457,6 +3532,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
+             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
              } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId 
@@ -3618,6 +3696,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
+            } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
             } : undefined,
         },
         update: {
@@ -3803,6 +3884,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -3866,6 +3950,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           reviewedById: item.reviewedById !== undefined ? {
               equals: item.reviewedById
             } : undefined,
@@ -4124,6 +4211,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -4226,6 +4316,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -4252,6 +4345,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -4334,6 +4430,12 @@ id
           } : undefined,
         title: item.title !== undefined ? {
             equals: item.title
+          } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
       },
       update: {
@@ -4512,6 +4614,9 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
+  type: prop.type !== undefined ? {
+    equals: prop.type 
+  } : undefined,
   userId: prop.userId !== undefined ? {
     equals: prop.userId 
   } : undefined,
@@ -4847,6 +4952,9 @@ id
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId
             } : undefined,
@@ -4979,6 +5087,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
+             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
              } : undefined,
           correlationId: item.correlationId !== undefined ? {
               equals: item.correlationId 
@@ -5140,6 +5251,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
           userId: item.userId !== undefined ? {
               equals: item.userId
+            } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type
             } : undefined,
         },
         update: {
@@ -5325,6 +5439,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId
             } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
         },
         update: {
           id: item.id !== undefined ? {
@@ -5388,6 +5505,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           reviewedById: item.reviewedById !== undefined ? {
               equals: item.reviewedById
             } : undefined,
@@ -5646,6 +5766,9 @@ id
           userId: item.userId !== undefined ? {
               equals: item.userId 
              } : undefined,
+          type: item.type !== undefined ? {
+              equals: item.type 
+             } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -5748,6 +5871,9 @@ id
           providerAccountId: item.providerAccountId !== undefined ? {
               equals: item.providerAccountId 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -5774,6 +5900,9 @@ id
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           email: item.email !== undefined ? item.email : undefined,
@@ -5856,6 +5985,12 @@ id
           } : undefined,
         title: item.title !== undefined ? {
             equals: item.title
+          } : undefined,
+        type: item.type !== undefined ? {
+            equals: item.type
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
       },
       update: {
@@ -6155,6 +6290,9 @@ id
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 
   } : undefined,
@@ -6333,6 +6471,9 @@ id
           where: whereInput ? whereInput : {
       id: props.id !== undefined ? {
     equals: props.id 
+  } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
   } : undefined,
   userId: props.userId !== undefined ? {
     equals: props.userId 

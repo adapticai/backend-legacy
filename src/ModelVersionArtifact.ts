@@ -223,6 +223,9 @@ id
     : { connectOrCreate: {
       where: {
         id: props.modelVersion.id !== undefined ? props.modelVersion.id : undefined,
+        status: props.modelVersion.status !== undefined ? {
+            equals: props.modelVersion.status 
+           } : undefined,
       },
       create: {
         modelName: props.modelVersion.modelName !== undefined ? props.modelVersion.modelName : undefined,
@@ -267,6 +270,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.modelVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.id : undefined,
+          status: props.modelVersion.parentVersion.status !== undefined ? {
+              equals: props.modelVersion.parentVersion.status 
+             } : undefined,
         },
         create: {
           modelName: props.modelVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.modelName : undefined,
@@ -311,6 +317,9 @@ id
     : { connectOrCreate: {
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: props.modelVersion.parentVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -381,6 +390,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -426,6 +438,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -504,6 +519,9 @@ id
  : { connectOrCreate: props.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -548,6 +566,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -618,6 +639,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -663,6 +687,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -744,6 +771,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -784,6 +814,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -837,6 +870,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -877,6 +913,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -1238,6 +1277,9 @@ id
         id: props.modelVersion.id !== undefined ? {
             equals: props.modelVersion.id
           } : undefined,
+        status: props.modelVersion.status !== undefined ? {
+            equals: props.modelVersion.status
+          } : undefined,
         parentVersionId: props.modelVersion.parentVersionId !== undefined ? {
             equals: props.modelVersion.parentVersionId
           } : undefined,
@@ -1356,6 +1398,9 @@ id
           id: props.modelVersion.parentVersion.id !== undefined ? {
               equals: props.modelVersion.parentVersion.id
             } : undefined,
+          status: props.modelVersion.parentVersion.status !== undefined ? {
+              equals: props.modelVersion.parentVersion.status
+            } : undefined,
           parentVersionId: props.modelVersion.parentVersion.parentVersionId !== undefined ? {
               equals: props.modelVersion.parentVersion.parentVersionId
             } : undefined,
@@ -1473,6 +1518,9 @@ id
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? {
                 equals: props.modelVersion.parentVersion.parentVersion.id
+              } : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status
               } : undefined,
             parentVersionId: props.modelVersion.parentVersion.parentVersion.parentVersionId !== undefined ? {
                 equals: props.modelVersion.parentVersion.parentVersion.parentVersionId
@@ -1654,6 +1702,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
               } : undefined,
@@ -1775,6 +1826,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
@@ -2008,6 +2062,9 @@ id
     : { connectOrCreate: {
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: props.modelVersion.parentVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -2078,6 +2135,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -2123,6 +2183,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -2200,6 +2263,9 @@ id
 } : { upsert: props.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           parentVersionId: item.parentVersionId !== undefined ? {
               equals: item.parentVersionId
             } : undefined,
@@ -2315,6 +2381,9 @@ id
 } : { upsert: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             parentVersionId: item.parentVersionId !== undefined ? {
                 equals: item.parentVersionId
               } : undefined,
@@ -2495,6 +2564,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
               } : undefined,
@@ -2616,6 +2688,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
@@ -2849,6 +2924,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -2919,6 +2997,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -2964,6 +3045,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -3043,6 +3127,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           name: item.name !== undefined ? {
               equals: item.name
+            } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId
@@ -3137,6 +3224,9 @@ id
           where: {
             id: item.treatmentVersion.id !== undefined ? {
                 equals: item.treatmentVersion.id
+              } : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status
               } : undefined,
             parentVersionId: item.treatmentVersion.parentVersionId !== undefined ? {
                 equals: item.treatmentVersion.parentVersionId
@@ -3317,6 +3407,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -3368,6 +3461,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           name: item.name !== undefined ? {
               equals: item.name
+            } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId
@@ -3462,6 +3558,9 @@ id
           where: {
             id: item.controlVersion.id !== undefined ? {
                 equals: item.controlVersion.id
+              } : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status
               } : undefined,
             parentVersionId: item.controlVersion.parentVersionId !== undefined ? {
                 equals: item.controlVersion.parentVersionId
@@ -3642,6 +3741,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -3804,6 +3906,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.modelVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.id : undefined,
+          status: props.modelVersion.parentVersion.status !== undefined ? {
+              equals: props.modelVersion.parentVersion.status 
+             } : undefined,
         },
         create: {
           modelName: props.modelVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.modelName : undefined,
@@ -3848,6 +3953,9 @@ id
     : { connectOrCreate: {
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: props.modelVersion.parentVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -3918,6 +4026,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -3963,6 +4074,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -4041,6 +4155,9 @@ id
  : { connectOrCreate: props.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -4085,6 +4202,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -4155,6 +4275,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -4200,6 +4323,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -4281,6 +4407,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -4321,6 +4450,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -4374,6 +4506,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -4414,6 +4549,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -4701,6 +4839,9 @@ id
     : { connectOrCreate: {
       where: {
         id: props.modelVersion.id !== undefined ? props.modelVersion.id : undefined,
+        status: props.modelVersion.status !== undefined ? {
+            equals: props.modelVersion.status 
+           } : undefined,
       },
       create: {
         modelName: props.modelVersion.modelName !== undefined ? props.modelVersion.modelName : undefined,
@@ -4745,6 +4886,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.modelVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.id : undefined,
+          status: props.modelVersion.parentVersion.status !== undefined ? {
+              equals: props.modelVersion.parentVersion.status 
+             } : undefined,
         },
         create: {
           modelName: props.modelVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.modelName : undefined,
@@ -4789,6 +4933,9 @@ id
     : { connectOrCreate: {
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: props.modelVersion.parentVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -4859,6 +5006,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -4904,6 +5054,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -4982,6 +5135,9 @@ id
  : { connectOrCreate: props.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -5026,6 +5182,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -5096,6 +5255,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -5141,6 +5303,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -5222,6 +5387,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -5262,6 +5430,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -5315,6 +5486,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -5355,6 +5529,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -5469,6 +5646,9 @@ id
       where: {
         id: props.modelVersion.id !== undefined ? {
             equals: props.modelVersion.id
+          } : undefined,
+        status: props.modelVersion.status !== undefined ? {
+            equals: props.modelVersion.status
           } : undefined,
         parentVersionId: props.modelVersion.parentVersionId !== undefined ? {
             equals: props.modelVersion.parentVersionId
@@ -5588,6 +5768,9 @@ id
           id: props.modelVersion.parentVersion.id !== undefined ? {
               equals: props.modelVersion.parentVersion.id
             } : undefined,
+          status: props.modelVersion.parentVersion.status !== undefined ? {
+              equals: props.modelVersion.parentVersion.status
+            } : undefined,
           parentVersionId: props.modelVersion.parentVersion.parentVersionId !== undefined ? {
               equals: props.modelVersion.parentVersion.parentVersionId
             } : undefined,
@@ -5705,6 +5888,9 @@ id
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? {
                 equals: props.modelVersion.parentVersion.parentVersion.id
+              } : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status
               } : undefined,
             parentVersionId: props.modelVersion.parentVersion.parentVersion.parentVersionId !== undefined ? {
                 equals: props.modelVersion.parentVersion.parentVersion.parentVersionId
@@ -5886,6 +6072,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
               } : undefined,
@@ -6007,6 +6196,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
@@ -6240,6 +6432,9 @@ id
     : { connectOrCreate: {
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: props.modelVersion.parentVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -6310,6 +6505,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -6355,6 +6553,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -6432,6 +6633,9 @@ id
 } : { upsert: props.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           parentVersionId: item.parentVersionId !== undefined ? {
               equals: item.parentVersionId
             } : undefined,
@@ -6547,6 +6751,9 @@ id
 } : { upsert: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             parentVersionId: item.parentVersionId !== undefined ? {
                 equals: item.parentVersionId
               } : undefined,
@@ -6727,6 +6934,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
               } : undefined,
@@ -6848,6 +7058,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
@@ -7081,6 +7294,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -7151,6 +7367,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -7196,6 +7415,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -7275,6 +7497,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           name: item.name !== undefined ? {
               equals: item.name
+            } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId
@@ -7369,6 +7594,9 @@ id
           where: {
             id: item.treatmentVersion.id !== undefined ? {
                 equals: item.treatmentVersion.id
+              } : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status
               } : undefined,
             parentVersionId: item.treatmentVersion.parentVersionId !== undefined ? {
                 equals: item.treatmentVersion.parentVersionId
@@ -7549,6 +7777,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -7600,6 +7831,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           name: item.name !== undefined ? {
               equals: item.name
+            } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId
@@ -7694,6 +7928,9 @@ id
           where: {
             id: item.controlVersion.id !== undefined ? {
                 equals: item.controlVersion.id
+              } : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status
               } : undefined,
             parentVersionId: item.controlVersion.parentVersionId !== undefined ? {
                 equals: item.controlVersion.parentVersionId
@@ -7874,6 +8111,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -8036,6 +8276,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.modelVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.id : undefined,
+          status: props.modelVersion.parentVersion.status !== undefined ? {
+              equals: props.modelVersion.parentVersion.status 
+             } : undefined,
         },
         create: {
           modelName: props.modelVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.modelName : undefined,
@@ -8080,6 +8323,9 @@ id
     : { connectOrCreate: {
           where: {
             id: props.modelVersion.parentVersion.parentVersion.id !== undefined ? props.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: props.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: props.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: props.modelVersion.parentVersion.parentVersion.modelName !== undefined ? props.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -8150,6 +8396,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -8195,6 +8444,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -8273,6 +8525,9 @@ id
  : { connectOrCreate: props.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -8317,6 +8572,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -8387,6 +8645,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -8432,6 +8693,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -8513,6 +8777,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -8553,6 +8820,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -8606,6 +8876,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -8646,6 +8919,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -8942,6 +9218,9 @@ id
         id: prop.modelVersion.id !== undefined ? {
             equals: prop.modelVersion.id
           } : undefined,
+        status: prop.modelVersion.status !== undefined ? {
+            equals: prop.modelVersion.status
+          } : undefined,
         parentVersionId: prop.modelVersion.parentVersionId !== undefined ? {
             equals: prop.modelVersion.parentVersionId
           } : undefined,
@@ -9060,6 +9339,9 @@ id
           id: prop.modelVersion.parentVersion.id !== undefined ? {
               equals: prop.modelVersion.parentVersion.id
             } : undefined,
+          status: prop.modelVersion.parentVersion.status !== undefined ? {
+              equals: prop.modelVersion.parentVersion.status
+            } : undefined,
           parentVersionId: prop.modelVersion.parentVersion.parentVersionId !== undefined ? {
               equals: prop.modelVersion.parentVersion.parentVersionId
             } : undefined,
@@ -9177,6 +9459,9 @@ id
           where: {
             id: prop.modelVersion.parentVersion.parentVersion.id !== undefined ? {
                 equals: prop.modelVersion.parentVersion.parentVersion.id
+              } : undefined,
+            status: prop.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: prop.modelVersion.parentVersion.parentVersion.status
               } : undefined,
             parentVersionId: prop.modelVersion.parentVersion.parentVersion.parentVersionId !== undefined ? {
                 equals: prop.modelVersion.parentVersion.parentVersion.parentVersionId
@@ -9358,6 +9643,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
               } : undefined,
@@ -9479,6 +9767,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
@@ -9712,6 +10003,9 @@ id
     : { connectOrCreate: {
           where: {
             id: prop.modelVersion.parentVersion.parentVersion.id !== undefined ? prop.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: prop.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: prop.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: prop.modelVersion.parentVersion.parentVersion.modelName !== undefined ? prop.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -9782,6 +10076,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -9827,6 +10124,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -9904,6 +10204,9 @@ id
 } : { upsert: prop.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
+            } : undefined,
           parentVersionId: item.parentVersionId !== undefined ? {
               equals: item.parentVersionId
             } : undefined,
@@ -10019,6 +10322,9 @@ id
 } : { upsert: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             parentVersionId: item.parentVersionId !== undefined ? {
                 equals: item.parentVersionId
               } : undefined,
@@ -10199,6 +10505,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
               } : undefined,
@@ -10320,6 +10629,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId
@@ -10553,6 +10865,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -10623,6 +10938,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -10668,6 +10986,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -10747,6 +11068,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           name: item.name !== undefined ? {
               equals: item.name
+            } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId
@@ -10841,6 +11165,9 @@ id
           where: {
             id: item.treatmentVersion.id !== undefined ? {
                 equals: item.treatmentVersion.id
+              } : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status
               } : undefined,
             parentVersionId: item.treatmentVersion.parentVersionId !== undefined ? {
                 equals: item.treatmentVersion.parentVersionId
@@ -11021,6 +11348,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -11072,6 +11402,9 @@ id
           id: item.id !== undefined ? item.id : undefined,
           name: item.name !== undefined ? {
               equals: item.name
+            } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status
             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId
@@ -11166,6 +11499,9 @@ id
           where: {
             id: item.controlVersion.id !== undefined ? {
                 equals: item.controlVersion.id
+              } : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status
               } : undefined,
             parentVersionId: item.controlVersion.parentVersionId !== undefined ? {
                 equals: item.controlVersion.parentVersionId
@@ -11346,6 +11682,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,
@@ -11508,6 +11847,9 @@ id
     : { connectOrCreate: {
         where: {
           id: prop.modelVersion.parentVersion.id !== undefined ? prop.modelVersion.parentVersion.id : undefined,
+          status: prop.modelVersion.parentVersion.status !== undefined ? {
+              equals: prop.modelVersion.parentVersion.status 
+             } : undefined,
         },
         create: {
           modelName: prop.modelVersion.parentVersion.modelName !== undefined ? prop.modelVersion.parentVersion.modelName : undefined,
@@ -11552,6 +11894,9 @@ id
     : { connectOrCreate: {
           where: {
             id: prop.modelVersion.parentVersion.parentVersion.id !== undefined ? prop.modelVersion.parentVersion.parentVersion.id : undefined,
+            status: prop.modelVersion.parentVersion.parentVersion.status !== undefined ? {
+                equals: prop.modelVersion.parentVersion.parentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: prop.modelVersion.parentVersion.parentVersion.modelName !== undefined ? prop.modelVersion.parentVersion.parentVersion.modelName : undefined,
@@ -11622,6 +11967,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -11667,6 +12015,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -11745,6 +12096,9 @@ id
  : { connectOrCreate: prop.modelVersion.childVersions.map((item: any) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
         },
         create: {
           modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -11789,6 +12143,9 @@ id
  : { connectOrCreate: item.childVersions.map((item: any) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             modelName: item.modelName !== undefined ? item.modelName : undefined,
@@ -11859,6 +12216,9 @@ id
             name: item.name !== undefined ? {
                 equals: item.name 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
                } : undefined,
@@ -11904,6 +12264,9 @@ id
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
                 equals: item.name 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             modelVersionAId: item.modelVersionAId !== undefined ? {
                 equals: item.modelVersionAId 
@@ -11985,6 +12348,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -12025,6 +12391,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.treatmentVersion.id !== undefined ? item.treatmentVersion.id : undefined,
+            status: item.treatmentVersion.status !== undefined ? {
+                equals: item.treatmentVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.treatmentVersion.modelName !== undefined ? item.treatmentVersion.modelName : undefined,
@@ -12078,6 +12447,9 @@ id
           name: item.name !== undefined ? {
               equals: item.name 
              } : undefined,
+          status: item.status !== undefined ? {
+              equals: item.status 
+             } : undefined,
           modelVersionAId: item.modelVersionAId !== undefined ? {
               equals: item.modelVersionAId 
              } : undefined,
@@ -12118,6 +12490,9 @@ id
     : { connectOrCreate: {
           where: {
             id: item.controlVersion.id !== undefined ? item.controlVersion.id : undefined,
+            status: item.controlVersion.status !== undefined ? {
+                equals: item.controlVersion.status 
+               } : undefined,
           },
           create: {
             modelName: item.controlVersion.modelName !== undefined ? item.controlVersion.modelName : undefined,

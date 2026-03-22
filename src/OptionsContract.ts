@@ -271,6 +271,9 @@ id
         contractId: item.contractId !== undefined ? {
             equals: item.contractId 
            } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status 
+           } : undefined,
       },
       create: {
         alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -421,6 +424,9 @@ id
              } : undefined,
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId 
+             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status 
              } : undefined,
         },
         create: {
@@ -823,6 +829,9 @@ id
         contractId: item.contractId !== undefined ? {
             equals: item.contractId
           } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
+          } : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
           } : undefined,
@@ -1439,6 +1448,9 @@ id
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId
             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status
+            } : undefined,
           tradeId: item.position.tradeId !== undefined ? {
               equals: item.position.tradeId
             } : undefined,
@@ -1719,6 +1731,9 @@ id
              } : undefined,
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId 
+             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status 
              } : undefined,
         },
         create: {
@@ -1919,6 +1934,9 @@ id
         contractId: item.contractId !== undefined ? {
             equals: item.contractId 
            } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status 
+           } : undefined,
       },
       create: {
         alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -2070,6 +2088,9 @@ id
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId 
              } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status 
+             } : undefined,
         },
         create: {
           alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -2214,6 +2235,9 @@ id
           } : undefined,
         contractId: item.contractId !== undefined ? {
             equals: item.contractId
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
@@ -2831,6 +2855,9 @@ id
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId
             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status
+            } : undefined,
           tradeId: item.position.tradeId !== undefined ? {
               equals: item.position.tradeId
             } : undefined,
@@ -3111,6 +3138,9 @@ id
              } : undefined,
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId 
+             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status 
              } : undefined,
         },
         create: {
@@ -3388,6 +3418,9 @@ id
           } : undefined,
         contractId: item.contractId !== undefined ? {
             equals: item.contractId
+          } : undefined,
+        status: item.status !== undefined ? {
+            equals: item.status
           } : undefined,
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
@@ -4005,6 +4038,9 @@ id
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId
             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status
+            } : undefined,
           tradeId: item.position.tradeId !== undefined ? {
               equals: item.position.tradeId
             } : undefined,
@@ -4285,6 +4321,9 @@ id
              } : undefined,
           contractId: item.position.contractId !== undefined ? {
               equals: item.position.contractId 
+             } : undefined,
+          status: item.position.status !== undefined ? {
+              equals: item.position.status 
              } : undefined,
         },
         create: {

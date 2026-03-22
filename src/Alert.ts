@@ -95,6 +95,9 @@ import { logger } from './utils/logger';
     : { connectOrCreate: {
       where: {
         id: props.alpacaAccount.id !== undefined ? props.alpacaAccount.id : undefined,
+        type: props.alpacaAccount.type !== undefined ? {
+            equals: props.alpacaAccount.type 
+           } : undefined,
         userId: props.alpacaAccount.userId !== undefined ? {
             equals: props.alpacaAccount.userId 
            } : undefined,
@@ -233,6 +236,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
                } : undefined,
@@ -331,6 +337,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
                } : undefined,
           },
           create: {
@@ -434,6 +443,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -460,6 +472,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -760,6 +775,12 @@ import { logger } from './utils/logger';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -817,6 +838,9 @@ import { logger } from './utils/logger';
       where: {
         id: props.alpacaAccount.id !== undefined ? {
             equals: props.alpacaAccount.id
+          } : undefined,
+        type: props.alpacaAccount.type !== undefined ? {
+            equals: props.alpacaAccount.type
           } : undefined,
         userId: props.alpacaAccount.userId !== undefined ? {
             equals: props.alpacaAccount.userId
@@ -1146,6 +1170,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId
               } : undefined,
@@ -1278,6 +1305,9 @@ import { logger } from './utils/logger';
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
@@ -1439,6 +1469,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId
+              } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
               } : undefined,
           },
           update: {
@@ -1624,6 +1657,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -1687,6 +1723,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             reviewedById: item.reviewedById !== undefined ? {
                 equals: item.reviewedById
               } : undefined,
@@ -1875,6 +1914,9 @@ import { logger } from './utils/logger';
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -1977,6 +2019,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -2003,6 +2048,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -2184,6 +2232,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
                } : undefined,
@@ -2282,6 +2333,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
                } : undefined,
           },
           create: {
@@ -2385,6 +2439,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -2411,6 +2468,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -2585,6 +2645,12 @@ import { logger } from './utils/logger';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           create: {
         title: props.title !== undefined ? props.title : undefined,
@@ -2608,6 +2674,9 @@ import { logger } from './utils/logger';
     : { connectOrCreate: {
       where: {
         id: props.alpacaAccount.id !== undefined ? props.alpacaAccount.id : undefined,
+        type: props.alpacaAccount.type !== undefined ? {
+            equals: props.alpacaAccount.type 
+           } : undefined,
         userId: props.alpacaAccount.userId !== undefined ? {
             equals: props.alpacaAccount.userId 
            } : undefined,
@@ -2746,6 +2815,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
                } : undefined,
@@ -2844,6 +2916,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
                } : undefined,
           },
           create: {
@@ -2947,6 +3022,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -2973,6 +3051,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -3070,6 +3151,9 @@ import { logger } from './utils/logger';
       where: {
         id: props.alpacaAccount.id !== undefined ? {
             equals: props.alpacaAccount.id
+          } : undefined,
+        type: props.alpacaAccount.type !== undefined ? {
+            equals: props.alpacaAccount.type
           } : undefined,
         userId: props.alpacaAccount.userId !== undefined ? {
             equals: props.alpacaAccount.userId
@@ -3399,6 +3483,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId
               } : undefined,
@@ -3531,6 +3618,9 @@ import { logger } from './utils/logger';
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
@@ -3692,6 +3782,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId
+              } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
               } : undefined,
           },
           update: {
@@ -3877,6 +3970,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -3940,6 +4036,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             reviewedById: item.reviewedById !== undefined ? {
                 equals: item.reviewedById
               } : undefined,
@@ -4128,6 +4227,9 @@ import { logger } from './utils/logger';
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -4230,6 +4332,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -4256,6 +4361,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -4437,6 +4545,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
                } : undefined,
@@ -4535,6 +4646,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
                } : undefined,
           },
           create: {
@@ -4638,6 +4752,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -4664,6 +4781,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -4838,6 +4958,12 @@ import { logger } from './utils/logger';
   title: prop.title !== undefined ? {
     equals: prop.title 
   } : undefined,
+  type: prop.type !== undefined ? {
+    equals: prop.type 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
+  } : undefined,
 
           },
           data: {
@@ -4896,6 +5022,9 @@ import { logger } from './utils/logger';
       where: {
         id: prop.alpacaAccount.id !== undefined ? {
             equals: prop.alpacaAccount.id
+          } : undefined,
+        type: prop.alpacaAccount.type !== undefined ? {
+            equals: prop.alpacaAccount.type
           } : undefined,
         userId: prop.alpacaAccount.userId !== undefined ? {
             equals: prop.alpacaAccount.userId
@@ -5225,6 +5354,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId
               } : undefined,
@@ -5357,6 +5489,9 @@ import { logger } from './utils/logger';
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
@@ -5518,6 +5653,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId
+              } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
               } : undefined,
           },
           update: {
@@ -5703,6 +5841,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId
               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -5766,6 +5907,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
             reviewedById: item.reviewedById !== undefined ? {
                 equals: item.reviewedById
               } : undefined,
@@ -5954,6 +6098,9 @@ import { logger } from './utils/logger';
             userId: item.userId !== undefined ? {
                 equals: item.userId 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
           },
           create: {
             type: item.type !== undefined ? item.type : undefined,
@@ -6056,6 +6203,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -6082,6 +6232,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -6263,6 +6416,9 @@ import { logger } from './utils/logger';
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
                 equals: item.tradingPolicyId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
             correlationId: item.correlationId !== undefined ? {
                 equals: item.correlationId 
                } : undefined,
@@ -6361,6 +6517,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
             userId: item.userId !== undefined ? {
                 equals: item.userId 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
                } : undefined,
           },
           create: {
@@ -6464,6 +6623,9 @@ import { logger } from './utils/logger';
             providerAccountId: item.providerAccountId !== undefined ? {
                 equals: item.providerAccountId 
                } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -6490,6 +6652,9 @@ import { logger } from './utils/logger';
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             email: item.email !== undefined ? item.email : undefined,
@@ -6785,6 +6950,12 @@ import { logger } from './utils/logger';
   title: props.title !== undefined ? {
     equals: props.title 
   } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -6966,6 +7137,12 @@ import { logger } from './utils/logger';
   } : undefined,
   title: props.title !== undefined ? {
     equals: props.title 
+  } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

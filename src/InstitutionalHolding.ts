@@ -160,6 +160,9 @@ id
         id: props.asset.id !== undefined ? props.asset.id : undefined,
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
         name: props.asset.name !== undefined ? props.asset.name : undefined,
+        type: props.asset.type !== undefined ? {
+            equals: props.asset.type 
+           } : undefined,
       },
       create: {
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
@@ -591,6 +594,9 @@ id
           } : undefined,
         name: props.asset.name !== undefined ? {
             equals: props.asset.name
+          } : undefined,
+        type: props.asset.type !== undefined ? {
+            equals: props.asset.type
           } : undefined,
       },
       update: {
@@ -1239,6 +1245,9 @@ id
         id: props.asset.id !== undefined ? props.asset.id : undefined,
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
         name: props.asset.name !== undefined ? props.asset.name : undefined,
+        type: props.asset.type !== undefined ? {
+            equals: props.asset.type 
+           } : undefined,
       },
       create: {
         symbol: props.asset.symbol !== undefined ? props.asset.symbol : undefined,
@@ -1421,6 +1430,9 @@ id
           } : undefined,
         name: props.asset.name !== undefined ? {
             equals: props.asset.name
+          } : undefined,
+        type: props.asset.type !== undefined ? {
+            equals: props.asset.type
           } : undefined,
       },
       update: {
@@ -2107,6 +2119,9 @@ id
           } : undefined,
         name: prop.asset.name !== undefined ? {
             equals: prop.asset.name
+          } : undefined,
+        type: prop.asset.type !== undefined ? {
+            equals: prop.asset.type
           } : undefined,
       },
       update: {

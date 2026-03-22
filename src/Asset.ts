@@ -584,6 +584,9 @@ import { logger } from './utils/logger';
             id: props.id !== undefined ? props.id : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -1134,6 +1137,9 @@ import { logger } from './utils/logger';
             id: props.id !== undefined ? props.id : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
       },
           create: {
         symbol: props.symbol !== undefined ? props.symbol : undefined,
@@ -1830,6 +1836,9 @@ import { logger } from './utils/logger';
               id: prop.id !== undefined ? prop.id : undefined,
   symbol: prop.symbol !== undefined ? prop.symbol : undefined,
   name: prop.name !== undefined ? prop.name : undefined,
+  type: prop.type !== undefined ? {
+    equals: prop.type 
+  } : undefined,
 
           },
           data: {
@@ -2502,6 +2511,9 @@ import { logger } from './utils/logger';
             id: props.id !== undefined ? props.id : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
   name: props.name !== undefined ? props.name : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -2683,6 +2695,9 @@ import { logger } from './utils/logger';
   } : undefined,
   name: props.name !== undefined ? {
     equals: props.name 
+  } : undefined,
+  type: props.type !== undefined ? {
+    equals: props.type 
   } : undefined,
       },
         };

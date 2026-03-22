@@ -387,6 +387,9 @@ import { logger } from './utils/logger';
   accountId: props.accountId !== undefined ? {
     equals: props.accountId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -612,6 +615,9 @@ import { logger } from './utils/logger';
             id: props.id !== undefined ? props.id : undefined,
   accountId: props.accountId !== undefined ? {
     equals: props.accountId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
           create: {
@@ -864,6 +870,9 @@ import { logger } from './utils/logger';
               id: prop.id !== undefined ? prop.id : undefined,
   accountId: prop.accountId !== undefined ? {
     equals: prop.accountId 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
   } : undefined,
 
           },
@@ -1213,6 +1222,9 @@ import { logger } from './utils/logger';
   accountId: props.accountId !== undefined ? {
     equals: props.accountId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -1391,6 +1403,9 @@ import { logger } from './utils/logger';
   } : undefined,
   accountId: props.accountId !== undefined ? {
     equals: props.accountId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
       },
         };

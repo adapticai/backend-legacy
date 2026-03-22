@@ -327,6 +327,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.tradingPolicy.alpacaAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.id : undefined,
+          type: props.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: props.tradingPolicy.alpacaAccount.type 
+             } : undefined,
           userId: props.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.userId 
              } : undefined,
@@ -425,6 +428,12 @@ id
                } : undefined,
             title: item.title !== undefined ? {
                 equals: item.title 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -698,6 +707,9 @@ id
   tradingPolicyId: props.tradingPolicyId !== undefined ? {
     equals: props.tradingPolicyId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
   correlationId: props.correlationId !== undefined ? {
     equals: props.correlationId 
   } : undefined,
@@ -946,6 +958,9 @@ id
           id: props.tradingPolicy.alpacaAccount.id !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.id
             } : undefined,
+          type: props.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: props.tradingPolicy.alpacaAccount.type
+            } : undefined,
           userId: props.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.userId
             } : undefined,
@@ -1174,6 +1189,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -1328,6 +1349,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -1410,6 +1437,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.tradingPolicy.alpacaAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.id : undefined,
+          type: props.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: props.tradingPolicy.alpacaAccount.type 
+             } : undefined,
           userId: props.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.userId 
              } : undefined,
@@ -1508,6 +1538,12 @@ id
                } : undefined,
             title: item.title !== undefined ? {
                 equals: item.title 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -1654,6 +1690,9 @@ id
   tradingPolicyId: props.tradingPolicyId !== undefined ? {
     equals: props.tradingPolicyId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
   correlationId: props.correlationId !== undefined ? {
     equals: props.correlationId 
   } : undefined,
@@ -1756,6 +1795,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.tradingPolicy.alpacaAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.id : undefined,
+          type: props.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: props.tradingPolicy.alpacaAccount.type 
+             } : undefined,
           userId: props.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.userId 
              } : undefined,
@@ -1854,6 +1896,12 @@ id
                } : undefined,
             title: item.title !== undefined ? {
                 equals: item.title 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -2111,6 +2159,9 @@ id
           id: props.tradingPolicy.alpacaAccount.id !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.id
             } : undefined,
+          type: props.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: props.tradingPolicy.alpacaAccount.type
+            } : undefined,
           userId: props.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.userId
             } : undefined,
@@ -2339,6 +2390,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -2493,6 +2550,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -2575,6 +2638,9 @@ id
     : { connectOrCreate: {
         where: {
           id: props.tradingPolicy.alpacaAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.id : undefined,
+          type: props.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: props.tradingPolicy.alpacaAccount.type 
+             } : undefined,
           userId: props.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: props.tradingPolicy.alpacaAccount.userId 
              } : undefined,
@@ -2673,6 +2739,12 @@ id
                } : undefined,
             title: item.title !== undefined ? {
                 equals: item.title 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -2818,6 +2890,9 @@ id
               id: prop.id !== undefined ? prop.id : undefined,
   tradingPolicyId: prop.tradingPolicyId !== undefined ? {
     equals: prop.tradingPolicyId 
+  } : undefined,
+  status: prop.status !== undefined ? {
+    equals: prop.status 
   } : undefined,
   correlationId: prop.correlationId !== undefined ? {
     equals: prop.correlationId 
@@ -3068,6 +3143,9 @@ id
           id: prop.tradingPolicy.alpacaAccount.id !== undefined ? {
               equals: prop.tradingPolicy.alpacaAccount.id
             } : undefined,
+          type: prop.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: prop.tradingPolicy.alpacaAccount.type
+            } : undefined,
           userId: prop.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: prop.tradingPolicy.alpacaAccount.userId
             } : undefined,
@@ -3296,6 +3374,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title
               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
           },
           update: {
             id: item.id !== undefined ? {
@@ -3450,6 +3534,12 @@ id
             title: item.title !== undefined ? {
                 equals: item.title 
                } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -3532,6 +3622,9 @@ id
     : { connectOrCreate: {
         where: {
           id: prop.tradingPolicy.alpacaAccount.id !== undefined ? prop.tradingPolicy.alpacaAccount.id : undefined,
+          type: prop.tradingPolicy.alpacaAccount.type !== undefined ? {
+              equals: prop.tradingPolicy.alpacaAccount.type 
+             } : undefined,
           userId: prop.tradingPolicy.alpacaAccount.userId !== undefined ? {
               equals: prop.tradingPolicy.alpacaAccount.userId 
              } : undefined,
@@ -3630,6 +3723,12 @@ id
                } : undefined,
             title: item.title !== undefined ? {
                 equals: item.title 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
                } : undefined,
           },
           create: {
@@ -3897,6 +3996,9 @@ id
   tradingPolicyId: props.tradingPolicyId !== undefined ? {
     equals: props.tradingPolicyId 
   } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
+  } : undefined,
   correlationId: props.correlationId !== undefined ? {
     equals: props.correlationId 
   } : undefined,
@@ -4081,6 +4183,9 @@ id
   } : undefined,
   tradingPolicyId: props.tradingPolicyId !== undefined ? {
     equals: props.tradingPolicyId 
+  } : undefined,
+  status: props.status !== undefined ? {
+    equals: props.status 
   } : undefined,
   correlationId: props.correlationId !== undefined ? {
     equals: props.correlationId 
