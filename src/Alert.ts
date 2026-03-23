@@ -22,8 +22,6 @@ import { logger } from './utils/logger';
   isRead
   acknowledgedAt
   resolvedAt
-  suppressedUntil
-  retryCount
   metadata
   createdAt
   updatedAt

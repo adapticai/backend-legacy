@@ -13,14 +13,7 @@ import { logger } from './utils/logger';
     
   id
   timestamp
-  entityType
-  entityId
-  serverVersion
-  clientVersion
-  strategy
   resolved
-  resolution
-  resolutionTime
 
   `;
 

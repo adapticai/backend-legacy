@@ -83,20 +83,6 @@ import { logger } from './utils/logger';
     bidPrice
     createdAt
     updatedAt
-    institutionalHoldings {
-id
-    }
-    institutionalFlowSignals {
-      id
-      symbol
-      signalDate
-      signalType
-      signalStrength
-      netFlow
-      confidence
-      metadata
-      createdAt
-    }
   }
 
   `;

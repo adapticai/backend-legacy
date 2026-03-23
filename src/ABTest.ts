@@ -86,29 +86,6 @@ id
     updatedAt
     deployedAt
     deprecatedAt
-    abTestsAsTreatment {
-id
-    }
-    featureImportanceAnalyses {
-      id
-      modelVersionId
-      analysisType
-      featureImportances
-      globalImportance
-      localImportance
-      analysisMetadataSampleSize
-      analysisMetadataBaselineAccuracy
-      analysisMetadataAnalysisDate
-      analysisMetadataComputationTime
-      analysisMetadataAnalysisParameters
-      insightsTopFeatures
-      insightsRedundantFeatures
-      insightsUnexpectedImportances
-      insightsStabilityScore
-      insightsRecommendations
-      createdAt
-      updatedAt
-    }
   }
   treatmentVersion {
     id
@@ -179,29 +156,6 @@ id
     updatedAt
     deployedAt
     deprecatedAt
-    abTestsAsControl {
-id
-    }
-    featureImportanceAnalyses {
-      id
-      modelVersionId
-      analysisType
-      featureImportances
-      globalImportance
-      localImportance
-      analysisMetadataSampleSize
-      analysisMetadataBaselineAccuracy
-      analysisMetadataAnalysisDate
-      analysisMetadataComputationTime
-      analysisMetadataAnalysisParameters
-      insightsTopFeatures
-      insightsRedundantFeatures
-      insightsUnexpectedImportances
-      insightsStabilityScore
-      insightsRecommendations
-      createdAt
-      updatedAt
-    }
   }
   trafficSplitControlPercent
   trafficSplitTreatmentPercent

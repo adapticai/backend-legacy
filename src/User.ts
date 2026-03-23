@@ -36,39 +36,6 @@ import { logger } from './utils/logger';
     updatedAt
   }
   customerId
-  accounts {
-    id
-    userId
-    type
-    provider
-    providerAccountId
-    refresh_token
-    access_token
-    expires_at
-    token_type
-    scope
-    id_token
-    session_state
-    createdAt
-    updatedAt
-  }
-  sessions {
-    id
-    sessionToken
-    userId
-    expires
-    createdAt
-    updatedAt
-  }
-  authenticators {
-    id
-    userId
-    credentialID
-    publicKey
-    counter
-    createdAt
-    updatedAt
-  }
   plan
   alpacaAccounts {
     id
@@ -93,91 +60,6 @@ import { logger } from './utils/logger';
       stocks
       options
       alpacaAccountId
-      alpacaAccount {
-id
-      }
-      createdAt
-      updatedAt
-    }
-    tradingPolicy {
-      id
-      alpacaAccountId
-      alpacaAccount {
-id
-      }
-      version
-      lastModifiedBy
-      lastModifiedAt
-      autonomyMode
-      realtimeTradingEnabled
-      paperTradingOnly
-      killSwitchEnabled
-      autonomyPrefs
-      equitiesEnabled
-      etfsEnabled
-      cryptoEnabled
-      optionsEnabled
-      futuresEnabled
-      forexEnabled
-      shortingEnabled
-      marginEnabled
-      fractionalSharesEnabled
-      assetUniversePrefs
-      maxBuyingPowerUtilPct
-      cashFloorPct
-      maxGrossExposurePct
-      maxNetExposurePct
-      maxLeverage
-      maxSymbolConcentrationPct
-      maxSectorConcentrationPct
-      maxOpenPositions
-      maxOpenOrders
-      riskBudgetPrefs
-      signalConsumptionPrefs
-      executionPrefs
-      positionManagementPrefs
-      portfolioConstructionPrefs
-      macroOverlayEnabled
-      sectorOverlayEnabled
-      volatilityOverlayEnabled
-      liquidityStressOverlayEnabled
-      blackSwanProtectionEnabled
-      drawdownGuardianEnabled
-      correlationSpikeProtectionEnabled
-      newsEventRiskOverlayEnabled
-      exchangeHealthOverlayEnabled
-      dataQualitySentinelEnabled
-      overlayResponsePrefs
-      miniModelProvider
-      miniModelId
-      normalModelProvider
-      normalModelId
-      advancedModelProvider
-      advancedModelId
-      modelPrefs
-      auditNotificationPrefs
-      overlays {
-        id
-        tradingPolicyId
-        tradingPolicy {
-id
-        }
-        overlayType
-        source
-        reason
-        severity
-        version
-        mutations
-        status
-        activatedAt
-        expiresAt
-        deactivatedAt
-        deactivatedBy
-        correlationId
-        triggerEventId
-        createdAt
-        updatedAt
-      }
       createdAt
       updatedAt
     }
@@ -210,8 +92,6 @@ id
       isRead
       acknowledgedAt
       resolvedAt
-      suppressedUntil
-      retryCount
       metadata
       createdAt
       updatedAt
@@ -246,53 +126,6 @@ id
     verifiedAt
     approvedAt
     rejectedAt
-  }
-  reviewedWaitlistEntries {
-    id
-    email
-    fullName
-    companyName
-    companyWebsite
-    jobRole
-    professionalInvestorConfirmed
-    status
-    queuePosition
-    createdAt
-    updatedAt
-    reviewedAt
-    reviewedById
-    inviteToken {
-      id
-      token
-      email
-      waitlistEntryId
-      waitlistEntry {
-id
-      }
-      used
-      usedAt
-      expiresAt
-      createdAt
-    }
-  }
-  llmConfiguration {
-    id
-    userId
-    defaultProvider
-    miniProvider
-    normalProvider
-    advancedProvider
-    miniModel
-    normalModel
-    advancedModel
-    anthropicApiKey
-    deepseekApiKey
-    kimiApiKey
-    qwenApiKey
-    xaiApiKey
-    geminiApiKey
-    createdAt
-    updatedAt
   }
 
   `;

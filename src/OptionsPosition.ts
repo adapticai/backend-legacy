@@ -45,61 +45,6 @@ import { logger } from './utils/logger';
     dataTimestamp
     createdAt
     updatedAt
-    greeksHistory {
-      id
-      contractId
-      timestamp
-      underlyingPrice
-      optionPrice
-      bidPrice
-      askPrice
-      impliedVolatility
-      delta
-      gamma
-      theta
-      vega
-      rho
-      volume
-      openInterest
-      daysToExpiration
-      intrinsicValue
-      extrinsicValue
-      metadata
-      createdAt
-    }
-    executions {
-      id
-      positionId
-      position {
-id
-      }
-      contractId
-      alpacaAccountId
-      brokerOrderId
-      executionSide
-      quantity
-      executionPrice
-      executionValue
-      fees
-      executionTime
-      underlyingPriceAtExecution
-      deltaAtExecution
-      gammaAtExecution
-      thetaAtExecution
-      vegaAtExecution
-      rhoAtExecution
-      impliedVolatilityAtExecution
-      orderType
-      limitPrice
-      stopPrice
-      timeInForce
-      venue
-      slippage
-      notes
-      metadata
-      createdAt
-      updatedAt
-    }
   }
   status
   openingSide
@@ -134,63 +79,6 @@ id
     id
     positionId
     contractId
-    contract {
-      id
-      symbol
-      contractSymbol
-      optionType
-      strikePrice
-      expirationDate
-      daysToExpiration
-      lastPrice
-      bidPrice
-      askPrice
-      midPrice
-      bidSize
-      askSize
-      volume
-      openInterest
-      impliedVolatility
-      delta
-      gamma
-      theta
-      vega
-      rho
-      inTheMoney
-      intrinsicValue
-      extrinsicValue
-      theoreticalPrice
-      underlyingPrice
-      metadata
-      dataTimestamp
-      createdAt
-      updatedAt
-      positions {
-id
-      }
-      greeksHistory {
-        id
-        contractId
-        timestamp
-        underlyingPrice
-        optionPrice
-        bidPrice
-        askPrice
-        impliedVolatility
-        delta
-        gamma
-        theta
-        vega
-        rho
-        volume
-        openInterest
-        daysToExpiration
-        intrinsicValue
-        extrinsicValue
-        metadata
-        createdAt
-      }
-    }
     alpacaAccountId
     brokerOrderId
     executionSide

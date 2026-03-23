@@ -11,7 +11,6 @@ import { logger } from './utils/logger';
 
   const selectionSet = `
     
-  id
   symbol
   timeStamp
   timespan
@@ -22,8 +21,6 @@ import { logger } from './utils/logger';
   vol
   vwap
   trades
-  source
-  createdAt
 
   `;
 

@@ -17,63 +17,6 @@ import { logger } from './utils/logger';
     id
     alpacaAccountId
     contractId
-    contract {
-      id
-      symbol
-      contractSymbol
-      optionType
-      strikePrice
-      expirationDate
-      daysToExpiration
-      lastPrice
-      bidPrice
-      askPrice
-      midPrice
-      bidSize
-      askSize
-      volume
-      openInterest
-      impliedVolatility
-      delta
-      gamma
-      theta
-      vega
-      rho
-      inTheMoney
-      intrinsicValue
-      extrinsicValue
-      theoreticalPrice
-      underlyingPrice
-      metadata
-      dataTimestamp
-      createdAt
-      updatedAt
-      greeksHistory {
-        id
-        contractId
-        timestamp
-        underlyingPrice
-        optionPrice
-        bidPrice
-        askPrice
-        impliedVolatility
-        delta
-        gamma
-        theta
-        vega
-        rho
-        volume
-        openInterest
-        daysToExpiration
-        intrinsicValue
-        extrinsicValue
-        metadata
-        createdAt
-      }
-      executions {
-id
-      }
-    }
     status
     openingSide
     quantity
@@ -136,65 +79,6 @@ id
     dataTimestamp
     createdAt
     updatedAt
-    positions {
-      id
-      alpacaAccountId
-      contractId
-      status
-      openingSide
-      quantity
-      entryPrice
-      entryCost
-      entryTime
-      exitPrice
-      exitValue
-      exitTime
-      currentPrice
-      currentValue
-      unrealizedPnL
-      unrealizedPnLPercent
-      realizedPnL
-      realizedPnLPercent
-      totalFees
-      currentDelta
-      currentGamma
-      currentTheta
-      currentVega
-      currentRho
-      currentImpliedVolatility
-      daysHeld
-      exitReason
-      strategyType
-      tradeId
-      metadata
-      createdAt
-      updatedAt
-      executions {
-id
-      }
-    }
-    greeksHistory {
-      id
-      contractId
-      timestamp
-      underlyingPrice
-      optionPrice
-      bidPrice
-      askPrice
-      impliedVolatility
-      delta
-      gamma
-      theta
-      vega
-      rho
-      volume
-      openInterest
-      daysToExpiration
-      intrinsicValue
-      extrinsicValue
-      metadata
-      createdAt
-    }
   }
   alpacaAccountId
   brokerOrderId

@@ -14,16 +14,8 @@ import { logger } from './utils/logger';
   id
   alpacaAccountId
   symbol
-  sector
-  assetClass
   summary
-  keyFactors
   outcome
-  outcomeDetails
-  decisionRecordId
-  correlationId
-  relevanceScore
-  expiresAt
   createdAt
   updatedAt
 

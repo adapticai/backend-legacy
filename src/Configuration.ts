@@ -16,12 +16,8 @@ import { logger } from './utils/logger';
   configValue
   type
   scope
-  version
   description
   isActive
-  expiresAt
-  createdAt
-  updatedAt
 
   `;
 

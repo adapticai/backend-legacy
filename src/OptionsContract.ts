@@ -74,39 +74,6 @@ import { logger } from './utils/logger';
     metadata
     createdAt
     updatedAt
-    executions {
-      id
-      positionId
-      contractId
-      contract {
-id
-      }
-      alpacaAccountId
-      brokerOrderId
-      executionSide
-      quantity
-      executionPrice
-      executionValue
-      fees
-      executionTime
-      underlyingPriceAtExecution
-      deltaAtExecution
-      gammaAtExecution
-      thetaAtExecution
-      vegaAtExecution
-      rhoAtExecution
-      impliedVolatilityAtExecution
-      orderType
-      limitPrice
-      stopPrice
-      timeInForce
-      venue
-      slippage
-      notes
-      metadata
-      createdAt
-      updatedAt
-    }
   }
   greeksHistory {
     id
@@ -133,43 +100,6 @@ id
   executions {
     id
     positionId
-    position {
-      id
-      alpacaAccountId
-      contractId
-      contract {
-id
-      }
-      status
-      openingSide
-      quantity
-      entryPrice
-      entryCost
-      entryTime
-      exitPrice
-      exitValue
-      exitTime
-      currentPrice
-      currentValue
-      unrealizedPnL
-      unrealizedPnLPercent
-      realizedPnL
-      realizedPnLPercent
-      totalFees
-      currentDelta
-      currentGamma
-      currentTheta
-      currentVega
-      currentRho
-      currentImpliedVolatility
-      daysHeld
-      exitReason
-      strategyType
-      tradeId
-      metadata
-      createdAt
-      updatedAt
-    }
     contractId
     alpacaAccountId
     brokerOrderId

@@ -22,19 +22,7 @@ import { logger } from './utils/logger';
   theta
   vega
   rho
-  totalDelta
-  totalGamma
-  totalTheta
-  totalVega
-  totalRho
-  positionCount
-  underlyingSymbols
-  expirationDates
-  marketHours
-  vix
-  spyPrice
   source
-  createdAt
 
   `;
 

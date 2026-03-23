@@ -858,7 +858,7 @@ model Configuration {
   /// Optional scope for namespacing the configuration (e.g., symbol, service name).
   scope String? // Optional scope for namespacing (e.g., symbol, service name)
 
-  /// Version of the configuration setting.
+  /// Version of the configuration setting. GQL.SKIP=true
   version String?
 
   /// A one-sentence description of the configuration setting.
@@ -867,13 +867,13 @@ model Configuration {
   /// A detailed, multi-paragraph description of the configuration setting, including usage examples and references.
   isActive Boolean @default(true)
 
-  /// Indicates whether the configuration is active or not.
+  /// Indicates whether the configuration is active or not. GQL.SKIP=true
   expiresAt DateTime?
 
-  /// Timestamp when the configuration setting was created. TYPESTRING.SKIP=true
+  /// Timestamp when the configuration setting was created. TYPESTRING.SKIP=true GQL.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Timestamp when the configuration setting was last updated. TYPESTRING.SKIP=true
+  /// Timestamp when the configuration setting was last updated. TYPESTRING.SKIP=true GQL.SKIP=true
   updatedAt DateTime @updatedAt
 
   @@map("configurations")
@@ -916,7 +916,7 @@ model Session {
   /// Expiration date and time of the session.
   expires DateTime
 
-  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['alpacaAccounts']
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email','image','emailVerified','role']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Timestamp when the session was created. TYPESTRING.SKIP=true
@@ -973,13 +973,13 @@ model User {
   /// Foreign key referencing the Customer. TYPESTRING.SKIP=true
   customerId Int?
 
-  /// List of accounts associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccounts','user']
+  /// List of accounts associated with the user. TYPESTRING.SKIP=true GQL.SKIP=true
   accounts Account[]
 
-  /// List of sessions associated with the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  /// List of sessions associated with the user. TYPESTRING.SKIP=true GQL.SKIP=true
   sessions Session[]
 
-  /// List of authenticators for the user. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  /// List of authenticators for the user. TYPESTRING.SKIP=true GQL.SKIP=true
   authenticators Authenticator[]
 
   /// The subscription plan the user is enrolled in.
@@ -1000,10 +1000,10 @@ model User {
   /// List of account linking requests. TYPESTRING.INCLUDE=['id','status','provider','email'] GQL.EXCLUDE=['user']
   accountLinkingRequests AccountLinkingRequest[]
 
-  /// List of waitlist entries reviewed by this user. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedBy']
+  /// List of waitlist entries reviewed by this user. TYPESTRING.SKIP=true GQL.SKIP=true
   reviewedWaitlistEntries WaitlistEntry[] @relation("WaitlistReviewer")
 
-  /// Per-user LLM provider and model configuration. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  /// Per-user LLM provider and model configuration. TYPESTRING.SKIP=true GQL.SKIP=true
   llmConfiguration LlmConfiguration?
 
   @@index([customerId])
@@ -1022,6 +1022,8 @@ model User {
 model LlmConfiguration {
   id     String @id @default(uuid()) @db.Uuid
   userId String @unique @db.Uuid
+
+  /// Relation to the User model. GQL.SKIP=true
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Default provider used for all tiers unless overridden
@@ -1038,15 +1040,19 @@ model LlmConfiguration {
   normalModel   String?
   advancedModel String?
 
-  /// Provider API keys (encrypted at rest)
-  /// TYPESTRING.SKIP=true
-  /// GQL.EXCLUDE=['openaiApiKey','anthropicApiKey','deepseekApiKey','kimiApiKey','qwenApiKey','xaiApiKey','geminiApiKey']
+  /// Provider API keys (encrypted at rest). TYPESTRING.SKIP=true GQL.SKIP=true
   openaiApiKey    String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
   anthropicApiKey String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
   deepseekApiKey  String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
   kimiApiKey      String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
   qwenApiKey      String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
   xaiApiKey       String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
   geminiApiKey    String?
 
   createdAt DateTime @default(now())
@@ -1085,7 +1091,7 @@ model LinkedProvider {
   /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['linkedProviders']
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.SKIP=true
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Unique constraints
@@ -1141,7 +1147,7 @@ model AccountLinkingRequest {
   /// When user rejected (optional).
   rejectedAt DateTime?
 
-  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['accountLinkingRequests']
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.INCLUDE=['id']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Indexes for performance and rate limiting
@@ -1193,7 +1199,7 @@ model AlpacaAccount {
   /// Account-level asset class allocation configuration. TYPESTRING.SKIP=true
   allocation Allocation?
 
-  /// Trading policy governing autonomous decision-making for this account. TYPESTRING.SKIP=true
+  /// Trading policy governing autonomous decision-making for this account. TYPESTRING.SKIP=true GQL.SKIP=true
   tradingPolicy TradingPolicy?
 
   /// Whether the system should automatically determine allocation percentages based on market conditions. TYPESTRING.SKIP=true
@@ -1235,7 +1241,7 @@ model AlpacaAccount {
   /// The minimum change in trailing stop percent to warrant an adjustment used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
   minimumPriceChangePercent100 Float @default(0.5)
 
-  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true  GQL.EXCLUDE=['alpacaAccounts', 'customer', 'accounts', 'sessions', 'authenticators']
+  /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccounts','customer','accounts','sessions','authenticators','linkedProviders','accountLinkingRequests','reviewedWaitlistEntries','llmConfiguration']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Foreign key referencing the User. TYPESTRING.SKIP=true
@@ -1289,7 +1295,7 @@ model Allocation {
   /// Reference to the Alpaca account associated with the allocation settings. TYPESTRING.SKIP=true
   alpacaAccountId String @unique @db.Uuid
 
-  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.EXCLUDE=['allocation']
+  /// Relation to the AlpacaAccount model. TYPESTRING.SKIP=true GQL.SKIP=true
   alpacaAccount AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   /// Timestamp when the allocation settings were created. TYPESTRING.SKIP=true
@@ -1319,7 +1325,7 @@ model Authenticator {
   /// Counter for the number of authentication attempts. TYPESTRING.SKIP=true
   counter Int
 
-  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['authenticators']
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.INCLUDE=['id']
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   /// Timestamp when the authenticator was created. TYPESTRING.SKIP=true
@@ -1376,7 +1382,7 @@ model Account {
   /// Timestamp when the account was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// Relation to the User model. TYPESTRING.SKIP=true GQL.EXCLUDE=['accounts']
+  /// Relation to the User model. TYPESTRING.SKIP=true GQL.SKIP=true
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
@@ -1619,10 +1625,10 @@ model Asset {
   /// List of news article sentiments related to this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   newsMentions NewsArticleAssetSentiment[]
 
-  /// List of institutional holdings for this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset']
+  /// List of institutional holdings for this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   institutionalHoldings InstitutionalHolding[] @relation("InstitutionalHoldingAsset")
 
-  /// List of institutional flow signals for this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['asset']
+  /// List of institutional flow signals for this asset. TYPESTRING.SKIP=true GQL.SKIP=true
   institutionalFlowSignals InstitutionalFlowSignal[] @relation("InstitutionalFlowSignalAsset")
 
   @@map(name: "assets")
@@ -1801,10 +1807,10 @@ model Alert {
   /// Timestamp when the alert was resolved. TYPESTRING.SKIP=true
   resolvedAt DateTime?
 
-  /// Timestamp until which the alert is suppressed. TYPESTRING.SKIP=true
+  /// Timestamp until which the alert is suppressed. TYPESTRING.SKIP=true GQL.SKIP=true
   suppressedUntil DateTime?
 
-  /// Number of retry attempts for alert-related operations.
+  /// Number of retry attempts for alert-related operations. GQL.SKIP=true
   retryCount Int @default(0)
 
   /// Additional metadata for the alert stored as JSON.
@@ -1876,7 +1882,7 @@ model NewsArticle {
   /// Timestamp when the news article was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// List of asset sentiments related to this news article. TYPESTRING.SKIP=true GQL.EXCLUDE=['news']
+  /// List of asset sentiments related to this news article. TYPESTRING.SKIP=true GQL.SKIP=true
   assets NewsArticleAssetSentiment[]
 
   @@index([createdAt])
@@ -1897,10 +1903,10 @@ model NewsArticleAssetSentiment {
   /// URL of the news article, must be unique.
   url String @unique
 
-  /// Relation to the NewsArticle model. TYPESTRING.SKIP=true GQL.EXCLUDE=['assets']
+  /// Relation to the NewsArticle model. TYPESTRING.SKIP=true GQL.INCLUDE=['id','title','source','url','timePublished','sentiment']
   news NewsArticle @relation(fields: [newsArticleId], references: [id])
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions', 'orders', 'positions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.INCLUDE=['id','symbol','name','type']
   asset Asset? @relation(fields: [assetId], references: [id], onDelete: Cascade)
 
   /// Relevancy score indicating how relevant the news is to the asset.
@@ -2220,7 +2226,7 @@ model InstitutionalHolding {
   /// Timestamp when the institutional holding was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions','institutionalHoldings','institutionalFlowSignals']
   asset Asset @relation("InstitutionalHoldingAsset", fields: [symbol], references: [symbol])
 
   @@unique([symbol, institutionName, filingDate])
@@ -2260,7 +2266,7 @@ model InstitutionalFlowSignal {
   /// Timestamp when the institutional flow signal was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
-  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions']
+  /// Relation to the Asset model. TYPESTRING.INCLUDE=['symbol','name','type'] GQL.EXCLUDE=['newsMentions','institutionalHoldings','institutionalFlowSignals']
   asset Asset @relation("InstitutionalFlowSignalAsset", fields: [symbol], references: [symbol])
 
   /// Indexes for performance optimization
@@ -2643,13 +2649,13 @@ model ModelVersion {
   /// Timestamp when the model version was deprecated (optional).
   deprecatedAt DateTime?
 
-  /// List of A/B tests using this version as control. TYPESTRING.SKIP=true GQL.EXCLUDE=['controlVersion']
+  /// List of A/B tests using this version as control. TYPESTRING.SKIP=true GQL.SKIP=true
   abTestsAsControl ABTest[] @relation("ABTestControlVersion")
 
-  /// List of A/B tests using this version as treatment. TYPESTRING.SKIP=true GQL.EXCLUDE=['treatmentVersion']
+  /// List of A/B tests using this version as treatment. TYPESTRING.SKIP=true GQL.SKIP=true
   abTestsAsTreatment ABTest[] @relation("ABTestTreatmentVersion")
 
-  /// List of feature importance analyses for this version. TYPESTRING.SKIP=true GQL.EXCLUDE=['modelVersion']
+  /// List of feature importance analyses for this version. TYPESTRING.SKIP=true GQL.SKIP=true
   featureImportanceAnalyses FeatureImportanceAnalysis[]
 
   /// Indexes for performance optimization
@@ -3039,13 +3045,13 @@ model OptionsContract {
   /// Timestamp when the contract record was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// List of positions using this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract']
+  /// List of positions using this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract','executions']
   positions OptionsPosition[]
 
-  /// List of Greeks history records for this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract']
+  /// List of Greeks history records for this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract','positions','executions']
   greeksHistory OptionsGreeksHistory[]
 
-  /// List of trade executions for this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract']
+  /// List of trade executions for this contract. TYPESTRING.SKIP=true GQL.EXCLUDE=['contract','position']
   executions OptionsTradeExecution[]
 
   /// Indexes for performance optimization
@@ -3067,7 +3073,7 @@ model OptionsPosition {
   /// Reference to the options contract
   contractId String @db.Uuid
 
-  /// Relation to OptionsContract. TYPESTRING.INCLUDE=['contractSymbol','symbol','optionType','strikePrice','expirationDate'] GQL.EXCLUDE=['positions']
+  /// Relation to OptionsContract. TYPESTRING.INCLUDE=['contractSymbol','symbol','optionType','strikePrice','expirationDate'] GQL.EXCLUDE=['positions','greeksHistory','executions']
   contract OptionsContract @relation(fields: [contractId], references: [id])
 
   /// Position status
@@ -3149,7 +3155,7 @@ model OptionsPosition {
   /// Timestamp when the position record was last updated. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
-  /// List of trade executions for this position. TYPESTRING.SKIP=true GQL.EXCLUDE=['position']
+  /// List of trade executions for this position. TYPESTRING.SKIP=true GQL.EXCLUDE=['position','contract']
   executions OptionsTradeExecution[]
 
   /// Indexes for performance optimization
@@ -3169,7 +3175,7 @@ model OptionsGreeksHistory {
   /// Reference to the options contract
   contractId String @db.Uuid
 
-  /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['greeksHistory']
+  /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['greeksHistory','positions','executions']
   contract OptionsContract @relation(fields: [contractId], references: [id], onDelete: Cascade)
 
   /// Timestamp of the Greeks snapshot
@@ -3262,46 +3268,46 @@ model PortfolioGreeksHistory {
   rho   Decimal @db.Decimal(8, 6)
 
   // Portfolio-level aggregates
-  /// Total portfolio delta exposure
+  /// Total portfolio delta exposure. GQL.SKIP=true
   totalDelta Decimal? @db.Decimal(10, 6)
 
-  /// Total portfolio gamma exposure
+  /// Total portfolio gamma exposure. GQL.SKIP=true
   totalGamma Decimal? @db.Decimal(10, 6)
 
-  /// Total portfolio theta exposure
+  /// Total portfolio theta exposure. GQL.SKIP=true
   totalTheta Decimal? @db.Decimal(10, 6)
 
-  /// Total portfolio vega exposure
+  /// Total portfolio vega exposure. GQL.SKIP=true
   totalVega Decimal? @db.Decimal(10, 6)
 
-  /// Total portfolio rho exposure
+  /// Total portfolio rho exposure. GQL.SKIP=true
   totalRho Decimal? @db.Decimal(10, 6)
 
   // Portfolio metadata
-  /// Number of positions in portfolio
+  /// Number of positions in portfolio. GQL.SKIP=true
   positionCount Int?
 
-  /// List of underlying symbols in portfolio
+  /// List of underlying symbols in portfolio. GQL.SKIP=true
   underlyingSymbols Json?
 
-  /// List of expiration dates in portfolio
+  /// List of expiration dates in portfolio. GQL.SKIP=true
   expirationDates Json?
 
   // Market context
-  /// Whether recorded during market hours
+  /// Whether recorded during market hours. GQL.SKIP=true
   marketHours Boolean?
 
-  /// VIX level at timestamp
+  /// VIX level at timestamp. GQL.SKIP=true
   vix Decimal? @db.Decimal(8, 4)
 
-  /// SPY price at timestamp
+  /// SPY price at timestamp. GQL.SKIP=true
   spyPrice Decimal? @db.Decimal(10, 4)
 
   // Data provenance
   /// Data source identifier
   source String?
 
-  /// Record creation timestamp
+  /// Record creation timestamp. GQL.SKIP=true
   createdAt DateTime @default(now())
 
   @@unique([accountId, timestamp, contractId])
@@ -3319,13 +3325,13 @@ model OptionsTradeExecution {
   /// Reference to the options position
   positionId String @db.Uuid
 
-  /// Relation to OptionsPosition. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions']
+  /// Relation to OptionsPosition. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions','contract']
   position OptionsPosition @relation(fields: [positionId], references: [id])
 
   /// Reference to the options contract
   contractId String @db.Uuid
 
-  /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions']
+  /// Relation to OptionsContract. TYPESTRING.SKIP=true GQL.EXCLUDE=['executions','positions','greeksHistory']
   contract OptionsContract @relation(fields: [contractId], references: [id])
 
   /// Reference to the Alpaca account
@@ -3798,28 +3804,28 @@ model ConflictEvent {
   /// Timestamp when conflict occurred
   timestamp DateTime @default(now())
 
-  /// Type of entity with conflict
+  /// Type of entity with conflict. GQL.SKIP=true
   entityType String @db.VarChar(100)
 
-  /// ID of the conflicting entity
+  /// ID of the conflicting entity. GQL.SKIP=true
   entityId String @db.VarChar(255)
 
-  /// Server version of the entity
+  /// Server version of the entity. GQL.SKIP=true
   serverVersion Json
 
-  /// Client version of the entity
+  /// Client version of the entity. GQL.SKIP=true
   clientVersion Json
 
-  /// Resolution strategy used
+  /// Resolution strategy used. GQL.SKIP=true
   strategy ConflictResolutionStrategy
 
   /// Whether conflict was resolved
   resolved Boolean
 
-  /// Resolved version of the entity (optional)
+  /// Resolved version of the entity (optional). GQL.SKIP=true
   resolution Json?
 
-  /// Time taken to resolve in milliseconds (optional)
+  /// Time taken to resolve in milliseconds (optional). GQL.SKIP=true
   resolutionTime Int?
 
   /// Indexes for efficient querying
@@ -4435,7 +4441,7 @@ model WaitlistEntry {
   /// The ID of the user who reviewed the entry. TYPESTRING.SKIP=true
   reviewedById String? @db.Uuid
 
-  /// The user who reviewed the entry. TYPESTRING.SKIP=true GQL.EXCLUDE=['reviewedWaitlistEntries']
+  /// The user who reviewed the entry. TYPESTRING.SKIP=true GQL.SKIP=true
   reviewedBy User? @relation("WaitlistReviewer", fields: [reviewedById], references: [id])
 
   /// The invite token associated with this waitlist entry. TYPESTRING.SKIP=true
@@ -4460,7 +4466,7 @@ model InviteToken {
   /// The ID of the associated waitlist entry (optional). TYPESTRING.SKIP=true
   waitlistEntryId String? @unique @db.Uuid
 
-  /// The associated waitlist entry (optional). TYPESTRING.SKIP=true
+  /// The associated waitlist entry (optional). TYPESTRING.SKIP=true GQL.SKIP=true
   waitlistEntry WaitlistEntry? @relation(fields: [waitlistEntryId], references: [id])
 
   /// Whether the token has been used.
@@ -4608,6 +4614,8 @@ enum DecisionMemoryOutcome {
 model TradingPolicy {
   id                String   @id @default(uuid()) @db.Uuid
   alpacaAccountId   String   @unique @db.Uuid
+
+  /// Relation to AlpacaAccount. GQL.SKIP=true
   alpacaAccount     AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
 
   version           Int      @default(1)
@@ -4669,6 +4677,7 @@ model TradingPolicy {
 
   auditNotificationPrefs    Json?
 
+  /// List of policy overlays. GQL.SKIP=true
   overlays                  PolicyOverlay[]
 
   createdAt                 DateTime @default(now())
@@ -4680,6 +4689,8 @@ model TradingPolicy {
 model PolicyOverlay {
   id                String   @id @default(uuid()) @db.Uuid
   tradingPolicyId   String   @db.Uuid
+
+  /// Relation to TradingPolicy. GQL.SKIP=true
   tradingPolicy     TradingPolicy @relation(fields: [tradingPolicyId], references: [id], onDelete: Cascade)
 
   overlayType       OverlayType
@@ -4759,18 +4770,26 @@ model DecisionMemorySummary {
   id                String   @id @default(uuid()) @db.Uuid
   alpacaAccountId   String   @db.Uuid
   symbol            String?
+  /// GQL.SKIP=true
   sector            String?
+  /// GQL.SKIP=true
   assetClass        String?
 
   summary           String
+  /// GQL.SKIP=true
   keyFactors        Json?
   outcome           DecisionMemoryOutcome @default(PENDING)
+  /// GQL.SKIP=true
   outcomeDetails    Json?
 
+  /// GQL.SKIP=true
   decisionRecordId  String?
+  /// GQL.SKIP=true
   correlationId     String?
 
+  /// GQL.SKIP=true
   relevanceScore    Float    @default(1.0)
+  /// GQL.SKIP=true
   expiresAt         DateTime?
 
   createdAt         DateTime @default(now())
@@ -4790,6 +4809,7 @@ enum EquityBarTimespan {
 }
 
 model EquityBar {
+  /// GQL.SKIP=true
   id        String            @id @default(cuid())
   symbol    String
   timeStamp BigInt
@@ -4801,7 +4821,9 @@ model EquityBar {
   vol       Float
   vwap      Float?
   trades    Int?
+  /// GQL.SKIP=true
   source    String
+  /// GQL.SKIP=true
   createdAt DateTime          @default(now())
 
   @@unique([symbol, timeStamp, timespan])

@@ -100,6 +100,58 @@ The published package (`dist/`) exposes:
 | `configureConnectionPool()` | Apollo Client pool tuning |
 | Custom resolvers | `OptionsGreeksHistoryCustomResolver` |
 
+## GQL Inline Comment System (Selection Set & TypeString Curation)
+
+The `prisma/schema.prisma` file is the **single source of truth** for which fields and relations are included in generated CRUD GraphQL operations and typeString representations. Inline `///` comments on model fields control what the codegen pipeline produces.
+
+### Directive Syntax
+
+Directives are placed in `///` doc comments directly above (or on the same line as) the field they control:
+
+```prisma
+/// Description of the field. GQL.SKIP=true
+myField String?
+
+/// Description of relation. GQL.EXCLUDE=['fieldA','fieldB']
+relatedModel RelatedModel @relation(...)
+
+/// Description of relation. GQL.INCLUDE=['id','name','email']
+user User @relation(...)
+```
+
+### Available Directives
+
+| Directive | Scope | Effect |
+|-----------|-------|--------|
+| `GQL.SKIP=true` | Scalar or relation | Completely omits the field from the generated GraphQL selection set |
+| `GQL.EXCLUDE=['f1','f2']` | Relation field | Includes the relation but omits the listed sub-fields from the nested selection |
+| `GQL.INCLUDE=['f1','f2']` | Relation field | Includes the relation but **only** includes the listed sub-fields (whitelist) |
+| `GQL.MAX_DEPTH=N` | Relation field | Overrides the default max nesting depth (default: 4) for this relation |
+| `TYPESTRING.SKIP=true` | Scalar or relation | Omits the field from the generated typeString (used for LLM context injection) |
+| `TYPESTRING.INCLUDE=['f1','f2']` | Relation field | Only includes the listed sub-fields in the typeString for this relation |
+
+### Important Rules
+
+1. **Each field needs its own comment.** A `GQL.SKIP=true` on one field does NOT propagate to sibling fields. If you need to skip 3 consecutive fields, each needs its own `/// GQL.SKIP=true` comment.
+2. **`GQL.EXCLUDE` on a relation** excludes sub-fields of the nested object (e.g., `GQL.EXCLUDE=['user']` on an `alpacaAccounts` relation removes the `user` sub-field from the nested AlpacaAccount selection).
+3. **`GQL.INCLUDE` on a relation** is a whitelist — only the listed fields appear in the nested selection. Use this for relations where you only need a few fields (e.g., `GQL.INCLUDE=['id','name']`).
+4. **Circular references** are automatically prevented by the codegen (ancestor tracking), but `GQL.EXCLUDE` or `GQL.SKIP=true` should be used to explicitly break unnecessary deep nesting chains.
+5. **After any change** to inline comments, run `npm run build` (or at minimum `npm run generate:selections`) to regenerate the selection sets, then verify the output in `src/generated/selectionSets/<ModelName>.ts`.
+
+### When to Add/Remove Exclusions
+
+- **Adding exclusions:** When a field or relation is demonstrably never accessed by any consuming package (`engine`, `utils`, `app`, `platform`). Search all repos for `adaptic.<model>.<crud>()` calls and trace which fields are accessed from the results.
+- **Removing exclusions:** When a new feature requires a field that was previously excluded. Update the inline comment, run `npm run build`, publish the package, and update downstream consumers.
+- **Security-sensitive fields** (API keys, tokens, secrets) should always have `GQL.SKIP=true` to prevent accidental exposure through GraphQL operations.
+
+### Verifying Changes
+
+After modifying inline comments:
+1. Run `npm run build` (full pipeline)
+2. Inspect the generated selection set: `cat src/generated/selectionSets/<ModelName>.ts`
+3. Confirm excluded fields are absent and included fields are present
+4. If the change affects downstream packages, publish and update them
+
 ## When Adding New Model Fields
 
 1. Update `prisma/schema.prisma`

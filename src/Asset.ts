@@ -69,32 +69,6 @@ import { logger } from './utils/logger';
   bidPrice
   createdAt
   updatedAt
-  institutionalHoldings {
-    id
-    symbol
-    institutionName
-    filingDate
-    reportDate
-    sharesHeld
-    marketValue
-    percentOfClass
-    changeShares
-    changePercent
-    metadata
-    createdAt
-    updatedAt
-  }
-  institutionalFlowSignals {
-    id
-    symbol
-    signalDate
-    signalType
-    signalStrength
-    netFlow
-    confidence
-    metadata
-    createdAt
-  }
 
   `;
 
