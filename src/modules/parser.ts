@@ -148,6 +148,7 @@ export const GRAPHQL_SCALARS = new Set([
   'JsonNullableFilter',
   'Prisma.JSONValueFilter',
   'BigInt',
+  'bigint',
   'Decimal',
   'DateTimeFilter',
   'IntFilter',

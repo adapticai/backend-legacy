@@ -6971,7 +6971,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.linkedproviders) {
+        if (response && response.data && response.data.linkedProviders) {
           return response.data.linkedProviders;
         } else {
           return [] as LinkedProviderType[];

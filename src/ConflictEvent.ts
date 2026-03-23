@@ -1104,7 +1104,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.conflictevents) {
+        if (response && response.data && response.data.conflictEvents) {
           return response.data.conflictEvents;
         } else {
           return [] as ConflictEventType[];

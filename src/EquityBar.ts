@@ -72,6 +72,7 @@ import { logger } from './utils/logger';
           const variables = {
             data: {
                 symbol: props.symbol !== undefined ? props.symbol : undefined,
+  timeStamp: props.timeStamp !== undefined ? props.timeStamp : undefined,
   timespan: props.timespan !== undefined ? props.timespan : undefined,
   open: props.open !== undefined ? props.open : undefined,
   high: props.high !== undefined ? props.high : undefined,
@@ -198,6 +199,7 @@ import { logger } from './utils/logger';
         const variables = {
           data: props.map(prop => ({
       symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  timeStamp: prop.timeStamp !== undefined ? prop.timeStamp : undefined,
   timespan: prop.timespan !== undefined ? prop.timespan : undefined,
   open: prop.open !== undefined ? prop.open : undefined,
   high: prop.high !== undefined ? prop.high : undefined,
@@ -492,6 +494,7 @@ import { logger } from './utils/logger';
       },
           create: {
         symbol: props.symbol !== undefined ? props.symbol : undefined,
+  timeStamp: props.timeStamp !== undefined ? props.timeStamp : undefined,
   timespan: props.timespan !== undefined ? props.timespan : undefined,
   open: props.open !== undefined ? props.open : undefined,
   high: props.high !== undefined ? props.high : undefined,
@@ -1134,7 +1137,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.equitybars) {
+        if (response && response.data && response.data.equityBars) {
           return response.data.equityBars;
         } else {
           return [] as EquityBarType[];

@@ -6837,7 +6837,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.waitlistentries) {
+        if (response && response.data && response.data.waitlistEntries) {
           return response.data.waitlistEntries;
         } else {
           return [] as WaitlistEntryType[];

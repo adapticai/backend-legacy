@@ -148,6 +148,8 @@ id
                 institutionName: props.institutionName !== undefined ? props.institutionName : undefined,
   filingDate: props.filingDate !== undefined ? props.filingDate : undefined,
   reportDate: props.reportDate !== undefined ? props.reportDate : undefined,
+  sharesHeld: props.sharesHeld !== undefined ? props.sharesHeld : undefined,
+  changeShares: props.changeShares !== undefined ? props.changeShares : undefined,
   metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
     typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
@@ -420,6 +422,8 @@ id
   institutionName: prop.institutionName !== undefined ? prop.institutionName : undefined,
   filingDate: prop.filingDate !== undefined ? prop.filingDate : undefined,
   reportDate: prop.reportDate !== undefined ? prop.reportDate : undefined,
+  sharesHeld: prop.sharesHeld !== undefined ? prop.sharesHeld : undefined,
+  changeShares: prop.changeShares !== undefined ? prop.changeShares : undefined,
   metadata: prop.metadata !== undefined ? prop.metadata : undefined,
       })),
         };
@@ -1233,6 +1237,8 @@ id
         institutionName: props.institutionName !== undefined ? props.institutionName : undefined,
   filingDate: props.filingDate !== undefined ? props.filingDate : undefined,
   reportDate: props.reportDate !== undefined ? props.reportDate : undefined,
+  sharesHeld: props.sharesHeld !== undefined ? props.sharesHeld : undefined,
+  changeShares: props.changeShares !== undefined ? props.changeShares : undefined,
   metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
     typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
@@ -3065,7 +3071,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.institutionalholdings) {
+        if (response && response.data && response.data.institutionalHoldings) {
           return response.data.institutionalHoldings;
         } else {
           return [] as InstitutionalHoldingType[];

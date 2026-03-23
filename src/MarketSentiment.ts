@@ -1025,7 +1025,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.marketsentiments) {
+        if (response && response.data && response.data.marketSentiments) {
           return response.data.marketSentiments;
         } else {
           return [] as MarketSentimentType[];

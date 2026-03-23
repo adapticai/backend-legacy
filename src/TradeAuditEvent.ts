@@ -1392,7 +1392,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.tradeauditevents) {
+        if (response && response.data && response.data.tradeAuditEvents) {
           return response.data.tradeAuditEvents;
         } else {
           return [] as TradeAuditEventType[];

@@ -6956,7 +6956,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.llmconfigurations) {
+        if (response && response.data && response.data.llmConfigurations) {
           return response.data.llmConfigurations;
         } else {
           return [] as LlmConfigurationType[];

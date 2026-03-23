@@ -1238,7 +1238,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.signalpriorityqueues) {
+        if (response && response.data && response.data.signalPriorityQueues) {
           return response.data.signalPriorityQueues;
         } else {
           return [] as SignalPriorityQueueType[];

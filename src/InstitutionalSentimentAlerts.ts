@@ -1118,7 +1118,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.institutionalsentimentalerts) {
+        if (response && response.data && response.data.institutionalSentimentAlerts) {
           return response.data.institutionalSentimentAlerts;
         } else {
           return [] as InstitutionalSentimentAlertsType[];

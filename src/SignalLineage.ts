@@ -105,6 +105,7 @@ import { logger } from './utils/logger';
   finalSignal: props.finalSignal !== undefined ? props.finalSignal : undefined,
   lifecycleEvents: props.lifecycleEvents !== undefined ? props.lifecycleEvents : undefined,
   performanceAttribution: props.performanceAttribution !== undefined ? props.performanceAttribution : undefined,
+  lastUpdated: props.lastUpdated !== undefined ? props.lastUpdated : undefined,
   storageLocation: props.storageLocation !== undefined ? props.storageLocation : undefined,
   retentionDays: props.retentionDays !== undefined ? props.retentionDays : undefined,
   complianceTags: props.complianceTags !== undefined ? props.complianceTags : undefined,
@@ -245,6 +246,7 @@ import { logger } from './utils/logger';
   finalSignal: prop.finalSignal !== undefined ? prop.finalSignal : undefined,
   lifecycleEvents: prop.lifecycleEvents !== undefined ? prop.lifecycleEvents : undefined,
   performanceAttribution: prop.performanceAttribution !== undefined ? prop.performanceAttribution : undefined,
+  lastUpdated: prop.lastUpdated !== undefined ? prop.lastUpdated : undefined,
   storageLocation: prop.storageLocation !== undefined ? prop.storageLocation : undefined,
   retentionDays: prop.retentionDays !== undefined ? prop.retentionDays : undefined,
   complianceTags: prop.complianceTags !== undefined ? prop.complianceTags : undefined,
@@ -609,6 +611,7 @@ import { logger } from './utils/logger';
   finalSignal: props.finalSignal !== undefined ? props.finalSignal : undefined,
   lifecycleEvents: props.lifecycleEvents !== undefined ? props.lifecycleEvents : undefined,
   performanceAttribution: props.performanceAttribution !== undefined ? props.performanceAttribution : undefined,
+  lastUpdated: props.lastUpdated !== undefined ? props.lastUpdated : undefined,
   storageLocation: props.storageLocation !== undefined ? props.storageLocation : undefined,
   retentionDays: props.retentionDays !== undefined ? props.retentionDays : undefined,
   complianceTags: props.complianceTags !== undefined ? props.complianceTags : undefined,
@@ -1358,7 +1361,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.signallineages) {
+        if (response && response.data && response.data.signalLineages) {
           return response.data.signalLineages;
         } else {
           return [] as SignalLineageType[];

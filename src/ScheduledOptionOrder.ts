@@ -1013,7 +1013,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.scheduledoptionorders) {
+        if (response && response.data && response.data.scheduledOptionOrders) {
           return response.data.scheduledOptionOrders;
         } else {
           return [] as ScheduledOptionOrderType[];

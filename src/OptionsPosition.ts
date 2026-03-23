@@ -5382,7 +5382,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.optionspositions) {
+        if (response && response.data && response.data.optionsPositions) {
           return response.data.optionsPositions;
         } else {
           return [] as OptionsPositionType[];

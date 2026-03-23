@@ -1306,7 +1306,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.systemalerts) {
+        if (response && response.data && response.data.systemAlerts) {
           return response.data.systemAlerts;
         } else {
           return [] as SystemAlertType[];

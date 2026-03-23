@@ -1419,7 +1419,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deadlettermessages) {
+        if (response && response.data && response.data.deadLetterMessages) {
           return response.data.deadLetterMessages;
         } else {
           return [] as DeadLetterMessageType[];

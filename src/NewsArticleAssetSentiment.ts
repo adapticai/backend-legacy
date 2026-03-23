@@ -296,6 +296,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -903,6 +905,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1023,6 +1027,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1302,6 +1308,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1664,6 +1672,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1784,6 +1794,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -2273,6 +2285,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -2393,6 +2407,8 @@ import { logger } from './utils/logger';
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
           filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
           reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
+          sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+          changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -2858,7 +2874,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.newsarticleassetsentiments) {
+        if (response && response.data && response.data.newsArticleAssetSentiments) {
           return response.data.newsArticleAssetSentiments;
         } else {
           return [] as NewsArticleAssetSentimentType[];

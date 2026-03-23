@@ -5372,7 +5372,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.optionstradeexecutions) {
+        if (response && response.data && response.data.optionsTradeExecutions) {
           return response.data.optionsTradeExecutions;
         } else {
           return [] as OptionsTradeExecutionType[];

@@ -1066,7 +1066,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.eventsnapshots) {
+        if (response && response.data && response.data.eventSnapshots) {
           return response.data.eventSnapshots;
         } else {
           return [] as EventSnapshotType[];

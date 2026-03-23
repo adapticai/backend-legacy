@@ -4205,7 +4205,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.policyoverlays) {
+        if (response && response.data && response.data.policyOverlays) {
           return response.data.policyOverlays;
         } else {
           return [] as PolicyOverlayType[];

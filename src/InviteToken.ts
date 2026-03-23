@@ -5377,7 +5377,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.invitetokens) {
+        if (response && response.data && response.data.inviteTokens) {
           return response.data.inviteTokens;
         } else {
           return [] as InviteTokenType[];

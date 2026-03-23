@@ -1432,7 +1432,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.accountdecisionrecords) {
+        if (response && response.data && response.data.accountDecisionRecords) {
           return response.data.accountDecisionRecords;
         } else {
           return [] as AccountDecisionRecordType[];

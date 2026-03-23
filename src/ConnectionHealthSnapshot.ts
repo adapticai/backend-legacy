@@ -1072,7 +1072,7 @@ import { logger } from './utils/logger';
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.connectionhealthsnapshots) {
+        if (response && response.data && response.data.connectionHealthSnapshots) {
           return response.data.connectionHealthSnapshots;
         } else {
           return [] as ConnectionHealthSnapshotType[];

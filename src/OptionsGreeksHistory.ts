@@ -4079,7 +4079,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.optionsgreekshistories) {
+        if (response && response.data && response.data.optionsGreeksHistories) {
           return response.data.optionsGreeksHistories;
         } else {
           return [] as OptionsGreeksHistoryType[];

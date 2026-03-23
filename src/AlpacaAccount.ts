@@ -6490,7 +6490,7 @@ id
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.alpacaaccounts) {
+        if (response && response.data && response.data.alpacaAccounts) {
           return response.data.alpacaAccounts;
         } else {
           return [] as AlpacaAccountType[];
