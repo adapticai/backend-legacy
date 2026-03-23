@@ -202,15 +202,30 @@ async function enqueueOperation<T>(
         const result = await operation();
         resolve(result);
       } catch (error) {
-        if (
-          attempt < poolConfig.retryAttempts &&
-          ((error instanceof Error && error.message.includes('Accelerate')) ||
-            (error instanceof Error && error.message.includes('code: 1016')))
-        ) {
-          // Only retry specific database connection errors
-          const delay = poolConfig.retryDelay * Math.pow(2, attempt); // Exponential backoff
+        const isRetryable = error instanceof Error && (
+          error.message.includes('Accelerate') ||
+          error.message.includes('code: 1016') ||
+          error.message.includes('ECONNREFUSED') ||
+          error.message.includes('ECONNRESET') ||
+          error.message.includes('ETIMEDOUT') ||
+          error.message.includes('fetch failed') ||
+          error.message.includes('socket hang up') ||
+          error.message.includes('network') ||
+          error.message.includes("Can't reach database server") ||
+          error.message.includes('Connection pool timeout') ||
+          error.message.includes('P2024') ||
+          error.message.includes('terminated') ||
+          error.message.includes('status code 408') ||
+          error.message.includes('status code 502') ||
+          error.message.includes('status code 503') ||
+          error.message.includes('status code 504')
+        );
+
+        if (attempt < poolConfig.retryAttempts && isRetryable) {
+          const delay = poolConfig.retryDelay * Math.pow(2, attempt);
           logger.warn(
-            `Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`
+            `Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`,
+            { error: error instanceof Error ? error.message : String(error) }
           );
           setTimeout(() => {
             enqueueOperation(operation, attempt + 1)

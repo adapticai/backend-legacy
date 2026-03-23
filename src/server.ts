@@ -17,10 +17,11 @@ import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { jwtSecret } from './config/jwtConfig';
-import prisma from './prismaClient';
+import prisma, { startConnectionHealthMonitor, disconnectWithTimeout } from './prismaClient';
 import { createHealthRouter } from './health';
 import { exec } from 'child_process';
 import { logger } from './utils/logger';
+import { shutdownTracing } from './config/tracing';
 
 import { Request } from 'express';
 import { CorsOptions } from 'cors';
@@ -117,39 +118,14 @@ const startServer = async () => {
         // If we've hit 3 (for example) attempts
         if (dbUnreachableCount >= 3) {
           const now = Date.now();
-          // Optional: Check if we've tried restarting recently
           if (now - lastRestartAttempt > 5 * 60 * 1000) {
             lastRestartAttempt = now;
-            try {
-              void restartDatabase();
-              // Reset the counter after attempting a restart
-              dbUnreachableCount = 0;
-            } catch (restartError) {
+            dbUnreachableCount = 0;
+            restartDatabase().catch((restartError) => {
               logger.error('Error trying to restart DB', {
                 restartError: String(restartError),
               });
-              // If the restart fails, we can try again after a delay
-              const backoffTime = Math.min(
-                30000,
-                1000 * Math.pow(2, dbUnreachableCount - 3)
-              ); // Exponential backoff with a max of 30 seconds
-              logger.info('Waiting before next restart attempt', {
-                backoffSeconds: backoffTime / 1000,
-              });
-              setTimeout(() => {
-                restartDatabase()
-                  .then(() => {
-                    dbUnreachableCount = 0; // Reset the counter after a successful restart
-                  })
-                  .catch((restartError) => {
-                    logger.error('Error trying to restart DB', {
-                      restartError: String(restartError),
-                    });
-                    // We do not reset the counter here if the restart fails,
-                    // so it can try again next time.
-                  });
-              }, backoffTime);
-            }
+            });
           }
         }
       } else {
@@ -353,6 +329,9 @@ const startServer = async () => {
     wsServer
   );
 
+  // Start the periodic database connection health monitor
+  startConnectionHealthMonitor();
+
   const PORT = process.env.PORT || 4000;
   httpServer.listen(PORT, () => {
     logger.info('Server ready', {
@@ -363,6 +342,64 @@ const startServer = async () => {
       endpoint: `ws://localhost:${PORT}/subscriptions`,
     });
   });
+
+  // --- Graceful shutdown ---
+  // Sequence: stop accepting connections → drain in-flight requests →
+  // close WebSocket → disconnect DB → flush traces → exit
+  let isShuttingDown = false;
+  const SHUTDOWN_TIMEOUT_MS = 15000;
+
+  async function gracefulShutdown(signal: string): Promise<void> {
+    if (isShuttingDown) return;
+    isShuttingDown = true;
+
+    logger.info(`Received ${signal}, starting graceful shutdown`);
+
+    // Force exit if shutdown takes too long
+    const forceExitTimer = setTimeout(() => {
+      logger.error('Graceful shutdown timed out, forcing exit');
+      process.exit(1);
+    }, SHUTDOWN_TIMEOUT_MS);
+    forceExitTimer.unref();
+
+    try {
+      // 1. Stop accepting new HTTP connections
+      await new Promise<void>((resolve) => {
+        httpServer.close(() => {
+          logger.info('HTTP server closed');
+          resolve();
+        });
+      });
+
+      // 2. Close WebSocket server (rejects new WS connections)
+      await new Promise<void>((resolve) => {
+        wsServer.close(() => {
+          logger.info('WebSocket server closed');
+          resolve();
+        });
+      });
+
+      // 3. Apollo Server drain is handled by ApolloServerPluginDrainHttpServer
+
+      // 4. Stop health monitor and disconnect DB with timeout
+      await disconnectWithTimeout(5000);
+
+      // 5. Flush OpenTelemetry traces
+      await shutdownTracing();
+
+      logger.info('Graceful shutdown complete');
+    } catch (error) {
+      logger.error('Error during graceful shutdown', {
+        error: error instanceof Error ? error.message : String(error),
+      });
+    } finally {
+      clearTimeout(forceExitTimer);
+      process.exit(0);
+    }
+  }
+
+  process.on('SIGINT', () => { void gracefulShutdown('SIGINT'); });
+  process.on('SIGTERM', () => { void gracefulShutdown('SIGTERM'); });
 };
 
 startServer().catch((error) => {
@@ -385,30 +422,3 @@ process.on('uncaughtException', (error) => {
   });
 });
 
-// Only disconnect Prisma when the process is truly shutting down
-process.on('SIGINT', async () => {
-  logger.info('Gracefully shutting down and closing database connections');
-  try {
-    await global.prisma?.$disconnect();
-    logger.info('Database connections closed successfully');
-  } catch (e) {
-    logger.error('Error disconnecting from database', {
-      error: e instanceof Error ? e.message : String(e),
-    });
-  }
-  process.exit(0);
-});
-
-// Also handle SIGTERM for containerized environments
-process.on('SIGTERM', async () => {
-  logger.info('Received SIGTERM, gracefully shutting down');
-  try {
-    await global.prisma?.$disconnect();
-    logger.info('Database connections closed successfully');
-  } catch (e) {
-    logger.error('Error disconnecting from database', {
-      error: e instanceof Error ? e.message : String(e),
-    });
-  }
-  process.exit(0);
-});
