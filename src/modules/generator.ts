@@ -67,10 +67,19 @@ const constructVariablesObject = (
   let variablesObject = '';
 
   fields.forEach((field) => {
-    // Skip meta fields during create operations
+    // Skip auto-generated meta fields during create operations.
+    // Only skip 'id' if the field is nullable (auto-generated via @default).
+    // Models with non-nullable id (no @default) require the caller to provide it.
     if (
       ['create', 'createMany'].includes(operationType) &&
-      ['id', 'createdAt', 'updatedAt'].includes(field.name)
+      ['createdAt', 'updatedAt'].includes(field.name)
+    ) {
+      return;
+    }
+    if (
+      ['create', 'createMany'].includes(operationType) &&
+      field.name === 'id' &&
+      field.type.isNullable
     ) {
       return;
     }

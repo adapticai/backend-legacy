@@ -65,7 +65,8 @@ import { logger } from './utils/logger';
 
           const variables = {
             data: {
-                ticker: props.ticker !== undefined ? props.ticker : undefined,
+                id: props.id !== undefined ? props.id : undefined,
+  ticker: props.ticker !== undefined ? props.ticker : undefined,
   action: props.action !== undefined ? props.action : undefined,
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   accounts: props.accounts !== undefined ? props.accounts : undefined,
@@ -187,7 +188,8 @@ import { logger } from './utils/logger';
 
         const variables = {
           data: props.map(prop => ({
-      ticker: prop.ticker !== undefined ? prop.ticker : undefined,
+      id: prop.id !== undefined ? prop.id : undefined,
+  ticker: prop.ticker !== undefined ? prop.ticker : undefined,
   action: prop.action !== undefined ? prop.action : undefined,
   timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
   accounts: prop.accounts !== undefined ? prop.accounts : undefined,
@@ -452,7 +454,8 @@ import { logger } from './utils/logger';
             id: props.id !== undefined ? props.id : undefined,
       },
           create: {
-        ticker: props.ticker !== undefined ? props.ticker : undefined,
+        id: props.id !== undefined ? props.id : undefined,
+  ticker: props.ticker !== undefined ? props.ticker : undefined,
   action: props.action !== undefined ? props.action : undefined,
   timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
   accounts: props.accounts !== undefined ? props.accounts : undefined,
