@@ -112,6 +112,8 @@ import { logger } from './utils/logger';
   customTags: props.customTags !== undefined ? props.customTags : undefined,
   executionStatus: props.executionStatus !== undefined ? props.executionStatus : undefined,
   decisionType: props.decisionType !== undefined ? props.decisionType : undefined,
+  pnlPercentage: props.pnlPercentage !== undefined ? props.pnlPercentage : undefined,
+  dataQuality: props.dataQuality !== undefined ? props.dataQuality : undefined,
 
             },
           };
@@ -254,6 +256,8 @@ import { logger } from './utils/logger';
   customTags: prop.customTags !== undefined ? prop.customTags : undefined,
   executionStatus: prop.executionStatus !== undefined ? prop.executionStatus : undefined,
   decisionType: prop.decisionType !== undefined ? prop.decisionType : undefined,
+  pnlPercentage: prop.pnlPercentage !== undefined ? prop.pnlPercentage : undefined,
+  dataQuality: prop.dataQuality !== undefined ? prop.dataQuality : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -619,6 +623,8 @@ import { logger } from './utils/logger';
   customTags: props.customTags !== undefined ? props.customTags : undefined,
   executionStatus: props.executionStatus !== undefined ? props.executionStatus : undefined,
   decisionType: props.decisionType !== undefined ? props.decisionType : undefined,
+  pnlPercentage: props.pnlPercentage !== undefined ? props.pnlPercentage : undefined,
+  dataQuality: props.dataQuality !== undefined ? props.dataQuality : undefined,
       },
           update: {
       timestamp: props.timestamp !== undefined ? {

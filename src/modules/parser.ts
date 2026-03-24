@@ -150,6 +150,8 @@ export const GRAPHQL_SCALARS = new Set([
   'BigInt',
   'bigint',
   'Decimal',
+  'DecimalJSScalar',
+  'Prisma.Decimal',
   'DateTimeFilter',
   'IntFilter',
   'StringFilter',

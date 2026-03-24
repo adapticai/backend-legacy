@@ -246,7 +246,10 @@ import { logger } from './utils/logger';
         filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
         reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
         sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+        marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+        percentOfClass: item.percentOfClass !== undefined ? item.percentOfClass : undefined,
         changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
+        changePercent: item.changePercent !== undefined ? item.changePercent : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -267,6 +270,9 @@ import { logger } from './utils/logger';
       create: {
         signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
         signalType: item.signalType !== undefined ? item.signalType : undefined,
+        signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+        netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+        confidence: item.confidence !== undefined ? item.confidence : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -948,7 +954,10 @@ import { logger } from './utils/logger';
         filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
         reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
         sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+        marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+        percentOfClass: item.percentOfClass !== undefined ? item.percentOfClass : undefined,
         changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
+        changePercent: item.changePercent !== undefined ? item.changePercent : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -991,6 +1000,9 @@ import { logger } from './utils/logger';
       create: {
         signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
         signalType: item.signalType !== undefined ? item.signalType : undefined,
+        signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+        netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+        confidence: item.confidence !== undefined ? item.confidence : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -1251,7 +1263,10 @@ import { logger } from './utils/logger';
         filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
         reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
         sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+        marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+        percentOfClass: item.percentOfClass !== undefined ? item.percentOfClass : undefined,
         changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
+        changePercent: item.changePercent !== undefined ? item.changePercent : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -1272,6 +1287,9 @@ import { logger } from './utils/logger';
       create: {
         signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
         signalType: item.signalType !== undefined ? item.signalType : undefined,
+        signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+        netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+        confidence: item.confidence !== undefined ? item.confidence : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -1651,7 +1669,10 @@ import { logger } from './utils/logger';
         filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
         reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
         sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+        marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+        percentOfClass: item.percentOfClass !== undefined ? item.percentOfClass : undefined,
         changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
+        changePercent: item.changePercent !== undefined ? item.changePercent : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -1694,6 +1715,9 @@ import { logger } from './utils/logger';
       create: {
         signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
         signalType: item.signalType !== undefined ? item.signalType : undefined,
+        signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+        netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+        confidence: item.confidence !== undefined ? item.confidence : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -2207,7 +2231,10 @@ import { logger } from './utils/logger';
         filingDate: item.filingDate !== undefined ? item.filingDate : undefined,
         reportDate: item.reportDate !== undefined ? item.reportDate : undefined,
         sharesHeld: item.sharesHeld !== undefined ? item.sharesHeld : undefined,
+        marketValue: item.marketValue !== undefined ? item.marketValue : undefined,
+        percentOfClass: item.percentOfClass !== undefined ? item.percentOfClass : undefined,
         changeShares: item.changeShares !== undefined ? item.changeShares : undefined,
+        changePercent: item.changePercent !== undefined ? item.changePercent : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))
@@ -2250,6 +2277,9 @@ import { logger } from './utils/logger';
       create: {
         signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
         signalType: item.signalType !== undefined ? item.signalType : undefined,
+        signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+        netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+        confidence: item.confidence !== undefined ? item.confidence : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
     }))

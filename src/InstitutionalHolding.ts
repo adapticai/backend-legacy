@@ -135,7 +135,10 @@ import { logger } from './utils/logger';
   filingDate: props.filingDate !== undefined ? props.filingDate : undefined,
   reportDate: props.reportDate !== undefined ? props.reportDate : undefined,
   sharesHeld: props.sharesHeld !== undefined ? props.sharesHeld : undefined,
+  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
+  percentOfClass: props.percentOfClass !== undefined ? props.percentOfClass : undefined,
   changeShares: props.changeShares !== undefined ? props.changeShares : undefined,
+  changePercent: props.changePercent !== undefined ? props.changePercent : undefined,
   metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
     typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
@@ -281,6 +284,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -410,7 +416,10 @@ import { logger } from './utils/logger';
   filingDate: prop.filingDate !== undefined ? prop.filingDate : undefined,
   reportDate: prop.reportDate !== undefined ? prop.reportDate : undefined,
   sharesHeld: prop.sharesHeld !== undefined ? prop.sharesHeld : undefined,
+  marketValue: prop.marketValue !== undefined ? prop.marketValue : undefined,
+  percentOfClass: prop.percentOfClass !== undefined ? prop.percentOfClass : undefined,
   changeShares: prop.changeShares !== undefined ? prop.changeShares : undefined,
+  changePercent: prop.changePercent !== undefined ? prop.changePercent : undefined,
   metadata: prop.metadata !== undefined ? prop.metadata : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
@@ -956,6 +965,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1090,6 +1102,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1225,7 +1240,10 @@ import { logger } from './utils/logger';
   filingDate: props.filingDate !== undefined ? props.filingDate : undefined,
   reportDate: props.reportDate !== undefined ? props.reportDate : undefined,
   sharesHeld: props.sharesHeld !== undefined ? props.sharesHeld : undefined,
+  marketValue: props.marketValue !== undefined ? props.marketValue : undefined,
+  percentOfClass: props.percentOfClass !== undefined ? props.percentOfClass : undefined,
   changeShares: props.changeShares !== undefined ? props.changeShares : undefined,
+  changePercent: props.changePercent !== undefined ? props.changePercent : undefined,
   metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
     typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && Object.keys(props.asset)[0] === 'id'
@@ -1371,6 +1389,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1794,6 +1815,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -1928,6 +1952,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -2483,6 +2510,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
@@ -2617,6 +2647,9 @@ import { logger } from './utils/logger';
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
           signalType: item.signalType !== undefined ? item.signalType : undefined,
+          signalStrength: item.signalStrength !== undefined ? item.signalStrength : undefined,
+          netFlow: item.netFlow !== undefined ? item.netFlow : undefined,
+          confidence: item.confidence !== undefined ? item.confidence : undefined,
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
