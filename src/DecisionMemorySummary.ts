@@ -164,9 +164,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of DecisionMemorySummary objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: DecisionMemorySummaryType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: DecisionMemorySummaryType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -185,8 +186,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_DECISIONMEMORYSUMMARY = gql`
-          mutation createManyDecisionMemorySummary($data: [DecisionMemorySummaryCreateManyInput!]!) {
-            createManyDecisionMemorySummary(data: $data) {
+          mutation createManyDecisionMemorySummary($data: [DecisionMemorySummaryCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyDecisionMemorySummary(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -206,6 +207,7 @@ import { logger } from './utils/logger';
   relevanceScore: prop.relevanceScore !== undefined ? prop.relevanceScore : undefined,
   expiresAt: prop.expiresAt !== undefined ? prop.expiresAt : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -239,10 +241,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyDecisionMemorySummary", {
+          logger.warn("Duplicate key in createManyDecisionMemorySummary (expected during overlapping fetches)", {
             operation: 'createManyDecisionMemorySummary',
             model: 'DecisionMemorySummary',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

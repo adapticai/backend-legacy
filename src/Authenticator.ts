@@ -595,9 +595,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Authenticator objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: AuthenticatorType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AuthenticatorType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -616,8 +617,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_AUTHENTICATOR = gql`
-          mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!) {
-            createManyAuthenticator(data: $data) {
+          mutation createManyAuthenticator($data: [AuthenticatorCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyAuthenticator(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -629,6 +630,7 @@ import { logger } from './utils/logger';
   publicKey: prop.publicKey !== undefined ? prop.publicKey : undefined,
   counter: prop.counter !== undefined ? prop.counter : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -662,10 +664,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyAuthenticator", {
+          logger.warn("Duplicate key in createManyAuthenticator (expected during overlapping fetches)", {
             operation: 'createManyAuthenticator',
             model: 'Authenticator',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

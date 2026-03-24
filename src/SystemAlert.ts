@@ -188,9 +188,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of SystemAlert objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: SystemAlertType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: SystemAlertType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -209,8 +210,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_SYSTEMALERT = gql`
-          mutation createManySystemAlert($data: [SystemAlertCreateManyInput!]!) {
-            createManySystemAlert(data: $data) {
+          mutation createManySystemAlert($data: [SystemAlertCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManySystemAlert(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -238,6 +239,7 @@ import { logger } from './utils/logger';
   escalationLevel: prop.escalationLevel !== undefined ? prop.escalationLevel : undefined,
   notificationChannels: prop.notificationChannels !== undefined ? prop.notificationChannels : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -271,10 +273,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManySystemAlert", {
+          logger.warn("Duplicate key in createManySystemAlert (expected during overlapping fetches)", {
             operation: 'createManySystemAlert',
             model: 'SystemAlert',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

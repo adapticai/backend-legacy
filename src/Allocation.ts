@@ -629,9 +629,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Allocation objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: AllocationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AllocationType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -650,8 +651,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_ALLOCATION = gql`
-          mutation createManyAllocation($data: [AllocationCreateManyInput!]!) {
-            createManyAllocation(data: $data) {
+          mutation createManyAllocation($data: [AllocationCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyAllocation(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -668,6 +669,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
   options: prop.options !== undefined ? prop.options : undefined,
   alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -701,10 +703,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyAllocation", {
+          logger.warn("Duplicate key in createManyAllocation (expected during overlapping fetches)", {
             operation: 'createManyAllocation',
             model: 'Allocation',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

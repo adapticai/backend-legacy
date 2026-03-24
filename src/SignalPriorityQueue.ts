@@ -179,9 +179,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of SignalPriorityQueue objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: SignalPriorityQueueType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: SignalPriorityQueueType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -200,8 +201,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_SIGNALPRIORITYQUEUE = gql`
-          mutation createManySignalPriorityQueue($data: [SignalPriorityQueueCreateManyInput!]!) {
-            createManySignalPriorityQueue(data: $data) {
+          mutation createManySignalPriorityQueue($data: [SignalPriorityQueueCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManySignalPriorityQueue(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -223,6 +224,7 @@ import { logger } from './utils/logger';
   timeInQueueMs: prop.timeInQueueMs !== undefined ? prop.timeInQueueMs : undefined,
   signalData: prop.signalData !== undefined ? prop.signalData : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -256,10 +258,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManySignalPriorityQueue", {
+          logger.warn("Duplicate key in createManySignalPriorityQueue (expected during overlapping fetches)", {
             operation: 'createManySignalPriorityQueue',
             model: 'SignalPriorityQueue',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

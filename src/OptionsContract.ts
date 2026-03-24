@@ -493,9 +493,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of OptionsContract objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: OptionsContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: OptionsContractType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -514,8 +515,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_OPTIONSCONTRACT = gql`
-          mutation createManyOptionsContract($data: [OptionsContractCreateManyInput!]!) {
-            createManyOptionsContract(data: $data) {
+          mutation createManyOptionsContract($data: [OptionsContractCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyOptionsContract(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -535,6 +536,7 @@ import { logger } from './utils/logger';
   metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   dataTimestamp: prop.dataTimestamp !== undefined ? prop.dataTimestamp : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -568,10 +570,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyOptionsContract", {
+          logger.warn("Duplicate key in createManyOptionsContract (expected during overlapping fetches)", {
             operation: 'createManyOptionsContract',
             model: 'OptionsContract',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

@@ -358,9 +358,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Asset objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: AssetType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AssetType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -379,8 +380,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_ASSET = gql`
-          mutation createManyAsset($data: [AssetCreateManyInput!]!) {
-            createManyAsset(data: $data) {
+          mutation createManyAsset($data: [AssetCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyAsset(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -443,6 +444,7 @@ import { logger } from './utils/logger';
   askPrice: prop.askPrice !== undefined ? prop.askPrice : undefined,
   bidPrice: prop.bidPrice !== undefined ? prop.bidPrice : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -476,10 +478,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyAsset", {
+          logger.warn("Duplicate key in createManyAsset (expected during overlapping fetches)", {
             operation: 'createManyAsset',
             model: 'Asset',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

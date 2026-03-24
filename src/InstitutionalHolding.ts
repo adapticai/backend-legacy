@@ -375,9 +375,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of InstitutionalHolding objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: InstitutionalHoldingType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: InstitutionalHoldingType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -396,8 +397,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_INSTITUTIONALHOLDING = gql`
-          mutation createManyInstitutionalHolding($data: [InstitutionalHoldingCreateManyInput!]!) {
-            createManyInstitutionalHolding(data: $data) {
+          mutation createManyInstitutionalHolding($data: [InstitutionalHoldingCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyInstitutionalHolding(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -412,6 +413,7 @@ import { logger } from './utils/logger';
   changeShares: prop.changeShares !== undefined ? prop.changeShares : undefined,
   metadata: prop.metadata !== undefined ? prop.metadata : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -445,10 +447,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyInstitutionalHolding", {
+          logger.warn("Duplicate key in createManyInstitutionalHolding (expected during overlapping fetches)", {
             operation: 'createManyInstitutionalHolding',
             model: 'InstitutionalHolding',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

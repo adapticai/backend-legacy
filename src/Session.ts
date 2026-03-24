@@ -594,9 +594,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Session objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: SessionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: SessionType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -615,8 +616,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_SESSION = gql`
-          mutation createManySession($data: [SessionCreateManyInput!]!) {
-            createManySession(data: $data) {
+          mutation createManySession($data: [SessionCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManySession(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -627,6 +628,7 @@ import { logger } from './utils/logger';
   userId: prop.userId !== undefined ? prop.userId : undefined,
   expires: prop.expires !== undefined ? prop.expires : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -660,10 +662,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManySession", {
+          logger.warn("Duplicate key in createManySession (expected during overlapping fetches)", {
             operation: 'createManySession',
             model: 'Session',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

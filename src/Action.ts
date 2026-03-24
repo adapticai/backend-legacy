@@ -211,9 +211,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of Action objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: ActionType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -232,8 +233,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_ACTION = gql`
-          mutation createManyAction($data: [ActionCreateManyInput!]!) {
-            createManyAction(data: $data) {
+          mutation createManyAction($data: [ActionCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyAction(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -249,6 +250,7 @@ import { logger } from './utils/logger';
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -282,10 +284,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyAction", {
+          logger.warn("Duplicate key in createManyAction (expected during overlapping fetches)", {
             operation: 'createManyAction',
             model: 'Action',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

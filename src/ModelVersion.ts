@@ -2087,9 +2087,10 @@ id
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of ModelVersion objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: ModelVersionType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: ModelVersionType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -2108,8 +2109,8 @@ id
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_MODELVERSION = gql`
-          mutation createManyModelVersion($data: [ModelVersionCreateManyInput!]!) {
-            createManyModelVersion(data: $data) {
+          mutation createManyModelVersion($data: [ModelVersionCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyModelVersion(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -2151,6 +2152,7 @@ id
   deployedAt: prop.deployedAt !== undefined ? prop.deployedAt : undefined,
   deprecatedAt: prop.deprecatedAt !== undefined ? prop.deprecatedAt : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -2184,10 +2186,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyModelVersion", {
+          logger.warn("Duplicate key in createManyModelVersion (expected during overlapping fetches)", {
             operation: 'createManyModelVersion',
             model: 'ModelVersion',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

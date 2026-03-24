@@ -156,9 +156,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of EconomicEvent objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: EconomicEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: EconomicEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -177,8 +178,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_ECONOMICEVENT = gql`
-          mutation createManyEconomicEvent($data: [EconomicEventCreateManyInput!]!) {
-            createManyEconomicEvent(data: $data) {
+          mutation createManyEconomicEvent($data: [EconomicEventCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyEconomicEvent(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -190,6 +191,7 @@ import { logger } from './utils/logger';
   date: prop.date !== undefined ? prop.date : undefined,
   importance: prop.importance !== undefined ? prop.importance : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -223,10 +225,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyEconomicEvent", {
+          logger.warn("Duplicate key in createManyEconomicEvent (expected during overlapping fetches)", {
             operation: 'createManyEconomicEvent',
             model: 'EconomicEvent',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

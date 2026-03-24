@@ -949,9 +949,10 @@ ${allocationValidationImport}  `;
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of ${capitalModelName} objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: ${capitalModelName}Type[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -970,8 +971,8 @@ ${allocationValidationImport}  `;
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_${capitalModelName.toUpperCase()} = gql\`
-          mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!) {
-            createMany${capitalModelName}(data: $data) {
+          mutation createMany${capitalModelName}($data: [${capitalModelName}CreateManyInput!]!, $skipDuplicates: Boolean) {
+            createMany${capitalModelName}(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }\`;
@@ -986,6 +987,7 @@ ${allocationValidationImport}  `;
       modelsPath,
       'createMany'
     )}      })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1019,10 +1021,9 @@ ${allocationValidationImport}  `;
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createMany${capitalModelName}", {
+          logger.warn("Duplicate key in createMany${capitalModelName} (expected during overlapping fetches)", {
             operation: 'createMany${capitalModelName}',
             model: '${capitalModelName}',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

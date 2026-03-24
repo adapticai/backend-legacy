@@ -459,9 +459,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of InviteToken objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: InviteTokenType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: InviteTokenType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -480,8 +481,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_INVITETOKEN = gql`
-          mutation createManyInviteToken($data: [InviteTokenCreateManyInput!]!) {
-            createManyInviteToken(data: $data) {
+          mutation createManyInviteToken($data: [InviteTokenCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyInviteToken(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -495,6 +496,7 @@ import { logger } from './utils/logger';
   usedAt: prop.usedAt !== undefined ? prop.usedAt : undefined,
   expiresAt: prop.expiresAt !== undefined ? prop.expiresAt : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -528,10 +530,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyInviteToken", {
+          logger.warn("Duplicate key in createManyInviteToken (expected during overlapping fetches)", {
             operation: 'createManyInviteToken',
             model: 'InviteToken',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

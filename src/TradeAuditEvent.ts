@@ -191,9 +191,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of TradeAuditEvent objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: TradeAuditEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: TradeAuditEventType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -212,8 +213,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_TRADEAUDITEVENT = gql`
-          mutation createManyTradeAuditEvent($data: [TradeAuditEventCreateManyInput!]!) {
-            createManyTradeAuditEvent(data: $data) {
+          mutation createManyTradeAuditEvent($data: [TradeAuditEventCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyTradeAuditEvent(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -243,6 +244,7 @@ import { logger } from './utils/logger';
   passed: prop.passed !== undefined ? prop.passed : undefined,
   retentionDate: prop.retentionDate !== undefined ? prop.retentionDate : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -276,10 +278,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyTradeAuditEvent", {
+          logger.warn("Duplicate key in createManyTradeAuditEvent (expected during overlapping fetches)", {
             operation: 'createManyTradeAuditEvent',
             model: 'TradeAuditEvent',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

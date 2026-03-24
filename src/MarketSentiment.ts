@@ -154,9 +154,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of MarketSentiment objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: MarketSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: MarketSentimentType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -175,8 +176,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_MARKETSENTIMENT = gql`
-          mutation createManyMarketSentiment($data: [MarketSentimentCreateManyInput!]!) {
-            createManyMarketSentiment(data: $data) {
+          mutation createManyMarketSentiment($data: [MarketSentimentCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyMarketSentiment(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -187,6 +188,7 @@ import { logger } from './utils/logger';
   description: prop.description !== undefined ? prop.description : undefined,
   longDescription: prop.longDescription !== undefined ? prop.longDescription : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -220,10 +222,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyMarketSentiment", {
+          logger.warn("Duplicate key in createManyMarketSentiment (expected during overlapping fetches)", {
             operation: 'createManyMarketSentiment',
             model: 'MarketSentiment',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

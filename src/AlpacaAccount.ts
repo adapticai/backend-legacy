@@ -700,9 +700,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of AlpacaAccount objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: AlpacaAccountType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -721,8 +722,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_ALPACAACCOUNT = gql`
-          mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!) {
-            createManyAlpacaAccount(data: $data) {
+          mutation createManyAlpacaAccount($data: [AlpacaAccountCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyAlpacaAccount(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -757,6 +758,7 @@ import { logger } from './utils/logger';
   userId: prop.userId !== undefined ? prop.userId : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -790,10 +792,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyAlpacaAccount", {
+          logger.warn("Duplicate key in createManyAlpacaAccount (expected during overlapping fetches)", {
             operation: 'createManyAlpacaAccount',
             model: 'AlpacaAccount',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

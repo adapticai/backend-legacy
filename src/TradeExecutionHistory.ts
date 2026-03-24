@@ -157,9 +157,10 @@ import { logger } from './utils/logger';
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of TradeExecutionHistory objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: TradeExecutionHistoryType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: TradeExecutionHistoryType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -178,8 +179,8 @@ import { logger } from './utils/logger';
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_TRADEEXECUTIONHISTORY = gql`
-          mutation createManyTradeExecutionHistory($data: [TradeExecutionHistoryCreateManyInput!]!) {
-            createManyTradeExecutionHistory(data: $data) {
+          mutation createManyTradeExecutionHistory($data: [TradeExecutionHistoryCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyTradeExecutionHistory(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -192,6 +193,7 @@ import { logger } from './utils/logger';
   accounts: prop.accounts !== undefined ? prop.accounts : undefined,
   expiresAt: prop.expiresAt !== undefined ? prop.expiresAt : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -225,10 +227,9 @@ import { logger } from './utils/logger';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyTradeExecutionHistory", {
+          logger.warn("Duplicate key in createManyTradeExecutionHistory (expected during overlapping fetches)", {
             operation: 'createManyTradeExecutionHistory',
             model: 'TradeExecutionHistory',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,

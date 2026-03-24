@@ -1047,9 +1047,10 @@ id
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Array of FeatureImportanceAnalysis objects for the new records.
    * @param globalClient - Apollo Client instance.
+   * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: FeatureImportanceAnalysisType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async createMany(props: FeatureImportanceAnalysisType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1068,8 +1069,8 @@ id
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_FEATUREIMPORTANCEANALYSIS = gql`
-          mutation createManyFeatureImportanceAnalysis($data: [FeatureImportanceAnalysisCreateManyInput!]!) {
-            createManyFeatureImportanceAnalysis(data: $data) {
+          mutation createManyFeatureImportanceAnalysis($data: [FeatureImportanceAnalysisCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyFeatureImportanceAnalysis(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
@@ -1092,6 +1093,7 @@ id
   insightsStabilityScore: prop.insightsStabilityScore !== undefined ? prop.insightsStabilityScore : undefined,
   insightsRecommendations: prop.insightsRecommendations !== undefined ? prop.insightsRecommendations : undefined,
       })),
+          ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -1125,10 +1127,9 @@ id
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in createManyFeatureImportanceAnalysis", {
+          logger.warn("Duplicate key in createManyFeatureImportanceAnalysis (expected during overlapping fetches)", {
             operation: 'createManyFeatureImportanceAnalysis',
             model: 'FeatureImportanceAnalysis',
-            error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,
