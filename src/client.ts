@@ -57,7 +57,7 @@ export type TokenProvider = () => string | Promise<string>;
 let apolloModules: ApolloModules | undefined;
 let apolloClient: ApolloClientType<NormalizedCacheObject> | undefined;
 let pendingOperations = 0;
-let operationQueue: Array<() => Promise<void>> = [];
+const operationQueue: Array<() => Promise<void>> = [];
 let poolConfig: ConnectionPoolConfig = DEFAULT_POOL_CONFIG;
 let customTokenProvider: TokenProvider | undefined;
 
@@ -298,7 +298,7 @@ export async function getApolloClient(): Promise<
     // Create the error handling link with retry logic.
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
-        graphQLErrors.forEach(({ message, locations, path }: any) => {
+        graphQLErrors.forEach(({ message, locations, path }) => {
           logger.error(
             `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
           );

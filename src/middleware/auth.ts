@@ -1,10 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { jwtSecret } from '../config/jwtConfig';
 import { logger } from '../utils/logger';
 
+/** Represents the decoded user payload attached to authenticated requests. */
+interface AuthUser extends JwtPayload {
+  provider?: string;
+  token?: string;
+  name?: string;
+  role?: string;
+}
+
 export interface AuthenticatedRequest extends Request {
-  user?: any;
+  user?: AuthUser | string;
 }
 
 export const authMiddleware = (
