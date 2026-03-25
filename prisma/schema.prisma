@@ -4848,3 +4848,46 @@ model EquityBar {
   @@index([symbol, timespan, timeStamp])
   @@index([timeStamp])
 }
+
+model TradeOutcome {
+  id                       String   @id @default(cuid())
+  tradeId                  String?
+  symbol                   String
+  assetClass               String
+  accountId                String
+  entryPrice               Float
+  exitPrice                Float
+  entryTimestamp           DateTime
+  exitTimestamp            DateTime
+  holdDurationMinutes      Float
+  exitReason               String
+  grossReturnPct           Float
+  netReturnPct             Float
+  maxAdverseExcursionPct   Float
+  maxFavorableExcursionPct Float
+  signalSource             String
+  transformerConfidence    Float?
+  llmConfidence            Float?
+  ensembleConfidence       Float
+  ensembleWeight           Float
+  regimeAtEntry            String
+  featureSnapshot          Json?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+model MLModelVersion {
+  id               String    @id @default(cuid())
+  assetClass       String
+  slot             String
+  rankIC           Float
+  trainedAt        DateTime
+  promotedAt       DateTime?
+  checkpointPath   String
+  featureCount     Int
+  trainingSymbols  String[]
+  trainingBarCount Int
+  configSnapshot   Json?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
