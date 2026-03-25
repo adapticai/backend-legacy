@@ -23,7 +23,7 @@
     "start": "npm run migrate && node dist/server.js",
     "generate": "SKIP_PRISMA_VERSION_CHECK=true npx prisma generate",
     "migrate:dev": "SKIP_PRISMA_VERSION_CHECK=true npx prisma migrate dev && npm run migrate",
-    "migrate": "npx prisma migrate deploy",
+    "migrate": "npx prisma migrate resolve --rolled-back 20260326000000_add_reunderwriting_fields 2>/dev/null || true; npx prisma migrate deploy",
     "update-backend-functions": "node update-backend-functions.mjs",
     "generate:functions": "ts-node src/modules/index.ts",
     "generate:strings": "ts-node src/modules/generateStrings.ts",
