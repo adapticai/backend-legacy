@@ -36,6 +36,8 @@ import { logger } from './utils/logger';
     updatedAt
     deletedAt
     alpacaOrderId
+    supersededActionId
+    triggerSource
   }
   entryPrice
   exitPrice
@@ -52,6 +54,9 @@ import { logger } from './utils/logger';
   marketVolatility
   sessionHorizonMinutes
   thresholdsJson
+  thesisVersion
+  lastReunderwrittenAt
+  supersededById
 
   `;
 
@@ -124,6 +129,9 @@ import { logger } from './utils/logger';
   marketVolatility: props.marketVolatility !== undefined ? props.marketVolatility : undefined,
   sessionHorizonMinutes: props.sessionHorizonMinutes !== undefined ? props.sessionHorizonMinutes : undefined,
   thresholdsJson: props.thresholdsJson !== undefined ? props.thresholdsJson : undefined,
+  thesisVersion: props.thesisVersion !== undefined ? props.thesisVersion : undefined,
+  lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
+  supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item: any) => ({
@@ -152,6 +160,8 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? item.status : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
+        triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
       },
     }))
   } : undefined,
@@ -297,6 +307,9 @@ import { logger } from './utils/logger';
   marketVolatility: prop.marketVolatility !== undefined ? prop.marketVolatility : undefined,
   sessionHorizonMinutes: prop.sessionHorizonMinutes !== undefined ? prop.sessionHorizonMinutes : undefined,
   thresholdsJson: prop.thresholdsJson !== undefined ? prop.thresholdsJson : undefined,
+  thesisVersion: prop.thesisVersion !== undefined ? prop.thesisVersion : undefined,
+  lastReunderwrittenAt: prop.lastReunderwrittenAt !== undefined ? prop.lastReunderwrittenAt : undefined,
+  supersededById: prop.supersededById !== undefined ? prop.supersededById : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -508,6 +521,15 @@ import { logger } from './utils/logger';
   thresholdsJson: props.thresholdsJson !== undefined ? {
             set: props.thresholdsJson 
            } : undefined,
+  thesisVersion: props.thesisVersion !== undefined ? {
+            set: props.thesisVersion 
+           } : undefined,
+  lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? {
+            set: props.lastReunderwrittenAt 
+           } : undefined,
+  supersededById: props.supersededById !== undefined ? {
+            set: props.supersededById 
+           } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: props.actions.map((item: any) => ({
@@ -525,6 +547,9 @@ import { logger } from './utils/logger';
           } : undefined,
         status: item.status !== undefined ? {
             equals: item.status
+          } : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? {
+            equals: item.supersededActionId
           } : undefined,
       },
       update: {
@@ -552,6 +577,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? {
             set: item.alpacaOrderId
           } : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? {
+            set: item.supersededActionId
+          } : undefined,
+        triggerSource: item.triggerSource !== undefined ? {
+            set: item.triggerSource
+          } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -561,6 +592,8 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? item.status : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
+        triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
       },
     }))
   } : undefined,
@@ -719,6 +752,9 @@ import { logger } from './utils/logger';
   marketVolatility: props.marketVolatility !== undefined ? props.marketVolatility : undefined,
   sessionHorizonMinutes: props.sessionHorizonMinutes !== undefined ? props.sessionHorizonMinutes : undefined,
   thresholdsJson: props.thresholdsJson !== undefined ? props.thresholdsJson : undefined,
+  thesisVersion: props.thesisVersion !== undefined ? props.thesisVersion : undefined,
+  lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
+  supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item: any) => ({
@@ -747,6 +783,8 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? item.status : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
+        triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
       },
     }))
   } : undefined,
@@ -827,6 +865,15 @@ import { logger } from './utils/logger';
   thresholdsJson: props.thresholdsJson !== undefined ? {
             set: props.thresholdsJson 
            } : undefined,
+  thesisVersion: props.thesisVersion !== undefined ? {
+            set: props.thesisVersion 
+           } : undefined,
+  lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? {
+            set: props.lastReunderwrittenAt 
+           } : undefined,
+  supersededById: props.supersededById !== undefined ? {
+            set: props.supersededById 
+           } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: props.actions.map((item: any) => ({
@@ -844,6 +891,9 @@ import { logger } from './utils/logger';
           } : undefined,
         status: item.status !== undefined ? {
             equals: item.status
+          } : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? {
+            equals: item.supersededActionId
           } : undefined,
       },
       update: {
@@ -871,6 +921,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? {
             set: item.alpacaOrderId
           } : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? {
+            set: item.supersededActionId
+          } : undefined,
+        triggerSource: item.triggerSource !== undefined ? {
+            set: item.triggerSource
+          } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -880,6 +936,8 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? item.status : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
+        triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
       },
     }))
   } : undefined,
@@ -1098,6 +1156,15 @@ import { logger } from './utils/logger';
   thresholdsJson: prop.thresholdsJson !== undefined ? {
             set: prop.thresholdsJson 
            } : undefined,
+  thesisVersion: prop.thesisVersion !== undefined ? {
+            set: prop.thesisVersion 
+           } : undefined,
+  lastReunderwrittenAt: prop.lastReunderwrittenAt !== undefined ? {
+            set: prop.lastReunderwrittenAt 
+           } : undefined,
+  supersededById: prop.supersededById !== undefined ? {
+            set: prop.supersededById 
+           } : undefined,
   actions: prop.actions ? 
   Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: prop.actions.map((item: any) => ({
@@ -1115,6 +1182,9 @@ import { logger } from './utils/logger';
           } : undefined,
         status: item.status !== undefined ? {
             equals: item.status
+          } : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? {
+            equals: item.supersededActionId
           } : undefined,
       },
       update: {
@@ -1142,6 +1212,12 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? {
             set: item.alpacaOrderId
           } : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? {
+            set: item.supersededActionId
+          } : undefined,
+        triggerSource: item.triggerSource !== undefined ? {
+            set: item.triggerSource
+          } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -1151,6 +1227,8 @@ import { logger } from './utils/logger';
         status: item.status !== undefined ? item.status : undefined,
         deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
+        supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
+        triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
       },
     }))
   } : undefined,

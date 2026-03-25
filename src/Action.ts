@@ -22,6 +22,8 @@ import { logger } from './utils/logger';
   updatedAt
   deletedAt
   alpacaOrderId
+  supersededActionId
+  triggerSource
 
   `;
 
@@ -76,6 +78,8 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? props.status : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
+  supersededActionId: props.supersededActionId !== undefined ? props.supersededActionId : undefined,
+  triggerSource: props.triggerSource !== undefined ? props.triggerSource : undefined,
   trade: props.trade ? 
     typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && Object.keys(props.trade)[0] === 'id'
     ? { connect: {
@@ -121,6 +125,9 @@ import { logger } from './utils/logger';
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
         sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
+        thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
+        lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
+        supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
       },
     }
   } : undefined,
@@ -249,6 +256,8 @@ import { logger } from './utils/logger';
   status: prop.status !== undefined ? prop.status : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
+  supersededActionId: prop.supersededActionId !== undefined ? prop.supersededActionId : undefined,
+  triggerSource: prop.triggerSource !== undefined ? prop.triggerSource : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -407,6 +416,12 @@ import { logger } from './utils/logger';
   alpacaOrderId: props.alpacaOrderId !== undefined ? {
             set: props.alpacaOrderId 
            } : undefined,
+  supersededActionId: props.supersededActionId !== undefined ? {
+            set: props.supersededActionId 
+           } : undefined,
+  triggerSource: props.triggerSource !== undefined ? {
+            set: props.triggerSource 
+           } : undefined,
   trade: props.trade ? 
   typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && (Object.keys(props.trade)[0] === 'id' || Object.keys(props.trade)[0] === 'symbol')
 ? {
@@ -426,6 +441,9 @@ import { logger } from './utils/logger';
           } : undefined,
         symbol: props.trade.symbol !== undefined ? {
             equals: props.trade.symbol
+          } : undefined,
+        supersededById: props.trade.supersededById !== undefined ? {
+            equals: props.trade.supersededById
           } : undefined,
       },
       update: {
@@ -507,6 +525,15 @@ import { logger } from './utils/logger';
         thresholdsJson: props.trade.thresholdsJson !== undefined ? {
             set: props.trade.thresholdsJson
           } : undefined,
+        thesisVersion: props.trade.thesisVersion !== undefined ? {
+            set: props.trade.thesisVersion
+          } : undefined,
+        lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? {
+            set: props.trade.lastReunderwrittenAt
+          } : undefined,
+        supersededById: props.trade.supersededById !== undefined ? {
+            set: props.trade.supersededById
+          } : undefined,
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
@@ -534,6 +561,9 @@ import { logger } from './utils/logger';
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
         sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
+        thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
+        lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
+        supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
       },
     }
   } : undefined,
@@ -675,6 +705,8 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? props.status : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
+  supersededActionId: props.supersededActionId !== undefined ? props.supersededActionId : undefined,
+  triggerSource: props.triggerSource !== undefined ? props.triggerSource : undefined,
   trade: props.trade ? 
     typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && Object.keys(props.trade)[0] === 'id'
     ? { connect: {
@@ -720,6 +752,9 @@ import { logger } from './utils/logger';
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
         sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
+        thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
+        lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
+        supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
       },
     }
   } : undefined,
@@ -746,6 +781,12 @@ import { logger } from './utils/logger';
   alpacaOrderId: props.alpacaOrderId !== undefined ? {
             set: props.alpacaOrderId 
            } : undefined,
+  supersededActionId: props.supersededActionId !== undefined ? {
+            set: props.supersededActionId 
+           } : undefined,
+  triggerSource: props.triggerSource !== undefined ? {
+            set: props.triggerSource 
+           } : undefined,
   trade: props.trade ? 
   typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && (Object.keys(props.trade)[0] === 'id' || Object.keys(props.trade)[0] === 'symbol')
 ? {
@@ -765,6 +806,9 @@ import { logger } from './utils/logger';
           } : undefined,
         symbol: props.trade.symbol !== undefined ? {
             equals: props.trade.symbol
+          } : undefined,
+        supersededById: props.trade.supersededById !== undefined ? {
+            equals: props.trade.supersededById
           } : undefined,
       },
       update: {
@@ -846,6 +890,15 @@ import { logger } from './utils/logger';
         thresholdsJson: props.trade.thresholdsJson !== undefined ? {
             set: props.trade.thresholdsJson
           } : undefined,
+        thesisVersion: props.trade.thesisVersion !== undefined ? {
+            set: props.trade.thesisVersion
+          } : undefined,
+        lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? {
+            set: props.trade.lastReunderwrittenAt
+          } : undefined,
+        supersededById: props.trade.supersededById !== undefined ? {
+            set: props.trade.supersededById
+          } : undefined,
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
@@ -873,6 +926,9 @@ import { logger } from './utils/logger';
         marketVolatility: props.trade.marketVolatility !== undefined ? props.trade.marketVolatility : undefined,
         sessionHorizonMinutes: props.trade.sessionHorizonMinutes !== undefined ? props.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: props.trade.thresholdsJson !== undefined ? props.trade.thresholdsJson : undefined,
+        thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
+        lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
+        supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
       },
     }
   } : undefined,
@@ -1038,6 +1094,12 @@ import { logger } from './utils/logger';
   alpacaOrderId: prop.alpacaOrderId !== undefined ? {
             set: prop.alpacaOrderId 
            } : undefined,
+  supersededActionId: prop.supersededActionId !== undefined ? {
+            set: prop.supersededActionId 
+           } : undefined,
+  triggerSource: prop.triggerSource !== undefined ? {
+            set: prop.triggerSource 
+           } : undefined,
   trade: prop.trade ? 
   typeof prop.trade === 'object' && Object.keys(prop.trade).length === 1 && (Object.keys(prop.trade)[0] === 'id' || Object.keys(prop.trade)[0] === 'symbol')
 ? {
@@ -1057,6 +1119,9 @@ import { logger } from './utils/logger';
           } : undefined,
         symbol: prop.trade.symbol !== undefined ? {
             equals: prop.trade.symbol
+          } : undefined,
+        supersededById: prop.trade.supersededById !== undefined ? {
+            equals: prop.trade.supersededById
           } : undefined,
       },
       update: {
@@ -1138,6 +1203,15 @@ import { logger } from './utils/logger';
         thresholdsJson: prop.trade.thresholdsJson !== undefined ? {
             set: prop.trade.thresholdsJson
           } : undefined,
+        thesisVersion: prop.trade.thesisVersion !== undefined ? {
+            set: prop.trade.thesisVersion
+          } : undefined,
+        lastReunderwrittenAt: prop.trade.lastReunderwrittenAt !== undefined ? {
+            set: prop.trade.lastReunderwrittenAt
+          } : undefined,
+        supersededById: prop.trade.supersededById !== undefined ? {
+            set: prop.trade.supersededById
+          } : undefined,
       },
       create: {
         alpacaAccountId: prop.trade.alpacaAccountId !== undefined ? prop.trade.alpacaAccountId : undefined,
@@ -1165,6 +1239,9 @@ import { logger } from './utils/logger';
         marketVolatility: prop.trade.marketVolatility !== undefined ? prop.trade.marketVolatility : undefined,
         sessionHorizonMinutes: prop.trade.sessionHorizonMinutes !== undefined ? prop.trade.sessionHorizonMinutes : undefined,
         thresholdsJson: prop.trade.thresholdsJson !== undefined ? prop.trade.thresholdsJson : undefined,
+        thesisVersion: prop.trade.thesisVersion !== undefined ? prop.trade.thesisVersion : undefined,
+        lastReunderwrittenAt: prop.trade.lastReunderwrittenAt !== undefined ? prop.trade.lastReunderwrittenAt : undefined,
+        supersededById: prop.trade.supersededById !== undefined ? prop.trade.supersededById : undefined,
       },
     }
   } : undefined,

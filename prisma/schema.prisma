@@ -351,6 +351,9 @@ enum TradeStatus {
 
   /// The trade has been canceled.
   CANCELED
+
+  /// The trade has been superseded by a newer trade via re-underwriting.
+  SUPERSEDED
 }
 
 // Categorizes the types of alerts that can be generated.
@@ -1723,6 +1726,15 @@ model Trade {
   /// Thresholds used for this trade as JSON. TYPESTRING.SKIP=true
   thresholdsJson String? @map("thresholds")
 
+  /// Version number of the trade thesis, incremented on each re-underwriting.
+  thesisVersion Int @default(1)
+
+  /// Timestamp of the last re-underwriting evaluation for this trade. TYPESTRING.SKIP=true
+  lastReunderwrittenAt DateTime?
+
+  /// If this trade was superseded, references the replacement trade's ID. TYPESTRING.SKIP=true
+  supersededById String? @db.Uuid
+
   @@index([alpacaAccountId])
   @@index([alpacaAccountId, status])
   @@index([symbol])
@@ -1766,6 +1778,12 @@ model Action {
 
   /// alpacaOrderId for the Alpaca order associated with this action. TYPESTRING.SKIP=true
   alpacaOrderId String? @unique @db.Uuid
+
+  /// If this action superseded a previous action, references its ID. TYPESTRING.SKIP=true
+  supersededActionId String? @db.Uuid
+
+  /// What triggered this action: 'original_signal', 'reunderwriting', or 'reversal'. TYPESTRING.SKIP=true
+  triggerSource String?
 
   @@index([tradeId])
   @@index([tradeId, status])
