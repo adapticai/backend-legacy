@@ -3167,6 +3167,15 @@ model OptionsPosition {
   /// Additional metadata as JSON
   metadata Json?
 
+  /// Current lifecycle state machine state (e.g., MONITORING, EXIT_TRIGGERED, CLOSING)
+  lifecycleState String?
+
+  /// Per-position exit thresholds (defaults + LLM overrides) stored as JSON
+  exitThresholds Json?
+
+  /// Links rolled positions for P&L continuity (references another OptionsPosition id)
+  linkedRollId String? @db.Uuid
+
   /// Timestamp when the position record was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -3176,13 +3185,48 @@ model OptionsPosition {
   /// List of trade executions for this position. TYPESTRING.SKIP=true GQL.EXCLUDE=['position','contract']
   executions OptionsTradeExecution[]
 
+  /// Lifecycle state transition events for audit trail. TYPESTRING.SKIP=true GQL.EXCLUDE=['position']
+  lifecycleEvents OptionsPositionEvent[]
+
   /// Indexes for performance optimization
   @@index([alpacaAccountId, status])
   @@index([contractId])
   @@index([status])
   @@index([entryTime])
   @@index([tradeId])
+  @@index([lifecycleState])
   @@map("options_positions")
+}
+
+// Tracks every lifecycle state machine transition for audit and observability
+model OptionsPositionEvent {
+  /// Unique identifier for the event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Reference to the options position this event belongs to
+  positionId String @db.Uuid
+
+  /// Relation to OptionsPosition. TYPESTRING.SKIP=true GQL.EXCLUDE=['lifecycleEvents','executions','contract']
+  position OptionsPosition @relation(fields: [positionId], references: [id], onDelete: Cascade)
+
+  /// State the position occupied before this transition
+  fromState String
+
+  /// State the position occupies after this transition
+  toState String
+
+  /// What caused the transition (e.g., PROFIT_TARGET, ASSIGNMENT_RISK, SYSTEM)
+  trigger String
+
+  /// Additional context about the transition (P&L, Greeks snapshot, reasoning)
+  metadata Json?
+
+  /// Timestamp when the transition occurred. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@index([positionId, createdAt])
+  @@index([createdAt])
+  @@map("options_position_events")
 }
 
 // Time-series Greeks data for options contracts

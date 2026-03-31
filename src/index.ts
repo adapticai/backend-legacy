@@ -72,6 +72,7 @@ import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
 import { OptionsContract } from './OptionsContract';
 import { OptionsGreeksHistory } from './OptionsGreeksHistory';
 import { OptionsPosition } from './OptionsPosition';
+import { OptionsPositionEvent } from './OptionsPositionEvent';
 import { OptionsTradeExecution } from './OptionsTradeExecution';
 import { PolicyOverlay } from './PolicyOverlay';
 import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
@@ -137,6 +138,7 @@ const adaptic = {
   optionsContract: OptionsContract,
   optionsGreeksHistory: OptionsGreeksHistory,
   optionsPosition: OptionsPosition,
+  optionsPositionEvent: OptionsPositionEvent,
   optionsTradeExecution: OptionsTradeExecution,
   policyOverlay: PolicyOverlay,
   portfolioGreeksHistory: PortfolioGreeksHistory,

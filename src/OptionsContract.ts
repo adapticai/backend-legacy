@@ -72,8 +72,20 @@ import { logger } from './utils/logger';
     strategyType
     tradeId
     metadata
+    lifecycleState
+    exitThresholds
+    linkedRollId
     createdAt
     updatedAt
+    lifecycleEvents {
+      id
+      positionId
+      fromState
+      toState
+      trigger
+      metadata
+      createdAt
+    }
   }
   greeksHistory {
     id
@@ -249,6 +261,9 @@ import { logger } from './utils/logger';
         strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
         tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
     executions: item.executions ? 
       Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.executions.map((item: any) => ({
@@ -339,6 +354,27 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.lifecycleEvents.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
     } : undefined,
@@ -473,6 +509,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -516,6 +555,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -898,6 +958,9 @@ import { logger } from './utils/logger';
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
           } : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? {
+            equals: item.linkedRollId
+          } : undefined,
       },
       update: {
         id: item.id !== undefined ? {
@@ -986,6 +1049,15 @@ import { logger } from './utils/logger';
           } : undefined,
         metadata: item.metadata !== undefined ? {
             set: item.metadata
+          } : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? {
+            set: item.lifecycleState
+          } : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? {
+            set: item.exitThresholds
+          } : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? {
+            set: item.linkedRollId
           } : undefined,
     executions: item.executions ? 
     Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -1285,6 +1357,43 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+    Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.lifecycleEvents.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          fromState: item.fromState !== undefined ? {
+              set: item.fromState
+            } : undefined,
+          toState: item.toState !== undefined ? {
+              set: item.toState
+            } : undefined,
+          trigger: item.trigger !== undefined ? {
+              set: item.trigger
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -1315,6 +1424,9 @@ import { logger } from './utils/logger';
         strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
         tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
     executions: item.executions ? 
       Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.executions.map((item: any) => ({
@@ -1405,6 +1517,27 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.lifecycleEvents.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
     } : undefined,
@@ -1617,6 +1750,9 @@ import { logger } from './utils/logger';
           tradeId: item.position.tradeId !== undefined ? {
               equals: item.position.tradeId
             } : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? {
+              equals: item.position.linkedRollId
+            } : undefined,
         },
         update: {
           id: item.position.id !== undefined ? {
@@ -1705,6 +1841,15 @@ import { logger } from './utils/logger';
             } : undefined,
           metadata: item.position.metadata !== undefined ? {
               set: item.position.metadata
+            } : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? {
+              set: item.position.lifecycleState
+            } : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? {
+              set: item.position.exitThresholds
+            } : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? {
+              set: item.position.linkedRollId
             } : undefined,
       contract: item.position.contract ? 
       typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && (Object.keys(item.position.contract)[0] === 'id' || Object.keys(item.position.contract)[0] === 'symbol')
@@ -1838,6 +1983,43 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+      Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 && item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.position.lifecycleEvents.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            trigger: item.trigger !== undefined ? {
+                set: item.trigger
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -1868,6 +2050,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -1911,6 +2096,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -1988,6 +2194,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -2031,6 +2240,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -2237,6 +2467,9 @@ import { logger } from './utils/logger';
         strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
         tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
     executions: item.executions ? 
       Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.executions.map((item: any) => ({
@@ -2327,6 +2560,27 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.lifecycleEvents.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
     } : undefined,
@@ -2461,6 +2715,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -2504,6 +2761,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -2614,6 +2892,9 @@ import { logger } from './utils/logger';
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
           } : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? {
+            equals: item.linkedRollId
+          } : undefined,
       },
       update: {
         id: item.id !== undefined ? {
@@ -2702,6 +2983,15 @@ import { logger } from './utils/logger';
           } : undefined,
         metadata: item.metadata !== undefined ? {
             set: item.metadata
+          } : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? {
+            set: item.lifecycleState
+          } : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? {
+            set: item.exitThresholds
+          } : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? {
+            set: item.linkedRollId
           } : undefined,
     executions: item.executions ? 
     Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -3001,6 +3291,43 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+    Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.lifecycleEvents.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          fromState: item.fromState !== undefined ? {
+              set: item.fromState
+            } : undefined,
+          toState: item.toState !== undefined ? {
+              set: item.toState
+            } : undefined,
+          trigger: item.trigger !== undefined ? {
+              set: item.trigger
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -3031,6 +3358,9 @@ import { logger } from './utils/logger';
         strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
         tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
     executions: item.executions ? 
       Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.executions.map((item: any) => ({
@@ -3121,6 +3451,27 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.lifecycleEvents.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
     } : undefined,
@@ -3333,6 +3684,9 @@ import { logger } from './utils/logger';
           tradeId: item.position.tradeId !== undefined ? {
               equals: item.position.tradeId
             } : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? {
+              equals: item.position.linkedRollId
+            } : undefined,
         },
         update: {
           id: item.position.id !== undefined ? {
@@ -3421,6 +3775,15 @@ import { logger } from './utils/logger';
             } : undefined,
           metadata: item.position.metadata !== undefined ? {
               set: item.position.metadata
+            } : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? {
+              set: item.position.lifecycleState
+            } : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? {
+              set: item.position.exitThresholds
+            } : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? {
+              set: item.position.linkedRollId
             } : undefined,
       contract: item.position.contract ? 
       typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && (Object.keys(item.position.contract)[0] === 'id' || Object.keys(item.position.contract)[0] === 'symbol')
@@ -3554,6 +3917,43 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+      Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 && item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.position.lifecycleEvents.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            trigger: item.trigger !== undefined ? {
+                set: item.trigger
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -3584,6 +3984,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -3627,6 +4030,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -3704,6 +4128,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -3747,6 +4174,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -3989,6 +4437,9 @@ import { logger } from './utils/logger';
         tradeId: item.tradeId !== undefined ? {
             equals: item.tradeId
           } : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? {
+            equals: item.linkedRollId
+          } : undefined,
       },
       update: {
         id: item.id !== undefined ? {
@@ -4077,6 +4528,15 @@ import { logger } from './utils/logger';
           } : undefined,
         metadata: item.metadata !== undefined ? {
             set: item.metadata
+          } : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? {
+            set: item.lifecycleState
+          } : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? {
+            set: item.exitThresholds
+          } : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? {
+            set: item.linkedRollId
           } : undefined,
     executions: item.executions ? 
     Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -4376,6 +4836,43 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+    Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.lifecycleEvents.map((item: any) => ({
+      id: item.id
+    }))
+} : { upsert: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          fromState: item.fromState !== undefined ? {
+              set: item.fromState
+            } : undefined,
+          toState: item.toState !== undefined ? {
+              set: item.toState
+            } : undefined,
+          trigger: item.trigger !== undefined ? {
+              set: item.trigger
+            } : undefined,
+          metadata: item.metadata !== undefined ? {
+              set: item.metadata
+            } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
@@ -4406,6 +4903,9 @@ import { logger } from './utils/logger';
         strategyType: item.strategyType !== undefined ? item.strategyType : undefined,
         tradeId: item.tradeId !== undefined ? item.tradeId : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+        lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+        exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
+        linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
     executions: item.executions ? 
       Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      item.executions.map((item: any) => ({
@@ -4496,6 +4996,27 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+        },
+      }))
+    } : undefined,
+    lifecycleEvents: item.lifecycleEvents ? 
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.lifecycleEvents.map((item: any) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          positionId: item.positionId !== undefined ? {
+              equals: item.positionId 
+             } : undefined,
+        },
+        create: {
+          fromState: item.fromState !== undefined ? item.fromState : undefined,
+          toState: item.toState !== undefined ? item.toState : undefined,
+          trigger: item.trigger !== undefined ? item.trigger : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
     } : undefined,
@@ -4708,6 +5229,9 @@ import { logger } from './utils/logger';
           tradeId: item.position.tradeId !== undefined ? {
               equals: item.position.tradeId
             } : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? {
+              equals: item.position.linkedRollId
+            } : undefined,
         },
         update: {
           id: item.position.id !== undefined ? {
@@ -4796,6 +5320,15 @@ import { logger } from './utils/logger';
             } : undefined,
           metadata: item.position.metadata !== undefined ? {
               set: item.position.metadata
+            } : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? {
+              set: item.position.lifecycleState
+            } : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? {
+              set: item.position.exitThresholds
+            } : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? {
+              set: item.position.linkedRollId
             } : undefined,
       contract: item.position.contract ? 
       typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && (Object.keys(item.position.contract)[0] === 'id' || Object.keys(item.position.contract)[0] === 'symbol')
@@ -4929,6 +5462,43 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+      Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 && item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.position.lifecycleEvents.map((item: any) => ({
+        id: item.id
+      }))
+} : { upsert: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            trigger: item.trigger !== undefined ? {
+                set: item.trigger
+              } : undefined,
+            metadata: item.metadata !== undefined ? {
+                set: item.metadata
+              } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           alpacaAccountId: item.position.alpacaAccountId !== undefined ? item.position.alpacaAccountId : undefined,
@@ -4959,6 +5529,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -5002,6 +5575,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -5079,6 +5673,9 @@ import { logger } from './utils/logger';
           strategyType: item.position.strategyType !== undefined ? item.position.strategyType : undefined,
           tradeId: item.position.tradeId !== undefined ? item.position.tradeId : undefined,
           metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
+          lifecycleState: item.position.lifecycleState !== undefined ? item.position.lifecycleState : undefined,
+          exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
+          linkedRollId: item.position.linkedRollId !== undefined ? item.position.linkedRollId : undefined,
       contract: item.position.contract ? 
         typeof item.position.contract === 'object' && Object.keys(item.position.contract).length === 1 && Object.keys(item.position.contract)[0] === 'id'
     ? { connect: {
@@ -5122,6 +5719,27 @@ import { logger } from './utils/logger';
             dataTimestamp: item.position.contract.dataTimestamp !== undefined ? item.position.contract.dataTimestamp : undefined,
           },
         }
+      } : undefined,
+      lifecycleEvents: item.position.lifecycleEvents ? 
+        Array.isArray(item.position.lifecycleEvents) && item.position.lifecycleEvents.length > 0 &&  item.position.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.position.lifecycleEvents.map((item: any) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.position.lifecycleEvents.map((item: any) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            positionId: item.positionId !== undefined ? {
+                equals: item.positionId 
+               } : undefined,
+          },
+          create: {
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            trigger: item.trigger !== undefined ? item.trigger : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
       } : undefined,
         },
       }
