@@ -4918,6 +4918,10 @@ model TradeOutcome {
   featureSnapshot          Json?
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
+
+  @@index([assetClass, createdAt])
+  @@index([symbol, createdAt])
+  @@index([accountId, createdAt])
 }
 
 model MLModelVersion {
@@ -4934,4 +4938,7 @@ model MLModelVersion {
   configSnapshot   Json?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+
+  @@index([assetClass, slot])
+  @@index([assetClass, trainedAt])
 }
