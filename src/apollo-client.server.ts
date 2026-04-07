@@ -65,15 +65,19 @@ export type {
 // call actually configures the dispatcher.
 
 let keepAliveConfigured = false;
+let keepAliveConfigurePromise: Promise<void> | undefined;
 
 /**
  * Configure a single global undici dispatcher with persistent keepalive
  * connections for the Node.js process. Call this once during server-side
  * application startup, before any GraphQL operation is made.
  *
- * Idempotent: subsequent calls are no-ops.
+ * Idempotent and safe to call multiple times — only the first call actually
+ * configures the dispatcher; subsequent calls return the same in-flight or
+ * resolved promise so concurrent callers don't double-configure.
  *
- * Browser environments are unaffected — this function only runs on Node.js.
+ * Browser environments are unaffected — this function only runs on Node.js
+ * and bails out early if invoked in a browser context.
  */
 export function configureKeepAliveDispatcher(opts?: {
   /** Max parallel sockets per origin. Default: 64. */
@@ -82,40 +86,50 @@ export function configureKeepAliveDispatcher(opts?: {
   keepAliveTimeoutMs?: number;
   /** Hard cap on connection age in milliseconds. Default: 600000 (10 min). */
   keepAliveMaxTimeoutMs?: number;
-}): void {
+}): Promise<void> {
   if (keepAliveConfigured) {
-    return;
+    return Promise.resolve();
+  }
+  if (keepAliveConfigurePromise) {
+    return keepAliveConfigurePromise;
   }
 
   // Server-only: bail in browser bundles.
   if (typeof window !== 'undefined') {
-    return;
+    return Promise.resolve();
   }
 
-  try {
-    // Lazy require so this file remains tree-shakable for browser consumers.
-    // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
-    const undici = require('undici') as typeof import('undici');
+  // Use dynamic ESM import (works in both CJS and ESM Node contexts) instead
+  // of require(), which fails at runtime when this module is loaded as ESM.
+  // Cache the in-flight promise so concurrent callers join the same load.
+  keepAliveConfigurePromise = (async () => {
+    try {
+      const undici = (await import('undici')) as typeof import('undici');
 
-    const dispatcher = new undici.Agent({
-      keepAliveTimeout: opts?.keepAliveTimeoutMs ?? 30_000,
-      keepAliveMaxTimeout: opts?.keepAliveMaxTimeoutMs ?? 600_000,
-      connections: opts?.connections ?? 64,
-      pipelining: 1,
-    });
+      const dispatcher = new undici.Agent({
+        keepAliveTimeout: opts?.keepAliveTimeoutMs ?? 30_000,
+        keepAliveMaxTimeout: opts?.keepAliveMaxTimeoutMs ?? 600_000,
+        connections: opts?.connections ?? 64,
+        pipelining: 1,
+      });
 
-    undici.setGlobalDispatcher(dispatcher);
-    keepAliveConfigured = true;
+      undici.setGlobalDispatcher(dispatcher);
+      keepAliveConfigured = true;
 
-    logger.info('Apollo client: undici global keepalive dispatcher configured', {
-      connections: opts?.connections ?? 64,
-      keepAliveTimeoutMs: opts?.keepAliveTimeoutMs ?? 30_000,
-      keepAliveMaxTimeoutMs: opts?.keepAliveMaxTimeoutMs ?? 600_000,
-    });
-  } catch (err) {
-    // Undici should always be available alongside Node 18+ but be defensive.
-    logger.warn('Apollo client: failed to configure undici keepalive dispatcher', {
-      error: err instanceof Error ? err.message : String(err),
-    });
-  }
+      logger.info('Apollo client: undici global keepalive dispatcher configured', {
+        connections: opts?.connections ?? 64,
+        keepAliveTimeoutMs: opts?.keepAliveTimeoutMs ?? 30_000,
+        keepAliveMaxTimeoutMs: opts?.keepAliveMaxTimeoutMs ?? 600_000,
+      });
+    } catch (err) {
+      // Undici should always be available alongside Node 18+ but be defensive.
+      logger.warn('Apollo client: failed to configure undici keepalive dispatcher', {
+        error: err instanceof Error ? err.message : String(err),
+      });
+      // Reset so a future call can retry once the failure cause clears.
+      keepAliveConfigurePromise = undefined;
+    }
+  })();
+
+  return keepAliveConfigurePromise;
 }

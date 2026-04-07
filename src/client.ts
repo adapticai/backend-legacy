@@ -32,13 +32,15 @@ export interface ApolloModules {
   /**
    * Server-only helper: lazily exported only by `apollo-client.server.ts`.
    * The browser variant does not export this and the runtime check above
-   * gates the call to `typeof window === 'undefined'`.
+   * gates the call to `typeof window === 'undefined'`. Returns a Promise so
+   * callers can await the dispatcher being installed before issuing the
+   * first GraphQL operation.
    */
   configureKeepAliveDispatcher?: (opts?: {
     connections?: number;
     keepAliveTimeoutMs?: number;
     keepAliveMaxTimeoutMs?: number;
-  }) => void;
+  }) => Promise<void>;
 }
 
 // === Connection Pool Configuration ===
@@ -74,12 +76,13 @@ let customTokenProvider: TokenProvider | undefined;
 // Forward-declare the optional server-only keepalive helper. The actual
 // implementation lives in `apollo-client.server.ts` and is loaded only when
 // the runtime is Node.js (see loadApolloModules below). This indirection
-// keeps the keepalive logic out of browser bundles.
+// keeps the keepalive logic out of browser bundles. Returns a Promise so
+// callers can await the dispatcher being installed before issuing requests.
 type ConfigureKeepAliveDispatcher = (opts?: {
   connections?: number;
   keepAliveTimeoutMs?: number;
   keepAliveMaxTimeoutMs?: number;
-}) => void;
+}) => Promise<void>;
 
 /**
  * Dynamically loads the correct Apollo modules based on the runtime environment.
@@ -289,12 +292,17 @@ export async function getApolloClient(): Promise<
     // load (the engine's signature symptom on Railway with many concurrent
     // GraphQL operations). This is server-only — browser bundles see a
     // no-op since `apollo-client.server.ts` is only loaded on Node.js.
+    //
+    // Awaited so the dispatcher is installed BEFORE the HttpLink below
+    // issues its first fetch — otherwise the very first request races the
+    // async undici import and goes out on the default (non-keepalive)
+    // dispatcher.
     if (typeof window === 'undefined') {
       const serverModule = apolloModules as ApolloModules & {
         configureKeepAliveDispatcher?: ConfigureKeepAliveDispatcher;
       };
       if (typeof serverModule.configureKeepAliveDispatcher === 'function') {
-        serverModule.configureKeepAliveDispatcher();
+        await serverModule.configureKeepAliveDispatcher();
       }
     }
 
