@@ -29,6 +29,16 @@ export interface ApolloModules {
   split: typeof import('@apollo/client').split;
   setContext: typeof import('@apollo/client/link/context').setContext;
   onError: typeof import('@apollo/client/link/error').onError;
+  /**
+   * Server-only helper: lazily exported only by `apollo-client.server.ts`.
+   * The browser variant does not export this and the runtime check above
+   * gates the call to `typeof window === 'undefined'`.
+   */
+  configureKeepAliveDispatcher?: (opts?: {
+    connections?: number;
+    keepAliveTimeoutMs?: number;
+    keepAliveMaxTimeoutMs?: number;
+  }) => void;
 }
 
 // === Connection Pool Configuration ===
@@ -60,6 +70,16 @@ let pendingOperations = 0;
 const operationQueue: Array<() => Promise<void>> = [];
 let poolConfig: ConnectionPoolConfig = DEFAULT_POOL_CONFIG;
 let customTokenProvider: TokenProvider | undefined;
+
+// Forward-declare the optional server-only keepalive helper. The actual
+// implementation lives in `apollo-client.server.ts` and is loaded only when
+// the runtime is Node.js (see loadApolloModules below). This indirection
+// keeps the keepalive logic out of browser bundles.
+type ConfigureKeepAliveDispatcher = (opts?: {
+  connections?: number;
+  keepAliveTimeoutMs?: number;
+  keepAliveMaxTimeoutMs?: number;
+}) => void;
 
 /**
  * Dynamically loads the correct Apollo modules based on the runtime environment.
@@ -263,6 +283,21 @@ export async function getApolloClient(): Promise<
     const { ApolloClient, InMemoryCache, HttpLink, setContext, onError } =
       apolloModules;
 
+    // Configure a global undici keepalive dispatcher for Node.js fetch.
+    // Without this, Node's built-in fetch opens a fresh TCP socket per
+    // request, exhausting the kernel's ephemeral port pool under sustained
+    // load (the engine's signature symptom on Railway with many concurrent
+    // GraphQL operations). This is server-only — browser bundles see a
+    // no-op since `apollo-client.server.ts` is only loaded on Node.js.
+    if (typeof window === 'undefined') {
+      const serverModule = apolloModules as ApolloModules & {
+        configureKeepAliveDispatcher?: ConfigureKeepAliveDispatcher;
+      };
+      if (typeof serverModule.configureKeepAliveDispatcher === 'function') {
+        serverModule.configureKeepAliveDispatcher();
+      }
+    }
+
     // Determine the GraphQL endpoint.
     const isProduction = process.env.NODE_ENV === 'production';
     const httpUrl =
@@ -272,7 +307,11 @@ export async function getApolloClient(): Promise<
         ? 'https://api.adaptic.ai/graphql'
         : 'http://localhost:4000/graphql');
 
-    // Create the HTTP link with appropriate fetch policies and timeouts
+    // Create the HTTP link. The `fetch` global resolves to Node.js's
+    // built-in undici fetch on the server (which now uses the keepalive
+    // dispatcher configured above) or the browser's native fetch on the
+    // client. Either way, sockets are reused across requests instead of
+    // a fresh TCP+TLS handshake per operation.
     const httpLinkInstance = new HttpLink({
       uri: httpUrl,
       fetch,
