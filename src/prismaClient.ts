@@ -122,15 +122,66 @@ if (!global.prisma) {
   // Register event-based log handlers for pool exhaustion detection
   client.$on('error' as never, (e: { message: string }) => {
     const message = e.message || '';
-    if (
+    // Build structured error information for actionable diagnostics
+    const errorInfo: Record<string, unknown> = {
+      message,
+      poolSize,
+    };
+
+    // Extract Prisma error code (e.g., P2002 unique constraint, P2003 foreign key)
+    const prismaCodeMatch =
+      message.match(/error code:\s*(P\d+)/i) || message.match(/(P\d{4})/);
+    if (prismaCodeMatch) {
+      errorInfo.prismaErrorCode = prismaCodeMatch[1];
+    }
+
+    // Extract Postgres error code (e.g., 23514 check constraint, 23505 unique)
+    const pgCodeMatch = message.match(/(?:error code|code):\s*(\d{5})/);
+    if (pgCodeMatch) {
+      errorInfo.postgresErrorCode = pgCodeMatch[1];
+    }
+
+    // Extract constraint name for violation diagnostics
+    const constraintMatch = message.match(/constraint\s+"([^"]+)"/);
+    if (constraintMatch) {
+      errorInfo.constraintName = constraintMatch[1];
+    }
+
+    // Extract model or table name
+    const modelMatch = message.match(/(?:model|table|relation)\s+"?(\w+)"?/i);
+    if (modelMatch) {
+      errorInfo.model = modelMatch[1];
+    }
+
+    // Categorize for alerting and triage. Expected races and invalid-UUID
+    // input must NOT pollute ERROR-level logs (they distort error budgets
+    // and trigger spurious alerts). See SR commit 4df4ea9 for rationale.
+    const isExpectedDeleteRace =
+      message.includes('No record was found for a delete') ||
+      message.includes('No record was found for an update');
+    const isInvalidUuidInput =
+      message.includes('Error creating UUID') ||
+      message.includes('Inconsistent column data: Error creating UUID');
+
+    if (isExpectedDeleteRace) {
+      errorInfo.category = 'EXPECTED_RACE';
+      errorInfo.handledByCaller = true;
+      logger.info('Prisma expected race (record already removed)', errorInfo);
+    } else if (isInvalidUuidInput) {
+      errorInfo.category = 'INVALID_INPUT_FORMAT';
+      errorInfo.hint =
+        'Caller passed a non-UUID value to a UUID column. Validate inputs upstream.';
+      logger.warn('Prisma rejected invalid UUID input', errorInfo);
+    } else if (
       message.includes('pool') ||
       message.includes('connection') ||
       message.includes('timeout')
     ) {
-      logger.error('Database connection pool exhaustion detected', {
-        poolSize,
-        errorMessage: message,
-      });
+      errorInfo.category = 'CONNECTION_POOL';
+      logger.error('Database connection pool issue detected', errorInfo);
+    } else if (prismaCodeMatch || pgCodeMatch) {
+      errorInfo.category = 'DATA_INTEGRITY';
+      logger.error('Prisma data integrity error', errorInfo);
     } else {
       logger.error('Prisma client error', { errorMessage: message });
     }
