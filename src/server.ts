@@ -107,10 +107,29 @@ const startServer = async () => {
       createAuditLogPlugin(),
     ],
     formatError: (err) => {
-      logger.error('GraphQL Error', { graphqlError: err });
+      const message = err.message || '';
+
+      // Demote known caller-handled / caller-side error patterns to lower
+      // log levels so they don't pollute ERROR logs and trigger spurious
+      // alerts. The Prisma client error categorizer in prismaClient.ts also
+      // demotes these on the raw client side; this mirror keeps the
+      // GraphQL-formatted error consistent.
+      const isExpectedDeleteRace =
+        message.includes('No record was found for a delete') ||
+        message.includes('No record was found for an update');
+      const isInvalidUuidInput =
+        message.includes('Error creating UUID') ||
+        message.includes('Inconsistent column data: Error creating UUID');
+
+      if (isExpectedDeleteRace) {
+        logger.info('GraphQL expected race (record already removed)', { graphqlError: err });
+      } else if (isInvalidUuidInput) {
+        logger.warn('GraphQL rejected invalid UUID input', { graphqlError: err });
+      } else {
+        logger.error('GraphQL Error', { graphqlError: err });
+      }
 
       // Check if this error is due to unreachable DB
-      const message = err.message || '';
       if (message.includes("Can't reach database server")) {
         dbUnreachableCount += 1;
         logger.warn('Database unreachable', { dbUnreachableCount });

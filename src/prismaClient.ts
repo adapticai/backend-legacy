@@ -172,7 +172,38 @@ if (!global.prisma) {
     }
 
     // Categorize for alerting and triage
-    if (message.includes('pool') || message.includes('connection') || message.includes('timeout')) {
+    //
+    // Two classes of "errors" are expected and handled by the caller and must
+    // not pollute ERROR-level logs (they distort error budgets and trigger
+    // spurious alerts):
+    //
+    // 1. "No record was found for a delete/update" — race condition where the
+    //    target row was already removed by another worker. Engine callers
+    //    handle this gracefully (see crypto-trade-execution-engine.ts and
+    //    order-manager.ts deleteTrade()). Demoted to INFO.
+    //
+    // 2. "Inconsistent column data: Error creating UUID" — caller passed a
+    //    non-UUID value to a `String @db.Uuid` column. This is a caller-side
+    //    bug; the engine has been hardened to detect synthetic positionIds
+    //    upstream (see engine/src/di/options-lifecycle.ts UUID_REGEX guard),
+    //    but for any remaining cases, log at WARN with full diagnostics so
+    //    callers can be tracked down without flooding ERROR logs.
+    const isExpectedDeleteRace =
+      message.includes('No record was found for a delete') ||
+      message.includes('No record was found for an update');
+    const isInvalidUuidInput =
+      message.includes('Error creating UUID') ||
+      message.includes('Inconsistent column data: Error creating UUID');
+
+    if (isExpectedDeleteRace) {
+      errorInfo.category = 'EXPECTED_RACE';
+      errorInfo.handledByCaller = true;
+      logger.info('Prisma expected race (record already removed)', errorInfo);
+    } else if (isInvalidUuidInput) {
+      errorInfo.category = 'INVALID_INPUT_FORMAT';
+      errorInfo.hint = 'Caller passed a non-UUID value to a UUID column. Validate inputs upstream.';
+      logger.warn('Prisma rejected invalid UUID input', errorInfo);
+    } else if (message.includes('pool') || message.includes('connection') || message.includes('timeout')) {
       errorInfo.category = 'CONNECTION_POOL';
       logger.error('Database connection pool issue detected', errorInfo);
     } else if (prismaCodeMatch || pgCodeMatch) {

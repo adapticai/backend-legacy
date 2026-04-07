@@ -95,7 +95,39 @@ function getUserContext(error: GraphQLError): {
 }
 
 /**
- * Logs the full error details server-side
+ * Returns true when the GraphQL error wraps a Prisma "delete/update missing
+ * record" P2025 race condition that callers handle gracefully (e.g. trade
+ * cleanup deletes after order failure). These should not log at ERROR.
+ */
+function isExpectedDeleteRace(error: GraphQLError): boolean {
+  const message = error.message || '';
+  return (
+    message.includes('No record was found for a delete') ||
+    message.includes('No record was found for an update')
+  );
+}
+
+/**
+ * Returns true when the GraphQL error wraps a Prisma "Inconsistent column
+ * data: Error creating UUID" — i.e. the caller passed a non-UUID value into
+ * a `String @db.Uuid` column. The engine has been hardened to detect this
+ * upstream; remaining occurrences are caller-side bugs and should log at WARN
+ * with full diagnostics, not ERROR.
+ */
+function isInvalidUuidInput(error: GraphQLError): boolean {
+  const message = error.message || '';
+  return (
+    message.includes('Error creating UUID') ||
+    message.includes('Inconsistent column data: Error creating UUID')
+  );
+}
+
+/**
+ * Logs the full error details server-side. Two classes of "errors" are
+ * expected/caller-side and demoted to lower log levels so they do not pollute
+ * ERROR logs or trigger spurious alerts:
+ *  - Delete/update race conditions on already-removed rows -> INFO
+ *  - Invalid UUID input from buggy callers -> WARN with full diagnostics
  */
 function logError(error: GraphQLError, isProduction: boolean): void {
   const { userId, requestId } = getUserContext(error);
@@ -110,6 +142,22 @@ function logError(error: GraphQLError, isProduction: boolean): void {
     locations: error.locations,
     timestamp: new Date().toISOString(),
   };
+
+  if (isExpectedDeleteRace(error)) {
+    logger.info('[GraphQL] Expected race (record already removed)', {
+      ...logData,
+      handledByCaller: true,
+    });
+    return;
+  }
+
+  if (isInvalidUuidInput(error)) {
+    logger.warn('[GraphQL] Invalid UUID input rejected by Prisma', {
+      ...logData,
+      hint: 'Caller passed a non-UUID value to a UUID column. Validate inputs upstream.',
+    });
+    return;
+  }
 
   // In development, include the full error details
   if (!isProduction) {
