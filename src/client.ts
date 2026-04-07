@@ -296,16 +296,70 @@ export async function getApolloClient(): Promise<
     });
 
     // Create the error handling link with retry logic.
+    //
+    // Apollo's onError link fires on every error including transient ones
+    // that the wrapping retryLink (and the engine-side retry-with-backoff
+    // queue at executeWithRetry above) handles automatically. Logging
+    // every transient blip at ERROR floods the consumer's error budget
+    // and triggers spurious alerts during checkpoint storms / brief
+    // network jitter. Demote known transient classes to WARN; reserve
+    // ERROR for genuine non-recoverable issues.
     const errorLink = onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
         graphQLErrors.forEach(({ message, locations, path }) => {
-          logger.error(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-          );
+          // Same demotion classes as the formatError handler in server.ts
+          // and the prismaClient $on('error') categorizer:
+          //   - Delete/update race on already-removed rows -> INFO
+          //   - Invalid UUID input from buggy callers -> WARN
+          //   - Everything else -> ERROR
+          const isExpectedDeleteRace =
+            message.includes('No record was found for a delete') ||
+            message.includes('No record was found for an update');
+          const isInvalidUuidInput =
+            message.includes('Error creating UUID') ||
+            message.includes('Inconsistent column data: Error creating UUID');
+
+          if (isExpectedDeleteRace) {
+            logger.info(
+              `[GraphQL expected race]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            );
+          } else if (isInvalidUuidInput) {
+            logger.warn(
+              `[GraphQL invalid UUID input]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            );
+          } else {
+            logger.error(
+              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            );
+          }
         });
       }
       if (networkError) {
-        logger.error(`[Network error]: ${networkError}`);
+        const errMessage = String(networkError);
+        // Network-class transients that the wrapping retry queue at
+        // executeWithRetry already handles automatically. Each retry
+        // attempt was logging at ERROR, producing 7+ ERROR lines per
+        // retry sequence. Demote known transients to WARN; reserve
+        // ERROR for non-network failures (TLS handshake, DNS resolve,
+        // SSL cert validation).
+        const isTransient =
+          errMessage.includes('TypeError: fetch failed') ||
+          errMessage.includes('TimeoutError') ||
+          errMessage.includes('aborted due to timeout') ||
+          errMessage.includes('ECONNRESET') ||
+          errMessage.includes('ETIMEDOUT') ||
+          errMessage.includes('ECONNREFUSED') ||
+          errMessage.includes('socket hang up') ||
+          errMessage.includes('status code 408') ||
+          errMessage.includes('status code 502') ||
+          errMessage.includes('status code 503') ||
+          errMessage.includes('status code 504');
+
+        if (isTransient) {
+          logger.warn(`[Network error]: ${errMessage} (transient — caller retry queue will handle)`);
+        } else {
+          logger.error(`[Network error]: ${errMessage}`);
+        }
       }
     });
 
