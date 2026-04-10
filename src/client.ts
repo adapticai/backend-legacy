@@ -320,12 +320,24 @@ export async function getApolloClient(): Promise<
     // dispatcher configured above) or the browser's native fetch on the
     // client. Either way, sockets are reused across requests instead of
     // a fresh TCP+TLS handshake per operation.
+    //
+    // The custom fetch wrapper enforces connectionTimeout via
+    // AbortSignal.timeout(). Without this, hung backend responses block
+    // the connection pool queue indefinitely — the prior fetchOptions.timeout
+    // was not a valid Fetch API option and was silently ignored.
+    const timeoutMs = poolConfig.connectionTimeout;
+    const fetchWithTimeout: typeof fetch = (input, init) => {
+      const timeoutSignal = AbortSignal.timeout(timeoutMs);
+      const existingSignal = init?.signal;
+      const signal = existingSignal
+        ? AbortSignal.any([existingSignal, timeoutSignal])
+        : timeoutSignal;
+      return fetch(input, { ...init, signal });
+    };
+
     const httpLinkInstance = new HttpLink({
       uri: httpUrl,
-      fetch,
-      fetchOptions: {
-        timeout: poolConfig.connectionTimeout,
-      },
+      fetch: fetchWithTimeout,
     });
 
     // Create the auth link with async token retrieval and validation.
