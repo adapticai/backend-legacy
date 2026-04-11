@@ -710,10 +710,30 @@ const isReservedField = (name: string): boolean => {
 };
 
 /**
- * Checks if a field name is unique and should be used for filtering.
+ * Checks if a field name is unique and should be used for filtering in
+ * generated `where` clauses (for `update`, `upsert`, `delete`).
+ *
+ * NOTE: This is a name-based heuristic, not a schema-driven check. It can
+ * produce wrong results in two directions:
+ *   1. Fields that ARE `@unique` in the Prisma schema but whose names are
+ *      not in this list get omitted from the `where` clause. Those models'
+ *      `upsert`/`update` calls will fail with a Prisma error like
+ *      "WhereUniqueInput needs at least one of id or <field>". The fix is
+ *      to add the field name to this list (or refactor the generator to
+ *      read `@unique` directly from the parsed Prisma DMMF).
+ *   2. Fields with a listed name that are NOT unique in a given model end
+ *      up in the `where` clause as additional filters. This usually works
+ *      because Prisma allows additional filter conditions alongside a
+ *      unique identifier, but can silently mask bugs.
+ *
+ * The long-term fix is to pass the model's actual unique fields into this
+ * check from the DMMF rather than relying on a hardcoded name list. Until
+ * that refactor lands, additions here should be driven by real encountered
+ * upsert/update failures across models.
+ *
  * @param name - The field name to check.
  * @returns Boolean indicating if the field is unique.
- * */
+ */
 
 const isUniqueField = (name: string): boolean => {
   // if name includes "Id", return true
@@ -735,6 +755,7 @@ const isUniqueField = (name: string): boolean => {
     'title',
     'url',
     'key',
+    'configKey', // Configuration.configKey is @unique — required for scheduler-state-persister upsert/update to work correctly.
     'handle',
     'symbol',
     'clientOrderId',
