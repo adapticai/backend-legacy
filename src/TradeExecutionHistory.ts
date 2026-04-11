@@ -324,9 +324,7 @@ import { logger } from './utils/logger';
   timestamp: props.timestamp !== undefined ? {
             set: props.timestamp 
            } : undefined,
-  accounts: props.accounts !== undefined ? {
-            set: props.accounts 
-           } : undefined,
+  accounts: props.accounts !== undefined ? props.accounts : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -471,9 +469,7 @@ import { logger } from './utils/logger';
   timestamp: props.timestamp !== undefined ? {
             set: props.timestamp 
            } : undefined,
-  accounts: props.accounts !== undefined ? {
-            set: props.accounts 
-           } : undefined,
+  accounts: props.accounts !== undefined ? props.accounts : undefined,
   expiresAt: props.expiresAt !== undefined ? {
             set: props.expiresAt 
            } : undefined,
@@ -611,9 +607,7 @@ import { logger } from './utils/logger';
   timestamp: prop.timestamp !== undefined ? {
             set: prop.timestamp 
            } : undefined,
-  accounts: prop.accounts !== undefined ? {
-            set: prop.accounts 
-           } : undefined,
+  accounts: prop.accounts !== undefined ? prop.accounts : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

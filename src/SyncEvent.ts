@@ -354,9 +354,7 @@ import { logger } from './utils/logger';
   error: props.error !== undefined ? {
             set: props.error 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -519,9 +517,7 @@ import { logger } from './utils/logger';
   error: props.error !== undefined ? {
             set: props.error 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -677,9 +673,7 @@ import { logger } from './utils/logger';
   error: prop.error !== undefined ? {
             set: prop.error 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
 
           },
         }));

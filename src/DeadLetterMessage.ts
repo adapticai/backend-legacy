@@ -469,27 +469,17 @@ import { logger } from './utils/logger';
   resolution: props.resolution !== undefined ? {
             set: props.resolution 
            } : undefined,
-  tradeContext: props.tradeContext !== undefined ? {
-            set: props.tradeContext 
-           } : undefined,
-  accountState: props.accountState !== undefined ? {
-            set: props.accountState 
-           } : undefined,
-  marketContext: props.marketContext !== undefined ? {
-            set: props.marketContext 
-           } : undefined,
-  validationErrors: props.validationErrors !== undefined ? {
-            set: props.validationErrors 
-           } : undefined,
+  tradeContext: props.tradeContext !== undefined ? props.tradeContext : undefined,
+  accountState: props.accountState !== undefined ? props.accountState : undefined,
+  marketContext: props.marketContext !== undefined ? props.marketContext : undefined,
+  validationErrors: props.validationErrors !== undefined ? props.validationErrors : undefined,
   failureCategory: props.failureCategory !== undefined ? {
             set: props.failureCategory 
            } : undefined,
   severity: props.severity !== undefined ? {
             set: props.severity 
            } : undefined,
-  tags: props.tags !== undefined ? {
-            set: props.tags 
-           } : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
   createdBy: props.createdBy !== undefined ? {
             set: props.createdBy 
            } : undefined,
@@ -729,27 +719,17 @@ import { logger } from './utils/logger';
   resolution: props.resolution !== undefined ? {
             set: props.resolution 
            } : undefined,
-  tradeContext: props.tradeContext !== undefined ? {
-            set: props.tradeContext 
-           } : undefined,
-  accountState: props.accountState !== undefined ? {
-            set: props.accountState 
-           } : undefined,
-  marketContext: props.marketContext !== undefined ? {
-            set: props.marketContext 
-           } : undefined,
-  validationErrors: props.validationErrors !== undefined ? {
-            set: props.validationErrors 
-           } : undefined,
+  tradeContext: props.tradeContext !== undefined ? props.tradeContext : undefined,
+  accountState: props.accountState !== undefined ? props.accountState : undefined,
+  marketContext: props.marketContext !== undefined ? props.marketContext : undefined,
+  validationErrors: props.validationErrors !== undefined ? props.validationErrors : undefined,
   failureCategory: props.failureCategory !== undefined ? {
             set: props.failureCategory 
            } : undefined,
   severity: props.severity !== undefined ? {
             set: props.severity 
            } : undefined,
-  tags: props.tags !== undefined ? {
-            set: props.tags 
-           } : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
   createdBy: props.createdBy !== undefined ? {
             set: props.createdBy 
            } : undefined,
@@ -956,27 +936,17 @@ import { logger } from './utils/logger';
   resolution: prop.resolution !== undefined ? {
             set: prop.resolution 
            } : undefined,
-  tradeContext: prop.tradeContext !== undefined ? {
-            set: prop.tradeContext 
-           } : undefined,
-  accountState: prop.accountState !== undefined ? {
-            set: prop.accountState 
-           } : undefined,
-  marketContext: prop.marketContext !== undefined ? {
-            set: prop.marketContext 
-           } : undefined,
-  validationErrors: prop.validationErrors !== undefined ? {
-            set: prop.validationErrors 
-           } : undefined,
+  tradeContext: prop.tradeContext !== undefined ? prop.tradeContext : undefined,
+  accountState: prop.accountState !== undefined ? prop.accountState : undefined,
+  marketContext: prop.marketContext !== undefined ? prop.marketContext : undefined,
+  validationErrors: prop.validationErrors !== undefined ? prop.validationErrors : undefined,
   failureCategory: prop.failureCategory !== undefined ? {
             set: prop.failureCategory 
            } : undefined,
   severity: prop.severity !== undefined ? {
             set: prop.severity 
            } : undefined,
-  tags: prop.tags !== undefined ? {
-            set: prop.tags 
-           } : undefined,
+  tags: prop.tags !== undefined ? prop.tags : undefined,
   createdBy: prop.createdBy !== undefined ? {
             set: prop.createdBy 
            } : undefined,

@@ -1,13 +1,44 @@
 import path from 'path';
 import fs from 'fs';
 import pluralize from 'pluralize';
-import { FieldDefinition, InputTypePaths } from './types';
+import { FieldDefinition, FieldType, InputTypePaths } from './types';
 import { capitalizeFirstLetter, lowerCaseFirstLetter } from './utils';
 import { getInputTypeDefinition } from './parser';
 import { selectionSets } from '../generated/selectionSets';
 import { logger } from '../utils/logger';
 
 type ModelName = keyof typeof selectionSets;
+
+/**
+ * Detect Prisma Json scalar field types in TypeGraphQL-generated input types.
+ *
+ * Prisma's generated `*UpdateInput` types declare JSON fields directly as
+ * `Prisma.InputJsonValue` (no `*FieldUpdateOperationsInput` wrapper). When the
+ * engine sends an update mutation, the JSON value must be passed RAW —
+ * wrapping it in `{ set: value }` causes Prisma to persist the literal
+ * `{ set: value }` object as the stored JSON, because the `InputJsonValue`
+ * scalar accepts any JSON shape without interpreting the `set` operator.
+ *
+ * This helper centralises the detection so both top-level and nested update
+ * paths emit raw values for JSON fields, while still wrapping non-JSON scalar
+ * fields with their `{ set: value }` operators (which IS the correct Prisma
+ * update syntax for String/Int/Boolean/DateTime/Enum scalars).
+ *
+ * Production incident (2026-04-11, stable Wave 31): the scheduler state
+ * persister's `Configuration` rows were stored as
+ * `{"set":{"taskId":"...","version":1,"lastRunIso":"..."}}` because the update
+ * codegen path was wrapping the JSON payload. This silently corrupted every
+ * update path for every JSON field across all 62 models until detected here.
+ */
+const isJsonValueFieldType = (type: FieldType): boolean => {
+  return (
+    type.name === 'Prisma.InputJsonValue' ||
+    type.name === 'Prisma.JsonValue' ||
+    type.name === 'Prisma.Json' ||
+    type.name === 'JsonValue' ||
+    type.name === 'Json'
+  );
+};
 
 type OperationType =
   | 'create'
@@ -337,6 +368,17 @@ const handleUpdateOperation = (
     return '';
   }
 
+  // JSON scalar fields (Prisma.InputJsonValue) MUST be emitted raw.
+  // TypeGraphQL-Prisma generates these as `Prisma.InputJsonValue` in the
+  // *UpdateInput types — they do NOT use the `*FieldUpdateOperationsInput`
+  // wrapper that other scalars (String/Int/Boolean/DateTime/Enum) use.
+  // Wrapping a raw JSON payload in `{ set: value }` causes Prisma to persist
+  // the literal operator envelope as the stored JSON, corrupting the row.
+  // See the `isJsonValueFieldType` helper at the top of this file for the
+  // full production-incident context (Wave 31, scheduler Configuration rows).
+  if (isJsonValueFieldType(field.type)) {
+    return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+  }
   // Scalar or updatable fields:
   if (
     (field.type.isScalar && field.type.isFieldUpdate) ||
@@ -505,6 +547,12 @@ ${indent}}
             const nestedAccessor = field.type.isList
               ? `item.${updateField.name}`
               : `${accessor}.${updateField.name}`;
+            // JSON scalar fields must be emitted raw — see Wave 31 note on
+            // the top-level handler above and the `isJsonValueFieldType`
+            // helper at the top of this file.
+            if (isJsonValueFieldType(updateField.type)) {
+              return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? ${nestedAccessor} : undefined,\n`;
+            }
             if (updateField.type.isScalar) {
               return `${indent}      ${updateField.name}: ${nestedAccessor} !== undefined ? {\n${indent}          set: ${nestedAccessor}\n${indent}        } : undefined,\n`;
             } else if (

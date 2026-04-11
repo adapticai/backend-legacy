@@ -309,6 +309,7 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  configKey: props.configKey !== undefined ? props.configKey : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
@@ -323,15 +324,11 @@ import { logger } from './utils/logger';
   configType: props.configType !== undefined ? {
             set: props.configType 
            } : undefined,
-  configValue: props.configValue !== undefined ? {
-            set: props.configValue 
-           } : undefined,
+  configValue: props.configValue !== undefined ? props.configValue : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -457,6 +454,7 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  configKey: props.configKey !== undefined ? props.configKey : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
@@ -475,15 +473,11 @@ import { logger } from './utils/logger';
   configType: props.configType !== undefined ? {
             set: props.configType 
            } : undefined,
-  configValue: props.configValue !== undefined ? {
-            set: props.configValue 
-           } : undefined,
+  configValue: props.configValue !== undefined ? props.configValue : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -603,6 +597,7 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
+  configKey: prop.configKey !== undefined ? prop.configKey : undefined,
   symbol: prop.symbol !== undefined ? {
     equals: prop.symbol 
   } : undefined,
@@ -618,15 +613,11 @@ import { logger } from './utils/logger';
   configType: prop.configType !== undefined ? {
             set: prop.configType 
            } : undefined,
-  configValue: prop.configValue !== undefined ? {
-            set: prop.configValue 
-           } : undefined,
+  configValue: prop.configValue !== undefined ? prop.configValue : undefined,
   symbol: prop.symbol !== undefined ? {
             set: prop.symbol 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -873,6 +864,7 @@ import { logger } from './utils/logger';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
+  configKey: props.configKey !== undefined ? props.configKey : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
@@ -1051,6 +1043,9 @@ import { logger } from './utils/logger';
           where: whereInput ? whereInput : {
       id: props.id !== undefined ? {
     equals: props.id 
+  } : undefined,
+  configKey: props.configKey !== undefined ? {
+    equals: props.configKey 
   } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 

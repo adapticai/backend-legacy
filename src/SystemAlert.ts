@@ -395,15 +395,11 @@ import { logger } from './utils/logger';
   metadataJobId: props.metadataJobId !== undefined ? {
             set: props.metadataJobId 
            } : undefined,
-  metadataMetrics: props.metadataMetrics !== undefined ? {
-            set: props.metadataMetrics 
-           } : undefined,
+  metadataMetrics: props.metadataMetrics !== undefined ? props.metadataMetrics : undefined,
   metadataErrorDetails: props.metadataErrorDetails !== undefined ? {
             set: props.metadataErrorDetails 
            } : undefined,
-  metadataRecommendations: props.metadataRecommendations !== undefined ? {
-            set: props.metadataRecommendations 
-           } : undefined,
+  metadataRecommendations: props.metadataRecommendations !== undefined ? props.metadataRecommendations : undefined,
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
@@ -428,9 +424,7 @@ import { logger } from './utils/logger';
   escalationLevel: props.escalationLevel !== undefined ? {
             set: props.escalationLevel 
            } : undefined,
-  notificationChannels: props.notificationChannels !== undefined ? {
-            set: props.notificationChannels 
-           } : undefined,
+  notificationChannels: props.notificationChannels !== undefined ? props.notificationChannels : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -616,15 +610,11 @@ import { logger } from './utils/logger';
   metadataJobId: props.metadataJobId !== undefined ? {
             set: props.metadataJobId 
            } : undefined,
-  metadataMetrics: props.metadataMetrics !== undefined ? {
-            set: props.metadataMetrics 
-           } : undefined,
+  metadataMetrics: props.metadataMetrics !== undefined ? props.metadataMetrics : undefined,
   metadataErrorDetails: props.metadataErrorDetails !== undefined ? {
             set: props.metadataErrorDetails 
            } : undefined,
-  metadataRecommendations: props.metadataRecommendations !== undefined ? {
-            set: props.metadataRecommendations 
-           } : undefined,
+  metadataRecommendations: props.metadataRecommendations !== undefined ? props.metadataRecommendations : undefined,
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
@@ -649,9 +639,7 @@ import { logger } from './utils/logger';
   escalationLevel: props.escalationLevel !== undefined ? {
             set: props.escalationLevel 
            } : undefined,
-  notificationChannels: props.notificationChannels !== undefined ? {
-            set: props.notificationChannels 
-           } : undefined,
+  notificationChannels: props.notificationChannels !== undefined ? props.notificationChannels : undefined,
       },
         };
 
@@ -813,15 +801,11 @@ import { logger } from './utils/logger';
   metadataJobId: prop.metadataJobId !== undefined ? {
             set: prop.metadataJobId 
            } : undefined,
-  metadataMetrics: prop.metadataMetrics !== undefined ? {
-            set: prop.metadataMetrics 
-           } : undefined,
+  metadataMetrics: prop.metadataMetrics !== undefined ? prop.metadataMetrics : undefined,
   metadataErrorDetails: prop.metadataErrorDetails !== undefined ? {
             set: prop.metadataErrorDetails 
            } : undefined,
-  metadataRecommendations: prop.metadataRecommendations !== undefined ? {
-            set: prop.metadataRecommendations 
-           } : undefined,
+  metadataRecommendations: prop.metadataRecommendations !== undefined ? prop.metadataRecommendations : undefined,
   status: prop.status !== undefined ? {
             set: prop.status 
            } : undefined,
@@ -846,9 +830,7 @@ import { logger } from './utils/logger';
   escalationLevel: prop.escalationLevel !== undefined ? {
             set: prop.escalationLevel 
            } : undefined,
-  notificationChannels: prop.notificationChannels !== undefined ? {
-            set: prop.notificationChannels 
-           } : undefined,
+  notificationChannels: prop.notificationChannels !== undefined ? prop.notificationChannels : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

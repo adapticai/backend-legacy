@@ -326,9 +326,7 @@ import { logger } from './utils/logger';
   version: props.version !== undefined ? {
             set: props.version 
            } : undefined,
-  state: props.state !== undefined ? {
-            set: props.state 
-           } : undefined,
+  state: props.state !== undefined ? props.state : undefined,
   timestamp: props.timestamp !== undefined ? {
             set: props.timestamp 
            } : undefined,
@@ -478,9 +476,7 @@ import { logger } from './utils/logger';
   version: props.version !== undefined ? {
             set: props.version 
            } : undefined,
-  state: props.state !== undefined ? {
-            set: props.state 
-           } : undefined,
+  state: props.state !== undefined ? props.state : undefined,
   timestamp: props.timestamp !== undefined ? {
             set: props.timestamp 
            } : undefined,
@@ -621,9 +617,7 @@ import { logger } from './utils/logger';
   version: prop.version !== undefined ? {
             set: prop.version 
            } : undefined,
-  state: prop.state !== undefined ? {
-            set: prop.state 
-           } : undefined,
+  state: prop.state !== undefined ? prop.state : undefined,
   timestamp: prop.timestamp !== undefined ? {
             set: prop.timestamp 
            } : undefined,

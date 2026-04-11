@@ -342,18 +342,14 @@ import { logger } from './utils/logger';
   recordId: props.recordId !== undefined ? {
             set: props.recordId 
            } : undefined,
-  changedFields: props.changedFields !== undefined ? {
-            set: props.changedFields 
-           } : undefined,
+  changedFields: props.changedFields !== undefined ? props.changedFields : undefined,
   operationName: props.operationName !== undefined ? {
             set: props.operationName 
            } : undefined,
   ipAddress: props.ipAddress !== undefined ? {
             set: props.ipAddress 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -504,18 +500,14 @@ import { logger } from './utils/logger';
   recordId: props.recordId !== undefined ? {
             set: props.recordId 
            } : undefined,
-  changedFields: props.changedFields !== undefined ? {
-            set: props.changedFields 
-           } : undefined,
+  changedFields: props.changedFields !== undefined ? props.changedFields : undefined,
   operationName: props.operationName !== undefined ? {
             set: props.operationName 
            } : undefined,
   ipAddress: props.ipAddress !== undefined ? {
             set: props.ipAddress 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -659,18 +651,14 @@ import { logger } from './utils/logger';
   recordId: prop.recordId !== undefined ? {
             set: prop.recordId 
            } : undefined,
-  changedFields: prop.changedFields !== undefined ? {
-            set: prop.changedFields 
-           } : undefined,
+  changedFields: prop.changedFields !== undefined ? prop.changedFields : undefined,
   operationName: prop.operationName !== undefined ? {
             set: prop.operationName 
            } : undefined,
   ipAddress: prop.ipAddress !== undefined ? {
             set: prop.ipAddress 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
 
           },
         }));

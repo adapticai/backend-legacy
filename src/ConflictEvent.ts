@@ -329,21 +329,15 @@ import { logger } from './utils/logger';
   entityId: props.entityId !== undefined ? {
             set: props.entityId 
            } : undefined,
-  serverVersion: props.serverVersion !== undefined ? {
-            set: props.serverVersion 
-           } : undefined,
-  clientVersion: props.clientVersion !== undefined ? {
-            set: props.clientVersion 
-           } : undefined,
+  serverVersion: props.serverVersion !== undefined ? props.serverVersion : undefined,
+  clientVersion: props.clientVersion !== undefined ? props.clientVersion : undefined,
   strategy: props.strategy !== undefined ? {
             set: props.strategy 
            } : undefined,
   resolved: props.resolved !== undefined ? {
             set: props.resolved 
            } : undefined,
-  resolution: props.resolution !== undefined ? {
-            set: props.resolution 
-           } : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
   resolutionTime: props.resolutionTime !== undefined ? {
             set: props.resolutionTime 
            } : undefined,
@@ -491,21 +485,15 @@ import { logger } from './utils/logger';
   entityId: props.entityId !== undefined ? {
             set: props.entityId 
            } : undefined,
-  serverVersion: props.serverVersion !== undefined ? {
-            set: props.serverVersion 
-           } : undefined,
-  clientVersion: props.clientVersion !== undefined ? {
-            set: props.clientVersion 
-           } : undefined,
+  serverVersion: props.serverVersion !== undefined ? props.serverVersion : undefined,
+  clientVersion: props.clientVersion !== undefined ? props.clientVersion : undefined,
   strategy: props.strategy !== undefined ? {
             set: props.strategy 
            } : undefined,
   resolved: props.resolved !== undefined ? {
             set: props.resolved 
            } : undefined,
-  resolution: props.resolution !== undefined ? {
-            set: props.resolution 
-           } : undefined,
+  resolution: props.resolution !== undefined ? props.resolution : undefined,
   resolutionTime: props.resolutionTime !== undefined ? {
             set: props.resolutionTime 
            } : undefined,
@@ -646,21 +634,15 @@ import { logger } from './utils/logger';
   entityId: prop.entityId !== undefined ? {
             set: prop.entityId 
            } : undefined,
-  serverVersion: prop.serverVersion !== undefined ? {
-            set: prop.serverVersion 
-           } : undefined,
-  clientVersion: prop.clientVersion !== undefined ? {
-            set: prop.clientVersion 
-           } : undefined,
+  serverVersion: prop.serverVersion !== undefined ? prop.serverVersion : undefined,
+  clientVersion: prop.clientVersion !== undefined ? prop.clientVersion : undefined,
   strategy: prop.strategy !== undefined ? {
             set: prop.strategy 
            } : undefined,
   resolved: prop.resolved !== undefined ? {
             set: prop.resolved 
            } : undefined,
-  resolution: prop.resolution !== undefined ? {
-            set: prop.resolution 
-           } : undefined,
+  resolution: prop.resolution !== undefined ? prop.resolution : undefined,
   resolutionTime: prop.resolutionTime !== undefined ? {
             set: prop.resolutionTime 
            } : undefined,

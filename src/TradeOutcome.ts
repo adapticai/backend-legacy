@@ -431,9 +431,7 @@ import { logger } from './utils/logger';
   regimeAtEntry: props.regimeAtEntry !== undefined ? {
             set: props.regimeAtEntry 
            } : undefined,
-  featureSnapshot: props.featureSnapshot !== undefined ? {
-            set: props.featureSnapshot 
-           } : undefined,
+  featureSnapshot: props.featureSnapshot !== undefined ? props.featureSnapshot : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -653,9 +651,7 @@ import { logger } from './utils/logger';
   regimeAtEntry: props.regimeAtEntry !== undefined ? {
             set: props.regimeAtEntry 
            } : undefined,
-  featureSnapshot: props.featureSnapshot !== undefined ? {
-            set: props.featureSnapshot 
-           } : undefined,
+  featureSnapshot: props.featureSnapshot !== undefined ? props.featureSnapshot : undefined,
       },
         };
 
@@ -850,9 +846,7 @@ import { logger } from './utils/logger';
   regimeAtEntry: prop.regimeAtEntry !== undefined ? {
             set: prop.regimeAtEntry 
            } : undefined,
-  featureSnapshot: prop.featureSnapshot !== undefined ? {
-            set: prop.featureSnapshot 
-           } : undefined,
+  featureSnapshot: prop.featureSnapshot !== undefined ? prop.featureSnapshot : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

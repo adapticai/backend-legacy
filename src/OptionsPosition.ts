@@ -938,15 +938,11 @@ import { logger } from './utils/logger';
   tradeId: props.tradeId !== undefined ? {
             set: props.tradeId 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   lifecycleState: props.lifecycleState !== undefined ? {
             set: props.lifecycleState 
            } : undefined,
-  exitThresholds: props.exitThresholds !== undefined ? {
-            set: props.exitThresholds 
-           } : undefined,
+  exitThresholds: props.exitThresholds !== undefined ? props.exitThresholds : undefined,
   linkedRollId: props.linkedRollId !== undefined ? {
             set: props.linkedRollId 
            } : undefined,
@@ -1050,9 +1046,7 @@ import { logger } from './utils/logger';
         underlyingPrice: props.contract.underlyingPrice !== undefined ? {
             set: props.contract.underlyingPrice
           } : undefined,
-        metadata: props.contract.metadata !== undefined ? {
-            set: props.contract.metadata
-          } : undefined,
+        metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
         dataTimestamp: props.contract.dataTimestamp !== undefined ? {
             set: props.contract.dataTimestamp
           } : undefined,
@@ -1120,9 +1114,7 @@ import { logger } from './utils/logger';
           extrinsicValue: item.extrinsicValue !== undefined ? {
               set: item.extrinsicValue
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
@@ -1236,9 +1228,7 @@ import { logger } from './utils/logger';
           notes: item.notes !== undefined ? {
               set: item.notes
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
       position: item.position ? 
       typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
 ? {
@@ -1351,15 +1341,11 @@ import { logger } from './utils/logger';
             tradeId: item.position.tradeId !== undefined ? {
                 set: item.position.tradeId
               } : undefined,
-            metadata: item.position.metadata !== undefined ? {
-                set: item.position.metadata
-              } : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
             lifecycleState: item.position.lifecycleState !== undefined ? {
                 set: item.position.lifecycleState
               } : undefined,
-            exitThresholds: item.position.exitThresholds !== undefined ? {
-                set: item.position.exitThresholds
-              } : undefined,
+            exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
             linkedRollId: item.position.linkedRollId !== undefined ? {
                 set: item.position.linkedRollId
               } : undefined,
@@ -1741,9 +1727,7 @@ import { logger } from './utils/logger';
         notes: item.notes !== undefined ? {
             set: item.notes
           } : undefined,
-        metadata: item.metadata !== undefined ? {
-            set: item.metadata
-          } : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
     contract: item.contract ? 
     typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
@@ -1838,9 +1822,7 @@ import { logger } from './utils/logger';
           underlyingPrice: item.contract.underlyingPrice !== undefined ? {
               set: item.contract.underlyingPrice
             } : undefined,
-          metadata: item.contract.metadata !== undefined ? {
-              set: item.contract.metadata
-            } : undefined,
+          metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
           dataTimestamp: item.contract.dataTimestamp !== undefined ? {
               set: item.contract.dataTimestamp
             } : undefined,
@@ -1953,15 +1935,11 @@ import { logger } from './utils/logger';
             tradeId: item.tradeId !== undefined ? {
                 set: item.tradeId
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
             lifecycleState: item.lifecycleState !== undefined ? {
                 set: item.lifecycleState
               } : undefined,
-            exitThresholds: item.exitThresholds !== undefined ? {
-                set: item.exitThresholds
-              } : undefined,
+            exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
             linkedRollId: item.linkedRollId !== undefined ? {
                 set: item.linkedRollId
               } : undefined,
@@ -2065,9 +2043,7 @@ import { logger } from './utils/logger';
             extrinsicValue: item.extrinsicValue !== undefined ? {
                 set: item.extrinsicValue
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
@@ -2395,9 +2371,7 @@ import { logger } from './utils/logger';
         trigger: item.trigger !== undefined ? {
             set: item.trigger
           } : undefined,
-        metadata: item.metadata !== undefined ? {
-            set: item.metadata
-          } : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
       create: {
         fromState: item.fromState !== undefined ? item.fromState : undefined,
@@ -3034,15 +3008,11 @@ import { logger } from './utils/logger';
   tradeId: props.tradeId !== undefined ? {
             set: props.tradeId 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   lifecycleState: props.lifecycleState !== undefined ? {
             set: props.lifecycleState 
            } : undefined,
-  exitThresholds: props.exitThresholds !== undefined ? {
-            set: props.exitThresholds 
-           } : undefined,
+  exitThresholds: props.exitThresholds !== undefined ? props.exitThresholds : undefined,
   linkedRollId: props.linkedRollId !== undefined ? {
             set: props.linkedRollId 
            } : undefined,
@@ -3140,9 +3110,7 @@ import { logger } from './utils/logger';
         underlyingPrice: props.contract.underlyingPrice !== undefined ? {
             set: props.contract.underlyingPrice
           } : undefined,
-        metadata: props.contract.metadata !== undefined ? {
-            set: props.contract.metadata
-          } : undefined,
+        metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
         dataTimestamp: props.contract.dataTimestamp !== undefined ? {
             set: props.contract.dataTimestamp
           } : undefined,
@@ -3210,9 +3178,7 @@ import { logger } from './utils/logger';
           extrinsicValue: item.extrinsicValue !== undefined ? {
               set: item.extrinsicValue
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
@@ -3326,9 +3292,7 @@ import { logger } from './utils/logger';
           notes: item.notes !== undefined ? {
               set: item.notes
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
       position: item.position ? 
       typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
 ? {
@@ -3441,15 +3405,11 @@ import { logger } from './utils/logger';
             tradeId: item.position.tradeId !== undefined ? {
                 set: item.position.tradeId
               } : undefined,
-            metadata: item.position.metadata !== undefined ? {
-                set: item.position.metadata
-              } : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
             lifecycleState: item.position.lifecycleState !== undefined ? {
                 set: item.position.lifecycleState
               } : undefined,
-            exitThresholds: item.position.exitThresholds !== undefined ? {
-                set: item.position.exitThresholds
-              } : undefined,
+            exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
             linkedRollId: item.position.linkedRollId !== undefined ? {
                 set: item.position.linkedRollId
               } : undefined,
@@ -3831,9 +3791,7 @@ import { logger } from './utils/logger';
         notes: item.notes !== undefined ? {
             set: item.notes
           } : undefined,
-        metadata: item.metadata !== undefined ? {
-            set: item.metadata
-          } : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
     contract: item.contract ? 
     typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
@@ -3928,9 +3886,7 @@ import { logger } from './utils/logger';
           underlyingPrice: item.contract.underlyingPrice !== undefined ? {
               set: item.contract.underlyingPrice
             } : undefined,
-          metadata: item.contract.metadata !== undefined ? {
-              set: item.contract.metadata
-            } : undefined,
+          metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
           dataTimestamp: item.contract.dataTimestamp !== undefined ? {
               set: item.contract.dataTimestamp
             } : undefined,
@@ -4043,15 +3999,11 @@ import { logger } from './utils/logger';
             tradeId: item.tradeId !== undefined ? {
                 set: item.tradeId
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
             lifecycleState: item.lifecycleState !== undefined ? {
                 set: item.lifecycleState
               } : undefined,
-            exitThresholds: item.exitThresholds !== undefined ? {
-                set: item.exitThresholds
-              } : undefined,
+            exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
             linkedRollId: item.linkedRollId !== undefined ? {
                 set: item.linkedRollId
               } : undefined,
@@ -4155,9 +4107,7 @@ import { logger } from './utils/logger';
             extrinsicValue: item.extrinsicValue !== undefined ? {
                 set: item.extrinsicValue
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
@@ -4485,9 +4435,7 @@ import { logger } from './utils/logger';
         trigger: item.trigger !== undefined ? {
             set: item.trigger
           } : undefined,
-        metadata: item.metadata !== undefined ? {
-            set: item.metadata
-          } : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
       create: {
         fromState: item.fromState !== undefined ? item.fromState : undefined,
@@ -4712,15 +4660,11 @@ import { logger } from './utils/logger';
   tradeId: prop.tradeId !== undefined ? {
             set: prop.tradeId 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   lifecycleState: prop.lifecycleState !== undefined ? {
             set: prop.lifecycleState 
            } : undefined,
-  exitThresholds: prop.exitThresholds !== undefined ? {
-            set: prop.exitThresholds 
-           } : undefined,
+  exitThresholds: prop.exitThresholds !== undefined ? prop.exitThresholds : undefined,
   linkedRollId: prop.linkedRollId !== undefined ? {
             set: prop.linkedRollId 
            } : undefined,
@@ -4824,9 +4768,7 @@ import { logger } from './utils/logger';
         underlyingPrice: prop.contract.underlyingPrice !== undefined ? {
             set: prop.contract.underlyingPrice
           } : undefined,
-        metadata: prop.contract.metadata !== undefined ? {
-            set: prop.contract.metadata
-          } : undefined,
+        metadata: prop.contract.metadata !== undefined ? prop.contract.metadata : undefined,
         dataTimestamp: prop.contract.dataTimestamp !== undefined ? {
             set: prop.contract.dataTimestamp
           } : undefined,
@@ -4894,9 +4836,7 @@ import { logger } from './utils/logger';
           extrinsicValue: item.extrinsicValue !== undefined ? {
               set: item.extrinsicValue
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
@@ -5010,9 +4950,7 @@ import { logger } from './utils/logger';
           notes: item.notes !== undefined ? {
               set: item.notes
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
       position: item.position ? 
       typeof item.position === 'object' && Object.keys(item.position).length === 1 && (Object.keys(item.position)[0] === 'id' || Object.keys(item.position)[0] === 'symbol')
 ? {
@@ -5125,15 +5063,11 @@ import { logger } from './utils/logger';
             tradeId: item.position.tradeId !== undefined ? {
                 set: item.position.tradeId
               } : undefined,
-            metadata: item.position.metadata !== undefined ? {
-                set: item.position.metadata
-              } : undefined,
+            metadata: item.position.metadata !== undefined ? item.position.metadata : undefined,
             lifecycleState: item.position.lifecycleState !== undefined ? {
                 set: item.position.lifecycleState
               } : undefined,
-            exitThresholds: item.position.exitThresholds !== undefined ? {
-                set: item.position.exitThresholds
-              } : undefined,
+            exitThresholds: item.position.exitThresholds !== undefined ? item.position.exitThresholds : undefined,
             linkedRollId: item.position.linkedRollId !== undefined ? {
                 set: item.position.linkedRollId
               } : undefined,
@@ -5515,9 +5449,7 @@ import { logger } from './utils/logger';
         notes: item.notes !== undefined ? {
             set: item.notes
           } : undefined,
-        metadata: item.metadata !== undefined ? {
-            set: item.metadata
-          } : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
     contract: item.contract ? 
     typeof item.contract === 'object' && Object.keys(item.contract).length === 1 && (Object.keys(item.contract)[0] === 'id' || Object.keys(item.contract)[0] === 'symbol')
 ? {
@@ -5612,9 +5544,7 @@ import { logger } from './utils/logger';
           underlyingPrice: item.contract.underlyingPrice !== undefined ? {
               set: item.contract.underlyingPrice
             } : undefined,
-          metadata: item.contract.metadata !== undefined ? {
-              set: item.contract.metadata
-            } : undefined,
+          metadata: item.contract.metadata !== undefined ? item.contract.metadata : undefined,
           dataTimestamp: item.contract.dataTimestamp !== undefined ? {
               set: item.contract.dataTimestamp
             } : undefined,
@@ -5727,15 +5657,11 @@ import { logger } from './utils/logger';
             tradeId: item.tradeId !== undefined ? {
                 set: item.tradeId
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
             lifecycleState: item.lifecycleState !== undefined ? {
                 set: item.lifecycleState
               } : undefined,
-            exitThresholds: item.exitThresholds !== undefined ? {
-                set: item.exitThresholds
-              } : undefined,
+            exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
             linkedRollId: item.linkedRollId !== undefined ? {
                 set: item.linkedRollId
               } : undefined,
@@ -5839,9 +5765,7 @@ import { logger } from './utils/logger';
             extrinsicValue: item.extrinsicValue !== undefined ? {
                 set: item.extrinsicValue
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
@@ -6169,9 +6093,7 @@ import { logger } from './utils/logger';
         trigger: item.trigger !== undefined ? {
             set: item.trigger
           } : undefined,
-        metadata: item.metadata !== undefined ? {
-            set: item.metadata
-          } : undefined,
+        metadata: item.metadata !== undefined ? item.metadata : undefined,
       },
       create: {
         fromState: item.fromState !== undefined ? item.fromState : undefined,

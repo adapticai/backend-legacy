@@ -553,9 +553,7 @@ import { logger } from './utils/logger';
   confidence: props.confidence !== undefined ? {
             set: props.confidence 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -948,9 +946,7 @@ import { logger } from './utils/logger';
           changePercent: item.changePercent !== undefined ? {
               set: item.changePercent
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
@@ -1412,9 +1408,7 @@ import { logger } from './utils/logger';
   confidence: props.confidence !== undefined ? {
             set: props.confidence 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
   typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && (Object.keys(props.asset)[0] === 'id' || Object.keys(props.asset)[0] === 'symbol')
 ? {
@@ -1804,9 +1798,7 @@ import { logger } from './utils/logger';
           changePercent: item.changePercent !== undefined ? {
               set: item.changePercent
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
@@ -2107,9 +2099,7 @@ import { logger } from './utils/logger';
   confidence: prop.confidence !== undefined ? {
             set: prop.confidence 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -2502,9 +2492,7 @@ import { logger } from './utils/logger';
           changePercent: item.changePercent !== undefined ? {
               set: item.changePercent
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           institutionName: item.institutionName !== undefined ? item.institutionName : undefined,

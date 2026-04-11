@@ -406,12 +406,8 @@ import { logger } from './utils/logger';
   positionCount: props.positionCount !== undefined ? {
             set: props.positionCount 
            } : undefined,
-  underlyingSymbols: props.underlyingSymbols !== undefined ? {
-            set: props.underlyingSymbols 
-           } : undefined,
-  expirationDates: props.expirationDates !== undefined ? {
-            set: props.expirationDates 
-           } : undefined,
+  underlyingSymbols: props.underlyingSymbols !== undefined ? props.underlyingSymbols : undefined,
+  expirationDates: props.expirationDates !== undefined ? props.expirationDates : undefined,
   marketHours: props.marketHours !== undefined ? {
             set: props.marketHours 
            } : undefined,
@@ -626,12 +622,8 @@ import { logger } from './utils/logger';
   positionCount: props.positionCount !== undefined ? {
             set: props.positionCount 
            } : undefined,
-  underlyingSymbols: props.underlyingSymbols !== undefined ? {
-            set: props.underlyingSymbols 
-           } : undefined,
-  expirationDates: props.expirationDates !== undefined ? {
-            set: props.expirationDates 
-           } : undefined,
+  underlyingSymbols: props.underlyingSymbols !== undefined ? props.underlyingSymbols : undefined,
+  expirationDates: props.expirationDates !== undefined ? props.expirationDates : undefined,
   marketHours: props.marketHours !== undefined ? {
             set: props.marketHours 
            } : undefined,
@@ -823,12 +815,8 @@ import { logger } from './utils/logger';
   positionCount: prop.positionCount !== undefined ? {
             set: prop.positionCount 
            } : undefined,
-  underlyingSymbols: prop.underlyingSymbols !== undefined ? {
-            set: prop.underlyingSymbols 
-           } : undefined,
-  expirationDates: prop.expirationDates !== undefined ? {
-            set: prop.expirationDates 
-           } : undefined,
+  underlyingSymbols: prop.underlyingSymbols !== undefined ? prop.underlyingSymbols : undefined,
+  expirationDates: prop.expirationDates !== undefined ? prop.expirationDates : undefined,
   marketHours: prop.marketHours !== undefined ? {
             set: prop.marketHours 
            } : undefined,

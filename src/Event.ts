@@ -435,15 +435,9 @@ import { logger } from './utils/logger';
   version: props.version !== undefined ? {
             set: props.version 
            } : undefined,
-  eventData: props.eventData !== undefined ? {
-            set: props.eventData 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-  signature: props.signature !== undefined ? {
-            set: props.signature 
-           } : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  signature: props.signature !== undefined ? props.signature : undefined,
   retentionPolicyId: props.retentionPolicyId !== undefined ? {
             set: props.retentionPolicyId 
            } : undefined,
@@ -453,9 +447,7 @@ import { logger } from './utils/logger';
   archived: props.archived !== undefined ? {
             set: props.archived 
            } : undefined,
-  tags: props.tags !== undefined ? {
-            set: props.tags 
-           } : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -677,15 +669,9 @@ import { logger } from './utils/logger';
   version: props.version !== undefined ? {
             set: props.version 
            } : undefined,
-  eventData: props.eventData !== undefined ? {
-            set: props.eventData 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-  signature: props.signature !== undefined ? {
-            set: props.signature 
-           } : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
+  signature: props.signature !== undefined ? props.signature : undefined,
   retentionPolicyId: props.retentionPolicyId !== undefined ? {
             set: props.retentionPolicyId 
            } : undefined,
@@ -695,9 +681,7 @@ import { logger } from './utils/logger';
   archived: props.archived !== undefined ? {
             set: props.archived 
            } : undefined,
-  tags: props.tags !== undefined ? {
-            set: props.tags 
-           } : undefined,
+  tags: props.tags !== undefined ? props.tags : undefined,
       },
         };
 
@@ -893,15 +877,9 @@ import { logger } from './utils/logger';
   version: prop.version !== undefined ? {
             set: prop.version 
            } : undefined,
-  eventData: prop.eventData !== undefined ? {
-            set: prop.eventData 
-           } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
-  signature: prop.signature !== undefined ? {
-            set: prop.signature 
-           } : undefined,
+  eventData: prop.eventData !== undefined ? prop.eventData : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
+  signature: prop.signature !== undefined ? prop.signature : undefined,
   retentionPolicyId: prop.retentionPolicyId !== undefined ? {
             set: prop.retentionPolicyId 
            } : undefined,
@@ -911,9 +889,7 @@ import { logger } from './utils/logger';
   archived: prop.archived !== undefined ? {
             set: prop.archived 
            } : undefined,
-  tags: prop.tags !== undefined ? {
-            set: prop.tags 
-           } : undefined,
+  tags: prop.tags !== undefined ? prop.tags : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

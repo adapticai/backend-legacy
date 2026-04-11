@@ -331,12 +331,8 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
-  metrics: props.metrics !== undefined ? {
-            set: props.metrics 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metrics: props.metrics !== undefined ? props.metrics : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -484,12 +480,8 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? {
             set: props.status 
            } : undefined,
-  metrics: props.metrics !== undefined ? {
-            set: props.metrics 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metrics: props.metrics !== undefined ? props.metrics : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -630,12 +622,8 @@ import { logger } from './utils/logger';
   status: prop.status !== undefined ? {
             set: prop.status 
            } : undefined,
-  metrics: prop.metrics !== undefined ? {
-            set: prop.metrics 
-           } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metrics: prop.metrics !== undefined ? prop.metrics : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

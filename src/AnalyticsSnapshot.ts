@@ -323,9 +323,7 @@ import { logger } from './utils/logger';
   dataType: props.dataType !== undefined ? {
             set: props.dataType 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -471,9 +469,7 @@ import { logger } from './utils/logger';
   dataType: props.dataType !== undefined ? {
             set: props.dataType 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
       },
         };
 
@@ -611,9 +607,7 @@ import { logger } from './utils/logger';
   dataType: prop.dataType !== undefined ? {
             set: prop.dataType 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

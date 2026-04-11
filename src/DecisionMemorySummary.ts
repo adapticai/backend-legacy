@@ -354,15 +354,11 @@ import { logger } from './utils/logger';
   summary: props.summary !== undefined ? {
             set: props.summary 
            } : undefined,
-  keyFactors: props.keyFactors !== undefined ? {
-            set: props.keyFactors 
-           } : undefined,
+  keyFactors: props.keyFactors !== undefined ? props.keyFactors : undefined,
   outcome: props.outcome !== undefined ? {
             set: props.outcome 
            } : undefined,
-  outcomeDetails: props.outcomeDetails !== undefined ? {
-            set: props.outcomeDetails 
-           } : undefined,
+  outcomeDetails: props.outcomeDetails !== undefined ? props.outcomeDetails : undefined,
   decisionRecordId: props.decisionRecordId !== undefined ? {
             set: props.decisionRecordId 
            } : undefined,
@@ -543,15 +539,11 @@ import { logger } from './utils/logger';
   summary: props.summary !== undefined ? {
             set: props.summary 
            } : undefined,
-  keyFactors: props.keyFactors !== undefined ? {
-            set: props.keyFactors 
-           } : undefined,
+  keyFactors: props.keyFactors !== undefined ? props.keyFactors : undefined,
   outcome: props.outcome !== undefined ? {
             set: props.outcome 
            } : undefined,
-  outcomeDetails: props.outcomeDetails !== undefined ? {
-            set: props.outcomeDetails 
-           } : undefined,
+  outcomeDetails: props.outcomeDetails !== undefined ? props.outcomeDetails : undefined,
   decisionRecordId: props.decisionRecordId !== undefined ? {
             set: props.decisionRecordId 
            } : undefined,
@@ -716,15 +708,11 @@ import { logger } from './utils/logger';
   summary: prop.summary !== undefined ? {
             set: prop.summary 
            } : undefined,
-  keyFactors: prop.keyFactors !== undefined ? {
-            set: prop.keyFactors 
-           } : undefined,
+  keyFactors: prop.keyFactors !== undefined ? prop.keyFactors : undefined,
   outcome: prop.outcome !== undefined ? {
             set: prop.outcome 
            } : undefined,
-  outcomeDetails: prop.outcomeDetails !== undefined ? {
-            set: prop.outcomeDetails 
-           } : undefined,
+  outcomeDetails: prop.outcomeDetails !== undefined ? prop.outcomeDetails : undefined,
   decisionRecordId: prop.decisionRecordId !== undefined ? {
             set: prop.decisionRecordId 
            } : undefined,

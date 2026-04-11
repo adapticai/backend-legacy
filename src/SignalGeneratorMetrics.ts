@@ -406,9 +406,7 @@ import { logger } from './utils/logger';
   healthStatus: props.healthStatus !== undefined ? {
             set: props.healthStatus 
            } : undefined,
-  healthIssues: props.healthIssues !== undefined ? {
-            set: props.healthIssues 
-           } : undefined,
+  healthIssues: props.healthIssues !== undefined ? props.healthIssues : undefined,
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
@@ -607,9 +605,7 @@ import { logger } from './utils/logger';
   healthStatus: props.healthStatus !== undefined ? {
             set: props.healthStatus 
            } : undefined,
-  healthIssues: props.healthIssues !== undefined ? {
-            set: props.healthIssues 
-           } : undefined,
+  healthIssues: props.healthIssues !== undefined ? props.healthIssues : undefined,
       },
         };
 
@@ -789,9 +785,7 @@ import { logger } from './utils/logger';
   healthStatus: prop.healthStatus !== undefined ? {
             set: prop.healthStatus 
            } : undefined,
-  healthIssues: prop.healthIssues !== undefined ? {
-            set: prop.healthIssues 
-           } : undefined,
+  healthIssues: prop.healthIssues !== undefined ? prop.healthIssues : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,

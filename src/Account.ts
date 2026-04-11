@@ -1015,9 +1015,7 @@ import { logger } from './utils/logger';
           APISecret: item.APISecret !== undefined ? {
               set: item.APISecret
             } : undefined,
-          configuration: item.configuration !== undefined ? {
-              set: item.configuration
-            } : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen
             } : undefined,
@@ -1183,9 +1181,7 @@ import { logger } from './utils/logger';
             killSwitchEnabled: item.tradingPolicy.killSwitchEnabled !== undefined ? {
                 set: item.tradingPolicy.killSwitchEnabled
               } : undefined,
-            autonomyPrefs: item.tradingPolicy.autonomyPrefs !== undefined ? {
-                set: item.tradingPolicy.autonomyPrefs
-              } : undefined,
+            autonomyPrefs: item.tradingPolicy.autonomyPrefs !== undefined ? item.tradingPolicy.autonomyPrefs : undefined,
             equitiesEnabled: item.tradingPolicy.equitiesEnabled !== undefined ? {
                 set: item.tradingPolicy.equitiesEnabled
               } : undefined,
@@ -1213,9 +1209,7 @@ import { logger } from './utils/logger';
             fractionalSharesEnabled: item.tradingPolicy.fractionalSharesEnabled !== undefined ? {
                 set: item.tradingPolicy.fractionalSharesEnabled
               } : undefined,
-            assetUniversePrefs: item.tradingPolicy.assetUniversePrefs !== undefined ? {
-                set: item.tradingPolicy.assetUniversePrefs
-              } : undefined,
+            assetUniversePrefs: item.tradingPolicy.assetUniversePrefs !== undefined ? item.tradingPolicy.assetUniversePrefs : undefined,
             maxBuyingPowerUtilPct: item.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
                 set: item.tradingPolicy.maxBuyingPowerUtilPct
               } : undefined,
@@ -1243,21 +1237,11 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? {
                 set: item.tradingPolicy.maxOpenOrders
               } : undefined,
-            riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? {
-                set: item.tradingPolicy.riskBudgetPrefs
-              } : undefined,
-            signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? {
-                set: item.tradingPolicy.signalConsumptionPrefs
-              } : undefined,
-            executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? {
-                set: item.tradingPolicy.executionPrefs
-              } : undefined,
-            positionManagementPrefs: item.tradingPolicy.positionManagementPrefs !== undefined ? {
-                set: item.tradingPolicy.positionManagementPrefs
-              } : undefined,
-            portfolioConstructionPrefs: item.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
-                set: item.tradingPolicy.portfolioConstructionPrefs
-              } : undefined,
+            riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.tradingPolicy.positionManagementPrefs !== undefined ? item.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.tradingPolicy.portfolioConstructionPrefs : undefined,
             macroOverlayEnabled: item.tradingPolicy.macroOverlayEnabled !== undefined ? {
                 set: item.tradingPolicy.macroOverlayEnabled
               } : undefined,
@@ -1288,9 +1272,7 @@ import { logger } from './utils/logger';
             dataQualitySentinelEnabled: item.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
                 set: item.tradingPolicy.dataQualitySentinelEnabled
               } : undefined,
-            overlayResponsePrefs: item.tradingPolicy.overlayResponsePrefs !== undefined ? {
-                set: item.tradingPolicy.overlayResponsePrefs
-              } : undefined,
+            overlayResponsePrefs: item.tradingPolicy.overlayResponsePrefs !== undefined ? item.tradingPolicy.overlayResponsePrefs : undefined,
             miniModelProvider: item.tradingPolicy.miniModelProvider !== undefined ? {
                 set: item.tradingPolicy.miniModelProvider
               } : undefined,
@@ -1309,12 +1291,8 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? {
                 set: item.tradingPolicy.advancedModelId
               } : undefined,
-            modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? {
-                set: item.tradingPolicy.modelPrefs
-              } : undefined,
-            auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? {
-                set: item.tradingPolicy.auditNotificationPrefs
-              } : undefined,
+            modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
           },
           create: {
             version: item.tradingPolicy.version !== undefined ? item.tradingPolicy.version : undefined,
@@ -1429,9 +1407,7 @@ import { logger } from './utils/logger';
             retryCount: item.retryCount !== undefined ? {
                 set: item.retryCount
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -3183,9 +3159,7 @@ import { logger } from './utils/logger';
           APISecret: item.APISecret !== undefined ? {
               set: item.APISecret
             } : undefined,
-          configuration: item.configuration !== undefined ? {
-              set: item.configuration
-            } : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen
             } : undefined,
@@ -3351,9 +3325,7 @@ import { logger } from './utils/logger';
             killSwitchEnabled: item.tradingPolicy.killSwitchEnabled !== undefined ? {
                 set: item.tradingPolicy.killSwitchEnabled
               } : undefined,
-            autonomyPrefs: item.tradingPolicy.autonomyPrefs !== undefined ? {
-                set: item.tradingPolicy.autonomyPrefs
-              } : undefined,
+            autonomyPrefs: item.tradingPolicy.autonomyPrefs !== undefined ? item.tradingPolicy.autonomyPrefs : undefined,
             equitiesEnabled: item.tradingPolicy.equitiesEnabled !== undefined ? {
                 set: item.tradingPolicy.equitiesEnabled
               } : undefined,
@@ -3381,9 +3353,7 @@ import { logger } from './utils/logger';
             fractionalSharesEnabled: item.tradingPolicy.fractionalSharesEnabled !== undefined ? {
                 set: item.tradingPolicy.fractionalSharesEnabled
               } : undefined,
-            assetUniversePrefs: item.tradingPolicy.assetUniversePrefs !== undefined ? {
-                set: item.tradingPolicy.assetUniversePrefs
-              } : undefined,
+            assetUniversePrefs: item.tradingPolicy.assetUniversePrefs !== undefined ? item.tradingPolicy.assetUniversePrefs : undefined,
             maxBuyingPowerUtilPct: item.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
                 set: item.tradingPolicy.maxBuyingPowerUtilPct
               } : undefined,
@@ -3411,21 +3381,11 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? {
                 set: item.tradingPolicy.maxOpenOrders
               } : undefined,
-            riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? {
-                set: item.tradingPolicy.riskBudgetPrefs
-              } : undefined,
-            signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? {
-                set: item.tradingPolicy.signalConsumptionPrefs
-              } : undefined,
-            executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? {
-                set: item.tradingPolicy.executionPrefs
-              } : undefined,
-            positionManagementPrefs: item.tradingPolicy.positionManagementPrefs !== undefined ? {
-                set: item.tradingPolicy.positionManagementPrefs
-              } : undefined,
-            portfolioConstructionPrefs: item.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
-                set: item.tradingPolicy.portfolioConstructionPrefs
-              } : undefined,
+            riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.tradingPolicy.positionManagementPrefs !== undefined ? item.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.tradingPolicy.portfolioConstructionPrefs : undefined,
             macroOverlayEnabled: item.tradingPolicy.macroOverlayEnabled !== undefined ? {
                 set: item.tradingPolicy.macroOverlayEnabled
               } : undefined,
@@ -3456,9 +3416,7 @@ import { logger } from './utils/logger';
             dataQualitySentinelEnabled: item.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
                 set: item.tradingPolicy.dataQualitySentinelEnabled
               } : undefined,
-            overlayResponsePrefs: item.tradingPolicy.overlayResponsePrefs !== undefined ? {
-                set: item.tradingPolicy.overlayResponsePrefs
-              } : undefined,
+            overlayResponsePrefs: item.tradingPolicy.overlayResponsePrefs !== undefined ? item.tradingPolicy.overlayResponsePrefs : undefined,
             miniModelProvider: item.tradingPolicy.miniModelProvider !== undefined ? {
                 set: item.tradingPolicy.miniModelProvider
               } : undefined,
@@ -3477,12 +3435,8 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? {
                 set: item.tradingPolicy.advancedModelId
               } : undefined,
-            modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? {
-                set: item.tradingPolicy.modelPrefs
-              } : undefined,
-            auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? {
-                set: item.tradingPolicy.auditNotificationPrefs
-              } : undefined,
+            modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
           },
           create: {
             version: item.tradingPolicy.version !== undefined ? item.tradingPolicy.version : undefined,
@@ -3597,9 +3551,7 @@ import { logger } from './utils/logger';
             retryCount: item.retryCount !== undefined ? {
                 set: item.retryCount
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,
@@ -4920,9 +4872,7 @@ import { logger } from './utils/logger';
           APISecret: item.APISecret !== undefined ? {
               set: item.APISecret
             } : undefined,
-          configuration: item.configuration !== undefined ? {
-              set: item.configuration
-            } : undefined,
+          configuration: item.configuration !== undefined ? item.configuration : undefined,
           marketOpen: item.marketOpen !== undefined ? {
               set: item.marketOpen
             } : undefined,
@@ -5088,9 +5038,7 @@ import { logger } from './utils/logger';
             killSwitchEnabled: item.tradingPolicy.killSwitchEnabled !== undefined ? {
                 set: item.tradingPolicy.killSwitchEnabled
               } : undefined,
-            autonomyPrefs: item.tradingPolicy.autonomyPrefs !== undefined ? {
-                set: item.tradingPolicy.autonomyPrefs
-              } : undefined,
+            autonomyPrefs: item.tradingPolicy.autonomyPrefs !== undefined ? item.tradingPolicy.autonomyPrefs : undefined,
             equitiesEnabled: item.tradingPolicy.equitiesEnabled !== undefined ? {
                 set: item.tradingPolicy.equitiesEnabled
               } : undefined,
@@ -5118,9 +5066,7 @@ import { logger } from './utils/logger';
             fractionalSharesEnabled: item.tradingPolicy.fractionalSharesEnabled !== undefined ? {
                 set: item.tradingPolicy.fractionalSharesEnabled
               } : undefined,
-            assetUniversePrefs: item.tradingPolicy.assetUniversePrefs !== undefined ? {
-                set: item.tradingPolicy.assetUniversePrefs
-              } : undefined,
+            assetUniversePrefs: item.tradingPolicy.assetUniversePrefs !== undefined ? item.tradingPolicy.assetUniversePrefs : undefined,
             maxBuyingPowerUtilPct: item.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
                 set: item.tradingPolicy.maxBuyingPowerUtilPct
               } : undefined,
@@ -5148,21 +5094,11 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? {
                 set: item.tradingPolicy.maxOpenOrders
               } : undefined,
-            riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? {
-                set: item.tradingPolicy.riskBudgetPrefs
-              } : undefined,
-            signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? {
-                set: item.tradingPolicy.signalConsumptionPrefs
-              } : undefined,
-            executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? {
-                set: item.tradingPolicy.executionPrefs
-              } : undefined,
-            positionManagementPrefs: item.tradingPolicy.positionManagementPrefs !== undefined ? {
-                set: item.tradingPolicy.positionManagementPrefs
-              } : undefined,
-            portfolioConstructionPrefs: item.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
-                set: item.tradingPolicy.portfolioConstructionPrefs
-              } : undefined,
+            riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.tradingPolicy.positionManagementPrefs !== undefined ? item.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.tradingPolicy.portfolioConstructionPrefs : undefined,
             macroOverlayEnabled: item.tradingPolicy.macroOverlayEnabled !== undefined ? {
                 set: item.tradingPolicy.macroOverlayEnabled
               } : undefined,
@@ -5193,9 +5129,7 @@ import { logger } from './utils/logger';
             dataQualitySentinelEnabled: item.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
                 set: item.tradingPolicy.dataQualitySentinelEnabled
               } : undefined,
-            overlayResponsePrefs: item.tradingPolicy.overlayResponsePrefs !== undefined ? {
-                set: item.tradingPolicy.overlayResponsePrefs
-              } : undefined,
+            overlayResponsePrefs: item.tradingPolicy.overlayResponsePrefs !== undefined ? item.tradingPolicy.overlayResponsePrefs : undefined,
             miniModelProvider: item.tradingPolicy.miniModelProvider !== undefined ? {
                 set: item.tradingPolicy.miniModelProvider
               } : undefined,
@@ -5214,12 +5148,8 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? {
                 set: item.tradingPolicy.advancedModelId
               } : undefined,
-            modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? {
-                set: item.tradingPolicy.modelPrefs
-              } : undefined,
-            auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? {
-                set: item.tradingPolicy.auditNotificationPrefs
-              } : undefined,
+            modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
           },
           create: {
             version: item.tradingPolicy.version !== undefined ? item.tradingPolicy.version : undefined,
@@ -5334,9 +5264,7 @@ import { logger } from './utils/logger';
             retryCount: item.retryCount !== undefined ? {
                 set: item.retryCount
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             title: item.title !== undefined ? item.title : undefined,

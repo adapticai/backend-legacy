@@ -360,9 +360,7 @@ import { logger } from './utils/logger';
   trainingBarCount: props.trainingBarCount !== undefined ? {
             set: props.trainingBarCount 
            } : undefined,
-  configSnapshot: props.configSnapshot !== undefined ? {
-            set: props.configSnapshot 
-           } : undefined,
+  configSnapshot: props.configSnapshot !== undefined ? props.configSnapshot : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -531,9 +529,7 @@ import { logger } from './utils/logger';
   trainingBarCount: props.trainingBarCount !== undefined ? {
             set: props.trainingBarCount 
            } : undefined,
-  configSnapshot: props.configSnapshot !== undefined ? {
-            set: props.configSnapshot 
-           } : undefined,
+  configSnapshot: props.configSnapshot !== undefined ? props.configSnapshot : undefined,
       },
         };
 
@@ -686,9 +682,7 @@ import { logger } from './utils/logger';
   trainingBarCount: prop.trainingBarCount !== undefined ? {
             set: prop.trainingBarCount 
            } : undefined,
-  configSnapshot: prop.configSnapshot !== undefined ? {
-            set: prop.configSnapshot 
-           } : undefined,
+  configSnapshot: prop.configSnapshot !== undefined ? prop.configSnapshot : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,

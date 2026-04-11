@@ -2004,9 +2004,7 @@ id
   trafficSplitTreatmentPercent: props.trafficSplitTreatmentPercent !== undefined ? {
             set: props.trafficSplitTreatmentPercent 
            } : undefined,
-  targetMetrics: props.targetMetrics !== undefined ? {
-            set: props.targetMetrics 
-           } : undefined,
+  targetMetrics: props.targetMetrics !== undefined ? props.targetMetrics : undefined,
   successCriteriaPrimaryMetric: props.successCriteriaPrimaryMetric !== undefined ? {
             set: props.successCriteriaPrimaryMetric 
            } : undefined,
@@ -2028,36 +2026,20 @@ id
   plannedDuration: props.plannedDuration !== undefined ? {
             set: props.plannedDuration 
            } : undefined,
-  resultsControlMetrics: props.resultsControlMetrics !== undefined ? {
-            set: props.resultsControlMetrics 
-           } : undefined,
-  resultsTreatmentMetrics: props.resultsTreatmentMetrics !== undefined ? {
-            set: props.resultsTreatmentMetrics 
-           } : undefined,
-  resultsStatisticalSignificance: props.resultsStatisticalSignificance !== undefined ? {
-            set: props.resultsStatisticalSignificance 
-           } : undefined,
-  resultsPValues: props.resultsPValues !== undefined ? {
-            set: props.resultsPValues 
-           } : undefined,
-  resultsConfidenceIntervals: props.resultsConfidenceIntervals !== undefined ? {
-            set: props.resultsConfidenceIntervals 
-           } : undefined,
+  resultsControlMetrics: props.resultsControlMetrics !== undefined ? props.resultsControlMetrics : undefined,
+  resultsTreatmentMetrics: props.resultsTreatmentMetrics !== undefined ? props.resultsTreatmentMetrics : undefined,
+  resultsStatisticalSignificance: props.resultsStatisticalSignificance !== undefined ? props.resultsStatisticalSignificance : undefined,
+  resultsPValues: props.resultsPValues !== undefined ? props.resultsPValues : undefined,
+  resultsConfidenceIntervals: props.resultsConfidenceIntervals !== undefined ? props.resultsConfidenceIntervals : undefined,
   resultsRecommendation: props.resultsRecommendation !== undefined ? {
             set: props.resultsRecommendation 
            } : undefined,
   metadataEnvironment: props.metadataEnvironment !== undefined ? {
             set: props.metadataEnvironment 
            } : undefined,
-  metadataEligibilityCriteria: props.metadataEligibilityCriteria !== undefined ? {
-            set: props.metadataEligibilityCriteria 
-           } : undefined,
-  metadataExclusionCriteria: props.metadataExclusionCriteria !== undefined ? {
-            set: props.metadataExclusionCriteria 
-           } : undefined,
-  metadataSegmentationRules: props.metadataSegmentationRules !== undefined ? {
-            set: props.metadataSegmentationRules 
-           } : undefined,
+  metadataEligibilityCriteria: props.metadataEligibilityCriteria !== undefined ? props.metadataEligibilityCriteria : undefined,
+  metadataExclusionCriteria: props.metadataExclusionCriteria !== undefined ? props.metadataExclusionCriteria : undefined,
+  metadataSegmentationRules: props.metadataSegmentationRules !== undefined ? props.metadataSegmentationRules : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -2134,15 +2116,9 @@ id
         validationCrossValidationScore: props.controlVersion.validationCrossValidationScore !== undefined ? {
             set: props.controlVersion.validationCrossValidationScore
           } : undefined,
-        validationOutOfSamplePerformance: props.controlVersion.validationOutOfSamplePerformance !== undefined ? {
-            set: props.controlVersion.validationOutOfSamplePerformance
-          } : undefined,
-        validationBacktestResults: props.controlVersion.validationBacktestResults !== undefined ? {
-            set: props.controlVersion.validationBacktestResults
-          } : undefined,
-        validationStatTestResults: props.controlVersion.validationStatTestResults !== undefined ? {
-            set: props.controlVersion.validationStatTestResults
-          } : undefined,
+        validationOutOfSamplePerformance: props.controlVersion.validationOutOfSamplePerformance !== undefined ? props.controlVersion.validationOutOfSamplePerformance : undefined,
+        validationBacktestResults: props.controlVersion.validationBacktestResults !== undefined ? props.controlVersion.validationBacktestResults : undefined,
+        validationStatTestResults: props.controlVersion.validationStatTestResults !== undefined ? props.controlVersion.validationStatTestResults : undefined,
         deploymentEnvironment: props.controlVersion.deploymentEnvironment !== undefined ? {
             set: props.controlVersion.deploymentEnvironment
           } : undefined,
@@ -2152,9 +2128,7 @@ id
         deploymentRolloutStrategy: props.controlVersion.deploymentRolloutStrategy !== undefined ? {
             set: props.controlVersion.deploymentRolloutStrategy
           } : undefined,
-        deploymentHealthCheckConfig: props.controlVersion.deploymentHealthCheckConfig !== undefined ? {
-            set: props.controlVersion.deploymentHealthCheckConfig
-          } : undefined,
+        deploymentHealthCheckConfig: props.controlVersion.deploymentHealthCheckConfig !== undefined ? props.controlVersion.deploymentHealthCheckConfig : undefined,
         trainingStartTime: props.controlVersion.trainingStartTime !== undefined ? {
             set: props.controlVersion.trainingStartTime
           } : undefined,
@@ -2167,12 +2141,8 @@ id
         trainingDatasetSize: props.controlVersion.trainingDatasetSize !== undefined ? {
             set: props.controlVersion.trainingDatasetSize
           } : undefined,
-        trainingFeaturesUsed: props.controlVersion.trainingFeaturesUsed !== undefined ? {
-            set: props.controlVersion.trainingFeaturesUsed
-          } : undefined,
-        trainingHyperparameters: props.controlVersion.trainingHyperparameters !== undefined ? {
-            set: props.controlVersion.trainingHyperparameters
-          } : undefined,
+        trainingFeaturesUsed: props.controlVersion.trainingFeaturesUsed !== undefined ? props.controlVersion.trainingFeaturesUsed : undefined,
+        trainingHyperparameters: props.controlVersion.trainingHyperparameters !== undefined ? props.controlVersion.trainingHyperparameters : undefined,
         trainingResourcePeakMemoryMB: props.controlVersion.trainingResourcePeakMemoryMB !== undefined ? {
             set: props.controlVersion.trainingResourcePeakMemoryMB
           } : undefined,
@@ -2255,15 +2225,9 @@ id
           validationCrossValidationScore: props.controlVersion.parentVersion.validationCrossValidationScore !== undefined ? {
               set: props.controlVersion.parentVersion.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: props.controlVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-              set: props.controlVersion.parentVersion.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: props.controlVersion.parentVersion.validationBacktestResults !== undefined ? {
-              set: props.controlVersion.parentVersion.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: props.controlVersion.parentVersion.validationStatTestResults !== undefined ? {
-              set: props.controlVersion.parentVersion.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: props.controlVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.controlVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: props.controlVersion.parentVersion.validationBacktestResults !== undefined ? props.controlVersion.parentVersion.validationBacktestResults : undefined,
+          validationStatTestResults: props.controlVersion.parentVersion.validationStatTestResults !== undefined ? props.controlVersion.parentVersion.validationStatTestResults : undefined,
           deploymentEnvironment: props.controlVersion.parentVersion.deploymentEnvironment !== undefined ? {
               set: props.controlVersion.parentVersion.deploymentEnvironment
             } : undefined,
@@ -2273,9 +2237,7 @@ id
           deploymentRolloutStrategy: props.controlVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
               set: props.controlVersion.parentVersion.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: props.controlVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-              set: props.controlVersion.parentVersion.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: props.controlVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.controlVersion.parentVersion.deploymentHealthCheckConfig : undefined,
           trainingStartTime: props.controlVersion.parentVersion.trainingStartTime !== undefined ? {
               set: props.controlVersion.parentVersion.trainingStartTime
             } : undefined,
@@ -2288,12 +2250,8 @@ id
           trainingDatasetSize: props.controlVersion.parentVersion.trainingDatasetSize !== undefined ? {
               set: props.controlVersion.parentVersion.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: props.controlVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-              set: props.controlVersion.parentVersion.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: props.controlVersion.parentVersion.trainingHyperparameters !== undefined ? {
-              set: props.controlVersion.parentVersion.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: props.controlVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.controlVersion.parentVersion.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: props.controlVersion.parentVersion.trainingHyperparameters !== undefined ? props.controlVersion.parentVersion.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: props.controlVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
               set: props.controlVersion.parentVersion.trainingResourcePeakMemoryMB
             } : undefined,
@@ -2376,15 +2334,9 @@ id
             validationCrossValidationScore: props.controlVersion.parentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: props.controlVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: props.controlVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: props.controlVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? props.controlVersion.parentVersion.parentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: props.controlVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? props.controlVersion.parentVersion.parentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: props.controlVersion.parentVersion.parentVersion.deploymentEnvironment !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.deploymentEnvironment
               } : undefined,
@@ -2394,9 +2346,7 @@ id
             deploymentRolloutStrategy: props.controlVersion.parentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: props.controlVersion.parentVersion.parentVersion.trainingStartTime !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.trainingStartTime
               } : undefined,
@@ -2409,12 +2359,8 @@ id
             trainingDatasetSize: props.controlVersion.parentVersion.parentVersion.trainingDatasetSize !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: props.controlVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: props.controlVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? props.controlVersion.parentVersion.parentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: props.controlVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -2532,9 +2478,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -2556,36 +2500,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -2658,9 +2586,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -2682,36 +2608,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -2763,15 +2673,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -2784,24 +2688,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -3124,15 +3018,9 @@ id
           validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
               set: item.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-              set: item.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: item.validationBacktestResults !== undefined ? {
-              set: item.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: item.validationStatTestResults !== undefined ? {
-              set: item.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+          validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
           deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
               set: item.deploymentEnvironment
             } : undefined,
@@ -3142,9 +3030,7 @@ id
           deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
               set: item.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-              set: item.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
           trainingStartTime: item.trainingStartTime !== undefined ? {
               set: item.trainingStartTime
             } : undefined,
@@ -3157,12 +3043,8 @@ id
           trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
               set: item.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-              set: item.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-              set: item.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
               set: item.trainingResourcePeakMemoryMB
             } : undefined,
@@ -3242,15 +3124,9 @@ id
             validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
                 set: item.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-                set: item.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.validationBacktestResults !== undefined ? {
-                set: item.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.validationStatTestResults !== undefined ? {
-                set: item.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+            validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
             deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
                 set: item.deploymentEnvironment
               } : undefined,
@@ -3260,9 +3136,7 @@ id
             deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
                 set: item.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-                set: item.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.trainingStartTime !== undefined ? {
                 set: item.trainingStartTime
               } : undefined,
@@ -3275,12 +3149,8 @@ id
             trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
                 set: item.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-                set: item.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-                set: item.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.trainingResourcePeakMemoryMB
               } : undefined,
@@ -3398,9 +3268,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -3422,36 +3290,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -3524,9 +3376,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -3548,36 +3398,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -3629,15 +3463,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -3650,24 +3478,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -3991,18 +3809,14 @@ id
             metadataPythonVersion: item.modelArtifact.metadataPythonVersion !== undefined ? {
                 set: item.modelArtifact.metadataPythonVersion
               } : undefined,
-            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? {
-                set: item.modelArtifact.metadataDependencies
-              } : undefined,
+            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? item.modelArtifact.metadataDependencies : undefined,
             metadataTrainingDate: item.modelArtifact.metadataTrainingDate !== undefined ? {
                 set: item.modelArtifact.metadataTrainingDate
               } : undefined,
             metadataDatasetSize: item.modelArtifact.metadataDatasetSize !== undefined ? {
                 set: item.modelArtifact.metadataDatasetSize
               } : undefined,
-            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? {
-                set: item.modelArtifact.metadataHyperparameters
-              } : undefined,
+            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? item.modelArtifact.metadataHyperparameters : undefined,
           },
           create: {
             modelName: item.modelArtifact.modelName !== undefined ? item.modelArtifact.modelName : undefined,
@@ -4095,9 +3909,7 @@ id
           trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
               set: item.trafficSplitTreatmentPercent
             } : undefined,
-          targetMetrics: item.targetMetrics !== undefined ? {
-              set: item.targetMetrics
-            } : undefined,
+          targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
           successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
               set: item.successCriteriaPrimaryMetric
             } : undefined,
@@ -4119,36 +3931,20 @@ id
           plannedDuration: item.plannedDuration !== undefined ? {
               set: item.plannedDuration
             } : undefined,
-          resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-              set: item.resultsControlMetrics
-            } : undefined,
-          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-              set: item.resultsTreatmentMetrics
-            } : undefined,
-          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-              set: item.resultsStatisticalSignificance
-            } : undefined,
-          resultsPValues: item.resultsPValues !== undefined ? {
-              set: item.resultsPValues
-            } : undefined,
-          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-              set: item.resultsConfidenceIntervals
-            } : undefined,
+          resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+          resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
           resultsRecommendation: item.resultsRecommendation !== undefined ? {
               set: item.resultsRecommendation
             } : undefined,
           metadataEnvironment: item.metadataEnvironment !== undefined ? {
               set: item.metadataEnvironment
             } : undefined,
-          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-              set: item.metadataEligibilityCriteria
-            } : undefined,
-          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-              set: item.metadataExclusionCriteria
-            } : undefined,
-          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-              set: item.metadataSegmentationRules
-            } : undefined,
+          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
           completedAt: item.completedAt !== undefined ? {
               set: item.completedAt
             } : undefined,
@@ -4219,15 +4015,9 @@ id
             validationCrossValidationScore: item.controlVersion.validationCrossValidationScore !== undefined ? {
                 set: item.controlVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.controlVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: item.controlVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.controlVersion.validationBacktestResults !== undefined ? {
-                set: item.controlVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.controlVersion.validationStatTestResults !== undefined ? {
-                set: item.controlVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.controlVersion.validationOutOfSamplePerformance !== undefined ? item.controlVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.controlVersion.validationBacktestResults !== undefined ? item.controlVersion.validationBacktestResults : undefined,
+            validationStatTestResults: item.controlVersion.validationStatTestResults !== undefined ? item.controlVersion.validationStatTestResults : undefined,
             deploymentEnvironment: item.controlVersion.deploymentEnvironment !== undefined ? {
                 set: item.controlVersion.deploymentEnvironment
               } : undefined,
@@ -4237,9 +4027,7 @@ id
             deploymentRolloutStrategy: item.controlVersion.deploymentRolloutStrategy !== undefined ? {
                 set: item.controlVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.controlVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: item.controlVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.controlVersion.deploymentHealthCheckConfig !== undefined ? item.controlVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.controlVersion.trainingStartTime !== undefined ? {
                 set: item.controlVersion.trainingStartTime
               } : undefined,
@@ -4252,12 +4040,8 @@ id
             trainingDatasetSize: item.controlVersion.trainingDatasetSize !== undefined ? {
                 set: item.controlVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.controlVersion.trainingFeaturesUsed !== undefined ? {
-                set: item.controlVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.controlVersion.trainingHyperparameters !== undefined ? {
-                set: item.controlVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.controlVersion.trainingFeaturesUsed !== undefined ? item.controlVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.controlVersion.trainingHyperparameters !== undefined ? item.controlVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.controlVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.controlVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -4409,15 +4193,9 @@ id
           analysisType: item.analysisType !== undefined ? {
               set: item.analysisType
             } : undefined,
-          featureImportances: item.featureImportances !== undefined ? {
-              set: item.featureImportances
-            } : undefined,
-          globalImportance: item.globalImportance !== undefined ? {
-              set: item.globalImportance
-            } : undefined,
-          localImportance: item.localImportance !== undefined ? {
-              set: item.localImportance
-            } : undefined,
+          featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+          globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+          localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
           analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
               set: item.analysisMetadataSampleSize
             } : undefined,
@@ -4430,24 +4208,14 @@ id
           analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
               set: item.analysisMetadataComputationTime
             } : undefined,
-          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-              set: item.analysisMetadataAnalysisParameters
-            } : undefined,
-          insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-              set: item.insightsTopFeatures
-            } : undefined,
-          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-              set: item.insightsRedundantFeatures
-            } : undefined,
-          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-              set: item.insightsUnexpectedImportances
-            } : undefined,
+          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+          insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
           insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
               set: item.insightsStabilityScore
             } : undefined,
-          insightsRecommendations: item.insightsRecommendations !== undefined ? {
-              set: item.insightsRecommendations
-            } : undefined,
+          insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
         },
         create: {
           analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -5253,15 +5021,9 @@ id
         validationCrossValidationScore: props.treatmentVersion.validationCrossValidationScore !== undefined ? {
             set: props.treatmentVersion.validationCrossValidationScore
           } : undefined,
-        validationOutOfSamplePerformance: props.treatmentVersion.validationOutOfSamplePerformance !== undefined ? {
-            set: props.treatmentVersion.validationOutOfSamplePerformance
-          } : undefined,
-        validationBacktestResults: props.treatmentVersion.validationBacktestResults !== undefined ? {
-            set: props.treatmentVersion.validationBacktestResults
-          } : undefined,
-        validationStatTestResults: props.treatmentVersion.validationStatTestResults !== undefined ? {
-            set: props.treatmentVersion.validationStatTestResults
-          } : undefined,
+        validationOutOfSamplePerformance: props.treatmentVersion.validationOutOfSamplePerformance !== undefined ? props.treatmentVersion.validationOutOfSamplePerformance : undefined,
+        validationBacktestResults: props.treatmentVersion.validationBacktestResults !== undefined ? props.treatmentVersion.validationBacktestResults : undefined,
+        validationStatTestResults: props.treatmentVersion.validationStatTestResults !== undefined ? props.treatmentVersion.validationStatTestResults : undefined,
         deploymentEnvironment: props.treatmentVersion.deploymentEnvironment !== undefined ? {
             set: props.treatmentVersion.deploymentEnvironment
           } : undefined,
@@ -5271,9 +5033,7 @@ id
         deploymentRolloutStrategy: props.treatmentVersion.deploymentRolloutStrategy !== undefined ? {
             set: props.treatmentVersion.deploymentRolloutStrategy
           } : undefined,
-        deploymentHealthCheckConfig: props.treatmentVersion.deploymentHealthCheckConfig !== undefined ? {
-            set: props.treatmentVersion.deploymentHealthCheckConfig
-          } : undefined,
+        deploymentHealthCheckConfig: props.treatmentVersion.deploymentHealthCheckConfig !== undefined ? props.treatmentVersion.deploymentHealthCheckConfig : undefined,
         trainingStartTime: props.treatmentVersion.trainingStartTime !== undefined ? {
             set: props.treatmentVersion.trainingStartTime
           } : undefined,
@@ -5286,12 +5046,8 @@ id
         trainingDatasetSize: props.treatmentVersion.trainingDatasetSize !== undefined ? {
             set: props.treatmentVersion.trainingDatasetSize
           } : undefined,
-        trainingFeaturesUsed: props.treatmentVersion.trainingFeaturesUsed !== undefined ? {
-            set: props.treatmentVersion.trainingFeaturesUsed
-          } : undefined,
-        trainingHyperparameters: props.treatmentVersion.trainingHyperparameters !== undefined ? {
-            set: props.treatmentVersion.trainingHyperparameters
-          } : undefined,
+        trainingFeaturesUsed: props.treatmentVersion.trainingFeaturesUsed !== undefined ? props.treatmentVersion.trainingFeaturesUsed : undefined,
+        trainingHyperparameters: props.treatmentVersion.trainingHyperparameters !== undefined ? props.treatmentVersion.trainingHyperparameters : undefined,
         trainingResourcePeakMemoryMB: props.treatmentVersion.trainingResourcePeakMemoryMB !== undefined ? {
             set: props.treatmentVersion.trainingResourcePeakMemoryMB
           } : undefined,
@@ -5374,15 +5130,9 @@ id
           validationCrossValidationScore: props.treatmentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
               set: props.treatmentVersion.parentVersion.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-              set: props.treatmentVersion.parentVersion.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: props.treatmentVersion.parentVersion.validationBacktestResults !== undefined ? {
-              set: props.treatmentVersion.parentVersion.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: props.treatmentVersion.parentVersion.validationStatTestResults !== undefined ? {
-              set: props.treatmentVersion.parentVersion.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.treatmentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: props.treatmentVersion.parentVersion.validationBacktestResults !== undefined ? props.treatmentVersion.parentVersion.validationBacktestResults : undefined,
+          validationStatTestResults: props.treatmentVersion.parentVersion.validationStatTestResults !== undefined ? props.treatmentVersion.parentVersion.validationStatTestResults : undefined,
           deploymentEnvironment: props.treatmentVersion.parentVersion.deploymentEnvironment !== undefined ? {
               set: props.treatmentVersion.parentVersion.deploymentEnvironment
             } : undefined,
@@ -5392,9 +5142,7 @@ id
           deploymentRolloutStrategy: props.treatmentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
               set: props.treatmentVersion.parentVersion.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-              set: props.treatmentVersion.parentVersion.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.treatmentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
           trainingStartTime: props.treatmentVersion.parentVersion.trainingStartTime !== undefined ? {
               set: props.treatmentVersion.parentVersion.trainingStartTime
             } : undefined,
@@ -5407,12 +5155,8 @@ id
           trainingDatasetSize: props.treatmentVersion.parentVersion.trainingDatasetSize !== undefined ? {
               set: props.treatmentVersion.parentVersion.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: props.treatmentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-              set: props.treatmentVersion.parentVersion.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: props.treatmentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-              set: props.treatmentVersion.parentVersion.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: props.treatmentVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.treatmentVersion.parentVersion.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: props.treatmentVersion.parentVersion.trainingHyperparameters !== undefined ? props.treatmentVersion.parentVersion.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: props.treatmentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
               set: props.treatmentVersion.parentVersion.trainingResourcePeakMemoryMB
             } : undefined,
@@ -5495,15 +5239,9 @@ id
             validationCrossValidationScore: props.treatmentVersion.parentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: props.treatmentVersion.parentVersion.parentVersion.deploymentEnvironment !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.deploymentEnvironment
               } : undefined,
@@ -5513,9 +5251,7 @@ id
             deploymentRolloutStrategy: props.treatmentVersion.parentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: props.treatmentVersion.parentVersion.parentVersion.trainingStartTime !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.trainingStartTime
               } : undefined,
@@ -5528,12 +5264,8 @@ id
             trainingDatasetSize: props.treatmentVersion.parentVersion.parentVersion.trainingDatasetSize !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: props.treatmentVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -5651,9 +5383,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -5675,36 +5405,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -5777,9 +5491,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -5801,36 +5513,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -5882,15 +5578,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -5903,24 +5593,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -6243,15 +5923,9 @@ id
           validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
               set: item.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-              set: item.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: item.validationBacktestResults !== undefined ? {
-              set: item.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: item.validationStatTestResults !== undefined ? {
-              set: item.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+          validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
           deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
               set: item.deploymentEnvironment
             } : undefined,
@@ -6261,9 +5935,7 @@ id
           deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
               set: item.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-              set: item.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
           trainingStartTime: item.trainingStartTime !== undefined ? {
               set: item.trainingStartTime
             } : undefined,
@@ -6276,12 +5948,8 @@ id
           trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
               set: item.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-              set: item.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-              set: item.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
               set: item.trainingResourcePeakMemoryMB
             } : undefined,
@@ -6361,15 +6029,9 @@ id
             validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
                 set: item.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-                set: item.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.validationBacktestResults !== undefined ? {
-                set: item.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.validationStatTestResults !== undefined ? {
-                set: item.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+            validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
             deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
                 set: item.deploymentEnvironment
               } : undefined,
@@ -6379,9 +6041,7 @@ id
             deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
                 set: item.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-                set: item.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.trainingStartTime !== undefined ? {
                 set: item.trainingStartTime
               } : undefined,
@@ -6394,12 +6054,8 @@ id
             trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
                 set: item.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-                set: item.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-                set: item.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.trainingResourcePeakMemoryMB
               } : undefined,
@@ -6517,9 +6173,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -6541,36 +6195,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -6643,9 +6281,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -6667,36 +6303,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -6748,15 +6368,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -6769,24 +6383,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -7110,18 +6714,14 @@ id
             metadataPythonVersion: item.modelArtifact.metadataPythonVersion !== undefined ? {
                 set: item.modelArtifact.metadataPythonVersion
               } : undefined,
-            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? {
-                set: item.modelArtifact.metadataDependencies
-              } : undefined,
+            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? item.modelArtifact.metadataDependencies : undefined,
             metadataTrainingDate: item.modelArtifact.metadataTrainingDate !== undefined ? {
                 set: item.modelArtifact.metadataTrainingDate
               } : undefined,
             metadataDatasetSize: item.modelArtifact.metadataDatasetSize !== undefined ? {
                 set: item.modelArtifact.metadataDatasetSize
               } : undefined,
-            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? {
-                set: item.modelArtifact.metadataHyperparameters
-              } : undefined,
+            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? item.modelArtifact.metadataHyperparameters : undefined,
           },
           create: {
             modelName: item.modelArtifact.modelName !== undefined ? item.modelArtifact.modelName : undefined,
@@ -7214,9 +6814,7 @@ id
           trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
               set: item.trafficSplitTreatmentPercent
             } : undefined,
-          targetMetrics: item.targetMetrics !== undefined ? {
-              set: item.targetMetrics
-            } : undefined,
+          targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
           successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
               set: item.successCriteriaPrimaryMetric
             } : undefined,
@@ -7238,36 +6836,20 @@ id
           plannedDuration: item.plannedDuration !== undefined ? {
               set: item.plannedDuration
             } : undefined,
-          resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-              set: item.resultsControlMetrics
-            } : undefined,
-          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-              set: item.resultsTreatmentMetrics
-            } : undefined,
-          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-              set: item.resultsStatisticalSignificance
-            } : undefined,
-          resultsPValues: item.resultsPValues !== undefined ? {
-              set: item.resultsPValues
-            } : undefined,
-          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-              set: item.resultsConfidenceIntervals
-            } : undefined,
+          resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+          resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
           resultsRecommendation: item.resultsRecommendation !== undefined ? {
               set: item.resultsRecommendation
             } : undefined,
           metadataEnvironment: item.metadataEnvironment !== undefined ? {
               set: item.metadataEnvironment
             } : undefined,
-          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-              set: item.metadataEligibilityCriteria
-            } : undefined,
-          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-              set: item.metadataExclusionCriteria
-            } : undefined,
-          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-              set: item.metadataSegmentationRules
-            } : undefined,
+          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
           completedAt: item.completedAt !== undefined ? {
               set: item.completedAt
             } : undefined,
@@ -7338,15 +6920,9 @@ id
             validationCrossValidationScore: item.treatmentVersion.validationCrossValidationScore !== undefined ? {
                 set: item.treatmentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.treatmentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: item.treatmentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.treatmentVersion.validationBacktestResults !== undefined ? {
-                set: item.treatmentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.treatmentVersion.validationStatTestResults !== undefined ? {
-                set: item.treatmentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.treatmentVersion.validationOutOfSamplePerformance !== undefined ? item.treatmentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.treatmentVersion.validationBacktestResults !== undefined ? item.treatmentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: item.treatmentVersion.validationStatTestResults !== undefined ? item.treatmentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: item.treatmentVersion.deploymentEnvironment !== undefined ? {
                 set: item.treatmentVersion.deploymentEnvironment
               } : undefined,
@@ -7356,9 +6932,7 @@ id
             deploymentRolloutStrategy: item.treatmentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: item.treatmentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.treatmentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: item.treatmentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.treatmentVersion.deploymentHealthCheckConfig !== undefined ? item.treatmentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.treatmentVersion.trainingStartTime !== undefined ? {
                 set: item.treatmentVersion.trainingStartTime
               } : undefined,
@@ -7371,12 +6945,8 @@ id
             trainingDatasetSize: item.treatmentVersion.trainingDatasetSize !== undefined ? {
                 set: item.treatmentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.treatmentVersion.trainingFeaturesUsed !== undefined ? {
-                set: item.treatmentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.treatmentVersion.trainingHyperparameters !== undefined ? {
-                set: item.treatmentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.treatmentVersion.trainingFeaturesUsed !== undefined ? item.treatmentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.treatmentVersion.trainingHyperparameters !== undefined ? item.treatmentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.treatmentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.treatmentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -7528,15 +7098,9 @@ id
           analysisType: item.analysisType !== undefined ? {
               set: item.analysisType
             } : undefined,
-          featureImportances: item.featureImportances !== undefined ? {
-              set: item.featureImportances
-            } : undefined,
-          globalImportance: item.globalImportance !== undefined ? {
-              set: item.globalImportance
-            } : undefined,
-          localImportance: item.localImportance !== undefined ? {
-              set: item.localImportance
-            } : undefined,
+          featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+          globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+          localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
           analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
               set: item.analysisMetadataSampleSize
             } : undefined,
@@ -7549,24 +7113,14 @@ id
           analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
               set: item.analysisMetadataComputationTime
             } : undefined,
-          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-              set: item.analysisMetadataAnalysisParameters
-            } : undefined,
-          insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-              set: item.insightsTopFeatures
-            } : undefined,
-          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-              set: item.insightsRedundantFeatures
-            } : undefined,
-          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-              set: item.insightsUnexpectedImportances
-            } : undefined,
+          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+          insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
           insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
               set: item.insightsStabilityScore
             } : undefined,
-          insightsRecommendations: item.insightsRecommendations !== undefined ? {
-              set: item.insightsRecommendations
-            } : undefined,
+          insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
         },
         create: {
           analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -9941,9 +9495,7 @@ id
   trafficSplitTreatmentPercent: props.trafficSplitTreatmentPercent !== undefined ? {
             set: props.trafficSplitTreatmentPercent 
            } : undefined,
-  targetMetrics: props.targetMetrics !== undefined ? {
-            set: props.targetMetrics 
-           } : undefined,
+  targetMetrics: props.targetMetrics !== undefined ? props.targetMetrics : undefined,
   successCriteriaPrimaryMetric: props.successCriteriaPrimaryMetric !== undefined ? {
             set: props.successCriteriaPrimaryMetric 
            } : undefined,
@@ -9965,36 +9517,20 @@ id
   plannedDuration: props.plannedDuration !== undefined ? {
             set: props.plannedDuration 
            } : undefined,
-  resultsControlMetrics: props.resultsControlMetrics !== undefined ? {
-            set: props.resultsControlMetrics 
-           } : undefined,
-  resultsTreatmentMetrics: props.resultsTreatmentMetrics !== undefined ? {
-            set: props.resultsTreatmentMetrics 
-           } : undefined,
-  resultsStatisticalSignificance: props.resultsStatisticalSignificance !== undefined ? {
-            set: props.resultsStatisticalSignificance 
-           } : undefined,
-  resultsPValues: props.resultsPValues !== undefined ? {
-            set: props.resultsPValues 
-           } : undefined,
-  resultsConfidenceIntervals: props.resultsConfidenceIntervals !== undefined ? {
-            set: props.resultsConfidenceIntervals 
-           } : undefined,
+  resultsControlMetrics: props.resultsControlMetrics !== undefined ? props.resultsControlMetrics : undefined,
+  resultsTreatmentMetrics: props.resultsTreatmentMetrics !== undefined ? props.resultsTreatmentMetrics : undefined,
+  resultsStatisticalSignificance: props.resultsStatisticalSignificance !== undefined ? props.resultsStatisticalSignificance : undefined,
+  resultsPValues: props.resultsPValues !== undefined ? props.resultsPValues : undefined,
+  resultsConfidenceIntervals: props.resultsConfidenceIntervals !== undefined ? props.resultsConfidenceIntervals : undefined,
   resultsRecommendation: props.resultsRecommendation !== undefined ? {
             set: props.resultsRecommendation 
            } : undefined,
   metadataEnvironment: props.metadataEnvironment !== undefined ? {
             set: props.metadataEnvironment 
            } : undefined,
-  metadataEligibilityCriteria: props.metadataEligibilityCriteria !== undefined ? {
-            set: props.metadataEligibilityCriteria 
-           } : undefined,
-  metadataExclusionCriteria: props.metadataExclusionCriteria !== undefined ? {
-            set: props.metadataExclusionCriteria 
-           } : undefined,
-  metadataSegmentationRules: props.metadataSegmentationRules !== undefined ? {
-            set: props.metadataSegmentationRules 
-           } : undefined,
+  metadataEligibilityCriteria: props.metadataEligibilityCriteria !== undefined ? props.metadataEligibilityCriteria : undefined,
+  metadataExclusionCriteria: props.metadataExclusionCriteria !== undefined ? props.metadataExclusionCriteria : undefined,
+  metadataSegmentationRules: props.metadataSegmentationRules !== undefined ? props.metadataSegmentationRules : undefined,
   completedAt: props.completedAt !== undefined ? {
             set: props.completedAt 
            } : undefined,
@@ -10065,15 +9601,9 @@ id
         validationCrossValidationScore: props.controlVersion.validationCrossValidationScore !== undefined ? {
             set: props.controlVersion.validationCrossValidationScore
           } : undefined,
-        validationOutOfSamplePerformance: props.controlVersion.validationOutOfSamplePerformance !== undefined ? {
-            set: props.controlVersion.validationOutOfSamplePerformance
-          } : undefined,
-        validationBacktestResults: props.controlVersion.validationBacktestResults !== undefined ? {
-            set: props.controlVersion.validationBacktestResults
-          } : undefined,
-        validationStatTestResults: props.controlVersion.validationStatTestResults !== undefined ? {
-            set: props.controlVersion.validationStatTestResults
-          } : undefined,
+        validationOutOfSamplePerformance: props.controlVersion.validationOutOfSamplePerformance !== undefined ? props.controlVersion.validationOutOfSamplePerformance : undefined,
+        validationBacktestResults: props.controlVersion.validationBacktestResults !== undefined ? props.controlVersion.validationBacktestResults : undefined,
+        validationStatTestResults: props.controlVersion.validationStatTestResults !== undefined ? props.controlVersion.validationStatTestResults : undefined,
         deploymentEnvironment: props.controlVersion.deploymentEnvironment !== undefined ? {
             set: props.controlVersion.deploymentEnvironment
           } : undefined,
@@ -10083,9 +9613,7 @@ id
         deploymentRolloutStrategy: props.controlVersion.deploymentRolloutStrategy !== undefined ? {
             set: props.controlVersion.deploymentRolloutStrategy
           } : undefined,
-        deploymentHealthCheckConfig: props.controlVersion.deploymentHealthCheckConfig !== undefined ? {
-            set: props.controlVersion.deploymentHealthCheckConfig
-          } : undefined,
+        deploymentHealthCheckConfig: props.controlVersion.deploymentHealthCheckConfig !== undefined ? props.controlVersion.deploymentHealthCheckConfig : undefined,
         trainingStartTime: props.controlVersion.trainingStartTime !== undefined ? {
             set: props.controlVersion.trainingStartTime
           } : undefined,
@@ -10098,12 +9626,8 @@ id
         trainingDatasetSize: props.controlVersion.trainingDatasetSize !== undefined ? {
             set: props.controlVersion.trainingDatasetSize
           } : undefined,
-        trainingFeaturesUsed: props.controlVersion.trainingFeaturesUsed !== undefined ? {
-            set: props.controlVersion.trainingFeaturesUsed
-          } : undefined,
-        trainingHyperparameters: props.controlVersion.trainingHyperparameters !== undefined ? {
-            set: props.controlVersion.trainingHyperparameters
-          } : undefined,
+        trainingFeaturesUsed: props.controlVersion.trainingFeaturesUsed !== undefined ? props.controlVersion.trainingFeaturesUsed : undefined,
+        trainingHyperparameters: props.controlVersion.trainingHyperparameters !== undefined ? props.controlVersion.trainingHyperparameters : undefined,
         trainingResourcePeakMemoryMB: props.controlVersion.trainingResourcePeakMemoryMB !== undefined ? {
             set: props.controlVersion.trainingResourcePeakMemoryMB
           } : undefined,
@@ -10186,15 +9710,9 @@ id
           validationCrossValidationScore: props.controlVersion.parentVersion.validationCrossValidationScore !== undefined ? {
               set: props.controlVersion.parentVersion.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: props.controlVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-              set: props.controlVersion.parentVersion.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: props.controlVersion.parentVersion.validationBacktestResults !== undefined ? {
-              set: props.controlVersion.parentVersion.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: props.controlVersion.parentVersion.validationStatTestResults !== undefined ? {
-              set: props.controlVersion.parentVersion.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: props.controlVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.controlVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: props.controlVersion.parentVersion.validationBacktestResults !== undefined ? props.controlVersion.parentVersion.validationBacktestResults : undefined,
+          validationStatTestResults: props.controlVersion.parentVersion.validationStatTestResults !== undefined ? props.controlVersion.parentVersion.validationStatTestResults : undefined,
           deploymentEnvironment: props.controlVersion.parentVersion.deploymentEnvironment !== undefined ? {
               set: props.controlVersion.parentVersion.deploymentEnvironment
             } : undefined,
@@ -10204,9 +9722,7 @@ id
           deploymentRolloutStrategy: props.controlVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
               set: props.controlVersion.parentVersion.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: props.controlVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-              set: props.controlVersion.parentVersion.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: props.controlVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.controlVersion.parentVersion.deploymentHealthCheckConfig : undefined,
           trainingStartTime: props.controlVersion.parentVersion.trainingStartTime !== undefined ? {
               set: props.controlVersion.parentVersion.trainingStartTime
             } : undefined,
@@ -10219,12 +9735,8 @@ id
           trainingDatasetSize: props.controlVersion.parentVersion.trainingDatasetSize !== undefined ? {
               set: props.controlVersion.parentVersion.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: props.controlVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-              set: props.controlVersion.parentVersion.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: props.controlVersion.parentVersion.trainingHyperparameters !== undefined ? {
-              set: props.controlVersion.parentVersion.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: props.controlVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.controlVersion.parentVersion.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: props.controlVersion.parentVersion.trainingHyperparameters !== undefined ? props.controlVersion.parentVersion.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: props.controlVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
               set: props.controlVersion.parentVersion.trainingResourcePeakMemoryMB
             } : undefined,
@@ -10307,15 +9819,9 @@ id
             validationCrossValidationScore: props.controlVersion.parentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: props.controlVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: props.controlVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: props.controlVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? props.controlVersion.parentVersion.parentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: props.controlVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? props.controlVersion.parentVersion.parentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: props.controlVersion.parentVersion.parentVersion.deploymentEnvironment !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.deploymentEnvironment
               } : undefined,
@@ -10325,9 +9831,7 @@ id
             deploymentRolloutStrategy: props.controlVersion.parentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: props.controlVersion.parentVersion.parentVersion.trainingStartTime !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.trainingStartTime
               } : undefined,
@@ -10340,12 +9844,8 @@ id
             trainingDatasetSize: props.controlVersion.parentVersion.parentVersion.trainingDatasetSize !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: props.controlVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-                set: props.controlVersion.parentVersion.parentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: props.controlVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? props.controlVersion.parentVersion.parentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: props.controlVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: props.controlVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -10463,9 +9963,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -10487,36 +9985,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -10589,9 +10071,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -10613,36 +10093,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -10694,15 +10158,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -10715,24 +10173,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -11055,15 +10503,9 @@ id
           validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
               set: item.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-              set: item.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: item.validationBacktestResults !== undefined ? {
-              set: item.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: item.validationStatTestResults !== undefined ? {
-              set: item.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+          validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
           deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
               set: item.deploymentEnvironment
             } : undefined,
@@ -11073,9 +10515,7 @@ id
           deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
               set: item.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-              set: item.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
           trainingStartTime: item.trainingStartTime !== undefined ? {
               set: item.trainingStartTime
             } : undefined,
@@ -11088,12 +10528,8 @@ id
           trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
               set: item.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-              set: item.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-              set: item.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
               set: item.trainingResourcePeakMemoryMB
             } : undefined,
@@ -11173,15 +10609,9 @@ id
             validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
                 set: item.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-                set: item.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.validationBacktestResults !== undefined ? {
-                set: item.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.validationStatTestResults !== undefined ? {
-                set: item.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+            validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
             deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
                 set: item.deploymentEnvironment
               } : undefined,
@@ -11191,9 +10621,7 @@ id
             deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
                 set: item.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-                set: item.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.trainingStartTime !== undefined ? {
                 set: item.trainingStartTime
               } : undefined,
@@ -11206,12 +10634,8 @@ id
             trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
                 set: item.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-                set: item.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-                set: item.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.trainingResourcePeakMemoryMB
               } : undefined,
@@ -11329,9 +10753,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -11353,36 +10775,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -11455,9 +10861,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -11479,36 +10883,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -11560,15 +10948,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -11581,24 +10963,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -11922,18 +11294,14 @@ id
             metadataPythonVersion: item.modelArtifact.metadataPythonVersion !== undefined ? {
                 set: item.modelArtifact.metadataPythonVersion
               } : undefined,
-            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? {
-                set: item.modelArtifact.metadataDependencies
-              } : undefined,
+            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? item.modelArtifact.metadataDependencies : undefined,
             metadataTrainingDate: item.modelArtifact.metadataTrainingDate !== undefined ? {
                 set: item.modelArtifact.metadataTrainingDate
               } : undefined,
             metadataDatasetSize: item.modelArtifact.metadataDatasetSize !== undefined ? {
                 set: item.modelArtifact.metadataDatasetSize
               } : undefined,
-            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? {
-                set: item.modelArtifact.metadataHyperparameters
-              } : undefined,
+            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? item.modelArtifact.metadataHyperparameters : undefined,
           },
           create: {
             modelName: item.modelArtifact.modelName !== undefined ? item.modelArtifact.modelName : undefined,
@@ -12026,9 +11394,7 @@ id
           trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
               set: item.trafficSplitTreatmentPercent
             } : undefined,
-          targetMetrics: item.targetMetrics !== undefined ? {
-              set: item.targetMetrics
-            } : undefined,
+          targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
           successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
               set: item.successCriteriaPrimaryMetric
             } : undefined,
@@ -12050,36 +11416,20 @@ id
           plannedDuration: item.plannedDuration !== undefined ? {
               set: item.plannedDuration
             } : undefined,
-          resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-              set: item.resultsControlMetrics
-            } : undefined,
-          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-              set: item.resultsTreatmentMetrics
-            } : undefined,
-          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-              set: item.resultsStatisticalSignificance
-            } : undefined,
-          resultsPValues: item.resultsPValues !== undefined ? {
-              set: item.resultsPValues
-            } : undefined,
-          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-              set: item.resultsConfidenceIntervals
-            } : undefined,
+          resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+          resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
           resultsRecommendation: item.resultsRecommendation !== undefined ? {
               set: item.resultsRecommendation
             } : undefined,
           metadataEnvironment: item.metadataEnvironment !== undefined ? {
               set: item.metadataEnvironment
             } : undefined,
-          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-              set: item.metadataEligibilityCriteria
-            } : undefined,
-          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-              set: item.metadataExclusionCriteria
-            } : undefined,
-          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-              set: item.metadataSegmentationRules
-            } : undefined,
+          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
           completedAt: item.completedAt !== undefined ? {
               set: item.completedAt
             } : undefined,
@@ -12150,15 +11500,9 @@ id
             validationCrossValidationScore: item.controlVersion.validationCrossValidationScore !== undefined ? {
                 set: item.controlVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.controlVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: item.controlVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.controlVersion.validationBacktestResults !== undefined ? {
-                set: item.controlVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.controlVersion.validationStatTestResults !== undefined ? {
-                set: item.controlVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.controlVersion.validationOutOfSamplePerformance !== undefined ? item.controlVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.controlVersion.validationBacktestResults !== undefined ? item.controlVersion.validationBacktestResults : undefined,
+            validationStatTestResults: item.controlVersion.validationStatTestResults !== undefined ? item.controlVersion.validationStatTestResults : undefined,
             deploymentEnvironment: item.controlVersion.deploymentEnvironment !== undefined ? {
                 set: item.controlVersion.deploymentEnvironment
               } : undefined,
@@ -12168,9 +11512,7 @@ id
             deploymentRolloutStrategy: item.controlVersion.deploymentRolloutStrategy !== undefined ? {
                 set: item.controlVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.controlVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: item.controlVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.controlVersion.deploymentHealthCheckConfig !== undefined ? item.controlVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.controlVersion.trainingStartTime !== undefined ? {
                 set: item.controlVersion.trainingStartTime
               } : undefined,
@@ -12183,12 +11525,8 @@ id
             trainingDatasetSize: item.controlVersion.trainingDatasetSize !== undefined ? {
                 set: item.controlVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.controlVersion.trainingFeaturesUsed !== undefined ? {
-                set: item.controlVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.controlVersion.trainingHyperparameters !== undefined ? {
-                set: item.controlVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.controlVersion.trainingFeaturesUsed !== undefined ? item.controlVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.controlVersion.trainingHyperparameters !== undefined ? item.controlVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.controlVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.controlVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -12340,15 +11678,9 @@ id
           analysisType: item.analysisType !== undefined ? {
               set: item.analysisType
             } : undefined,
-          featureImportances: item.featureImportances !== undefined ? {
-              set: item.featureImportances
-            } : undefined,
-          globalImportance: item.globalImportance !== undefined ? {
-              set: item.globalImportance
-            } : undefined,
-          localImportance: item.localImportance !== undefined ? {
-              set: item.localImportance
-            } : undefined,
+          featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+          globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+          localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
           analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
               set: item.analysisMetadataSampleSize
             } : undefined,
@@ -12361,24 +11693,14 @@ id
           analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
               set: item.analysisMetadataComputationTime
             } : undefined,
-          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-              set: item.analysisMetadataAnalysisParameters
-            } : undefined,
-          insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-              set: item.insightsTopFeatures
-            } : undefined,
-          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-              set: item.insightsRedundantFeatures
-            } : undefined,
-          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-              set: item.insightsUnexpectedImportances
-            } : undefined,
+          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+          insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
           insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
               set: item.insightsStabilityScore
             } : undefined,
-          insightsRecommendations: item.insightsRecommendations !== undefined ? {
-              set: item.insightsRecommendations
-            } : undefined,
+          insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
         },
         create: {
           analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -13184,15 +12506,9 @@ id
         validationCrossValidationScore: props.treatmentVersion.validationCrossValidationScore !== undefined ? {
             set: props.treatmentVersion.validationCrossValidationScore
           } : undefined,
-        validationOutOfSamplePerformance: props.treatmentVersion.validationOutOfSamplePerformance !== undefined ? {
-            set: props.treatmentVersion.validationOutOfSamplePerformance
-          } : undefined,
-        validationBacktestResults: props.treatmentVersion.validationBacktestResults !== undefined ? {
-            set: props.treatmentVersion.validationBacktestResults
-          } : undefined,
-        validationStatTestResults: props.treatmentVersion.validationStatTestResults !== undefined ? {
-            set: props.treatmentVersion.validationStatTestResults
-          } : undefined,
+        validationOutOfSamplePerformance: props.treatmentVersion.validationOutOfSamplePerformance !== undefined ? props.treatmentVersion.validationOutOfSamplePerformance : undefined,
+        validationBacktestResults: props.treatmentVersion.validationBacktestResults !== undefined ? props.treatmentVersion.validationBacktestResults : undefined,
+        validationStatTestResults: props.treatmentVersion.validationStatTestResults !== undefined ? props.treatmentVersion.validationStatTestResults : undefined,
         deploymentEnvironment: props.treatmentVersion.deploymentEnvironment !== undefined ? {
             set: props.treatmentVersion.deploymentEnvironment
           } : undefined,
@@ -13202,9 +12518,7 @@ id
         deploymentRolloutStrategy: props.treatmentVersion.deploymentRolloutStrategy !== undefined ? {
             set: props.treatmentVersion.deploymentRolloutStrategy
           } : undefined,
-        deploymentHealthCheckConfig: props.treatmentVersion.deploymentHealthCheckConfig !== undefined ? {
-            set: props.treatmentVersion.deploymentHealthCheckConfig
-          } : undefined,
+        deploymentHealthCheckConfig: props.treatmentVersion.deploymentHealthCheckConfig !== undefined ? props.treatmentVersion.deploymentHealthCheckConfig : undefined,
         trainingStartTime: props.treatmentVersion.trainingStartTime !== undefined ? {
             set: props.treatmentVersion.trainingStartTime
           } : undefined,
@@ -13217,12 +12531,8 @@ id
         trainingDatasetSize: props.treatmentVersion.trainingDatasetSize !== undefined ? {
             set: props.treatmentVersion.trainingDatasetSize
           } : undefined,
-        trainingFeaturesUsed: props.treatmentVersion.trainingFeaturesUsed !== undefined ? {
-            set: props.treatmentVersion.trainingFeaturesUsed
-          } : undefined,
-        trainingHyperparameters: props.treatmentVersion.trainingHyperparameters !== undefined ? {
-            set: props.treatmentVersion.trainingHyperparameters
-          } : undefined,
+        trainingFeaturesUsed: props.treatmentVersion.trainingFeaturesUsed !== undefined ? props.treatmentVersion.trainingFeaturesUsed : undefined,
+        trainingHyperparameters: props.treatmentVersion.trainingHyperparameters !== undefined ? props.treatmentVersion.trainingHyperparameters : undefined,
         trainingResourcePeakMemoryMB: props.treatmentVersion.trainingResourcePeakMemoryMB !== undefined ? {
             set: props.treatmentVersion.trainingResourcePeakMemoryMB
           } : undefined,
@@ -13305,15 +12615,9 @@ id
           validationCrossValidationScore: props.treatmentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
               set: props.treatmentVersion.parentVersion.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-              set: props.treatmentVersion.parentVersion.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: props.treatmentVersion.parentVersion.validationBacktestResults !== undefined ? {
-              set: props.treatmentVersion.parentVersion.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: props.treatmentVersion.parentVersion.validationStatTestResults !== undefined ? {
-              set: props.treatmentVersion.parentVersion.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.treatmentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: props.treatmentVersion.parentVersion.validationBacktestResults !== undefined ? props.treatmentVersion.parentVersion.validationBacktestResults : undefined,
+          validationStatTestResults: props.treatmentVersion.parentVersion.validationStatTestResults !== undefined ? props.treatmentVersion.parentVersion.validationStatTestResults : undefined,
           deploymentEnvironment: props.treatmentVersion.parentVersion.deploymentEnvironment !== undefined ? {
               set: props.treatmentVersion.parentVersion.deploymentEnvironment
             } : undefined,
@@ -13323,9 +12627,7 @@ id
           deploymentRolloutStrategy: props.treatmentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
               set: props.treatmentVersion.parentVersion.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-              set: props.treatmentVersion.parentVersion.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.treatmentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
           trainingStartTime: props.treatmentVersion.parentVersion.trainingStartTime !== undefined ? {
               set: props.treatmentVersion.parentVersion.trainingStartTime
             } : undefined,
@@ -13338,12 +12640,8 @@ id
           trainingDatasetSize: props.treatmentVersion.parentVersion.trainingDatasetSize !== undefined ? {
               set: props.treatmentVersion.parentVersion.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: props.treatmentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-              set: props.treatmentVersion.parentVersion.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: props.treatmentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-              set: props.treatmentVersion.parentVersion.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: props.treatmentVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.treatmentVersion.parentVersion.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: props.treatmentVersion.parentVersion.trainingHyperparameters !== undefined ? props.treatmentVersion.parentVersion.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: props.treatmentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
               set: props.treatmentVersion.parentVersion.trainingResourcePeakMemoryMB
             } : undefined,
@@ -13426,15 +12724,9 @@ id
             validationCrossValidationScore: props.treatmentVersion.parentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? props.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? props.treatmentVersion.parentVersion.parentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? props.treatmentVersion.parentVersion.parentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: props.treatmentVersion.parentVersion.parentVersion.deploymentEnvironment !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.deploymentEnvironment
               } : undefined,
@@ -13444,9 +12736,7 @@ id
             deploymentRolloutStrategy: props.treatmentVersion.parentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? props.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: props.treatmentVersion.parentVersion.parentVersion.trainingStartTime !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.trainingStartTime
               } : undefined,
@@ -13459,12 +12749,8 @@ id
             trainingDatasetSize: props.treatmentVersion.parentVersion.parentVersion.trainingDatasetSize !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-                set: props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? props.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? props.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: props.treatmentVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: props.treatmentVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -13582,9 +12868,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -13606,36 +12890,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -13708,9 +12976,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -13732,36 +12998,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -13813,15 +13063,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -13834,24 +13078,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -14174,15 +13408,9 @@ id
           validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
               set: item.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-              set: item.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: item.validationBacktestResults !== undefined ? {
-              set: item.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: item.validationStatTestResults !== undefined ? {
-              set: item.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+          validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
           deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
               set: item.deploymentEnvironment
             } : undefined,
@@ -14192,9 +13420,7 @@ id
           deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
               set: item.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-              set: item.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
           trainingStartTime: item.trainingStartTime !== undefined ? {
               set: item.trainingStartTime
             } : undefined,
@@ -14207,12 +13433,8 @@ id
           trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
               set: item.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-              set: item.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-              set: item.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
               set: item.trainingResourcePeakMemoryMB
             } : undefined,
@@ -14292,15 +13514,9 @@ id
             validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
                 set: item.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-                set: item.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.validationBacktestResults !== undefined ? {
-                set: item.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.validationStatTestResults !== undefined ? {
-                set: item.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+            validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
             deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
                 set: item.deploymentEnvironment
               } : undefined,
@@ -14310,9 +13526,7 @@ id
             deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
                 set: item.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-                set: item.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.trainingStartTime !== undefined ? {
                 set: item.trainingStartTime
               } : undefined,
@@ -14325,12 +13539,8 @@ id
             trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
                 set: item.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-                set: item.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-                set: item.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.trainingResourcePeakMemoryMB
               } : undefined,
@@ -14448,9 +13658,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -14472,36 +13680,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -14574,9 +13766,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -14598,36 +13788,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -14679,15 +13853,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -14700,24 +13868,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -15041,18 +14199,14 @@ id
             metadataPythonVersion: item.modelArtifact.metadataPythonVersion !== undefined ? {
                 set: item.modelArtifact.metadataPythonVersion
               } : undefined,
-            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? {
-                set: item.modelArtifact.metadataDependencies
-              } : undefined,
+            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? item.modelArtifact.metadataDependencies : undefined,
             metadataTrainingDate: item.modelArtifact.metadataTrainingDate !== undefined ? {
                 set: item.modelArtifact.metadataTrainingDate
               } : undefined,
             metadataDatasetSize: item.modelArtifact.metadataDatasetSize !== undefined ? {
                 set: item.modelArtifact.metadataDatasetSize
               } : undefined,
-            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? {
-                set: item.modelArtifact.metadataHyperparameters
-              } : undefined,
+            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? item.modelArtifact.metadataHyperparameters : undefined,
           },
           create: {
             modelName: item.modelArtifact.modelName !== undefined ? item.modelArtifact.modelName : undefined,
@@ -15145,9 +14299,7 @@ id
           trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
               set: item.trafficSplitTreatmentPercent
             } : undefined,
-          targetMetrics: item.targetMetrics !== undefined ? {
-              set: item.targetMetrics
-            } : undefined,
+          targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
           successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
               set: item.successCriteriaPrimaryMetric
             } : undefined,
@@ -15169,36 +14321,20 @@ id
           plannedDuration: item.plannedDuration !== undefined ? {
               set: item.plannedDuration
             } : undefined,
-          resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-              set: item.resultsControlMetrics
-            } : undefined,
-          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-              set: item.resultsTreatmentMetrics
-            } : undefined,
-          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-              set: item.resultsStatisticalSignificance
-            } : undefined,
-          resultsPValues: item.resultsPValues !== undefined ? {
-              set: item.resultsPValues
-            } : undefined,
-          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-              set: item.resultsConfidenceIntervals
-            } : undefined,
+          resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+          resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
           resultsRecommendation: item.resultsRecommendation !== undefined ? {
               set: item.resultsRecommendation
             } : undefined,
           metadataEnvironment: item.metadataEnvironment !== undefined ? {
               set: item.metadataEnvironment
             } : undefined,
-          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-              set: item.metadataEligibilityCriteria
-            } : undefined,
-          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-              set: item.metadataExclusionCriteria
-            } : undefined,
-          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-              set: item.metadataSegmentationRules
-            } : undefined,
+          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
           completedAt: item.completedAt !== undefined ? {
               set: item.completedAt
             } : undefined,
@@ -15269,15 +14405,9 @@ id
             validationCrossValidationScore: item.treatmentVersion.validationCrossValidationScore !== undefined ? {
                 set: item.treatmentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.treatmentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: item.treatmentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.treatmentVersion.validationBacktestResults !== undefined ? {
-                set: item.treatmentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.treatmentVersion.validationStatTestResults !== undefined ? {
-                set: item.treatmentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.treatmentVersion.validationOutOfSamplePerformance !== undefined ? item.treatmentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.treatmentVersion.validationBacktestResults !== undefined ? item.treatmentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: item.treatmentVersion.validationStatTestResults !== undefined ? item.treatmentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: item.treatmentVersion.deploymentEnvironment !== undefined ? {
                 set: item.treatmentVersion.deploymentEnvironment
               } : undefined,
@@ -15287,9 +14417,7 @@ id
             deploymentRolloutStrategy: item.treatmentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: item.treatmentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.treatmentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: item.treatmentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.treatmentVersion.deploymentHealthCheckConfig !== undefined ? item.treatmentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.treatmentVersion.trainingStartTime !== undefined ? {
                 set: item.treatmentVersion.trainingStartTime
               } : undefined,
@@ -15302,12 +14430,8 @@ id
             trainingDatasetSize: item.treatmentVersion.trainingDatasetSize !== undefined ? {
                 set: item.treatmentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.treatmentVersion.trainingFeaturesUsed !== undefined ? {
-                set: item.treatmentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.treatmentVersion.trainingHyperparameters !== undefined ? {
-                set: item.treatmentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.treatmentVersion.trainingFeaturesUsed !== undefined ? item.treatmentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.treatmentVersion.trainingHyperparameters !== undefined ? item.treatmentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.treatmentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.treatmentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -15459,15 +14583,9 @@ id
           analysisType: item.analysisType !== undefined ? {
               set: item.analysisType
             } : undefined,
-          featureImportances: item.featureImportances !== undefined ? {
-              set: item.featureImportances
-            } : undefined,
-          globalImportance: item.globalImportance !== undefined ? {
-              set: item.globalImportance
-            } : undefined,
-          localImportance: item.localImportance !== undefined ? {
-              set: item.localImportance
-            } : undefined,
+          featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+          globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+          localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
           analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
               set: item.analysisMetadataSampleSize
             } : undefined,
@@ -15480,24 +14598,14 @@ id
           analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
               set: item.analysisMetadataComputationTime
             } : undefined,
-          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-              set: item.analysisMetadataAnalysisParameters
-            } : undefined,
-          insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-              set: item.insightsTopFeatures
-            } : undefined,
-          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-              set: item.insightsRedundantFeatures
-            } : undefined,
-          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-              set: item.insightsUnexpectedImportances
-            } : undefined,
+          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+          insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
           insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
               set: item.insightsStabilityScore
             } : undefined,
-          insightsRecommendations: item.insightsRecommendations !== undefined ? {
-              set: item.insightsRecommendations
-            } : undefined,
+          insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
         },
         create: {
           analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -16388,9 +15496,7 @@ id
   trafficSplitTreatmentPercent: prop.trafficSplitTreatmentPercent !== undefined ? {
             set: prop.trafficSplitTreatmentPercent 
            } : undefined,
-  targetMetrics: prop.targetMetrics !== undefined ? {
-            set: prop.targetMetrics 
-           } : undefined,
+  targetMetrics: prop.targetMetrics !== undefined ? prop.targetMetrics : undefined,
   successCriteriaPrimaryMetric: prop.successCriteriaPrimaryMetric !== undefined ? {
             set: prop.successCriteriaPrimaryMetric 
            } : undefined,
@@ -16412,36 +15518,20 @@ id
   plannedDuration: prop.plannedDuration !== undefined ? {
             set: prop.plannedDuration 
            } : undefined,
-  resultsControlMetrics: prop.resultsControlMetrics !== undefined ? {
-            set: prop.resultsControlMetrics 
-           } : undefined,
-  resultsTreatmentMetrics: prop.resultsTreatmentMetrics !== undefined ? {
-            set: prop.resultsTreatmentMetrics 
-           } : undefined,
-  resultsStatisticalSignificance: prop.resultsStatisticalSignificance !== undefined ? {
-            set: prop.resultsStatisticalSignificance 
-           } : undefined,
-  resultsPValues: prop.resultsPValues !== undefined ? {
-            set: prop.resultsPValues 
-           } : undefined,
-  resultsConfidenceIntervals: prop.resultsConfidenceIntervals !== undefined ? {
-            set: prop.resultsConfidenceIntervals 
-           } : undefined,
+  resultsControlMetrics: prop.resultsControlMetrics !== undefined ? prop.resultsControlMetrics : undefined,
+  resultsTreatmentMetrics: prop.resultsTreatmentMetrics !== undefined ? prop.resultsTreatmentMetrics : undefined,
+  resultsStatisticalSignificance: prop.resultsStatisticalSignificance !== undefined ? prop.resultsStatisticalSignificance : undefined,
+  resultsPValues: prop.resultsPValues !== undefined ? prop.resultsPValues : undefined,
+  resultsConfidenceIntervals: prop.resultsConfidenceIntervals !== undefined ? prop.resultsConfidenceIntervals : undefined,
   resultsRecommendation: prop.resultsRecommendation !== undefined ? {
             set: prop.resultsRecommendation 
            } : undefined,
   metadataEnvironment: prop.metadataEnvironment !== undefined ? {
             set: prop.metadataEnvironment 
            } : undefined,
-  metadataEligibilityCriteria: prop.metadataEligibilityCriteria !== undefined ? {
-            set: prop.metadataEligibilityCriteria 
-           } : undefined,
-  metadataExclusionCriteria: prop.metadataExclusionCriteria !== undefined ? {
-            set: prop.metadataExclusionCriteria 
-           } : undefined,
-  metadataSegmentationRules: prop.metadataSegmentationRules !== undefined ? {
-            set: prop.metadataSegmentationRules 
-           } : undefined,
+  metadataEligibilityCriteria: prop.metadataEligibilityCriteria !== undefined ? prop.metadataEligibilityCriteria : undefined,
+  metadataExclusionCriteria: prop.metadataExclusionCriteria !== undefined ? prop.metadataExclusionCriteria : undefined,
+  metadataSegmentationRules: prop.metadataSegmentationRules !== undefined ? prop.metadataSegmentationRules : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -16518,15 +15608,9 @@ id
         validationCrossValidationScore: prop.controlVersion.validationCrossValidationScore !== undefined ? {
             set: prop.controlVersion.validationCrossValidationScore
           } : undefined,
-        validationOutOfSamplePerformance: prop.controlVersion.validationOutOfSamplePerformance !== undefined ? {
-            set: prop.controlVersion.validationOutOfSamplePerformance
-          } : undefined,
-        validationBacktestResults: prop.controlVersion.validationBacktestResults !== undefined ? {
-            set: prop.controlVersion.validationBacktestResults
-          } : undefined,
-        validationStatTestResults: prop.controlVersion.validationStatTestResults !== undefined ? {
-            set: prop.controlVersion.validationStatTestResults
-          } : undefined,
+        validationOutOfSamplePerformance: prop.controlVersion.validationOutOfSamplePerformance !== undefined ? prop.controlVersion.validationOutOfSamplePerformance : undefined,
+        validationBacktestResults: prop.controlVersion.validationBacktestResults !== undefined ? prop.controlVersion.validationBacktestResults : undefined,
+        validationStatTestResults: prop.controlVersion.validationStatTestResults !== undefined ? prop.controlVersion.validationStatTestResults : undefined,
         deploymentEnvironment: prop.controlVersion.deploymentEnvironment !== undefined ? {
             set: prop.controlVersion.deploymentEnvironment
           } : undefined,
@@ -16536,9 +15620,7 @@ id
         deploymentRolloutStrategy: prop.controlVersion.deploymentRolloutStrategy !== undefined ? {
             set: prop.controlVersion.deploymentRolloutStrategy
           } : undefined,
-        deploymentHealthCheckConfig: prop.controlVersion.deploymentHealthCheckConfig !== undefined ? {
-            set: prop.controlVersion.deploymentHealthCheckConfig
-          } : undefined,
+        deploymentHealthCheckConfig: prop.controlVersion.deploymentHealthCheckConfig !== undefined ? prop.controlVersion.deploymentHealthCheckConfig : undefined,
         trainingStartTime: prop.controlVersion.trainingStartTime !== undefined ? {
             set: prop.controlVersion.trainingStartTime
           } : undefined,
@@ -16551,12 +15633,8 @@ id
         trainingDatasetSize: prop.controlVersion.trainingDatasetSize !== undefined ? {
             set: prop.controlVersion.trainingDatasetSize
           } : undefined,
-        trainingFeaturesUsed: prop.controlVersion.trainingFeaturesUsed !== undefined ? {
-            set: prop.controlVersion.trainingFeaturesUsed
-          } : undefined,
-        trainingHyperparameters: prop.controlVersion.trainingHyperparameters !== undefined ? {
-            set: prop.controlVersion.trainingHyperparameters
-          } : undefined,
+        trainingFeaturesUsed: prop.controlVersion.trainingFeaturesUsed !== undefined ? prop.controlVersion.trainingFeaturesUsed : undefined,
+        trainingHyperparameters: prop.controlVersion.trainingHyperparameters !== undefined ? prop.controlVersion.trainingHyperparameters : undefined,
         trainingResourcePeakMemoryMB: prop.controlVersion.trainingResourcePeakMemoryMB !== undefined ? {
             set: prop.controlVersion.trainingResourcePeakMemoryMB
           } : undefined,
@@ -16639,15 +15717,9 @@ id
           validationCrossValidationScore: prop.controlVersion.parentVersion.validationCrossValidationScore !== undefined ? {
               set: prop.controlVersion.parentVersion.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: prop.controlVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-              set: prop.controlVersion.parentVersion.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: prop.controlVersion.parentVersion.validationBacktestResults !== undefined ? {
-              set: prop.controlVersion.parentVersion.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: prop.controlVersion.parentVersion.validationStatTestResults !== undefined ? {
-              set: prop.controlVersion.parentVersion.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: prop.controlVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? prop.controlVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: prop.controlVersion.parentVersion.validationBacktestResults !== undefined ? prop.controlVersion.parentVersion.validationBacktestResults : undefined,
+          validationStatTestResults: prop.controlVersion.parentVersion.validationStatTestResults !== undefined ? prop.controlVersion.parentVersion.validationStatTestResults : undefined,
           deploymentEnvironment: prop.controlVersion.parentVersion.deploymentEnvironment !== undefined ? {
               set: prop.controlVersion.parentVersion.deploymentEnvironment
             } : undefined,
@@ -16657,9 +15729,7 @@ id
           deploymentRolloutStrategy: prop.controlVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
               set: prop.controlVersion.parentVersion.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: prop.controlVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-              set: prop.controlVersion.parentVersion.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: prop.controlVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? prop.controlVersion.parentVersion.deploymentHealthCheckConfig : undefined,
           trainingStartTime: prop.controlVersion.parentVersion.trainingStartTime !== undefined ? {
               set: prop.controlVersion.parentVersion.trainingStartTime
             } : undefined,
@@ -16672,12 +15742,8 @@ id
           trainingDatasetSize: prop.controlVersion.parentVersion.trainingDatasetSize !== undefined ? {
               set: prop.controlVersion.parentVersion.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: prop.controlVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-              set: prop.controlVersion.parentVersion.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: prop.controlVersion.parentVersion.trainingHyperparameters !== undefined ? {
-              set: prop.controlVersion.parentVersion.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: prop.controlVersion.parentVersion.trainingFeaturesUsed !== undefined ? prop.controlVersion.parentVersion.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: prop.controlVersion.parentVersion.trainingHyperparameters !== undefined ? prop.controlVersion.parentVersion.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: prop.controlVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
               set: prop.controlVersion.parentVersion.trainingResourcePeakMemoryMB
             } : undefined,
@@ -16760,15 +15826,9 @@ id
             validationCrossValidationScore: prop.controlVersion.parentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
                 set: prop.controlVersion.parentVersion.parentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: prop.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: prop.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: prop.controlVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? {
-                set: prop.controlVersion.parentVersion.parentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: prop.controlVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? {
-                set: prop.controlVersion.parentVersion.parentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: prop.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? prop.controlVersion.parentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: prop.controlVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? prop.controlVersion.parentVersion.parentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: prop.controlVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? prop.controlVersion.parentVersion.parentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: prop.controlVersion.parentVersion.parentVersion.deploymentEnvironment !== undefined ? {
                 set: prop.controlVersion.parentVersion.parentVersion.deploymentEnvironment
               } : undefined,
@@ -16778,9 +15838,7 @@ id
             deploymentRolloutStrategy: prop.controlVersion.parentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: prop.controlVersion.parentVersion.parentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: prop.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: prop.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: prop.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? prop.controlVersion.parentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: prop.controlVersion.parentVersion.parentVersion.trainingStartTime !== undefined ? {
                 set: prop.controlVersion.parentVersion.parentVersion.trainingStartTime
               } : undefined,
@@ -16793,12 +15851,8 @@ id
             trainingDatasetSize: prop.controlVersion.parentVersion.parentVersion.trainingDatasetSize !== undefined ? {
                 set: prop.controlVersion.parentVersion.parentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: prop.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-                set: prop.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: prop.controlVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-                set: prop.controlVersion.parentVersion.parentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: prop.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? prop.controlVersion.parentVersion.parentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: prop.controlVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? prop.controlVersion.parentVersion.parentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: prop.controlVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: prop.controlVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -16916,9 +15970,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -16940,36 +15992,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -17042,9 +16078,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -17066,36 +16100,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -17147,15 +16165,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -17168,24 +16180,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -17508,15 +16510,9 @@ id
           validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
               set: item.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-              set: item.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: item.validationBacktestResults !== undefined ? {
-              set: item.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: item.validationStatTestResults !== undefined ? {
-              set: item.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+          validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
           deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
               set: item.deploymentEnvironment
             } : undefined,
@@ -17526,9 +16522,7 @@ id
           deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
               set: item.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-              set: item.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
           trainingStartTime: item.trainingStartTime !== undefined ? {
               set: item.trainingStartTime
             } : undefined,
@@ -17541,12 +16535,8 @@ id
           trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
               set: item.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-              set: item.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-              set: item.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
               set: item.trainingResourcePeakMemoryMB
             } : undefined,
@@ -17626,15 +16616,9 @@ id
             validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
                 set: item.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-                set: item.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.validationBacktestResults !== undefined ? {
-                set: item.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.validationStatTestResults !== undefined ? {
-                set: item.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+            validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
             deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
                 set: item.deploymentEnvironment
               } : undefined,
@@ -17644,9 +16628,7 @@ id
             deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
                 set: item.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-                set: item.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.trainingStartTime !== undefined ? {
                 set: item.trainingStartTime
               } : undefined,
@@ -17659,12 +16641,8 @@ id
             trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
                 set: item.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-                set: item.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-                set: item.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.trainingResourcePeakMemoryMB
               } : undefined,
@@ -17782,9 +16760,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -17806,36 +16782,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -17908,9 +16868,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -17932,36 +16890,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -18013,15 +16955,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -18034,24 +16970,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -18375,18 +17301,14 @@ id
             metadataPythonVersion: item.modelArtifact.metadataPythonVersion !== undefined ? {
                 set: item.modelArtifact.metadataPythonVersion
               } : undefined,
-            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? {
-                set: item.modelArtifact.metadataDependencies
-              } : undefined,
+            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? item.modelArtifact.metadataDependencies : undefined,
             metadataTrainingDate: item.modelArtifact.metadataTrainingDate !== undefined ? {
                 set: item.modelArtifact.metadataTrainingDate
               } : undefined,
             metadataDatasetSize: item.modelArtifact.metadataDatasetSize !== undefined ? {
                 set: item.modelArtifact.metadataDatasetSize
               } : undefined,
-            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? {
-                set: item.modelArtifact.metadataHyperparameters
-              } : undefined,
+            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? item.modelArtifact.metadataHyperparameters : undefined,
           },
           create: {
             modelName: item.modelArtifact.modelName !== undefined ? item.modelArtifact.modelName : undefined,
@@ -18479,9 +17401,7 @@ id
           trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
               set: item.trafficSplitTreatmentPercent
             } : undefined,
-          targetMetrics: item.targetMetrics !== undefined ? {
-              set: item.targetMetrics
-            } : undefined,
+          targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
           successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
               set: item.successCriteriaPrimaryMetric
             } : undefined,
@@ -18503,36 +17423,20 @@ id
           plannedDuration: item.plannedDuration !== undefined ? {
               set: item.plannedDuration
             } : undefined,
-          resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-              set: item.resultsControlMetrics
-            } : undefined,
-          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-              set: item.resultsTreatmentMetrics
-            } : undefined,
-          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-              set: item.resultsStatisticalSignificance
-            } : undefined,
-          resultsPValues: item.resultsPValues !== undefined ? {
-              set: item.resultsPValues
-            } : undefined,
-          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-              set: item.resultsConfidenceIntervals
-            } : undefined,
+          resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+          resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
           resultsRecommendation: item.resultsRecommendation !== undefined ? {
               set: item.resultsRecommendation
             } : undefined,
           metadataEnvironment: item.metadataEnvironment !== undefined ? {
               set: item.metadataEnvironment
             } : undefined,
-          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-              set: item.metadataEligibilityCriteria
-            } : undefined,
-          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-              set: item.metadataExclusionCriteria
-            } : undefined,
-          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-              set: item.metadataSegmentationRules
-            } : undefined,
+          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
           completedAt: item.completedAt !== undefined ? {
               set: item.completedAt
             } : undefined,
@@ -18603,15 +17507,9 @@ id
             validationCrossValidationScore: item.controlVersion.validationCrossValidationScore !== undefined ? {
                 set: item.controlVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.controlVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: item.controlVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.controlVersion.validationBacktestResults !== undefined ? {
-                set: item.controlVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.controlVersion.validationStatTestResults !== undefined ? {
-                set: item.controlVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.controlVersion.validationOutOfSamplePerformance !== undefined ? item.controlVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.controlVersion.validationBacktestResults !== undefined ? item.controlVersion.validationBacktestResults : undefined,
+            validationStatTestResults: item.controlVersion.validationStatTestResults !== undefined ? item.controlVersion.validationStatTestResults : undefined,
             deploymentEnvironment: item.controlVersion.deploymentEnvironment !== undefined ? {
                 set: item.controlVersion.deploymentEnvironment
               } : undefined,
@@ -18621,9 +17519,7 @@ id
             deploymentRolloutStrategy: item.controlVersion.deploymentRolloutStrategy !== undefined ? {
                 set: item.controlVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.controlVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: item.controlVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.controlVersion.deploymentHealthCheckConfig !== undefined ? item.controlVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.controlVersion.trainingStartTime !== undefined ? {
                 set: item.controlVersion.trainingStartTime
               } : undefined,
@@ -18636,12 +17532,8 @@ id
             trainingDatasetSize: item.controlVersion.trainingDatasetSize !== undefined ? {
                 set: item.controlVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.controlVersion.trainingFeaturesUsed !== undefined ? {
-                set: item.controlVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.controlVersion.trainingHyperparameters !== undefined ? {
-                set: item.controlVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.controlVersion.trainingFeaturesUsed !== undefined ? item.controlVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.controlVersion.trainingHyperparameters !== undefined ? item.controlVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.controlVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.controlVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -18793,15 +17685,9 @@ id
           analysisType: item.analysisType !== undefined ? {
               set: item.analysisType
             } : undefined,
-          featureImportances: item.featureImportances !== undefined ? {
-              set: item.featureImportances
-            } : undefined,
-          globalImportance: item.globalImportance !== undefined ? {
-              set: item.globalImportance
-            } : undefined,
-          localImportance: item.localImportance !== undefined ? {
-              set: item.localImportance
-            } : undefined,
+          featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+          globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+          localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
           analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
               set: item.analysisMetadataSampleSize
             } : undefined,
@@ -18814,24 +17700,14 @@ id
           analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
               set: item.analysisMetadataComputationTime
             } : undefined,
-          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-              set: item.analysisMetadataAnalysisParameters
-            } : undefined,
-          insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-              set: item.insightsTopFeatures
-            } : undefined,
-          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-              set: item.insightsRedundantFeatures
-            } : undefined,
-          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-              set: item.insightsUnexpectedImportances
-            } : undefined,
+          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+          insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
           insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
               set: item.insightsStabilityScore
             } : undefined,
-          insightsRecommendations: item.insightsRecommendations !== undefined ? {
-              set: item.insightsRecommendations
-            } : undefined,
+          insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
         },
         create: {
           analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -19637,15 +18513,9 @@ id
         validationCrossValidationScore: prop.treatmentVersion.validationCrossValidationScore !== undefined ? {
             set: prop.treatmentVersion.validationCrossValidationScore
           } : undefined,
-        validationOutOfSamplePerformance: prop.treatmentVersion.validationOutOfSamplePerformance !== undefined ? {
-            set: prop.treatmentVersion.validationOutOfSamplePerformance
-          } : undefined,
-        validationBacktestResults: prop.treatmentVersion.validationBacktestResults !== undefined ? {
-            set: prop.treatmentVersion.validationBacktestResults
-          } : undefined,
-        validationStatTestResults: prop.treatmentVersion.validationStatTestResults !== undefined ? {
-            set: prop.treatmentVersion.validationStatTestResults
-          } : undefined,
+        validationOutOfSamplePerformance: prop.treatmentVersion.validationOutOfSamplePerformance !== undefined ? prop.treatmentVersion.validationOutOfSamplePerformance : undefined,
+        validationBacktestResults: prop.treatmentVersion.validationBacktestResults !== undefined ? prop.treatmentVersion.validationBacktestResults : undefined,
+        validationStatTestResults: prop.treatmentVersion.validationStatTestResults !== undefined ? prop.treatmentVersion.validationStatTestResults : undefined,
         deploymentEnvironment: prop.treatmentVersion.deploymentEnvironment !== undefined ? {
             set: prop.treatmentVersion.deploymentEnvironment
           } : undefined,
@@ -19655,9 +18525,7 @@ id
         deploymentRolloutStrategy: prop.treatmentVersion.deploymentRolloutStrategy !== undefined ? {
             set: prop.treatmentVersion.deploymentRolloutStrategy
           } : undefined,
-        deploymentHealthCheckConfig: prop.treatmentVersion.deploymentHealthCheckConfig !== undefined ? {
-            set: prop.treatmentVersion.deploymentHealthCheckConfig
-          } : undefined,
+        deploymentHealthCheckConfig: prop.treatmentVersion.deploymentHealthCheckConfig !== undefined ? prop.treatmentVersion.deploymentHealthCheckConfig : undefined,
         trainingStartTime: prop.treatmentVersion.trainingStartTime !== undefined ? {
             set: prop.treatmentVersion.trainingStartTime
           } : undefined,
@@ -19670,12 +18538,8 @@ id
         trainingDatasetSize: prop.treatmentVersion.trainingDatasetSize !== undefined ? {
             set: prop.treatmentVersion.trainingDatasetSize
           } : undefined,
-        trainingFeaturesUsed: prop.treatmentVersion.trainingFeaturesUsed !== undefined ? {
-            set: prop.treatmentVersion.trainingFeaturesUsed
-          } : undefined,
-        trainingHyperparameters: prop.treatmentVersion.trainingHyperparameters !== undefined ? {
-            set: prop.treatmentVersion.trainingHyperparameters
-          } : undefined,
+        trainingFeaturesUsed: prop.treatmentVersion.trainingFeaturesUsed !== undefined ? prop.treatmentVersion.trainingFeaturesUsed : undefined,
+        trainingHyperparameters: prop.treatmentVersion.trainingHyperparameters !== undefined ? prop.treatmentVersion.trainingHyperparameters : undefined,
         trainingResourcePeakMemoryMB: prop.treatmentVersion.trainingResourcePeakMemoryMB !== undefined ? {
             set: prop.treatmentVersion.trainingResourcePeakMemoryMB
           } : undefined,
@@ -19758,15 +18622,9 @@ id
           validationCrossValidationScore: prop.treatmentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
               set: prop.treatmentVersion.parentVersion.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: prop.treatmentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-              set: prop.treatmentVersion.parentVersion.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: prop.treatmentVersion.parentVersion.validationBacktestResults !== undefined ? {
-              set: prop.treatmentVersion.parentVersion.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: prop.treatmentVersion.parentVersion.validationStatTestResults !== undefined ? {
-              set: prop.treatmentVersion.parentVersion.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: prop.treatmentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? prop.treatmentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: prop.treatmentVersion.parentVersion.validationBacktestResults !== undefined ? prop.treatmentVersion.parentVersion.validationBacktestResults : undefined,
+          validationStatTestResults: prop.treatmentVersion.parentVersion.validationStatTestResults !== undefined ? prop.treatmentVersion.parentVersion.validationStatTestResults : undefined,
           deploymentEnvironment: prop.treatmentVersion.parentVersion.deploymentEnvironment !== undefined ? {
               set: prop.treatmentVersion.parentVersion.deploymentEnvironment
             } : undefined,
@@ -19776,9 +18634,7 @@ id
           deploymentRolloutStrategy: prop.treatmentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
               set: prop.treatmentVersion.parentVersion.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: prop.treatmentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-              set: prop.treatmentVersion.parentVersion.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: prop.treatmentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? prop.treatmentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
           trainingStartTime: prop.treatmentVersion.parentVersion.trainingStartTime !== undefined ? {
               set: prop.treatmentVersion.parentVersion.trainingStartTime
             } : undefined,
@@ -19791,12 +18647,8 @@ id
           trainingDatasetSize: prop.treatmentVersion.parentVersion.trainingDatasetSize !== undefined ? {
               set: prop.treatmentVersion.parentVersion.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: prop.treatmentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-              set: prop.treatmentVersion.parentVersion.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: prop.treatmentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-              set: prop.treatmentVersion.parentVersion.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: prop.treatmentVersion.parentVersion.trainingFeaturesUsed !== undefined ? prop.treatmentVersion.parentVersion.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: prop.treatmentVersion.parentVersion.trainingHyperparameters !== undefined ? prop.treatmentVersion.parentVersion.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: prop.treatmentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
               set: prop.treatmentVersion.parentVersion.trainingResourcePeakMemoryMB
             } : undefined,
@@ -19879,15 +18731,9 @@ id
             validationCrossValidationScore: prop.treatmentVersion.parentVersion.parentVersion.validationCrossValidationScore !== undefined ? {
                 set: prop.treatmentVersion.parentVersion.parentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: prop.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: prop.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: prop.treatmentVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? {
-                set: prop.treatmentVersion.parentVersion.parentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: prop.treatmentVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? {
-                set: prop.treatmentVersion.parentVersion.parentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: prop.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance !== undefined ? prop.treatmentVersion.parentVersion.parentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: prop.treatmentVersion.parentVersion.parentVersion.validationBacktestResults !== undefined ? prop.treatmentVersion.parentVersion.parentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: prop.treatmentVersion.parentVersion.parentVersion.validationStatTestResults !== undefined ? prop.treatmentVersion.parentVersion.parentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: prop.treatmentVersion.parentVersion.parentVersion.deploymentEnvironment !== undefined ? {
                 set: prop.treatmentVersion.parentVersion.parentVersion.deploymentEnvironment
               } : undefined,
@@ -19897,9 +18743,7 @@ id
             deploymentRolloutStrategy: prop.treatmentVersion.parentVersion.parentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: prop.treatmentVersion.parentVersion.parentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: prop.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: prop.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: prop.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig !== undefined ? prop.treatmentVersion.parentVersion.parentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: prop.treatmentVersion.parentVersion.parentVersion.trainingStartTime !== undefined ? {
                 set: prop.treatmentVersion.parentVersion.parentVersion.trainingStartTime
               } : undefined,
@@ -19912,12 +18756,8 @@ id
             trainingDatasetSize: prop.treatmentVersion.parentVersion.parentVersion.trainingDatasetSize !== undefined ? {
                 set: prop.treatmentVersion.parentVersion.parentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: prop.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? {
-                set: prop.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: prop.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? {
-                set: prop.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: prop.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed !== undefined ? prop.treatmentVersion.parentVersion.parentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: prop.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters !== undefined ? prop.treatmentVersion.parentVersion.parentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: prop.treatmentVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: prop.treatmentVersion.parentVersion.parentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -20035,9 +18875,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -20059,36 +18897,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -20161,9 +18983,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -20185,36 +19005,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -20266,15 +19070,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -20287,24 +19085,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -20627,15 +19415,9 @@ id
           validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
               set: item.validationCrossValidationScore
             } : undefined,
-          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-              set: item.validationOutOfSamplePerformance
-            } : undefined,
-          validationBacktestResults: item.validationBacktestResults !== undefined ? {
-              set: item.validationBacktestResults
-            } : undefined,
-          validationStatTestResults: item.validationStatTestResults !== undefined ? {
-              set: item.validationStatTestResults
-            } : undefined,
+          validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+          validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+          validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
           deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
               set: item.deploymentEnvironment
             } : undefined,
@@ -20645,9 +19427,7 @@ id
           deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
               set: item.deploymentRolloutStrategy
             } : undefined,
-          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-              set: item.deploymentHealthCheckConfig
-            } : undefined,
+          deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
           trainingStartTime: item.trainingStartTime !== undefined ? {
               set: item.trainingStartTime
             } : undefined,
@@ -20660,12 +19440,8 @@ id
           trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
               set: item.trainingDatasetSize
             } : undefined,
-          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-              set: item.trainingFeaturesUsed
-            } : undefined,
-          trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-              set: item.trainingHyperparameters
-            } : undefined,
+          trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+          trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
           trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
               set: item.trainingResourcePeakMemoryMB
             } : undefined,
@@ -20745,15 +19521,9 @@ id
             validationCrossValidationScore: item.validationCrossValidationScore !== undefined ? {
                 set: item.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? {
-                set: item.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.validationBacktestResults !== undefined ? {
-                set: item.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.validationStatTestResults !== undefined ? {
-                set: item.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.validationOutOfSamplePerformance !== undefined ? item.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.validationBacktestResults !== undefined ? item.validationBacktestResults : undefined,
+            validationStatTestResults: item.validationStatTestResults !== undefined ? item.validationStatTestResults : undefined,
             deploymentEnvironment: item.deploymentEnvironment !== undefined ? {
                 set: item.deploymentEnvironment
               } : undefined,
@@ -20763,9 +19533,7 @@ id
             deploymentRolloutStrategy: item.deploymentRolloutStrategy !== undefined ? {
                 set: item.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? {
-                set: item.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.deploymentHealthCheckConfig !== undefined ? item.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.trainingStartTime !== undefined ? {
                 set: item.trainingStartTime
               } : undefined,
@@ -20778,12 +19546,8 @@ id
             trainingDatasetSize: item.trainingDatasetSize !== undefined ? {
                 set: item.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? {
-                set: item.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.trainingHyperparameters !== undefined ? {
-                set: item.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.trainingFeaturesUsed !== undefined ? item.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.trainingHyperparameters !== undefined ? item.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.trainingResourcePeakMemoryMB
               } : undefined,
@@ -20901,9 +19665,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -20925,36 +19687,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -21027,9 +19773,7 @@ id
             trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
                 set: item.trafficSplitTreatmentPercent
               } : undefined,
-            targetMetrics: item.targetMetrics !== undefined ? {
-                set: item.targetMetrics
-              } : undefined,
+            targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
             successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
                 set: item.successCriteriaPrimaryMetric
               } : undefined,
@@ -21051,36 +19795,20 @@ id
             plannedDuration: item.plannedDuration !== undefined ? {
                 set: item.plannedDuration
               } : undefined,
-            resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-                set: item.resultsControlMetrics
-              } : undefined,
-            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-                set: item.resultsTreatmentMetrics
-              } : undefined,
-            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-                set: item.resultsStatisticalSignificance
-              } : undefined,
-            resultsPValues: item.resultsPValues !== undefined ? {
-                set: item.resultsPValues
-              } : undefined,
-            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-                set: item.resultsConfidenceIntervals
-              } : undefined,
+            resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+            resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+            resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+            resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+            resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
             resultsRecommendation: item.resultsRecommendation !== undefined ? {
                 set: item.resultsRecommendation
               } : undefined,
             metadataEnvironment: item.metadataEnvironment !== undefined ? {
                 set: item.metadataEnvironment
               } : undefined,
-            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-                set: item.metadataEligibilityCriteria
-              } : undefined,
-            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-                set: item.metadataExclusionCriteria
-              } : undefined,
-            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-                set: item.metadataSegmentationRules
-              } : undefined,
+            metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+            metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+            metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
             completedAt: item.completedAt !== undefined ? {
                 set: item.completedAt
               } : undefined,
@@ -21132,15 +19860,9 @@ id
             analysisType: item.analysisType !== undefined ? {
                 set: item.analysisType
               } : undefined,
-            featureImportances: item.featureImportances !== undefined ? {
-                set: item.featureImportances
-              } : undefined,
-            globalImportance: item.globalImportance !== undefined ? {
-                set: item.globalImportance
-              } : undefined,
-            localImportance: item.localImportance !== undefined ? {
-                set: item.localImportance
-              } : undefined,
+            featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+            globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+            localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
             analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
                 set: item.analysisMetadataSampleSize
               } : undefined,
@@ -21153,24 +19875,14 @@ id
             analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
                 set: item.analysisMetadataComputationTime
               } : undefined,
-            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-                set: item.analysisMetadataAnalysisParameters
-              } : undefined,
-            insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-                set: item.insightsTopFeatures
-              } : undefined,
-            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-                set: item.insightsRedundantFeatures
-              } : undefined,
-            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-                set: item.insightsUnexpectedImportances
-              } : undefined,
+            analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+            insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+            insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+            insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
             insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
                 set: item.insightsStabilityScore
               } : undefined,
-            insightsRecommendations: item.insightsRecommendations !== undefined ? {
-                set: item.insightsRecommendations
-              } : undefined,
+            insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
           },
           create: {
             analysisType: item.analysisType !== undefined ? item.analysisType : undefined,
@@ -21494,18 +20206,14 @@ id
             metadataPythonVersion: item.modelArtifact.metadataPythonVersion !== undefined ? {
                 set: item.modelArtifact.metadataPythonVersion
               } : undefined,
-            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? {
-                set: item.modelArtifact.metadataDependencies
-              } : undefined,
+            metadataDependencies: item.modelArtifact.metadataDependencies !== undefined ? item.modelArtifact.metadataDependencies : undefined,
             metadataTrainingDate: item.modelArtifact.metadataTrainingDate !== undefined ? {
                 set: item.modelArtifact.metadataTrainingDate
               } : undefined,
             metadataDatasetSize: item.modelArtifact.metadataDatasetSize !== undefined ? {
                 set: item.modelArtifact.metadataDatasetSize
               } : undefined,
-            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? {
-                set: item.modelArtifact.metadataHyperparameters
-              } : undefined,
+            metadataHyperparameters: item.modelArtifact.metadataHyperparameters !== undefined ? item.modelArtifact.metadataHyperparameters : undefined,
           },
           create: {
             modelName: item.modelArtifact.modelName !== undefined ? item.modelArtifact.modelName : undefined,
@@ -21598,9 +20306,7 @@ id
           trafficSplitTreatmentPercent: item.trafficSplitTreatmentPercent !== undefined ? {
               set: item.trafficSplitTreatmentPercent
             } : undefined,
-          targetMetrics: item.targetMetrics !== undefined ? {
-              set: item.targetMetrics
-            } : undefined,
+          targetMetrics: item.targetMetrics !== undefined ? item.targetMetrics : undefined,
           successCriteriaPrimaryMetric: item.successCriteriaPrimaryMetric !== undefined ? {
               set: item.successCriteriaPrimaryMetric
             } : undefined,
@@ -21622,36 +20328,20 @@ id
           plannedDuration: item.plannedDuration !== undefined ? {
               set: item.plannedDuration
             } : undefined,
-          resultsControlMetrics: item.resultsControlMetrics !== undefined ? {
-              set: item.resultsControlMetrics
-            } : undefined,
-          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? {
-              set: item.resultsTreatmentMetrics
-            } : undefined,
-          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? {
-              set: item.resultsStatisticalSignificance
-            } : undefined,
-          resultsPValues: item.resultsPValues !== undefined ? {
-              set: item.resultsPValues
-            } : undefined,
-          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? {
-              set: item.resultsConfidenceIntervals
-            } : undefined,
+          resultsControlMetrics: item.resultsControlMetrics !== undefined ? item.resultsControlMetrics : undefined,
+          resultsTreatmentMetrics: item.resultsTreatmentMetrics !== undefined ? item.resultsTreatmentMetrics : undefined,
+          resultsStatisticalSignificance: item.resultsStatisticalSignificance !== undefined ? item.resultsStatisticalSignificance : undefined,
+          resultsPValues: item.resultsPValues !== undefined ? item.resultsPValues : undefined,
+          resultsConfidenceIntervals: item.resultsConfidenceIntervals !== undefined ? item.resultsConfidenceIntervals : undefined,
           resultsRecommendation: item.resultsRecommendation !== undefined ? {
               set: item.resultsRecommendation
             } : undefined,
           metadataEnvironment: item.metadataEnvironment !== undefined ? {
               set: item.metadataEnvironment
             } : undefined,
-          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? {
-              set: item.metadataEligibilityCriteria
-            } : undefined,
-          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? {
-              set: item.metadataExclusionCriteria
-            } : undefined,
-          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? {
-              set: item.metadataSegmentationRules
-            } : undefined,
+          metadataEligibilityCriteria: item.metadataEligibilityCriteria !== undefined ? item.metadataEligibilityCriteria : undefined,
+          metadataExclusionCriteria: item.metadataExclusionCriteria !== undefined ? item.metadataExclusionCriteria : undefined,
+          metadataSegmentationRules: item.metadataSegmentationRules !== undefined ? item.metadataSegmentationRules : undefined,
           completedAt: item.completedAt !== undefined ? {
               set: item.completedAt
             } : undefined,
@@ -21722,15 +20412,9 @@ id
             validationCrossValidationScore: item.treatmentVersion.validationCrossValidationScore !== undefined ? {
                 set: item.treatmentVersion.validationCrossValidationScore
               } : undefined,
-            validationOutOfSamplePerformance: item.treatmentVersion.validationOutOfSamplePerformance !== undefined ? {
-                set: item.treatmentVersion.validationOutOfSamplePerformance
-              } : undefined,
-            validationBacktestResults: item.treatmentVersion.validationBacktestResults !== undefined ? {
-                set: item.treatmentVersion.validationBacktestResults
-              } : undefined,
-            validationStatTestResults: item.treatmentVersion.validationStatTestResults !== undefined ? {
-                set: item.treatmentVersion.validationStatTestResults
-              } : undefined,
+            validationOutOfSamplePerformance: item.treatmentVersion.validationOutOfSamplePerformance !== undefined ? item.treatmentVersion.validationOutOfSamplePerformance : undefined,
+            validationBacktestResults: item.treatmentVersion.validationBacktestResults !== undefined ? item.treatmentVersion.validationBacktestResults : undefined,
+            validationStatTestResults: item.treatmentVersion.validationStatTestResults !== undefined ? item.treatmentVersion.validationStatTestResults : undefined,
             deploymentEnvironment: item.treatmentVersion.deploymentEnvironment !== undefined ? {
                 set: item.treatmentVersion.deploymentEnvironment
               } : undefined,
@@ -21740,9 +20424,7 @@ id
             deploymentRolloutStrategy: item.treatmentVersion.deploymentRolloutStrategy !== undefined ? {
                 set: item.treatmentVersion.deploymentRolloutStrategy
               } : undefined,
-            deploymentHealthCheckConfig: item.treatmentVersion.deploymentHealthCheckConfig !== undefined ? {
-                set: item.treatmentVersion.deploymentHealthCheckConfig
-              } : undefined,
+            deploymentHealthCheckConfig: item.treatmentVersion.deploymentHealthCheckConfig !== undefined ? item.treatmentVersion.deploymentHealthCheckConfig : undefined,
             trainingStartTime: item.treatmentVersion.trainingStartTime !== undefined ? {
                 set: item.treatmentVersion.trainingStartTime
               } : undefined,
@@ -21755,12 +20437,8 @@ id
             trainingDatasetSize: item.treatmentVersion.trainingDatasetSize !== undefined ? {
                 set: item.treatmentVersion.trainingDatasetSize
               } : undefined,
-            trainingFeaturesUsed: item.treatmentVersion.trainingFeaturesUsed !== undefined ? {
-                set: item.treatmentVersion.trainingFeaturesUsed
-              } : undefined,
-            trainingHyperparameters: item.treatmentVersion.trainingHyperparameters !== undefined ? {
-                set: item.treatmentVersion.trainingHyperparameters
-              } : undefined,
+            trainingFeaturesUsed: item.treatmentVersion.trainingFeaturesUsed !== undefined ? item.treatmentVersion.trainingFeaturesUsed : undefined,
+            trainingHyperparameters: item.treatmentVersion.trainingHyperparameters !== undefined ? item.treatmentVersion.trainingHyperparameters : undefined,
             trainingResourcePeakMemoryMB: item.treatmentVersion.trainingResourcePeakMemoryMB !== undefined ? {
                 set: item.treatmentVersion.trainingResourcePeakMemoryMB
               } : undefined,
@@ -21912,15 +20590,9 @@ id
           analysisType: item.analysisType !== undefined ? {
               set: item.analysisType
             } : undefined,
-          featureImportances: item.featureImportances !== undefined ? {
-              set: item.featureImportances
-            } : undefined,
-          globalImportance: item.globalImportance !== undefined ? {
-              set: item.globalImportance
-            } : undefined,
-          localImportance: item.localImportance !== undefined ? {
-              set: item.localImportance
-            } : undefined,
+          featureImportances: item.featureImportances !== undefined ? item.featureImportances : undefined,
+          globalImportance: item.globalImportance !== undefined ? item.globalImportance : undefined,
+          localImportance: item.localImportance !== undefined ? item.localImportance : undefined,
           analysisMetadataSampleSize: item.analysisMetadataSampleSize !== undefined ? {
               set: item.analysisMetadataSampleSize
             } : undefined,
@@ -21933,24 +20605,14 @@ id
           analysisMetadataComputationTime: item.analysisMetadataComputationTime !== undefined ? {
               set: item.analysisMetadataComputationTime
             } : undefined,
-          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? {
-              set: item.analysisMetadataAnalysisParameters
-            } : undefined,
-          insightsTopFeatures: item.insightsTopFeatures !== undefined ? {
-              set: item.insightsTopFeatures
-            } : undefined,
-          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? {
-              set: item.insightsRedundantFeatures
-            } : undefined,
-          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? {
-              set: item.insightsUnexpectedImportances
-            } : undefined,
+          analysisMetadataAnalysisParameters: item.analysisMetadataAnalysisParameters !== undefined ? item.analysisMetadataAnalysisParameters : undefined,
+          insightsTopFeatures: item.insightsTopFeatures !== undefined ? item.insightsTopFeatures : undefined,
+          insightsRedundantFeatures: item.insightsRedundantFeatures !== undefined ? item.insightsRedundantFeatures : undefined,
+          insightsUnexpectedImportances: item.insightsUnexpectedImportances !== undefined ? item.insightsUnexpectedImportances : undefined,
           insightsStabilityScore: item.insightsStabilityScore !== undefined ? {
               set: item.insightsStabilityScore
             } : undefined,
-          insightsRecommendations: item.insightsRecommendations !== undefined ? {
-              set: item.insightsRecommendations
-            } : undefined,
+          insightsRecommendations: item.insightsRecommendations !== undefined ? item.insightsRecommendations : undefined,
         },
         create: {
           analysisType: item.analysisType !== undefined ? item.analysisType : undefined,

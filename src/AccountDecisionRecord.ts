@@ -429,30 +429,14 @@ import { logger } from './utils/logger';
   decisionConfidence: props.decisionConfidence !== undefined ? {
             set: props.decisionConfidence 
            } : undefined,
-  actionIntents: props.actionIntents !== undefined ? {
-            set: props.actionIntents 
-           } : undefined,
-  validationResults: props.validationResults !== undefined ? {
-            set: props.validationResults 
-           } : undefined,
-  executionResults: props.executionResults !== undefined ? {
-            set: props.executionResults 
-           } : undefined,
-  effectivePolicySnapshot: props.effectivePolicySnapshot !== undefined ? {
-            set: props.effectivePolicySnapshot 
-           } : undefined,
-  positionsSnapshot: props.positionsSnapshot !== undefined ? {
-            set: props.positionsSnapshot 
-           } : undefined,
-  openOrdersSnapshot: props.openOrdersSnapshot !== undefined ? {
-            set: props.openOrdersSnapshot 
-           } : undefined,
-  exposureSnapshot: props.exposureSnapshot !== undefined ? {
-            set: props.exposureSnapshot 
-           } : undefined,
-  overlaysSnapshot: props.overlaysSnapshot !== undefined ? {
-            set: props.overlaysSnapshot 
-           } : undefined,
+  actionIntents: props.actionIntents !== undefined ? props.actionIntents : undefined,
+  validationResults: props.validationResults !== undefined ? props.validationResults : undefined,
+  executionResults: props.executionResults !== undefined ? props.executionResults : undefined,
+  effectivePolicySnapshot: props.effectivePolicySnapshot !== undefined ? props.effectivePolicySnapshot : undefined,
+  positionsSnapshot: props.positionsSnapshot !== undefined ? props.positionsSnapshot : undefined,
+  openOrdersSnapshot: props.openOrdersSnapshot !== undefined ? props.openOrdersSnapshot : undefined,
+  exposureSnapshot: props.exposureSnapshot !== undefined ? props.exposureSnapshot : undefined,
+  overlaysSnapshot: props.overlaysSnapshot !== undefined ? props.overlaysSnapshot : undefined,
   modelProvider: props.modelProvider !== undefined ? {
             set: props.modelProvider 
            } : undefined,
@@ -465,9 +449,7 @@ import { logger } from './utils/logger';
   routingReason: props.routingReason !== undefined ? {
             set: props.routingReason 
            } : undefined,
-  tokenUsage: props.tokenUsage !== undefined ? {
-            set: props.tokenUsage 
-           } : undefined,
+  tokenUsage: props.tokenUsage !== undefined ? props.tokenUsage : undefined,
   sessionDurationMs: props.sessionDurationMs !== undefined ? {
             set: props.sessionDurationMs 
            } : undefined,
@@ -686,30 +668,14 @@ import { logger } from './utils/logger';
   decisionConfidence: props.decisionConfidence !== undefined ? {
             set: props.decisionConfidence 
            } : undefined,
-  actionIntents: props.actionIntents !== undefined ? {
-            set: props.actionIntents 
-           } : undefined,
-  validationResults: props.validationResults !== undefined ? {
-            set: props.validationResults 
-           } : undefined,
-  executionResults: props.executionResults !== undefined ? {
-            set: props.executionResults 
-           } : undefined,
-  effectivePolicySnapshot: props.effectivePolicySnapshot !== undefined ? {
-            set: props.effectivePolicySnapshot 
-           } : undefined,
-  positionsSnapshot: props.positionsSnapshot !== undefined ? {
-            set: props.positionsSnapshot 
-           } : undefined,
-  openOrdersSnapshot: props.openOrdersSnapshot !== undefined ? {
-            set: props.openOrdersSnapshot 
-           } : undefined,
-  exposureSnapshot: props.exposureSnapshot !== undefined ? {
-            set: props.exposureSnapshot 
-           } : undefined,
-  overlaysSnapshot: props.overlaysSnapshot !== undefined ? {
-            set: props.overlaysSnapshot 
-           } : undefined,
+  actionIntents: props.actionIntents !== undefined ? props.actionIntents : undefined,
+  validationResults: props.validationResults !== undefined ? props.validationResults : undefined,
+  executionResults: props.executionResults !== undefined ? props.executionResults : undefined,
+  effectivePolicySnapshot: props.effectivePolicySnapshot !== undefined ? props.effectivePolicySnapshot : undefined,
+  positionsSnapshot: props.positionsSnapshot !== undefined ? props.positionsSnapshot : undefined,
+  openOrdersSnapshot: props.openOrdersSnapshot !== undefined ? props.openOrdersSnapshot : undefined,
+  exposureSnapshot: props.exposureSnapshot !== undefined ? props.exposureSnapshot : undefined,
+  overlaysSnapshot: props.overlaysSnapshot !== undefined ? props.overlaysSnapshot : undefined,
   modelProvider: props.modelProvider !== undefined ? {
             set: props.modelProvider 
            } : undefined,
@@ -722,9 +688,7 @@ import { logger } from './utils/logger';
   routingReason: props.routingReason !== undefined ? {
             set: props.routingReason 
            } : undefined,
-  tokenUsage: props.tokenUsage !== undefined ? {
-            set: props.tokenUsage 
-           } : undefined,
+  tokenUsage: props.tokenUsage !== undefined ? props.tokenUsage : undefined,
   sessionDurationMs: props.sessionDurationMs !== undefined ? {
             set: props.sessionDurationMs 
            } : undefined,
@@ -911,30 +875,14 @@ import { logger } from './utils/logger';
   decisionConfidence: prop.decisionConfidence !== undefined ? {
             set: prop.decisionConfidence 
            } : undefined,
-  actionIntents: prop.actionIntents !== undefined ? {
-            set: prop.actionIntents 
-           } : undefined,
-  validationResults: prop.validationResults !== undefined ? {
-            set: prop.validationResults 
-           } : undefined,
-  executionResults: prop.executionResults !== undefined ? {
-            set: prop.executionResults 
-           } : undefined,
-  effectivePolicySnapshot: prop.effectivePolicySnapshot !== undefined ? {
-            set: prop.effectivePolicySnapshot 
-           } : undefined,
-  positionsSnapshot: prop.positionsSnapshot !== undefined ? {
-            set: prop.positionsSnapshot 
-           } : undefined,
-  openOrdersSnapshot: prop.openOrdersSnapshot !== undefined ? {
-            set: prop.openOrdersSnapshot 
-           } : undefined,
-  exposureSnapshot: prop.exposureSnapshot !== undefined ? {
-            set: prop.exposureSnapshot 
-           } : undefined,
-  overlaysSnapshot: prop.overlaysSnapshot !== undefined ? {
-            set: prop.overlaysSnapshot 
-           } : undefined,
+  actionIntents: prop.actionIntents !== undefined ? prop.actionIntents : undefined,
+  validationResults: prop.validationResults !== undefined ? prop.validationResults : undefined,
+  executionResults: prop.executionResults !== undefined ? prop.executionResults : undefined,
+  effectivePolicySnapshot: prop.effectivePolicySnapshot !== undefined ? prop.effectivePolicySnapshot : undefined,
+  positionsSnapshot: prop.positionsSnapshot !== undefined ? prop.positionsSnapshot : undefined,
+  openOrdersSnapshot: prop.openOrdersSnapshot !== undefined ? prop.openOrdersSnapshot : undefined,
+  exposureSnapshot: prop.exposureSnapshot !== undefined ? prop.exposureSnapshot : undefined,
+  overlaysSnapshot: prop.overlaysSnapshot !== undefined ? prop.overlaysSnapshot : undefined,
   modelProvider: prop.modelProvider !== undefined ? {
             set: prop.modelProvider 
            } : undefined,
@@ -947,9 +895,7 @@ import { logger } from './utils/logger';
   routingReason: prop.routingReason !== undefined ? {
             set: prop.routingReason 
            } : undefined,
-  tokenUsage: prop.tokenUsage !== undefined ? {
-            set: prop.tokenUsage 
-           } : undefined,
+  tokenUsage: prop.tokenUsage !== undefined ? prop.tokenUsage : undefined,
   sessionDurationMs: prop.sessionDurationMs !== undefined ? {
             set: prop.sessionDurationMs 
            } : undefined,

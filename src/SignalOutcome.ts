@@ -384,9 +384,7 @@ import { logger } from './utils/logger';
   generatedAt: props.generatedAt !== undefined ? {
             set: props.generatedAt 
            } : undefined,
-  marketConditions: props.marketConditions !== undefined ? {
-            set: props.marketConditions 
-           } : undefined,
+  marketConditions: props.marketConditions !== undefined ? props.marketConditions : undefined,
       },
         };
 
@@ -569,9 +567,7 @@ import { logger } from './utils/logger';
   generatedAt: props.generatedAt !== undefined ? {
             set: props.generatedAt 
            } : undefined,
-  marketConditions: props.marketConditions !== undefined ? {
-            set: props.marketConditions 
-           } : undefined,
+  marketConditions: props.marketConditions !== undefined ? props.marketConditions : undefined,
       },
         };
 
@@ -742,9 +738,7 @@ import { logger } from './utils/logger';
   generatedAt: prop.generatedAt !== undefined ? {
             set: prop.generatedAt 
            } : undefined,
-  marketConditions: prop.marketConditions !== undefined ? {
-            set: prop.marketConditions 
-           } : undefined,
+  marketConditions: prop.marketConditions !== undefined ? prop.marketConditions : undefined,
 
           },
         }));

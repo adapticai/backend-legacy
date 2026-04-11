@@ -967,9 +967,7 @@ import { logger } from './utils/logger';
             APISecret: item.APISecret !== undefined ? {
                 set: item.APISecret
               } : undefined,
-            configuration: item.configuration !== undefined ? {
-                set: item.configuration
-              } : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
             marketOpen: item.marketOpen !== undefined ? {
                 set: item.marketOpen
               } : undefined,
@@ -2596,9 +2594,7 @@ import { logger } from './utils/logger';
             APISecret: item.APISecret !== undefined ? {
                 set: item.APISecret
               } : undefined,
-            configuration: item.configuration !== undefined ? {
-                set: item.configuration
-              } : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
             marketOpen: item.marketOpen !== undefined ? {
                 set: item.marketOpen
               } : undefined,
@@ -3924,9 +3920,7 @@ import { logger } from './utils/logger';
             APISecret: item.APISecret !== undefined ? {
                 set: item.APISecret
               } : undefined,
-            configuration: item.configuration !== undefined ? {
-                set: item.configuration
-              } : undefined,
+            configuration: item.configuration !== undefined ? item.configuration : undefined,
             marketOpen: item.marketOpen !== undefined ? {
                 set: item.marketOpen
               } : undefined,

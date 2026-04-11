@@ -533,9 +533,7 @@ import { logger } from './utils/logger';
   marketContextBreadth: props.marketContextBreadth !== undefined ? {
             set: props.marketContextBreadth 
            } : undefined,
-  signalFeatures: props.signalFeatures !== undefined ? {
-            set: props.signalFeatures 
-           } : undefined,
+  signalFeatures: props.signalFeatures !== undefined ? props.signalFeatures : undefined,
   executionMetricsLatency: props.executionMetricsLatency !== undefined ? {
             set: props.executionMetricsLatency 
            } : undefined,
@@ -584,9 +582,7 @@ import { logger } from './utils/logger';
   attributionBetaExposure: props.attributionBetaExposure !== undefined ? {
             set: props.attributionBetaExposure 
            } : undefined,
-  attributionFactorExposures: props.attributionFactorExposures !== undefined ? {
-            set: props.attributionFactorExposures 
-           } : undefined,
+  attributionFactorExposures: props.attributionFactorExposures !== undefined ? props.attributionFactorExposures : undefined,
   attributionSkillVsLuck: props.attributionSkillVsLuck !== undefined ? {
             set: props.attributionSkillVsLuck 
            } : undefined,
@@ -860,9 +856,7 @@ import { logger } from './utils/logger';
   marketContextBreadth: props.marketContextBreadth !== undefined ? {
             set: props.marketContextBreadth 
            } : undefined,
-  signalFeatures: props.signalFeatures !== undefined ? {
-            set: props.signalFeatures 
-           } : undefined,
+  signalFeatures: props.signalFeatures !== undefined ? props.signalFeatures : undefined,
   executionMetricsLatency: props.executionMetricsLatency !== undefined ? {
             set: props.executionMetricsLatency 
            } : undefined,
@@ -911,9 +905,7 @@ import { logger } from './utils/logger';
   attributionBetaExposure: props.attributionBetaExposure !== undefined ? {
             set: props.attributionBetaExposure 
            } : undefined,
-  attributionFactorExposures: props.attributionFactorExposures !== undefined ? {
-            set: props.attributionFactorExposures 
-           } : undefined,
+  attributionFactorExposures: props.attributionFactorExposures !== undefined ? props.attributionFactorExposures : undefined,
   attributionSkillVsLuck: props.attributionSkillVsLuck !== undefined ? {
             set: props.attributionSkillVsLuck 
            } : undefined,
@@ -1135,9 +1127,7 @@ import { logger } from './utils/logger';
   marketContextBreadth: prop.marketContextBreadth !== undefined ? {
             set: prop.marketContextBreadth 
            } : undefined,
-  signalFeatures: prop.signalFeatures !== undefined ? {
-            set: prop.signalFeatures 
-           } : undefined,
+  signalFeatures: prop.signalFeatures !== undefined ? prop.signalFeatures : undefined,
   executionMetricsLatency: prop.executionMetricsLatency !== undefined ? {
             set: prop.executionMetricsLatency 
            } : undefined,
@@ -1186,9 +1176,7 @@ import { logger } from './utils/logger';
   attributionBetaExposure: prop.attributionBetaExposure !== undefined ? {
             set: prop.attributionBetaExposure 
            } : undefined,
-  attributionFactorExposures: prop.attributionFactorExposures !== undefined ? {
-            set: prop.attributionFactorExposures 
-           } : undefined,
+  attributionFactorExposures: prop.attributionFactorExposures !== undefined ? prop.attributionFactorExposures : undefined,
   attributionSkillVsLuck: prop.attributionSkillVsLuck !== undefined ? {
             set: prop.attributionSkillVsLuck 
            } : undefined,

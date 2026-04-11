@@ -569,9 +569,7 @@ import { logger } from './utils/logger';
   changePercent: props.changePercent !== undefined ? {
             set: props.changePercent 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -958,9 +956,7 @@ import { logger } from './utils/logger';
           confidence: item.confidence !== undefined ? {
               set: item.confidence
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
@@ -1425,9 +1421,7 @@ import { logger } from './utils/logger';
   changePercent: props.changePercent !== undefined ? {
             set: props.changePercent 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   asset: props.asset ? 
   typeof props.asset === 'object' && Object.keys(props.asset).length === 1 && (Object.keys(props.asset)[0] === 'id' || Object.keys(props.asset)[0] === 'symbol')
 ? {
@@ -1808,9 +1802,7 @@ import { logger } from './utils/logger';
           confidence: item.confidence !== undefined ? {
               set: item.confidence
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
@@ -2114,9 +2106,7 @@ import { logger } from './utils/logger';
   changePercent: prop.changePercent !== undefined ? {
             set: prop.changePercent 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -2503,9 +2493,7 @@ import { logger } from './utils/logger';
           confidence: item.confidence !== undefined ? {
               set: item.confidence
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           signalDate: item.signalDate !== undefined ? item.signalDate : undefined,

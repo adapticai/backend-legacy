@@ -802,9 +802,7 @@ import { logger } from './utils/logger';
             changePercent: item.changePercent !== undefined ? {
                 set: item.changePercent
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
@@ -850,9 +848,7 @@ import { logger } from './utils/logger';
             confidence: item.confidence !== undefined ? {
                 set: item.confidence
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
@@ -1695,9 +1691,7 @@ import { logger } from './utils/logger';
             changePercent: item.changePercent !== undefined ? {
                 set: item.changePercent
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
@@ -1743,9 +1737,7 @@ import { logger } from './utils/logger';
             confidence: item.confidence !== undefined ? {
                 set: item.confidence
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             signalDate: item.signalDate !== undefined ? item.signalDate : undefined,
@@ -2434,9 +2426,7 @@ import { logger } from './utils/logger';
             changePercent: item.changePercent !== undefined ? {
                 set: item.changePercent
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             institutionName: item.institutionName !== undefined ? item.institutionName : undefined,
@@ -2482,9 +2472,7 @@ import { logger } from './utils/logger';
             confidence: item.confidence !== undefined ? {
                 set: item.confidence
               } : undefined,
-            metadata: item.metadata !== undefined ? {
-                set: item.metadata
-              } : undefined,
+            metadata: item.metadata !== undefined ? item.metadata : undefined,
           },
           create: {
             signalDate: item.signalDate !== undefined ? item.signalDate : undefined,

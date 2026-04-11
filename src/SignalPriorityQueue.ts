@@ -386,9 +386,7 @@ import { logger } from './utils/logger';
   priorityTier: props.priorityTier !== undefined ? {
             set: props.priorityTier 
            } : undefined,
-  scoreComponents: props.scoreComponents !== undefined ? {
-            set: props.scoreComponents 
-           } : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? props.scoreComponents : undefined,
   queuePosition: props.queuePosition !== undefined ? {
             set: props.queuePosition 
            } : undefined,
@@ -410,9 +408,7 @@ import { logger } from './utils/logger';
   signalConfidence: props.signalConfidence !== undefined ? {
             set: props.signalConfidence 
            } : undefined,
-  signalData: props.signalData !== undefined ? {
-            set: props.signalData 
-           } : undefined,
+  signalData: props.signalData !== undefined ? props.signalData : undefined,
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
            } : undefined,
@@ -591,9 +587,7 @@ import { logger } from './utils/logger';
   priorityTier: props.priorityTier !== undefined ? {
             set: props.priorityTier 
            } : undefined,
-  scoreComponents: props.scoreComponents !== undefined ? {
-            set: props.scoreComponents 
-           } : undefined,
+  scoreComponents: props.scoreComponents !== undefined ? props.scoreComponents : undefined,
   queuePosition: props.queuePosition !== undefined ? {
             set: props.queuePosition 
            } : undefined,
@@ -615,9 +609,7 @@ import { logger } from './utils/logger';
   signalConfidence: props.signalConfidence !== undefined ? {
             set: props.signalConfidence 
            } : undefined,
-  signalData: props.signalData !== undefined ? {
-            set: props.signalData 
-           } : undefined,
+  signalData: props.signalData !== undefined ? props.signalData : undefined,
       },
         };
 
@@ -777,9 +769,7 @@ import { logger } from './utils/logger';
   priorityTier: prop.priorityTier !== undefined ? {
             set: prop.priorityTier 
            } : undefined,
-  scoreComponents: prop.scoreComponents !== undefined ? {
-            set: prop.scoreComponents 
-           } : undefined,
+  scoreComponents: prop.scoreComponents !== undefined ? prop.scoreComponents : undefined,
   queuePosition: prop.queuePosition !== undefined ? {
             set: prop.queuePosition 
            } : undefined,
@@ -801,9 +791,7 @@ import { logger } from './utils/logger';
   signalConfidence: prop.signalConfidence !== undefined ? {
             set: prop.signalConfidence 
            } : undefined,
-  signalData: prop.signalData !== undefined ? {
-            set: prop.signalData 
-           } : undefined,
+  signalData: prop.signalData !== undefined ? prop.signalData : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
            } : undefined,

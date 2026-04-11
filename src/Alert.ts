@@ -818,9 +818,7 @@ import { logger } from './utils/logger';
   retryCount: props.retryCount !== undefined ? {
             set: props.retryCount 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -858,9 +856,7 @@ import { logger } from './utils/logger';
         APISecret: props.alpacaAccount.APISecret !== undefined ? {
             set: props.alpacaAccount.APISecret
           } : undefined,
-        configuration: props.alpacaAccount.configuration !== undefined ? {
-            set: props.alpacaAccount.configuration
-          } : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
             set: props.alpacaAccount.marketOpen
           } : undefined,
@@ -1026,9 +1022,7 @@ import { logger } from './utils/logger';
           killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.killSwitchEnabled
             } : undefined,
-          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.autonomyPrefs
-            } : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
           equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.equitiesEnabled
             } : undefined,
@@ -1056,9 +1050,7 @@ import { logger } from './utils/logger';
           fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled
             } : undefined,
-          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.assetUniversePrefs
-            } : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
           maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct
             } : undefined,
@@ -1086,21 +1078,11 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.maxOpenOrders
             } : undefined,
-          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.riskBudgetPrefs
-            } : undefined,
-          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs
-            } : undefined,
-          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.executionPrefs
-            } : undefined,
-          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.positionManagementPrefs
-            } : undefined,
-          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs
-            } : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
           macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.macroOverlayEnabled
             } : undefined,
@@ -1131,9 +1113,7 @@ import { logger } from './utils/logger';
           dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled
             } : undefined,
-          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.overlayResponsePrefs
-            } : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
           miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.miniModelProvider
             } : undefined,
@@ -1152,12 +1132,8 @@ import { logger } from './utils/logger';
           advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.advancedModelId
             } : undefined,
-          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.modelPrefs
-            } : undefined,
-          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.auditNotificationPrefs
-            } : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
       Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
@@ -1198,9 +1174,7 @@ import { logger } from './utils/logger';
             version: item.version !== undefined ? {
                 set: item.version
               } : undefined,
-            mutations: item.mutations !== undefined ? {
-                set: item.mutations
-              } : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
             status: item.status !== undefined ? {
                 set: item.status
               } : undefined,
@@ -3137,9 +3111,7 @@ import { logger } from './utils/logger';
   retryCount: props.retryCount !== undefined ? {
             set: props.retryCount 
            } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
+  metadata: props.metadata !== undefined ? props.metadata : undefined,
   alpacaAccount: props.alpacaAccount ? 
   typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
 ? {
@@ -3171,9 +3143,7 @@ import { logger } from './utils/logger';
         APISecret: props.alpacaAccount.APISecret !== undefined ? {
             set: props.alpacaAccount.APISecret
           } : undefined,
-        configuration: props.alpacaAccount.configuration !== undefined ? {
-            set: props.alpacaAccount.configuration
-          } : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
             set: props.alpacaAccount.marketOpen
           } : undefined,
@@ -3339,9 +3309,7 @@ import { logger } from './utils/logger';
           killSwitchEnabled: props.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.killSwitchEnabled
             } : undefined,
-          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.autonomyPrefs
-            } : undefined,
+          autonomyPrefs: props.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? props.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
           equitiesEnabled: props.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.equitiesEnabled
             } : undefined,
@@ -3369,9 +3337,7 @@ import { logger } from './utils/logger';
           fractionalSharesEnabled: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.fractionalSharesEnabled
             } : undefined,
-          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.assetUniversePrefs
-            } : undefined,
+          assetUniversePrefs: props.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? props.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
           maxBuyingPowerUtilPct: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct
             } : undefined,
@@ -3399,21 +3365,11 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.maxOpenOrders
             } : undefined,
-          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.riskBudgetPrefs
-            } : undefined,
-          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs
-            } : undefined,
-          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.executionPrefs
-            } : undefined,
-          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.positionManagementPrefs
-            } : undefined,
-          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs
-            } : undefined,
+          riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: props.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? props.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
           macroOverlayEnabled: props.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.macroOverlayEnabled
             } : undefined,
@@ -3444,9 +3400,7 @@ import { logger } from './utils/logger';
           dataQualitySentinelEnabled: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled
             } : undefined,
-          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.overlayResponsePrefs
-            } : undefined,
+          overlayResponsePrefs: props.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? props.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
           miniModelProvider: props.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.miniModelProvider
             } : undefined,
@@ -3465,12 +3419,8 @@ import { logger } from './utils/logger';
           advancedModelId: props.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.advancedModelId
             } : undefined,
-          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.modelPrefs
-            } : undefined,
-          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? {
-              set: props.alpacaAccount.tradingPolicy.auditNotificationPrefs
-            } : undefined,
+          modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
       Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
@@ -3511,9 +3461,7 @@ import { logger } from './utils/logger';
             version: item.version !== undefined ? {
                 set: item.version
               } : undefined,
-            mutations: item.mutations !== undefined ? {
-                set: item.mutations
-              } : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
             status: item.status !== undefined ? {
                 set: item.status
               } : undefined,
@@ -5002,9 +4950,7 @@ import { logger } from './utils/logger';
   retryCount: prop.retryCount !== undefined ? {
             set: prop.retryCount 
            } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
+  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -5042,9 +4988,7 @@ import { logger } from './utils/logger';
         APISecret: prop.alpacaAccount.APISecret !== undefined ? {
             set: prop.alpacaAccount.APISecret
           } : undefined,
-        configuration: prop.alpacaAccount.configuration !== undefined ? {
-            set: prop.alpacaAccount.configuration
-          } : undefined,
+        configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
         marketOpen: prop.alpacaAccount.marketOpen !== undefined ? {
             set: prop.alpacaAccount.marketOpen
           } : undefined,
@@ -5210,9 +5154,7 @@ import { logger } from './utils/logger';
           killSwitchEnabled: prop.alpacaAccount.tradingPolicy.killSwitchEnabled !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.killSwitchEnabled
             } : undefined,
-          autonomyPrefs: prop.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.autonomyPrefs
-            } : undefined,
+          autonomyPrefs: prop.alpacaAccount.tradingPolicy.autonomyPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.autonomyPrefs : undefined,
           equitiesEnabled: prop.alpacaAccount.tradingPolicy.equitiesEnabled !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.equitiesEnabled
             } : undefined,
@@ -5240,9 +5182,7 @@ import { logger } from './utils/logger';
           fractionalSharesEnabled: prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.fractionalSharesEnabled
             } : undefined,
-          assetUniversePrefs: prop.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.assetUniversePrefs
-            } : undefined,
+          assetUniversePrefs: prop.alpacaAccount.tradingPolicy.assetUniversePrefs !== undefined ? prop.alpacaAccount.tradingPolicy.assetUniversePrefs : undefined,
           maxBuyingPowerUtilPct: prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.maxBuyingPowerUtilPct
             } : undefined,
@@ -5270,21 +5210,11 @@ import { logger } from './utils/logger';
           maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.maxOpenOrders
             } : undefined,
-          riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs
-            } : undefined,
-          signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs
-            } : undefined,
-          executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.executionPrefs
-            } : undefined,
-          positionManagementPrefs: prop.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.positionManagementPrefs
-            } : undefined,
-          portfolioConstructionPrefs: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs
-            } : undefined,
+          riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
+          signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
+          executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
+          positionManagementPrefs: prop.alpacaAccount.tradingPolicy.positionManagementPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.positionManagementPrefs : undefined,
+          portfolioConstructionPrefs: prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioConstructionPrefs : undefined,
           macroOverlayEnabled: prop.alpacaAccount.tradingPolicy.macroOverlayEnabled !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.macroOverlayEnabled
             } : undefined,
@@ -5315,9 +5245,7 @@ import { logger } from './utils/logger';
           dataQualitySentinelEnabled: prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.dataQualitySentinelEnabled
             } : undefined,
-          overlayResponsePrefs: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs
-            } : undefined,
+          overlayResponsePrefs: prop.alpacaAccount.tradingPolicy.overlayResponsePrefs !== undefined ? prop.alpacaAccount.tradingPolicy.overlayResponsePrefs : undefined,
           miniModelProvider: prop.alpacaAccount.tradingPolicy.miniModelProvider !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.miniModelProvider
             } : undefined,
@@ -5336,12 +5264,8 @@ import { logger } from './utils/logger';
           advancedModelId: prop.alpacaAccount.tradingPolicy.advancedModelId !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.advancedModelId
             } : undefined,
-          modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.modelPrefs
-            } : undefined,
-          auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? {
-              set: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs
-            } : undefined,
+          modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
+          auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
       Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 && prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
@@ -5382,9 +5306,7 @@ import { logger } from './utils/logger';
             version: item.version !== undefined ? {
                 set: item.version
               } : undefined,
-            mutations: item.mutations !== undefined ? {
-                set: item.mutations
-              } : undefined,
+            mutations: item.mutations !== undefined ? item.mutations : undefined,
             status: item.status !== undefined ? {
                 set: item.status
               } : undefined,

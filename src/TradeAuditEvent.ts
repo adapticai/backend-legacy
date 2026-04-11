@@ -419,12 +419,8 @@ import { logger } from './utils/logger';
   systemId: props.systemId !== undefined ? {
             set: props.systemId 
            } : undefined,
-  signatureJson: props.signatureJson !== undefined ? {
-            set: props.signatureJson 
-           } : undefined,
-  custodyJson: props.custodyJson !== undefined ? {
-            set: props.custodyJson 
-           } : undefined,
+  signatureJson: props.signatureJson !== undefined ? props.signatureJson : undefined,
+  custodyJson: props.custodyJson !== undefined ? props.custodyJson : undefined,
   retentionPolicyId: props.retentionPolicyId !== undefined ? {
             set: props.retentionPolicyId 
            } : undefined,
@@ -434,15 +430,9 @@ import { logger } from './utils/logger';
   encrypted: props.encrypted !== undefined ? {
             set: props.encrypted 
            } : undefined,
-  complianceTags: props.complianceTags !== undefined ? {
-            set: props.complianceTags 
-           } : undefined,
-  customTags: props.customTags !== undefined ? {
-            set: props.customTags 
-           } : undefined,
-  eventData: props.eventData !== undefined ? {
-            set: props.eventData 
-           } : undefined,
+  complianceTags: props.complianceTags !== undefined ? props.complianceTags : undefined,
+  customTags: props.customTags !== undefined ? props.customTags : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
   eventCategory: props.eventCategory !== undefined ? {
             set: props.eventCategory 
            } : undefined,
@@ -658,12 +648,8 @@ import { logger } from './utils/logger';
   systemId: props.systemId !== undefined ? {
             set: props.systemId 
            } : undefined,
-  signatureJson: props.signatureJson !== undefined ? {
-            set: props.signatureJson 
-           } : undefined,
-  custodyJson: props.custodyJson !== undefined ? {
-            set: props.custodyJson 
-           } : undefined,
+  signatureJson: props.signatureJson !== undefined ? props.signatureJson : undefined,
+  custodyJson: props.custodyJson !== undefined ? props.custodyJson : undefined,
   retentionPolicyId: props.retentionPolicyId !== undefined ? {
             set: props.retentionPolicyId 
            } : undefined,
@@ -673,15 +659,9 @@ import { logger } from './utils/logger';
   encrypted: props.encrypted !== undefined ? {
             set: props.encrypted 
            } : undefined,
-  complianceTags: props.complianceTags !== undefined ? {
-            set: props.complianceTags 
-           } : undefined,
-  customTags: props.customTags !== undefined ? {
-            set: props.customTags 
-           } : undefined,
-  eventData: props.eventData !== undefined ? {
-            set: props.eventData 
-           } : undefined,
+  complianceTags: props.complianceTags !== undefined ? props.complianceTags : undefined,
+  customTags: props.customTags !== undefined ? props.customTags : undefined,
+  eventData: props.eventData !== undefined ? props.eventData : undefined,
   eventCategory: props.eventCategory !== undefined ? {
             set: props.eventCategory 
            } : undefined,
@@ -874,12 +854,8 @@ import { logger } from './utils/logger';
   systemId: prop.systemId !== undefined ? {
             set: prop.systemId 
            } : undefined,
-  signatureJson: prop.signatureJson !== undefined ? {
-            set: prop.signatureJson 
-           } : undefined,
-  custodyJson: prop.custodyJson !== undefined ? {
-            set: prop.custodyJson 
-           } : undefined,
+  signatureJson: prop.signatureJson !== undefined ? prop.signatureJson : undefined,
+  custodyJson: prop.custodyJson !== undefined ? prop.custodyJson : undefined,
   retentionPolicyId: prop.retentionPolicyId !== undefined ? {
             set: prop.retentionPolicyId 
            } : undefined,
@@ -889,15 +865,9 @@ import { logger } from './utils/logger';
   encrypted: prop.encrypted !== undefined ? {
             set: prop.encrypted 
            } : undefined,
-  complianceTags: prop.complianceTags !== undefined ? {
-            set: prop.complianceTags 
-           } : undefined,
-  customTags: prop.customTags !== undefined ? {
-            set: prop.customTags 
-           } : undefined,
-  eventData: prop.eventData !== undefined ? {
-            set: prop.eventData 
-           } : undefined,
+  complianceTags: prop.complianceTags !== undefined ? prop.complianceTags : undefined,
+  customTags: prop.customTags !== undefined ? prop.customTags : undefined,
+  eventData: prop.eventData !== undefined ? prop.eventData : undefined,
   eventCategory: prop.eventCategory !== undefined ? {
             set: prop.eventCategory 
            } : undefined,

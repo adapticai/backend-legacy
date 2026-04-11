@@ -314,6 +314,7 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  configKey: props.configKey !== undefined ? props.configKey : undefined,
   type: props.type !== undefined ? {
     equals: props.type 
   } : undefined,
@@ -325,9 +326,7 @@ import { logger } from './utils/logger';
   configKey: props.configKey !== undefined ? {
             set: props.configKey 
            } : undefined,
-  configValue: props.configValue !== undefined ? {
-            set: props.configValue 
-           } : undefined,
+  configValue: props.configValue !== undefined ? props.configValue : undefined,
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
@@ -471,6 +470,7 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
+  configKey: props.configKey !== undefined ? props.configKey : undefined,
   type: props.type !== undefined ? {
     equals: props.type 
   } : undefined,
@@ -489,9 +489,7 @@ import { logger } from './utils/logger';
       configKey: props.configKey !== undefined ? {
             set: props.configKey 
            } : undefined,
-  configValue: props.configValue !== undefined ? {
-            set: props.configValue 
-           } : undefined,
+  configValue: props.configValue !== undefined ? props.configValue : undefined,
   type: props.type !== undefined ? {
             set: props.type 
            } : undefined,
@@ -629,6 +627,7 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
+  configKey: prop.configKey !== undefined ? prop.configKey : undefined,
   type: prop.type !== undefined ? {
     equals: prop.type 
   } : undefined,
@@ -641,9 +640,7 @@ import { logger } from './utils/logger';
   configKey: prop.configKey !== undefined ? {
             set: prop.configKey 
            } : undefined,
-  configValue: prop.configValue !== undefined ? {
-            set: prop.configValue 
-           } : undefined,
+  configValue: prop.configValue !== undefined ? prop.configValue : undefined,
   type: prop.type !== undefined ? {
             set: prop.type 
            } : undefined,
@@ -908,6 +905,7 @@ import { logger } from './utils/logger';
         const variables = {
           where: whereInput ? whereInput : {
             id: props.id !== undefined ? props.id : undefined,
+  configKey: props.configKey !== undefined ? props.configKey : undefined,
   type: props.type !== undefined ? {
     equals: props.type 
   } : undefined,
@@ -1086,6 +1084,9 @@ import { logger } from './utils/logger';
           where: whereInput ? whereInput : {
       id: props.id !== undefined ? {
     equals: props.id 
+  } : undefined,
+  configKey: props.configKey !== undefined ? {
+    equals: props.configKey 
   } : undefined,
   type: props.type !== undefined ? {
     equals: props.type 

@@ -886,9 +886,7 @@ import { logger } from './utils/logger';
   killSwitchEnabled: props.killSwitchEnabled !== undefined ? {
             set: props.killSwitchEnabled 
            } : undefined,
-  autonomyPrefs: props.autonomyPrefs !== undefined ? {
-            set: props.autonomyPrefs 
-           } : undefined,
+  autonomyPrefs: props.autonomyPrefs !== undefined ? props.autonomyPrefs : undefined,
   equitiesEnabled: props.equitiesEnabled !== undefined ? {
             set: props.equitiesEnabled 
            } : undefined,
@@ -916,9 +914,7 @@ import { logger } from './utils/logger';
   fractionalSharesEnabled: props.fractionalSharesEnabled !== undefined ? {
             set: props.fractionalSharesEnabled 
            } : undefined,
-  assetUniversePrefs: props.assetUniversePrefs !== undefined ? {
-            set: props.assetUniversePrefs 
-           } : undefined,
+  assetUniversePrefs: props.assetUniversePrefs !== undefined ? props.assetUniversePrefs : undefined,
   maxBuyingPowerUtilPct: props.maxBuyingPowerUtilPct !== undefined ? {
             set: props.maxBuyingPowerUtilPct 
            } : undefined,
@@ -946,21 +942,11 @@ import { logger } from './utils/logger';
   maxOpenOrders: props.maxOpenOrders !== undefined ? {
             set: props.maxOpenOrders 
            } : undefined,
-  riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? {
-            set: props.riskBudgetPrefs 
-           } : undefined,
-  signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? {
-            set: props.signalConsumptionPrefs 
-           } : undefined,
-  executionPrefs: props.executionPrefs !== undefined ? {
-            set: props.executionPrefs 
-           } : undefined,
-  positionManagementPrefs: props.positionManagementPrefs !== undefined ? {
-            set: props.positionManagementPrefs 
-           } : undefined,
-  portfolioConstructionPrefs: props.portfolioConstructionPrefs !== undefined ? {
-            set: props.portfolioConstructionPrefs 
-           } : undefined,
+  riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
+  signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
+  executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
+  positionManagementPrefs: props.positionManagementPrefs !== undefined ? props.positionManagementPrefs : undefined,
+  portfolioConstructionPrefs: props.portfolioConstructionPrefs !== undefined ? props.portfolioConstructionPrefs : undefined,
   macroOverlayEnabled: props.macroOverlayEnabled !== undefined ? {
             set: props.macroOverlayEnabled 
            } : undefined,
@@ -991,9 +977,7 @@ import { logger } from './utils/logger';
   dataQualitySentinelEnabled: props.dataQualitySentinelEnabled !== undefined ? {
             set: props.dataQualitySentinelEnabled 
            } : undefined,
-  overlayResponsePrefs: props.overlayResponsePrefs !== undefined ? {
-            set: props.overlayResponsePrefs 
-           } : undefined,
+  overlayResponsePrefs: props.overlayResponsePrefs !== undefined ? props.overlayResponsePrefs : undefined,
   miniModelProvider: props.miniModelProvider !== undefined ? {
             set: props.miniModelProvider 
            } : undefined,
@@ -1012,12 +996,8 @@ import { logger } from './utils/logger';
   advancedModelId: props.advancedModelId !== undefined ? {
             set: props.advancedModelId 
            } : undefined,
-  modelPrefs: props.modelPrefs !== undefined ? {
-            set: props.modelPrefs 
-           } : undefined,
-  auditNotificationPrefs: props.auditNotificationPrefs !== undefined ? {
-            set: props.auditNotificationPrefs 
-           } : undefined,
+  modelPrefs: props.modelPrefs !== undefined ? props.modelPrefs : undefined,
+  auditNotificationPrefs: props.auditNotificationPrefs !== undefined ? props.auditNotificationPrefs : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
            } : undefined,
@@ -1055,9 +1035,7 @@ import { logger } from './utils/logger';
         APISecret: props.alpacaAccount.APISecret !== undefined ? {
             set: props.alpacaAccount.APISecret
           } : undefined,
-        configuration: props.alpacaAccount.configuration !== undefined ? {
-            set: props.alpacaAccount.configuration
-          } : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
             set: props.alpacaAccount.marketOpen
           } : undefined,
@@ -1993,9 +1971,7 @@ import { logger } from './utils/logger';
           retryCount: item.retryCount !== undefined ? {
               set: item.retryCount
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           title: item.title !== undefined ? item.title : undefined,
@@ -2400,9 +2376,7 @@ import { logger } from './utils/logger';
         version: item.version !== undefined ? {
             set: item.version
           } : undefined,
-        mutations: item.mutations !== undefined ? {
-            set: item.mutations
-          } : undefined,
+        mutations: item.mutations !== undefined ? item.mutations : undefined,
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
@@ -3048,9 +3022,7 @@ import { logger } from './utils/logger';
   killSwitchEnabled: props.killSwitchEnabled !== undefined ? {
             set: props.killSwitchEnabled 
            } : undefined,
-  autonomyPrefs: props.autonomyPrefs !== undefined ? {
-            set: props.autonomyPrefs 
-           } : undefined,
+  autonomyPrefs: props.autonomyPrefs !== undefined ? props.autonomyPrefs : undefined,
   equitiesEnabled: props.equitiesEnabled !== undefined ? {
             set: props.equitiesEnabled 
            } : undefined,
@@ -3078,9 +3050,7 @@ import { logger } from './utils/logger';
   fractionalSharesEnabled: props.fractionalSharesEnabled !== undefined ? {
             set: props.fractionalSharesEnabled 
            } : undefined,
-  assetUniversePrefs: props.assetUniversePrefs !== undefined ? {
-            set: props.assetUniversePrefs 
-           } : undefined,
+  assetUniversePrefs: props.assetUniversePrefs !== undefined ? props.assetUniversePrefs : undefined,
   maxBuyingPowerUtilPct: props.maxBuyingPowerUtilPct !== undefined ? {
             set: props.maxBuyingPowerUtilPct 
            } : undefined,
@@ -3108,21 +3078,11 @@ import { logger } from './utils/logger';
   maxOpenOrders: props.maxOpenOrders !== undefined ? {
             set: props.maxOpenOrders 
            } : undefined,
-  riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? {
-            set: props.riskBudgetPrefs 
-           } : undefined,
-  signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? {
-            set: props.signalConsumptionPrefs 
-           } : undefined,
-  executionPrefs: props.executionPrefs !== undefined ? {
-            set: props.executionPrefs 
-           } : undefined,
-  positionManagementPrefs: props.positionManagementPrefs !== undefined ? {
-            set: props.positionManagementPrefs 
-           } : undefined,
-  portfolioConstructionPrefs: props.portfolioConstructionPrefs !== undefined ? {
-            set: props.portfolioConstructionPrefs 
-           } : undefined,
+  riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
+  signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
+  executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
+  positionManagementPrefs: props.positionManagementPrefs !== undefined ? props.positionManagementPrefs : undefined,
+  portfolioConstructionPrefs: props.portfolioConstructionPrefs !== undefined ? props.portfolioConstructionPrefs : undefined,
   macroOverlayEnabled: props.macroOverlayEnabled !== undefined ? {
             set: props.macroOverlayEnabled 
            } : undefined,
@@ -3153,9 +3113,7 @@ import { logger } from './utils/logger';
   dataQualitySentinelEnabled: props.dataQualitySentinelEnabled !== undefined ? {
             set: props.dataQualitySentinelEnabled 
            } : undefined,
-  overlayResponsePrefs: props.overlayResponsePrefs !== undefined ? {
-            set: props.overlayResponsePrefs 
-           } : undefined,
+  overlayResponsePrefs: props.overlayResponsePrefs !== undefined ? props.overlayResponsePrefs : undefined,
   miniModelProvider: props.miniModelProvider !== undefined ? {
             set: props.miniModelProvider 
            } : undefined,
@@ -3174,12 +3132,8 @@ import { logger } from './utils/logger';
   advancedModelId: props.advancedModelId !== undefined ? {
             set: props.advancedModelId 
            } : undefined,
-  modelPrefs: props.modelPrefs !== undefined ? {
-            set: props.modelPrefs 
-           } : undefined,
-  auditNotificationPrefs: props.auditNotificationPrefs !== undefined ? {
-            set: props.auditNotificationPrefs 
-           } : undefined,
+  modelPrefs: props.modelPrefs !== undefined ? props.modelPrefs : undefined,
+  auditNotificationPrefs: props.auditNotificationPrefs !== undefined ? props.auditNotificationPrefs : undefined,
   alpacaAccount: props.alpacaAccount ? 
   typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
 ? {
@@ -3211,9 +3165,7 @@ import { logger } from './utils/logger';
         APISecret: props.alpacaAccount.APISecret !== undefined ? {
             set: props.alpacaAccount.APISecret
           } : undefined,
-        configuration: props.alpacaAccount.configuration !== undefined ? {
-            set: props.alpacaAccount.configuration
-          } : undefined,
+        configuration: props.alpacaAccount.configuration !== undefined ? props.alpacaAccount.configuration : undefined,
         marketOpen: props.alpacaAccount.marketOpen !== undefined ? {
             set: props.alpacaAccount.marketOpen
           } : undefined,
@@ -4149,9 +4101,7 @@ import { logger } from './utils/logger';
           retryCount: item.retryCount !== undefined ? {
               set: item.retryCount
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           title: item.title !== undefined ? item.title : undefined,
@@ -4556,9 +4506,7 @@ import { logger } from './utils/logger';
         version: item.version !== undefined ? {
             set: item.version
           } : undefined,
-        mutations: item.mutations !== undefined ? {
-            set: item.mutations
-          } : undefined,
+        mutations: item.mutations !== undefined ? item.mutations : undefined,
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
@@ -4754,9 +4702,7 @@ import { logger } from './utils/logger';
   killSwitchEnabled: prop.killSwitchEnabled !== undefined ? {
             set: prop.killSwitchEnabled 
            } : undefined,
-  autonomyPrefs: prop.autonomyPrefs !== undefined ? {
-            set: prop.autonomyPrefs 
-           } : undefined,
+  autonomyPrefs: prop.autonomyPrefs !== undefined ? prop.autonomyPrefs : undefined,
   equitiesEnabled: prop.equitiesEnabled !== undefined ? {
             set: prop.equitiesEnabled 
            } : undefined,
@@ -4784,9 +4730,7 @@ import { logger } from './utils/logger';
   fractionalSharesEnabled: prop.fractionalSharesEnabled !== undefined ? {
             set: prop.fractionalSharesEnabled 
            } : undefined,
-  assetUniversePrefs: prop.assetUniversePrefs !== undefined ? {
-            set: prop.assetUniversePrefs 
-           } : undefined,
+  assetUniversePrefs: prop.assetUniversePrefs !== undefined ? prop.assetUniversePrefs : undefined,
   maxBuyingPowerUtilPct: prop.maxBuyingPowerUtilPct !== undefined ? {
             set: prop.maxBuyingPowerUtilPct 
            } : undefined,
@@ -4814,21 +4758,11 @@ import { logger } from './utils/logger';
   maxOpenOrders: prop.maxOpenOrders !== undefined ? {
             set: prop.maxOpenOrders 
            } : undefined,
-  riskBudgetPrefs: prop.riskBudgetPrefs !== undefined ? {
-            set: prop.riskBudgetPrefs 
-           } : undefined,
-  signalConsumptionPrefs: prop.signalConsumptionPrefs !== undefined ? {
-            set: prop.signalConsumptionPrefs 
-           } : undefined,
-  executionPrefs: prop.executionPrefs !== undefined ? {
-            set: prop.executionPrefs 
-           } : undefined,
-  positionManagementPrefs: prop.positionManagementPrefs !== undefined ? {
-            set: prop.positionManagementPrefs 
-           } : undefined,
-  portfolioConstructionPrefs: prop.portfolioConstructionPrefs !== undefined ? {
-            set: prop.portfolioConstructionPrefs 
-           } : undefined,
+  riskBudgetPrefs: prop.riskBudgetPrefs !== undefined ? prop.riskBudgetPrefs : undefined,
+  signalConsumptionPrefs: prop.signalConsumptionPrefs !== undefined ? prop.signalConsumptionPrefs : undefined,
+  executionPrefs: prop.executionPrefs !== undefined ? prop.executionPrefs : undefined,
+  positionManagementPrefs: prop.positionManagementPrefs !== undefined ? prop.positionManagementPrefs : undefined,
+  portfolioConstructionPrefs: prop.portfolioConstructionPrefs !== undefined ? prop.portfolioConstructionPrefs : undefined,
   macroOverlayEnabled: prop.macroOverlayEnabled !== undefined ? {
             set: prop.macroOverlayEnabled 
            } : undefined,
@@ -4859,9 +4793,7 @@ import { logger } from './utils/logger';
   dataQualitySentinelEnabled: prop.dataQualitySentinelEnabled !== undefined ? {
             set: prop.dataQualitySentinelEnabled 
            } : undefined,
-  overlayResponsePrefs: prop.overlayResponsePrefs !== undefined ? {
-            set: prop.overlayResponsePrefs 
-           } : undefined,
+  overlayResponsePrefs: prop.overlayResponsePrefs !== undefined ? prop.overlayResponsePrefs : undefined,
   miniModelProvider: prop.miniModelProvider !== undefined ? {
             set: prop.miniModelProvider 
            } : undefined,
@@ -4880,12 +4812,8 @@ import { logger } from './utils/logger';
   advancedModelId: prop.advancedModelId !== undefined ? {
             set: prop.advancedModelId 
            } : undefined,
-  modelPrefs: prop.modelPrefs !== undefined ? {
-            set: prop.modelPrefs 
-           } : undefined,
-  auditNotificationPrefs: prop.auditNotificationPrefs !== undefined ? {
-            set: prop.auditNotificationPrefs 
-           } : undefined,
+  modelPrefs: prop.modelPrefs !== undefined ? prop.modelPrefs : undefined,
+  auditNotificationPrefs: prop.auditNotificationPrefs !== undefined ? prop.auditNotificationPrefs : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
            } : undefined,
@@ -4923,9 +4851,7 @@ import { logger } from './utils/logger';
         APISecret: prop.alpacaAccount.APISecret !== undefined ? {
             set: prop.alpacaAccount.APISecret
           } : undefined,
-        configuration: prop.alpacaAccount.configuration !== undefined ? {
-            set: prop.alpacaAccount.configuration
-          } : undefined,
+        configuration: prop.alpacaAccount.configuration !== undefined ? prop.alpacaAccount.configuration : undefined,
         marketOpen: prop.alpacaAccount.marketOpen !== undefined ? {
             set: prop.alpacaAccount.marketOpen
           } : undefined,
@@ -5861,9 +5787,7 @@ import { logger } from './utils/logger';
           retryCount: item.retryCount !== undefined ? {
               set: item.retryCount
             } : undefined,
-          metadata: item.metadata !== undefined ? {
-              set: item.metadata
-            } : undefined,
+          metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
         create: {
           title: item.title !== undefined ? item.title : undefined,
@@ -6268,9 +6192,7 @@ import { logger } from './utils/logger';
         version: item.version !== undefined ? {
             set: item.version
           } : undefined,
-        mutations: item.mutations !== undefined ? {
-            set: item.mutations
-          } : undefined,
+        mutations: item.mutations !== undefined ? item.mutations : undefined,
         status: item.status !== undefined ? {
             set: item.status
           } : undefined,
