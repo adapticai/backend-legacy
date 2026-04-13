@@ -6232,6 +6232,12 @@ import { logger } from './utils/logger';
 
         const filteredVariables = removeUndefinedProps(variables);
 
+        // Validate that we have at least one filter criteria
+        // GraphQL requires a non-empty where clause for findMany
+        if (!filteredVariables || !filteredVariables.where || Object.keys(filteredVariables.where).length === 0) {
+          throw new Error(`findManyAlpacaAccount requires at least one filter criterion. Received empty where clause.`);
+        }
+
         const response = await client.query({
           query: FIND_MANY_ALPACAACCOUNT,
           variables: filteredVariables,
