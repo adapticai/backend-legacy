@@ -611,10 +611,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  waitlistEntryId: props.waitlistEntryId !== undefined ? props.waitlistEntryId : undefined,
-  email: props.email !== undefined ? {
-    equals: props.email 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -3563,10 +3559,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  waitlistEntryId: prop.waitlistEntryId !== undefined ? prop.waitlistEntryId : undefined,
-  email: prop.email !== undefined ? {
-    equals: prop.email 
-  } : undefined,
 
           },
           data: {

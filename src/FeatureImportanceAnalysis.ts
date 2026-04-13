@@ -1208,9 +1208,6 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  modelVersionId: props.modelVersionId !== undefined ? {
-    equals: props.modelVersionId 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -8769,9 +8766,6 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  modelVersionId: prop.modelVersionId !== undefined ? {
-    equals: prop.modelVersionId 
-  } : undefined,
 
           },
           data: {

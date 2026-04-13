@@ -1972,18 +1972,6 @@ id
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
-  modelVersionAId: props.modelVersionAId !== undefined ? {
-    equals: props.modelVersionAId 
-  } : undefined,
-  modelVersionBId: props.modelVersionBId !== undefined ? {
-    equals: props.modelVersionBId 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -15463,18 +15451,6 @@ id
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  name: prop.name !== undefined ? {
-    equals: prop.name 
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status 
-  } : undefined,
-  modelVersionAId: prop.modelVersionAId !== undefined ? {
-    equals: prop.modelVersionAId 
-  } : undefined,
-  modelVersionBId: prop.modelVersionBId !== undefined ? {
-    equals: prop.modelVersionBId 
-  } : undefined,
 
           },
           data: {

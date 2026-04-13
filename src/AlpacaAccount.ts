@@ -873,12 +873,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type 
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -4401,12 +4395,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type 
-  } : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId 
-  } : undefined,
 
           },
           data: {

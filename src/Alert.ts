@@ -768,18 +768,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId 
-  } : undefined,
-  title: props.title !== undefined ? {
-    equals: props.title 
-  } : undefined,
-  type: props.type !== undefined ? {
-    equals: props.type 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -4899,18 +4887,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
-    equals: prop.alpacaAccountId 
-  } : undefined,
-  title: prop.title !== undefined ? {
-    equals: prop.title 
-  } : undefined,
-  type: prop.type !== undefined ? {
-    equals: prop.type 
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status 
-  } : undefined,
 
           },
           data: {

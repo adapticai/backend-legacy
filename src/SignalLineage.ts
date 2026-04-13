@@ -374,13 +374,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  lineageId: props.lineageId !== undefined ? props.lineageId : undefined,
-  signalId: props.signalId !== undefined ? {
-    equals: props.signalId 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -775,13 +768,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  lineageId: prop.lineageId !== undefined ? prop.lineageId : undefined,
-  signalId: prop.signalId !== undefined ? {
-    equals: prop.signalId 
-  } : undefined,
-  symbol: prop.symbol !== undefined ? {
-    equals: prop.symbol 
-  } : undefined,
 
           },
           data: {

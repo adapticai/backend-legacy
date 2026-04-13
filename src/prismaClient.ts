@@ -112,7 +112,8 @@ function buildDatabaseUrl(): string {
   });
 
   const statementTimeoutMs = parseInt(
-    process.env.DATABASE_STATEMENT_TIMEOUT_MS || String(DEFAULT_STATEMENT_TIMEOUT_MS),
+    process.env.DATABASE_STATEMENT_TIMEOUT_MS ||
+      String(DEFAULT_STATEMENT_TIMEOUT_MS),
     10
   );
 
@@ -147,8 +148,8 @@ if (!global.prisma) {
     };
 
     // Extract Prisma error code (e.g., P2002 unique constraint, P2003 foreign key)
-    const prismaCodeMatch = message.match(/error code:\s*(P\d+)/i)
-      || message.match(/(P\d{4})/);
+    const prismaCodeMatch =
+      message.match(/error code:\s*(P\d+)/i) || message.match(/(P\d{4})/);
     if (prismaCodeMatch) {
       errorInfo.prismaErrorCode = prismaCodeMatch[1];
     }
@@ -201,9 +202,14 @@ if (!global.prisma) {
       logger.info('Prisma expected race (record already removed)', errorInfo);
     } else if (isInvalidUuidInput) {
       errorInfo.category = 'INVALID_INPUT_FORMAT';
-      errorInfo.hint = 'Caller passed a non-UUID value to a UUID column. Validate inputs upstream.';
+      errorInfo.hint =
+        'Caller passed a non-UUID value to a UUID column. Validate inputs upstream.';
       logger.warn('Prisma rejected invalid UUID input', errorInfo);
-    } else if (message.includes('pool') || message.includes('connection') || message.includes('timeout')) {
+    } else if (
+      message.includes('pool') ||
+      message.includes('connection') ||
+      message.includes('timeout')
+    ) {
       errorInfo.category = 'CONNECTION_POOL';
       logger.error('Database connection pool issue detected', errorInfo);
     } else if (prismaCodeMatch || pgCodeMatch) {
@@ -248,13 +254,19 @@ async function heartbeat(): Promise<void> {
     await Promise.race([
       global.prisma.$queryRaw`SELECT 1`,
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Heartbeat timeout')), HEARTBEAT_TIMEOUT_MS)
+        setTimeout(
+          () => reject(new Error('Heartbeat timeout')),
+          HEARTBEAT_TIMEOUT_MS
+        )
       ),
     ]);
     const latencyMs = Date.now() - start;
 
     if (heartbeatFailures > 0) {
-      logger.info('Database heartbeat recovered', { latencyMs, previousFailures: heartbeatFailures });
+      logger.info('Database heartbeat recovered', {
+        latencyMs,
+        previousFailures: heartbeatFailures,
+      });
     }
     heartbeatFailures = 0;
   } catch (error) {
@@ -266,9 +278,12 @@ async function heartbeat(): Promise<void> {
     });
 
     if (heartbeatFailures >= MAX_HEARTBEAT_FAILURES) {
-      logger.error('Database heartbeat exceeded failure threshold, reconnecting Prisma client', {
-        consecutiveFailures: heartbeatFailures,
-      });
+      logger.error(
+        'Database heartbeat exceeded failure threshold, reconnecting Prisma client',
+        {
+          consecutiveFailures: heartbeatFailures,
+        }
+      );
       await reconnectPrisma();
     }
   }
@@ -303,11 +318,19 @@ async function reconnectPrisma(): Promise<void> {
     });
 
     // Re-register error/warn handlers
-    newClient.$on('error' as never, (e: { message: string; timestamp: string }) => {
-      logger.error('Prisma client error (reconnected)', { message: e.message, timestamp: e.timestamp });
-    });
+    newClient.$on(
+      'error' as never,
+      (e: { message: string; timestamp: string }) => {
+        logger.error('Prisma client error (reconnected)', {
+          message: e.message,
+          timestamp: e.timestamp,
+        });
+      }
+    );
     newClient.$on('warn' as never, (e: { message: string }) => {
-      logger.warn('Prisma client warning (reconnected)', { message: e.message });
+      logger.warn('Prisma client warning (reconnected)', {
+        message: e.message,
+      });
     });
 
     global.prisma = newClient;
@@ -369,7 +392,13 @@ export async function disconnectWithTimeout(timeoutMs = 5000): Promise<void> {
     await Promise.race([
       global.prisma.$disconnect(),
       new Promise<void>((_, reject) =>
-        setTimeout(() => reject(new Error(`Prisma disconnect timed out after ${timeoutMs}ms`)), timeoutMs)
+        setTimeout(
+          () =>
+            reject(
+              new Error(`Prisma disconnect timed out after ${timeoutMs}ms`)
+            ),
+          timeoutMs
+        )
       ),
     ]);
     logger.info('Database connections closed successfully');

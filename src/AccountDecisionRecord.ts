@@ -378,22 +378,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  correlationId: props.correlationId !== undefined ? props.correlationId : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? {
-    equals: props.alpacaAccountId 
-  } : undefined,
-  opportunityId: props.opportunityId !== undefined ? {
-    equals: props.opportunityId 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-  modelId: props.modelId !== undefined ? {
-    equals: props.modelId 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -823,22 +807,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  correlationId: prop.correlationId !== undefined ? prop.correlationId : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? {
-    equals: prop.alpacaAccountId 
-  } : undefined,
-  opportunityId: prop.opportunityId !== undefined ? {
-    equals: prop.opportunityId 
-  } : undefined,
-  symbol: prop.symbol !== undefined ? {
-    equals: prop.symbol 
-  } : undefined,
-  modelId: prop.modelId !== undefined ? {
-    equals: prop.modelId 
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status 
-  } : undefined,
 
           },
           data: {

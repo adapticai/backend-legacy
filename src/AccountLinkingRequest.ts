@@ -751,18 +751,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
-  } : undefined,
-  email: props.email !== undefined ? {
-    equals: props.email 
-  } : undefined,
-  providerAccountId: props.providerAccountId !== undefined ? {
-    equals: props.providerAccountId 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -4585,18 +4573,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId 
-  } : undefined,
-  email: prop.email !== undefined ? {
-    equals: prop.email 
-  } : undefined,
-  providerAccountId: prop.providerAccountId !== undefined ? {
-    equals: prop.providerAccountId 
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status 
-  } : undefined,
 
           },
           data: {

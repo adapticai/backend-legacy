@@ -225,24 +225,24 @@ async function enqueueOperation<T>(
         const result = await operation();
         resolve(result);
       } catch (error) {
-        const isRetryable = error instanceof Error && (
-          error.message.includes('Accelerate') ||
-          error.message.includes('code: 1016') ||
-          error.message.includes('ECONNREFUSED') ||
-          error.message.includes('ECONNRESET') ||
-          error.message.includes('ETIMEDOUT') ||
-          error.message.includes('fetch failed') ||
-          error.message.includes('socket hang up') ||
-          error.message.includes('network') ||
-          error.message.includes("Can't reach database server") ||
-          error.message.includes('Connection pool timeout') ||
-          error.message.includes('P2024') ||
-          error.message.includes('terminated') ||
-          error.message.includes('status code 408') ||
-          error.message.includes('status code 502') ||
-          error.message.includes('status code 503') ||
-          error.message.includes('status code 504')
-        );
+        const isRetryable =
+          error instanceof Error &&
+          (error.message.includes('Accelerate') ||
+            error.message.includes('code: 1016') ||
+            error.message.includes('ECONNREFUSED') ||
+            error.message.includes('ECONNRESET') ||
+            error.message.includes('ETIMEDOUT') ||
+            error.message.includes('fetch failed') ||
+            error.message.includes('socket hang up') ||
+            error.message.includes('network') ||
+            error.message.includes("Can't reach database server") ||
+            error.message.includes('Connection pool timeout') ||
+            error.message.includes('P2024') ||
+            error.message.includes('terminated') ||
+            error.message.includes('status code 408') ||
+            error.message.includes('status code 502') ||
+            error.message.includes('status code 503') ||
+            error.message.includes('status code 504'));
 
         if (attempt < poolConfig.retryAttempts && isRetryable) {
           const delay = poolConfig.retryDelay * Math.pow(2, attempt);
@@ -415,7 +415,9 @@ export async function getApolloClient(): Promise<
           errMessage.includes('status code 504');
 
         if (isTransient) {
-          logger.warn(`[Network error]: ${errMessage} (transient — caller retry queue will handle)`);
+          logger.warn(
+            `[Network error]: ${errMessage} (transient — caller retry queue will handle)`
+          );
         } else {
           logger.error(`[Network error]: ${errMessage}`);
         }

@@ -850,16 +850,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
-  miniModelId: props.miniModelId !== undefined ? {
-    equals: props.miniModelId 
-  } : undefined,
-  normalModelId: props.normalModelId !== undefined ? {
-    equals: props.normalModelId 
-  } : undefined,
-  advancedModelId: props.advancedModelId !== undefined ? {
-    equals: props.advancedModelId 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -4665,16 +4655,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
-  miniModelId: prop.miniModelId !== undefined ? {
-    equals: prop.miniModelId 
-  } : undefined,
-  normalModelId: prop.normalModelId !== undefined ? {
-    equals: prop.normalModelId 
-  } : undefined,
-  advancedModelId: prop.advancedModelId !== undefined ? {
-    equals: prop.advancedModelId 
-  } : undefined,
 
           },
           data: {

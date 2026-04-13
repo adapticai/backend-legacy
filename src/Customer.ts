@@ -849,17 +849,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  stripeCustomerId: props.stripeCustomerId !== undefined ? props.stripeCustomerId : undefined,
-  stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
-  authUserId: props.authUserId !== undefined ? {
-    equals: props.authUserId 
-  } : undefined,
-  name: props.name !== undefined ? {
-    equals: props.name 
-  } : undefined,
-  stripePriceId: props.stripePriceId !== undefined ? {
-    equals: props.stripePriceId 
-  } : undefined,
       },
           data: {
       authUserId: props.authUserId !== undefined ? {
@@ -4684,17 +4673,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  stripeCustomerId: prop.stripeCustomerId !== undefined ? prop.stripeCustomerId : undefined,
-  stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? prop.stripeSubscriptionId : undefined,
-  authUserId: prop.authUserId !== undefined ? {
-    equals: prop.authUserId 
-  } : undefined,
-  name: prop.name !== undefined ? {
-    equals: prop.name 
-  } : undefined,
-  stripePriceId: prop.stripePriceId !== undefined ? {
-    equals: prop.stripePriceId 
-  } : undefined,
 
           },
           data: {

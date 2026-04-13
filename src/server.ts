@@ -17,7 +17,10 @@ import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { jwtSecret } from './config/jwtConfig';
-import prisma, { startConnectionHealthMonitor, disconnectWithTimeout } from './prismaClient';
+import prisma, {
+  startConnectionHealthMonitor,
+  disconnectWithTimeout,
+} from './prismaClient';
 import { createHealthRouter } from './health';
 import { exec } from 'child_process';
 import { logger } from './utils/logger';
@@ -122,9 +125,13 @@ const startServer = async () => {
         message.includes('Inconsistent column data: Error creating UUID');
 
       if (isExpectedDeleteRace) {
-        logger.info('GraphQL expected race (record already removed)', { graphqlError: err });
+        logger.info('GraphQL expected race (record already removed)', {
+          graphqlError: err,
+        });
       } else if (isInvalidUuidInput) {
-        logger.warn('GraphQL rejected invalid UUID input', { graphqlError: err });
+        logger.warn('GraphQL rejected invalid UUID input', {
+          graphqlError: err,
+        });
       } else {
         logger.error('GraphQL Error', { graphqlError: err });
       }
@@ -417,8 +424,12 @@ const startServer = async () => {
     }
   }
 
-  process.on('SIGINT', () => { void gracefulShutdown('SIGINT'); });
-  process.on('SIGTERM', () => { void gracefulShutdown('SIGTERM'); });
+  process.on('SIGINT', () => {
+    void gracefulShutdown('SIGINT');
+  });
+  process.on('SIGTERM', () => {
+    void gracefulShutdown('SIGTERM');
+  });
 };
 
 startServer().catch((error) => {
@@ -440,4 +451,3 @@ process.on('uncaughtException', (error) => {
     stack: error.stack,
   });
 });
-

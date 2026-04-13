@@ -47,6 +47,7 @@ type OperationType =
   | 'updateWithoutId'
   | 'updateMany'
   | 'where'
+  | 'updateWhere' // Special where clause for update mutations - only uses 'id' as identifier
   | 'findMany'
   | 'none'
   | 'upsert'
@@ -154,6 +155,20 @@ const constructVariablesObject = (
       case 'findMany':
       case 'get':
         variablesObject += handleWhereOperation(
+          field,
+          accessor,
+          inputsPath,
+          modelsPath,
+          depth,
+          maxDepth
+        );
+        break;
+      case 'updateWhere':
+        // For update mutations, the where clause should ONLY use 'id' as the identifier.
+        // Other unique fields like 'alpacaOrderId' should NOT be in the where clause
+        // because they may be the fields being SET (not looked up by).
+        // This prevents unique constraint violations when updating unique fields.
+        variablesObject += handleUpdateWhereOperation(
           field,
           accessor,
           inputsPath,
@@ -730,6 +745,50 @@ const handleWhereOperation = (
 };
 
 /**
+ * Handles the 'updateWhere' operation type for where clause generation in update mutations.
+ *
+ * CRITICAL: For update mutations, the where clause should ONLY use 'id' as the identifier.
+ * This prevents unique constraint violations when updating other unique fields like 'alpacaOrderId'.
+ *
+ * Example problem this solves:
+ * When calling adaptic.action.update({ id: "abc", alpacaOrderId: "new-order-id" }),
+ * the old code would put alpacaOrderId in BOTH the where clause (for lookup) AND the data
+ * clause (for setting). This causes Prisma to fail because:
+ * 1. It tries to find an action where alpacaOrderId = "new-order-id" (which doesn't exist yet)
+ * 2. OR if another action has that alpacaOrderId, it causes a unique constraint violation
+ *
+ * The fix: where clause only uses 'id', and alpacaOrderId only goes in the data clause.
+ */
+const handleUpdateWhereOperation = (
+  field: FieldDefinition,
+  accessor: string,
+  inputsPath: string | null,
+  modelsPath: string | null,
+  depth: number,
+  maxDepth: number
+): string => {
+  const indent = '  '.repeat(depth + 1);
+  if (depth >= maxDepth) {
+    return '';
+  }
+
+  if (isReservedField(field.name)) {
+    return '';
+  }
+
+  // For update mutations, ONLY 'id' should be in the where clause
+  // All other unique fields should NOT be used for identification
+  // because they may be the fields being updated (not looked up by)
+  if (field.name === 'id') {
+    return `${indent}${field.name}: ${accessor} !== undefined ? ${accessor} : undefined,\n`;
+  }
+
+  // Skip all other fields in the update where clause
+  // They will be handled in the data clause instead
+  return '';
+};
+
+/**
  * Checks if a field name is reserved and should be skipped.
  * @param name - The field name to check.
  * @returns Boolean indicating if the field is reserved.
@@ -1199,7 +1258,7 @@ ${allocationValidationImport}  `;
             capitalModelName,
             inputsPath,
             modelsPath,
-            'where'
+            'updateWhere' // Use updateWhere to only include 'id' in the where clause, preventing unique constraint violations when updating other unique fields
           )}      },
           data: {
     ${constructVariablesObject(
@@ -1476,7 +1535,7 @@ ${allocationValidationImport}  `;
               capitalModelName,
               inputsPath,
               modelsPath,
-              'where'
+              'updateWhere' // Use updateWhere to only include 'id' in the where clause
             )}
           },
           data: {

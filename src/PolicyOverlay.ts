@@ -547,18 +547,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  tradingPolicyId: props.tradingPolicyId !== undefined ? {
-    equals: props.tradingPolicyId 
-  } : undefined,
-  status: props.status !== undefined ? {
-    equals: props.status 
-  } : undefined,
-  correlationId: props.correlationId !== undefined ? {
-    equals: props.correlationId 
-  } : undefined,
-  triggerEventId: props.triggerEventId !== undefined ? {
-    equals: props.triggerEventId 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -2679,18 +2667,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  tradingPolicyId: prop.tradingPolicyId !== undefined ? {
-    equals: prop.tradingPolicyId 
-  } : undefined,
-  status: prop.status !== undefined ? {
-    equals: prop.status 
-  } : undefined,
-  correlationId: prop.correlationId !== undefined ? {
-    equals: prop.correlationId 
-  } : undefined,
-  triggerEventId: prop.triggerEventId !== undefined ? {
-    equals: prop.triggerEventId 
-  } : undefined,
 
           },
           data: {

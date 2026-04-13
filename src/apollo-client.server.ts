@@ -116,16 +116,22 @@ export function configureKeepAliveDispatcher(opts?: {
       undici.setGlobalDispatcher(dispatcher);
       keepAliveConfigured = true;
 
-      logger.info('Apollo client: undici global keepalive dispatcher configured', {
-        connections: opts?.connections ?? 64,
-        keepAliveTimeoutMs: opts?.keepAliveTimeoutMs ?? 30_000,
-        keepAliveMaxTimeoutMs: opts?.keepAliveMaxTimeoutMs ?? 600_000,
-      });
+      logger.info(
+        'Apollo client: undici global keepalive dispatcher configured',
+        {
+          connections: opts?.connections ?? 64,
+          keepAliveTimeoutMs: opts?.keepAliveTimeoutMs ?? 30_000,
+          keepAliveMaxTimeoutMs: opts?.keepAliveMaxTimeoutMs ?? 600_000,
+        }
+      );
     } catch (err) {
       // Undici should always be available alongside Node 18+ but be defensive.
-      logger.warn('Apollo client: failed to configure undici keepalive dispatcher', {
-        error: err instanceof Error ? err.message : String(err),
-      });
+      logger.warn(
+        'Apollo client: failed to configure undici keepalive dispatcher',
+        {
+          error: err instanceof Error ? err.message : String(err),
+        }
+      );
       // Reset so a future call can retry once the failure cause clears.
       keepAliveConfigurePromise = undefined;
     }

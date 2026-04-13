@@ -360,31 +360,6 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  eventId: props.eventId !== undefined ? props.eventId : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-  accountId: props.accountId !== undefined ? {
-    equals: props.accountId 
-  } : undefined,
-  tradeId: props.tradeId !== undefined ? {
-    equals: props.tradeId 
-  } : undefined,
-  signalId: props.signalId !== undefined ? {
-    equals: props.signalId 
-  } : undefined,
-  orderId: props.orderId !== undefined ? {
-    equals: props.orderId 
-  } : undefined,
-  userId: props.userId !== undefined ? {
-    equals: props.userId 
-  } : undefined,
-  aggregateId: props.aggregateId !== undefined ? {
-    equals: props.aggregateId 
-  } : undefined,
-  retentionPolicyId: props.retentionPolicyId !== undefined ? {
-    equals: props.retentionPolicyId 
-  } : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -801,31 +776,6 @@ import { logger } from './utils/logger';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  eventId: prop.eventId !== undefined ? prop.eventId : undefined,
-  symbol: prop.symbol !== undefined ? {
-    equals: prop.symbol 
-  } : undefined,
-  accountId: prop.accountId !== undefined ? {
-    equals: prop.accountId 
-  } : undefined,
-  tradeId: prop.tradeId !== undefined ? {
-    equals: prop.tradeId 
-  } : undefined,
-  signalId: prop.signalId !== undefined ? {
-    equals: prop.signalId 
-  } : undefined,
-  orderId: prop.orderId !== undefined ? {
-    equals: prop.orderId 
-  } : undefined,
-  userId: prop.userId !== undefined ? {
-    equals: prop.userId 
-  } : undefined,
-  aggregateId: prop.aggregateId !== undefined ? {
-    equals: prop.aggregateId 
-  } : undefined,
-  retentionPolicyId: prop.retentionPolicyId !== undefined ? {
-    equals: prop.retentionPolicyId 
-  } : undefined,
 
           },
           data: {

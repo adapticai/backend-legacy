@@ -794,7 +794,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
           data: {
       id: props.id !== undefined ? {
@@ -4964,7 +4963,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const variables = props.map(prop => ({
           where: {
               id: prop.id !== undefined ? prop.id : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
 
           },
           data: {
