@@ -16,6 +16,7 @@ export {
   getApolloModules,
   configureConnectionPool,
   setTokenProvider,
+  stopClient,
   client
 } from './client';
 

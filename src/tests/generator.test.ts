@@ -63,7 +63,7 @@ describe('Generator Module', () => {
         if (result !== null) {
           expect(result).toContain('import { User as UserType }');
           expect(result).toContain('import { removeUndefinedProps }');
-          expect(result).toContain('import { client as importedClient');
+          expect(result).toContain('import { getApolloClient, ApolloClientType, NormalizedCacheObject, getApolloModules }');
         }
       } finally {
         fs.rmSync(tmpDir, { recursive: true, force: true });

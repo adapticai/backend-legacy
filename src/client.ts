@@ -487,8 +487,35 @@ export async function getApolloModules(): Promise<ApolloModules> {
 }
 
 /**
- * For convenience, you may also export a promise that resolves to the Apollo Client.
- * IMPORTANT: It's recommended to explicitly call getApolloClient() instead of using
- * this constant to ensure proper initialization and avoid race conditions.
+ * Lazy client accessor — the connection is only created when this value is first
+ * awaited (or used in `Promise.all`). Previously this was `getApolloClient()` which
+ * eagerly opened a connection at module-load time, before any pool configuration or
+ * auth token provider was set, causing orphaned connections in every process that
+ * imported `@adaptic/backend-legacy`.
+ *
+ * @deprecated Prefer calling `getApolloClient()` directly for explicit lifecycle control.
  */
-export const client = getApolloClient();
+export const client: PromiseLike<ApolloClientType<NormalizedCacheObject>> = {
+  then<TResult1 = ApolloClientType<NormalizedCacheObject>, TResult2 = never>(
+    onfulfilled?: ((value: ApolloClientType<NormalizedCacheObject>) => TResult1 | PromiseLike<TResult1>) | null | undefined,
+    onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined,
+  ): Promise<TResult1 | TResult2> {
+    return getApolloClient().then(onfulfilled, onrejected);
+  },
+};
+
+/**
+ * Gracefully stops the singleton Apollo Client and releases its resources.
+ * Call this during process shutdown to close keep-alive HTTP connections and
+ * drain in-flight operations.
+ *
+ * After calling `stopClient()`, the next call to `getApolloClient()` will
+ * create a fresh instance.
+ */
+export function stopClient(): void {
+  if (apolloClient) {
+    apolloClient.stop();
+    apolloClient = undefined;
+    logger.info('Apollo client stopped and resources released');
+  }
+}

@@ -1,7 +1,7 @@
 
   
 import { SyncEvent as SyncEventType } from './generated/typegraphql-prisma/models/SyncEvent';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
+import { getApolloClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
   
@@ -53,7 +53,7 @@ import { logger } from './utils/logger';
             getApolloModules(),
             globalClient
               ? Promise.resolve(globalClient)
-              : importedClient
+              : getApolloClient()
           ]);
 
           const { gql, ApolloError } = modules;
@@ -180,7 +180,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -304,7 +304,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -453,7 +453,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -616,7 +616,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -764,7 +764,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -887,7 +887,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -983,7 +983,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1067,7 +1067,7 @@ import { logger } from './utils/logger';
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;

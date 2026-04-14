@@ -919,7 +919,7 @@ export const generateModelFunctions = (
 
   const imports = `
 import { ${capitalModelName} as ${capitalModelName}Type } from './generated/typegraphql-prisma/models/${capitalModelName}';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
+import { getApolloClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
 ${allocationValidationImport}  `;
@@ -977,7 +977,7 @@ ${allocationValidationImport}  `;
             getApolloModules(),
             globalClient
               ? Promise.resolve(globalClient)
-              : importedClient
+              : getApolloClient()
           ]);
 
           const { gql, ApolloError } = modules;
@@ -1102,7 +1102,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1238,7 +1238,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1372,7 +1372,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1515,7 +1515,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1648,7 +1648,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1771,7 +1771,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1867,7 +1867,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
@@ -1951,7 +1951,7 @@ ${allocationValidationImport}  `;
           getApolloModules(),
           globalClient
             ? Promise.resolve(globalClient)
-            : importedClient
+            : getApolloClient()
         ]);
 
         const { gql, ApolloError } = modules;
