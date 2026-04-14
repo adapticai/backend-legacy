@@ -1,4 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+// Note: `@prisma/extension-accelerate` is installed and available for future
+// use (per-query `cacheStrategy()` etc.). It is NOT applied here because
+// basic pool multiplexing — the primary benefit we want from Accelerate —
+// is activated purely by the `prisma://` DATABASE_URL scheme and does not
+// require the client extension. Adding the extension would change the
+// PrismaClient type surface, forcing casts throughout the audit-logger
+// plugin and server context injection. Revisit if we adopt per-query
+// caching strategies.
 import { logger } from './utils/logger';
 
 /**
@@ -95,6 +103,16 @@ function resolvePoolTimeout(): number {
  *
  * @returns The database URL with pool parameters
  */
+/**
+ * True when the given DATABASE_URL points to Prisma Accelerate.
+ * Accelerate connections use a `prisma://` scheme and handle pooling
+ * at the Accelerate proxy; per-connection Postgres timeouts are not
+ * valid as URL params in that case.
+ */
+function isAccelerateUrl(url: string): boolean {
+  return url.startsWith('prisma://') || url.startsWith('prisma+postgres://');
+}
+
 function buildDatabaseUrl(): string {
   const baseUrl = process.env.DATABASE_URL || '';
   if (!baseUrl) {
@@ -103,6 +121,21 @@ function buildDatabaseUrl(): string {
 
   const poolSize = resolvePoolSize();
   const poolTimeout = resolvePoolTimeout();
+
+  // Accelerate path: Accelerate manages pooling itself at the proxy. We do
+  // NOT append `statement_timeout` / `idle_in_transaction_session_timeout`
+  // because they are Postgres-specific parameters the Accelerate URL
+  // parser would reject. Accelerate URLs carry the api_key as a query
+  // param; leave them untouched (pool size is controlled via the Accelerate
+  // console, not via URL).
+  if (isAccelerateUrl(baseUrl)) {
+    logger.info('Prisma Accelerate URL detected — pooling managed by Accelerate proxy', {
+      environment: process.env.NODE_ENV || 'development',
+    });
+    return baseUrl;
+  }
+
+  // Direct Postgres path: append per-connection pool + timeout params.
   const separator = baseUrl.includes('?') ? '&' : '?';
 
   logger.info('Database connection pool configured', {
