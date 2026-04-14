@@ -318,6 +318,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1274,6 +1276,12 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? {
                 set: item.tradingPolicy.maxOpenOrders
               } : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1359,6 +1367,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1561,6 +1571,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2144,6 +2156,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2711,6 +2725,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3420,6 +3436,12 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? {
                 set: item.tradingPolicy.maxOpenOrders
               } : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3505,6 +3527,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3707,6 +3731,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -4290,6 +4316,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5125,6 +5153,12 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? {
                 set: item.tradingPolicy.maxOpenOrders
               } : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5210,6 +5244,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5412,6 +5448,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5995,6 +6033,8 @@ import { logger } from './utils/logger';
             maxSectorConcentrationPct: item.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.tradingPolicy.maxSectorConcentrationPct : undefined,
             maxOpenPositions: item.tradingPolicy.maxOpenPositions !== undefined ? item.tradingPolicy.maxOpenPositions : undefined,
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,

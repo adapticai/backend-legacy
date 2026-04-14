@@ -1202,7 +1202,7 @@ model AlpacaAccount {
   /// Account-level asset class allocation configuration. TYPESTRING.SKIP=true
   allocation Allocation?
 
-  /// Trading policy governing autonomous decision-making for this account. TYPESTRING.SKIP=true GQL.SKIP=true
+  /// Trading policy governing autonomous decision-making for this account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount','overlays']
   tradingPolicy TradingPolicy?
 
   /// Whether the system should automatically determine allocation percentages based on market conditions. TYPESTRING.SKIP=true
@@ -4710,6 +4710,13 @@ model TradingPolicy {
   maxSectorConcentrationPct Float   @default(30)
   maxOpenPositions          Int     @default(20)
   maxOpenOrders             Int     @default(50)
+
+  /// Percentage of account equity (with leverage) allocated per equities trade. Canonical replacement for legacy AlpacaAccount.tradeAllocationPct.
+  perTradeEquityAllocationPct Float @default(5)
+
+  /// Percentage of the crypto allocation slice of account equity allocated per crypto trade. Canonical replacement for legacy AlpacaAccount.cryptoTradeAllocationPct.
+  perTradeCryptoAllocationPct Float @default(5)
+
   riskBudgetPrefs           Json?
 
   signalConsumptionPrefs    Json?

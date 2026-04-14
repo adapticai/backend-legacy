@@ -180,6 +180,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -1026,6 +1028,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.maxOpenOrders
             } : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct
+            } : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct
+            } : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -1191,6 +1199,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -2170,6 +2180,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -2753,6 +2765,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -3338,6 +3352,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.maxOpenOrders
             } : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct
+            } : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct
+            } : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -3503,6 +3523,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -4482,6 +4504,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: props.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -5196,6 +5220,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.maxOpenOrders
             } : undefined,
+          perTradeEquityAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct
+            } : undefined,
+          perTradeCryptoAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct
+            } : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -5361,6 +5391,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: prop.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -6340,6 +6372,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           maxSectorConcentrationPct: prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct !== undefined ? prop.alpacaAccount.tradingPolicy.maxSectorConcentrationPct : undefined,
           maxOpenPositions: prop.alpacaAccount.tradingPolicy.maxOpenPositions !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenPositions : undefined,
           maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
+          perTradeEquityAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
+          perTradeCryptoAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,

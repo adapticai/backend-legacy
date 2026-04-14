@@ -136,6 +136,8 @@ import { logger } from './utils/logger';
         maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
         maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
+        perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -700,6 +702,12 @@ import { logger } from './utils/logger';
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? {
             set: props.tradingPolicy.maxOpenOrders
           } : undefined,
+        perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+            set: props.tradingPolicy.perTradeEquityAllocationPct
+          } : undefined,
+        perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+            set: props.tradingPolicy.perTradeCryptoAllocationPct
+          } : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1209,6 +1217,8 @@ import { logger } from './utils/logger';
         maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
         maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
+        perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1567,6 +1577,8 @@ import { logger } from './utils/logger';
         maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
         maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
+        perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1874,6 +1886,12 @@ import { logger } from './utils/logger';
           } : undefined,
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? {
             set: props.tradingPolicy.maxOpenOrders
+          } : undefined,
+        perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+            set: props.tradingPolicy.perTradeEquityAllocationPct
+          } : undefined,
+        perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+            set: props.tradingPolicy.perTradeCryptoAllocationPct
           } : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
@@ -2384,6 +2402,8 @@ import { logger } from './utils/logger';
         maxSectorConcentrationPct: props.tradingPolicy.maxSectorConcentrationPct !== undefined ? props.tradingPolicy.maxSectorConcentrationPct : undefined,
         maxOpenPositions: props.tradingPolicy.maxOpenPositions !== undefined ? props.tradingPolicy.maxOpenPositions : undefined,
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
+        perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
+        perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -2820,6 +2840,12 @@ import { logger } from './utils/logger';
           } : undefined,
         maxOpenOrders: prop.tradingPolicy.maxOpenOrders !== undefined ? {
             set: prop.tradingPolicy.maxOpenOrders
+          } : undefined,
+        perTradeEquityAllocationPct: prop.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+            set: prop.tradingPolicy.perTradeEquityAllocationPct
+          } : undefined,
+        perTradeCryptoAllocationPct: prop.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+            set: prop.tradingPolicy.perTradeCryptoAllocationPct
           } : undefined,
         riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
@@ -3330,6 +3356,8 @@ import { logger } from './utils/logger';
         maxSectorConcentrationPct: prop.tradingPolicy.maxSectorConcentrationPct !== undefined ? prop.tradingPolicy.maxSectorConcentrationPct : undefined,
         maxOpenPositions: prop.tradingPolicy.maxOpenPositions !== undefined ? prop.tradingPolicy.maxOpenPositions : undefined,
         maxOpenOrders: prop.tradingPolicy.maxOpenOrders !== undefined ? prop.tradingPolicy.maxOpenOrders : undefined,
+        perTradeEquityAllocationPct: prop.tradingPolicy.perTradeEquityAllocationPct !== undefined ? prop.tradingPolicy.perTradeEquityAllocationPct : undefined,
+        perTradeCryptoAllocationPct: prop.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? prop.tradingPolicy.perTradeCryptoAllocationPct : undefined,
         riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: prop.tradingPolicy.executionPrefs !== undefined ? prop.tradingPolicy.executionPrefs : undefined,

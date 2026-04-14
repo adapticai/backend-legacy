@@ -40,6 +40,8 @@ import { logger } from './utils/logger';
   maxSectorConcentrationPct
   maxOpenPositions
   maxOpenOrders
+  perTradeEquityAllocationPct
+  perTradeCryptoAllocationPct
   riskBudgetPrefs
   signalConsumptionPrefs
   executionPrefs
@@ -140,6 +142,8 @@ import { logger } from './utils/logger';
   maxSectorConcentrationPct: props.maxSectorConcentrationPct !== undefined ? props.maxSectorConcentrationPct : undefined,
   maxOpenPositions: props.maxOpenPositions !== undefined ? props.maxOpenPositions : undefined,
   maxOpenOrders: props.maxOpenOrders !== undefined ? props.maxOpenOrders : undefined,
+  perTradeEquityAllocationPct: props.perTradeEquityAllocationPct !== undefined ? props.perTradeEquityAllocationPct : undefined,
+  perTradeCryptoAllocationPct: props.perTradeCryptoAllocationPct !== undefined ? props.perTradeCryptoAllocationPct : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
   executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
@@ -710,6 +714,8 @@ import { logger } from './utils/logger';
   maxSectorConcentrationPct: prop.maxSectorConcentrationPct !== undefined ? prop.maxSectorConcentrationPct : undefined,
   maxOpenPositions: prop.maxOpenPositions !== undefined ? prop.maxOpenPositions : undefined,
   maxOpenOrders: prop.maxOpenOrders !== undefined ? prop.maxOpenOrders : undefined,
+  perTradeEquityAllocationPct: prop.perTradeEquityAllocationPct !== undefined ? prop.perTradeEquityAllocationPct : undefined,
+  perTradeCryptoAllocationPct: prop.perTradeCryptoAllocationPct !== undefined ? prop.perTradeCryptoAllocationPct : undefined,
   riskBudgetPrefs: prop.riskBudgetPrefs !== undefined ? prop.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: prop.signalConsumptionPrefs !== undefined ? prop.signalConsumptionPrefs : undefined,
   executionPrefs: prop.executionPrefs !== undefined ? prop.executionPrefs : undefined,
@@ -931,6 +937,12 @@ import { logger } from './utils/logger';
            } : undefined,
   maxOpenOrders: props.maxOpenOrders !== undefined ? {
             set: props.maxOpenOrders 
+           } : undefined,
+  perTradeEquityAllocationPct: props.perTradeEquityAllocationPct !== undefined ? {
+            set: props.perTradeEquityAllocationPct 
+           } : undefined,
+  perTradeCryptoAllocationPct: props.perTradeCryptoAllocationPct !== undefined ? {
+            set: props.perTradeCryptoAllocationPct 
            } : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
@@ -2564,6 +2576,8 @@ import { logger } from './utils/logger';
   maxSectorConcentrationPct: props.maxSectorConcentrationPct !== undefined ? props.maxSectorConcentrationPct : undefined,
   maxOpenPositions: props.maxOpenPositions !== undefined ? props.maxOpenPositions : undefined,
   maxOpenOrders: props.maxOpenOrders !== undefined ? props.maxOpenOrders : undefined,
+  perTradeEquityAllocationPct: props.perTradeEquityAllocationPct !== undefined ? props.perTradeEquityAllocationPct : undefined,
+  perTradeCryptoAllocationPct: props.perTradeCryptoAllocationPct !== undefined ? props.perTradeCryptoAllocationPct : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
   executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
@@ -3067,6 +3081,12 @@ import { logger } from './utils/logger';
            } : undefined,
   maxOpenOrders: props.maxOpenOrders !== undefined ? {
             set: props.maxOpenOrders 
+           } : undefined,
+  perTradeEquityAllocationPct: props.perTradeEquityAllocationPct !== undefined ? {
+            set: props.perTradeEquityAllocationPct 
+           } : undefined,
+  perTradeCryptoAllocationPct: props.perTradeCryptoAllocationPct !== undefined ? {
+            set: props.perTradeCryptoAllocationPct 
            } : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
@@ -4737,6 +4757,12 @@ import { logger } from './utils/logger';
            } : undefined,
   maxOpenOrders: prop.maxOpenOrders !== undefined ? {
             set: prop.maxOpenOrders 
+           } : undefined,
+  perTradeEquityAllocationPct: prop.perTradeEquityAllocationPct !== undefined ? {
+            set: prop.perTradeEquityAllocationPct 
+           } : undefined,
+  perTradeCryptoAllocationPct: prop.perTradeCryptoAllocationPct !== undefined ? {
+            set: prop.perTradeCryptoAllocationPct 
            } : undefined,
   riskBudgetPrefs: prop.riskBudgetPrefs !== undefined ? prop.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: prop.signalConsumptionPrefs !== undefined ? prop.signalConsumptionPrefs : undefined,
