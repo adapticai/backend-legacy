@@ -842,6 +842,97 @@ enum AuthProvider {
   // Add more providers as needed
 }
 
+// ===========================================================================
+// Multi-Broker Expansion Enums (introduced 2026-04-15; see
+// docs/superpowers/specs/2026-04-15-multi-broker-crypto-design.md)
+// ===========================================================================
+
+// Broker venue identifiers. IKBR reserved for a future equities/options/futures epic.
+enum BrokerType {
+  /// Alpaca Markets (existing broker)
+  ALPACA
+  /// Binance (spot + margin + perp + future for crypto)
+  BINANCE
+  /// OKX (spot + margin + perp + future for crypto)
+  OKX
+  /// Bybit (spot + linear perp + inverse perp for crypto)
+  BYBIT
+  /// Interactive Brokers (reserved; equities/options/futures — not implemented this epic)
+  IKBR
+}
+
+// Trading environment. PAPER = sandbox/testnet; LIVE = production exchange.
+enum BrokerEnv {
+  /// Paper trading / sandbox / testnet environment
+  PAPER
+  /// Live trading against real money
+  LIVE
+}
+
+// Lifecycle status of a BrokerageAccount connection.
+enum BrokerAccountStatus {
+  /// Credentials entered, engine validation not yet run
+  PENDING
+  /// Validated and eligible for trade routing
+  ACTIVE
+  /// User toggled off via the UI on/off switch
+  DISABLED
+  /// Engine caught 401/403 from the adapter; re-auth required
+  AUTH_FAILED
+  /// Admin-suspended for compliance or risk reasons
+  SUSPENDED
+}
+
+// Category of a canonical asset used for routing and aggregation.
+enum CanonicalAssetCategory {
+  /// Major crypto by market cap (BTC, ETH, etc.)
+  CRYPTO_MAJOR
+  /// Alt crypto
+  CRYPTO_ALT
+  /// Stablecoin (USDT, USDC, DAI, ...)
+  STABLECOIN
+  /// Equity (reserved for IKBR expansion)
+  EQUITY
+  /// Option (reserved)
+  OPTION
+  /// Future (reserved)
+  FUTURE
+}
+
+// Tradable instrument kind on a broker. Capability-gated per adapter.
+enum InstrumentKind {
+  /// Spot crypto (e.g. BTC/USDT on Binance Spot)
+  SPOT
+  /// Cross or isolated margin crypto
+  MARGIN
+  /// Perpetual futures (no expiry; funding rate)
+  PERP
+  /// Dated futures (with expiry)
+  FUTURE
+  /// Options (reserved)
+  OPTION
+  /// Equity (reserved for IKBR)
+  EQUITY
+}
+
+// Reason the BrokerRouter picked a particular venue for a signal.
+enum RoutingDecisionReason {
+  /// Only one candidate broker was eligible
+  ONLY_ELIGIBLE_BROKER
+  /// Best effective fill price (spread-aware)
+  BEST_PRICE
+  /// Tightest quoted spread
+  BEST_SPREAD
+  /// Most depth at signal notional
+  BEST_LIQUIDITY
+  /// Lowest net fees after maker/taker + incentives
+  BEST_FEES_NET
+  /// User has pinned this canonical asset to a specific broker
+  USER_PINNED
+  /// Preferred broker unavailable; fell back to next-best
+  FALLBACK_DUE_TO_OUTAGE
+}
+
 /// ### Models
 
 // Represents a configuration setting in the system.
@@ -990,6 +1081,9 @@ model User {
 
   /// List of Alpaca accounts linked to the user. TYPESTRING.INCLUDE=['id','type'] GQL.EXCLUDE=['user']
   alpacaAccounts AlpacaAccount[]
+
+  /// List of BrokerageAccounts (Binance/OKX/Bybit/etc) connected by the user. TYPESTRING.INCLUDE=['id','broker','env','status','enabled','label'] GQL.EXCLUDE=['user','encApiKey','encApiSecret','encPassphrase','encDataKey','kmsKeyArn']
+  brokerageAccounts BrokerageAccount[]
 
   /// OpenAI API key for the user.
   openaiAPIKey String?
@@ -1642,8 +1736,20 @@ model Trade {
   /// Unique identifier for the trade. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
 
-  /// Reference to the Alpaca account used for the trade. TYPESTRING.SKIP=true
-  alpacaAccountId String @db.Uuid
+  /// Reference to the Alpaca account used for the trade (null when the trade was routed through a non-Alpaca BrokerageAccount). Exactly one of alpacaAccountId or brokerageAccountId is non-null; enforced by DB check constraint. TYPESTRING.SKIP=true
+  alpacaAccountId String? @db.Uuid
+
+  /// Reference to the BrokerageAccount used for the trade (null for legacy Alpaca-routed trades). Exactly one of alpacaAccountId or brokerageAccountId is non-null. TYPESTRING.SKIP=true
+  brokerageAccountId String? @db.Uuid
+
+  /// Relation to the BrokerageAccount, if this trade was routed through the multi-broker adapter layer. TYPESTRING.SKIP=true GQL.EXCLUDE=['user','encApiKey','encApiSecret','encPassphrase','encDataKey','kmsKeyArn']
+  brokerageAccount BrokerageAccount? @relation("TradeBrokerageAccount", fields: [brokerageAccountId], references: [id])
+
+  /// RoutingDecision record produced by the BrokerRouter when this trade was placed. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade']
+  routingDecision RoutingDecision?
+
+  /// ExecutionQuality record capturing slippage, fees, and latency for this trade. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade']
+  executionQuality ExecutionQuality?
 
   /// Signal that triggered the trade.
   signal TradeSignal @default(PRICE_ACTION)
@@ -4948,4 +5054,414 @@ model MLModelVersion {
 
   @@index([assetClass, slot])
   @@index([assetClass, trainedAt])
+}
+
+// ===========================================================================
+// Multi-Broker Expansion Models (introduced 2026-04-15; see
+// docs/superpowers/specs/2026-04-15-multi-broker-crypto-design.md)
+// ===========================================================================
+
+/// A connection to a single (user, broker, env) tuple. Credentials are stored
+/// encrypted using KMS envelope encryption — plaintext credentials are never
+/// persisted and never leave the backend. Unique on (userId, broker, env).
+model BrokerageAccount {
+  /// Unique identifier for the brokerage account. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// FK to the owning user. TYPESTRING.SKIP=true
+  userId String @db.Uuid
+
+  /// Relation back to User. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccounts','brokerageAccounts','customer','accounts','sessions','authenticators','linkedProviders','accountLinkingRequests','reviewedWaitlistEntries','llmConfiguration']
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Broker venue identifier (ALPACA, BINANCE, OKX, BYBIT, IKBR).
+  broker BrokerType
+
+  /// Environment (PAPER or LIVE).
+  env BrokerEnv
+
+  /// Lifecycle status (PENDING/ACTIVE/DISABLED/AUTH_FAILED/SUSPENDED).
+  status BrokerAccountStatus @default(PENDING)
+
+  /// User on/off switch for routing eligibility. When false, router skips this account even if status=ACTIVE.
+  enabled Boolean @default(false)
+
+  /// Optional user-friendly label (e.g. "Binance — main").
+  label String?
+
+  /// Ciphertext API key (AES-256-GCM). Never returned via GraphQL. TYPESTRING.SKIP=true GQL.SKIP=true
+  encApiKey Bytes
+
+  /// Ciphertext API secret. TYPESTRING.SKIP=true GQL.SKIP=true
+  encApiSecret Bytes
+
+  /// Ciphertext passphrase (OKX only; null for other brokers). TYPESTRING.SKIP=true GQL.SKIP=true
+  encPassphrase Bytes?
+
+  /// KMS CMK ARN used to wrap the data key. TYPESTRING.SKIP=true GQL.SKIP=true
+  kmsKeyArn String
+
+  /// KMS-encrypted data key (envelope encryption). TYPESTRING.SKIP=true GQL.SKIP=true
+  encDataKey Bytes
+
+  /// SHA-256 fingerprint of the plaintext API key for audit without decrypt. TYPESTRING.SKIP=true
+  credFingerprint String
+
+  /// Instrument kinds actually supported by this broker connection, snapshotted at activation.
+  supportedKinds InstrumentKind[]
+
+  /// Default instrument kind when not specified in a trade signal.
+  defaultKind InstrumentKind @default(SPOT)
+
+  /// Last time engine successfully validated credentials. TYPESTRING.SKIP=true
+  lastValidatedAt DateTime?
+
+  /// Last time credentials failed authentication. TYPESTRING.SKIP=true
+  lastAuthFailedAt DateTime?
+
+  /// Last auth failure reason (from adapter). TYPESTRING.SKIP=true
+  lastAuthFailReason String?
+
+  /// Timestamp when the brokerage account was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the brokerage account was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Soft-delete timestamp. Null = active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  /// Trades routed through this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount','alpacaAccount']
+  trades Trade[] @relation("TradeBrokerageAccount")
+
+  /// Routing decisions where this account was the selected venue. TYPESTRING.SKIP=true GQL.EXCLUDE=['selectedBrokerage','trade','canonicalAsset']
+  routingDecisions RoutingDecision[]
+
+  /// Execution quality records for trades routed here. TYPESTRING.SKIP=true GQL.EXCLUDE=['trade','brokerageAccount']
+  executionQuality ExecutionQuality[]
+
+  /// Current positions held via this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount','canonicalAsset']
+  brokerPositions BrokerPosition[]
+
+  /// Audit log entries for credential access. TYPESTRING.SKIP=true GQL.SKIP=true
+  credentialAccessLogs CredentialAccessLog[]
+
+  @@unique([userId, broker, env])
+  @@index([userId])
+  @@index([broker, env, status])
+  @@index([status])
+  @@map(name: "brokerage_accounts")
+}
+
+/// Canonical representation of a tradable asset independent of broker symbology.
+/// One CanonicalAsset ↔ many BrokerSymbolMapping rows (one per broker × instrument kind × quote currency).
+model CanonicalAsset {
+  /// Unique identifier for the canonical asset. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Canonical symbol (e.g. "BTC", "ETH", "SOL"). Uppercase, globally unique.
+  symbol String @unique
+
+  /// Human-readable name (e.g. "Bitcoin").
+  name String
+
+  /// Category (CRYPTO_MAJOR, CRYPTO_ALT, STABLECOIN, EQUITY/OPTION/FUTURE reserved).
+  category CanonicalAssetCategory
+
+  /// Decimal precision for display and position math.
+  decimals Int @default(8)
+
+  /// Optional screener reference-mid policy override (JSON). Null uses global default (median of available venues). TYPESTRING.SKIP=true
+  screenerRefPolicy Json?
+
+  /// Broker-specific mappings for this canonical asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['canonicalAsset']
+  brokerMappings BrokerSymbolMapping[]
+
+  /// Positions aggregated under this canonical asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['canonicalAsset']
+  positions BrokerPosition[]
+
+  /// Routing decisions for this asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['canonicalAsset']
+  routingDecisions RoutingDecision[]
+
+  /// Timestamp when the canonical asset was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the canonical asset was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+  @@map(name: "canonical_assets")
+}
+
+/// Mapping from a CanonicalAsset to a broker-native symbol for a specific instrument kind
+/// and quote currency. Drives symbology translation in each adapter's ISymbologyMapper.
+model BrokerSymbolMapping {
+  /// Unique identifier. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// FK to the canonical asset. TYPESTRING.SKIP=true
+  canonicalAssetId String @db.Uuid
+
+  /// Relation to canonical asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerMappings','positions','routingDecisions']
+  canonicalAsset CanonicalAsset @relation(fields: [canonicalAssetId], references: [id], onDelete: Cascade)
+
+  /// Which broker this mapping applies to.
+  broker BrokerType
+
+  /// Instrument kind (SPOT, MARGIN, PERP, FUTURE).
+  instrumentKind InstrumentKind
+
+  /// Broker-native symbol string (e.g. "BTCUSDT", "BTC-USDT", "BTC/USD", "BTCUSD").
+  nativeSymbol String
+
+  /// Quote currency (e.g. "USDT", "USD", "USDC", "BTC").
+  quoteCurrency String
+
+  /// Price tick size on this venue for this instrument.
+  priceTick Decimal @db.Decimal(30, 18)
+
+  /// Quantity step size.
+  qtyStep Decimal @db.Decimal(30, 18)
+
+  /// Minimum notional value of an order on this venue.
+  minNotional Decimal @db.Decimal(30, 18)
+
+  /// Maximum notional value (null = unbounded).
+  maxNotional Decimal? @db.Decimal(30, 18)
+
+  /// Whether the pair is currently tradable on the venue.
+  isActive Boolean @default(true)
+
+  /// When the mapping was last refreshed from the exchange's instruments endpoint. TYPESTRING.SKIP=true
+  lastRefreshedAt DateTime @default(now())
+
+  /// Timestamp when the mapping was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the mapping was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([broker, nativeSymbol, instrumentKind])
+  @@unique([canonicalAssetId, broker, instrumentKind, quoteCurrency])
+  @@index([broker, isActive])
+  @@index([canonicalAssetId])
+  @@map(name: "broker_symbol_mappings")
+}
+
+/// Immutable audit record produced by the BrokerRouter each time it decides which
+/// brokerage account to route a signal through. Stores the full candidate snapshot
+/// for post-hoc analysis and best-execution reporting.
+model RoutingDecision {
+  /// Unique identifier. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// FK to the Trade this decision produced. Null if the signal was rejected by the router. TYPESTRING.SKIP=true
+  tradeId String? @unique @db.Uuid
+
+  /// Relation to the trade. TYPESTRING.SKIP=true GQL.EXCLUDE=['routingDecision','executionQuality','brokerageAccount','alpacaAccount']
+  trade Trade? @relation(fields: [tradeId], references: [id], onDelete: SetNull)
+
+  /// FK to the user the trade was placed for. TYPESTRING.SKIP=true
+  userId String @db.Uuid
+
+  /// FK to the canonical asset under evaluation. TYPESTRING.SKIP=true
+  canonicalAssetId String @db.Uuid
+
+  /// Relation to canonical asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerMappings','positions','routingDecisions']
+  canonicalAsset CanonicalAsset @relation(fields: [canonicalAssetId], references: [id], onDelete: Restrict)
+
+  /// FK to the winning brokerage account. TYPESTRING.SKIP=true
+  selectedBrokerageId String @db.Uuid
+
+  /// Relation to the winning brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['user','encApiKey','encApiSecret','encPassphrase','encDataKey','kmsKeyArn','trades','routingDecisions','executionQuality','brokerPositions','credentialAccessLogs']
+  selectedBrokerage BrokerageAccount @relation(fields: [selectedBrokerageId], references: [id], onDelete: Restrict)
+
+  /// Reason the selectedBrokerage won.
+  reason RoutingDecisionReason
+
+  /// JSON array of all candidate venues considered with their snapshot metrics:
+  /// [{broker, price, spread, feeBps, liquidityUsd, latencyMs, score}]. Immutable audit record.
+  candidates Json
+
+  /// Timestamp when the decision was made. TYPESTRING.SKIP=true
+  decidedAt DateTime @default(now())
+
+  /// Milliseconds the router took to decide (for observability).
+  decisionLatencyMs Int
+
+  @@index([userId, decidedAt])
+  @@index([selectedBrokerageId])
+  @@index([canonicalAssetId, decidedAt])
+  @@map(name: "routing_decisions")
+}
+
+/// Per-trade execution quality capture. Populated by the monitoring service on fill.
+/// Drives trade-card expansion in the UI (slippage, fees, latency breakdown).
+model ExecutionQuality {
+  /// Unique identifier. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// FK to the trade (one-to-one). TYPESTRING.SKIP=true
+  tradeId String @unique @db.Uuid
+
+  /// Relation to trade. TYPESTRING.SKIP=true GQL.EXCLUDE=['executionQuality','routingDecision','brokerageAccount','alpacaAccount']
+  trade Trade @relation(fields: [tradeId], references: [id], onDelete: Cascade)
+
+  /// FK to the brokerage account that executed. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
+
+  /// Relation to brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['user','encApiKey','encApiSecret','encPassphrase','encDataKey','kmsKeyArn','trades','routingDecisions','executionQuality','brokerPositions','credentialAccessLogs']
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id], onDelete: Restrict)
+
+  /// Mid-market at signal generation.
+  midAtSignal Decimal @db.Decimal(30, 18)
+
+  /// Mid-market at router decision time.
+  midAtDecision Decimal @db.Decimal(30, 18)
+
+  /// Mid-market at order-ack by the exchange.
+  midAtAck Decimal @db.Decimal(30, 18)
+
+  /// Volume-weighted average fill price.
+  avgFillPrice Decimal @db.Decimal(30, 18)
+
+  /// Signed slippage in basis points (positive = adverse for the trade direction).
+  slippageBps Decimal @db.Decimal(12, 6)
+
+  /// Total fees paid in quote currency.
+  feesPaid Decimal @db.Decimal(30, 18)
+
+  /// Fees as basis points of notional.
+  feeBps Decimal @db.Decimal(12, 6)
+
+  /// Milliseconds from signal emission to exchange ack.
+  latencySignalToAckMs Int
+
+  /// Milliseconds from ack to first fill.
+  latencyAckToFirstFillMs Int
+
+  /// Milliseconds from first fill to last fill.
+  latencyFirstToLastFillMs Int
+
+  /// Timestamp when record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@index([brokerageAccountId, createdAt])
+  @@map(name: "execution_quality")
+}
+
+/// Position held via a specific BrokerageAccount. Aggregated to CanonicalAsset for UI.
+/// Synced from the broker's account stream; the engine does not mutate these directly.
+model BrokerPosition {
+  /// Unique identifier. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// FK to the owning brokerage account. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
+
+  /// Relation to brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['user','encApiKey','encApiSecret','encPassphrase','encDataKey','kmsKeyArn','trades','routingDecisions','executionQuality','brokerPositions','credentialAccessLogs']
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id], onDelete: Cascade)
+
+  /// FK to the canonical asset. TYPESTRING.SKIP=true
+  canonicalAssetId String @db.Uuid
+
+  /// Relation to canonical asset. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerMappings','positions','routingDecisions']
+  canonicalAsset CanonicalAsset @relation(fields: [canonicalAssetId], references: [id], onDelete: Restrict)
+
+  /// Instrument kind (SPOT, MARGIN, PERP, FUTURE).
+  instrumentKind InstrumentKind
+
+  /// Native symbol as reported by the broker.
+  nativeSymbol String
+
+  /// Position size (signed for perp/future/margin; unsigned for spot).
+  qty Decimal @db.Decimal(30, 18)
+
+  /// Average entry price.
+  avgEntryPrice Decimal @db.Decimal(30, 18)
+
+  /// Unrealized PnL in quote currency.
+  unrealizedPnl Decimal @db.Decimal(30, 18)
+
+  /// Current market value in quote currency.
+  marketValue Decimal @db.Decimal(30, 18)
+
+  /// Last time the position was synced from the broker's account stream. TYPESTRING.SKIP=true
+  lastSyncedAt DateTime @default(now())
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([brokerageAccountId, nativeSymbol, instrumentKind])
+  @@index([canonicalAssetId])
+  @@map(name: "broker_positions")
+}
+
+/// Runtime-toggleable feature flag. Engine and app both read with 30-sec TTL cache.
+/// Primary use: broker kill-switches (`brokers.binance.enabled`) and feature gates
+/// (`features.multiBrokerUI.enabled`, `features.bestExecutionRouter.enabled`).
+model FeatureFlag {
+  /// Unique identifier. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Flag name in dotted form (e.g. "brokers.binance.enabled").
+  name String
+
+  /// Deployment environment ("production", "staging", "paper"). Same flag can have different values per env.
+  env String
+
+  /// Whether the flag is on.
+  enabled Boolean @default(false)
+
+  /// Human-readable description of what flipping the flag does.
+  description String?
+
+  /// Timestamp when the flag was last toggled. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// User who last toggled the flag (admin audit). TYPESTRING.SKIP=true
+  updatedBy String? @db.Uuid
+
+  /// Timestamp when the flag was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@unique([name, env])
+  @@index([env])
+  @@map(name: "feature_flags")
+}
+
+/// Audit log for every credential fetch. Append-only. Grows large — partitioned by
+/// month in production (Prisma does not model partitioning directly; enforced via
+/// raw SQL migration).
+model CredentialAccessLog {
+  /// Unique identifier. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// FK to the brokerage account whose credentials were accessed. TYPESTRING.SKIP=true
+  brokerageAccountId String @db.Uuid
+
+  /// Relation to brokerage account. TYPESTRING.SKIP=true GQL.SKIP=true
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id], onDelete: Cascade)
+
+  /// Actor identifier (service JWT sub claim, or user id for admin fetches). TYPESTRING.SKIP=true
+  accessedBy String
+
+  /// Why the credentials were fetched (e.g. "order.place", "account.sync", "ws.subscribe"). TYPESTRING.SKIP=true
+  purpose String
+
+  /// Whether the fetch succeeded. TYPESTRING.SKIP=true
+  success Boolean
+
+  /// Error message if success=false. TYPESTRING.SKIP=true
+  errorMessage String?
+
+  /// Timestamp. TYPESTRING.SKIP=true
+  accessedAt DateTime @default(now())
+
+  @@index([brokerageAccountId, accessedAt])
+  @@index([accessedAt])
+  @@map(name: "credential_access_logs")
 }

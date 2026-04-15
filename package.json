@@ -103,7 +103,8 @@
     "ws": "^8.18.3"
   },
   "optionalDependencies": {
-    "@aws-sdk/client-lambda": "^3.859.0"
+    "@aws-sdk/client-lambda": "^3.859.0",
+    "@aws-sdk/client-kms": "^3.1030.0"
   },
   "overrides": {
     "@prisma/client": "^6.19.2",
