@@ -3818,6 +3818,9 @@ model DeadLetterMessage {
 }
 
 // Sync Event - Track all sync operations between engine and backend
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model SyncEvent {
   /// Unique identifier for the sync event. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
@@ -3859,6 +3862,9 @@ model SyncEvent {
 }
 
 // Conflict Event - Track sync conflicts and their resolution
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model ConflictEvent {
   /// Unique identifier for the conflict event. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
