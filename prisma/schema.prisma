@@ -2110,6 +2110,9 @@ model InstitutionalSentimentAlerts {
 }
 
 // Stores weight analytics data for volatility models and analytics metadata.
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model AnalyticsSnapshot {
   /// Unique identifier for the analytics snapshot. TYPESTRING.SKIP=true
   id String @id @default(cuid())
@@ -3302,6 +3305,9 @@ model OptionsGreeksHistory {
 }
 
 // Portfolio-level Greeks tracking for multi-position analysis
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model PortfolioGreeksHistory {
   /// Unique identifier for the portfolio Greeks history record
   id String @id @default(uuid()) @db.Uuid
@@ -4303,6 +4309,9 @@ model SignalOutcome {
 }
 
 // Event Storage - Production-grade event persistence for audit trail
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model Event {
   /// Unique identifier for the event. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
@@ -4403,6 +4412,9 @@ model Event {
 
 // Event Snapshot model for event sourcing optimization
 // Stores point-in-time aggregate state to avoid replaying all events
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model EventSnapshot {
   /// Unique identifier for the snapshot. TYPESTRING.SKIP=true
   id String @id @default(uuid()) @db.Uuid
@@ -4437,6 +4449,9 @@ model EventSnapshot {
 
 // Trade Execution History - Persistent execution tracking for deduplication
 // Prevents duplicate trades across service restarts with automatic TTL-based cleanup
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model TradeExecutionHistory {
   /// Unique identifier for the execution record
   id String @id @db.VarChar(255)
@@ -4841,6 +4856,9 @@ model AccountDecisionRecord {
   @@map("account_decision_records")
 }
 
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model DecisionMemorySummary {
   id                String   @id @default(uuid()) @db.Uuid
   alpacaAccountId   String   @db.Uuid
@@ -4883,6 +4901,9 @@ enum EquityBarTimespan {
   day
 }
 
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model EquityBar {
   /// GQL.SKIP=true
   id        String            @id @default(cuid())
@@ -4906,6 +4927,9 @@ model EquityBar {
   @@index([timeStamp])
 }
 
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model TradeOutcome {
   id                       String   @id @default(cuid())
   tradeId                  String?
@@ -4937,6 +4961,9 @@ model TradeOutcome {
   @@index([accountId, createdAt])
 }
 
+/// FROZEN 2026-04-15 — engine moved to telemetryDb per
+/// engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md
+/// Drop after 14d stable operation.
 model MLModelVersion {
   id               String    @id @default(cuid())
   assetClass       String
