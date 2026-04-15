@@ -37,6 +37,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "backfill:alpaca-credentials": "ts-node src/crypto/backfill-alpaca-credentials.ts",
     "prepare": "husky"
   },
   "keywords": [],
@@ -51,6 +52,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^22.19.17",
     "@types/pluralize": "^0.0.33",
+    "@types/supertest": "^7.2.0",
     "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
@@ -59,6 +61,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "nodemon": "^3.1.10",
+    "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.3",
     "typescript": "^5.9.2",
@@ -103,8 +106,8 @@
     "ws": "^8.18.3"
   },
   "optionalDependencies": {
-    "@aws-sdk/client-lambda": "^3.859.0",
-    "@aws-sdk/client-kms": "^3.1030.0"
+    "@aws-sdk/client-kms": "^3.1030.0",
+    "@aws-sdk/client-lambda": "^3.859.0"
   },
   "overrides": {
     "@prisma/client": "^6.19.2",

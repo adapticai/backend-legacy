@@ -22,6 +22,7 @@ import prisma, {
   disconnectWithTimeout,
 } from './prismaClient';
 import { createHealthRouter } from './health';
+import { buildInternalRouter } from './crypto/internal-credential-router';
 import { exec } from 'child_process';
 import { logger } from './utils/logger';
 import { shutdownTracing } from './config/tracing';
@@ -176,6 +177,12 @@ const startServer = async () => {
 
   // Health check endpoint - mounted before Apollo middleware so it's not behind GraphQL or auth
   app.use(createHealthRouter());
+
+  // Internal REST router for engine -> backend credential fetches. Gated by
+  // SERVER_AUTH_TOKEN (same scheme as the GraphQL context's server-auth path).
+  // Never CORS-exposed; only reachable from the in-cluster network.
+  // See: docs/superpowers/specs/2026-04-15-multi-broker-crypto-design.md §3.3
+  app.use('/internal', bodyParser.json({ limit: '16kb' }), buildInternalRouter());
 
   // Configure CORS with allowed origins
   const defaultOrigins = [

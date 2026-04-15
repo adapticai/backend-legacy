@@ -1266,11 +1266,26 @@ model AlpacaAccount {
   /// The type of Alpaca account (PAPER or LIVE).
   type AlpacaAccountType @default(PAPER)
 
-  /// API key for authenticating requests to Alpaca. TYPESTRING.SKIP=true
+  /// @deprecated Plaintext API key. Retained for one release cycle during the multi-broker credential retro-fix (see migration 20260415130000_encrypt_alpaca_credentials). Encryption schedule: backfill -> consume-from-encrypted -> drop-plaintext. DO NOT read directly from new code; go through CredentialService.fetchCredentials instead. TYPESTRING.SKIP=true GQL.SKIP=true
   APIKey String
 
-  /// API secret for authenticating requests to Alpaca. TYPESTRING.SKIP=true
+  /// @deprecated Plaintext API secret. See APIKey for migration status. TYPESTRING.SKIP=true GQL.SKIP=true
   APISecret String
+
+  /// Ciphertext API key (AES-256-GCM). Populated by the retro-fix data migration. TYPESTRING.SKIP=true GQL.SKIP=true
+  encAPIKey Bytes?
+
+  /// Ciphertext API secret. TYPESTRING.SKIP=true GQL.SKIP=true
+  encAPISecret Bytes?
+
+  /// KMS-encrypted data key (envelope encryption). TYPESTRING.SKIP=true GQL.SKIP=true
+  encDataKey Bytes?
+
+  /// KMS CMK ARN used to wrap encDataKey. TYPESTRING.SKIP=true GQL.SKIP=true
+  kmsKeyArn String?
+
+  /// SHA-256 fingerprint of the plaintext apiKey for audit without decrypt. TYPESTRING.SKIP=true
+  credFingerprint String?
 
   /// JSON configuration settings for the Alpaca account.
   configuration Json?

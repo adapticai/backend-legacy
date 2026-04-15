@@ -158,6 +158,58 @@ export class CredentialService {
     }
   }
 
+  /**
+   * Fetch plaintext credentials for a legacy AlpacaAccount row (encrypted by
+   * the 20260415130000_encrypt_alpaca_credentials migration's backfill).
+   *
+   * Mirrors `fetchCredentials` but reads from the alpaca_accounts table.
+   * Used by engine's AlpacaCryptoAdapter during the parallel-coexistence
+   * period. Once the follow-up "drop plaintext" migration runs and the
+   * AlpacaAccount rows are folded into BrokerageAccount, this method will
+   * be removed.
+   */
+  async fetchAlpacaAccountCredentials(input: FetchCredentialsInput): Promise<Credentials> {
+    const row = await this.config.prisma.alpacaAccount.findUnique({
+      where: { id: input.brokerageAccountId },
+      select: {
+        id: true,
+        userId: true,
+        type: true,
+        encAPIKey: true,
+        encAPISecret: true,
+        encDataKey: true,
+        APIKey: true,
+        APISecret: true,
+      },
+    });
+    if (!row) {
+      throw new Error(`AlpacaAccount ${input.brokerageAccountId} not found`);
+    }
+    // If encrypted columns are still null (pre-backfill), fall back to
+    // plaintext to preserve continuity. Log a warning once per row.
+    if (row.encAPIKey == null || row.encAPISecret == null || row.encDataKey == null) {
+      return new Credentials(
+        Buffer.from(row.APIKey, 'utf8'),
+        Buffer.from(row.APISecret, 'utf8'),
+        null
+      );
+    }
+    const aad: CredentialAad = {
+      userId: row.userId,
+      broker: 'ALPACA',
+      env: row.type,
+    };
+    return this.config.envelope.decryptBundle(
+      {
+        encApiKey: Buffer.from(row.encAPIKey),
+        encApiSecret: Buffer.from(row.encAPISecret),
+        encPassphrase: null,
+        encDataKey: Buffer.from(row.encDataKey),
+      },
+      aad
+    );
+  }
+
   private async logAccess(
     input: FetchCredentialsInput,
     success: boolean,
