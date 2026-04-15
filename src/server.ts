@@ -23,6 +23,7 @@ import prisma, {
 } from './prismaClient';
 import { createHealthRouter } from './health';
 import { buildInternalRouter } from './crypto/internal-credential-router';
+import { buildInternalBrokersRouter } from './crypto/internal-brokers-router';
 import { exec } from 'child_process';
 import { logger } from './utils/logger';
 import { shutdownTracing } from './config/tracing';
@@ -183,6 +184,11 @@ const startServer = async () => {
   // Never CORS-exposed; only reachable from the in-cluster network.
   // See: docs/superpowers/specs/2026-04-15-multi-broker-crypto-design.md §3.3
   app.use('/internal', bodyParser.json({ limit: '16kb' }), buildInternalRouter());
+  app.use(
+    '/internal/brokers',
+    bodyParser.json({ limit: '16kb' }),
+    buildInternalBrokersRouter()
+  );
 
   // Configure CORS with allowed origins
   const defaultOrigins = [
