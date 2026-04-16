@@ -1214,34 +1214,34 @@ model AlpacaAccount {
   /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). TYPESTRING.SKIP=true
   volumeThreshold Float @default(50000)
 
-  /// Opt-in for enabling the portfolio-level trailing stop service within Adaptic's Realtime Trade Engine. TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.enablePortfolioTrailingStop instead. Retained for legacy onboarding UI and migration backfill; engine reads from tradingPolicy.enablePortfolioTrailingStop with this field as fallback. TYPESTRING.SKIP=true
   enablePortfolioTrailingStop Boolean @default(false)
 
-  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.portfolioTrailPercent instead. Retained for migration backfill; engine reads from tradingPolicy.portfolioTrailPercent with this field as fallback. TYPESTRING.SKIP=true
   portfolioTrailPercent Float @default(4.0)
 
-  /// The portfolio-level profit threshold percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.portfolioProfitThresholdPercent instead. Retained for migration backfill; engine reads from tradingPolicy.portfolioProfitThresholdPercent with this field as fallback. TYPESTRING.SKIP=true
   portfolioProfitThresholdPercent Float @default(2.0)
 
-  /// The portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop, if opted into the portfolio-level trailing stop service. TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.reducedPortfolioTrailPercent instead. Retained for migration backfill; engine reads from tradingPolicy.reducedPortfolioTrailPercent with this field as fallback. TYPESTRING.SKIP=true
   reducedPortfolioTrailPercent Float @default(0.5)
 
-  /// The initial trailing stop percentage used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.defaultTrailingStopPercentage100 instead. Retained for migration backfill; engine reads from tradingPolicy.defaultTrailingStopPercentage100 with this field as fallback. TYPESTRING.SKIP=true
   defaultTrailingStopPercentage100 Float @default(4.0)
 
-  /// The first profit threshold at which to reduce the trailing stop used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.firstTrailReductionThreshold100 instead. Retained for migration backfill; engine reads from tradingPolicy.firstTrailReductionThreshold100 with this field as fallback. TYPESTRING.SKIP=true
   firstTrailReductionThreshold100 Float @default(2.0)
 
-  /// The second profit threshold at which to further reduce the trailing stop used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.secondTrailReductionThreshold100 instead. Retained for migration backfill; engine reads from tradingPolicy.secondTrailReductionThreshold100 with this field as fallback. TYPESTRING.SKIP=true
   secondTrailReductionThreshold100 Float @default(5.0)
 
-  /// The trailing stop percentage to use when profit exceeds the first threshold used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.firstReducedTrailPercentage100 instead. Retained for migration backfill; engine reads from tradingPolicy.firstReducedTrailPercentage100 with this field as fallback. TYPESTRING.SKIP=true
   firstReducedTrailPercentage100 Float @default(1.0)
 
-  /// The trailing stop percentage to use when profit exceeds the second threshold used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.secondReducedTrailPercentage100 instead. Retained for migration backfill; engine reads from tradingPolicy.secondReducedTrailPercentage100 with this field as fallback. TYPESTRING.SKIP=true
   secondReducedTrailPercentage100 Float @default(0.5)
 
-  /// The minimum change in trailing stop percent to warrant an adjustment used by the Position Trailing Stop Service (within the Realtime Trade Engine). TYPESTRING.SKIP=true
+  /// @deprecated Use TradingPolicy.minimumPriceChangePercent100 instead. Retained for migration backfill; engine reads from tradingPolicy.minimumPriceChangePercent100 with this field as fallback. TYPESTRING.SKIP=true
   minimumPriceChangePercent100 Float @default(0.5)
 
   /// Relation to the User model who owns this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccounts','customer','accounts','sessions','authenticators','linkedProviders','accountLinkingRequests','reviewedWaitlistEntries','llmConfiguration']
@@ -4737,6 +4737,36 @@ model TradingPolicy {
 
   /// Percentage of the crypto allocation slice of account equity allocated per crypto trade. Canonical replacement for legacy AlpacaAccount.cryptoTradeAllocationPct.
   perTradeCryptoAllocationPct Float @default(5)
+
+  /// Opt-in for enabling the portfolio-level trailing stop service within Adaptic's Realtime Trade Engine. Canonical replacement for legacy AlpacaAccount.enablePortfolioTrailingStop.
+  enablePortfolioTrailingStop Boolean @default(false)
+
+  /// Portfolio-level trailing stop percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. Canonical replacement for legacy AlpacaAccount.portfolioTrailPercent.
+  portfolioTrailPercent Float @default(4.0)
+
+  /// Portfolio-level profit threshold percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. Canonical replacement for legacy AlpacaAccount.portfolioProfitThresholdPercent.
+  portfolioProfitThresholdPercent Float @default(2.0)
+
+  /// Portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop once the profit threshold is exceeded. Canonical replacement for legacy AlpacaAccount.reducedPortfolioTrailPercent.
+  reducedPortfolioTrailPercent Float @default(0.5)
+
+  /// Initial trailing stop percentage used by the Position Trailing Stop Service. Canonical replacement for legacy AlpacaAccount.defaultTrailingStopPercentage100.
+  defaultTrailingStopPercentage100 Float @default(4.0)
+
+  /// First profit threshold at which the Position Trailing Stop Service reduces the trailing stop. Canonical replacement for legacy AlpacaAccount.firstTrailReductionThreshold100.
+  firstTrailReductionThreshold100 Float @default(2.0)
+
+  /// Second profit threshold at which the Position Trailing Stop Service further reduces the trailing stop. Canonical replacement for legacy AlpacaAccount.secondTrailReductionThreshold100.
+  secondTrailReductionThreshold100 Float @default(5.0)
+
+  /// Trailing stop percentage to use when profit exceeds the first threshold. Canonical replacement for legacy AlpacaAccount.firstReducedTrailPercentage100.
+  firstReducedTrailPercentage100 Float @default(1.0)
+
+  /// Trailing stop percentage to use when profit exceeds the second threshold. Canonical replacement for legacy AlpacaAccount.secondReducedTrailPercentage100.
+  secondReducedTrailPercentage100 Float @default(0.5)
+
+  /// Minimum change in trailing stop percent to warrant an adjustment. Canonical replacement for legacy AlpacaAccount.minimumPriceChangePercent100.
+  minimumPriceChangePercent100 Float @default(0.5)
 
   riskBudgetPrefs           Json?
 

@@ -138,6 +138,16 @@ import { logger } from './utils/logger';
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
         perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
         perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+        enablePortfolioTrailingStop: props.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.enablePortfolioTrailingStop : undefined,
+        portfolioTrailPercent: props.tradingPolicy.portfolioTrailPercent !== undefined ? props.tradingPolicy.portfolioTrailPercent : undefined,
+        portfolioProfitThresholdPercent: props.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+        reducedPortfolioTrailPercent: props.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+        defaultTrailingStopPercentage100: props.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+        firstTrailReductionThreshold100: props.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+        secondTrailReductionThreshold100: props.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+        firstReducedTrailPercentage100: props.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+        secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+        minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -750,6 +760,36 @@ import { logger } from './utils/logger';
         perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
             set: props.tradingPolicy.perTradeCryptoAllocationPct
           } : undefined,
+        enablePortfolioTrailingStop: props.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+            set: props.tradingPolicy.enablePortfolioTrailingStop
+          } : undefined,
+        portfolioTrailPercent: props.tradingPolicy.portfolioTrailPercent !== undefined ? {
+            set: props.tradingPolicy.portfolioTrailPercent
+          } : undefined,
+        portfolioProfitThresholdPercent: props.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+            set: props.tradingPolicy.portfolioProfitThresholdPercent
+          } : undefined,
+        reducedPortfolioTrailPercent: props.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+            set: props.tradingPolicy.reducedPortfolioTrailPercent
+          } : undefined,
+        defaultTrailingStopPercentage100: props.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+            set: props.tradingPolicy.defaultTrailingStopPercentage100
+          } : undefined,
+        firstTrailReductionThreshold100: props.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+            set: props.tradingPolicy.firstTrailReductionThreshold100
+          } : undefined,
+        secondTrailReductionThreshold100: props.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+            set: props.tradingPolicy.secondTrailReductionThreshold100
+          } : undefined,
+        firstReducedTrailPercentage100: props.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+            set: props.tradingPolicy.firstReducedTrailPercentage100
+          } : undefined,
+        secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+            set: props.tradingPolicy.secondReducedTrailPercentage100
+          } : undefined,
+        minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+            set: props.tradingPolicy.minimumPriceChangePercent100
+          } : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1261,6 +1301,16 @@ import { logger } from './utils/logger';
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
         perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
         perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+        enablePortfolioTrailingStop: props.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.enablePortfolioTrailingStop : undefined,
+        portfolioTrailPercent: props.tradingPolicy.portfolioTrailPercent !== undefined ? props.tradingPolicy.portfolioTrailPercent : undefined,
+        portfolioProfitThresholdPercent: props.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+        reducedPortfolioTrailPercent: props.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+        defaultTrailingStopPercentage100: props.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+        firstTrailReductionThreshold100: props.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+        secondTrailReductionThreshold100: props.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+        firstReducedTrailPercentage100: props.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+        secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+        minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1642,6 +1692,16 @@ import { logger } from './utils/logger';
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
         perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
         perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+        enablePortfolioTrailingStop: props.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.enablePortfolioTrailingStop : undefined,
+        portfolioTrailPercent: props.tradingPolicy.portfolioTrailPercent !== undefined ? props.tradingPolicy.portfolioTrailPercent : undefined,
+        portfolioProfitThresholdPercent: props.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+        reducedPortfolioTrailPercent: props.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+        defaultTrailingStopPercentage100: props.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+        firstTrailReductionThreshold100: props.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+        secondTrailReductionThreshold100: props.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+        firstReducedTrailPercentage100: props.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+        secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+        minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1955,6 +2015,36 @@ import { logger } from './utils/logger';
           } : undefined,
         perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
             set: props.tradingPolicy.perTradeCryptoAllocationPct
+          } : undefined,
+        enablePortfolioTrailingStop: props.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+            set: props.tradingPolicy.enablePortfolioTrailingStop
+          } : undefined,
+        portfolioTrailPercent: props.tradingPolicy.portfolioTrailPercent !== undefined ? {
+            set: props.tradingPolicy.portfolioTrailPercent
+          } : undefined,
+        portfolioProfitThresholdPercent: props.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+            set: props.tradingPolicy.portfolioProfitThresholdPercent
+          } : undefined,
+        reducedPortfolioTrailPercent: props.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+            set: props.tradingPolicy.reducedPortfolioTrailPercent
+          } : undefined,
+        defaultTrailingStopPercentage100: props.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+            set: props.tradingPolicy.defaultTrailingStopPercentage100
+          } : undefined,
+        firstTrailReductionThreshold100: props.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+            set: props.tradingPolicy.firstTrailReductionThreshold100
+          } : undefined,
+        secondTrailReductionThreshold100: props.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+            set: props.tradingPolicy.secondTrailReductionThreshold100
+          } : undefined,
+        firstReducedTrailPercentage100: props.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+            set: props.tradingPolicy.firstReducedTrailPercentage100
+          } : undefined,
+        secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+            set: props.tradingPolicy.secondReducedTrailPercentage100
+          } : undefined,
+        minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+            set: props.tradingPolicy.minimumPriceChangePercent100
           } : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
@@ -2467,6 +2557,16 @@ import { logger } from './utils/logger';
         maxOpenOrders: props.tradingPolicy.maxOpenOrders !== undefined ? props.tradingPolicy.maxOpenOrders : undefined,
         perTradeEquityAllocationPct: props.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.tradingPolicy.perTradeEquityAllocationPct : undefined,
         perTradeCryptoAllocationPct: props.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+        enablePortfolioTrailingStop: props.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.enablePortfolioTrailingStop : undefined,
+        portfolioTrailPercent: props.tradingPolicy.portfolioTrailPercent !== undefined ? props.tradingPolicy.portfolioTrailPercent : undefined,
+        portfolioProfitThresholdPercent: props.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+        reducedPortfolioTrailPercent: props.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+        defaultTrailingStopPercentage100: props.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+        firstTrailReductionThreshold100: props.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+        secondTrailReductionThreshold100: props.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+        firstReducedTrailPercentage100: props.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+        secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+        minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -2930,6 +3030,36 @@ import { logger } from './utils/logger';
           } : undefined,
         perTradeCryptoAllocationPct: prop.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
             set: prop.tradingPolicy.perTradeCryptoAllocationPct
+          } : undefined,
+        enablePortfolioTrailingStop: prop.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+            set: prop.tradingPolicy.enablePortfolioTrailingStop
+          } : undefined,
+        portfolioTrailPercent: prop.tradingPolicy.portfolioTrailPercent !== undefined ? {
+            set: prop.tradingPolicy.portfolioTrailPercent
+          } : undefined,
+        portfolioProfitThresholdPercent: prop.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+            set: prop.tradingPolicy.portfolioProfitThresholdPercent
+          } : undefined,
+        reducedPortfolioTrailPercent: prop.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+            set: prop.tradingPolicy.reducedPortfolioTrailPercent
+          } : undefined,
+        defaultTrailingStopPercentage100: prop.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+            set: prop.tradingPolicy.defaultTrailingStopPercentage100
+          } : undefined,
+        firstTrailReductionThreshold100: prop.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+            set: prop.tradingPolicy.firstTrailReductionThreshold100
+          } : undefined,
+        secondTrailReductionThreshold100: prop.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+            set: prop.tradingPolicy.secondTrailReductionThreshold100
+          } : undefined,
+        firstReducedTrailPercentage100: prop.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+            set: prop.tradingPolicy.firstReducedTrailPercentage100
+          } : undefined,
+        secondReducedTrailPercentage100: prop.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+            set: prop.tradingPolicy.secondReducedTrailPercentage100
+          } : undefined,
+        minimumPriceChangePercent100: prop.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+            set: prop.tradingPolicy.minimumPriceChangePercent100
           } : undefined,
         riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
@@ -3442,6 +3572,16 @@ import { logger } from './utils/logger';
         maxOpenOrders: prop.tradingPolicy.maxOpenOrders !== undefined ? prop.tradingPolicy.maxOpenOrders : undefined,
         perTradeEquityAllocationPct: prop.tradingPolicy.perTradeEquityAllocationPct !== undefined ? prop.tradingPolicy.perTradeEquityAllocationPct : undefined,
         perTradeCryptoAllocationPct: prop.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? prop.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+        enablePortfolioTrailingStop: prop.tradingPolicy.enablePortfolioTrailingStop !== undefined ? prop.tradingPolicy.enablePortfolioTrailingStop : undefined,
+        portfolioTrailPercent: prop.tradingPolicy.portfolioTrailPercent !== undefined ? prop.tradingPolicy.portfolioTrailPercent : undefined,
+        portfolioProfitThresholdPercent: prop.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? prop.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+        reducedPortfolioTrailPercent: prop.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? prop.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+        defaultTrailingStopPercentage100: prop.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? prop.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+        firstTrailReductionThreshold100: prop.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+        secondTrailReductionThreshold100: prop.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+        firstReducedTrailPercentage100: prop.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+        secondReducedTrailPercentage100: prop.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+        minimumPriceChangePercent100: prop.tradingPolicy.minimumPriceChangePercent100 !== undefined ? prop.tradingPolicy.minimumPriceChangePercent100 : undefined,
         riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: prop.tradingPolicy.executionPrefs !== undefined ? prop.tradingPolicy.executionPrefs : undefined,

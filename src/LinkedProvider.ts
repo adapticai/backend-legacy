@@ -320,6 +320,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1324,6 +1334,36 @@ import { logger } from './utils/logger';
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
                 set: item.tradingPolicy.perTradeCryptoAllocationPct
               } : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1411,6 +1451,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1615,6 +1665,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2200,6 +2260,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2790,6 +2860,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3505,6 +3585,36 @@ import { logger } from './utils/logger';
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
                 set: item.tradingPolicy.perTradeCryptoAllocationPct
               } : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3592,6 +3702,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3796,6 +3916,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -4381,6 +4511,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5243,6 +5383,36 @@ import { logger } from './utils/logger';
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
                 set: item.tradingPolicy.perTradeCryptoAllocationPct
               } : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5330,6 +5500,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5534,6 +5714,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -6119,6 +6309,16 @@ import { logger } from './utils/logger';
             maxOpenOrders: item.tradingPolicy.maxOpenOrders !== undefined ? item.tradingPolicy.maxOpenOrders : undefined,
             perTradeEquityAllocationPct: item.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.tradingPolicy.perTradeEquityAllocationPct : undefined,
             perTradeCryptoAllocationPct: item.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.tradingPolicy.portfolioTrailPercent !== undefined ? item.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,

@@ -200,6 +200,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -1116,6 +1126,36 @@ import { logger } from './utils/logger';
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct
             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent
+            } : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100
+            } : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -1283,6 +1323,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -2211,6 +2261,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -2817,6 +2877,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -3436,6 +3506,36 @@ import { logger } from './utils/logger';
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct
             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent
+            } : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100
+            } : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -3603,6 +3703,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -4531,6 +4641,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: props.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? props.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? props.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -5300,6 +5420,36 @@ import { logger } from './utils/logger';
           perTradeCryptoAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct
             } : undefined,
+          enablePortfolioTrailingStop: prop.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: prop.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent
+            } : undefined,
+          defaultTrailingStopPercentage100: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100
+            } : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -5467,6 +5617,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: prop.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? prop.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: prop.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -6395,6 +6555,16 @@ import { logger } from './utils/logger';
           maxOpenOrders: prop.alpacaAccount.tradingPolicy.maxOpenOrders !== undefined ? prop.alpacaAccount.tradingPolicy.maxOpenOrders : undefined,
           perTradeEquityAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeEquityAllocationPct : undefined,
           perTradeCryptoAllocationPct: prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? prop.alpacaAccount.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+          enablePortfolioTrailingStop: prop.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop !== undefined ? prop.alpacaAccount.tradingPolicy.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: prop.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
