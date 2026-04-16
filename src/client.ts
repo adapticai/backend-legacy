@@ -213,10 +213,49 @@ function processQueue(): void {
 }
 
 /**
+ * Extract the GraphQL operation name from a query or mutation DocumentNode.
+ * Returns the name of the first OperationDefinition (e.g. `findManyTrade`,
+ * `createOneAlert`) so callers see which operations participate in a retry
+ * or timeout cascade. Returns 'anonymous' for unnamed operations and
+ * 'unknown' when the document shape is unexpected — never throws, so
+ * observability code never degrades the request path.
+ */
+function extractOperationName(options: unknown): string {
+  try {
+    const opts = options as {
+      query?: { definitions?: ReadonlyArray<unknown> };
+      mutation?: { definitions?: ReadonlyArray<unknown> };
+    };
+    const doc = opts?.query ?? opts?.mutation;
+    const defs = doc?.definitions;
+    if (!Array.isArray(defs)) return 'unknown';
+    for (const def of defs) {
+      const d = def as {
+        kind?: string;
+        name?: { value?: string };
+      };
+      if (d?.kind === 'OperationDefinition') {
+        return d.name?.value ?? 'anonymous';
+      }
+    }
+    return 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+
+/**
  * Adds an operation to the queue with retry capability.
+ *
+ * `operationName` is threaded through retries so every log line names the
+ * GraphQL operation (e.g. `findManyTrade`, `createManyEquityBar`) that is
+ * being retried or rejected. Without it, cascade bursts of 4-17 concurrent
+ * timeouts are indistinguishable in logs and root-cause diagnosis is
+ * impossible.
  */
 async function enqueueOperation<T>(
   operation: () => Promise<T>,
+  operationName: string,
   attempt = 0
 ): Promise<T> {
   return new Promise((resolve, reject) => {
@@ -246,18 +285,37 @@ async function enqueueOperation<T>(
             error.message.includes('status code 503') ||
             error.message.includes('status code 504'));
 
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+
         if (attempt < poolConfig.retryAttempts && isRetryable) {
           const delay = poolConfig.retryDelay * Math.pow(2, attempt);
           logger.warn(
-            `Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`,
-            { error: error instanceof Error ? error.message : String(error) }
+            `Apollo operation '${operationName}' failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`,
+            {
+              operation: operationName,
+              attempt: attempt + 1,
+              maxAttempts: poolConfig.retryAttempts,
+              delayMs: delay,
+              error: errorMessage,
+            }
           );
           setTimeout(() => {
-            enqueueOperation(operation, attempt + 1)
+            enqueueOperation(operation, operationName, attempt + 1)
               .then(resolve)
               .catch(reject);
           }, delay);
         } else {
+          if (isRetryable) {
+            logger.warn(
+              `Apollo operation '${operationName}' exhausted retries (${poolConfig.retryAttempts}/${poolConfig.retryAttempts})`,
+              {
+                operation: operationName,
+                attempts: poolConfig.retryAttempts,
+                error: errorMessage,
+              }
+            );
+          }
           reject(error);
         }
       }
@@ -461,11 +519,17 @@ export async function getApolloClient(): Promise<
     const originalMutate = apolloClient.mutate.bind(apolloClient);
 
     apolloClient.query = (options) => {
-      return enqueueOperation(() => originalQuery(options));
+      return enqueueOperation(
+        () => originalQuery(options),
+        extractOperationName(options)
+      );
     };
 
     apolloClient.mutate = (options) => {
-      return enqueueOperation(() => originalMutate(options));
+      return enqueueOperation(
+        () => originalMutate(options),
+        extractOperationName(options)
+      );
     };
 
     return apolloClient;
