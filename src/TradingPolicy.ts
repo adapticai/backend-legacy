@@ -615,13 +615,34 @@ import { logger } from './utils/logger';
             throw error;
           }
 
-          // Check if this is a database connection error that we should retry
+          // Check if this is a database connection error that we should retry.
+          // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+          // pool exhaustion, and transient gateway statuses. Must stay consistent
+          // with the transient classifier in client.ts (onError link + enqueueOperation).
           const isConnectionError =
             error.message?.includes('Server has closed the connection') ||
             error.message?.includes('Cannot reach database server') ||
             error.message?.includes('Connection timed out') ||
+            error.message?.includes('aborted due to timeout') ||
+            error.message?.includes('TimeoutError') ||
+            error.message?.includes('fetch failed') ||
+            error.message?.includes('socket hang up') ||
+            error.message?.includes('ECONNRESET') ||
+            error.message?.includes('ECONNREFUSED') ||
+            error.message?.includes('ETIMEDOUT') ||
+            error.message?.includes('Connection pool timeout') ||
+            error.message?.includes('P2024') ||
+            error.message?.includes('status code 408') ||
+            error.message?.includes('status code 502') ||
+            error.message?.includes('status code 503') ||
+            error.message?.includes('status code 504') ||
             error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+            (error.networkError && (
+              error.networkError.message?.includes('Failed to fetch') ||
+              error.networkError.message?.includes('fetch failed') ||
+              error.networkError.message?.includes('aborted due to timeout') ||
+              error.networkError.message?.includes('TimeoutError')
+            ));
 
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
@@ -785,13 +806,34 @@ import { logger } from './utils/logger';
           throw error;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -2464,13 +2506,34 @@ import { logger } from './utils/logger';
           throw error;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -4602,13 +4665,34 @@ import { logger } from './utils/logger';
           throw error;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -6284,13 +6368,34 @@ import { logger } from './utils/logger';
           throw error;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -6404,13 +6509,34 @@ import { logger } from './utils/logger';
           throw error;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -6508,13 +6634,34 @@ import { logger } from './utils/logger';
           return null;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -6590,13 +6737,34 @@ import { logger } from './utils/logger';
           return null;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
@@ -6707,13 +6875,34 @@ import { logger } from './utils/logger';
           return null;
         }
 
-        // Check if this is a database connection error that we should retry
+        // Check if this is a database connection error that we should retry.
+        // Covers undici/fetch timeouts, Prisma Accelerate transients, connection
+        // pool exhaustion, and transient gateway statuses. Must stay consistent
+        // with the transient classifier in client.ts (onError link + enqueueOperation).
         const isConnectionError =
           error.message?.includes('Server has closed the connection') ||
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
+          error.message?.includes('aborted due to timeout') ||
+          error.message?.includes('TimeoutError') ||
+          error.message?.includes('fetch failed') ||
+          error.message?.includes('socket hang up') ||
+          error.message?.includes('ECONNRESET') ||
+          error.message?.includes('ECONNREFUSED') ||
+          error.message?.includes('ETIMEDOUT') ||
+          error.message?.includes('Connection pool timeout') ||
+          error.message?.includes('P2024') ||
+          error.message?.includes('status code 408') ||
+          error.message?.includes('status code 502') ||
+          error.message?.includes('status code 503') ||
+          error.message?.includes('status code 504') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError && (
+            error.networkError.message?.includes('Failed to fetch') ||
+            error.networkError.message?.includes('fetch failed') ||
+            error.networkError.message?.includes('aborted due to timeout') ||
+            error.networkError.message?.includes('TimeoutError')
+          ));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;

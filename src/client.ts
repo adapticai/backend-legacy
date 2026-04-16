@@ -239,6 +239,8 @@ async function enqueueOperation<T>(
             error.message.includes('Connection pool timeout') ||
             error.message.includes('P2024') ||
             error.message.includes('terminated') ||
+            error.message.includes('aborted due to timeout') ||
+            error.message.includes('TimeoutError') ||
             error.message.includes('status code 408') ||
             error.message.includes('status code 502') ||
             error.message.includes('status code 503') ||
