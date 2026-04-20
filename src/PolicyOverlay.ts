@@ -51,7 +51,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -269,12 +269,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -329,9 +329,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOnePolicyOverlay) {
             return response.data.createOnePolicyOverlay;
           } else {
-            return null as any;
+            return null as unknown as PolicyOverlayType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -427,7 +428,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -481,9 +482,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyPolicyOverlay) {
           return response.data.createManyPolicyOverlay;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -577,7 +579,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1073,11 +1075,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-      Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 && props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 && props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+} : { upsert: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -1230,12 +1232,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -1432,12 +1434,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -1491,9 +1493,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOnePolicyOverlay) {
           return response.data.updateOnePolicyOverlay;
         } else {
-          return null as any;
+          return null as unknown as PolicyOverlayType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1591,7 +1594,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1823,12 +1826,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2329,11 +2332,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-      Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 && props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 && props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+} : { upsert: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2486,12 +2489,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2688,12 +2691,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: props.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(props.tradingPolicy.alpacaAccount.alerts) && props.tradingPolicy.alpacaAccount.alerts.length > 0 &&  props.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2747,9 +2750,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOnePolicyOverlay) {
           return response.data.upsertOnePolicyOverlay;
         } else {
-          return null as any;
+          return null as unknown as PolicyOverlayType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2847,7 +2851,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -3344,11 +3348,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: prop.tradingPolicy.alpacaAccount.alerts ? 
-      Array.isArray(prop.tradingPolicy.alpacaAccount.alerts) && prop.tradingPolicy.alpacaAccount.alerts.length > 0 && prop.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(prop.tradingPolicy.alpacaAccount.alerts) && prop.tradingPolicy.alpacaAccount.alerts.length > 0 && prop.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.tradingPolicy.alpacaAccount.alerts.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+} : { upsert: prop.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3501,12 +3505,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: prop.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(prop.tradingPolicy.alpacaAccount.alerts) && prop.tradingPolicy.alpacaAccount.alerts.length > 0 &&  prop.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(prop.tradingPolicy.alpacaAccount.alerts) && prop.tradingPolicy.alpacaAccount.alerts.length > 0 &&  prop.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: prop.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3703,12 +3707,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: prop.tradingPolicy.alpacaAccount.alerts ? 
-        Array.isArray(prop.tradingPolicy.alpacaAccount.alerts) && prop.tradingPolicy.alpacaAccount.alerts.length > 0 &&  prop.tradingPolicy.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+        Array.isArray(prop.tradingPolicy.alpacaAccount.alerts) && prop.tradingPolicy.alpacaAccount.alerts.length > 0 &&  prop.tradingPolicy.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.tradingPolicy.alpacaAccount.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.tradingPolicy.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: prop.tradingPolicy.alpacaAccount.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3763,9 +3767,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyPolicyOverlay) {
           return response.data.updateManyPolicyOverlay;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -3860,7 +3865,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -3900,9 +3905,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOnePolicyOverlay) {
           return response.data.deleteOnePolicyOverlay;
         } else {
-          return null as any;
+          return null as unknown as PolicyOverlayType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -4000,11 +4006,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved PolicyOverlay or null.
    */
-  async get(props: PolicyOverlayType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<PolicyOverlayType | null> {
+  async get(props: PolicyOverlayType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<PolicyOverlayType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -4052,7 +4058,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getPolicyOverlay ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -4127,7 +4134,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -4155,7 +4162,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.policyOverlays ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -4228,11 +4236,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found PolicyOverlay records or null.
    */
-  async findMany(props: PolicyOverlayType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<PolicyOverlayType[] | null> {
+  async findMany(props: PolicyOverlayType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<PolicyOverlayType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -4293,7 +4301,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as PolicyOverlayType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

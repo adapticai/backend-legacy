@@ -3,6 +3,23 @@ import {
   createValidationPlugin,
   VALIDATION_RULES,
 } from '../middleware/graphql-validation-plugin';
+import type { ValidationErrorDetail } from '../middleware/input-validator';
+
+/**
+ * Minimal shape of the Apollo Server didResolveOperation request context that
+ * the validation plugin actually reads. Tests construct lightweight fixtures
+ * rather than full Apollo Server contexts, so we use this Parameters-derived
+ * type to cast through the structural gap without resorting to `any`.
+ */
+type DidResolveOperationContext = Parameters<
+  NonNullable<
+    Awaited<
+      ReturnType<
+        NonNullable<ReturnType<typeof createValidationPlugin>['requestDidStart']>
+      >
+    >['didResolveOperation']
+  >
+>[0];
 
 describe('GraphQL Validation Plugin', () => {
   describe('VALIDATION_RULES', () => {
@@ -80,7 +97,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).resolves.not.toThrow();
     });
 
@@ -97,7 +116,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).rejects.toThrow(GraphQLError);
     });
 
@@ -114,7 +135,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).resolves.not.toThrow();
     });
 
@@ -136,7 +159,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       try {
-        await listener.didResolveOperation!(requestContext as any);
+        await listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        );
         fail('Should have thrown GraphQLError');
       } catch (error) {
         expect(error).toBeInstanceOf(GraphQLError);
@@ -144,7 +169,8 @@ describe('GraphQL Validation Plugin', () => {
           expect(error.extensions.code).toBe('BAD_USER_INPUT');
           expect(error.extensions.validationErrors).toBeDefined();
           expect(
-            (error.extensions.validationErrors as any[]).length
+            (error.extensions.validationErrors as ValidationErrorDetail[])
+              .length
           ).toBeGreaterThan(0);
         }
       }
@@ -167,12 +193,15 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       try {
-        await listener.didResolveOperation!(requestContext as any);
+        await listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        );
         fail('Should have thrown GraphQLError');
       } catch (error) {
         expect(error).toBeInstanceOf(GraphQLError);
         if (error instanceof GraphQLError) {
-          const validationErrors = error.extensions.validationErrors as any[];
+          const validationErrors = error.extensions
+            .validationErrors as ValidationErrorDetail[];
           expect(validationErrors.length).toBeGreaterThanOrEqual(2); // At least percentage and quantity
         }
       }
@@ -195,7 +224,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).resolves.not.toThrow();
     });
 
@@ -214,7 +245,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).rejects.toThrow(GraphQLError);
     });
 
@@ -233,7 +266,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).resolves.not.toThrow();
     });
 
@@ -256,7 +291,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).rejects.toThrow(GraphQLError);
     });
 
@@ -271,7 +308,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).resolves.not.toThrow();
     });
 
@@ -284,7 +323,9 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(
+          requestContext as unknown as DidResolveOperationContext
+        )
       ).resolves.not.toThrow();
     });
   });

@@ -80,7 +80,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -133,12 +133,12 @@ import { logger } from './utils/logger';
   lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   actions: props.actions ? 
-    Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.actions.map((item: any) => ({
+    Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.actions.map((item) => ({
          id: item.id
       }))
  }
- : { connectOrCreate: props.actions.map((item: any) => ({
+ : { connectOrCreate: props.actions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
@@ -182,9 +182,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOneTrade) {
             return response.data.createOneTrade;
           } else {
-            return null as any;
+            return null as unknown as TradeType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -280,7 +281,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -348,9 +349,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyTrade) {
           return response.data.createManyTrade;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -444,7 +446,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -564,11 +566,11 @@ import { logger } from './utils/logger';
             set: props.supersededById 
            } : undefined,
   actions: props.actions ? 
-  Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.actions.map((item: any) => ({
+  Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.actions.map((item) => ({
     id: item.id
   }))
-} : { upsert: props.actions.map((item: any) => ({
+} : { upsert: props.actions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
@@ -646,9 +648,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOneTrade) {
           return response.data.updateOneTrade;
         } else {
-          return null as any;
+          return null as unknown as TradeType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -746,7 +749,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -810,12 +813,12 @@ import { logger } from './utils/logger';
   lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   actions: props.actions ? 
-    Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.actions.map((item: any) => ({
+    Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.actions.map((item) => ({
          id: item.id
       }))
  }
- : { connectOrCreate: props.actions.map((item: any) => ({
+ : { connectOrCreate: props.actions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
@@ -929,11 +932,11 @@ import { logger } from './utils/logger';
             set: props.supersededById 
            } : undefined,
   actions: props.actions ? 
-  Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.actions.map((item: any) => ({
+  Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.actions.map((item) => ({
     id: item.id
   }))
-} : { upsert: props.actions.map((item: any) => ({
+} : { upsert: props.actions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
@@ -1011,9 +1014,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOneTrade) {
           return response.data.upsertOneTrade;
         } else {
-          return null as any;
+          return null as unknown as TradeType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1111,7 +1115,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1232,11 +1236,11 @@ import { logger } from './utils/logger';
             set: prop.supersededById 
            } : undefined,
   actions: prop.actions ? 
-  Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: prop.actions.map((item: any) => ({
+  Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.actions.map((item) => ({
     id: item.id
   }))
-} : { upsert: prop.actions.map((item: any) => ({
+} : { upsert: prop.actions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
@@ -1315,9 +1319,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyTrade) {
           return response.data.updateManyTrade;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1412,7 +1417,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1452,9 +1457,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOneTrade) {
           return response.data.deleteOneTrade;
         } else {
-          return null as any;
+          return null as unknown as TradeType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1552,11 +1558,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved Trade or null.
    */
-  async get(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<TradeType | null> {
+  async get(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<TradeType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1601,7 +1607,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getTrade ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -1676,7 +1683,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1704,7 +1711,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.trades ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -1777,11 +1785,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found Trade records or null.
    */
-  async findMany(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<TradeType[] | null> {
+  async findMany(props: TradeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<TradeType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1839,7 +1847,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as TradeType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

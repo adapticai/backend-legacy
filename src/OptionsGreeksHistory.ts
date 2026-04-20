@@ -86,7 +86,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -169,12 +169,12 @@ import { logger } from './utils/logger';
         metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
         dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
     positions: props.contract.positions ? 
-      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.positions.map((item: any) => ({
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.positions.map((item: any) => ({
+ : { connectOrCreate: props.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -220,12 +220,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -269,12 +269,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -293,12 +293,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: props.contract.executions ? 
-      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.executions.map((item: any) => ({
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.executions.map((item: any) => ({
+ : { connectOrCreate: props.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -415,9 +415,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOneOptionsGreeksHistory) {
             return response.data.createOneOptionsGreeksHistory;
           } else {
-            return null as any;
+            return null as unknown as OptionsGreeksHistoryType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -513,7 +514,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -571,9 +572,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyOptionsGreeksHistory) {
           return response.data.createManyOptionsGreeksHistory;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -667,7 +669,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -847,11 +849,11 @@ import { logger } from './utils/logger';
             set: props.contract.dataTimestamp
           } : undefined,
     positions: props.contract.positions ? 
-    Array.isArray(props.contract.positions) && props.contract.positions.length > 0 && props.contract.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.contract.positions.map((item: any) => ({
+    Array.isArray(props.contract.positions) && props.contract.positions.length > 0 && props.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.positions.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.contract.positions.map((item: any) => ({
+} : { upsert: props.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -964,11 +966,11 @@ import { logger } from './utils/logger';
               set: item.linkedRollId
             } : undefined,
       executions: item.executions ? 
-      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.executions.map((item: any) => ({
+      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.executions.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.executions.map((item: any) => ({
+} : { upsert: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -1084,11 +1086,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.lifecycleEvents.map((item: any) => ({
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.lifecycleEvents.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.lifecycleEvents.map((item: any) => ({
+} : { upsert: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -1152,12 +1154,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -1201,12 +1203,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -1225,11 +1227,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: props.contract.executions ? 
-    Array.isArray(props.contract.executions) && props.contract.executions.length > 0 && props.contract.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.contract.executions.map((item: any) => ({
+    Array.isArray(props.contract.executions) && props.contract.executions.length > 0 && props.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.executions.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.contract.executions.map((item: any) => ({
+} : { upsert: props.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -1584,12 +1586,12 @@ import { logger } from './utils/logger';
         metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
         dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
     positions: props.contract.positions ? 
-      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.positions.map((item: any) => ({
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.positions.map((item: any) => ({
+ : { connectOrCreate: props.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -1635,12 +1637,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -1684,12 +1686,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -1708,12 +1710,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: props.contract.executions ? 
-      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.executions.map((item: any) => ({
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.executions.map((item: any) => ({
+ : { connectOrCreate: props.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -1829,9 +1831,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOneOptionsGreeksHistory) {
           return response.data.updateOneOptionsGreeksHistory;
         } else {
-          return null as any;
+          return null as unknown as OptionsGreeksHistoryType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1929,7 +1932,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2017,12 +2020,12 @@ import { logger } from './utils/logger';
         metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
         dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
     positions: props.contract.positions ? 
-      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.positions.map((item: any) => ({
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.positions.map((item: any) => ({
+ : { connectOrCreate: props.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2068,12 +2071,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -2117,12 +2120,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -2141,12 +2144,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: props.contract.executions ? 
-      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.executions.map((item: any) => ({
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.executions.map((item: any) => ({
+ : { connectOrCreate: props.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -2396,11 +2399,11 @@ import { logger } from './utils/logger';
             set: props.contract.dataTimestamp
           } : undefined,
     positions: props.contract.positions ? 
-    Array.isArray(props.contract.positions) && props.contract.positions.length > 0 && props.contract.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.contract.positions.map((item: any) => ({
+    Array.isArray(props.contract.positions) && props.contract.positions.length > 0 && props.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.positions.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.contract.positions.map((item: any) => ({
+} : { upsert: props.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2513,11 +2516,11 @@ import { logger } from './utils/logger';
               set: item.linkedRollId
             } : undefined,
       executions: item.executions ? 
-      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.executions.map((item: any) => ({
+      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.executions.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.executions.map((item: any) => ({
+} : { upsert: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -2633,11 +2636,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.lifecycleEvents.map((item: any) => ({
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.lifecycleEvents.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.lifecycleEvents.map((item: any) => ({
+} : { upsert: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -2701,12 +2704,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -2750,12 +2753,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -2774,11 +2777,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: props.contract.executions ? 
-    Array.isArray(props.contract.executions) && props.contract.executions.length > 0 && props.contract.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.contract.executions.map((item: any) => ({
+    Array.isArray(props.contract.executions) && props.contract.executions.length > 0 && props.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.contract.executions.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.contract.executions.map((item: any) => ({
+} : { upsert: props.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -3133,12 +3136,12 @@ import { logger } from './utils/logger';
         metadata: props.contract.metadata !== undefined ? props.contract.metadata : undefined,
         dataTimestamp: props.contract.dataTimestamp !== undefined ? props.contract.dataTimestamp : undefined,
     positions: props.contract.positions ? 
-      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.positions.map((item: any) => ({
+      Array.isArray(props.contract.positions) && props.contract.positions.length > 0 &&  props.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.positions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.positions.map((item: any) => ({
+ : { connectOrCreate: props.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3184,12 +3187,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -3233,12 +3236,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -3257,12 +3260,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: props.contract.executions ? 
-      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.contract.executions.map((item: any) => ({
+      Array.isArray(props.contract.executions) && props.contract.executions.length > 0 &&  props.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.contract.executions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.contract.executions.map((item: any) => ({
+ : { connectOrCreate: props.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -3378,9 +3381,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOneOptionsGreeksHistory) {
           return response.data.upsertOneOptionsGreeksHistory;
         } else {
-          return null as any;
+          return null as unknown as OptionsGreeksHistoryType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -3478,7 +3482,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -3659,11 +3663,11 @@ import { logger } from './utils/logger';
             set: prop.contract.dataTimestamp
           } : undefined,
     positions: prop.contract.positions ? 
-    Array.isArray(prop.contract.positions) && prop.contract.positions.length > 0 && prop.contract.positions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.contract.positions.map((item: any) => ({
+    Array.isArray(prop.contract.positions) && prop.contract.positions.length > 0 && prop.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.contract.positions.map((item) => ({
       id: item.id
     }))
-} : { upsert: prop.contract.positions.map((item: any) => ({
+} : { upsert: prop.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3776,11 +3780,11 @@ import { logger } from './utils/logger';
               set: item.linkedRollId
             } : undefined,
       executions: item.executions ? 
-      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.executions.map((item: any) => ({
+      Array.isArray(item.executions) && item.executions.length > 0 && item.executions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.executions.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.executions.map((item: any) => ({
+} : { upsert: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -3896,11 +3900,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.lifecycleEvents.map((item: any) => ({
+      Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 && item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.lifecycleEvents.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.lifecycleEvents.map((item: any) => ({
+} : { upsert: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -3964,12 +3968,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -4013,12 +4017,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -4037,11 +4041,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: prop.contract.executions ? 
-    Array.isArray(prop.contract.executions) && prop.contract.executions.length > 0 && prop.contract.executions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.contract.executions.map((item: any) => ({
+    Array.isArray(prop.contract.executions) && prop.contract.executions.length > 0 && prop.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.contract.executions.map((item) => ({
       id: item.id
     }))
-} : { upsert: prop.contract.executions.map((item: any) => ({
+} : { upsert: prop.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -4396,12 +4400,12 @@ import { logger } from './utils/logger';
         metadata: prop.contract.metadata !== undefined ? prop.contract.metadata : undefined,
         dataTimestamp: prop.contract.dataTimestamp !== undefined ? prop.contract.dataTimestamp : undefined,
     positions: prop.contract.positions ? 
-      Array.isArray(prop.contract.positions) && prop.contract.positions.length > 0 &&  prop.contract.positions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.contract.positions.map((item: any) => ({
+      Array.isArray(prop.contract.positions) && prop.contract.positions.length > 0 &&  prop.contract.positions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.contract.positions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: prop.contract.positions.map((item: any) => ({
+ : { connectOrCreate: prop.contract.positions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -4447,12 +4451,12 @@ import { logger } from './utils/logger';
           exitThresholds: item.exitThresholds !== undefined ? item.exitThresholds : undefined,
           linkedRollId: item.linkedRollId !== undefined ? item.linkedRollId : undefined,
       executions: item.executions ? 
-        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.executions.map((item: any) => ({
+        Array.isArray(item.executions) && item.executions.length > 0 &&  item.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.executions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.executions.map((item: any) => ({
+ : { connectOrCreate: item.executions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -4496,12 +4500,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       lifecycleEvents: item.lifecycleEvents ? 
-        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.lifecycleEvents.map((item: any) => ({
+        Array.isArray(item.lifecycleEvents) && item.lifecycleEvents.length > 0 &&  item.lifecycleEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.lifecycleEvents.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.lifecycleEvents.map((item: any) => ({
+ : { connectOrCreate: item.lifecycleEvents.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             positionId: item.positionId !== undefined ? {
@@ -4520,12 +4524,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     executions: prop.contract.executions ? 
-      Array.isArray(prop.contract.executions) && prop.contract.executions.length > 0 &&  prop.contract.executions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.contract.executions.map((item: any) => ({
+      Array.isArray(prop.contract.executions) && prop.contract.executions.length > 0 &&  prop.contract.executions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.contract.executions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: prop.contract.executions.map((item: any) => ({
+ : { connectOrCreate: prop.contract.executions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           positionId: item.positionId !== undefined ? {
@@ -4642,9 +4646,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyOptionsGreeksHistory) {
           return response.data.updateManyOptionsGreeksHistory;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -4739,7 +4744,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -4779,9 +4784,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOneOptionsGreeksHistory) {
           return response.data.deleteOneOptionsGreeksHistory;
         } else {
-          return null as any;
+          return null as unknown as OptionsGreeksHistoryType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -4879,11 +4885,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved OptionsGreeksHistory or null.
    */
-  async get(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OptionsGreeksHistoryType | null> {
+  async get(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<OptionsGreeksHistoryType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -4922,7 +4928,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getOptionsGreeksHistory ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -4997,7 +5004,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5025,7 +5032,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.optionsGreeksHistories ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -5098,11 +5106,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found OptionsGreeksHistory records or null.
    */
-  async findMany(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<OptionsGreeksHistoryType[] | null> {
+  async findMany(props: OptionsGreeksHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<OptionsGreeksHistoryType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5154,7 +5162,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as OptionsGreeksHistoryType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

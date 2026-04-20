@@ -48,7 +48,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -235,12 +235,12 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -336,12 +336,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -367,12 +367,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -386,12 +386,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -406,12 +406,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -436,12 +436,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -473,12 +473,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -551,9 +551,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOneAlert) {
             return response.data.createOneAlert;
           } else {
-            return null as any;
+            return null as unknown as AlertType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -649,7 +650,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -702,9 +703,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyAlert) {
           return response.data.createManyAlert;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -798,7 +800,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1213,11 +1215,11 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -1358,12 +1360,12 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -1522,11 +1524,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accounts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accounts.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accounts.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1587,11 +1589,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.sessions.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.sessions.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.sessions.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1616,11 +1618,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.authenticators.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.authenticators.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.authenticators.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1649,11 +1651,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.linkedProviders.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1704,11 +1706,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1778,11 +1780,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -1965,12 +1967,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1996,12 +1998,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2015,12 +2017,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2035,12 +2037,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2065,12 +2067,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2102,12 +2104,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -2296,12 +2298,12 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -2397,12 +2399,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -2428,12 +2430,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2447,12 +2449,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2467,12 +2469,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2497,12 +2499,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2534,12 +2536,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -2611,9 +2613,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOneAlert) {
           return response.data.updateOneAlert;
         } else {
-          return null as any;
+          return null as unknown as AlertType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2711,7 +2714,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2912,12 +2915,12 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -3013,12 +3016,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -3044,12 +3047,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3063,12 +3066,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3083,12 +3086,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3113,12 +3116,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3150,12 +3153,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -3593,11 +3596,11 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -3738,12 +3741,12 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -3902,11 +3905,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accounts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accounts.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accounts.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -3967,11 +3970,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.sessions.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.sessions.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.sessions.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3996,11 +3999,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.authenticators.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.authenticators.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.authenticators.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4029,11 +4032,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.linkedProviders.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4084,11 +4087,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4158,11 +4161,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -4345,12 +4348,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -4376,12 +4379,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4395,12 +4398,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4415,12 +4418,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4445,12 +4448,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4482,12 +4485,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -4676,12 +4679,12 @@ import { logger } from './utils/logger';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -4777,12 +4780,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -4808,12 +4811,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4827,12 +4830,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4847,12 +4850,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4877,12 +4880,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4914,12 +4917,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -4991,9 +4994,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOneAlert) {
           return response.data.upsertOneAlert;
         } else {
-          return null as any;
+          return null as unknown as AlertType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -5091,7 +5095,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5507,11 +5511,11 @@ import { logger } from './utils/logger';
           modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
-      Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 && prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 && prop.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -5652,12 +5656,12 @@ import { logger } from './utils/logger';
           modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -5816,11 +5820,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-      Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 && prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.accounts.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 && prop.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.accounts.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.accounts.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -5881,11 +5885,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-      Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 && prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.sessions.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 && prop.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.sessions.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.sessions.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -5910,11 +5914,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-      Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 && prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 && prop.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.authenticators.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -5943,11 +5947,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
-      Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 && prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 && prop.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.linkedProviders.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -5998,11 +6002,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
-      Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 && prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 && prop.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6072,11 +6076,11 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
-      Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -6259,12 +6263,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -6290,12 +6294,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6309,12 +6313,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6329,12 +6333,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6359,12 +6363,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6396,12 +6400,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -6590,12 +6594,12 @@ import { logger } from './utils/logger';
           modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -6691,12 +6695,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -6722,12 +6726,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6741,12 +6745,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6761,12 +6765,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6791,12 +6795,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6828,12 +6832,12 @@ import { logger } from './utils/logger';
         }))
       } : undefined,
       reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -6906,9 +6910,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyAlert) {
           return response.data.updateManyAlert;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -7003,7 +7008,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7043,9 +7048,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOneAlert) {
           return response.data.deleteOneAlert;
         } else {
-          return null as any;
+          return null as unknown as AlertType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -7143,11 +7149,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved Alert or null.
    */
-  async get(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlertType | null> {
+  async get(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AlertType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7195,7 +7201,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getAlert ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -7270,7 +7277,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7298,7 +7305,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.alerts ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -7371,11 +7379,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found Alert records or null.
    */
-  async findMany(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AlertType[] | null> {
+  async findMany(props: AlertType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AlertType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7436,7 +7444,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as AlertType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

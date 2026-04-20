@@ -81,7 +81,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -166,9 +166,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOneInstitutionalSentimentHistory) {
             return response.data.createOneInstitutionalSentimentHistory;
           } else {
-            return null as any;
+            return null as unknown as InstitutionalSentimentHistoryType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -264,7 +265,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -348,9 +349,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyInstitutionalSentimentHistory) {
           return response.data.createManyInstitutionalSentimentHistory;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -444,7 +446,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -627,9 +629,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOneInstitutionalSentimentHistory) {
           return response.data.updateOneInstitutionalSentimentHistory;
         } else {
-          return null as any;
+          return null as unknown as InstitutionalSentimentHistoryType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -727,7 +730,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -950,9 +953,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOneInstitutionalSentimentHistory) {
           return response.data.upsertOneInstitutionalSentimentHistory;
         } else {
-          return null as any;
+          return null as unknown as InstitutionalSentimentHistoryType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1050,7 +1054,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1235,9 +1239,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyInstitutionalSentimentHistory) {
           return response.data.updateManyInstitutionalSentimentHistory;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1332,7 +1337,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1372,9 +1377,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOneInstitutionalSentimentHistory) {
           return response.data.deleteOneInstitutionalSentimentHistory;
         } else {
-          return null as any;
+          return null as unknown as InstitutionalSentimentHistoryType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1472,11 +1478,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved InstitutionalSentimentHistory or null.
    */
-  async get(props: InstitutionalSentimentHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<InstitutionalSentimentHistoryType | null> {
+  async get(props: InstitutionalSentimentHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<InstitutionalSentimentHistoryType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1515,7 +1521,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getInstitutionalSentimentHistory ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -1590,7 +1597,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1618,7 +1625,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.institutionalSentimentHistories ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -1691,11 +1699,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found InstitutionalSentimentHistory records or null.
    */
-  async findMany(props: InstitutionalSentimentHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<InstitutionalSentimentHistoryType[] | null> {
+  async findMany(props: InstitutionalSentimentHistoryType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<InstitutionalSentimentHistoryType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1747,7 +1755,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as InstitutionalSentimentHistoryType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

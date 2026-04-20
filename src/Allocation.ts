@@ -57,7 +57,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -217,12 +217,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -318,12 +318,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -349,12 +349,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -368,12 +368,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -388,12 +388,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -418,12 +418,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -455,12 +455,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -514,12 +514,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -571,9 +571,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
           if (response && response.data && response.data.createOneAllocation) {
             return response.data.createOneAllocation;
           } else {
-            return null as any;
+            return null as unknown as AllocationType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -669,7 +670,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -718,9 +719,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (response && response.data && response.data.createManyAllocation) {
           return response.data.createManyAllocation;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -824,7 +826,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1173,11 +1175,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -1318,12 +1320,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -1482,11 +1484,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accounts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accounts.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accounts.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1547,11 +1549,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.sessions.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.sessions.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.sessions.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1576,11 +1578,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.authenticators.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.authenticators.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.authenticators.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1609,11 +1611,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.linkedProviders.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1664,11 +1666,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1738,11 +1740,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -1925,12 +1927,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1956,12 +1958,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1975,12 +1977,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -1995,12 +1997,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2025,12 +2027,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2062,12 +2064,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -2121,11 +2123,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.alpacaAccount.alerts.map((item: any) => ({
+    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.alpacaAccount.alerts.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.alpacaAccount.alerts.map((item: any) => ({
+} : { upsert: props.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2309,12 +2311,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -2410,12 +2412,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -2441,12 +2443,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2460,12 +2462,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2480,12 +2482,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2510,12 +2512,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -2547,12 +2549,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -2606,12 +2608,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2662,9 +2664,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (response && response.data && response.data.updateOneAllocation) {
           return response.data.updateOneAllocation;
         } else {
-          return null as any;
+          return null as unknown as AllocationType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2762,7 +2765,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2925,12 +2928,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -3026,12 +3029,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -3057,12 +3060,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3076,12 +3079,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3096,12 +3099,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3126,12 +3129,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3163,12 +3166,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -3222,12 +3225,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3578,11 +3581,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 && props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+} : { upsert: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -3723,12 +3726,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -3887,11 +3890,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accounts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 && props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accounts.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accounts.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -3952,11 +3955,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.sessions.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 && props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.sessions.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.sessions.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -3981,11 +3984,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.authenticators.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 && props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.authenticators.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.authenticators.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4014,11 +4017,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 && props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.linkedProviders.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4069,11 +4072,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 && props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4143,11 +4146,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
         id: item.id
       }))
-} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -4330,12 +4333,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -4361,12 +4364,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4380,12 +4383,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4400,12 +4403,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4430,12 +4433,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4467,12 +4470,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -4526,11 +4529,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.alpacaAccount.alerts.map((item: any) => ({
+    Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 && props.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.alpacaAccount.alerts.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.alpacaAccount.alerts.map((item: any) => ({
+} : { upsert: props.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -4714,12 +4717,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: props.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? props.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: props.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? props.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: props.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.tradingPolicy.overlays) && props.alpacaAccount.tradingPolicy.overlays.length > 0 &&  props.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -4815,12 +4818,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: props.alpacaAccount.user.accounts ? 
-        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accounts) && props.alpacaAccount.user.accounts.length > 0 &&  props.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -4846,12 +4849,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: props.alpacaAccount.user.sessions ? 
-        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.sessions) && props.alpacaAccount.user.sessions.length > 0 &&  props.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4865,12 +4868,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: props.alpacaAccount.user.authenticators ? 
-        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.authenticators) && props.alpacaAccount.user.authenticators.length > 0 &&  props.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4885,12 +4888,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: props.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.linkedProviders) && props.alpacaAccount.user.linkedProviders.length > 0 &&  props.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4915,12 +4918,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: props.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.accountLinkingRequests) && props.alpacaAccount.user.accountLinkingRequests.length > 0 &&  props.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -4952,12 +4955,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: props.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(props.alpacaAccount.user.reviewedWaitlistEntries) && props.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  props.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -5011,12 +5014,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: props.alpacaAccount.alerts ? 
-      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(props.alpacaAccount.alerts) && props.alpacaAccount.alerts.length > 0 &&  props.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.alpacaAccount.alerts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: props.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -5067,9 +5070,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (response && response.data && response.data.upsertOneAllocation) {
           return response.data.upsertOneAllocation;
         } else {
-          return null as any;
+          return null as unknown as AllocationType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -5167,7 +5171,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5517,11 +5521,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
-      Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 && prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 && prop.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -5662,12 +5666,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -5826,11 +5830,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-      Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 && prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.accounts.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 && prop.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.accounts.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.accounts.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -5891,11 +5895,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-      Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 && prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.sessions.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 && prop.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.sessions.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.sessions.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -5920,11 +5924,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-      Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 && prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 && prop.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.authenticators.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -5953,11 +5957,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
-      Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 && prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 && prop.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.linkedProviders.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6008,11 +6012,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
-      Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 && prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 && prop.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6082,11 +6086,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
-      Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 && prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
         id: item.id
       }))
-} : { upsert: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -6269,12 +6273,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -6300,12 +6304,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6319,12 +6323,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6339,12 +6343,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6369,12 +6373,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6406,12 +6410,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -6465,11 +6469,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: prop.alpacaAccount.alerts ? 
-    Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 && prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.alpacaAccount.alerts.map((item: any) => ({
+    Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 && prop.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.alpacaAccount.alerts.map((item) => ({
       id: item.id
     }))
-} : { upsert: prop.alpacaAccount.alerts.map((item: any) => ({
+} : { upsert: prop.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -6653,12 +6657,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           modelPrefs: prop.alpacaAccount.tradingPolicy.modelPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.modelPrefs : undefined,
           auditNotificationPrefs: prop.alpacaAccount.tradingPolicy.auditNotificationPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.auditNotificationPrefs : undefined,
       overlays: prop.alpacaAccount.tradingPolicy.overlays ? 
-        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.tradingPolicy.overlays) && prop.alpacaAccount.tradingPolicy.overlays.length > 0 &&  prop.alpacaAccount.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.tradingPolicy.overlays.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             tradingPolicyId: item.tradingPolicyId !== undefined ? {
@@ -6754,12 +6758,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }
       } : undefined,
       accounts: prop.alpacaAccount.user.accounts ? 
-        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accounts.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accounts) && prop.alpacaAccount.user.accounts.length > 0 &&  prop.alpacaAccount.user.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accounts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accounts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -6785,12 +6789,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       sessions: prop.alpacaAccount.user.sessions ? 
-        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.sessions.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.sessions) && prop.alpacaAccount.user.sessions.length > 0 &&  prop.alpacaAccount.user.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.sessions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.sessions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6804,12 +6808,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       authenticators: prop.alpacaAccount.user.authenticators ? 
-        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.authenticators.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.authenticators) && prop.alpacaAccount.user.authenticators.length > 0 &&  prop.alpacaAccount.user.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.authenticators.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.authenticators.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6824,12 +6828,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       linkedProviders: prop.alpacaAccount.user.linkedProviders ? 
-        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.linkedProviders) && prop.alpacaAccount.user.linkedProviders.length > 0 &&  prop.alpacaAccount.user.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.linkedProviders.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.linkedProviders.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6854,12 +6858,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       accountLinkingRequests: prop.alpacaAccount.user.accountLinkingRequests ? 
-        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.accountLinkingRequests) && prop.alpacaAccount.user.accountLinkingRequests.length > 0 &&  prop.alpacaAccount.user.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.accountLinkingRequests.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             userId: item.userId !== undefined ? {
@@ -6891,12 +6895,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
         }))
       } : undefined,
       reviewedWaitlistEntries: prop.alpacaAccount.user.reviewedWaitlistEntries ? 
-        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+        Array.isArray(prop.alpacaAccount.user.reviewedWaitlistEntries) && prop.alpacaAccount.user.reviewedWaitlistEntries.length > 0 &&  prop.alpacaAccount.user.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.user.reviewedWaitlistEntries.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             email: item.email !== undefined ? item.email : undefined,
@@ -6950,12 +6954,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
       }
     } : undefined,
     alerts: prop.alpacaAccount.alerts ? 
-      Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 &&  prop.alpacaAccount.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.alpacaAccount.alerts.map((item: any) => ({
+      Array.isArray(prop.alpacaAccount.alerts) && prop.alpacaAccount.alerts.length > 0 &&  prop.alpacaAccount.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.alpacaAccount.alerts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: prop.alpacaAccount.alerts.map((item: any) => ({
+ : { connectOrCreate: prop.alpacaAccount.alerts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -7007,9 +7011,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (response && response.data && response.data.updateManyAllocation) {
           return response.data.updateManyAllocation;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -7104,7 +7109,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7144,9 +7149,10 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (response && response.data && response.data.deleteOneAllocation) {
           return response.data.deleteOneAllocation;
         } else {
-          return null as any;
+          return null as unknown as AllocationType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -7244,11 +7250,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved Allocation or null.
    */
-  async get(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AllocationType | null> {
+  async get(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AllocationType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7285,7 +7291,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getAllocation ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -7360,7 +7367,7 @@ import { assertValidAllocation } from './validators/allocation-validator';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7388,7 +7395,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.allocations ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -7461,11 +7469,11 @@ import { assertValidAllocation } from './validators/allocation-validator';
    * @param whereInput - Optional custom where input.
    * @returns An array of found Allocation records or null.
    */
-  async findMany(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AllocationType[] | null> {
+  async findMany(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AllocationType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7517,7 +7525,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         } else {
           return [] as AllocationType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

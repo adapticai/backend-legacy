@@ -105,7 +105,7 @@ id
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -144,12 +144,12 @@ id
   metadataDatasetSize: props.metadataDatasetSize !== undefined ? props.metadataDatasetSize : undefined,
   metadataHyperparameters: props.metadataHyperparameters !== undefined ? props.metadataHyperparameters : undefined,
   modelVersions: props.modelVersions ? 
-    Array.isArray(props.modelVersions) && props.modelVersions.length > 0 &&  props.modelVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.modelVersions.map((item: any) => ({
+    Array.isArray(props.modelVersions) && props.modelVersions.length > 0 &&  props.modelVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.modelVersions.map((item) => ({
          id: item.id
       }))
  }
- : { connectOrCreate: props.modelVersions.map((item: any) => ({
+ : { connectOrCreate: props.modelVersions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         modelVersionId: item.modelVersionId !== undefined ? {
@@ -258,12 +258,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -308,12 +308,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -358,12 +358,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -408,12 +408,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -461,9 +461,10 @@ id
           if (response && response.data && response.data.createOneModelArtifact) {
             return response.data.createOneModelArtifact;
           } else {
-            return null as any;
+            return null as unknown as ModelArtifactType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -559,7 +560,7 @@ id
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -613,9 +614,10 @@ id
         if (response && response.data && response.data.createManyModelArtifact) {
           return response.data.createManyModelArtifact;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -709,7 +711,7 @@ id
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -783,11 +785,11 @@ id
             set: props.updatedAt 
            } : undefined,
   modelVersions: props.modelVersions ? 
-  Array.isArray(props.modelVersions) && props.modelVersions.length > 0 && props.modelVersions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.modelVersions.map((item: any) => ({
+  Array.isArray(props.modelVersions) && props.modelVersions.length > 0 && props.modelVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.modelVersions.map((item) => ({
     id: item.id
   }))
-} : { upsert: props.modelVersions.map((item: any) => ({
+} : { upsert: props.modelVersions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         modelVersionId: item.modelVersionId !== undefined ? {
@@ -1058,11 +1060,11 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-      Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 && item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.childVersions.map((item: any) => ({
+      Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 && item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.childVersions.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.childVersions.map((item: any) => ({
+} : { upsert: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -1202,11 +1204,11 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-      Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 && item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.abTestsAsControl.map((item: any) => ({
+      Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 && item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.abTestsAsControl.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.abTestsAsControl.map((item: any) => ({
+} : { upsert: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -1310,11 +1312,11 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-      Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 && item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+      Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 && item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.abTestsAsTreatment.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+} : { upsert: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -1418,11 +1420,11 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-      Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 && item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+      Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 && item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.featureImportanceAnalyses.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+} : { upsert: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -1564,12 +1566,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -1614,12 +1616,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -1664,12 +1666,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -1714,12 +1716,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -1847,12 +1849,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -1897,12 +1899,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -1947,12 +1949,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -1997,12 +1999,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -2049,9 +2051,10 @@ id
         if (response && response.data && response.data.updateOneModelArtifact) {
           return response.data.updateOneModelArtifact;
         } else {
-          return null as any;
+          return null as unknown as ModelArtifactType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2149,7 +2152,7 @@ id
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2190,12 +2193,12 @@ id
   metadataDatasetSize: props.metadataDatasetSize !== undefined ? props.metadataDatasetSize : undefined,
   metadataHyperparameters: props.metadataHyperparameters !== undefined ? props.metadataHyperparameters : undefined,
   modelVersions: props.modelVersions ? 
-    Array.isArray(props.modelVersions) && props.modelVersions.length > 0 &&  props.modelVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.modelVersions.map((item: any) => ({
+    Array.isArray(props.modelVersions) && props.modelVersions.length > 0 &&  props.modelVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.modelVersions.map((item) => ({
          id: item.id
       }))
  }
- : { connectOrCreate: props.modelVersions.map((item: any) => ({
+ : { connectOrCreate: props.modelVersions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         modelVersionId: item.modelVersionId !== undefined ? {
@@ -2304,12 +2307,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -2354,12 +2357,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -2404,12 +2407,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -2454,12 +2457,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -2531,11 +2534,11 @@ id
            } : undefined,
   metadataHyperparameters: props.metadataHyperparameters !== undefined ? props.metadataHyperparameters : undefined,
   modelVersions: props.modelVersions ? 
-  Array.isArray(props.modelVersions) && props.modelVersions.length > 0 && props.modelVersions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.modelVersions.map((item: any) => ({
+  Array.isArray(props.modelVersions) && props.modelVersions.length > 0 && props.modelVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.modelVersions.map((item) => ({
     id: item.id
   }))
-} : { upsert: props.modelVersions.map((item: any) => ({
+} : { upsert: props.modelVersions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         modelVersionId: item.modelVersionId !== undefined ? {
@@ -2806,11 +2809,11 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-      Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 && item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.childVersions.map((item: any) => ({
+      Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 && item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.childVersions.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.childVersions.map((item: any) => ({
+} : { upsert: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -2950,11 +2953,11 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-      Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 && item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.abTestsAsControl.map((item: any) => ({
+      Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 && item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.abTestsAsControl.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.abTestsAsControl.map((item: any) => ({
+} : { upsert: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -3058,11 +3061,11 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-      Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 && item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+      Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 && item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.abTestsAsTreatment.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+} : { upsert: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -3166,11 +3169,11 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-      Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 && item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+      Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 && item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.featureImportanceAnalyses.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+} : { upsert: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -3312,12 +3315,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -3362,12 +3365,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -3412,12 +3415,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -3462,12 +3465,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -3595,12 +3598,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -3645,12 +3648,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -3695,12 +3698,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -3745,12 +3748,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -3797,9 +3800,10 @@ id
         if (response && response.data && response.data.upsertOneModelArtifact) {
           return response.data.upsertOneModelArtifact;
         } else {
-          return null as any;
+          return null as unknown as ModelArtifactType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -3897,7 +3901,7 @@ id
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -3972,11 +3976,11 @@ id
             set: prop.updatedAt 
            } : undefined,
   modelVersions: prop.modelVersions ? 
-  Array.isArray(prop.modelVersions) && prop.modelVersions.length > 0 && prop.modelVersions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: prop.modelVersions.map((item: any) => ({
+  Array.isArray(prop.modelVersions) && prop.modelVersions.length > 0 && prop.modelVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.modelVersions.map((item) => ({
     id: item.id
   }))
-} : { upsert: prop.modelVersions.map((item: any) => ({
+} : { upsert: prop.modelVersions.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         modelVersionId: item.modelVersionId !== undefined ? {
@@ -4247,11 +4251,11 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-      Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 && item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.childVersions.map((item: any) => ({
+      Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 && item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.childVersions.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.childVersions.map((item: any) => ({
+} : { upsert: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -4391,11 +4395,11 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-      Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 && item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.abTestsAsControl.map((item: any) => ({
+      Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 && item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.abTestsAsControl.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.abTestsAsControl.map((item: any) => ({
+} : { upsert: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -4499,11 +4503,11 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-      Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 && item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+      Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 && item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.abTestsAsTreatment.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+} : { upsert: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -4607,11 +4611,11 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-      Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 && item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+      Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 && item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.modelVersion.featureImportanceAnalyses.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+} : { upsert: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -4753,12 +4757,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -4803,12 +4807,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -4853,12 +4857,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -4903,12 +4907,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -5036,12 +5040,12 @@ id
         }
       } : undefined,
       childVersions: item.modelVersion.childVersions ? 
-        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.childVersions.map((item: any) => ({
+        Array.isArray(item.modelVersion.childVersions) && item.modelVersion.childVersions.length > 0 &&  item.modelVersion.childVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.childVersions.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.childVersions.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.childVersions.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             status: item.status !== undefined ? {
@@ -5086,12 +5090,12 @@ id
         }))
       } : undefined,
       abTestsAsControl: item.modelVersion.abTestsAsControl ? 
-        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsControl.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsControl) && item.modelVersion.abTestsAsControl.length > 0 &&  item.modelVersion.abTestsAsControl.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsControl.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsControl.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -5136,12 +5140,12 @@ id
         }))
       } : undefined,
       abTestsAsTreatment: item.modelVersion.abTestsAsTreatment ? 
-        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+        Array.isArray(item.modelVersion.abTestsAsTreatment) && item.modelVersion.abTestsAsTreatment.length > 0 &&  item.modelVersion.abTestsAsTreatment.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.abTestsAsTreatment.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.abTestsAsTreatment.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             name: item.name !== undefined ? {
@@ -5186,12 +5190,12 @@ id
         }))
       } : undefined,
       featureImportanceAnalyses: item.modelVersion.featureImportanceAnalyses ? 
-        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+        Array.isArray(item.modelVersion.featureImportanceAnalyses) && item.modelVersion.featureImportanceAnalyses.length > 0 &&  item.modelVersion.featureImportanceAnalyses.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.modelVersion.featureImportanceAnalyses.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item: any) => ({
+ : { connectOrCreate: item.modelVersion.featureImportanceAnalyses.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             modelVersionId: item.modelVersionId !== undefined ? {
@@ -5239,9 +5243,10 @@ id
         if (response && response.data && response.data.updateManyModelArtifact) {
           return response.data.updateManyModelArtifact;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -5336,7 +5341,7 @@ id
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5376,9 +5381,10 @@ id
         if (response && response.data && response.data.deleteOneModelArtifact) {
           return response.data.deleteOneModelArtifact;
         } else {
-          return null as any;
+          return null as unknown as ModelArtifactType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -5476,11 +5482,11 @@ id
    * @param whereInput - Optional custom where input.
    * @returns The retrieved ModelArtifact or null.
    */
-  async get(props: ModelArtifactType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ModelArtifactType | null> {
+  async get(props: ModelArtifactType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<ModelArtifactType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5516,7 +5522,8 @@ id
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getModelArtifact ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -5591,7 +5598,7 @@ id
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5619,7 +5626,8 @@ id
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.modelArtifacts ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -5692,11 +5700,11 @@ id
    * @param whereInput - Optional custom where input.
    * @returns An array of found ModelArtifact records or null.
    */
-  async findMany(props: ModelArtifactType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<ModelArtifactType[] | null> {
+  async findMany(props: ModelArtifactType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<ModelArtifactType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5745,7 +5753,8 @@ id
         } else {
           return [] as ModelArtifactType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

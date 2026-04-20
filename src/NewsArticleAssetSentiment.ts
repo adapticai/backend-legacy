@@ -41,7 +41,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -176,12 +176,12 @@ import { logger } from './utils/logger';
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
     institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalHoldings.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -202,12 +202,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: props.asset.institutionalFlowSignals ? 
-      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalFlowSignals.map((item: any) => ({
+      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalFlowSignals.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalFlowSignals.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -244,9 +244,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOneNewsArticleAssetSentiment) {
             return response.data.createOneNewsArticleAssetSentiment;
           } else {
-            return null as any;
+            return null as unknown as NewsArticleAssetSentimentType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -342,7 +343,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -388,9 +389,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyNewsArticleAssetSentiment) {
           return response.data.createManyNewsArticleAssetSentiment;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -484,7 +486,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -799,11 +801,11 @@ import { logger } from './utils/logger';
             set: props.asset.bidPrice
           } : undefined,
     institutionalHoldings: props.asset.institutionalHoldings ? 
-    Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 && props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.asset.institutionalHoldings.map((item: any) => ({
+    Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 && props.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.asset.institutionalHoldings.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.asset.institutionalHoldings.map((item: any) => ({
+} : { upsert: props.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -854,11 +856,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: props.asset.institutionalFlowSignals ? 
-    Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 && props.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.asset.institutionalFlowSignals.map((item: any) => ({
+    Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 && props.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.asset.institutionalFlowSignals.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.asset.institutionalFlowSignals.map((item: any) => ({
+} : { upsert: props.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -954,12 +956,12 @@ import { logger } from './utils/logger';
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
     institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalHoldings.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -980,12 +982,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: props.asset.institutionalFlowSignals ? 
-      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalFlowSignals.map((item: any) => ({
+      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalFlowSignals.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalFlowSignals.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1021,9 +1023,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOneNewsArticleAssetSentiment) {
           return response.data.updateOneNewsArticleAssetSentiment;
         } else {
-          return null as any;
+          return null as unknown as NewsArticleAssetSentimentType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1121,7 +1124,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1262,12 +1265,12 @@ import { logger } from './utils/logger';
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
     institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalHoldings.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1288,12 +1291,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: props.asset.institutionalFlowSignals ? 
-      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalFlowSignals.map((item: any) => ({
+      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalFlowSignals.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalFlowSignals.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1601,11 +1604,11 @@ import { logger } from './utils/logger';
             set: props.asset.bidPrice
           } : undefined,
     institutionalHoldings: props.asset.institutionalHoldings ? 
-    Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 && props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.asset.institutionalHoldings.map((item: any) => ({
+    Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 && props.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.asset.institutionalHoldings.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.asset.institutionalHoldings.map((item: any) => ({
+} : { upsert: props.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1656,11 +1659,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: props.asset.institutionalFlowSignals ? 
-    Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 && props.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: props.asset.institutionalFlowSignals.map((item: any) => ({
+    Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 && props.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.asset.institutionalFlowSignals.map((item) => ({
       id: item.id
     }))
-} : { upsert: props.asset.institutionalFlowSignals.map((item: any) => ({
+} : { upsert: props.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1756,12 +1759,12 @@ import { logger } from './utils/logger';
         askPrice: props.asset.askPrice !== undefined ? props.asset.askPrice : undefined,
         bidPrice: props.asset.bidPrice !== undefined ? props.asset.bidPrice : undefined,
     institutionalHoldings: props.asset.institutionalHoldings ? 
-      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalHoldings.map((item: any) => ({
+      Array.isArray(props.asset.institutionalHoldings) && props.asset.institutionalHoldings.length > 0 &&  props.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalHoldings.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1782,12 +1785,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: props.asset.institutionalFlowSignals ? 
-      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      props.asset.institutionalFlowSignals.map((item: any) => ({
+      Array.isArray(props.asset.institutionalFlowSignals) && props.asset.institutionalFlowSignals.length > 0 &&  props.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.asset.institutionalFlowSignals.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: props.asset.institutionalFlowSignals.map((item: any) => ({
+ : { connectOrCreate: props.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -1823,9 +1826,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOneNewsArticleAssetSentiment) {
           return response.data.upsertOneNewsArticleAssetSentiment;
         } else {
-          return null as any;
+          return null as unknown as NewsArticleAssetSentimentType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1923,7 +1927,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2239,11 +2243,11 @@ import { logger } from './utils/logger';
             set: prop.asset.bidPrice
           } : undefined,
     institutionalHoldings: prop.asset.institutionalHoldings ? 
-    Array.isArray(prop.asset.institutionalHoldings) && prop.asset.institutionalHoldings.length > 0 && prop.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.asset.institutionalHoldings.map((item: any) => ({
+    Array.isArray(prop.asset.institutionalHoldings) && prop.asset.institutionalHoldings.length > 0 && prop.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.asset.institutionalHoldings.map((item) => ({
       id: item.id
     }))
-} : { upsert: prop.asset.institutionalHoldings.map((item: any) => ({
+} : { upsert: prop.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -2294,11 +2298,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: prop.asset.institutionalFlowSignals ? 
-    Array.isArray(prop.asset.institutionalFlowSignals) && prop.asset.institutionalFlowSignals.length > 0 && prop.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: prop.asset.institutionalFlowSignals.map((item: any) => ({
+    Array.isArray(prop.asset.institutionalFlowSignals) && prop.asset.institutionalFlowSignals.length > 0 && prop.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.asset.institutionalFlowSignals.map((item) => ({
       id: item.id
     }))
-} : { upsert: prop.asset.institutionalFlowSignals.map((item: any) => ({
+} : { upsert: prop.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -2394,12 +2398,12 @@ import { logger } from './utils/logger';
         askPrice: prop.asset.askPrice !== undefined ? prop.asset.askPrice : undefined,
         bidPrice: prop.asset.bidPrice !== undefined ? prop.asset.bidPrice : undefined,
     institutionalHoldings: prop.asset.institutionalHoldings ? 
-      Array.isArray(prop.asset.institutionalHoldings) && prop.asset.institutionalHoldings.length > 0 &&  prop.asset.institutionalHoldings.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.asset.institutionalHoldings.map((item: any) => ({
+      Array.isArray(prop.asset.institutionalHoldings) && prop.asset.institutionalHoldings.length > 0 &&  prop.asset.institutionalHoldings.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.asset.institutionalHoldings.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: prop.asset.institutionalHoldings.map((item: any) => ({
+ : { connectOrCreate: prop.asset.institutionalHoldings.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -2420,12 +2424,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     institutionalFlowSignals: prop.asset.institutionalFlowSignals ? 
-      Array.isArray(prop.asset.institutionalFlowSignals) && prop.asset.institutionalFlowSignals.length > 0 &&  prop.asset.institutionalFlowSignals.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      prop.asset.institutionalFlowSignals.map((item: any) => ({
+      Array.isArray(prop.asset.institutionalFlowSignals) && prop.asset.institutionalFlowSignals.length > 0 &&  prop.asset.institutionalFlowSignals.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.asset.institutionalFlowSignals.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: prop.asset.institutionalFlowSignals.map((item: any) => ({
+ : { connectOrCreate: prop.asset.institutionalFlowSignals.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           symbol: item.symbol !== undefined ? {
@@ -2462,9 +2466,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyNewsArticleAssetSentiment) {
           return response.data.updateManyNewsArticleAssetSentiment;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2559,7 +2564,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2599,9 +2604,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOneNewsArticleAssetSentiment) {
           return response.data.deleteOneNewsArticleAssetSentiment;
         } else {
-          return null as any;
+          return null as unknown as NewsArticleAssetSentimentType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2699,11 +2705,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved NewsArticleAssetSentiment or null.
    */
-  async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType | null> {
+  async get(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<NewsArticleAssetSentimentType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2743,7 +2749,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getNewsArticleAssetSentiment ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -2818,7 +2825,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2846,7 +2853,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.newsArticleAssetSentiments ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -2919,11 +2927,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found NewsArticleAssetSentiment records or null.
    */
-  async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<NewsArticleAssetSentimentType[] | null> {
+  async findMany(props: NewsArticleAssetSentimentType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<NewsArticleAssetSentimentType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2978,7 +2986,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as NewsArticleAssetSentimentType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

@@ -283,10 +283,10 @@ const handleCreateOperation = (
 
     // Add dynamic handling for cases where accessor is an object with only one field 'id'. If so, use 'connect' instead of 'connectOrCreate', and use accessor.id instead of accessor.
     const openingLine = field.type.isList
-      ? `Array.isArray(${accessor}) && ${accessor}.length > 0 &&  ${accessor}.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-    ${indent}connect: ${indent} ${accessor}.map((item: any) => ({
+      ? `Array.isArray(${accessor}) && ${accessor}.length > 0 &&  ${accessor}.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+    ${indent}connect: ${indent} ${accessor}.map((item) => ({
     ${indent}   id: item.id
-    ${indent}}))\n }\n : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
+    ${indent}}))\n }\n : { ${operationFieldName}: ${accessor}.map((item) => ({\n`
       : `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && Object.keys(${accessor})[0] === 'id'
     ? { connect: {
      ${indent} id: ${accessor}.id
@@ -491,14 +491,14 @@ const handleUpdateOperation = (
 
     // Dynamic handling for cases where accessor is {id: ...} or {symbol: ...} only or array of such objects:
     const singleIdCondition = `typeof ${accessor} === 'object' && Object.keys(${accessor}).length === 1 && (Object.keys(${accessor})[0] === 'id' || Object.keys(${accessor})[0] === 'symbol')`;
-    const arrayOfIdCondition = `Array.isArray(${accessor}) && ${accessor}.length > 0 && ${accessor}.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1)`;
+    const arrayOfIdCondition = `Array.isArray(${accessor}) && ${accessor}.length > 0 && ${accessor}.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1)`;
 
     const openingLine = field.type.isList
       ? `${arrayOfIdCondition} ? {
-${indent}connect: ${accessor}.map((item: any) => ({
+${indent}connect: ${accessor}.map((item) => ({
 ${indent}  id: item.id
 ${indent}}))
-} : { ${operationFieldName}: ${accessor}.map((item: any) => ({\n`
+} : { ${operationFieldName}: ${accessor}.map((item) => ({\n`
       : `${singleIdCondition}
 ? {
 ${indent}connect: {
@@ -968,7 +968,7 @@ ${allocationValidationImport}  `;
       }// Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -1016,9 +1016,10 @@ ${allocationValidationImport}  `;
           if (response && response.data && response.data.createOne${capitalModelName}) {
             return response.data.createOne${capitalModelName};
           } else {
-            return null as any;
+            return null as unknown as ${capitalModelName}Type;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -1114,7 +1115,7 @@ ${allocationValidationImport}  `;
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1161,9 +1162,10 @@ ${allocationValidationImport}  `;
         if (response && response.data && response.data.createMany${capitalModelName}) {
           return response.data.createMany${capitalModelName};
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1271,7 +1273,7 @@ ${allocationValidationImport}  `;
     }// Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1326,9 +1328,10 @@ ${allocationValidationImport}  `;
         if (response && response.data && response.data.updateOne${capitalModelName}) {
           return response.data.updateOne${capitalModelName};
         } else {
-          return null as any;
+          return null as unknown as ${capitalModelName}Type;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1426,7 +1429,7 @@ ${allocationValidationImport}  `;
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1490,9 +1493,10 @@ ${allocationValidationImport}  `;
         if (response && response.data && response.data.upsertOne${capitalModelName}) {
           return response.data.upsertOne${capitalModelName};
         } else {
-          return null as any;
+          return null as unknown as ${capitalModelName}Type;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1590,7 +1594,7 @@ ${allocationValidationImport}  `;
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1647,9 +1651,10 @@ ${allocationValidationImport}  `;
         if (response && response.data && response.data.updateMany${capitalModelName}) {
           return response.data.updateMany${capitalModelName};
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1744,7 +1749,7 @@ ${allocationValidationImport}  `;
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1784,9 +1789,10 @@ ${allocationValidationImport}  `;
         if (response && response.data && response.data.deleteOne${capitalModelName}) {
           return response.data.deleteOne${capitalModelName};
         } else {
-          return null as any;
+          return null as unknown as ${capitalModelName}Type;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -1884,11 +1890,11 @@ ${allocationValidationImport}  `;
    * @param whereInput - Optional custom where input.
    * @returns The retrieved ${capitalModelName} or null.
    */
-  async get(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<${capitalModelName}Type | null> {
+  async get(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<${capitalModelName}Type | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1930,7 +1936,8 @@ ${allocationValidationImport}  `;
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.get${capitalModelName} ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -2005,7 +2012,7 @@ ${allocationValidationImport}  `;
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2033,7 +2040,8 @@ ${allocationValidationImport}  `;
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.${lowerCaseFirstLetter(pluralModelName)} ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -2106,11 +2114,11 @@ ${allocationValidationImport}  `;
    * @param whereInput - Optional custom where input.
    * @returns An array of found ${capitalModelName} records or null.
    */
-  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<${capitalModelName}Type[] | null> {
+  async findMany(props: ${capitalModelName}Type, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<${capitalModelName}Type[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2163,7 +2171,8 @@ ${allocationValidationImport}  `;
         } else {
           return [] as ${capitalModelName}Type[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure

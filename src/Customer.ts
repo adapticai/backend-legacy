@@ -219,7 +219,7 @@ import { logger } from './utils/logger';
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
-      let lastError: any = null;
+      let lastError: unknown = null;
 
       // Retry loop to handle potential database connection issues
       while (retryCount < MAX_RETRIES) {
@@ -251,12 +251,12 @@ import { logger } from './utils/logger';
   stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
   users: props.users ? 
-    Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.users.map((item: any) => ({
+    Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.users.map((item) => ({
          id: item.id
       }))
  }
- : { connectOrCreate: props.users.map((item: any) => ({
+ : { connectOrCreate: props.users.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         email: item.email !== undefined ? item.email : undefined,
@@ -278,12 +278,12 @@ import { logger } from './utils/logger';
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
     accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -309,12 +309,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.sessions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -328,12 +328,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.authenticators.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -348,12 +348,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.alpacaAccounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -501,12 +501,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -542,12 +542,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.linkedProviders.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -572,12 +572,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accountLinkingRequests.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -609,12 +609,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.reviewedWaitlistEntries.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -707,9 +707,10 @@ import { logger } from './utils/logger';
           if (response && response.data && response.data.createOneCustomer) {
             return response.data.createOneCustomer;
           } else {
-            return null as any;
+            return null as unknown as CustomerType;
           }
-        } catch (error: any) {
+        } catch (caughtError: unknown) {
+          const error = caughtError as Error & { networkError?: { message?: string } };
           lastError = error;
 
           // Check for constraint violations FIRST - these are NEVER retryable
@@ -805,7 +806,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -852,9 +853,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.createManyCustomer) {
           return response.data.createManyCustomer;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -948,7 +950,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -1002,11 +1004,11 @@ import { logger } from './utils/logger';
             set: props.updatedAt 
            } : undefined,
   users: props.users ? 
-  Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.users.map((item: any) => ({
+  Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.users.map((item) => ({
     id: item.id
   }))
-} : { upsert: props.users.map((item: any) => ({
+} : { upsert: props.users.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         email: item.email !== undefined ? item.email : undefined,
@@ -1058,11 +1060,11 @@ import { logger } from './utils/logger';
             set: item.openaiModel
           } : undefined,
     accounts: item.accounts ? 
-    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accounts.map((item: any) => ({
+    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.accounts.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.accounts.map((item: any) => ({
+} : { upsert: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -1123,11 +1125,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.sessions.map((item: any) => ({
+    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.sessions.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.sessions.map((item: any) => ({
+} : { upsert: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1152,11 +1154,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.authenticators.map((item: any) => ({
+    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.authenticators.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.authenticators.map((item: any) => ({
+} : { upsert: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1185,11 +1187,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.alpacaAccounts.map((item: any) => ({
+    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.alpacaAccounts.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.alpacaAccounts.map((item: any) => ({
+} : { upsert: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -1595,11 +1597,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-      Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.alerts.map((item: any) => ({
+      Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.alerts.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.alerts.map((item: any) => ({
+} : { upsert: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -1809,12 +1811,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -1850,11 +1852,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.linkedProviders.map((item: any) => ({
+    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.linkedProviders.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.linkedProviders.map((item: any) => ({
+} : { upsert: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1905,11 +1907,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accountLinkingRequests.map((item: any) => ({
+    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.accountLinkingRequests.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.accountLinkingRequests.map((item: any) => ({
+} : { upsert: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -1979,11 +1981,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-    Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 && item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.reviewedWaitlistEntries.map((item: any) => ({
+    Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 && item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.reviewedWaitlistEntries.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -2204,12 +2206,12 @@ import { logger } from './utils/logger';
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
     accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -2235,12 +2237,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.sessions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2254,12 +2256,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.authenticators.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2274,12 +2276,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.alpacaAccounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -2427,12 +2429,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -2468,12 +2470,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.linkedProviders.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2498,12 +2500,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accountLinkingRequests.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2535,12 +2537,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.reviewedWaitlistEntries.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -2632,9 +2634,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateOneCustomer) {
           return response.data.updateOneCustomer;
         } else {
-          return null as any;
+          return null as unknown as CustomerType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -2732,7 +2735,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -2777,12 +2780,12 @@ import { logger } from './utils/logger';
   stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
   users: props.users ? 
-    Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-      connect:    props.users.map((item: any) => ({
+    Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.users.map((item) => ({
          id: item.id
       }))
  }
- : { connectOrCreate: props.users.map((item: any) => ({
+ : { connectOrCreate: props.users.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         email: item.email !== undefined ? item.email : undefined,
@@ -2804,12 +2807,12 @@ import { logger } from './utils/logger';
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
     accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -2835,12 +2838,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.sessions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2854,12 +2857,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.authenticators.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -2874,12 +2877,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.alpacaAccounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -3027,12 +3030,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -3068,12 +3071,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.linkedProviders.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3098,12 +3101,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accountLinkingRequests.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3135,12 +3138,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.reviewedWaitlistEntries.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -3240,11 +3243,11 @@ import { logger } from './utils/logger';
             set: props.stripeCurrentPeriodEnd 
            } : undefined,
   users: props.users ? 
-  Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: props.users.map((item: any) => ({
+  Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.users.map((item) => ({
     id: item.id
   }))
-} : { upsert: props.users.map((item: any) => ({
+} : { upsert: props.users.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         email: item.email !== undefined ? item.email : undefined,
@@ -3296,11 +3299,11 @@ import { logger } from './utils/logger';
             set: item.openaiModel
           } : undefined,
     accounts: item.accounts ? 
-    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accounts.map((item: any) => ({
+    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.accounts.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.accounts.map((item: any) => ({
+} : { upsert: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -3361,11 +3364,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.sessions.map((item: any) => ({
+    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.sessions.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.sessions.map((item: any) => ({
+} : { upsert: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3390,11 +3393,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.authenticators.map((item: any) => ({
+    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.authenticators.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.authenticators.map((item: any) => ({
+} : { upsert: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -3423,11 +3426,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.alpacaAccounts.map((item: any) => ({
+    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.alpacaAccounts.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.alpacaAccounts.map((item: any) => ({
+} : { upsert: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -3833,11 +3836,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-      Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.alerts.map((item: any) => ({
+      Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.alerts.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.alerts.map((item: any) => ({
+} : { upsert: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -4047,12 +4050,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -4088,11 +4091,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.linkedProviders.map((item: any) => ({
+    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.linkedProviders.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.linkedProviders.map((item: any) => ({
+} : { upsert: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -4143,11 +4146,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accountLinkingRequests.map((item: any) => ({
+    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.accountLinkingRequests.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.accountLinkingRequests.map((item: any) => ({
+} : { upsert: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -4217,11 +4220,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-    Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 && item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.reviewedWaitlistEntries.map((item: any) => ({
+    Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 && item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.reviewedWaitlistEntries.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -4442,12 +4445,12 @@ import { logger } from './utils/logger';
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
     accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -4473,12 +4476,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.sessions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -4492,12 +4495,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.authenticators.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -4512,12 +4515,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.alpacaAccounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -4665,12 +4668,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -4706,12 +4709,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.linkedProviders.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -4736,12 +4739,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accountLinkingRequests.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -4773,12 +4776,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.reviewedWaitlistEntries.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -4870,9 +4873,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.upsertOneCustomer) {
           return response.data.upsertOneCustomer;
         } else {
-          return null as any;
+          return null as unknown as CustomerType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -4970,7 +4974,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -5025,11 +5029,11 @@ import { logger } from './utils/logger';
             set: prop.updatedAt 
            } : undefined,
   users: prop.users ? 
-  Array.isArray(prop.users) && prop.users.length > 0 && prop.users.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-  connect: prop.users.map((item: any) => ({
+  Array.isArray(prop.users) && prop.users.length > 0 && prop.users.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.users.map((item) => ({
     id: item.id
   }))
-} : { upsert: prop.users.map((item: any) => ({
+} : { upsert: prop.users.map((item) => ({
       where: {
         id: item.id !== undefined ? item.id : undefined,
         email: item.email !== undefined ? item.email : undefined,
@@ -5081,11 +5085,11 @@ import { logger } from './utils/logger';
             set: item.openaiModel
           } : undefined,
     accounts: item.accounts ? 
-    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accounts.map((item: any) => ({
+    Array.isArray(item.accounts) && item.accounts.length > 0 && item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.accounts.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.accounts.map((item: any) => ({
+} : { upsert: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -5146,11 +5150,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.sessions.map((item: any) => ({
+    Array.isArray(item.sessions) && item.sessions.length > 0 && item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.sessions.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.sessions.map((item: any) => ({
+} : { upsert: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -5175,11 +5179,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.authenticators.map((item: any) => ({
+    Array.isArray(item.authenticators) && item.authenticators.length > 0 && item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.authenticators.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.authenticators.map((item: any) => ({
+} : { upsert: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -5208,11 +5212,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.alpacaAccounts.map((item: any) => ({
+    Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 && item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.alpacaAccounts.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.alpacaAccounts.map((item: any) => ({
+} : { upsert: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -5618,11 +5622,11 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-      Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-      connect: item.alerts.map((item: any) => ({
+      Array.isArray(item.alerts) && item.alerts.length > 0 && item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.alerts.map((item) => ({
         id: item.id
       }))
-} : { upsert: item.alerts.map((item: any) => ({
+} : { upsert: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -5832,12 +5836,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -5873,11 +5877,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.linkedProviders.map((item: any) => ({
+    Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 && item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.linkedProviders.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.linkedProviders.map((item: any) => ({
+} : { upsert: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -5928,11 +5932,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.accountLinkingRequests.map((item: any) => ({
+    Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 && item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.accountLinkingRequests.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.accountLinkingRequests.map((item: any) => ({
+} : { upsert: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -6002,11 +6006,11 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-    Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 && item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
-    connect: item.reviewedWaitlistEntries.map((item: any) => ({
+    Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 && item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: item.reviewedWaitlistEntries.map((item) => ({
       id: item.id
     }))
-} : { upsert: item.reviewedWaitlistEntries.map((item: any) => ({
+} : { upsert: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -6227,12 +6231,12 @@ import { logger } from './utils/logger';
         openaiAPIKey: item.openaiAPIKey !== undefined ? item.openaiAPIKey : undefined,
         openaiModel: item.openaiModel !== undefined ? item.openaiModel : undefined,
     accounts: item.accounts ? 
-      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accounts.map((item: any) => ({
+      Array.isArray(item.accounts) && item.accounts.length > 0 &&  item.accounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accounts.map((item: any) => ({
+ : { connectOrCreate: item.accounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           providerAccountId: item.providerAccountId !== undefined ? item.providerAccountId : undefined,
@@ -6258,12 +6262,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     sessions: item.sessions ? 
-      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.sessions.map((item: any) => ({
+      Array.isArray(item.sessions) && item.sessions.length > 0 &&  item.sessions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.sessions.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.sessions.map((item: any) => ({
+ : { connectOrCreate: item.sessions.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -6277,12 +6281,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     authenticators: item.authenticators ? 
-      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.authenticators.map((item: any) => ({
+      Array.isArray(item.authenticators) && item.authenticators.length > 0 &&  item.authenticators.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.authenticators.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.authenticators.map((item: any) => ({
+ : { connectOrCreate: item.authenticators.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -6297,12 +6301,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     alpacaAccounts: item.alpacaAccounts ? 
-      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.alpacaAccounts.map((item: any) => ({
+      Array.isArray(item.alpacaAccounts) && item.alpacaAccounts.length > 0 &&  item.alpacaAccounts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.alpacaAccounts.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.alpacaAccounts.map((item: any) => ({
+ : { connectOrCreate: item.alpacaAccounts.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           type: item.type !== undefined ? {
@@ -6450,12 +6454,12 @@ import { logger } from './utils/logger';
         }
       } : undefined,
       alerts: item.alerts ? 
-        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-          connect:        item.alerts.map((item: any) => ({
+        Array.isArray(item.alerts) && item.alerts.length > 0 &&  item.alerts.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alerts.map((item) => ({
              id: item.id
           }))
  }
- : { connectOrCreate: item.alerts.map((item: any) => ({
+ : { connectOrCreate: item.alerts.map((item) => ({
           where: {
             id: item.id !== undefined ? item.id : undefined,
             alpacaAccountId: item.alpacaAccountId !== undefined ? {
@@ -6491,12 +6495,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     linkedProviders: item.linkedProviders ? 
-      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.linkedProviders.map((item: any) => ({
+      Array.isArray(item.linkedProviders) && item.linkedProviders.length > 0 &&  item.linkedProviders.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.linkedProviders.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.linkedProviders.map((item: any) => ({
+ : { connectOrCreate: item.linkedProviders.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -6521,12 +6525,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     accountLinkingRequests: item.accountLinkingRequests ? 
-      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.accountLinkingRequests.map((item: any) => ({
+      Array.isArray(item.accountLinkingRequests) && item.accountLinkingRequests.length > 0 &&  item.accountLinkingRequests.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.accountLinkingRequests.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.accountLinkingRequests.map((item: any) => ({
+ : { connectOrCreate: item.accountLinkingRequests.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           userId: item.userId !== undefined ? {
@@ -6558,12 +6562,12 @@ import { logger } from './utils/logger';
       }))
     } : undefined,
     reviewedWaitlistEntries: item.reviewedWaitlistEntries ? 
-      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: any) => typeof item === 'object' && 'id' in item && Object.keys(item).length === 1) ? {
-        connect:      item.reviewedWaitlistEntries.map((item: any) => ({
+      Array.isArray(item.reviewedWaitlistEntries) && item.reviewedWaitlistEntries.length > 0 &&  item.reviewedWaitlistEntries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      item.reviewedWaitlistEntries.map((item) => ({
            id: item.id
         }))
  }
- : { connectOrCreate: item.reviewedWaitlistEntries.map((item: any) => ({
+ : { connectOrCreate: item.reviewedWaitlistEntries.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
           email: item.email !== undefined ? item.email : undefined,
@@ -6656,9 +6660,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.updateManyCustomer) {
           return response.data.updateManyCustomer;
         } else {
-          return null as any;
+          return null;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -6753,7 +6758,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -6793,9 +6798,10 @@ import { logger } from './utils/logger';
         if (response && response.data && response.data.deleteOneCustomer) {
           return response.data.deleteOneCustomer;
         } else {
-          return null as any;
+          return null as unknown as CustomerType;
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check for constraint violations FIRST - these are NEVER retryable
@@ -6893,11 +6899,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved Customer or null.
    */
-  async get(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<CustomerType | null> {
+  async get(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<CustomerType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -6944,7 +6950,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.getCustomer ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -7019,7 +7026,7 @@ import { logger } from './utils/logger';
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7047,7 +7054,8 @@ import { logger } from './utils/logger';
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
         return response.data?.customers ?? null;
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
@@ -7120,11 +7128,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found Customer records or null.
    */
-  async findMany(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<CustomerType[] | null> {
+  async findMany(props: CustomerType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<CustomerType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
-    let lastError: any = null;
+    let lastError: unknown = null;
 
     // Retry loop to handle potential database connection issues
     while (retryCount < MAX_RETRIES) {
@@ -7188,7 +7196,8 @@ import { logger } from './utils/logger';
         } else {
           return [] as CustomerType[];
         }
-      } catch (error: any) {
+      } catch (caughtError: unknown) {
+        const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
