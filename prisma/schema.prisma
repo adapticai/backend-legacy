@@ -1738,6 +1738,7 @@ model Trade {
   @@index([alpacaAccountId])
   @@index([alpacaAccountId, status])
   @@index([symbol])
+  @@index([updatedAt])
   @@map(name: "trades")
 }
 
@@ -1787,6 +1788,7 @@ model Action {
 
   @@index([tradeId])
   @@index([tradeId, status])
+  @@index([updatedAt])
   @@map(name: "actions")
 }
 
