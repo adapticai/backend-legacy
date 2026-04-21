@@ -206,13 +206,27 @@ import { logger } from './utils/logger';
             continue;
           }
 
-          // Log structured error details and rethrow
-          logger.error("Database create operation failed", {
-            operation: 'createOneAccountDecisionRecord',
-            model: 'AccountDecisionRecord',
-            error: String(error),
-            isRetryable: isConnectionError,
-          });
+          // Log structured error details and rethrow.
+          // Demote transient failures to WARN with explicit transient+recoveryHint
+          // metadata so log analytics can distinguish recoverable upstream retries
+          // from true defects.
+          if (isConnectionError) {
+            logger.warn("Database create operation failed (transient after retries)", {
+              operation: 'createOneAccountDecisionRecord',
+              model: 'AccountDecisionRecord',
+              error: String(error),
+              isRetryable: true,
+              transient: true,
+              recoveryHint: "Upstream caller should retry on next cycle",
+            });
+          } else {
+            logger.error("Database create operation failed", {
+              operation: 'createOneAccountDecisionRecord',
+              model: 'AccountDecisionRecord',
+              error: String(error),
+              isRetryable: false,
+            });
+          }
           throw error;
         }
       }
@@ -372,13 +386,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database createMany operation failed", {
-          operation: 'createManyAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database createMany operation failed (transient after retries)", {
+            operation: 'createManyAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database createMany operation failed", {
+            operation: 'createManyAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -589,14 +614,26 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database update operation failed", {
-          operation: 'updateOneAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database update operation failed (transient after retries)", {
+            operation: 'updateOneAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database update operation failed", {
+            operation: 'updateOneAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -844,14 +881,26 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database upsert operation failed", {
-          operation: 'upsertOneAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database upsert operation failed (transient after retries)", {
+            operation: 'upsertOneAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database upsert operation failed", {
+            operation: 'upsertOneAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1062,13 +1111,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database updateMany operation failed", {
-          operation: 'updateManyAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database updateMany operation failed (transient after retries)", {
+            operation: 'updateManyAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database updateMany operation failed", {
+            operation: 'updateManyAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1205,14 +1265,26 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database delete operation failed", {
-          operation: 'deleteOneAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database delete operation failed (transient after retries)", {
+            operation: 'deleteOneAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database delete operation failed", {
+            operation: 'deleteOneAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1336,13 +1408,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database get operation failed", {
-          operation: 'getAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database get operation failed (transient after retries)", {
+            operation: 'getAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database get operation failed", {
+            operation: 'getAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1440,13 +1523,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database getAll operation failed", {
-          operation: 'getAllAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database getAll operation failed (transient after retries)", {
+            operation: 'getAllAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database getAll operation failed", {
+            operation: 'getAllAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1585,13 +1679,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database findMany operation failed", {
-          operation: 'findManyAccountDecisionRecord',
-          model: 'AccountDecisionRecord',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database findMany operation failed (transient after retries)", {
+            operation: 'findManyAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database findMany operation failed", {
+            operation: 'findManyAccountDecisionRecord',
+            model: 'AccountDecisionRecord',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }

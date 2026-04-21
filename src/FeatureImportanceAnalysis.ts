@@ -1049,13 +1049,27 @@ id
             continue;
           }
 
-          // Log structured error details and rethrow
-          logger.error("Database create operation failed", {
-            operation: 'createOneFeatureImportanceAnalysis',
-            model: 'FeatureImportanceAnalysis',
-            error: String(error),
-            isRetryable: isConnectionError,
-          });
+          // Log structured error details and rethrow.
+          // Demote transient failures to WARN with explicit transient+recoveryHint
+          // metadata so log analytics can distinguish recoverable upstream retries
+          // from true defects.
+          if (isConnectionError) {
+            logger.warn("Database create operation failed (transient after retries)", {
+              operation: 'createOneFeatureImportanceAnalysis',
+              model: 'FeatureImportanceAnalysis',
+              error: String(error),
+              isRetryable: true,
+              transient: true,
+              recoveryHint: "Upstream caller should retry on next cycle",
+            });
+          } else {
+            logger.error("Database create operation failed", {
+              operation: 'createOneFeatureImportanceAnalysis',
+              model: 'FeatureImportanceAnalysis',
+              error: String(error),
+              isRetryable: false,
+            });
+          }
           throw error;
         }
       }
@@ -1202,13 +1216,24 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database createMany operation failed", {
-          operation: 'createManyFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database createMany operation failed (transient after retries)", {
+            operation: 'createManyFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database createMany operation failed", {
+            operation: 'createManyFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -4597,14 +4622,26 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database update operation failed", {
-          operation: 'updateOneFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database update operation failed (transient after retries)", {
+            operation: 'updateOneFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database update operation failed", {
+            operation: 'updateOneFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -8803,14 +8840,26 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database upsert operation failed", {
-          operation: 'upsertOneFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database upsert operation failed (transient after retries)", {
+            operation: 'upsertOneFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database upsert operation failed", {
+            operation: 'upsertOneFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -12199,13 +12248,24 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database updateMany operation failed", {
-          operation: 'updateManyFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database updateMany operation failed (transient after retries)", {
+            operation: 'updateManyFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database updateMany operation failed", {
+            operation: 'updateManyFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -12342,14 +12402,26 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database delete operation failed", {
-          operation: 'deleteOneFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database delete operation failed (transient after retries)", {
+            operation: 'deleteOneFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database delete operation failed", {
+            operation: 'deleteOneFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -12460,13 +12532,24 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database get operation failed", {
-          operation: 'getFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database get operation failed (transient after retries)", {
+            operation: 'getFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database get operation failed", {
+            operation: 'getFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -12564,13 +12647,24 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database getAll operation failed", {
-          operation: 'getAllFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database getAll operation failed (transient after retries)", {
+            operation: 'getAllFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database getAll operation failed", {
+            operation: 'getAllFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -12694,13 +12788,24 @@ id
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database findMany operation failed", {
-          operation: 'findManyFeatureImportanceAnalysis',
-          model: 'FeatureImportanceAnalysis',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database findMany operation failed (transient after retries)", {
+            operation: 'findManyFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database findMany operation failed", {
+            operation: 'findManyFeatureImportanceAnalysis',
+            model: 'FeatureImportanceAnalysis',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }

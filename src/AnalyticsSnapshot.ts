@@ -158,13 +158,27 @@ import { logger } from './utils/logger';
             continue;
           }
 
-          // Log structured error details and rethrow
-          logger.error("Database create operation failed", {
-            operation: 'createOneAnalyticsSnapshot',
-            model: 'AnalyticsSnapshot',
-            error: String(error),
-            isRetryable: isConnectionError,
-          });
+          // Log structured error details and rethrow.
+          // Demote transient failures to WARN with explicit transient+recoveryHint
+          // metadata so log analytics can distinguish recoverable upstream retries
+          // from true defects.
+          if (isConnectionError) {
+            logger.warn("Database create operation failed (transient after retries)", {
+              operation: 'createOneAnalyticsSnapshot',
+              model: 'AnalyticsSnapshot',
+              error: String(error),
+              isRetryable: true,
+              transient: true,
+              recoveryHint: "Upstream caller should retry on next cycle",
+            });
+          } else {
+            logger.error("Database create operation failed", {
+              operation: 'createOneAnalyticsSnapshot',
+              model: 'AnalyticsSnapshot',
+              error: String(error),
+              isRetryable: false,
+            });
+          }
           throw error;
         }
       }
@@ -300,13 +314,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database createMany operation failed", {
-          operation: 'createManyAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database createMany operation failed (transient after retries)", {
+            operation: 'createManyAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database createMany operation failed", {
+            operation: 'createManyAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -461,14 +486,26 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database update operation failed", {
-          operation: 'updateOneAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database update operation failed (transient after retries)", {
+            operation: 'updateOneAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database update operation failed", {
+            operation: 'updateOneAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -623,14 +660,26 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database upsert operation failed", {
-          operation: 'upsertOneAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database upsert operation failed (transient after retries)", {
+            operation: 'upsertOneAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database upsert operation failed", {
+            operation: 'upsertOneAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -785,13 +834,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database updateMany operation failed", {
-          operation: 'updateManyAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database updateMany operation failed (transient after retries)", {
+            operation: 'updateManyAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database updateMany operation failed", {
+            operation: 'updateManyAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -928,14 +988,26 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database delete operation failed", {
-          operation: 'deleteOneAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          recordId: props.id,
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database delete operation failed (transient after retries)", {
+            operation: 'deleteOneAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database delete operation failed", {
+            operation: 'deleteOneAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            recordId: props.id,
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1046,13 +1118,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database get operation failed", {
-          operation: 'getAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database get operation failed (transient after retries)", {
+            operation: 'getAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database get operation failed", {
+            operation: 'getAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1150,13 +1233,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database getAll operation failed", {
-          operation: 'getAllAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database getAll operation failed (transient after retries)", {
+            operation: 'getAllAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database getAll operation failed", {
+            operation: 'getAllAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
@@ -1280,13 +1374,24 @@ import { logger } from './utils/logger';
           continue;
         }
 
-        // Log structured error details and rethrow
-        logger.error("Database findMany operation failed", {
-          operation: 'findManyAnalyticsSnapshot',
-          model: 'AnalyticsSnapshot',
-          error: String(error),
-          isRetryable: isConnectionError,
-        });
+        // Log structured error details and rethrow (transient -> WARN).
+        if (isConnectionError) {
+          logger.warn("Database findMany operation failed (transient after retries)", {
+            operation: 'findManyAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: true,
+            transient: true,
+            recoveryHint: "Upstream caller should retry on next cycle",
+          });
+        } else {
+          logger.error("Database findMany operation failed", {
+            operation: 'findManyAnalyticsSnapshot',
+            model: 'AnalyticsSnapshot',
+            error: String(error),
+            isRetryable: false,
+          });
+        }
         throw error;
       }
     }
