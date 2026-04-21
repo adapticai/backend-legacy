@@ -264,7 +264,36 @@ async function enqueueOperation<T>(
         const result = await operation();
         resolve(result);
       } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
+
+        const isTimeoutLike =
+          error instanceof Error &&
+          (error.message.includes('aborted due to timeout') ||
+            error.message.includes('TimeoutError') ||
+            error.message.includes('ETIMEDOUT') ||
+            error.message.includes('status code 504'));
+
+        // deleteOne* mutations are naturally idempotent: if the server receives
+        // the request and the record exists, it is deleted; a subsequent delete
+        // of the same record returns the "record not found" race error that
+        // callers already swallow. When a delete TIMES OUT, the Prisma query
+        // has almost certainly already run server-side, so retrying issues a
+        // second delete that fails with "not found" AND adds load to an
+        // already-stressed backend. This creates a retry storm that starves
+        // read operations (e.g. getAlpacaAccount) of pool/bandwidth during
+        // backend pressure — observed 2026-04-21 blocking equity trade
+        // prepareAccountContext (20s cap) across all accounts.
+        //
+        // Suppressing retries for deleteOne* on timeout/aborted errors: the
+        // caller still receives the error and can treat it as success (the
+        // engine's database-operations-wrapper already handles this path with
+        // idempotent=true).
+        const isNonRetryableDelete =
+          operationName.startsWith('deleteOne') && isTimeoutLike;
+
         const isRetryable =
+          !isNonRetryableDelete &&
           error instanceof Error &&
           (error.message.includes('Accelerate') ||
             error.message.includes('code: 1016') ||
@@ -285,8 +314,17 @@ async function enqueueOperation<T>(
             error.message.includes('status code 503') ||
             error.message.includes('status code 504'));
 
-        const errorMessage =
-          error instanceof Error ? error.message : String(error);
+        if (isNonRetryableDelete) {
+          logger.warn(
+            `Apollo mutation '${operationName}' timed out — NOT retrying (server-side delete is idempotent; retry would starve reads)`,
+            {
+              operation: operationName,
+              attempt: attempt + 1,
+              error: errorMessage,
+              category: 'SUPPRESSED_DELETE_RETRY',
+            }
+          );
+        }
 
         if (attempt < poolConfig.retryAttempts && isRetryable) {
           const delay = poolConfig.retryDelay * Math.pow(2, attempt);
