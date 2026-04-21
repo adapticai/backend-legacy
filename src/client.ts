@@ -49,6 +49,30 @@ interface ConnectionPoolConfig {
   retryAttempts: number;
   retryDelay: number;
   connectionTimeout: number;
+  /**
+   * Maximum depth of the in-memory operation queue. When the queue length
+   * reaches this threshold, new first-attempt operations are rejected
+   * synchronously with a LOAD_SHEDDING error instead of being enqueued.
+   * Retries bypass this check so in-flight work completes.
+   *
+   * Prevents unbounded queue growth during backend stalls (e.g. Postgres
+   * checkpoint I/O pauses on Railway shared volumes): without admission
+   * control, 30s+ stalls accumulate hundreds of queued operations that all
+   * fire together when the stall clears, saturating the backend event loop
+   * and causing a retry storm of cascading 30s client-side timeouts.
+   */
+  maxQueueDepth: number;
+  /**
+   * Maximum time (ms) an operation may sit in the queue before executing.
+   * If a queued operation waits longer than this on its first attempt, it
+   * is rejected with a QUEUE_WAIT_TIMEOUT error instead of firing against
+   * a likely-already-overloaded backend. Retries bypass this check.
+   *
+   * Prevents "zombie" requests that fire long after the caller has
+   * given up (engine default is a 30s client fetch timeout): executing
+   * them wastes backend capacity on results nobody wants.
+   */
+  queueWaitTimeoutMs: number;
 }
 
 const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
@@ -56,6 +80,8 @@ const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
   retryAttempts: 3, // Number of retry attempts for failed operations
   retryDelay: 1000, // Base delay in ms between retries (will use exponential backoff)
   connectionTimeout: 10000, // Connection timeout in ms
+  maxQueueDepth: 300, // 3× default maxConcurrent — load-shed beyond this
+  queueWaitTimeoutMs: 15000, // Drop queued ops that waited > 15s (half of typical 30s fetch timeout)
 };
 
 // === Token Provider Type ===
@@ -258,8 +284,66 @@ async function enqueueOperation<T>(
   operationName: string,
   attempt = 0
 ): Promise<T> {
+  // Load shedding: reject new (first-attempt) operations when the queue is
+  // saturated. This turns a cascading 30s timeout storm during backend
+  // stalls into a fast-fail that callers can handle explicitly (e.g. log,
+  // retry later, or skip this cycle). Retries bypass this check because
+  // they represent in-flight commitments that already consumed backend
+  // capacity on the first attempt.
+  if (
+    attempt === 0 &&
+    operationQueue.length >= poolConfig.maxQueueDepth
+  ) {
+    logger.warn(
+      `Apollo operation '${operationName}' rejected — queue saturated (${operationQueue.length}/${poolConfig.maxQueueDepth})`,
+      {
+        operation: operationName,
+        queueDepth: operationQueue.length,
+        maxQueueDepth: poolConfig.maxQueueDepth,
+        pendingOperations,
+        maxConcurrentOperations: poolConfig.maxConcurrentOperations,
+        category: 'LOAD_SHEDDING',
+      }
+    );
+    return Promise.reject(
+      new Error(
+        `Apollo operation '${operationName}' rejected: queue saturated (${operationQueue.length}/${poolConfig.maxQueueDepth}). Backend is overloaded.`
+      )
+    );
+  }
+
   return new Promise((resolve, reject) => {
+    const enqueuedAt = Date.now();
     const executeWithRetry = async (): Promise<void> => {
+      // Queue-wait timeout: if this operation sat in the queue longer than
+      // queueWaitTimeoutMs before a slot opened up, the caller has almost
+      // certainly already timed out (engine's default fetch timeout is 30s).
+      // Firing the request anyway wastes backend capacity on results nobody
+      // is waiting for. Retries bypass this check — they have their own
+      // retry-specific delay semantics.
+      if (attempt === 0) {
+        const waitMs = Date.now() - enqueuedAt;
+        if (waitMs > poolConfig.queueWaitTimeoutMs) {
+          logger.warn(
+            `Apollo operation '${operationName}' dropped — queue wait exceeded ${poolConfig.queueWaitTimeoutMs}ms (waited ${waitMs}ms)`,
+            {
+              operation: operationName,
+              waitMs,
+              queueWaitTimeoutMs: poolConfig.queueWaitTimeoutMs,
+              queueDepth: operationQueue.length,
+              pendingOperations,
+              category: 'QUEUE_WAIT_TIMEOUT',
+            }
+          );
+          reject(
+            new Error(
+              `Apollo operation '${operationName}' dropped: queue wait ${waitMs}ms exceeded ${poolConfig.queueWaitTimeoutMs}ms. Caller likely already timed out.`
+            )
+          );
+          return;
+        }
+      }
+
       try {
         const result = await operation();
         resolve(result);
