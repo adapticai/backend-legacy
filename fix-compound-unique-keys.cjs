@@ -26,7 +26,8 @@ function patchEquityBar() {
 
   // Match the broken filter-style symbol where clause inside upsert/update where blocks
   // Pattern: id line followed by symbol: { equals } line — only in where blocks (not data/update blocks)
-  const brokenPattern = /( +where: \{\n +id: props\.id !== undefined \? props\.id : undefined,\n) +symbol: props\.symbol !== undefined \? \{\n +equals: props\.symbol *\n +\} : undefined,\n( +\},)/g;
+  const brokenPattern =
+    /( +where: \{\n +id: props\.id !== undefined \? props\.id : undefined,\n) +symbol: props\.symbol !== undefined \? \{\n +equals: props\.symbol *\n +\} : undefined,\n( +\},)/g;
 
   const replacement = (match, prefix, suffix) => {
     patchCount++;
@@ -36,12 +37,16 @@ function patchEquityBar() {
   const newContent = content.replace(brokenPattern, replacement);
 
   if (patchCount === 0) {
-    console.log('EquityBar.ts: compound key where clauses already patched or pattern not found');
+    console.log(
+      'EquityBar.ts: compound key where clauses already patched or pattern not found'
+    );
     return;
   }
 
   fs.writeFileSync(EQUITY_BAR_PATH, newContent, 'utf-8');
-  console.log(`EquityBar.ts: patched ${patchCount} compound unique key where clause(s)`);
+  console.log(
+    `EquityBar.ts: patched ${patchCount} compound unique key where clause(s)`
+  );
 }
 
 patchEquityBar();

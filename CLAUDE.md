@@ -88,17 +88,17 @@ prisma/schema.prisma
 
 The published package (`dist/`) exposes:
 
-| Export | Description |
-|--------|-------------|
-| `types` namespace | All 62 Prisma model types (canonical for entire monorepo) |
-| `enums` namespace | All 63 Prisma enums |
-| `typeStrings` | String representations of model types (for LLM context injection) |
-| `adaptic.<model>.<op>()` | CRUD functions: create, get, getAll, findMany, update, delete, createMany |
-| `getApolloClient()` | Singleton Apollo Client with connection pooling, retry, token validation |
-| `getApolloModules()` | Dynamic Apollo module loader (CJS server / ESM client) |
-| `setTokenProvider()` | Custom auth token provider (NextAuth sessions, etc.) |
-| `configureConnectionPool()` | Apollo Client pool tuning |
-| Custom resolvers | `OptionsGreeksHistoryCustomResolver` |
+| Export                      | Description                                                               |
+| --------------------------- | ------------------------------------------------------------------------- |
+| `types` namespace           | All 62 Prisma model types (canonical for entire monorepo)                 |
+| `enums` namespace           | All 63 Prisma enums                                                       |
+| `typeStrings`               | String representations of model types (for LLM context injection)         |
+| `adaptic.<model>.<op>()`    | CRUD functions: create, get, getAll, findMany, update, delete, createMany |
+| `getApolloClient()`         | Singleton Apollo Client with connection pooling, retry, token validation  |
+| `getApolloModules()`        | Dynamic Apollo module loader (CJS server / ESM client)                    |
+| `setTokenProvider()`        | Custom auth token provider (NextAuth sessions, etc.)                      |
+| `configureConnectionPool()` | Apollo Client pool tuning                                                 |
+| Custom resolvers            | `OptionsGreeksHistoryCustomResolver`                                      |
 
 ## GQL Inline Comment System (Selection Set & TypeString Curation)
 
@@ -121,14 +121,14 @@ user User @relation(...)
 
 ### Available Directives
 
-| Directive | Scope | Effect |
-|-----------|-------|--------|
-| `GQL.SKIP=true` | Scalar or relation | Completely omits the field from the generated GraphQL selection set |
-| `GQL.EXCLUDE=['f1','f2']` | Relation field | Includes the relation but omits the listed sub-fields from the nested selection |
-| `GQL.INCLUDE=['f1','f2']` | Relation field | Includes the relation but **only** includes the listed sub-fields (whitelist) |
-| `GQL.MAX_DEPTH=N` | Relation field | Overrides the default max nesting depth (default: 4) for this relation |
-| `TYPESTRING.SKIP=true` | Scalar or relation | Omits the field from the generated typeString (used for LLM context injection) |
-| `TYPESTRING.INCLUDE=['f1','f2']` | Relation field | Only includes the listed sub-fields in the typeString for this relation |
+| Directive                        | Scope              | Effect                                                                          |
+| -------------------------------- | ------------------ | ------------------------------------------------------------------------------- |
+| `GQL.SKIP=true`                  | Scalar or relation | Completely omits the field from the generated GraphQL selection set             |
+| `GQL.EXCLUDE=['f1','f2']`        | Relation field     | Includes the relation but omits the listed sub-fields from the nested selection |
+| `GQL.INCLUDE=['f1','f2']`        | Relation field     | Includes the relation but **only** includes the listed sub-fields (whitelist)   |
+| `GQL.MAX_DEPTH=N`                | Relation field     | Overrides the default max nesting depth (default: 4) for this relation          |
+| `TYPESTRING.SKIP=true`           | Scalar or relation | Omits the field from the generated typeString (used for LLM context injection)  |
+| `TYPESTRING.INCLUDE=['f1','f2']` | Relation field     | Only includes the listed sub-fields in the typeString for this relation         |
 
 ### Important Rules
 
@@ -147,6 +147,7 @@ user User @relation(...)
 ### Verifying Changes
 
 After modifying inline comments:
+
 1. Run `npm run build` (full pipeline)
 2. Inspect the generated selection set: `cat src/generated/selectionSets/<ModelName>.ts`
 3. Confirm excluded fields are absent and included fields are present
@@ -164,36 +165,36 @@ After modifying inline comments:
 
 ## Key Files
 
-| File | Purpose |
-|------|---------|
-| `prisma/schema.prisma` | Source of truth: 62 models, 63 enums |
-| `src/index.ts` | Package entry: exports types, enums, typeStrings, CRUD functions, Apollo Client |
-| `src/server.ts` | Apollo Server 5 + Express 4 + WebSocket subscriptions |
-| `src/client.ts` | Apollo Client factory (singleton, connection pooling, retry, token validation) |
-| `src/prismaClient.ts` | Prisma singleton with Accelerate extension + pool tuning |
-| `src/health.ts` | GET /health endpoint (DB check, uptime, memory, version) |
-| `src/config/jwtConfig.ts` | JWT secret management (production enforcement, min 32 chars) |
-| `src/config/tracing.ts` | OpenTelemetry tracing (OTLP exporter, HTTP/Express/GraphQL instrumentation) |
-| `src/config/metrics.ts` | Prometheus metrics (prom-client, HTTP/GraphQL/DB metrics) |
-| `src/config/persisted-queries.ts` | APQ LRU cache for Apollo Server |
-| `src/utils/logger.ts` | Structured JSON logger (replaces console.log) |
-| `src/middleware/auth.ts` | JWT authentication middleware (Bearer token + Google OAuth) |
-| `src/middleware/audit-logger.ts` | Apollo plugin logging all GraphQL mutations to AuditLog |
-| `src/middleware/input-validator.ts` | Input validation for mutations |
-| `src/middleware/graphql-validation-plugin.ts` | GraphQL schema-level validation |
-| `src/middleware/rate-limiter.ts` | Rate limiting (auth/unauth split, Retry-After) |
-| `src/middleware/query-complexity.ts` | Query complexity + depth analysis |
-| `src/middleware/soft-delete.ts` | Soft delete utilities (User, AlpacaAccount, Trade, Action) |
-| `src/plugins/query-depth-limiter.ts` | Configurable query depth limiting |
-| `src/plugins/error-sanitizer.ts` | Strip stack traces in production |
-| `src/validators/allocation-validator.ts` | Allocation sum validation |
-| `src/modules/generator.ts` | CRUD function code generator |
-| `src/modules/generateSelections.ts` | Selection set code generator |
-| `src/modules/generateStrings.ts` | Type string code generator |
-| `src/modules/parser.ts` | TypeGraphQL input type parser |
-| `fix-import-paths.cjs` | Post-generation import path fixer |
-| `eslint.config.mjs` | ESLint flat config (strict TS rules) |
-| `vitest.config.ts` | Vitest config with v8 coverage |
+| File                                          | Purpose                                                                         |
+| --------------------------------------------- | ------------------------------------------------------------------------------- |
+| `prisma/schema.prisma`                        | Source of truth: 62 models, 63 enums                                            |
+| `src/index.ts`                                | Package entry: exports types, enums, typeStrings, CRUD functions, Apollo Client |
+| `src/server.ts`                               | Apollo Server 5 + Express 4 + WebSocket subscriptions                           |
+| `src/client.ts`                               | Apollo Client factory (singleton, connection pooling, retry, token validation)  |
+| `src/prismaClient.ts`                         | Prisma singleton with Accelerate extension + pool tuning                        |
+| `src/health.ts`                               | GET /health endpoint (DB check, uptime, memory, version)                        |
+| `src/config/jwtConfig.ts`                     | JWT secret management (production enforcement, min 32 chars)                    |
+| `src/config/tracing.ts`                       | OpenTelemetry tracing (OTLP exporter, HTTP/Express/GraphQL instrumentation)     |
+| `src/config/metrics.ts`                       | Prometheus metrics (prom-client, HTTP/GraphQL/DB metrics)                       |
+| `src/config/persisted-queries.ts`             | APQ LRU cache for Apollo Server                                                 |
+| `src/utils/logger.ts`                         | Structured JSON logger (replaces console.log)                                   |
+| `src/middleware/auth.ts`                      | JWT authentication middleware (Bearer token + Google OAuth)                     |
+| `src/middleware/audit-logger.ts`              | Apollo plugin logging all GraphQL mutations to AuditLog                         |
+| `src/middleware/input-validator.ts`           | Input validation for mutations                                                  |
+| `src/middleware/graphql-validation-plugin.ts` | GraphQL schema-level validation                                                 |
+| `src/middleware/rate-limiter.ts`              | Rate limiting (auth/unauth split, Retry-After)                                  |
+| `src/middleware/query-complexity.ts`          | Query complexity + depth analysis                                               |
+| `src/middleware/soft-delete.ts`               | Soft delete utilities (User, AlpacaAccount, Trade, Action)                      |
+| `src/plugins/query-depth-limiter.ts`          | Configurable query depth limiting                                               |
+| `src/plugins/error-sanitizer.ts`              | Strip stack traces in production                                                |
+| `src/validators/allocation-validator.ts`      | Allocation sum validation                                                       |
+| `src/modules/generator.ts`                    | CRUD function code generator                                                    |
+| `src/modules/generateSelections.ts`           | Selection set code generator                                                    |
+| `src/modules/generateStrings.ts`              | Type string code generator                                                      |
+| `src/modules/parser.ts`                       | TypeGraphQL input type parser                                                   |
+| `fix-import-paths.cjs`                        | Post-generation import path fixer                                               |
+| `eslint.config.mjs`                           | ESLint flat config (strict TS rules)                                            |
+| `vitest.config.ts`                            | Vitest config with v8 coverage                                                  |
 
 ## Code Style Guidelines
 
@@ -212,6 +213,7 @@ After modifying inline comments:
 ### Plan Mode
 
 Enter plan mode for ANY of the following:
+
 - Schema changes (adding/modifying/removing models or fields)
 - Migration changes
 - Codegen pipeline changes
@@ -220,6 +222,7 @@ Enter plan mode for ANY of the following:
 ### Critical Warning
 
 Schema changes affect ALL packages. Always:
+
 1. Plan the change and assess cross-package impact
 2. Check impact on `engine`, `utils`, `platform`
 3. Make the change in `prisma/schema.prisma`
@@ -237,6 +240,7 @@ Schema changes affect ALL packages. Always:
 ### Autonomous Bug Fixing
 
 When debugging backend-legacy issues:
+
 1. Check Prisma schema consistency (`npm run validate:schema`)
 2. Run `npm run generate` to refresh types
 3. Check codegen pipeline output in `src/generated/`
@@ -246,28 +250,28 @@ When debugging backend-legacy issues:
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DATABASE_URL` | Yes | PostgreSQL connection URL (Prisma Accelerate) |
-| `DIRECT_DATABASE_URL` | Yes | Direct PostgreSQL connection URL |
-| `JWT_SECRET` | Production | JWT signing secret (min 32 chars, enforced in production) |
-| `NEXTAUTH_SECRET` | Fallback | Fallback JWT secret if JWT_SECRET not set |
-| `SERVER_AUTH_TOKEN` | No | Server-to-server authentication token |
-| `ALLOWED_ORIGINS` | No | Comma-separated CORS origins |
-| `PORT` | No | Server port (default: 4000) |
-| `DATABASE_POOL_SIZE` | No | Connection pool size override |
-| `DATABASE_POOL_TIMEOUT_MS` | No | Pool timeout in ms (default: 10000) |
-| `RATE_LIMIT_MAX` | No | Auth rate limit per 15min (default: 1000) |
-| `RATE_LIMIT_MAX_UNAUTH` | No | Unauth rate limit per 15min (default: 200) |
-| `GRAPHQL_MAX_DEPTH` | No | Max query depth (default: 10) |
-| `GRAPHQL_MAX_COMPLEXITY_AUTH` | No | Auth complexity limit (default: 1000) |
-| `GRAPHQL_MAX_COMPLEXITY_UNAUTH` | No | Unauth complexity limit (default: 200) |
-| `OTEL_TRACING_ENABLED` | No | Enable OpenTelemetry tracing |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | No | OTLP exporter endpoint |
-| `PROMETHEUS_METRICS_ENABLED` | No | Enable Prometheus metrics |
-| `APQ_ENABLED` | No | Enable Automatic Persisted Queries (default: true) |
-| `APQ_MAX_CACHE_SIZE` | No | APQ LRU cache size (default: 1000) |
-| `RAILWAY_TOKEN` | No | Railway CLI token for DB restart |
+| Variable                        | Required   | Description                                               |
+| ------------------------------- | ---------- | --------------------------------------------------------- |
+| `DATABASE_URL`                  | Yes        | PostgreSQL connection URL (Prisma Accelerate)             |
+| `DIRECT_DATABASE_URL`           | Yes        | Direct PostgreSQL connection URL                          |
+| `JWT_SECRET`                    | Production | JWT signing secret (min 32 chars, enforced in production) |
+| `NEXTAUTH_SECRET`               | Fallback   | Fallback JWT secret if JWT_SECRET not set                 |
+| `SERVER_AUTH_TOKEN`             | No         | Server-to-server authentication token                     |
+| `ALLOWED_ORIGINS`               | No         | Comma-separated CORS origins                              |
+| `PORT`                          | No         | Server port (default: 4000)                               |
+| `DATABASE_POOL_SIZE`            | No         | Connection pool size override                             |
+| `DATABASE_POOL_TIMEOUT_MS`      | No         | Pool timeout in ms (default: 10000)                       |
+| `RATE_LIMIT_MAX`                | No         | Auth rate limit per 15min (default: 1000)                 |
+| `RATE_LIMIT_MAX_UNAUTH`         | No         | Unauth rate limit per 15min (default: 200)                |
+| `GRAPHQL_MAX_DEPTH`             | No         | Max query depth (default: 10)                             |
+| `GRAPHQL_MAX_COMPLEXITY_AUTH`   | No         | Auth complexity limit (default: 1000)                     |
+| `GRAPHQL_MAX_COMPLEXITY_UNAUTH` | No         | Unauth complexity limit (default: 200)                    |
+| `OTEL_TRACING_ENABLED`          | No         | Enable OpenTelemetry tracing                              |
+| `OTEL_EXPORTER_OTLP_ENDPOINT`   | No         | OTLP exporter endpoint                                    |
+| `PROMETHEUS_METRICS_ENABLED`    | No         | Enable Prometheus metrics                                 |
+| `APQ_ENABLED`                   | No         | Enable Automatic Persisted Queries (default: true)        |
+| `APQ_MAX_CACHE_SIZE`            | No         | APQ LRU cache size (default: 1000)                        |
+| `RAILWAY_TOKEN`                 | No         | Railway CLI token for DB restart                          |
 
 ## Testing
 

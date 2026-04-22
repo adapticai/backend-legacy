@@ -105,13 +105,14 @@ function parseMutationOperation(
  * @param user - The user object from GraphQL context
  * @returns The user ID string or null
  */
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const UUID_REGEX =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function extractUserId(
   user: AuditUser | string | null | undefined
 ): string | null {
   if (!user) return null;
-  const rawId = typeof user === 'string' ? user : (user.sub || user.id || null);
+  const rawId = typeof user === 'string' ? user : user.sub || user.id || null;
   if (!rawId) return null;
   return UUID_REGEX.test(rawId) ? rawId : null;
 }

@@ -129,9 +129,12 @@ function buildDatabaseUrl(): string {
   // param; leave them untouched (pool size is controlled via the Accelerate
   // console, not via URL).
   if (isAccelerateUrl(baseUrl)) {
-    logger.info('Prisma Accelerate URL detected — pooling managed by Accelerate proxy', {
-      environment: process.env.NODE_ENV || 'development',
-    });
+    logger.info(
+      'Prisma Accelerate URL detected — pooling managed by Accelerate proxy',
+      {
+        environment: process.env.NODE_ENV || 'development',
+      }
+    );
     return baseUrl;
   }
 

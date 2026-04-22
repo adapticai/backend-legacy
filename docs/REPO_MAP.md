@@ -133,20 +133,20 @@ backend-legacy/
 
 ## Important Files
 
-| File | Role |
-|------|------|
-| `prisma/schema.prisma` | THE canonical data model -- 54 models, 53 enums. All type changes start here. |
-| `src/index.ts` | Package entry point. Auto-generated. Exports types, enums, typeStrings, CRUD functions, Apollo client. |
-| `src/client.ts` | Apollo Client factory with lazy-loaded modules, connection pool, and token provider pattern. |
-| `src/prismaClient.ts` | PrismaClient singleton with Accelerate extension, connection pool sizing, and error monitoring. |
-| `src/server.ts` | Express 4 + Apollo Server 5 + graphql-ws server bootstrap. |
-| `src/generated/typegraphql-prisma/` | Prisma-generated TypeGraphQL models, enums, and resolvers. Never edit directly. |
-| `src/generated/selectionSets/` | Generated GraphQL selection set strings per model (depth 4). |
-| `src/generated/typeStrings/` | Generated TypeScript type-as-string per model (used for LLM prompts). |
-| `src/modules/generator.ts` | Core codegen: reads models + inputs, generates per-model CRUD function files. |
-| `src/modules/generateSelections.ts` | Reads Prisma DMMF, generates selectionSet files with nested field traversal. |
-| `src/modules/generateStrings.ts` | Reads Prisma DMMF, generates typeString files for LLM consumption. |
-| `eslint.config.mjs` | ESLint flat config; ignores all generated code (`src/generated/**`, `src/[A-Z]*.ts`, `src/modules/**`). |
+| File                                | Role                                                                                                    |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `prisma/schema.prisma`              | THE canonical data model -- 54 models, 53 enums. All type changes start here.                           |
+| `src/index.ts`                      | Package entry point. Auto-generated. Exports types, enums, typeStrings, CRUD functions, Apollo client.  |
+| `src/client.ts`                     | Apollo Client factory with lazy-loaded modules, connection pool, and token provider pattern.            |
+| `src/prismaClient.ts`               | PrismaClient singleton with Accelerate extension, connection pool sizing, and error monitoring.         |
+| `src/server.ts`                     | Express 4 + Apollo Server 5 + graphql-ws server bootstrap.                                              |
+| `src/generated/typegraphql-prisma/` | Prisma-generated TypeGraphQL models, enums, and resolvers. Never edit directly.                         |
+| `src/generated/selectionSets/`      | Generated GraphQL selection set strings per model (depth 4).                                            |
+| `src/generated/typeStrings/`        | Generated TypeScript type-as-string per model (used for LLM prompts).                                   |
+| `src/modules/generator.ts`          | Core codegen: reads models + inputs, generates per-model CRUD function files.                           |
+| `src/modules/generateSelections.ts` | Reads Prisma DMMF, generates selectionSet files with nested field traversal.                            |
+| `src/modules/generateStrings.ts`    | Reads Prisma DMMF, generates typeString files for LLM consumption.                                      |
+| `eslint.config.mjs`                 | ESLint flat config; ignores all generated code (`src/generated/**`, `src/[A-Z]*.ts`, `src/modules/**`). |
 
 ## Codegen Pipeline
 
@@ -196,17 +196,17 @@ generator typegraphql {
 
 ## Key Dependencies
 
-| Dependency | Version | Purpose |
-|------------|---------|---------|
-| `@prisma/client` | ^6.19.2 | Prisma ORM client |
-| `prisma` | ^6.19.2 | Prisma CLI and engine |
-| `typegraphql-prisma` | ^0.28.0 | Generates TypeGraphQL resolvers from Prisma schema |
-| `type-graphql` | ^2.0.0-rc.2 | TypeGraphQL framework |
-| `@apollo/server` | ^5.0.0 | Apollo Server (GraphQL server) |
-| `@apollo/client` | ^3.13.9 | Apollo Client (used by consumers) |
-| `express` | ^4.21.2 | Express HTTP framework |
-| `graphql-ws` | ^5.16.2 | GraphQL over WebSocket |
-| `jsonwebtoken` | ^9.0.2 | JWT authentication |
-| `prom-client` | ^15.1.3 | Prometheus metrics |
-| `typescript` | ^5.9.2 | TypeScript compiler |
-| `vitest` | ^3.0.4 | Test runner |
+| Dependency           | Version     | Purpose                                            |
+| -------------------- | ----------- | -------------------------------------------------- |
+| `@prisma/client`     | ^6.19.2     | Prisma ORM client                                  |
+| `prisma`             | ^6.19.2     | Prisma CLI and engine                              |
+| `typegraphql-prisma` | ^0.28.0     | Generates TypeGraphQL resolvers from Prisma schema |
+| `type-graphql`       | ^2.0.0-rc.2 | TypeGraphQL framework                              |
+| `@apollo/server`     | ^5.0.0      | Apollo Server (GraphQL server)                     |
+| `@apollo/client`     | ^3.13.9     | Apollo Client (used by consumers)                  |
+| `express`            | ^4.21.2     | Express HTTP framework                             |
+| `graphql-ws`         | ^5.16.2     | GraphQL over WebSocket                             |
+| `jsonwebtoken`       | ^9.0.2      | JWT authentication                                 |
+| `prom-client`        | ^15.1.3     | Prometheus metrics                                 |
+| `typescript`         | ^5.9.2      | TypeScript compiler                                |
+| `vitest`             | ^3.0.4      | Test runner                                        |

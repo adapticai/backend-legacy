@@ -46,18 +46,18 @@
 
 ## Technology Stack
 
-| Layer | Technology | Version |
-|-------|------------|---------|
-| HTTP Server | Express | 4.21.x |
-| GraphQL Server | Apollo Server | 5.x |
-| Schema Generation | TypeGraphQL + typegraphql-prisma | 2.0.0-rc.2 / 0.28.0 |
-| ORM | Prisma Client | 6.19.x |
-| Database | PostgreSQL | via Prisma Accelerate |
-| Auth | JWT (jsonwebtoken) + Google OAuth | 9.x |
-| Subscriptions | graphql-ws over WebSocket | 5.16.x |
-| TypeScript | | 5.9.x |
-| Test Framework | Vitest | 3.x |
-| Linter | ESLint (flat config) | 9.x |
+| Layer             | Technology                        | Version               |
+| ----------------- | --------------------------------- | --------------------- |
+| HTTP Server       | Express                           | 4.21.x                |
+| GraphQL Server    | Apollo Server                     | 5.x                   |
+| Schema Generation | TypeGraphQL + typegraphql-prisma  | 2.0.0-rc.2 / 0.28.0   |
+| ORM               | Prisma Client                     | 6.19.x                |
+| Database          | PostgreSQL                        | via Prisma Accelerate |
+| Auth              | JWT (jsonwebtoken) + Google OAuth | 9.x                   |
+| Subscriptions     | graphql-ws over WebSocket         | 5.16.x                |
+| TypeScript        |                                   | 5.9.x                 |
+| Test Framework    | Vitest                            | 3.x                   |
+| Linter            | ESLint (flat config)              | 9.x                   |
 
 ## Source Directory Structure
 
@@ -140,6 +140,7 @@ Reads `prisma/schema.prisma` and produces TypeGraphQL-compatible models and reso
 **Output:** `src/generated/typegraphql-prisma/` (models, resolvers, enums, scalars, helpers)
 
 The generator configuration in the schema:
+
 ```prisma
 generator typegraphql {
   provider               = "typegraphql-prisma"
@@ -167,6 +168,7 @@ ts-node src/modules/generateSelections.ts
 Parses the Prisma schema via `@prisma/internals` DMMF (Data Model Meta Format), then generates GraphQL field selection set strings for each model. These selection sets control which fields are requested in Apollo Client queries.
 
 **Key features:**
+
 - Respects `GQL.SKIP`, `GQL.EXCLUDE`, `GQL.INCLUDE`, `GQL.MAX_DEPTH` meta tags in schema field documentation
 - Prevents circular references via ancestor tracking
 - LRU cache for repeated model traversals
@@ -182,18 +184,18 @@ ts-node src/modules/index.ts
 
 Produces typed CRUD function files for each Prisma model. Each model gets a file (e.g., `src/Trade.ts`) with the following operations:
 
-| Operation | GraphQL | Description |
-|-----------|---------|-------------|
-| `create(props)` | `createOneTrade` | Create a single record |
-| `createMany(props[])` | `createManyTrade` | Create multiple records |
-| `update(props)` | `updateOneTrade` | Update by ID |
-| `updateMany(props)` | `updateManyTrade` | Update matching records |
-| `upsert(props)` | `upsertOneTrade` | Create or update |
-| `delete(props)` | `deleteOneTrade` | Delete by ID |
-| `deleteMany(props)` | `deleteManyTrade` | Delete matching records |
-| `get(props)` | `trade` (findUnique) | Get single record by ID |
-| `getAll()` | `trades` (findMany) | Get all records |
-| `findMany(props)` | `trades` (findMany) | Find with where clause |
+| Operation             | GraphQL              | Description             |
+| --------------------- | -------------------- | ----------------------- |
+| `create(props)`       | `createOneTrade`     | Create a single record  |
+| `createMany(props[])` | `createManyTrade`    | Create multiple records |
+| `update(props)`       | `updateOneTrade`     | Update by ID            |
+| `updateMany(props)`   | `updateManyTrade`    | Update matching records |
+| `upsert(props)`       | `upsertOneTrade`     | Create or update        |
+| `delete(props)`       | `deleteOneTrade`     | Delete by ID            |
+| `deleteMany(props)`   | `deleteManyTrade`    | Delete matching records |
+| `get(props)`          | `trade` (findUnique) | Get single record by ID |
+| `getAll()`            | `trades` (findMany)  | Get all records         |
+| `findMany(props)`     | `trades` (findMany)  | Find with where clause  |
 
 The generator also rebuilds `src/index.ts`, which aggregates all model CRUD objects into the `adaptic` default export.
 
@@ -208,6 +210,7 @@ ts-node src/modules/generateStrings.ts
 Produces TypeScript type string representations for each model, designed for LLM context injection. Includes enum declarations, field types, and documentation annotations.
 
 **Key features:**
+
 - Respects `TYPESTRING.SKIP` and `TYPESTRING.INCLUDE` meta tags
 - Converts Prisma types to TypeScript types (String -> string, Int -> number, etc.)
 - Resolves nested relations up to depth 5
@@ -220,144 +223,166 @@ Produces TypeScript type string representations for each model, designed for LLM
 ### Models by Domain (62 total)
 
 #### Identity and Authentication (9 models)
-| Model | Description |
-|-------|-------------|
-| `User` | Platform user with roles, subscription, preferences |
-| `Session` | User sessions (NextAuth compatible) |
-| `Account` | OAuth account connections |
-| `Authenticator` | WebAuthn/FIDO2 authenticators |
-| `LinkedProvider` | Linked authentication providers per user |
-| `AccountLinkingRequest` | Cross-provider account linking workflow |
-| `VerificationToken` | Email/token verification |
-| `WaitlistEntry` | Platform access waitlist |
-| `InviteToken` | Invitation tokens for new users |
+
+| Model                   | Description                                         |
+| ----------------------- | --------------------------------------------------- |
+| `User`                  | Platform user with roles, subscription, preferences |
+| `Session`               | User sessions (NextAuth compatible)                 |
+| `Account`               | OAuth account connections                           |
+| `Authenticator`         | WebAuthn/FIDO2 authenticators                       |
+| `LinkedProvider`        | Linked authentication providers per user            |
+| `AccountLinkingRequest` | Cross-provider account linking workflow             |
+| `VerificationToken`     | Email/token verification                            |
+| `WaitlistEntry`         | Platform access waitlist                            |
+| `InviteToken`           | Invitation tokens for new users                     |
 
 #### Organization and Fund Management (6 models)
-| Model | Description |
-|-------|-------------|
-| `Organization` | ManCo / fund operator firm |
-| `OrgMembership` | User membership in organizations with roles |
-| `Fund` | Investment fund within an organization |
+
+| Model            | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| `Organization`   | ManCo / fund operator firm                     |
+| `OrgMembership`  | User membership in organizations with roles    |
+| `Fund`           | Investment fund within an organization         |
 | `FundAssignment` | User assignment to funds with fund-level roles |
-| `Investor` | KYC-verified investor entity |
-| `Investment` | Investor capital allocation to a fund |
+| `Investor`       | KYC-verified investor entity                   |
+| `Investment`     | Investor capital allocation to a fund          |
 
 #### Brokerage and Portfolio (5 models)
-| Model | Description |
-|-------|-------------|
-| `BrokerageAccount` | Brokerage connection (Alpaca, IBKR, Coinbase) |
-| `Allocation` | Portfolio allocation percentages (equities, options, crypto, etc.) |
-| `Trade` | Individual trade records with entry/exit data |
-| `Action` | Trade execution actions (BUY, SELL, HEDGE, etc.) |
-| `Customer` | Customer/account holder records |
+
+| Model              | Description                                                        |
+| ------------------ | ------------------------------------------------------------------ |
+| `BrokerageAccount` | Brokerage connection (Alpaca, IBKR, Coinbase)                      |
+| `Allocation`       | Portfolio allocation percentages (equities, options, crypto, etc.) |
+| `Trade`            | Individual trade records with entry/exit data                      |
+| `Action`           | Trade execution actions (BUY, SELL, HEDGE, etc.)                   |
+| `Customer`         | Customer/account holder records                                    |
 
 #### Assets and Market Data (5 models)
-| Model | Description |
-|-------|-------------|
-| `Asset` | Financial instruments (stocks, ETFs, crypto, etc.) |
-| `NewsArticle` | News articles with sentiment data |
-| `NewsArticleAssetSentiment` | Per-asset sentiment scores for news articles |
-| `MarketSentiment` | Overall market sentiment snapshots |
-| `EconomicEvent` | Economic calendar events with importance levels |
+
+| Model                       | Description                                        |
+| --------------------------- | -------------------------------------------------- |
+| `Asset`                     | Financial instruments (stocks, ETFs, crypto, etc.) |
+| `NewsArticle`               | News articles with sentiment data                  |
+| `NewsArticleAssetSentiment` | Per-asset sentiment scores for news articles       |
+| `MarketSentiment`           | Overall market sentiment snapshots                 |
+| `EconomicEvent`             | Economic calendar events with importance levels    |
 
 #### Options Trading (6 models)
-| Model | Description |
-|-------|-------------|
-| `OptionsContract` | Options contract definitions (call/put) |
-| `OptionsPosition` | Open options positions |
-| `OptionsGreeksHistory` | Historical Greeks snapshots per contract |
-| `PortfolioGreeksHistory` | Portfolio-level Greeks aggregations |
-| `OptionsTradeExecution` | Options trade execution records |
-| `ScheduledOptionOrder` | Scheduled/pending option orders |
+
+| Model                    | Description                              |
+| ------------------------ | ---------------------------------------- |
+| `OptionsContract`        | Options contract definitions (call/put)  |
+| `OptionsPosition`        | Open options positions                   |
+| `OptionsGreeksHistory`   | Historical Greeks snapshots per contract |
+| `PortfolioGreeksHistory` | Portfolio-level Greeks aggregations      |
+| `OptionsTradeExecution`  | Options trade execution records          |
+| `ScheduledOptionOrder`   | Scheduled/pending option orders          |
 
 #### ML and Model Management (6 models)
-| Model | Description |
-|-------|-------------|
-| `MLTrainingData` | Training data for ML models |
-| `ModelVersion` | ML model version lifecycle tracking |
-| `ModelArtifact` | Model artifact storage references |
-| `ModelVersionArtifact` | Junction: model version to artifact mapping |
-| `ABTest` | A/B test definitions and results |
-| `FeatureImportanceAnalysis` | Feature importance/SHAP analysis results |
+
+| Model                       | Description                                 |
+| --------------------------- | ------------------------------------------- |
+| `MLTrainingData`            | Training data for ML models                 |
+| `ModelVersion`              | ML model version lifecycle tracking         |
+| `ModelArtifact`             | Model artifact storage references           |
+| `ModelVersionArtifact`      | Junction: model version to artifact mapping |
+| `ABTest`                    | A/B test definitions and results            |
+| `FeatureImportanceAnalysis` | Feature importance/SHAP analysis results    |
 
 #### Signal Processing (5 models)
-| Model | Description |
-|-------|-------------|
-| `SignalLineage` | Signal provenance and transformation chain |
-| `SignalGeneratorMetrics` | Signal generator performance metrics |
-| `SignalPriorityQueue` | Priority-ordered signal processing queue |
-| `SignalOutcome` | Signal outcome tracking (hit/miss/partial) |
-| `TradeExecutionHistory` | Detailed trade execution audit trail |
+
+| Model                    | Description                                |
+| ------------------------ | ------------------------------------------ |
+| `SignalLineage`          | Signal provenance and transformation chain |
+| `SignalGeneratorMetrics` | Signal generator performance metrics       |
+| `SignalPriorityQueue`    | Priority-ordered signal processing queue   |
+| `SignalOutcome`          | Signal outcome tracking (hit/miss/partial) |
+| `TradeExecutionHistory`  | Detailed trade execution audit trail       |
 
 #### Institutional Data (4 models)
-| Model | Description |
-|-------|-------------|
-| `InstitutionalHolding` | Institutional investor holding disclosures |
-| `InstitutionalFlowSignal` | Institutional money flow signals |
-| `InstitutionalSentimentHistory` | Historical institutional sentiment |
+
+| Model                           | Description                                |
+| ------------------------------- | ------------------------------------------ |
+| `InstitutionalHolding`          | Institutional investor holding disclosures |
+| `InstitutionalFlowSignal`       | Institutional money flow signals           |
+| `InstitutionalSentimentHistory` | Historical institutional sentiment         |
 | `InstitutionalSentimentMetrics` | Aggregated institutional sentiment metrics |
 
 #### Analytics and Configuration (4 models)
-| Model | Description |
-|-------|-------------|
-| `AnalyticsSnapshot` | Point-in-time analytics snapshots |
-| `AnalyticsConfiguration` | Analytics pipeline configuration |
-| `Configuration` | System configuration key-value store |
-| `DashboardLayout` | User dashboard layout preferences |
+
+| Model                    | Description                          |
+| ------------------------ | ------------------------------------ |
+| `AnalyticsSnapshot`      | Point-in-time analytics snapshots    |
+| `AnalyticsConfiguration` | Analytics pipeline configuration     |
+| `Configuration`          | System configuration key-value store |
+| `DashboardLayout`        | User dashboard layout preferences    |
 
 #### Monitoring and Operations (7 models)
-| Model | Description |
-|-------|-------------|
-| `Alert` | User-facing alerts (trade, portfolio, risk, system) |
-| `SystemAlert` | System-level operational alerts |
-| `ConnectionHealthSnapshot` | Connection health monitoring snapshots |
-| `AuditLog` | Mutation audit log (who changed what, when) |
-| `TradeAuditEvent` | Trade-specific audit events |
-| `Event` | System events with categorization |
-| `EventSnapshot` | Point-in-time event snapshots |
+
+| Model                      | Description                                         |
+| -------------------------- | --------------------------------------------------- |
+| `Alert`                    | User-facing alerts (trade, portfolio, risk, system) |
+| `SystemAlert`              | System-level operational alerts                     |
+| `ConnectionHealthSnapshot` | Connection health monitoring snapshots              |
+| `AuditLog`                 | Mutation audit log (who changed what, when)         |
+| `TradeAuditEvent`          | Trade-specific audit events                         |
+| `Event`                    | System events with categorization                   |
+| `EventSnapshot`            | Point-in-time event snapshots                       |
 
 #### Sync and Error Handling (5 models)
-| Model | Description |
-|-------|-------------|
-| `SyncEvent` | Cross-system synchronization events |
-| `ConflictEvent` | Data conflict detection and resolution |
-| `DeadLetterMessage` | Failed message processing queue |
-| `InstitutionalSentimentErrors` | Institutional data pipeline errors |
-| `InstitutionalSentimentAlerts` | Institutional data pipeline alerts |
+
+| Model                          | Description                            |
+| ------------------------------ | -------------------------------------- |
+| `SyncEvent`                    | Cross-system synchronization events    |
+| `ConflictEvent`                | Data conflict detection and resolution |
+| `DeadLetterMessage`            | Failed message processing queue        |
+| `InstitutionalSentimentErrors` | Institutional data pipeline errors     |
+| `InstitutionalSentimentAlerts` | Institutional data pipeline alerts     |
 
 ### Enums by Domain (63 total)
 
 #### Trading Enums (11)
+
 `TradeStrategy`, `TradeSignal`, `TradeStatus`, `ActionType`, `ActionStatus`, `TradeExitReason`, `TradeOutcomeQuality`, `MarketCondition`, `OptionType`, `OptionPositionStatus`, `OptionExecutionSide`
 
 #### Market Data Enums (7)
+
 `MarketSentimentLevel`, `MarketSentimentContext`, `MarketRegime`, `VolatilityLevel`, `VolumeLevel`, `AssetType`, `EventImportance`
 
 #### Brokerage Enums (3)
+
 `BrokerageAccountType`, `BrokerageProvider`, `SubscriptionPlan`
 
 #### Alert and Monitoring Enums (7)
+
 `AlertType`, `AlertStatus`, `AlertCategory`, `AlertSeverity`, `SystemAlertType`, `SystemAlertStatus`, `EventCategory`, `EventSeverity`
 
 #### Organization and Fund Enums (9)
+
 `UserRole`, `OrgBusinessType`, `RegulatoryStatus`, `OrgRole`, `FundRole`, `FundStatus`, `InvestorType`, `KycStatus`, `InvestmentStatus`
 
 #### ML and Model Enums (8)
+
 `ModelVersionStatus`, `DeploymentEnvironment`, `RolloutStrategy`, `ArtifactType`, `StorageProvider`, `ABTestStatus`, `ABTestRecommendation`, `FeatureImportanceAnalysisType`
 
 #### Auth and Account Enums (4)
+
 `AuthProvider`, `AccountLinkingStatus`, `WaitlistStatus`, `ScheduledOptionOrderStatus`
 
 #### Signal Processing Enums (6)
+
 `SignalGeneratorSource`, `SignalPriorityTier`, `SignalQueueStatus`, `SignalOutcomeType`, `SignalExecutionStatus`, `SignalDecisionType`
 
 #### Sync and Operations Enums (4)
+
 `SyncDirection`, `ConflictResolutionStrategy`, `DeadLetterStatus`, `DeadLetterSeverity`
 
 #### Configuration Enums (2)
+
 `ConfigType`, `OpenaiModel`
 
 #### Audit Enums (1)
+
 `AuditOperationType`
 
 ## Server Architecture
@@ -410,31 +435,31 @@ startServer()
 
 ## Security Layers
 
-| Layer | Implementation | Location |
-|-------|---------------|----------|
-| Authentication | JWT + Google OAuth + Server tokens | `src/middleware/auth.ts`, `src/server.ts` |
-| JWT Secret Management | Production enforcement, min 32 chars | `src/config/jwtConfig.ts` |
-| CORS | Environment-based origin whitelist | `src/server.ts` |
-| Rate Limiting | Auth/unauth split, Retry-After headers | `src/middleware/rate-limiter.ts` |
-| Input Validation | Mutation input validation | `src/middleware/input-validator.ts` |
-| GraphQL Validation | Schema-level operation validation | `src/middleware/graphql-validation-plugin.ts` |
-| Query Depth Limiting | Configurable max depth (default: 10) | `src/plugins/query-depth-limiter.ts` |
-| Query Complexity | Auth/unauth complexity limits | `src/middleware/query-complexity.ts` |
-| Error Sanitization | Strip stack traces in production | `src/plugins/error-sanitizer.ts` |
-| Audit Logging | All mutations logged to AuditLog model | `src/middleware/audit-logger.ts` |
-| Soft Deletes | deletedAt on User, BrokerageAccount, Trade, Action | `src/middleware/soft-delete.ts` |
-| Database Constraints | CHECK constraints on prices, quantities, strings | Prisma migration |
-| Allocation Validation | Sum validation for allocation percentages | `src/validators/allocation-validator.ts` |
+| Layer                 | Implementation                                     | Location                                      |
+| --------------------- | -------------------------------------------------- | --------------------------------------------- |
+| Authentication        | JWT + Google OAuth + Server tokens                 | `src/middleware/auth.ts`, `src/server.ts`     |
+| JWT Secret Management | Production enforcement, min 32 chars               | `src/config/jwtConfig.ts`                     |
+| CORS                  | Environment-based origin whitelist                 | `src/server.ts`                               |
+| Rate Limiting         | Auth/unauth split, Retry-After headers             | `src/middleware/rate-limiter.ts`              |
+| Input Validation      | Mutation input validation                          | `src/middleware/input-validator.ts`           |
+| GraphQL Validation    | Schema-level operation validation                  | `src/middleware/graphql-validation-plugin.ts` |
+| Query Depth Limiting  | Configurable max depth (default: 10)               | `src/plugins/query-depth-limiter.ts`          |
+| Query Complexity      | Auth/unauth complexity limits                      | `src/middleware/query-complexity.ts`          |
+| Error Sanitization    | Strip stack traces in production                   | `src/plugins/error-sanitizer.ts`              |
+| Audit Logging         | All mutations logged to AuditLog model             | `src/middleware/audit-logger.ts`              |
+| Soft Deletes          | deletedAt on User, BrokerageAccount, Trade, Action | `src/middleware/soft-delete.ts`               |
+| Database Constraints  | CHECK constraints on prices, quantities, strings   | Prisma migration                              |
+| Allocation Validation | Sum validation for allocation percentages          | `src/validators/allocation-validator.ts`      |
 
 ## Observability
 
-| Capability | Implementation | Status |
-|-----------|---------------|--------|
-| Structured Logging | Custom JSON logger (`src/utils/logger.ts`) | Active |
-| Health Check | `GET /health` (DB, uptime, memory, version) | Active |
-| OpenTelemetry Tracing | OTLP exporter, HTTP/Express/GraphQL spans | Implemented, needs wiring into server.ts |
-| Prometheus Metrics | HTTP/GraphQL/DB metrics, `/metrics` endpoint | Implemented, needs wiring into server.ts |
-| Persisted Queries | APQ LRU cache (1000 entries) | Implemented, needs wiring into server.ts |
+| Capability            | Implementation                               | Status                                   |
+| --------------------- | -------------------------------------------- | ---------------------------------------- |
+| Structured Logging    | Custom JSON logger (`src/utils/logger.ts`)   | Active                                   |
+| Health Check          | `GET /health` (DB, uptime, memory, version)  | Active                                   |
+| OpenTelemetry Tracing | OTLP exporter, HTTP/Express/GraphQL spans    | Implemented, needs wiring into server.ts |
+| Prometheus Metrics    | HTTP/GraphQL/DB metrics, `/metrics` endpoint | Implemented, needs wiring into server.ts |
+| Persisted Queries     | APQ LRU cache (1000 entries)                 | Implemented, needs wiring into server.ts |
 
 ## Cross-Package Integration
 
@@ -462,6 +487,7 @@ npm run validate:schema
 ```
 
 Performs three checks:
+
 1. `npx prisma validate` -- schema syntax
 2. `npx prisma generate` -- code generation succeeds
 3. `git diff --quiet src/generated/` -- drift detection
@@ -487,14 +513,15 @@ npm run build
 
 ### Dual Output
 
-| Target | tsconfig | Output | Module | Use Case |
-|--------|----------|--------|--------|----------|
-| CJS | `tsconfig.json` | `dist/` | CommonJS (ES2018) | NPM package consumers |
-| ESM | `tsconfig.server.json` | `dist/server/` | ESNext | Server-side ESM consumers |
+| Target | tsconfig               | Output         | Module            | Use Case                  |
+| ------ | ---------------------- | -------------- | ----------------- | ------------------------- |
+| CJS    | `tsconfig.json`        | `dist/`        | CommonJS (ES2018) | NPM package consumers     |
+| ESM    | `tsconfig.server.json` | `dist/server/` | ESNext            | Server-side ESM consumers |
 
 ### NPM Package Contents
 
 Published files (from `package.json` `files` field):
+
 - `dist/**/*.js` -- compiled JavaScript
 - `dist/**/*.d.ts` -- TypeScript declarations
 - `dist/**/*.js.map` -- source maps
@@ -512,17 +539,17 @@ Vitest with v8 coverage provider. Configuration in `vitest.config.ts`:
 
 ### Test Files
 
-| Test File | Tests | Domain |
-|-----------|-------|--------|
-| `src/middleware/__tests__/audit-logger.test.ts` | 25 | Audit logging plugin |
-| `src/middleware/__tests__/soft-delete.test.ts` | 21 | Soft delete utilities |
-| `src/tests/connection-pool.test.ts` | 10 | Connection pool configuration |
-| `src/tests/graphql-validation-plugin.test.ts` | -- | GraphQL validation |
-| `src/tests/input-validator.test.ts` | -- | Input validation |
-| `src/validators/allocation-validator.test.ts` | -- | Allocation validation |
-| `src/tests/generator.test.ts` | -- | CRUD generator |
-| `src/tests/parser.test.ts` | -- | Input type parser |
-| `src/tests/utils.test.ts` | -- | Utility functions |
+| Test File                                       | Tests | Domain                        |
+| ----------------------------------------------- | ----- | ----------------------------- |
+| `src/middleware/__tests__/audit-logger.test.ts` | 25    | Audit logging plugin          |
+| `src/middleware/__tests__/soft-delete.test.ts`  | 21    | Soft delete utilities         |
+| `src/tests/connection-pool.test.ts`             | 10    | Connection pool configuration |
+| `src/tests/graphql-validation-plugin.test.ts`   | --    | GraphQL validation            |
+| `src/tests/input-validator.test.ts`             | --    | Input validation              |
+| `src/validators/allocation-validator.test.ts`   | --    | Allocation validation         |
+| `src/tests/generator.test.ts`                   | --    | CRUD generator                |
+| `src/tests/parser.test.ts`                      | --    | Input type parser             |
+| `src/tests/utils.test.ts`                       | --    | Utility functions             |
 
 ## Migration History
 
@@ -538,11 +565,11 @@ Vitest with v8 coverage provider. Configuration in `vitest.config.ts`:
 
 ## Known Issues and Remaining Work
 
-| Priority | Issue | Detail |
-|----------|-------|--------|
-| P1 | TypeGraphQL RC | Using 2.0.0-rc.2 (waiting on stable release) |
-| P2 | Tracing not wired | `initTracing()` needs wiring into server.ts startup |
-| P2 | Metrics not wired | Prometheus metrics/middleware needs wiring into server.ts |
-| P2 | APQ not wired | `createAPQCache()` needs wiring into Apollo Server config |
-| P2 | Query complexity not wired | `createQueryComplexityPlugin` needs wiring into Apollo Server |
-| Low | Git history | .env may exist in git history (manual BFG cleanup needed) |
+| Priority | Issue                      | Detail                                                        |
+| -------- | -------------------------- | ------------------------------------------------------------- |
+| P1       | TypeGraphQL RC             | Using 2.0.0-rc.2 (waiting on stable release)                  |
+| P2       | Tracing not wired          | `initTracing()` needs wiring into server.ts startup           |
+| P2       | Metrics not wired          | Prometheus metrics/middleware needs wiring into server.ts     |
+| P2       | APQ not wired              | `createAPQCache()` needs wiring into Apollo Server config     |
+| P2       | Query complexity not wired | `createQueryComplexityPlugin` needs wiring into Apollo Server |
+| Low      | Git history                | .env may exist in git history (manual BFG cleanup needed)     |

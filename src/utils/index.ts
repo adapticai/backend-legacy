@@ -41,8 +41,7 @@ export function removeUndefinedProps(
         (item) =>
           item !== undefined &&
           item !== null &&
-          (!isPlainObject(item) ||
-            Object.keys(item).length > 0)
+          (!isPlainObject(item) || Object.keys(item).length > 0)
       ) as unknown as Record<string, unknown>;
   } else if (isPlainObject(obj)) {
     const record = obj;
@@ -52,10 +51,7 @@ export function removeUndefinedProps(
       if (value !== undefined && value !== null) {
         let cleanedValue: unknown;
 
-        if (
-          key === 'where' &&
-          isPlainObject(value)
-        ) {
+        if (key === 'where' && isPlainObject(value)) {
           const whereObj = value;
           if (
             Object.prototype.hasOwnProperty.call(whereObj, 'id') &&
@@ -79,8 +75,7 @@ export function removeUndefinedProps(
         if (
           cleanedValue !== undefined &&
           cleanedValue !== null &&
-          (!isPlainObject(cleanedValue) ||
-            Object.keys(cleanedValue).length > 0)
+          (!isPlainObject(cleanedValue) || Object.keys(cleanedValue).length > 0)
         ) {
           acc[key] = cleanedValue;
         }

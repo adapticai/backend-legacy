@@ -61,41 +61,68 @@ describe('Enum Sync: Prisma enums match expected values', () => {
 
   it('DecisionRecordStatus has expected values', () => {
     const values = Object.values(PrismaDecisionRecordStatus);
-    expect(values).toEqual(['PENDING', 'EXECUTING', 'COMPLETED', 'FAILED', 'CANCELLED', 'ESCALATED']);
+    expect(values).toEqual([
+      'PENDING',
+      'EXECUTING',
+      'COMPLETED',
+      'FAILED',
+      'CANCELLED',
+      'ESCALATED',
+    ]);
   });
 
   it('DecisionMemoryOutcome has expected values', () => {
     const values = Object.values(PrismaDecisionMemoryOutcome);
-    expect(values).toEqual(['PENDING', 'PROFITABLE', 'UNPROFITABLE', 'STOPPED_OUT', 'CANCELLED']);
+    expect(values).toEqual([
+      'PENDING',
+      'PROFITABLE',
+      'UNPROFITABLE',
+      'STOPPED_OUT',
+      'CANCELLED',
+    ]);
   });
 });
 
 describe('Enum Sync: Prisma enums match @adaptic/utils mirror enums', () => {
   it('AutonomyMode matches @adaptic/utils', () => {
-    expect(Object.values(PrismaAutonomyMode).sort()).toEqual(Object.values(UtilsAutonomyMode).sort());
+    expect(Object.values(PrismaAutonomyMode).sort()).toEqual(
+      Object.values(UtilsAutonomyMode).sort()
+    );
   });
 
   it('OverlayType matches @adaptic/utils', () => {
-    expect(Object.values(PrismaOverlayType).sort()).toEqual(Object.values(UtilsOverlayType).sort());
+    expect(Object.values(PrismaOverlayType).sort()).toEqual(
+      Object.values(UtilsOverlayType).sort()
+    );
   });
 
   it('OverlaySeverity matches @adaptic/utils', () => {
-    expect(Object.values(PrismaOverlaySeverity).sort()).toEqual(Object.values(UtilsOverlaySeverity).sort());
+    expect(Object.values(PrismaOverlaySeverity).sort()).toEqual(
+      Object.values(UtilsOverlaySeverity).sort()
+    );
   });
 
   it('OverlayStatus matches @adaptic/utils', () => {
-    expect(Object.values(PrismaOverlayStatus).sort()).toEqual(Object.values(UtilsOverlayStatus).sort());
+    expect(Object.values(PrismaOverlayStatus).sort()).toEqual(
+      Object.values(UtilsOverlayStatus).sort()
+    );
   });
 
   it('DecisionOutcome matches @adaptic/utils', () => {
-    expect(Object.values(PrismaDecisionOutcome).sort()).toEqual(Object.values(UtilsDecisionOutcome).sort());
+    expect(Object.values(PrismaDecisionOutcome).sort()).toEqual(
+      Object.values(UtilsDecisionOutcome).sort()
+    );
   });
 
   it('DecisionRecordStatus matches @adaptic/utils', () => {
-    expect(Object.values(PrismaDecisionRecordStatus).sort()).toEqual(Object.values(UtilsDecisionRecordStatus).sort());
+    expect(Object.values(PrismaDecisionRecordStatus).sort()).toEqual(
+      Object.values(UtilsDecisionRecordStatus).sort()
+    );
   });
 
   it('DecisionMemoryOutcome matches @adaptic/utils', () => {
-    expect(Object.values(PrismaDecisionMemoryOutcome).sort()).toEqual(Object.values(UtilsDecisionMemoryOutcome).sort());
+    expect(Object.values(PrismaDecisionMemoryOutcome).sort()).toEqual(
+      Object.values(UtilsDecisionMemoryOutcome).sort()
+    );
   });
 });

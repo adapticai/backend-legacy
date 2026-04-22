@@ -82,7 +82,10 @@ export default [
       '@typescript-eslint/no-unsafe-argument': 'warn',
       '@typescript-eslint/consistent-type-assertions': [
         'error',
-        { assertionStyle: 'as', objectLiteralTypeAssertions: 'allow-as-parameter' },
+        {
+          assertionStyle: 'as',
+          objectLiteralTypeAssertions: 'allow-as-parameter',
+        },
       ],
       '@typescript-eslint/no-non-null-assertion': 'warn',
       '@typescript-eslint/no-unused-vars': [

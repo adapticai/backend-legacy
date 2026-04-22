@@ -15,7 +15,9 @@ type DidResolveOperationContext = Parameters<
   NonNullable<
     Awaited<
       ReturnType<
-        NonNullable<ReturnType<typeof createValidationPlugin>['requestDidStart']>
+        NonNullable<
+          ReturnType<typeof createValidationPlugin>['requestDidStart']
+        >
       >
     >['didResolveOperation']
   >
