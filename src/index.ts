@@ -17,6 +17,7 @@ export {
   configureConnectionPool,
   setTokenProvider,
   stopClient,
+  getPoolStats,
   client
 } from './client';
 
@@ -26,6 +27,7 @@ export type {
   HttpLinkType,
   NormalizedCacheObject,
   TokenProvider,
+  PoolStats,
 } from './client';
 
 

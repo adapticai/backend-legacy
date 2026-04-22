@@ -1,5 +1,6 @@
 // client.ts
 
+import { randomInt } from 'node:crypto';
 import { logger } from './utils/logger';
 
 // === Export type definitions (statically) ===
@@ -95,9 +96,26 @@ export type TokenProvider = () => string | Promise<string>;
 let apolloModules: ApolloModules | undefined;
 let apolloClient: ApolloClientType<NormalizedCacheObject> | undefined;
 let pendingOperations = 0;
-const operationQueue: Array<() => Promise<void>> = [];
+const operationQueue: Array<{
+  executeWithRetry: () => Promise<void>;
+  enqueuedAt: number;
+  operationName: string;
+}> = [];
 let poolConfig: ConnectionPoolConfig = DEFAULT_POOL_CONFIG;
 let customTokenProvider: TokenProvider | undefined;
+
+// === Pool observability counters ===
+// These are best-effort process-local counters. They are exposed via
+// `getPoolStats()` for engine-side Prometheus scraping. Resetting
+// categorical counters is not offered — callers that care about deltas
+// should sample-then-diff.
+const poolCounters = {
+  executedTotal: 0,
+  rejectedLoadShed: 0,
+  rejectedQueueWaitTimeout: 0,
+  rejectedNonRetryable: 0,
+  retryAttemptsTotal: 0,
+};
 
 // Forward-declare the optional server-only keepalive helper. The actual
 // implementation lives in `apollo-client.server.ts` and is loaded only when
@@ -220,6 +238,14 @@ async function getAuthToken(): Promise<string> {
 
 /**
  * Processes the operation queue respecting the connection pool limits.
+ *
+ * Before executing each dequeued operation, this also performs a proactive
+ * queue-wait-timeout sweep: any operation that has been waiting longer than
+ * `queueWaitTimeoutMs` on its first attempt is rejected inline by its own
+ * `executeWithRetry` (attempt === 0 branch) rather than consuming a slot.
+ * The sweep runs here (not on a separate timer) because queue pressure
+ * almost always clears at the same moment a slot opens up, so the check
+ * is cheap and avoids introducing another timer.
  */
 function processQueue(): void {
   // Process queue until we reach max concurrent operations or queue is empty
@@ -227,10 +253,10 @@ function processQueue(): void {
     pendingOperations < poolConfig.maxConcurrentOperations &&
     operationQueue.length > 0
   ) {
-    const operation = operationQueue.shift();
-    if (operation) {
+    const entry = operationQueue.shift();
+    if (entry) {
       pendingOperations++;
-      void operation().finally(() => {
+      void entry.executeWithRetry().finally(() => {
         pendingOperations--;
         processQueue(); // Process next item after an operation completes
       });
@@ -279,6 +305,52 @@ function extractOperationName(options: unknown): string {
  * timeouts are indistinguishable in logs and root-cause diagnosis is
  * impossible.
  */
+/**
+ * Classify an error as definitively non-retryable. These errors cost capacity
+ * when retried and cannot succeed without the caller changing behaviour:
+ *
+ * - **Accelerate 1102 "Worker exceeded resource limits"**: the Cloudflare
+ *   Worker backing Prisma Accelerate hit its CPU/memory budget. Cloudflare's
+ *   guidance is explicit: do not retry — retrying the same shape will hit
+ *   the same limit and only inflates worker concurrency across the fleet,
+ *   which can trigger broader throttling. Fix is at the caller (smaller
+ *   batch, narrower selection, chunked write).
+ * - **P2002 unique-constraint violation**: another writer already inserted
+ *   the conflicting row. Retrying the same mutation produces the same
+ *   failure. Fix is at the caller (idempotent find-or-create, stable
+ *   idempotency key, serialized writer).
+ * - **P2025 "record not found" race**: a concurrent delete/update removed
+ *   the target row. Retrying a delete/update against a vanished row loops.
+ * - **GraphQL schema validation / 400 Bad Request**: the query itself is
+ *   malformed; retrying guarantees the same 400.
+ *
+ * Explicit classification avoids the previous pattern where the generic
+ * `error.message.includes('Accelerate')` branch treated all Accelerate
+ * errors — including 1102 — as retryable, turning a single worker-limit
+ * breach into a retry storm that further starved the Accelerate worker
+ * pool. See Cloudflare error codes
+ * (https://developers.cloudflare.com/workers/observability/errors/#error-1102).
+ */
+function isDefinitivelyNonRetryable(message: string): boolean {
+  return (
+    // Accelerate Worker resource-limit errors — never retry
+    message.includes('1102') ||
+    message.includes('Worker exceeded resource limits') ||
+    message.includes('Worker exceeded CPU') ||
+    message.includes('Worker exceeded memory') ||
+    // Prisma unique-constraint violation — retry just reproduces it
+    message.includes('P2002') ||
+    message.includes('Unique constraint failed') ||
+    // Prisma record-not-found race — deletes/updates already lost the row
+    message.includes('P2025') ||
+    message.includes('Record to update not found') ||
+    message.includes('Record to delete does not exist') ||
+    // GraphQL schema / 400 — malformed query, retry is pointless
+    message.includes('GRAPHQL_VALIDATION_FAILED') ||
+    message.includes('status code 400')
+  );
+}
+
 async function enqueueOperation<T>(
   operation: () => Promise<T>,
   operationName: string,
@@ -290,10 +362,8 @@ async function enqueueOperation<T>(
   // retry later, or skip this cycle). Retries bypass this check because
   // they represent in-flight commitments that already consumed backend
   // capacity on the first attempt.
-  if (
-    attempt === 0 &&
-    operationQueue.length >= poolConfig.maxQueueDepth
-  ) {
+  if (attempt === 0 && operationQueue.length >= poolConfig.maxQueueDepth) {
+    poolCounters.rejectedLoadShed++;
     logger.warn(
       `Apollo operation '${operationName}' rejected — queue saturated (${operationQueue.length}/${poolConfig.maxQueueDepth})`,
       {
@@ -324,6 +394,7 @@ async function enqueueOperation<T>(
       if (attempt === 0) {
         const waitMs = Date.now() - enqueuedAt;
         if (waitMs > poolConfig.queueWaitTimeoutMs) {
+          poolCounters.rejectedQueueWaitTimeout++;
           logger.warn(
             `Apollo operation '${operationName}' dropped — queue wait exceeded ${poolConfig.queueWaitTimeoutMs}ms (waited ${waitMs}ms)`,
             {
@@ -346,6 +417,7 @@ async function enqueueOperation<T>(
 
       try {
         const result = await operation();
+        poolCounters.executedTotal++;
         resolve(result);
       } catch (error) {
         const errorMessage =
@@ -376,11 +448,24 @@ async function enqueueOperation<T>(
         const isNonRetryableDelete =
           operationName.startsWith('deleteOne') && isTimeoutLike;
 
+        // Hard non-retry classes: retrying guarantees the same failure AND
+        // wastes backend capacity. Cross-check this list against caller-side
+        // handling — engine's graphql-error-handler should also treat these
+        // as non-retryable so double-wrapped callers don't re-retry.
+        const isHardNonRetryable = isDefinitivelyNonRetryable(errorMessage);
+
         const isRetryable =
           !isNonRetryableDelete &&
+          !isHardNonRetryable &&
           error instanceof Error &&
-          (error.message.includes('Accelerate') ||
-            error.message.includes('code: 1016') ||
+          // Narrowed from the previous broad `includes('Accelerate')`: that
+          // matched 1102 (Worker resource-limit) and fed retry storms. Keep
+          // only transient Accelerate classes that genuinely benefit from
+          // retry (1016 = origin DNS temporarily unresolved, 1033 = worker
+          // script temporarily unreachable).
+          (error.message.includes('code: 1016') ||
+            error.message.includes('code: 1033') ||
+            error.message.includes('Accelerate transient') ||
             error.message.includes('ECONNREFUSED') ||
             error.message.includes('ECONNRESET') ||
             error.message.includes('ETIMEDOUT') ||
@@ -410,8 +495,34 @@ async function enqueueOperation<T>(
           );
         }
 
+        if (isHardNonRetryable) {
+          poolCounters.rejectedNonRetryable++;
+          logger.warn(
+            `Apollo operation '${operationName}' failed with non-retryable error — NOT retrying (would reproduce same failure or hit resource limit)`,
+            {
+              operation: operationName,
+              attempt: attempt + 1,
+              error: errorMessage,
+              category: 'NON_RETRYABLE_HARD',
+            }
+          );
+        }
+
         if (attempt < poolConfig.retryAttempts && isRetryable) {
-          const delay = poolConfig.retryDelay * Math.pow(2, attempt);
+          // Decorrelated jitter: delay = random_between(retryDelay, base * 3)
+          // where base = retryDelay * 2^attempt. This breaks the thundering
+          // herd pattern where every op enqueued at the same stall moment
+          // retries at the same time (1.5s, 3s, 6s — all in lockstep) and
+          // overwhelms the backend the instant it recovers. See AWS
+          // architecture blog "Exponential Backoff And Jitter".
+          const base = poolConfig.retryDelay * Math.pow(2, attempt);
+          const upper = base * 3;
+          const lower = poolConfig.retryDelay;
+          const delay =
+            lower >= upper
+              ? upper
+              : randomInt(Math.floor(lower), Math.floor(upper) + 1);
+          poolCounters.retryAttemptsTotal++;
           logger.warn(
             `Apollo operation '${operationName}' failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`,
             {
@@ -420,6 +531,7 @@ async function enqueueOperation<T>(
               maxAttempts: poolConfig.retryAttempts,
               delayMs: delay,
               error: errorMessage,
+              category: 'RETRY',
             }
           );
           setTimeout(() => {
@@ -435,6 +547,7 @@ async function enqueueOperation<T>(
                 operation: operationName,
                 attempts: poolConfig.retryAttempts,
                 error: errorMessage,
+                category: 'RETRY_EXHAUSTED',
               }
             );
           }
@@ -443,7 +556,7 @@ async function enqueueOperation<T>(
       }
     };
 
-    operationQueue.push(executeWithRetry);
+    operationQueue.push({ executeWithRetry, enqueuedAt, operationName });
     processQueue();
   });
 }
@@ -685,12 +798,68 @@ export async function getApolloModules(): Promise<ApolloModules> {
  */
 export const client: PromiseLike<ApolloClientType<NormalizedCacheObject>> = {
   then<TResult1 = ApolloClientType<NormalizedCacheObject>, TResult2 = never>(
-    onfulfilled?: ((value: ApolloClientType<NormalizedCacheObject>) => TResult1 | PromiseLike<TResult1>) | null | undefined,
-    onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined,
+    onfulfilled?:
+      | ((
+          value: ApolloClientType<NormalizedCacheObject>
+        ) => TResult1 | PromiseLike<TResult1>)
+      | null
+      | undefined,
+    onrejected?:
+      | ((reason: unknown) => TResult2 | PromiseLike<TResult2>)
+      | null
+      | undefined
   ): Promise<TResult1 | TResult2> {
     return getApolloClient().then(onfulfilled, onrejected);
   },
 };
+
+/**
+ * Snapshot of connection-pool state at the instant `getPoolStats` is called.
+ * Exposed so downstream observability (engine's Prometheus registry) can
+ * scrape pool depth, pending-op concurrency, retry counters, and rejection
+ * categories without having to reach into module-private state.
+ */
+export interface PoolStats {
+  /** Operations currently in flight (post-dequeue, pre-resolution). */
+  pendingOperations: number;
+  /** Operations waiting in the queue for a concurrency slot. */
+  queueDepth: number;
+  /** Configured limits at the time of sampling. */
+  maxConcurrentOperations: number;
+  maxQueueDepth: number;
+  queueWaitTimeoutMs: number;
+  connectionTimeoutMs: number;
+  /** Count of operations whose underlying fetch resolved (success path). */
+  executedTotal: number;
+  /** Count of first-attempt ops rejected by load-shedding admission control. */
+  rejectedLoadShed: number;
+  /** Count of ops rejected after queue-wait-timeout at dequeue. */
+  rejectedQueueWaitTimeout: number;
+  /** Count of ops that failed with a hard non-retryable error class. */
+  rejectedNonRetryable: number;
+  /** Count of retry attempts fired across all operations. */
+  retryAttemptsTotal: number;
+}
+
+/**
+ * Returns a read-only snapshot of pool state for observability.
+ * Safe to call on every scrape interval (O(1)).
+ */
+export function getPoolStats(): PoolStats {
+  return {
+    pendingOperations,
+    queueDepth: operationQueue.length,
+    maxConcurrentOperations: poolConfig.maxConcurrentOperations,
+    maxQueueDepth: poolConfig.maxQueueDepth,
+    queueWaitTimeoutMs: poolConfig.queueWaitTimeoutMs,
+    connectionTimeoutMs: poolConfig.connectionTimeout,
+    executedTotal: poolCounters.executedTotal,
+    rejectedLoadShed: poolCounters.rejectedLoadShed,
+    rejectedQueueWaitTimeout: poolCounters.rejectedQueueWaitTimeout,
+    rejectedNonRetryable: poolCounters.rejectedNonRetryable,
+    retryAttemptsTotal: poolCounters.retryAttemptsTotal,
+  };
+}
 
 /**
  * Gracefully stops the singleton Apollo Client and releases its resources.
