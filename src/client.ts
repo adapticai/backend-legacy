@@ -64,11 +64,18 @@ interface ConnectionPoolConfig {
 }
 
 const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
-  maxConcurrentOperations: 100, // Maximum concurrent operations to the database
+  // Lowered from 100 → 50 so this client does not fire more concurrent
+  // GraphQL ops than the server-side Prisma pool (production default
+  // raised to 35 in prismaClient.ts) can execute without queueing.
+  // A 100:20 ratio was producing "DatabaseHealthCheck exhausted retries
+  // (3/3)" cascades on Railway adaptic-os/stable where 80 ops queued on
+  // a saturated pool and blew the 10s connectionTimeout.
+  maxConcurrentOperations: 50,
   retryAttempts: 3, // Number of retry attempts for failed operations
   retryDelay: 1000, // Base delay in ms between retries (will use exponential backoff)
   connectionTimeout: 10000, // Connection timeout in ms
-  maxQueueDepth: 300, // 3× default maxConcurrent — load-shed beyond this
+  // Keep a 3× concurrency queue so short spikes don't load-shed.
+  maxQueueDepth: 150,
   queueWaitTimeoutMs: 15000, // Drop queued ops that waited > 15s (half of typical 30s fetch timeout)
 };
 
@@ -228,10 +235,7 @@ async function enqueueOperation<T>(
   // retry later, or skip this cycle). Retries bypass this check because
   // they represent in-flight commitments that already consumed backend
   // capacity on the first attempt.
-  if (
-    attempt === 0 &&
-    operationQueue.length >= poolConfig.maxQueueDepth
-  ) {
+  if (attempt === 0 && operationQueue.length >= poolConfig.maxQueueDepth) {
     logger.warn(
       `Apollo operation '${operationName}' rejected — queue saturated (${operationQueue.length}/${poolConfig.maxQueueDepth})`,
       {
