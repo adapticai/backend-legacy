@@ -32,11 +32,19 @@ const HEARTBEAT_TIMEOUT_MS = 5000;
 /**
  * Connection pool size defaults per deployment tier.
  * Can be overridden via the DATABASE_POOL_SIZE environment variable.
+ *
+ * Production raised from 20 to 35 to give Prisma more headroom against the
+ * Apollo client's `maxConcurrentOperations` budget (also lowered to 50 in
+ * src/client.ts). Prior 20:100 ratio let 80 concurrent in-flight ops queue
+ * on a saturated pool, producing the "DatabaseHealthCheck exhausted retries
+ * (3/3)" cascades observed on Railway adaptic-os/stable. No-op for
+ * deployments using Prisma Accelerate (prisma:// URL), where pooling is
+ * managed at the proxy and this value is ignored.
  */
 const POOL_SIZE_DEFAULTS: Record<string, number> = {
   development: 5,
   staging: 10,
-  production: 20,
+  production: 35,
 };
 
 /** Connection pool timeout in milliseconds. Configurable via DATABASE_POOL_TIMEOUT_MS. */
