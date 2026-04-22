@@ -74,6 +74,25 @@ interface ConnectionPoolConfig {
    * them wastes backend capacity on results nobody wants.
    */
   queueWaitTimeoutMs: number;
+  /**
+   * When true (default), identical QUERY operations that arrive while a
+   * prior identical query is still in flight share the same Promise
+   * instead of each going through the pool queue independently. Keyed on
+   * `operationName + fetchPolicy + stable-stringified variables`.
+   *
+   * Mutations and subscriptions are never coalesced. Queries with any
+   * per-call context override are not coalesced (context can carry
+   * auth/headers/behaviour flags). Entries are removed on promise
+   * settlement (success OR failure), so the next identical call issues
+   * a fresh request — this is pure in-flight dedup, not TTL caching.
+   *
+   * Measured in Session-1 audit: Agent-2 showed 150-300 findManyTrade/min
+   * in production with zero caller-side dedup; 3 independent callers
+   * fetching the same `status: ACTIVE` PolicyOverlay list; duplicate
+   * health-check fan-out. Coalescing eliminates those duplicates before
+   * they consume a pool concurrency slot.
+   */
+  coalesceInFlightQueries?: boolean;
 }
 
 const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
@@ -83,6 +102,7 @@ const DEFAULT_POOL_CONFIG: ConnectionPoolConfig = {
   connectionTimeout: 10000, // Connection timeout in ms
   maxQueueDepth: 300, // 3× default maxConcurrent — load-shed beyond this
   queueWaitTimeoutMs: 15000, // Drop queued ops that waited > 15s (half of typical 30s fetch timeout)
+  coalesceInFlightQueries: true, // Dedup identical queries that overlap in time
 };
 
 // === Token Provider Type ===
@@ -115,7 +135,100 @@ const poolCounters = {
   rejectedQueueWaitTimeout: 0,
   rejectedNonRetryable: 0,
   retryAttemptsTotal: 0,
+  coalescedHitsTotal: 0,
 };
+
+// === In-flight query coalescer ===
+//
+// Map of coalesce-key → shared Promise. When two callers issue the same
+// GraphQL query (same operation name, same variables, same fetchPolicy,
+// no per-call context override) while the first is still in flight, the
+// second caller awaits the same Promise instead of firing a duplicate
+// request. This collapses bursts of identical reads — the core finding
+// of the Session-1 audit for hot paths like findManyTrade /
+// findManyTradingPolicy / findManyPolicyOverlay / getAllAlpacaAccount /
+// DatabaseHealthCheck, which Agent-2 measured at 150-300 findManyTrade/min
+// in production with ZERO caller-side dedup.
+//
+// Safety rules:
+//   - Mutations are NEVER coalesced (two identical upserts may be
+//     intentional; coalescing would merge distinct side-effects).
+//   - Subscriptions are NEVER coalesced (ongoing stream, not a one-shot).
+//   - Queries with any `context` override are not coalesced (context can
+//     carry per-call headers/auth/behaviour; merging is unsafe).
+//   - Entries are removed when the Promise settles (success OR failure),
+//     so the NEXT identical call issues a fresh request. No staleness
+//     window — pure in-flight dedup.
+//   - Failure is shared: all coalesced callers receive the same
+//     rejection. Correct behaviour — any retry is the caller's
+//     responsibility, the pool itself already retries transient classes.
+interface InflightEntry {
+  promise: Promise<unknown>;
+  firstEnqueuedAt: number;
+  hits: number;
+}
+const inflightQueries = new Map<string, InflightEntry>();
+
+/**
+ * Deterministic key-only stringify for coalescing.
+ *
+ * `JSON.stringify` does not sort object keys, so `{a:1,b:2}` and `{b:2,a:1}`
+ * produce different strings even though they are the same input from a
+ * GraphQL perspective. Sort recursively so order-of-declaration in caller
+ * code does not defeat coalescing.
+ */
+function stableStringify(value: unknown): string {
+  if (value === null || value === undefined) return JSON.stringify(value);
+  if (typeof value !== 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) {
+    return '[' + value.map(stableStringify).join(',') + ']';
+  }
+  const obj = value as Record<string, unknown>;
+  const keys = Object.keys(obj).sort();
+  return (
+    '{' +
+    keys
+      .map((k) => `${JSON.stringify(k)}:${stableStringify(obj[k])}`)
+      .join(',') +
+    '}'
+  );
+}
+
+/**
+ * Compute the coalesce key for a query, or `null` to bypass coalescing
+ * entirely. Callers that return `null` fall through to the normal
+ * enqueue path.
+ */
+function computeCoalesceKey(
+  operationName: string,
+  options: unknown
+): string | null {
+  try {
+    if (poolConfig.coalesceInFlightQueries === false) return null;
+    if (!operationName || operationName === 'anonymous') return null;
+    // `options` shape on server is the raw Apollo `QueryOptions`.
+    const opts = options as {
+      mutation?: unknown;
+      query?: unknown;
+      variables?: unknown;
+      fetchPolicy?: string;
+      context?: Record<string, unknown>;
+    };
+    // Never coalesce mutations. They may have distinct side-effects even
+    // with identical inputs (e.g., two retries of the same create).
+    if (opts?.mutation) return null;
+    // Not a query shape — fail-safe skip.
+    if (!opts?.query) return null;
+    // Per-call context overrides are unsafe to share (headers, auth,
+    // noRetry flag, custom fetchOptions). Conservative skip.
+    if (opts.context && Object.keys(opts.context).length > 0) return null;
+    const vars = stableStringify(opts.variables ?? null);
+    const fp = opts.fetchPolicy ?? 'default';
+    return `${operationName}::${fp}::${vars}`;
+  } catch {
+    return null;
+  }
+}
 
 // Forward-declare the optional server-only keepalive helper. The actual
 // implementation lives in `apollo-client.server.ts` and is loaded only when
@@ -753,12 +866,51 @@ export async function getApolloClient(): Promise<
     const originalQuery = apolloClient.query.bind(apolloClient);
     const originalMutate = apolloClient.mutate.bind(apolloClient);
 
-    apolloClient.query = (options) => {
+    apolloClient.query = ((options: Parameters<typeof originalQuery>[0]) => {
+      const operationName = extractOperationName(options);
+      const coalesceKey = computeCoalesceKey(operationName, options);
+
+      if (coalesceKey) {
+        const existing = inflightQueries.get(coalesceKey);
+        if (existing) {
+          poolCounters.coalescedHitsTotal++;
+          existing.hits++;
+          // Share the Promise. Apollo's QueryResult is fully serialisable
+          // and callers never mutate it; safe to hand to multiple awaiters.
+          // Two-step cast because the inflight map is keyed generically;
+          // the original call's TVariables/T cannot be preserved across
+          // distinct callers (and does not need to be — the result shape
+          // is identical for identical queries by construction).
+          return existing.promise as unknown as ReturnType<
+            typeof originalQuery
+          >;
+        }
+
+        const promise = enqueueOperation(
+          () => originalQuery(options),
+          operationName
+        );
+        inflightQueries.set(coalesceKey, {
+          promise,
+          firstEnqueuedAt: Date.now(),
+          hits: 0,
+        });
+        // Use .then/.catch symmetric cleanup so it fires regardless of
+        // resolution or rejection. Avoids unhandled-rejection warnings
+        // that a bare `.finally()` would produce if awaiters have not
+        // attached yet when the Promise rejects.
+        const cleanup = (): void => {
+          inflightQueries.delete(coalesceKey);
+        };
+        promise.then(cleanup, cleanup);
+        return promise as unknown as ReturnType<typeof originalQuery>;
+      }
+
       return enqueueOperation(
         () => originalQuery(options),
-        extractOperationName(options)
-      );
-    };
+        operationName
+      ) as unknown as ReturnType<typeof originalQuery>;
+    }) as typeof apolloClient.query;
 
     apolloClient.mutate = (options) => {
       return enqueueOperation(
@@ -839,6 +991,17 @@ export interface PoolStats {
   rejectedNonRetryable: number;
   /** Count of retry attempts fired across all operations. */
   retryAttemptsTotal: number;
+  /**
+   * Count of query operations satisfied from the in-flight coalescer
+   * (i.e. requests that did NOT consume a pool concurrency slot because
+   * an identical request was already running). Expected to be large and
+   * growing monotonically in a healthy system with hot reads. Ratio
+   * `coalescedHitsTotal / (executedTotal + coalescedHitsTotal)` is the
+   * coalesce hit rate.
+   */
+  coalescedHitsTotal: number;
+  /** Current size of the in-flight coalescer map (0 when idle). */
+  coalescerInflightSize: number;
 }
 
 /**
@@ -858,6 +1021,8 @@ export function getPoolStats(): PoolStats {
     rejectedQueueWaitTimeout: poolCounters.rejectedQueueWaitTimeout,
     rejectedNonRetryable: poolCounters.rejectedNonRetryable,
     retryAttemptsTotal: poolCounters.retryAttemptsTotal,
+    coalescedHitsTotal: poolCounters.coalescedHitsTotal,
+    coalescerInflightSize: inflightQueries.size,
   };
 }
 
