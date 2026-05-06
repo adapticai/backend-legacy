@@ -430,6 +430,26 @@ enum SubscriptionPlan {
 
 // OpenAI API language models available for text generation.
 enum OpenaiModel {
+  /// GPT-5.5 (current flagship; recommended for advanced/complex queries)
+  /// API model id: "gpt-5.5"
+  GPT_5_5
+
+  /// GPT-5.5 Pro (top-tier reasoning; ~6x cost of GPT-5.5)
+  /// API model id: "gpt-5.5-pro"
+  GPT_5_5_PRO
+
+  /// GPT-5.4 (prior flagship; still supported)
+  /// API model id: "gpt-5.4"
+  GPT_5_4
+
+  /// GPT-5.4 mini (cost-efficient GPT-5.4)
+  /// API model id: "gpt-5.4-mini"
+  GPT_5_4_MINI
+
+  /// GPT-5.4 nano (smallest / cheapest GPT-5.4)
+  /// API model id: "gpt-5.4-nano"
+  GPT_5_4_NANO
+
   /// GPT-5 (flagship; best for coding + agentic chains)
   /// API model id: "gpt-5"
   GPT_5
@@ -453,6 +473,156 @@ enum OpenaiModel {
   /// GPT-4.1 nano (fastest / cheapest 4.1)
   /// API model id: "gpt-4.1-nano"
   GPT_4_1_NANO
+
+  /// o1 reasoning model
+  /// API model id: "o1"
+  O1
+
+  /// o1-mini reasoning model
+  /// API model id: "o1-mini"
+  O1_MINI
+
+  /// o3 reasoning model
+  /// API model id: "o3"
+  O3
+
+  /// o3-mini reasoning model
+  /// API model id: "o3-mini"
+  O3_MINI
+
+  /// o4-mini reasoning model
+  /// API model id: "o4-mini"
+  O4_MINI
+}
+
+/// Anthropic Claude language models available for text generation.
+enum AnthropicModel {
+  /// Claude Opus 4.7 (current flagship; recommended for advanced/complex queries)
+  /// API model id: "claude-opus-4-7"
+  CLAUDE_OPUS_4_7
+
+  /// Claude Opus 4.6 (prior flagship; still supported)
+  /// API model id: "claude-opus-4-6"
+  CLAUDE_OPUS_4_6
+
+  /// Claude Sonnet 4.6 (mid-tier; balance of capability and cost)
+  /// API model id: "claude-sonnet-4-6"
+  CLAUDE_SONNET_4_6
+
+  /// Claude Haiku 4.5 (fast and economical)
+  /// API model id: "claude-haiku-4-5"
+  CLAUDE_HAIKU_4_5
+}
+
+/// DeepSeek language models available for text generation.
+enum DeepseekModel {
+  /// DeepSeek V4 Pro (current flagship; recommended for advanced/complex queries; 1.6T parameters / 49B activated; 1M ctx)
+  /// API model id: "deepseek-v4-pro"
+  DEEPSEEK_V4_PRO
+
+  /// DeepSeek V4 Flash (mid-tier; 284B parameters / 13B activated; 1M ctx)
+  /// API model id: "deepseek-v4-flash"
+  DEEPSEEK_V4_FLASH
+
+  /// DeepSeek Chat (legacy non-thinking; retires July 24, 2026 — currently aliased to V4 Flash non-thinking)
+  /// API model id: "deepseek-chat"
+  DEEPSEEK_CHAT
+
+  /// DeepSeek Reasoner (legacy thinking; retires July 24, 2026 — currently aliased to V4 Flash thinking)
+  /// API model id: "deepseek-reasoner"
+  DEEPSEEK_REASONER
+}
+
+/// Kimi (Moonshot) language models available for text generation.
+enum KimiModel {
+  /// Kimi K2.6 (current flagship; recommended for advanced/complex queries)
+  /// API model id: "kimi-k2.6"
+  KIMI_K2_6
+
+  /// Kimi K2.5 (prior flagship; still supported)
+  /// API model id: "kimi-k2.5"
+  KIMI_K2_5
+
+  /// Kimi K2 (September 2025 release)
+  /// API model id: "kimi-k2-0905-preview"
+  KIMI_K2_0905_PREVIEW
+
+  /// Kimi K2 Turbo (faster variant)
+  /// API model id: "kimi-k2-turbo-preview"
+  KIMI_K2_TURBO_PREVIEW
+
+  /// Kimi K2 Thinking (reasoning variant)
+  /// API model id: "kimi-k2-thinking"
+  KIMI_K2_THINKING
+
+  /// Kimi K2 Thinking Turbo (faster reasoning variant)
+  /// API model id: "kimi-k2-thinking-turbo"
+  KIMI_K2_THINKING_TURBO
+}
+
+/// Qwen (Alibaba DashScope) language models available for text generation.
+enum QwenModel {
+  /// Qwen3 Max (current flagship; recommended for advanced/complex queries)
+  /// API model id: "qwen3-max"
+  QWEN3_MAX
+
+  /// Qwen3.5 Plus (mid-tier; balance of capability and cost)
+  /// API model id: "qwen3.5-plus"
+  QWEN3_5_PLUS
+
+  /// Qwen3.5 Flash (fast and economical)
+  /// API model id: "qwen3.5-flash"
+  QWEN3_5_FLASH
+}
+
+/// xAI Grok language models available for text generation.
+enum XaiModel {
+  /// Grok 4.3 (current flagship; recommended for advanced/complex queries)
+  /// API model id: "grok-4.3"
+  GROK_4_3
+
+  /// Grok 4.20 (long-context option; 2M ctx)
+  /// API model id: "grok-4.20"
+  GROK_4_20
+
+  /// Grok 4.1 Fast (cheap and fast workhorse)
+  /// API model id: "grok-4.1-fast"
+  GROK_4_1_FAST
+
+  /// Grok 4 (prior flagship)
+  /// API model id: "grok-4"
+  GROK_4
+
+  /// Grok 4 Fast Reasoning (reasoning variant)
+  /// API model id: "grok-4-fast-reasoning"
+  GROK_4_FAST_REASONING
+
+  /// Grok 4 Fast Non-Reasoning (non-reasoning variant)
+  /// API model id: "grok-4-fast-non-reasoning"
+  GROK_4_FAST_NON_REASONING
+
+  /// Grok 3 (legacy)
+  /// API model id: "grok-3"
+  GROK_3
+
+  /// Grok 3 Mini (legacy fast tier)
+  /// API model id: "grok-3-mini"
+  GROK_3_MINI
+}
+
+/// Google Gemini language models available for text generation.
+enum GeminiModel {
+  /// Gemini 3.1 Pro (current flagship; recommended for advanced/complex queries)
+  /// API model id: "gemini-3.1-pro-preview"
+  GEMINI_3_1_PRO_PREVIEW
+
+  /// Gemini 3 Flash (mid-tier; balance of capability and cost)
+  /// API model id: "gemini-3-flash-preview"
+  GEMINI_3_FLASH_PREVIEW
+
+  /// Gemini 3.1 Flash Lite (fast and economical)
+  /// API model id: "gemini-3.1-flash-lite-preview"
+  GEMINI_3_1_FLASH_LITE_PREVIEW
 }
 
 /// Supported LLM providers for multi-provider model routing
@@ -1037,8 +1207,10 @@ model LlmConfiguration {
   normalProvider   LlmProvider?
   advancedProvider LlmProvider?
 
-  /// Per-tier model overrides (null = use provider's default for that tier)
-  /// These are model ID strings like "gpt-5.4-mini", "claude-sonnet-4-6", etc.
+  /// Per-tier model overrides (null = use provider's default for that tier).
+  /// These are model ID strings. The canonical sets are documented by the per-provider enums
+  /// (OpenaiModel, AnthropicModel, DeepseekModel, KimiModel, QwenModel, XaiModel, GeminiModel)
+  /// — e.g. "gpt-5.5", "claude-opus-4-7", "deepseek-v4-pro", "grok-4.3", "gemini-3.1-pro-preview".
   miniModel     String?
   normalModel   String?
   advancedModel String?
