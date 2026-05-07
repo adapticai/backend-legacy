@@ -1618,6 +1618,18 @@ model Customer {
   /// End date of the current billing period in Stripe.
   stripeCurrentPeriodEnd DateTime?
 
+  /// KYC jurisdiction for the customer (ISO 3166-1 alpha-2 country code, e.g., "US", "GB"). Used by pre-trade compliance to enforce jurisdiction-restricted asset gates. Null for customers whose KYC has not yet been completed.
+  jurisdiction String?
+
+  /// KYC risk profile classification for the customer (e.g., "LOW", "MEDIUM", "HIGH"). Used by pre-trade compliance to scale position-size and exposure limits. Null until risk assessment has been performed.
+  riskProfile String?
+
+  /// Anti-money-laundering status for the customer (e.g., "CLEAR", "FLAGGED", "BLOCKED"). Used by pre-trade compliance to gate order entry. Null until AML screening has been performed.
+  amlStatus String?
+
+  /// Timestamp of the last KYC review or update for this customer. Used by pre-trade compliance to enforce KYC-refresh policy. Null until first KYC review.
+  lastKycUpdate DateTime?
+
   /// Timestamp when the customer was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
