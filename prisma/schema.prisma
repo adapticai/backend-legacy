@@ -1916,6 +1916,9 @@ model Trade {
   /// If this trade was superseded, references the replacement trade's ID. TYPESTRING.SKIP=true
   supersededById String? @db.Uuid
 
+  /// Forensic metadata populated when status is REJECTED_BROKER, REJECTED_COMPLIANCE, or FAILED. Carries reason, errorCode, brokerResponse, attemptedAt and any other contextual details required for SEC Rule 15c3-5 audits and FINRA review. Null for trades that did not fail or get rejected.
+  rejectionMetadata Json?
+
   @@index([alpacaAccountId])
   @@index([alpacaAccountId, status])
   @@index([symbol])
