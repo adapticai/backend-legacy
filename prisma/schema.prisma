@@ -4954,6 +4954,9 @@ model TradingPolicy {
   /// Minimum change in trailing stop percent to warrant an adjustment. Canonical replacement for legacy AlpacaAccount.minimumPriceChangePercent100.
   minimumPriceChangePercent100 Float @default(0.5)
 
+  /// Wash-trade cooldown period in milliseconds for equities — minimum elapsed time between opposing-side fills on the same symbol per FINRA Rule 5210. Mirrors the 30s default already enforced for crypto. Default: 30000 (30 seconds).
+  equityWashTradeCooldownMs Int @default(30000)
+
   riskBudgetPrefs           Json?
 
   signalConsumptionPrefs    Json?
