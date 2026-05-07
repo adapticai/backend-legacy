@@ -52,6 +52,7 @@ import { logger } from './utils/logger';
   firstReducedTrailPercentage100
   secondReducedTrailPercentage100
   minimumPriceChangePercent100
+  equityWashTradeCooldownMs
   riskBudgetPrefs
   signalConsumptionPrefs
   executionPrefs
@@ -164,6 +165,7 @@ import { logger } from './utils/logger';
   firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? props.firstReducedTrailPercentage100 : undefined,
   secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? props.secondReducedTrailPercentage100 : undefined,
   minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? props.minimumPriceChangePercent100 : undefined,
+  equityWashTradeCooldownMs: props.equityWashTradeCooldownMs !== undefined ? props.equityWashTradeCooldownMs : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
   executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
@@ -310,6 +312,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -782,6 +788,7 @@ import { logger } from './utils/logger';
   firstReducedTrailPercentage100: prop.firstReducedTrailPercentage100 !== undefined ? prop.firstReducedTrailPercentage100 : undefined,
   secondReducedTrailPercentage100: prop.secondReducedTrailPercentage100 !== undefined ? prop.secondReducedTrailPercentage100 : undefined,
   minimumPriceChangePercent100: prop.minimumPriceChangePercent100 !== undefined ? prop.minimumPriceChangePercent100 : undefined,
+  equityWashTradeCooldownMs: prop.equityWashTradeCooldownMs !== undefined ? prop.equityWashTradeCooldownMs : undefined,
   riskBudgetPrefs: prop.riskBudgetPrefs !== undefined ? prop.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: prop.signalConsumptionPrefs !== undefined ? prop.signalConsumptionPrefs : undefined,
   executionPrefs: prop.executionPrefs !== undefined ? prop.executionPrefs : undefined,
@@ -1072,6 +1079,9 @@ import { logger } from './utils/logger';
            } : undefined,
   minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
             set: props.minimumPriceChangePercent100 
+           } : undefined,
+  equityWashTradeCooldownMs: props.equityWashTradeCooldownMs !== undefined ? {
+            set: props.equityWashTradeCooldownMs 
            } : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
@@ -1393,6 +1403,18 @@ import { logger } from './utils/logger';
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? {
                 set: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd
               } : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? {
+                set: props.alpacaAccount.user.customer.jurisdiction
+              } : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? {
+                set: props.alpacaAccount.user.customer.riskProfile
+              } : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? {
+                set: props.alpacaAccount.user.customer.amlStatus
+              } : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? {
+                set: props.alpacaAccount.user.customer.lastKycUpdate
+              } : undefined,
           },
           create: {
             authUserId: props.alpacaAccount.user.customer.authUserId !== undefined ? props.alpacaAccount.user.customer.authUserId : undefined,
@@ -1402,6 +1424,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -1845,6 +1871,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -2227,6 +2257,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -2751,6 +2785,7 @@ import { logger } from './utils/logger';
   firstReducedTrailPercentage100: props.firstReducedTrailPercentage100 !== undefined ? props.firstReducedTrailPercentage100 : undefined,
   secondReducedTrailPercentage100: props.secondReducedTrailPercentage100 !== undefined ? props.secondReducedTrailPercentage100 : undefined,
   minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? props.minimumPriceChangePercent100 : undefined,
+  equityWashTradeCooldownMs: props.equityWashTradeCooldownMs !== undefined ? props.equityWashTradeCooldownMs : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
   executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
@@ -2897,6 +2932,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -3291,6 +3330,9 @@ import { logger } from './utils/logger';
   minimumPriceChangePercent100: props.minimumPriceChangePercent100 !== undefined ? {
             set: props.minimumPriceChangePercent100 
            } : undefined,
+  equityWashTradeCooldownMs: props.equityWashTradeCooldownMs !== undefined ? {
+            set: props.equityWashTradeCooldownMs 
+           } : undefined,
   riskBudgetPrefs: props.riskBudgetPrefs !== undefined ? props.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: props.signalConsumptionPrefs !== undefined ? props.signalConsumptionPrefs : undefined,
   executionPrefs: props.executionPrefs !== undefined ? props.executionPrefs : undefined,
@@ -3605,6 +3647,18 @@ import { logger } from './utils/logger';
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? {
                 set: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd
               } : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? {
+                set: props.alpacaAccount.user.customer.jurisdiction
+              } : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? {
+                set: props.alpacaAccount.user.customer.riskProfile
+              } : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? {
+                set: props.alpacaAccount.user.customer.amlStatus
+              } : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? {
+                set: props.alpacaAccount.user.customer.lastKycUpdate
+              } : undefined,
           },
           create: {
             authUserId: props.alpacaAccount.user.customer.authUserId !== undefined ? props.alpacaAccount.user.customer.authUserId : undefined,
@@ -3614,6 +3668,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -4057,6 +4115,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -4439,6 +4501,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? props.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.alpacaAccount.user.customer.stripePriceId !== undefined ? props.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? props.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.alpacaAccount.user.customer.jurisdiction !== undefined ? props.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: props.alpacaAccount.user.customer.riskProfile !== undefined ? props.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: props.alpacaAccount.user.customer.amlStatus !== undefined ? props.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: props.alpacaAccount.user.customer.lastKycUpdate !== undefined ? props.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -5031,6 +5097,9 @@ import { logger } from './utils/logger';
   minimumPriceChangePercent100: prop.minimumPriceChangePercent100 !== undefined ? {
             set: prop.minimumPriceChangePercent100 
            } : undefined,
+  equityWashTradeCooldownMs: prop.equityWashTradeCooldownMs !== undefined ? {
+            set: prop.equityWashTradeCooldownMs 
+           } : undefined,
   riskBudgetPrefs: prop.riskBudgetPrefs !== undefined ? prop.riskBudgetPrefs : undefined,
   signalConsumptionPrefs: prop.signalConsumptionPrefs !== undefined ? prop.signalConsumptionPrefs : undefined,
   executionPrefs: prop.executionPrefs !== undefined ? prop.executionPrefs : undefined,
@@ -5351,6 +5420,18 @@ import { logger } from './utils/logger';
             stripeCurrentPeriodEnd: prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? {
                 set: prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd
               } : undefined,
+            jurisdiction: prop.alpacaAccount.user.customer.jurisdiction !== undefined ? {
+                set: prop.alpacaAccount.user.customer.jurisdiction
+              } : undefined,
+            riskProfile: prop.alpacaAccount.user.customer.riskProfile !== undefined ? {
+                set: prop.alpacaAccount.user.customer.riskProfile
+              } : undefined,
+            amlStatus: prop.alpacaAccount.user.customer.amlStatus !== undefined ? {
+                set: prop.alpacaAccount.user.customer.amlStatus
+              } : undefined,
+            lastKycUpdate: prop.alpacaAccount.user.customer.lastKycUpdate !== undefined ? {
+                set: prop.alpacaAccount.user.customer.lastKycUpdate
+              } : undefined,
           },
           create: {
             authUserId: prop.alpacaAccount.user.customer.authUserId !== undefined ? prop.alpacaAccount.user.customer.authUserId : undefined,
@@ -5360,6 +5441,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: prop.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? prop.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: prop.alpacaAccount.user.customer.stripePriceId !== undefined ? prop.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: prop.alpacaAccount.user.customer.jurisdiction !== undefined ? prop.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: prop.alpacaAccount.user.customer.riskProfile !== undefined ? prop.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: prop.alpacaAccount.user.customer.amlStatus !== undefined ? prop.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: prop.alpacaAccount.user.customer.lastKycUpdate !== undefined ? prop.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -5803,6 +5888,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: prop.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? prop.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: prop.alpacaAccount.user.customer.stripePriceId !== undefined ? prop.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: prop.alpacaAccount.user.customer.jurisdiction !== undefined ? prop.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: prop.alpacaAccount.user.customer.riskProfile !== undefined ? prop.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: prop.alpacaAccount.user.customer.amlStatus !== undefined ? prop.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: prop.alpacaAccount.user.customer.lastKycUpdate !== undefined ? prop.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -6185,6 +6274,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: prop.alpacaAccount.user.customer.stripeSubscriptionId !== undefined ? prop.alpacaAccount.user.customer.stripeSubscriptionId : undefined,
             stripePriceId: prop.alpacaAccount.user.customer.stripePriceId !== undefined ? prop.alpacaAccount.user.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd !== undefined ? prop.alpacaAccount.user.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: prop.alpacaAccount.user.customer.jurisdiction !== undefined ? prop.alpacaAccount.user.customer.jurisdiction : undefined,
+            riskProfile: prop.alpacaAccount.user.customer.riskProfile !== undefined ? prop.alpacaAccount.user.customer.riskProfile : undefined,
+            amlStatus: prop.alpacaAccount.user.customer.amlStatus !== undefined ? prop.alpacaAccount.user.customer.amlStatus : undefined,
+            lastKycUpdate: prop.alpacaAccount.user.customer.lastKycUpdate !== undefined ? prop.alpacaAccount.user.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,

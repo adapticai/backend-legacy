@@ -128,6 +128,7 @@ import { logger } from './utils/logger';
         thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
         lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
+        rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
       },
     }
   } : undefined,
@@ -593,6 +594,7 @@ import { logger } from './utils/logger';
         supersededById: props.trade.supersededById !== undefined ? {
             set: props.trade.supersededById
           } : undefined,
+        rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
@@ -623,6 +625,7 @@ import { logger } from './utils/logger';
         thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
         lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
+        rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
       },
     }
   } : undefined,
@@ -848,6 +851,7 @@ import { logger } from './utils/logger';
         thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
         lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
+        rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
       },
     }
   } : undefined,
@@ -992,6 +996,7 @@ import { logger } from './utils/logger';
         supersededById: props.trade.supersededById !== undefined ? {
             set: props.trade.supersededById
           } : undefined,
+        rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
@@ -1022,6 +1027,7 @@ import { logger } from './utils/logger';
         thesisVersion: props.trade.thesisVersion !== undefined ? props.trade.thesisVersion : undefined,
         lastReunderwrittenAt: props.trade.lastReunderwrittenAt !== undefined ? props.trade.lastReunderwrittenAt : undefined,
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
+        rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
       },
     }
   } : undefined,
@@ -1329,6 +1335,7 @@ import { logger } from './utils/logger';
         supersededById: prop.trade.supersededById !== undefined ? {
             set: prop.trade.supersededById
           } : undefined,
+        rejectionMetadata: prop.trade.rejectionMetadata !== undefined ? prop.trade.rejectionMetadata : undefined,
       },
       create: {
         alpacaAccountId: prop.trade.alpacaAccountId !== undefined ? prop.trade.alpacaAccountId : undefined,
@@ -1359,6 +1366,7 @@ import { logger } from './utils/logger';
         thesisVersion: prop.trade.thesisVersion !== undefined ? prop.trade.thesisVersion : undefined,
         lastReunderwrittenAt: prop.trade.lastReunderwrittenAt !== undefined ? prop.trade.lastReunderwrittenAt : undefined,
         supersededById: prop.trade.supersededById !== undefined ? prop.trade.supersededById : undefined,
+        rejectionMetadata: prop.trade.rejectionMetadata !== undefined ? prop.trade.rejectionMetadata : undefined,
       },
     }
   } : undefined,

@@ -57,6 +57,7 @@ import { logger } from './utils/logger';
   thesisVersion
   lastReunderwrittenAt
   supersededById
+  rejectionMetadata
 
   `;
 
@@ -132,6 +133,7 @@ import { logger } from './utils/logger';
   thesisVersion: props.thesisVersion !== undefined ? props.thesisVersion : undefined,
   lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
+  rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item) => ({
@@ -346,6 +348,7 @@ import { logger } from './utils/logger';
   thesisVersion: prop.thesisVersion !== undefined ? prop.thesisVersion : undefined,
   lastReunderwrittenAt: prop.lastReunderwrittenAt !== undefined ? prop.lastReunderwrittenAt : undefined,
   supersededById: prop.supersededById !== undefined ? prop.supersededById : undefined,
+  rejectionMetadata: prop.rejectionMetadata !== undefined ? prop.rejectionMetadata : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -590,6 +593,7 @@ import { logger } from './utils/logger';
   supersededById: props.supersededById !== undefined ? {
             set: props.supersededById 
            } : undefined,
+  rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: props.actions.map((item) => ({
@@ -849,6 +853,7 @@ import { logger } from './utils/logger';
   thesisVersion: props.thesisVersion !== undefined ? props.thesisVersion : undefined,
   lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
+  rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item) => ({
@@ -968,6 +973,7 @@ import { logger } from './utils/logger';
   supersededById: props.supersededById !== undefined ? {
             set: props.supersededById 
            } : undefined,
+  rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: props.actions.map((item) => ({
@@ -1284,6 +1290,7 @@ import { logger } from './utils/logger';
   supersededById: prop.supersededById !== undefined ? {
             set: prop.supersededById 
            } : undefined,
+  rejectionMetadata: prop.rejectionMetadata !== undefined ? prop.rejectionMetadata : undefined,
   actions: prop.actions ? 
   Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: prop.actions.map((item) => ({

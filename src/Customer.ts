@@ -19,6 +19,10 @@ import { logger } from './utils/logger';
   stripeSubscriptionId
   stripePriceId
   stripeCurrentPeriodEnd
+  jurisdiction
+  riskProfile
+  amlStatus
+  lastKycUpdate
   createdAt
   updatedAt
   users {
@@ -104,6 +108,7 @@ import { logger } from './utils/logger';
         firstReducedTrailPercentage100
         secondReducedTrailPercentage100
         minimumPriceChangePercent100
+        equityWashTradeCooldownMs
         riskBudgetPrefs
         signalConsumptionPrefs
         executionPrefs
@@ -250,6 +255,10 @@ import { logger } from './utils/logger';
   stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
   stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? props.jurisdiction : undefined,
+  riskProfile: props.riskProfile !== undefined ? props.riskProfile : undefined,
+  amlStatus: props.amlStatus !== undefined ? props.amlStatus : undefined,
+  lastKycUpdate: props.lastKycUpdate !== undefined ? props.lastKycUpdate : undefined,
   users: props.users ? 
     Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.users.map((item) => ({
@@ -473,6 +482,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -850,6 +860,10 @@ import { logger } from './utils/logger';
   stripeSubscriptionId: prop.stripeSubscriptionId !== undefined ? prop.stripeSubscriptionId : undefined,
   stripePriceId: prop.stripePriceId !== undefined ? prop.stripePriceId : undefined,
   stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? prop.stripeCurrentPeriodEnd : undefined,
+  jurisdiction: prop.jurisdiction !== undefined ? prop.jurisdiction : undefined,
+  riskProfile: prop.riskProfile !== undefined ? prop.riskProfile : undefined,
+  amlStatus: prop.amlStatus !== undefined ? prop.amlStatus : undefined,
+  lastKycUpdate: prop.lastKycUpdate !== undefined ? prop.lastKycUpdate : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -1021,6 +1035,18 @@ import { logger } from './utils/logger';
            } : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
             set: props.stripeCurrentPeriodEnd 
+           } : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? {
+            set: props.jurisdiction 
+           } : undefined,
+  riskProfile: props.riskProfile !== undefined ? {
+            set: props.riskProfile 
+           } : undefined,
+  amlStatus: props.amlStatus !== undefined ? {
+            set: props.amlStatus 
+           } : undefined,
+  lastKycUpdate: props.lastKycUpdate !== undefined ? {
+            set: props.lastKycUpdate 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -1497,6 +1523,9 @@ import { logger } from './utils/logger';
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
                 set: item.tradingPolicy.minimumPriceChangePercent100
               } : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1594,6 +1623,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1808,6 +1838,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2426,6 +2457,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2816,6 +2848,10 @@ import { logger } from './utils/logger';
   stripeSubscriptionId: props.stripeSubscriptionId !== undefined ? props.stripeSubscriptionId : undefined,
   stripePriceId: props.stripePriceId !== undefined ? props.stripePriceId : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? props.stripeCurrentPeriodEnd : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? props.jurisdiction : undefined,
+  riskProfile: props.riskProfile !== undefined ? props.riskProfile : undefined,
+  amlStatus: props.amlStatus !== undefined ? props.amlStatus : undefined,
+  lastKycUpdate: props.lastKycUpdate !== undefined ? props.lastKycUpdate : undefined,
   users: props.users ? 
     Array.isArray(props.users) && props.users.length > 0 &&  props.users.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.users.map((item) => ({
@@ -3039,6 +3075,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3278,6 +3315,18 @@ import { logger } from './utils/logger';
            } : undefined,
   stripeCurrentPeriodEnd: props.stripeCurrentPeriodEnd !== undefined ? {
             set: props.stripeCurrentPeriodEnd 
+           } : undefined,
+  jurisdiction: props.jurisdiction !== undefined ? {
+            set: props.jurisdiction 
+           } : undefined,
+  riskProfile: props.riskProfile !== undefined ? {
+            set: props.riskProfile 
+           } : undefined,
+  amlStatus: props.amlStatus !== undefined ? {
+            set: props.amlStatus 
+           } : undefined,
+  lastKycUpdate: props.lastKycUpdate !== undefined ? {
+            set: props.lastKycUpdate 
            } : undefined,
   users: props.users ? 
   Array.isArray(props.users) && props.users.length > 0 && props.users.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -3748,6 +3797,9 @@ import { logger } from './utils/logger';
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
                 set: item.tradingPolicy.minimumPriceChangePercent100
               } : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3845,6 +3897,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -4059,6 +4112,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -4677,6 +4731,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5070,6 +5125,18 @@ import { logger } from './utils/logger';
            } : undefined,
   stripeCurrentPeriodEnd: prop.stripeCurrentPeriodEnd !== undefined ? {
             set: prop.stripeCurrentPeriodEnd 
+           } : undefined,
+  jurisdiction: prop.jurisdiction !== undefined ? {
+            set: prop.jurisdiction 
+           } : undefined,
+  riskProfile: prop.riskProfile !== undefined ? {
+            set: prop.riskProfile 
+           } : undefined,
+  amlStatus: prop.amlStatus !== undefined ? {
+            set: prop.amlStatus 
+           } : undefined,
+  lastKycUpdate: prop.lastKycUpdate !== undefined ? {
+            set: prop.lastKycUpdate 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
@@ -5546,6 +5613,9 @@ import { logger } from './utils/logger';
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
                 set: item.tradingPolicy.minimumPriceChangePercent100
               } : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5643,6 +5713,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5857,6 +5928,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -6475,6 +6547,7 @@ import { logger } from './utils/logger';
             firstReducedTrailPercentage100: item.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.tradingPolicy.firstReducedTrailPercentage100 : undefined,
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,

@@ -151,6 +151,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -865,6 +869,18 @@ import { logger } from './utils/logger';
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? {
                 set: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd
               } : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.jurisdiction
+              } : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.riskProfile
+              } : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.amlStatus
+              } : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.lastKycUpdate
+              } : undefined,
           },
           create: {
             authUserId: props.waitlistEntry.reviewedBy.customer.authUserId !== undefined ? props.waitlistEntry.reviewedBy.customer.authUserId : undefined,
@@ -874,6 +890,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -1376,6 +1396,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -1661,6 +1685,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -2126,6 +2154,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -2526,6 +2558,18 @@ import { logger } from './utils/logger';
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? {
                 set: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd
               } : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.jurisdiction
+              } : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.riskProfile
+              } : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.amlStatus
+              } : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? {
+                set: props.waitlistEntry.reviewedBy.customer.lastKycUpdate
+              } : undefined,
           },
           create: {
             authUserId: props.waitlistEntry.reviewedBy.customer.authUserId !== undefined ? props.waitlistEntry.reviewedBy.customer.authUserId : undefined,
@@ -2535,6 +2579,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -3037,6 +3085,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -3322,6 +3374,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: props.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? props.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? props.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: props.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? props.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: props.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? props.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: props.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? props.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: props.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? props.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -3882,6 +3938,18 @@ import { logger } from './utils/logger';
             stripeCurrentPeriodEnd: prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? {
                 set: prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd
               } : undefined,
+            jurisdiction: prop.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.customer.jurisdiction
+              } : undefined,
+            riskProfile: prop.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.customer.riskProfile
+              } : undefined,
+            amlStatus: prop.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.customer.amlStatus
+              } : undefined,
+            lastKycUpdate: prop.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? {
+                set: prop.waitlistEntry.reviewedBy.customer.lastKycUpdate
+              } : undefined,
           },
           create: {
             authUserId: prop.waitlistEntry.reviewedBy.customer.authUserId !== undefined ? prop.waitlistEntry.reviewedBy.customer.authUserId : undefined,
@@ -3891,6 +3959,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: prop.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: prop.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: prop.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? prop.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: prop.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? prop.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: prop.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? prop.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: prop.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? prop.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -4393,6 +4465,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: prop.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: prop.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: prop.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? prop.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: prop.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? prop.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: prop.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? prop.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: prop.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? prop.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
@@ -4678,6 +4754,10 @@ import { logger } from './utils/logger';
             stripeSubscriptionId: prop.waitlistEntry.reviewedBy.customer.stripeSubscriptionId !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripeSubscriptionId : undefined,
             stripePriceId: prop.waitlistEntry.reviewedBy.customer.stripePriceId !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripePriceId : undefined,
             stripeCurrentPeriodEnd: prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd !== undefined ? prop.waitlistEntry.reviewedBy.customer.stripeCurrentPeriodEnd : undefined,
+            jurisdiction: prop.waitlistEntry.reviewedBy.customer.jurisdiction !== undefined ? prop.waitlistEntry.reviewedBy.customer.jurisdiction : undefined,
+            riskProfile: prop.waitlistEntry.reviewedBy.customer.riskProfile !== undefined ? prop.waitlistEntry.reviewedBy.customer.riskProfile : undefined,
+            amlStatus: prop.waitlistEntry.reviewedBy.customer.amlStatus !== undefined ? prop.waitlistEntry.reviewedBy.customer.amlStatus : undefined,
+            lastKycUpdate: prop.waitlistEntry.reviewedBy.customer.lastKycUpdate !== undefined ? prop.waitlistEntry.reviewedBy.customer.lastKycUpdate : undefined,
           },
         }
       } : undefined,
