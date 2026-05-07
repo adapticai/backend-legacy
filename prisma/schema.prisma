@@ -349,11 +349,20 @@ enum TradeStatus {
   /// The trade has been fully completed.
   COMPLETED
 
-  /// The trade has been canceled.
+  /// The trade has been canceled (e.g., by operator action).
   CANCELED
 
   /// The trade has been superseded by a newer trade via re-underwriting.
   SUPERSEDED
+
+  /// The broker rejected the order (e.g., insufficient buying power, bad symbol, halted asset). Forensic record retained per SEC Rule 15c3-5.
+  REJECTED_BROKER
+
+  /// A pre-trade compliance/risk check rejected the trade (e.g., wash-trade cooldown, KYC, restricted list). Forensic record retained per SEC Rule 15c3-5.
+  REJECTED_COMPLIANCE
+
+  /// The trade failed during execution due to a system error (e.g., network, broker outage). Forensic record retained per SEC Rule 15c3-5.
+  FAILED
 }
 
 // Categorizes the types of alerts that can be generated.
