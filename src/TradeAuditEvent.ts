@@ -103,6 +103,7 @@ import { logger } from './utils/logger';
   eventCategory: props.eventCategory !== undefined ? props.eventCategory : undefined,
   severity: props.severity !== undefined ? props.severity : undefined,
   passed: props.passed !== undefined ? props.passed : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
   retentionDate: props.retentionDate !== undefined ? props.retentionDate : undefined,
 
             },
@@ -278,6 +279,7 @@ import { logger } from './utils/logger';
   eventCategory: prop.eventCategory !== undefined ? prop.eventCategory : undefined,
   severity: prop.severity !== undefined ? prop.severity : undefined,
   passed: prop.passed !== undefined ? prop.passed : undefined,
+  createdAt: prop.createdAt !== undefined ? prop.createdAt : undefined,
   retentionDate: prop.retentionDate !== undefined ? prop.retentionDate : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
@@ -693,6 +695,7 @@ import { logger } from './utils/logger';
   eventCategory: props.eventCategory !== undefined ? props.eventCategory : undefined,
   severity: props.severity !== undefined ? props.severity : undefined,
   passed: props.passed !== undefined ? props.passed : undefined,
+  createdAt: props.createdAt !== undefined ? props.createdAt : undefined,
   retentionDate: props.retentionDate !== undefined ? props.retentionDate : undefined,
       },
           update: {
