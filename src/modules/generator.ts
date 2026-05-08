@@ -67,10 +67,17 @@ const constructVariablesObject = (
   let variablesObject = '';
 
   fields.forEach((field) => {
-    // Skip meta fields during create operations
+    // Skip auto-generated meta fields during create operations.
+    // Only skip when the field is nullable (i.e., the schema supplies a
+    // default via `@default(...)` / `@updatedAt`, so the GraphQL input
+    // marks the field optional). Non-nullable variants (e.g.
+    // `TradeAuditEvent.createdAt BigInt` / `SignalLineage.createdAt BigInt`,
+    // both lacking a `@default`) require the caller to supply the value
+    // and must NOT be silently dropped from the mutation variables.
     if (
       ['create', 'createMany'].includes(operationType) &&
-      ['id', 'createdAt', 'updatedAt'].includes(field.name)
+      ['id', 'createdAt', 'updatedAt'].includes(field.name) &&
+      field.type.isNullable
     ) {
       return;
     }
@@ -287,8 +294,14 @@ const handleCreateOperation = (
         `${indent}    create: {\n` +
         createFields
           .map((createField) => {
-            if (['id', 'createdAt', 'updatedAt'].includes(createField.name)) {
-              return ''; // Skip meta fields
+            // Only skip auto-managed meta fields when the GraphQL input
+            // marks them optional (i.e., schema supplies a default). For
+            // non-nullable variants the caller must provide the value.
+            if (
+              ['id', 'createdAt', 'updatedAt'].includes(createField.name) &&
+              createField.type.isNullable
+            ) {
+              return '';
             }
             const nestedAccessor = field.type.isList
               ? `item.${createField.name}`
@@ -534,8 +547,13 @@ ${indent}}
         `${indent}    create: {\n` +
         createFields
           .map((createField) => {
-            if (['id', 'createdAt', 'updatedAt'].includes(createField.name)) {
-              return ''; // Skip meta fields
+            // Only skip auto-managed meta fields when the GraphQL input
+            // marks them optional (i.e., schema supplies a default).
+            if (
+              ['id', 'createdAt', 'updatedAt'].includes(createField.name) &&
+              createField.type.isNullable
+            ) {
+              return '';
             }
             const nestedAccessor = field.type.isList
               ? `item.${createField.name}`
