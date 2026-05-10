@@ -149,6 +149,18 @@ import { logger } from './utils/logger';
         secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         equityWashTradeCooldownMs: props.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.tradingPolicy.equityWashTradeCooldownMs : undefined,
+        minIntradayLiquidityShares: props.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.tradingPolicy.minIntradayLiquidityShares : undefined,
+        maxEntrySpreadBps: props.tradingPolicy.maxEntrySpreadBps !== undefined ? props.tradingPolicy.maxEntrySpreadBps : undefined,
+        sameSideReentryDelayMs: props.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.tradingPolicy.sameSideReentryDelayMs : undefined,
+        minAtrPercentage: props.tradingPolicy.minAtrPercentage !== undefined ? props.tradingPolicy.minAtrPercentage : undefined,
+        maxAtrPercentage: props.tradingPolicy.maxAtrPercentage !== undefined ? props.tradingPolicy.maxAtrPercentage : undefined,
+        minBookDepthShares: props.tradingPolicy.minBookDepthShares !== undefined ? props.tradingPolicy.minBookDepthShares : undefined,
+        maxAnomalousSlippageBps: props.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.tradingPolicy.maxAnomalousSlippageBps : undefined,
+        intradayTradingWindows: props.tradingPolicy.intradayTradingWindows !== undefined ? props.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: props.tradingPolicy.hardPositionExitMinutes !== undefined ? props.tradingPolicy.hardPositionExitMinutes : undefined,
+        maxOrdersPerWindow: props.tradingPolicy.maxOrdersPerWindow !== undefined ? props.tradingPolicy.maxOrdersPerWindow : undefined,
+        orderWindowSeconds: props.tradingPolicy.orderWindowSeconds !== undefined ? props.tradingPolicy.orderWindowSeconds : undefined,
+        dayTradeOnly: props.tradingPolicy.dayTradeOnly !== undefined ? props.tradingPolicy.dayTradeOnly : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -821,6 +833,40 @@ import { logger } from './utils/logger';
         equityWashTradeCooldownMs: props.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
             set: props.tradingPolicy.equityWashTradeCooldownMs
           } : undefined,
+        minIntradayLiquidityShares: props.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+            set: props.tradingPolicy.minIntradayLiquidityShares
+          } : undefined,
+        maxEntrySpreadBps: props.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+            set: props.tradingPolicy.maxEntrySpreadBps
+          } : undefined,
+        sameSideReentryDelayMs: props.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+            set: props.tradingPolicy.sameSideReentryDelayMs
+          } : undefined,
+        minAtrPercentage: props.tradingPolicy.minAtrPercentage !== undefined ? {
+            set: props.tradingPolicy.minAtrPercentage
+          } : undefined,
+        maxAtrPercentage: props.tradingPolicy.maxAtrPercentage !== undefined ? {
+            set: props.tradingPolicy.maxAtrPercentage
+          } : undefined,
+        minBookDepthShares: props.tradingPolicy.minBookDepthShares !== undefined ? {
+            set: props.tradingPolicy.minBookDepthShares
+          } : undefined,
+        maxAnomalousSlippageBps: props.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+            set: props.tradingPolicy.maxAnomalousSlippageBps
+          } : undefined,
+        intradayTradingWindows: props.tradingPolicy.intradayTradingWindows !== undefined ? props.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: props.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+            set: props.tradingPolicy.hardPositionExitMinutes
+          } : undefined,
+        maxOrdersPerWindow: props.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+            set: props.tradingPolicy.maxOrdersPerWindow
+          } : undefined,
+        orderWindowSeconds: props.tradingPolicy.orderWindowSeconds !== undefined ? {
+            set: props.tradingPolicy.orderWindowSeconds
+          } : undefined,
+        dayTradeOnly: props.tradingPolicy.dayTradeOnly !== undefined ? {
+            set: props.tradingPolicy.dayTradeOnly
+          } : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1343,6 +1389,18 @@ import { logger } from './utils/logger';
         secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         equityWashTradeCooldownMs: props.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.tradingPolicy.equityWashTradeCooldownMs : undefined,
+        minIntradayLiquidityShares: props.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.tradingPolicy.minIntradayLiquidityShares : undefined,
+        maxEntrySpreadBps: props.tradingPolicy.maxEntrySpreadBps !== undefined ? props.tradingPolicy.maxEntrySpreadBps : undefined,
+        sameSideReentryDelayMs: props.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.tradingPolicy.sameSideReentryDelayMs : undefined,
+        minAtrPercentage: props.tradingPolicy.minAtrPercentage !== undefined ? props.tradingPolicy.minAtrPercentage : undefined,
+        maxAtrPercentage: props.tradingPolicy.maxAtrPercentage !== undefined ? props.tradingPolicy.maxAtrPercentage : undefined,
+        minBookDepthShares: props.tradingPolicy.minBookDepthShares !== undefined ? props.tradingPolicy.minBookDepthShares : undefined,
+        maxAnomalousSlippageBps: props.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.tradingPolicy.maxAnomalousSlippageBps : undefined,
+        intradayTradingWindows: props.tradingPolicy.intradayTradingWindows !== undefined ? props.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: props.tradingPolicy.hardPositionExitMinutes !== undefined ? props.tradingPolicy.hardPositionExitMinutes : undefined,
+        maxOrdersPerWindow: props.tradingPolicy.maxOrdersPerWindow !== undefined ? props.tradingPolicy.maxOrdersPerWindow : undefined,
+        orderWindowSeconds: props.tradingPolicy.orderWindowSeconds !== undefined ? props.tradingPolicy.orderWindowSeconds : undefined,
+        dayTradeOnly: props.tradingPolicy.dayTradeOnly !== undefined ? props.tradingPolicy.dayTradeOnly : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -1748,6 +1806,18 @@ import { logger } from './utils/logger';
         secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         equityWashTradeCooldownMs: props.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.tradingPolicy.equityWashTradeCooldownMs : undefined,
+        minIntradayLiquidityShares: props.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.tradingPolicy.minIntradayLiquidityShares : undefined,
+        maxEntrySpreadBps: props.tradingPolicy.maxEntrySpreadBps !== undefined ? props.tradingPolicy.maxEntrySpreadBps : undefined,
+        sameSideReentryDelayMs: props.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.tradingPolicy.sameSideReentryDelayMs : undefined,
+        minAtrPercentage: props.tradingPolicy.minAtrPercentage !== undefined ? props.tradingPolicy.minAtrPercentage : undefined,
+        maxAtrPercentage: props.tradingPolicy.maxAtrPercentage !== undefined ? props.tradingPolicy.maxAtrPercentage : undefined,
+        minBookDepthShares: props.tradingPolicy.minBookDepthShares !== undefined ? props.tradingPolicy.minBookDepthShares : undefined,
+        maxAnomalousSlippageBps: props.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.tradingPolicy.maxAnomalousSlippageBps : undefined,
+        intradayTradingWindows: props.tradingPolicy.intradayTradingWindows !== undefined ? props.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: props.tradingPolicy.hardPositionExitMinutes !== undefined ? props.tradingPolicy.hardPositionExitMinutes : undefined,
+        maxOrdersPerWindow: props.tradingPolicy.maxOrdersPerWindow !== undefined ? props.tradingPolicy.maxOrdersPerWindow : undefined,
+        orderWindowSeconds: props.tradingPolicy.orderWindowSeconds !== undefined ? props.tradingPolicy.orderWindowSeconds : undefined,
+        dayTradeOnly: props.tradingPolicy.dayTradeOnly !== undefined ? props.tradingPolicy.dayTradeOnly : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -2094,6 +2164,40 @@ import { logger } from './utils/logger';
           } : undefined,
         equityWashTradeCooldownMs: props.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
             set: props.tradingPolicy.equityWashTradeCooldownMs
+          } : undefined,
+        minIntradayLiquidityShares: props.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+            set: props.tradingPolicy.minIntradayLiquidityShares
+          } : undefined,
+        maxEntrySpreadBps: props.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+            set: props.tradingPolicy.maxEntrySpreadBps
+          } : undefined,
+        sameSideReentryDelayMs: props.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+            set: props.tradingPolicy.sameSideReentryDelayMs
+          } : undefined,
+        minAtrPercentage: props.tradingPolicy.minAtrPercentage !== undefined ? {
+            set: props.tradingPolicy.minAtrPercentage
+          } : undefined,
+        maxAtrPercentage: props.tradingPolicy.maxAtrPercentage !== undefined ? {
+            set: props.tradingPolicy.maxAtrPercentage
+          } : undefined,
+        minBookDepthShares: props.tradingPolicy.minBookDepthShares !== undefined ? {
+            set: props.tradingPolicy.minBookDepthShares
+          } : undefined,
+        maxAnomalousSlippageBps: props.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+            set: props.tradingPolicy.maxAnomalousSlippageBps
+          } : undefined,
+        intradayTradingWindows: props.tradingPolicy.intradayTradingWindows !== undefined ? props.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: props.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+            set: props.tradingPolicy.hardPositionExitMinutes
+          } : undefined,
+        maxOrdersPerWindow: props.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+            set: props.tradingPolicy.maxOrdersPerWindow
+          } : undefined,
+        orderWindowSeconds: props.tradingPolicy.orderWindowSeconds !== undefined ? {
+            set: props.tradingPolicy.orderWindowSeconds
+          } : undefined,
+        dayTradeOnly: props.tradingPolicy.dayTradeOnly !== undefined ? {
+            set: props.tradingPolicy.dayTradeOnly
           } : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
@@ -2617,6 +2721,18 @@ import { logger } from './utils/logger';
         secondReducedTrailPercentage100: props.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.minimumPriceChangePercent100 : undefined,
         equityWashTradeCooldownMs: props.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.tradingPolicy.equityWashTradeCooldownMs : undefined,
+        minIntradayLiquidityShares: props.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.tradingPolicy.minIntradayLiquidityShares : undefined,
+        maxEntrySpreadBps: props.tradingPolicy.maxEntrySpreadBps !== undefined ? props.tradingPolicy.maxEntrySpreadBps : undefined,
+        sameSideReentryDelayMs: props.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.tradingPolicy.sameSideReentryDelayMs : undefined,
+        minAtrPercentage: props.tradingPolicy.minAtrPercentage !== undefined ? props.tradingPolicy.minAtrPercentage : undefined,
+        maxAtrPercentage: props.tradingPolicy.maxAtrPercentage !== undefined ? props.tradingPolicy.maxAtrPercentage : undefined,
+        minBookDepthShares: props.tradingPolicy.minBookDepthShares !== undefined ? props.tradingPolicy.minBookDepthShares : undefined,
+        maxAnomalousSlippageBps: props.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.tradingPolicy.maxAnomalousSlippageBps : undefined,
+        intradayTradingWindows: props.tradingPolicy.intradayTradingWindows !== undefined ? props.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: props.tradingPolicy.hardPositionExitMinutes !== undefined ? props.tradingPolicy.hardPositionExitMinutes : undefined,
+        maxOrdersPerWindow: props.tradingPolicy.maxOrdersPerWindow !== undefined ? props.tradingPolicy.maxOrdersPerWindow : undefined,
+        orderWindowSeconds: props.tradingPolicy.orderWindowSeconds !== undefined ? props.tradingPolicy.orderWindowSeconds : undefined,
+        dayTradeOnly: props.tradingPolicy.dayTradeOnly !== undefined ? props.tradingPolicy.dayTradeOnly : undefined,
         riskBudgetPrefs: props.tradingPolicy.riskBudgetPrefs !== undefined ? props.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: props.tradingPolicy.signalConsumptionPrefs !== undefined ? props.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: props.tradingPolicy.executionPrefs !== undefined ? props.tradingPolicy.executionPrefs : undefined,
@@ -3126,6 +3242,40 @@ import { logger } from './utils/logger';
           } : undefined,
         equityWashTradeCooldownMs: prop.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
             set: prop.tradingPolicy.equityWashTradeCooldownMs
+          } : undefined,
+        minIntradayLiquidityShares: prop.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+            set: prop.tradingPolicy.minIntradayLiquidityShares
+          } : undefined,
+        maxEntrySpreadBps: prop.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+            set: prop.tradingPolicy.maxEntrySpreadBps
+          } : undefined,
+        sameSideReentryDelayMs: prop.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+            set: prop.tradingPolicy.sameSideReentryDelayMs
+          } : undefined,
+        minAtrPercentage: prop.tradingPolicy.minAtrPercentage !== undefined ? {
+            set: prop.tradingPolicy.minAtrPercentage
+          } : undefined,
+        maxAtrPercentage: prop.tradingPolicy.maxAtrPercentage !== undefined ? {
+            set: prop.tradingPolicy.maxAtrPercentage
+          } : undefined,
+        minBookDepthShares: prop.tradingPolicy.minBookDepthShares !== undefined ? {
+            set: prop.tradingPolicy.minBookDepthShares
+          } : undefined,
+        maxAnomalousSlippageBps: prop.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+            set: prop.tradingPolicy.maxAnomalousSlippageBps
+          } : undefined,
+        intradayTradingWindows: prop.tradingPolicy.intradayTradingWindows !== undefined ? prop.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: prop.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+            set: prop.tradingPolicy.hardPositionExitMinutes
+          } : undefined,
+        maxOrdersPerWindow: prop.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+            set: prop.tradingPolicy.maxOrdersPerWindow
+          } : undefined,
+        orderWindowSeconds: prop.tradingPolicy.orderWindowSeconds !== undefined ? {
+            set: prop.tradingPolicy.orderWindowSeconds
+          } : undefined,
+        dayTradeOnly: prop.tradingPolicy.dayTradeOnly !== undefined ? {
+            set: prop.tradingPolicy.dayTradeOnly
           } : undefined,
         riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
@@ -3649,6 +3799,18 @@ import { logger } from './utils/logger';
         secondReducedTrailPercentage100: prop.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: prop.tradingPolicy.minimumPriceChangePercent100 !== undefined ? prop.tradingPolicy.minimumPriceChangePercent100 : undefined,
         equityWashTradeCooldownMs: prop.tradingPolicy.equityWashTradeCooldownMs !== undefined ? prop.tradingPolicy.equityWashTradeCooldownMs : undefined,
+        minIntradayLiquidityShares: prop.tradingPolicy.minIntradayLiquidityShares !== undefined ? prop.tradingPolicy.minIntradayLiquidityShares : undefined,
+        maxEntrySpreadBps: prop.tradingPolicy.maxEntrySpreadBps !== undefined ? prop.tradingPolicy.maxEntrySpreadBps : undefined,
+        sameSideReentryDelayMs: prop.tradingPolicy.sameSideReentryDelayMs !== undefined ? prop.tradingPolicy.sameSideReentryDelayMs : undefined,
+        minAtrPercentage: prop.tradingPolicy.minAtrPercentage !== undefined ? prop.tradingPolicy.minAtrPercentage : undefined,
+        maxAtrPercentage: prop.tradingPolicy.maxAtrPercentage !== undefined ? prop.tradingPolicy.maxAtrPercentage : undefined,
+        minBookDepthShares: prop.tradingPolicy.minBookDepthShares !== undefined ? prop.tradingPolicy.minBookDepthShares : undefined,
+        maxAnomalousSlippageBps: prop.tradingPolicy.maxAnomalousSlippageBps !== undefined ? prop.tradingPolicy.maxAnomalousSlippageBps : undefined,
+        intradayTradingWindows: prop.tradingPolicy.intradayTradingWindows !== undefined ? prop.tradingPolicy.intradayTradingWindows : undefined,
+        hardPositionExitMinutes: prop.tradingPolicy.hardPositionExitMinutes !== undefined ? prop.tradingPolicy.hardPositionExitMinutes : undefined,
+        maxOrdersPerWindow: prop.tradingPolicy.maxOrdersPerWindow !== undefined ? prop.tradingPolicy.maxOrdersPerWindow : undefined,
+        orderWindowSeconds: prop.tradingPolicy.orderWindowSeconds !== undefined ? prop.tradingPolicy.orderWindowSeconds : undefined,
+        dayTradeOnly: prop.tradingPolicy.dayTradeOnly !== undefined ? prop.tradingPolicy.dayTradeOnly : undefined,
         riskBudgetPrefs: prop.tradingPolicy.riskBudgetPrefs !== undefined ? prop.tradingPolicy.riskBudgetPrefs : undefined,
         signalConsumptionPrefs: prop.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.tradingPolicy.signalConsumptionPrefs : undefined,
         executionPrefs: prop.tradingPolicy.executionPrefs !== undefined ? prop.tradingPolicy.executionPrefs : undefined,

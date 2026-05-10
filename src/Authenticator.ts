@@ -308,6 +308,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1372,6 +1384,40 @@ import { logger } from './utils/logger';
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
                 set: item.tradingPolicy.equityWashTradeCooldownMs
               } : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.tradingPolicy.dayTradeOnly
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1470,6 +1516,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -1685,6 +1743,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2320,6 +2390,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -2938,6 +3020,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3687,6 +3781,40 @@ import { logger } from './utils/logger';
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
                 set: item.tradingPolicy.equityWashTradeCooldownMs
               } : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.tradingPolicy.dayTradeOnly
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -3785,6 +3913,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -4000,6 +4140,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -4635,6 +4787,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5547,6 +5711,40 @@ import { logger } from './utils/logger';
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
                 set: item.tradingPolicy.equityWashTradeCooldownMs
               } : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.tradingPolicy.dayTradeOnly
+              } : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5645,6 +5843,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -5860,6 +6070,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
@@ -6495,6 +6717,18 @@ import { logger } from './utils/logger';
             secondReducedTrailPercentage100: item.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.tradingPolicy.secondReducedTrailPercentage100 : undefined,
             minimumPriceChangePercent100: item.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.tradingPolicy.minimumPriceChangePercent100 : undefined,
             equityWashTradeCooldownMs: item.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.tradingPolicy.maxEntrySpreadBps !== undefined ? item.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.tradingPolicy.minAtrPercentage !== undefined ? item.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.tradingPolicy.maxAtrPercentage !== undefined ? item.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.tradingPolicy.minBookDepthShares !== undefined ? item.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.tradingPolicy.intradayTradingWindows !== undefined ? item.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.tradingPolicy.hardPositionExitMinutes !== undefined ? item.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.tradingPolicy.maxOrdersPerWindow !== undefined ? item.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.tradingPolicy.orderWindowSeconds !== undefined ? item.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.tradingPolicy.dayTradeOnly !== undefined ? item.tradingPolicy.dayTradeOnly : undefined,
             riskBudgetPrefs: item.tradingPolicy.riskBudgetPrefs !== undefined ? item.tradingPolicy.riskBudgetPrefs : undefined,
             signalConsumptionPrefs: item.tradingPolicy.signalConsumptionPrefs !== undefined ? item.tradingPolicy.signalConsumptionPrefs : undefined,
             executionPrefs: item.tradingPolicy.executionPrefs !== undefined ? item.tradingPolicy.executionPrefs : undefined,
