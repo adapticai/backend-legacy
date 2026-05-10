@@ -211,6 +211,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? props.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? props.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? props.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? props.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? props.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? props.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -1191,6 +1203,40 @@ import { logger } from './utils/logger';
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs
             } : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares
+            } : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps
+            } : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs
+            } : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minAtrPercentage
+            } : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxAtrPercentage
+            } : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minBookDepthShares
+            } : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps
+            } : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes
+            } : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow
+            } : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.orderWindowSeconds
+            } : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.dayTradeOnly
+            } : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -1369,6 +1415,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? props.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? props.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? props.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? props.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? props.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? props.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -2328,6 +2386,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? props.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? props.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? props.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? props.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? props.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? props.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -2962,6 +3032,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? props.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? props.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? props.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? props.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? props.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? props.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -3618,6 +3700,40 @@ import { logger } from './utils/logger';
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs
             } : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares
+            } : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps
+            } : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs
+            } : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minAtrPercentage
+            } : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxAtrPercentage
+            } : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.minBookDepthShares
+            } : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps
+            } : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes
+            } : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow
+            } : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.orderWindowSeconds
+            } : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.dayTradeOnly
+            } : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -3796,6 +3912,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? props.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? props.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? props.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? props.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? props.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? props.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -4755,6 +4883,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? props.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? props.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: props.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? props.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? props.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: props.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: props.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? props.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: props.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? props.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? props.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: props.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? props.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: props.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? props.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: props.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? props.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: props.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? props.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: props.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? props.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: props.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? props.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: props.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: props.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? props.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -5574,6 +5714,40 @@ import { logger } from './utils/logger';
           equityWashTradeCooldownMs: prop.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs
             } : undefined,
+          minIntradayLiquidityShares: prop.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.minIntradayLiquidityShares
+            } : undefined,
+          maxEntrySpreadBps: prop.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxEntrySpreadBps
+            } : undefined,
+          sameSideReentryDelayMs: prop.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.sameSideReentryDelayMs
+            } : undefined,
+          minAtrPercentage: prop.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.minAtrPercentage
+            } : undefined,
+          maxAtrPercentage: prop.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxAtrPercentage
+            } : undefined,
+          minBookDepthShares: prop.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.minBookDepthShares
+            } : undefined,
+          maxAnomalousSlippageBps: prop.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps
+            } : undefined,
+          intradayTradingWindows: prop.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? prop.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: prop.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.hardPositionExitMinutes
+            } : undefined,
+          maxOrdersPerWindow: prop.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.maxOrdersPerWindow
+            } : undefined,
+          orderWindowSeconds: prop.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.orderWindowSeconds
+            } : undefined,
+          dayTradeOnly: prop.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.dayTradeOnly
+            } : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -5752,6 +5926,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: prop.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? prop.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: prop.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? prop.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: prop.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? prop.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: prop.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? prop.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: prop.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? prop.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: prop.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? prop.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: prop.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? prop.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: prop.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? prop.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: prop.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? prop.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: prop.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? prop.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: prop.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? prop.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: prop.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? prop.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: prop.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? prop.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,
@@ -6711,6 +6897,18 @@ import { logger } from './utils/logger';
           secondReducedTrailPercentage100: prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondReducedTrailPercentage100 : undefined,
           minimumPriceChangePercent100: prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.tradingPolicy.minimumPriceChangePercent100 : undefined,
           equityWashTradeCooldownMs: prop.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs !== undefined ? prop.alpacaAccount.tradingPolicy.equityWashTradeCooldownMs : undefined,
+          minIntradayLiquidityShares: prop.alpacaAccount.tradingPolicy.minIntradayLiquidityShares !== undefined ? prop.alpacaAccount.tradingPolicy.minIntradayLiquidityShares : undefined,
+          maxEntrySpreadBps: prop.alpacaAccount.tradingPolicy.maxEntrySpreadBps !== undefined ? prop.alpacaAccount.tradingPolicy.maxEntrySpreadBps : undefined,
+          sameSideReentryDelayMs: prop.alpacaAccount.tradingPolicy.sameSideReentryDelayMs !== undefined ? prop.alpacaAccount.tradingPolicy.sameSideReentryDelayMs : undefined,
+          minAtrPercentage: prop.alpacaAccount.tradingPolicy.minAtrPercentage !== undefined ? prop.alpacaAccount.tradingPolicy.minAtrPercentage : undefined,
+          maxAtrPercentage: prop.alpacaAccount.tradingPolicy.maxAtrPercentage !== undefined ? prop.alpacaAccount.tradingPolicy.maxAtrPercentage : undefined,
+          minBookDepthShares: prop.alpacaAccount.tradingPolicy.minBookDepthShares !== undefined ? prop.alpacaAccount.tradingPolicy.minBookDepthShares : undefined,
+          maxAnomalousSlippageBps: prop.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps !== undefined ? prop.alpacaAccount.tradingPolicy.maxAnomalousSlippageBps : undefined,
+          intradayTradingWindows: prop.alpacaAccount.tradingPolicy.intradayTradingWindows !== undefined ? prop.alpacaAccount.tradingPolicy.intradayTradingWindows : undefined,
+          hardPositionExitMinutes: prop.alpacaAccount.tradingPolicy.hardPositionExitMinutes !== undefined ? prop.alpacaAccount.tradingPolicy.hardPositionExitMinutes : undefined,
+          maxOrdersPerWindow: prop.alpacaAccount.tradingPolicy.maxOrdersPerWindow !== undefined ? prop.alpacaAccount.tradingPolicy.maxOrdersPerWindow : undefined,
+          orderWindowSeconds: prop.alpacaAccount.tradingPolicy.orderWindowSeconds !== undefined ? prop.alpacaAccount.tradingPolicy.orderWindowSeconds : undefined,
+          dayTradeOnly: prop.alpacaAccount.tradingPolicy.dayTradeOnly !== undefined ? prop.alpacaAccount.tradingPolicy.dayTradeOnly : undefined,
           riskBudgetPrefs: prop.alpacaAccount.tradingPolicy.riskBudgetPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.riskBudgetPrefs : undefined,
           signalConsumptionPrefs: prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.signalConsumptionPrefs : undefined,
           executionPrefs: prop.alpacaAccount.tradingPolicy.executionPrefs !== undefined ? prop.alpacaAccount.tradingPolicy.executionPrefs : undefined,

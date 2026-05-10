@@ -4969,6 +4969,42 @@ model TradingPolicy {
   /// Wash-trade cooldown period in milliseconds for equities — minimum elapsed time between opposing-side fills on the same symbol per FINRA Rule 5210. Mirrors the 30s default already enforced for crypto. Default: 30000 (30 seconds).
   equityWashTradeCooldownMs Int @default(30000)
 
+  /// Minimum intraday liquidity threshold (shares traded in last 5 min). Required for scalping. Default: 10000 (10k shares in last 5 min).
+  minIntradayLiquidityShares    Int      @default(10000)
+
+  /// Maximum spread in basis points (1/100ths of 1%) to allow entry. Scalping requires tight spreads; use 1-3 bps. Default: 5 (0.05%).
+  maxEntrySpreadBps             Int      @default(5)
+
+  /// Minimum time between same-symbol same-side entries (ms). FINRA Rule 5210 requires 30s for opposite-side trades; this controls same-side rapid re-entry. Default: 5000 (5 seconds) for scalping; 30000 for normal trading.
+  sameSideReentryDelayMs        Int      @default(5000)
+
+  /// Volatility filter: only trade if ATR(14) >= minAtrPercentage. Scalping needs moderate volatility; too low = no edge. Default: 0.3 (0.3%).
+  minAtrPercentage              Float    @default(0.3)
+
+  /// Volatility filter: only trade if ATR(14) <= maxAtrPercentage. Scalping needs moderate volatility; too high = whipsaws. Default: 2.0 (2.0%).
+  maxAtrPercentage              Float    @default(2.0)
+
+  /// Order book depth requirement: minimum shares at best bid/ask to qualify for entry. Scalping needs guaranteed liquidity. Default: 5000 shares.
+  minBookDepthShares            Int      @default(5000)
+
+  /// Maximum market order slippage in basis points before flagging as anomaly. Helps detect liquidity crunches. Default: 10 bps.
+  maxAnomalousSlippageBps       Int      @default(10)
+
+  /// Intraday session windows allowed (JSON array). Format: [{ startMinutesFromOpen, endMinutesFromOpen, active }]. Example: skip first 5 min and last 10 min of RTH.
+  intradayTradingWindows        Json?
+
+  /// Hard position exit clock (minutes from entry). 0 = disabled. Forces liquidation regardless of signal. Useful for strict day-trading discipline. Default: 0.
+  hardPositionExitMinutes       Int      @default(0)
+
+  /// Rapid-fire order-rate limit: max orders within orderWindowSeconds. Default: 10 orders per 5 seconds.
+  maxOrdersPerWindow            Int      @default(10)
+
+  /// Window size for maxOrdersPerWindow rate limit (seconds). Default: 5.
+  orderWindowSeconds            Int      @default(5)
+
+  /// Enforce intraday-only trading (auto-close all positions before EOD). Default: false.
+  dayTradeOnly                  Boolean  @default(false)
+
   riskBudgetPrefs           Json?
 
   signalConsumptionPrefs    Json?
