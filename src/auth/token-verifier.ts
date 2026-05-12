@@ -348,7 +348,13 @@ export async function verifyBackendToken(
   // looking at a Google ID token, which is structurally a JWT signed by Google.
   let localJwtFailure: AuthErrorReason | undefined;
   try {
-    const payload = jwt.verify(token, jwtSecret);
+    // Pin algorithm to HS256. Without this, `jsonwebtoken.verify` accepts
+    // `alg: "none"` (silently!) for older versions of the library — a
+    // well-known footgun where an attacker forges an unsigned token and
+    // the server accepts it as authentic. Pinning also ensures forward
+    // compatibility: if we ever sign with a different alg, every verifier
+    // is forced to update in lockstep with the signer.
+    const payload = jwt.verify(token, jwtSecret, { algorithms: ['HS256'] });
     if (typeof payload === 'string') {
       // String-payload JWTs are not used by this platform and carry no claims
       // we can convert into a principal. Treat as malformed.
@@ -430,10 +436,16 @@ export async function verifyBackendToken(
       throw new AuthError('invalid_token', 'bad_signature');
     }
     // Default classification for Google verification failures is
-    // `bad_audience`: this is the most common production failure mode
-    // (token issued for a different client ID) and the most actionable
-    // diagnosis for the caller.
-    throw new AuthError('invalid_token', 'bad_audience');
+    // `bad_audience` — BUT: when local-JWT path 2 already failed (the
+    // common case, since the app mints HS256 tokens that Google cannot
+    // recognise), the user is almost certainly NOT presenting a Google
+    // ID token at all. Surfacing `bad_audience` in that case hides the
+    // real upstream failure (typically `bad_signature` from path 2)
+    // behind an irrelevant fallback diagnosis. Prefer the local-JWT
+    // reason when present; only fall back to `bad_audience` when there
+    // is no local-JWT failure to bubble (i.e. a token that decoded as
+    // a JWT but somehow didn't reach the local-JWT branch — defensive).
+    throw new AuthError('invalid_token', localJwtFailure ?? 'bad_audience');
   }
 
   // ticketResult must be defined here because the catch above always throws.

@@ -313,7 +313,26 @@ describe('verifyBackendToken — discriminated reasons', () => {
       ]);
     });
 
-    it('rejects when Google verification throws (wrong audience or any error) with reason "bad_audience"', async () => {
+    it('when Google verification throws (wrong audience), prefers the upstream local-JWT failure reason over the Google audience catch-all', async () => {
+      // Setup: a structurally-valid-but-unsigned JWT. This token will:
+      //   1. Fail local-JWT verification (path 2) with `bad_signature`
+      //      because we cannot verify its signature against `jwtSecret`.
+      //      `localJwtFailure` is recorded as 'bad_signature'.
+      //   2. Fall through to Google (path 3). The Google mock is set to
+      //      reject with "wrong audience".
+      //
+      // Previous behaviour (before CORTEX-2026-05-12 auth-debug change):
+      //   surfaced `bad_audience` from the Google catch-all, hiding the
+      //   real upstream failure. For app-issued tokens (HS256 with our
+      //   secret) Google would never have recognised them anyway — the
+      //   `bad_audience` diagnosis was noise.
+      //
+      // New behaviour: prefer `localJwtFailure` when present. Operators
+      // see the actionable diagnosis (`bad_signature` -> "check the
+      // shared JWT_SECRET") rather than a misleading downstream one.
+      // The original `bad_audience` default is still emitted when no
+      // `localJwtFailure` exists, which is a defensive branch that
+      // doesn't fire in practice but is asserted in the next test.
       const googleLooking = makeStructurallyValidButUnsignedJwt();
 
       verifyIdTokenMock.mockRejectedValueOnce(
@@ -322,7 +341,7 @@ describe('verifyBackendToken — discriminated reasons', () => {
 
       await expect(verifyBackendToken(googleLooking)).rejects.toMatchObject({
         code: 'invalid_token',
-        reason: 'bad_audience' satisfies AuthErrorReason,
+        reason: 'bad_signature' satisfies AuthErrorReason,
       });
     });
 

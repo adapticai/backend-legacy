@@ -205,12 +205,27 @@ const startServer = async () => {
         dbUnreachableCount = 0;
       }
 
+      // Surface the verifier's `reason` enum on UNAUTHENTICATED responses so
+      // operators (and the web app's network tab) can diagnose auth failures
+      // without grepping Railway logs. The reason is one of a finite set —
+      // `malformed | expired | bad_signature | bad_audience |
+      // opaque_access_token_rejected | misconfigured` — and carries no
+      // sensitive data (no token bytes, no claim values). Whitelisted to
+      // UNAUTHENTICATED so we do not accidentally leak a `reason` field
+      // attached to any other error class. See CORTEX-2026-05-12 auth-debug
+      // change log.
+      const code = err.extensions?.code || 'INTERNAL_SERVER_ERROR';
+      const reasonValue = err.extensions?.reason;
+      const includeReason =
+        code === 'UNAUTHENTICATED' && typeof reasonValue === 'string';
+
       return {
         message: err.message,
         locations: err.locations,
         path: err.path,
         extensions: {
-          code: err.extensions?.code || 'INTERNAL_SERVER_ERROR',
+          code,
+          ...(includeReason ? { reason: reasonValue } : {}),
         },
       };
     },
