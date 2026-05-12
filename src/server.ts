@@ -6,18 +6,14 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { buildSchema } from 'type-graphql';
-import { resolvers } from './generated/typegraphql-prisma';
-import { OptionsGreeksHistoryCustomResolver } from './resolvers/custom';
 import { createServer } from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
-import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
-import { jwtSecret } from './config/jwtConfig';
-import prisma, {
+import {
   startConnectionHealthMonitor,
   disconnectWithTimeout,
 } from './prismaClient';
@@ -25,6 +21,22 @@ import { createHealthRouter } from './health';
 import { exec } from 'child_process';
 import { logger } from './utils/logger';
 import { shutdownTracing } from './config/tracing';
+
+// CORTEX-P0-001 — closed-by-default GraphQL API:
+//  * `applyEnhanceOverrides` strips secret fields from the schema metadata.
+//  * `getAllowedResolvers` returns only the explicit resolver allowlist.
+//  * `authChecker` + `authGuardMiddleware` enforce fail-closed auth.
+//  * `buildApolloContextFromRequest` / `buildApolloContextFromConnectionParams`
+//    throw `GraphQLError("Unauthenticated")` on missing/invalid bearer.
+import { applyEnhanceOverrides } from './graphql/enhance-overrides';
+import { getAllowedResolvers } from './graphql/resolver-allowlist';
+import { authChecker } from './graphql/auth-checker';
+import { authGuardMiddleware } from './graphql/auth-guard';
+import {
+  buildApolloContextFromRequest,
+  buildApolloContextFromConnectionParams,
+  type BackendContext,
+} from './graphql/apollo-context';
 
 import { Request } from 'express';
 import { CorsOptions } from 'cors';
@@ -90,9 +102,25 @@ async function restartDatabase(): Promise<void> {
 }
 
 const startServer = async () => {
+  // CORTEX-P0-001 layer 1: excise forbidden field metadata BEFORE the
+  // schema is built. The override is idempotent, so re-importing this
+  // module elsewhere is safe.
+  await applyEnhanceOverrides();
+
+  // CORTEX-P0-001 layer 2: build the schema from the explicit allowlist
+  // (not the generated `resolvers` spread) and install the auth-checker
+  // + global auth-guard middleware. With `authMode: 'error'`, any
+  // resolver decorated with `@Authorized()` whose role check fails
+  // surfaces a `ForbiddenError` to the caller. The global middleware
+  // additionally fails closed on every operation when `context.user`
+  // is missing, so the generated CRUD resolvers (which have no
+  // `@Authorized()` decorator) are still gated by authentication.
   const schema = await buildSchema({
-    resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
+    resolvers: await getAllowedResolvers(),
     validate: false,
+    authChecker,
+    authMode: 'error',
+    globalMiddlewares: [authGuardMiddleware],
   });
 
   const app = express();
@@ -102,9 +130,20 @@ const startServer = async () => {
     authMiddleware(req as AuthenticatedRequest, res, next)
   );
 
-  const server = new ApolloServer({
+  // CORTEX-P0-001 layer 4: introspection is disabled in production
+  // unless explicitly opted in. The default development behaviour
+  // keeps introspection on so GraphiQL/Apollo Studio still work for
+  // local dev.
+  const introspectionEnabled =
+    process.env.GRAPHQL_INTROSPECTION === 'true' ||
+    process.env.NODE_ENV !== 'production';
+  if (!introspectionEnabled && process.env.NODE_ENV === 'production') {
+    logger.info('GraphQL introspection disabled in production (CORTEX-P0-001)');
+  }
+
+  const server = new ApolloServer<BackendContext>({
     schema,
-    introspection: true,
+    introspection: introspectionEnabled,
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       createAuditLogPlugin(),
@@ -213,68 +252,16 @@ const startServer = async () => {
     cors<Request>(corsOptions),
     bodyParser.json(),
     expressMiddleware(server, {
-      context: async ({ req }: { req: Request }) => {
-        // Ensure we're using the global prisma instance and never disconnecting it between requests
-        if (!global.prisma) {
-          logger.warn(
-            'Prisma client not found in global scope, reinitializing'
-          );
-          global.prisma = prisma;
-        }
-
-        // Extract token from Authorization header
-        const authHeader = req.headers.authorization || '';
-        // Only try to verify token if it's in proper Bearer format
-        const token = authHeader.startsWith('Bearer ')
-          ? authHeader.split(' ')[1]
-          : '';
-
-        let user = null;
-        if (token) {
-          // Check if token is a Google OAuth token (starts with ya29.)
-          if (token.startsWith('ya29.')) {
-            // For Google OAuth tokens, we should validate differently or pass them through
-            // This is a temporary solution - ideally you should verify with Google's OAuth API
-            user = { provider: 'google', token };
-          } else {
-            // Validate JWT format before attempting verification (must have 3 dot-separated parts)
-            const tokenParts = token.split('.');
-            if (tokenParts.length !== 3) {
-              // Log only once per unique malformed token to avoid log spam
-              const tokenPreview =
-                token.length > 20 ? `${token.substring(0, 20)}...` : token;
-              logger.warn('Received malformed token (not a valid JWT format)', {
-                tokenPreview,
-              });
-              // Continue without authentication - don't fail the request
-              return {
-                prisma: global.prisma,
-                req,
-                authError:
-                  'Malformed token: expected JWT format (header.payload.signature)',
-              };
-            }
-
-            // For regular JWT tokens, verify using the centralized secret
-            try {
-              // Check for server-to-server auth token from environment
-              const serverAuthToken = process.env.SERVER_AUTH_TOKEN;
-              if (serverAuthToken && token === serverAuthToken) {
-                user = { sub: 'server', name: 'Server Auth', role: 'server' };
-              } else {
-                user = jwt.verify(token, jwtSecret);
-              }
-            } catch (e) {
-              // Only log verification failures at warn level with minimal info
-              const errorMessage =
-                e instanceof Error ? e.message : 'Unknown error';
-              logger.warn('JWT verification failed', { errorMessage });
-              return { prisma: global.prisma, req, authError: 'Invalid token' };
-            }
-          }
-        }
-        return { prisma: global.prisma, req, user };
-      },
+      // CORTEX-P0-001 layer 3: the context factory is fail-closed.
+      // `buildApolloContextFromRequest` throws
+      // `GraphQLError("Unauthenticated", { extensions: { code: "UNAUTHENTICATED" } })`
+      // on missing/invalid token; Apollo Server packages the thrown
+      // error into the operation response. Returning a `{ user: null }`
+      // context is no longer possible — the previous behaviour was the
+      // load-bearing reason the generated CRUD resolvers were callable
+      // anonymously.
+      context: async ({ req }: { req: Request }) =>
+        buildApolloContextFromRequest(req),
     })
   );
 
@@ -304,53 +291,18 @@ const startServer = async () => {
   useServer(
     {
       schema,
-      context: async (ctx, _msg, _args) => {
-        // Ensure we're using the global prisma instance for WebSocket connections too
-        if (!global.prisma) {
-          logger.warn(
-            'Prisma client not found in global scope for WebSocket context, reinitializing'
-          );
-          global.prisma = prisma;
-        }
-
-        const authHeader =
-          (ctx.connectionParams as { authorization?: string })?.authorization ||
-          '';
-        const token = authHeader.startsWith('Bearer ')
-          ? authHeader.split(' ')[1]
-          : '';
-
-        let user = null;
-        if (token) {
-          // Check if token is a Google OAuth token (starts with ya29.)
-          if (token.startsWith('ya29.')) {
-            // For Google OAuth tokens, we should validate differently or pass them through
-            logger.info(
-              'Detected Google OAuth token in WebSocket, skipping JWT verification'
-            );
-            user = { provider: 'google', token };
-          } else {
-            // For regular JWT tokens, verify using the centralized secret
-            try {
-              // Check for server-to-server auth token from environment
-              const serverAuthToken = process.env.SERVER_AUTH_TOKEN;
-              if (serverAuthToken && token === serverAuthToken) {
-                user = { sub: 'server', name: 'Server Auth', role: 'server' };
-              } else {
-                user = jwt.verify(token, jwtSecret);
-              }
-            } catch (e) {
-              const errorMessage =
-                e instanceof Error ? e.message : 'Unknown error';
-              logger.warn('WebSocket JWT verification failed', {
-                errorMessage,
-              });
-              return { prisma: global.prisma, authError: 'Invalid token' };
-            }
-          }
-        }
-        return { prisma: global.prisma, user };
-      },
+      // CORTEX-P0-001 layer 3 (WebSocket twin): same fail-closed
+      // semantics as the HTTP context. A missing/invalid token in
+      // `connectionParams.authorization` causes `buildApolloContextFromConnectionParams`
+      // to throw `GraphQLError("Unauthenticated")`; `graphql-ws`
+      // translates the throw into a WebSocket connection close. The
+      // previous behaviour of returning `{ prisma, authError }`
+      // accepted the connection and let unauthenticated subscriptions
+      // proceed.
+      context: async (ctx) =>
+        buildApolloContextFromConnectionParams(
+          ctx.connectionParams as Record<string, unknown> | undefined
+        ),
     },
     wsServer
   );
