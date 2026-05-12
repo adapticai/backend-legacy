@@ -127,6 +127,35 @@ function isWriteSideInputName(name: string): boolean {
 }
 
 /**
+ * The closed set of server-only DTO types that legitimately carry the
+ * otherwise-forbidden secret fields. Each of these is wired into
+ * `buildSchema(...)` only via a `@Resolver` whose `@Query`/`@Mutation`
+ * methods carry `@Authorized(["server","admin"])`, so the read path is
+ * gated at the auth-checker layer — they are NOT reachable through the
+ * generated CRUD resolvers, the public `AlpacaAccount` / `Session` /
+ * `Account` / `VerificationToken` output types, or via introspection
+ * from a `user`-role principal in production (production has
+ * introspection disabled). The stand-alone test
+ * `src/resolvers/custom/server/__tests__/server-credentials.test.ts`
+ * asserts the auth gating end-to-end; this test only asserts that the
+ * fields aren't also leaking onto the **public** read-side surface.
+ *
+ * Adding a new DTO here requires:
+ *   1. An `@Authorized(["server","admin"])` gated resolver method (the
+ *      only legitimate read path).
+ *   2. A regression test in `server-credentials.test.ts` covering
+ *      auth-required, role-required, and server-passes scenarios.
+ *   3. A line in the consumer-inventory document describing why a
+ *      server-grade caller needs this surface.
+ */
+const SERVER_DTO_TYPES: ReadonlySet<string> = new Set<string>([
+  'AlpacaAccountCredentialsDTO',
+  'SessionWithTokenDTO',
+  'AccountWithTokensDTO',
+  'VerificationTokenDTO',
+]);
+
+/**
  * Build a fresh schema. We do not cache between tests because each
  * test independently asserts a property of the SDL; building is fast
  * (<500ms with cached metadata).
@@ -159,6 +188,9 @@ describe('GraphQL schema: forbidden secret fields excised', () => {
         const fieldDecl = new RegExp(`(?:^|\\n)\\s+${forbidden}\\s*:`, 'm');
         if (!fieldDecl.test(body)) continue;
         if (isWriteSideInputName(name)) continue;
+        // Server-only DTOs are the explicit, auth-gated carriers of
+        // these fields. Their presence here is required, not a leak.
+        if (SERVER_DTO_TYPES.has(name)) continue;
         violations.push({ kind, name, field: forbidden });
       }
     }
