@@ -342,3 +342,45 @@ When debugging backend-legacy issues:
 - **Full Pipeline Verification:** Always run complete codegen after schema changes
 - **Minimal Impact:** Consider downstream effects on engine, utils, platform
 - **Security First:** JWT enforcement, rate limiting, input validation, audit logging
+
+## GitNexus — Cross-Repo Awareness
+
+`@adaptic/backend-legacy` owns the canonical Prisma schema and the GraphQL/typeStrings/selectionSets codegen pipeline. Schema changes here propagate to **every other repo** in the ecosystem via the published npm package. This is the highest-blast-radius package in the workspace — coordinate carefully.
+
+Use the [GitNexus CLI](../gitnexus/README.md) before, during, and after any work in this repo.
+
+### Required moments
+
+```bash
+# Before any schema change:
+gitnexus status        # confirm consumer repos are clean before you start
+gitnexus map           # see who depends on @adaptic/backend-legacy
+
+# Before commit and before push:
+gitnexus guard
+
+# Before publishing a new version:
+gitnexus repo backend-legacy
+```
+
+### Publish + propagation workflow (canonical sequence)
+
+1. **In backend-legacy:** modify schema → `npm run build` → `gitnexus guard` → commit → push (triggers GitHub Action that publishes the npm package).
+2. **Wait** 3-5 minutes for npm publication to complete.
+3. **`gitnexus status`** to confirm the workspace is otherwise clean.
+4. **In `utils`:** bump `@adaptic/backend-legacy` dep version, build, test, commit, publish.
+5. **In `lumic-utils`:** same as utils.
+6. **In `engine`, `platform`, `app`:** bump dependency, build, commit, push.
+7. **Final `gitnexus status`** — verify the new version is consistent across consumers.
+
+### Stop signals specific to backend-legacy
+
+Do not push schema changes if GitNexus reports:
+
+- Any consumer repo (`engine`, `utils`, `lumic-utils`, `platform`, `app`) has `DIRTY_TREE` — your changes will collide with their in-flight work.
+- `WRONG_BRANCH` on this repo — schema bumps belong on `main`.
+- Outstanding `AHEAD_BEHIND` against `origin/main` — sync first.
+
+### Final-response requirements
+
+Final response must enumerate: new schema version, GitHub Action publish status, downstream repos updated and to which version, validation per repo, and any deferred consumer updates with rationale.
