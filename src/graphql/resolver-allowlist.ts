@@ -202,13 +202,38 @@ export async function getAllowedResolvers(): Promise<NonEmptyArray<ResolverClass
     }
   }
 
-  // Custom resolvers
+  // Custom resolvers. Each addition is named explicitly so a reviewer can
+  // see the surface area at a glance. The `server*` group exposes
+  // credential-bearing DTOs and is gated by `@Authorized(["server","admin"])`
+  // at the resolver method level — see `src/resolvers/custom/server/`.
   const customModule = (await import('../resolvers/custom/index')) as Record<
     string,
     ResolverClass
   >;
+
+  // Aggregation / analytics
   if (typeof customModule.OptionsGreeksHistoryCustomResolver === 'function') {
     resolvers.push(customModule.OptionsGreeksHistoryCustomResolver);
+  }
+
+  // Server-only credential-retrieval resolvers (CORTEX-P0-001 follow-up).
+  // These provide the DTO read-paths the Auth.js Apollo adapter and the
+  // engine broker-auth flow need now that the secret-field excision is
+  // in place. Each method is @Authorized(["server","admin"]).
+  for (const key of [
+    'AlpacaAccountCredentialsResolver',
+    'SessionResolver',
+    'AccountResolver',
+    'VerificationTokenResolver',
+  ] as const) {
+    const cls = customModule[key];
+    if (typeof cls !== 'function') {
+      throw new Error(
+        `resolver-allowlist: expected server resolver ${key} to be exported ` +
+          `from src/resolvers/custom/server/index.ts; got ${typeof cls}.`
+      );
+    }
+    resolvers.push(cls);
   }
 
   if (resolvers.length === 0) {
