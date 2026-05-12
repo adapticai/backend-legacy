@@ -339,10 +339,18 @@ async function getAuthToken(): Promise<string> {
 
   // Validate the token format
   if (token && !isValidJwtFormat(token)) {
-    // Check if it looks like a Google OAuth token
+    // Opaque OAuth access tokens (`ya29.…`) are NOT acceptable backend
+    // credentials — the backend's `verifyBackendToken` rejects them with
+    // `opaque_access_token_rejected`. Refuse to send them so callers see a
+    // clear local warning instead of an opaque 401 from the server.
     if (token.startsWith('ya29.')) {
-      // Google OAuth tokens are valid, pass through
-      return token;
+      logger.warn(
+        '[Apollo Client] Refusing to send a Google OAuth access token (ya29.…) ' +
+          'to the backend. These tokens cannot be verified offline and are ' +
+          'rejected by the backend. Use a backend-issued JWT or SERVER_AUTH_TOKEN ' +
+          'instead.'
+      );
+      return '';
     }
 
     logger.warn(

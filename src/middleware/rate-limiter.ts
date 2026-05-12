@@ -32,10 +32,10 @@ function isAuthenticated(req: Request): boolean {
     return false;
   }
   const token = authHeader.slice(7);
-  // Google OAuth tokens (ya29.) and JWTs (three dot-separated segments) count
-  if (token.startsWith('ya29.')) {
-    return true;
-  }
+  // Only count 3-segment JWT-shaped tokens as "authenticated" for rate-limit
+  // tiering. Opaque OAuth access tokens (e.g. `ya29.…`) are rejected by the
+  // verifier downstream — treating them as authenticated here would let a
+  // caller spamming opaque tokens enjoy the higher auth-tier limits.
   return token.split('.').length === 3;
 }
 
