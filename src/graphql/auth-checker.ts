@@ -31,7 +31,7 @@
 
 import type { AuthChecker } from 'type-graphql';
 
-import type { BackendContext, BackendUser } from './apollo-context';
+import { unauthenticatedError, type BackendContext, type BackendUser } from './apollo-context';
 
 /**
  * Finite set of role strings recognised by the backend.
@@ -62,19 +62,39 @@ function extractRoles(user: BackendUser): string[] {
 }
 
 /**
- * AuthChecker implementation. Returns:
- *  - `false` if no authenticated user is on the context (fail-closed).
- *  - `true` if no roles were specified (any authenticated user is OK).
- *  - `true` iff the user's role set intersects the required roles.
+ * AuthChecker implementation. Two failure shapes:
  *
- * When type-graphql is built with `authMode: 'error'`, a `false` here
- * causes a `ForbiddenError` to bubble to the GraphQL response.
+ *  - No authenticated user on context: throws `GraphQLError("Unauthenticated")`
+ *    with `extensions.code = "UNAUTHENTICATED"`. This **must** distinguish
+ *    from the "wrong role" case — clients (and the failing test that
+ *    guards this contract) rely on the distinction to handle re-auth vs.
+ *    permission-elevation paths.
+ *
+ *  - Authenticated user but missing role: returns `false`. With
+ *    `authMode: 'error'`, type-graphql then throws its built-in
+ *    `AuthorizationError` (extensions.code = `"UNAUTHORIZED"`), which is
+ *    the correct semantics for "you're known but not permitted".
+ *
+ *  - Authenticated user with at least one of the required roles, or
+ *    `@Authorized()` with no specific role list: returns `true`.
+ *
+ * The previous behaviour returned `false` on missing user, which (because
+ * type-graphql's built-in AuthMiddleware emits `AuthorizationError` for
+ * any `false` from a `@Authorized([...])` decorator with a non-empty role
+ * list) surfaced as `UNAUTHORIZED` — indistinguishable from a real
+ * permission denial. That made the consumer's re-auth flow harder to
+ * design and contradicted the spec for these tests.
  */
 export const authChecker: AuthChecker<BackendContext, BackendRole> = (
   { context },
   roles
 ) => {
-  if (!context.user) return false;
+  if (!context.user) {
+    // Throwing here propagates through the AuthMiddleware's check and
+    // bypasses its `AuthorizationError` fallback, giving the response a
+    // proper UNAUTHENTICATED code.
+    throw unauthenticatedError();
+  }
   if (!roles || roles.length === 0) return true;
   const userRoles = extractRoles(context.user);
   return roles.some((required) => userRoles.includes(required));
