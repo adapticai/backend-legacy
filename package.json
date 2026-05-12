@@ -87,6 +87,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.4",
     "express": "^4.21.2",
+    "google-auth-library": "^10.6.2",
     "graphql": "^16.11.0",
     "graphql-fields": "^2.0.3",
     "graphql-query-complexity": "^1.1.0",

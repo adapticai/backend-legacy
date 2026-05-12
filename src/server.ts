@@ -6,6 +6,7 @@ import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express4';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
 import { buildSchema } from 'type-graphql';
+import { GraphQLError } from 'graphql';
 import { resolvers } from './generated/typegraphql-prisma';
 import { OptionsGreeksHistoryCustomResolver } from './resolvers/custom';
 import { createServer } from 'http';
@@ -13,10 +14,8 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
-import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
-import { jwtSecret } from './config/jwtConfig';
 import prisma, {
   startConnectionHealthMonitor,
   disconnectWithTimeout,
@@ -25,6 +24,12 @@ import { createHealthRouter } from './health';
 import { exec } from 'child_process';
 import { logger } from './utils/logger';
 import { shutdownTracing } from './config/tracing';
+import {
+  verifyBackendToken,
+  AuthError,
+  assertGoogleAudienceConfiguredForProd,
+  type BackendPrincipal,
+} from './auth/token-verifier';
 
 import { Request } from 'express';
 import { CorsOptions } from 'cors';
@@ -41,6 +46,39 @@ interface AuthUser {
 
 interface AuthenticatedRequest extends Request {
   user: JwtPayload | AuthUser | string;
+}
+
+/**
+ * Adapt a verified `BackendPrincipal` to the legacy `user` context shape used
+ * by downstream resolvers and audit plugins (`{ sub, role, roles? }`).
+ *
+ * The server-kind principal is materialised as `{ sub: 'server', role: 'server' }`
+ * for compatibility with the historical `audit-logger` middleware that checks
+ * `context.user?.role === 'server'`.
+ */
+function principalToUser(principal: BackendPrincipal): AuthUser {
+  switch (principal.kind) {
+    case 'server':
+      return { sub: 'server', name: 'Server Auth', role: 'server' };
+    case 'admin':
+      return {
+        sub: principal.sub,
+        role: 'admin',
+        // Preserve the email if Google or our JWT provided one.
+        ...(principal.email ? { name: principal.email } : {}),
+      };
+    case 'user':
+      // Surface the highest-privilege role string for legacy consumers that
+      // expect `role` to be a single value (default to "user").
+      return {
+        sub: principal.sub,
+        role:
+          principal.roles.find((r) => r !== 'user') ??
+          principal.roles[0] ??
+          'user',
+        ...(principal.email ? { name: principal.email } : {}),
+      };
+  }
 }
 
 let dbUnreachableCount = 0;
@@ -90,6 +128,12 @@ async function restartDatabase(): Promise<void> {
 }
 
 const startServer = async () => {
+  // Boot-time invariant: in production, `GOOGLE_OAUTH_CLIENT_IDS` must be set.
+  // Without it, no Google ID token can be safely verified — and the verifier
+  // would surface a per-request `misconfigured` error indefinitely. Refuse to
+  // boot with broken identity configuration.
+  assertGoogleAudienceConfiguredForProd();
+
   const schema = await buildSchema({
     resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
     validate: false,
@@ -224,56 +268,42 @@ const startServer = async () => {
 
         // Extract token from Authorization header
         const authHeader = req.headers.authorization || '';
-        // Only try to verify token if it's in proper Bearer format
         const token = authHeader.startsWith('Bearer ')
-          ? authHeader.split(' ')[1]
+          ? authHeader.slice('Bearer '.length).trim()
           : '';
 
-        let user = null;
-        if (token) {
-          // Check if token is a Google OAuth token (starts with ya29.)
-          if (token.startsWith('ya29.')) {
-            // For Google OAuth tokens, we should validate differently or pass them through
-            // This is a temporary solution - ideally you should verify with Google's OAuth API
-            user = { provider: 'google', token };
-          } else {
-            // Validate JWT format before attempting verification (must have 3 dot-separated parts)
-            const tokenParts = token.split('.');
-            if (tokenParts.length !== 3) {
-              // Log only once per unique malformed token to avoid log spam
-              const tokenPreview =
-                token.length > 20 ? `${token.substring(0, 20)}...` : token;
-              logger.warn('Received malformed token (not a valid JWT format)', {
-                tokenPreview,
-              });
-              // Continue without authentication - don't fail the request
-              return {
-                prisma: global.prisma,
-                req,
-                authError:
-                  'Malformed token: expected JWT format (header.payload.signature)',
-              };
-            }
-
-            // For regular JWT tokens, verify using the centralized secret
-            try {
-              // Check for server-to-server auth token from environment
-              const serverAuthToken = process.env.SERVER_AUTH_TOKEN;
-              if (serverAuthToken && token === serverAuthToken) {
-                user = { sub: 'server', name: 'Server Auth', role: 'server' };
-              } else {
-                user = jwt.verify(token, jwtSecret);
-              }
-            } catch (e) {
-              // Only log verification failures at warn level with minimal info
-              const errorMessage =
-                e instanceof Error ? e.message : 'Unknown error';
-              logger.warn('JWT verification failed', { errorMessage });
-              return { prisma: global.prisma, req, authError: 'Invalid token' };
-            }
-          }
+        // When NO token is presented, fall through with `user: null`. The
+        // `AuthChecker` introduced in CORTEX-P0-001 will reject any operation
+        // that requires a principal; this contract preserves the current
+        // unauthenticated-public-query path until P0-001 lands.
+        if (!token) {
+          return { prisma: global.prisma, req, user: null };
         }
-        return { prisma: global.prisma, req, user };
+
+        // Verify the bearer token through the SINGLE typed entry point. There
+        // is no prefix shortcut (ya29.…), no parallel path, and no silent
+        // downgrade to an unverified principal on failure.
+        try {
+          const principal = await verifyBackendToken(token);
+          return {
+            prisma: global.prisma,
+            req,
+            user: principalToUser(principal),
+          };
+        } catch (e) {
+          const reason =
+            e instanceof AuthError ? e.reason : 'bad_signature';
+          logger.warn('GraphQL HTTP auth rejected', { reason });
+          // Throw `UNAUTHENTICATED` so Apollo's HTTP transport returns a
+          // GraphQL-shaped error response. The `formatError` hook above
+          // preserves the `code` extension.
+          throw new GraphQLError('Unauthenticated', {
+            extensions: {
+              code: 'UNAUTHENTICATED',
+              reason,
+            },
+          });
+        }
       },
     })
   );
@@ -317,39 +347,40 @@ const startServer = async () => {
           (ctx.connectionParams as { authorization?: string })?.authorization ||
           '';
         const token = authHeader.startsWith('Bearer ')
-          ? authHeader.split(' ')[1]
+          ? authHeader.slice('Bearer '.length).trim()
           : '';
 
-        let user = null;
-        if (token) {
-          // Check if token is a Google OAuth token (starts with ya29.)
-          if (token.startsWith('ya29.')) {
-            // For Google OAuth tokens, we should validate differently or pass them through
-            logger.info(
-              'Detected Google OAuth token in WebSocket, skipping JWT verification'
-            );
-            user = { provider: 'google', token };
-          } else {
-            // For regular JWT tokens, verify using the centralized secret
-            try {
-              // Check for server-to-server auth token from environment
-              const serverAuthToken = process.env.SERVER_AUTH_TOKEN;
-              if (serverAuthToken && token === serverAuthToken) {
-                user = { sub: 'server', name: 'Server Auth', role: 'server' };
-              } else {
-                user = jwt.verify(token, jwtSecret);
-              }
-            } catch (e) {
-              const errorMessage =
-                e instanceof Error ? e.message : 'Unknown error';
-              logger.warn('WebSocket JWT verification failed', {
-                errorMessage,
-              });
-              return { prisma: global.prisma, authError: 'Invalid token' };
-            }
-          }
+        // No token presented -> deliver a null-user context. The AuthChecker
+        // landing in CORTEX-P0-001 will reject any subscription that requires
+        // a principal. Until then, public subscriptions continue to work.
+        if (!token) {
+          return { prisma: global.prisma, user: null };
         }
-        return { prisma: global.prisma, user };
+
+        // Verify the bearer token via the single typed entry point.
+        // Any verification failure THROWS — graphql-ws closes the connection
+        // when the context callback throws, instead of silently downgrading
+        // to a degraded `authError` context that quietly delivered messages
+        // to an unauthenticated socket.
+        try {
+          const principal = await verifyBackendToken(token);
+          return {
+            prisma: global.prisma,
+            user: principalToUser(principal),
+          };
+        } catch (e) {
+          const reason =
+            e instanceof AuthError ? e.reason : 'bad_signature';
+          logger.warn('WebSocket auth rejected — closing connection', {
+            reason,
+          });
+          throw new GraphQLError('Unauthenticated', {
+            extensions: {
+              code: 'UNAUTHENTICATED',
+              reason,
+            },
+          });
+        }
       },
     },
     wsServer
