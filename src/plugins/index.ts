@@ -6,3 +6,4 @@
 
 export { queryDepthLimiterPlugin } from './query-depth-limiter';
 export { createErrorSanitizer, formatError } from './error-sanitizer';
+export { createHttpStatusMapperPlugin } from './http-status-mapper';

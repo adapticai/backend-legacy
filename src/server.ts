@@ -17,6 +17,7 @@ import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { jwtSecret } from './config/jwtConfig';
+import { createHttpStatusMapperPlugin } from './plugins/http-status-mapper';
 import prisma from './prismaClient';
 import { createHealthRouter } from './health';
 import { exec } from 'child_process';
@@ -104,6 +105,7 @@ const startServer = async () => {
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       createAuditLogPlugin(),
+      createHttpStatusMapperPlugin(),
     ],
     formatError: (err) => {
       logger.error('GraphQL Error', { graphqlError: err });
@@ -176,8 +178,17 @@ const startServer = async () => {
   app.use(createHealthRouter());
 
   // Configure CORS with allowed origins
-  const defaultOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:4000', 'https://adaptic.ai', 'https://api.adaptic.ai', 'https://os.adaptic.ai'];
-  const envOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()) : [];
+  const defaultOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:4000',
+    'https://adaptic.ai',
+    'https://api.adaptic.ai',
+    'https://os.adaptic.ai',
+  ];
+  const envOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
+    : [];
   const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
 
   const corsOptions: CorsOptions = {
