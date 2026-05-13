@@ -314,10 +314,27 @@ const startServer = async () => {
           // Throw `UNAUTHENTICATED` so Apollo's HTTP transport returns a
           // GraphQL-shaped error response. The `formatError` hook above
           // preserves the `code` extension.
+          //
+          // `extensions.http.status: 401` is essential and easy to miss:
+          // when `context()` throws, Apollo Server takes the
+          // `errorResponse` path (ApolloServer.js#executeHTTPGraphQLRequest
+          // catch block) which BYPASSES the request pipeline entirely —
+          // willSendResponse plugins do not fire. The only mechanism left
+          // for setting the HTTP status is `extensions.http.status` on the
+          // thrown error itself, which `normalizeAndFormatErrors` lifts
+          // into the response head and then strips from the body so it does
+          // not leak. Without this, every auth failure ships as HTTP 500,
+          // and Apollo Client's observable pipeline crashes on the 5xx +
+          // GraphQL-body combination (`Cannot read properties of undefined
+          // (reading 'write')`), leaving consumer `await client.query(...)`
+          // promises that neither resolve nor reject — which is precisely
+          // how /configure/trading-policy ended up locked in a permanent
+          // loading state.
           throw new GraphQLError('Unauthenticated', {
             extensions: {
               code: 'UNAUTHENTICATED',
               reason,
+              http: { status: 401 },
             },
           });
         }
@@ -391,10 +408,17 @@ const startServer = async () => {
           logger.warn('WebSocket auth rejected — closing connection', {
             reason,
           });
+          // graphql-ws closes the connection rather than producing an HTTP
+          // response, so `extensions.http.status` is irrelevant here — but
+          // we include it for symmetry with the HTTP context above. Any
+          // future code that funnels a WS-rejected GraphQLError back into
+          // an HTTP response (e.g. a graceful-degrade fallback) will get
+          // the correct status without further changes.
           throw new GraphQLError('Unauthenticated', {
             extensions: {
               code: 'UNAUTHENTICATED',
               reason,
+              http: { status: 401 },
             },
           });
         }
