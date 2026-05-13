@@ -16,6 +16,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
+import { createHttpStatusMapperPlugin } from './plugins/http-status-mapper';
 import prisma, {
   startConnectionHealthMonitor,
   disconnectWithTimeout,
@@ -152,6 +153,7 @@ const startServer = async () => {
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       createAuditLogPlugin(),
+      createHttpStatusMapperPlugin(),
     ],
     formatError: (err) => {
       const message = err.message || '';
