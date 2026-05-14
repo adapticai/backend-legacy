@@ -362,8 +362,24 @@ enum TradeStatus {
   /// The trade has been fully completed.
   COMPLETED
 
-  /// The trade has been canceled.
+  /// The trade has been canceled (e.g., by operator action).
   CANCELED
+
+  /// The trade has been superseded by a newer trade via re-underwriting.
+  SUPERSEDED
+
+  /// The broker rejected the order (e.g., insufficient buying power,
+  /// bad symbol, halted asset). SEC Rule 15c3-5 forensic record retained.
+  REJECTED_BROKER
+
+  /// A pre-trade compliance/risk check rejected the trade
+  /// (e.g., wash-trade cooldown, KYC, restricted list).
+  /// SEC Rule 15c3-5 forensic record retained.
+  REJECTED_COMPLIANCE
+
+  /// The trade failed during execution due to a system error
+  /// (e.g., network, broker outage). SEC Rule 15c3-5 forensic record retained.
+  FAILED
 }
 
 // Categorizes the types of alerts that can be generated.
@@ -1100,6 +1116,13 @@ model Fund {
   /// Values here take precedence over the organization's llmDefaults.
   /// Same JSON shape as Organization.llmDefaults.
   llmOverrides Json?
+
+  /// Active and recent policy overlays for this fund (charter §2.4 F4,
+  /// sub-project 2 spec §4.4). Array of PolicyOverlayEntry. Active
+  /// overlays are deep-merged into effectivePolicy() output. The engine
+  /// archiver moves entries to Tier-A PolicyOverlayHistory on every
+  /// status flip away from ACTIVE; steady-state size ≤ 20 entries.
+  policyOverlays Json?
 
   /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
   organizationId String @db.Uuid
@@ -1841,6 +1864,19 @@ model Customer {
   /// End date of the current billing period in Stripe.
   stripeCurrentPeriodEnd DateTime?
 
+  /// Jurisdiction country code (ISO 3166-1 alpha-2). Captured during
+  /// onboarding KYC for compliance scoping (sub-project 2 spec §4.6).
+  jurisdiction String?
+
+  /// Risk profile category (free-string; validation in app layer).
+  riskProfile String?
+
+  /// AML compliance status (free-string).
+  amlStatus String?
+
+  /// Timestamp of last KYC update.
+  lastKycUpdate DateTime?
+
   /// Timestamp when the customer was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -2133,9 +2169,24 @@ model Trade {
   /// Thresholds used for this trade as JSON. TYPESTRING.SKIP=true
   thresholdsJson String? @map("thresholds")
 
+  /// Version of the thesis this trade is acting on. Incremented when
+  /// re-underwriting produces a new thesis (sub-project 2 spec §4.5).
+  thesisVersion Int @default(1)
+
+  /// If this trade superseded another via re-underwriting, the prior
+  /// trade's Action id.
+  supersededActionId String? @db.Uuid
+
+  /// Free-form metadata captured when status is REJECTED_BROKER /
+  /// REJECTED_COMPLIANCE / FAILED. SEC Rule 15c3-5 forensic record
+  /// retained per sub-project 2 spec §4.7.
+  rejectionMetadata Json?
+
   @@index([brokerageAccountId])
   @@index([brokerageAccountId, status])
   @@index([symbol])
+  @@index([supersededActionId])
+  @@index([updatedAt])
   @@map(name: "trades")
 }
 
@@ -2177,8 +2228,18 @@ model Action {
   /// alpacaOrderId for the Alpaca order associated with this action. TYPESTRING.SKIP=true
   alpacaOrderId String? @unique @db.Uuid
 
+  /// Version of the thesis this action is acting on. Incremented when
+  /// re-underwriting produces a new thesis (sub-project 2 spec §4.5).
+  thesisVersion Int @default(1)
+
+  /// If this action superseded another via re-underwriting, the prior
+  /// Action id.
+  supersededActionId String? @db.Uuid
+
   @@index([tradeId])
   @@index([tradeId, status])
+  @@index([supersededActionId])
+  @@index([updatedAt])
   @@map(name: "actions")
 }
 
