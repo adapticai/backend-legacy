@@ -24,6 +24,8 @@
     "validators/",
     "config/",
     "middleware/",
+    "types/",
+    "helpers/",
     "*.d.ts",
     "*.js",
     "*.cjs",
