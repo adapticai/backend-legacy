@@ -224,9 +224,16 @@ function processQueue(): void {
 
 /**
  * Adds an operation to the queue with retry capability.
+ *
+ * @param operation - The async operation to execute
+ * @param operationName - Symbolic name for the operation (used in structured
+ *   logs and load-shedding error messages). Defaults to 'unknown' when the
+ *   caller cannot derive a meaningful name (e.g. anonymous GraphQL documents).
+ * @param attempt - Current retry attempt (0 for first call)
  */
 async function enqueueOperation<T>(
   operation: () => Promise<T>,
+  operationName: string = 'unknown',
   attempt = 0
 ): Promise<T> {
   // Load shedding: reject new (first-attempt) operations when the queue is
@@ -301,7 +308,7 @@ async function enqueueOperation<T>(
             `Apollo operation failed, retrying in ${delay}ms (attempt ${attempt + 1}/${poolConfig.retryAttempts})`
           );
           setTimeout(() => {
-            enqueueOperation(operation, attempt + 1)
+            enqueueOperation(operation, operationName, attempt + 1)
               .then(resolve)
               .catch(reject);
           }, delay);
@@ -483,12 +490,34 @@ export async function getApolloClient(): Promise<
     const originalQuery = apolloClient.query.bind(apolloClient);
     const originalMutate = apolloClient.mutate.bind(apolloClient);
 
+    // Best-effort extraction of the GraphQL operation name from the document
+    // so structured logs and load-shedding errors identify the offending query.
+    const extractOpName = (doc: unknown): string => {
+      if (!doc || typeof doc !== 'object') return 'unknown';
+      const defs = (doc as { definitions?: ReadonlyArray<unknown> })
+        .definitions;
+      if (!Array.isArray(defs)) return 'unknown';
+      for (const def of defs) {
+        const node = def as { kind?: string; name?: { value?: string } };
+        if (node.kind === 'OperationDefinition' && node.name?.value) {
+          return node.name.value;
+        }
+      }
+      return 'unknown';
+    };
+
     apolloClient.query = (options) => {
-      return enqueueOperation(() => originalQuery(options));
+      return enqueueOperation(
+        () => originalQuery(options),
+        extractOpName(options.query)
+      );
     };
 
     apolloClient.mutate = (options) => {
-      return enqueueOperation(() => originalMutate(options));
+      return enqueueOperation(
+        () => originalMutate(options),
+        extractOpName(options.mutation)
+      );
     };
 
     return apolloClient;
