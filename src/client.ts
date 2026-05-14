@@ -257,13 +257,24 @@ export async function getApolloClient(): Promise<
         ? 'https://api.adaptic.ai/graphql'
         : 'http://localhost:4000/graphql');
 
+    // Enforce connectionTimeout via AbortSignal.timeout(). The prior
+    // `fetchOptions.timeout` was not a valid Fetch API option and was
+    // silently ignored, leaving hung backend responses to block the
+    // connection-pool queue indefinitely. Ported from SR commit 38fbbfa.
+    const timeoutMs = poolConfig.connectionTimeout;
+    const fetchWithTimeout: typeof fetch = (input, init) => {
+      const timeoutSignal = AbortSignal.timeout(timeoutMs);
+      const existingSignal = init?.signal;
+      const signal = existingSignal
+        ? AbortSignal.any([existingSignal, timeoutSignal])
+        : timeoutSignal;
+      return fetch(input, { ...init, signal });
+    };
+
     // Create the HTTP link with appropriate fetch policies and timeouts
     const httpLinkInstance = new HttpLink({
       uri: httpUrl,
-      fetch,
-      fetchOptions: {
-        timeout: poolConfig.connectionTimeout,
-      },
+      fetch: fetchWithTimeout,
     });
 
     // Create the auth link with async token retrieval and validation.
