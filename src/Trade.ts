@@ -58,6 +58,10 @@ import { logger } from './utils/logger';
   lastReunderwrittenAt
   supersededById
   rejectionMetadata
+  signalSource
+  signalId
+  pathway
+  exitTier
 
   `;
 
@@ -134,6 +138,10 @@ import { logger } from './utils/logger';
   lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
+  signalSource: props.signalSource !== undefined ? props.signalSource : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  pathway: props.pathway !== undefined ? props.pathway : undefined,
+  exitTier: props.exitTier !== undefined ? props.exitTier : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item) => ({
@@ -349,6 +357,10 @@ import { logger } from './utils/logger';
   lastReunderwrittenAt: prop.lastReunderwrittenAt !== undefined ? prop.lastReunderwrittenAt : undefined,
   supersededById: prop.supersededById !== undefined ? prop.supersededById : undefined,
   rejectionMetadata: prop.rejectionMetadata !== undefined ? prop.rejectionMetadata : undefined,
+  signalSource: prop.signalSource !== undefined ? prop.signalSource : undefined,
+  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+  pathway: prop.pathway !== undefined ? prop.pathway : undefined,
+  exitTier: prop.exitTier !== undefined ? prop.exitTier : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -594,6 +606,18 @@ import { logger } from './utils/logger';
             set: props.supersededById 
            } : undefined,
   rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
+  signalSource: props.signalSource !== undefined ? {
+            set: props.signalSource 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  pathway: props.pathway !== undefined ? {
+            set: props.pathway 
+           } : undefined,
+  exitTier: props.exitTier !== undefined ? {
+            set: props.exitTier 
+           } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: props.actions.map((item) => ({
@@ -823,6 +847,9 @@ import { logger } from './utils/logger';
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
       },
           create: {
         alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
@@ -854,6 +881,10 @@ import { logger } from './utils/logger';
   lastReunderwrittenAt: props.lastReunderwrittenAt !== undefined ? props.lastReunderwrittenAt : undefined,
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
+  signalSource: props.signalSource !== undefined ? props.signalSource : undefined,
+  signalId: props.signalId !== undefined ? props.signalId : undefined,
+  pathway: props.pathway !== undefined ? props.pathway : undefined,
+  exitTier: props.exitTier !== undefined ? props.exitTier : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item) => ({
@@ -974,6 +1005,18 @@ import { logger } from './utils/logger';
             set: props.supersededById 
            } : undefined,
   rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
+  signalSource: props.signalSource !== undefined ? {
+            set: props.signalSource 
+           } : undefined,
+  signalId: props.signalId !== undefined ? {
+            set: props.signalId 
+           } : undefined,
+  pathway: props.pathway !== undefined ? {
+            set: props.pathway 
+           } : undefined,
+  exitTier: props.exitTier !== undefined ? {
+            set: props.exitTier 
+           } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: props.actions.map((item) => ({
@@ -1291,6 +1334,18 @@ import { logger } from './utils/logger';
             set: prop.supersededById 
            } : undefined,
   rejectionMetadata: prop.rejectionMetadata !== undefined ? prop.rejectionMetadata : undefined,
+  signalSource: prop.signalSource !== undefined ? {
+            set: prop.signalSource 
+           } : undefined,
+  signalId: prop.signalId !== undefined ? {
+            set: prop.signalId 
+           } : undefined,
+  pathway: prop.pathway !== undefined ? {
+            set: prop.pathway 
+           } : undefined,
+  exitTier: prop.exitTier !== undefined ? {
+            set: prop.exitTier 
+           } : undefined,
   actions: prop.actions ? 
   Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
   connect: prop.actions.map((item) => ({
@@ -1674,6 +1729,9 @@ import { logger } from './utils/logger';
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
   } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
+  } : undefined,
 },
         };
         const filteredVariables = removeUndefinedProps(variables);
@@ -1924,6 +1982,9 @@ import { logger } from './utils/logger';
   } : undefined,
   symbol: props.symbol !== undefined ? {
     equals: props.symbol 
+  } : undefined,
+  signalId: props.signalId !== undefined ? {
+    equals: props.signalId 
   } : undefined,
       },
         };

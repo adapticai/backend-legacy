@@ -1931,10 +1931,23 @@ model Trade {
   /// Forensic metadata populated when status is REJECTED_BROKER, REJECTED_COMPLIANCE, or FAILED. Carries reason, errorCode, brokerResponse, attemptedAt and any other contextual details required for SEC Rule 15c3-5 audits and FINRA review. Null for trades that did not fail or get rejected.
   rejectionMetadata Json?
 
+  /// Wave 234 — Upstream ensemble signal source that produced this trade. One of "ensemble" | "llm_only" | "transformer_only" | "drift_fallback" | "manual". Populated at trade creation from `TradeSideAndSignal.metadata.signalSource`. Consumed at exit-fill time to populate `TradeOutcome.signalSource` (replacing the legacy hardcoded "ensemble" default in `order-fill-handler.ts:labelExitOutcomeFromFill`). Calibration trainer joins on this for cohort partition.
+  signalSource String?
+
+  /// Wave 234 — Unique signal identifier (UUID, cuid-style) from the upstream TradeSignalEvent. Threaded end-to-end so live-IC computation can correlate (signal_score, forward_return) on a one-to-one basis. Joined to `PredictionPair.tradeId` (which Wave 213 populated with `signal.signalId`) at calibration training time. TYPESTRING.SKIP=true
+  signalId String?
+
+  /// Wave 234 — Decision pathway as a free-form string (matches the ML system DecisionPathway enum: ML_ONLY | LLM_ONLY | HYBRID | FALLBACK | RULES | UNKNOWN). Carried separately from signalSource to support richer attribution analytics: signalSource describes which producer emitted the merged signal; pathway describes the high-level decision pathway (the typed system enum). TYPESTRING.SKIP=true
+  pathway String?
+
+  /// Wave 236 — Exit tier classification (TIER_A | TIER_B | TIER_C | MANUAL | EOD) for exit trades. NULL on open trades. Populated when the exit is initiated by the exit-framework orchestrator (Tier A = volatility/regime circuit breakers; Tier B = engine-internal stop logic; Tier C = LLM advisory re-evaluation). Refines `TradeOutcome.exitReason` (which is derived from order shape) with the upstream decision tier. TYPESTRING.SKIP=true
+  exitTier String?
+
   @@index([alpacaAccountId])
   @@index([alpacaAccountId, status])
   @@index([symbol])
   @@index([updatedAt])
+  @@index([signalId])
   @@map(name: "trades")
 }
 
