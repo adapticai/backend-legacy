@@ -2182,11 +2182,39 @@ model Trade {
   /// retained per sub-project 2 spec §4.7.
   rejectionMetadata Json?
 
+  /// Wave 234 — Upstream ensemble signal source that produced this trade.
+  /// One of "ensemble" | "llm_only" | "transformer_only" | "drift_fallback"
+  /// | "manual". Populated at trade creation from
+  /// `TradeSideAndSignal.metadata.signalSource`. Consumed at exit-fill
+  /// time to populate `TradeOutcome.signalSource` for cohort partition
+  /// in the calibration trainer.
+  signalSource String?
+
+  /// Wave 234 — Unique signal identifier (UUID/cuid) from the upstream
+  /// TradeSignalEvent. Threaded end-to-end so live-IC computation can
+  /// correlate (signal_score, forward_return) one-to-one. Joins
+  /// `PredictionPair.tradeId` for calibration training. TYPESTRING.SKIP=true
+  signalId String?
+
+  /// Wave 234 — Decision pathway: ML_ONLY | LLM_ONLY | HYBRID | FALLBACK |
+  /// RULES | UNKNOWN. Carried separately from signalSource because
+  /// signalSource describes the merged-signal producer; pathway describes
+  /// the high-level decision typing. TYPESTRING.SKIP=true
+  pathway String?
+
+  /// Wave 236 — Exit tier (TIER_A | TIER_B | TIER_C | MANUAL | EOD).
+  /// NULL on open trades. Populated when the exit-framework orchestrator
+  /// initiates the exit (A = volatility/regime breakers, B = internal
+  /// stop logic, C = LLM advisory re-evaluation). Refines TradeOutcome's
+  /// exit-reason with upstream decision tier. TYPESTRING.SKIP=true
+  exitTier String?
+
   @@index([brokerageAccountId])
   @@index([brokerageAccountId, status])
   @@index([symbol])
   @@index([supersededActionId])
   @@index([updatedAt])
+  @@index([signalId])
   @@map(name: "trades")
 }
 
