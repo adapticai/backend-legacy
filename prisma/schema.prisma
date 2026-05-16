@@ -1449,6 +1449,9 @@ model AlpacaAccount {
   /// Risk metrics snapshot for this Alpaca account (FSM state, HWM, drawdown, P&L windows). TYPESTRING.SKIP=true GQL.SKIP=true
   accountRiskMetrics AccountRiskMetrics?
 
+  /// Per-strategy rolling-window health snapshots for this Alpaca account. TYPESTRING.SKIP=true GQL.SKIP=true
+  strategyHealthSnapshots  StrategyHealthSnapshot[]
+
   @@index([userId])
   @@map(name: "alpaca_accounts")
 }
@@ -5377,4 +5380,39 @@ model AccountRiskMetrics {
 
   @@index([alpacaAccountId])
   @@index([currentRiskState, riskStateChangedAt])
+}
+
+/// Per-strategy rolling-window health snapshot: FSM state, rolling stats, backtest divergence, and confidence trend.
+model StrategyHealthSnapshot {
+  id                       String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId          String   @db.Uuid
+  alpacaAccount            AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  strategyName             String
+
+  currentState             StrategyState @default(ACTIVE)
+  stateChangedAt           DateTime?
+  stateChangedReason       String?
+
+  windowSize               Int      @default(20)
+  windowTradeCount         Int      @default(0)
+  windowHitRate            Decimal? @db.Decimal(10, 6)
+  windowExpectancy         Decimal? @db.Decimal(20, 6)
+  windowProfitFactor       Decimal? @db.Decimal(20, 6)
+  windowSortino            Decimal? @db.Decimal(20, 6)
+  windowMaxDrawdownPct     Decimal? @db.Decimal(10, 6)
+  windowCumulativePnlAmt   Decimal? @db.Decimal(20, 2)
+
+  backtestExpectancy       Decimal? @db.Decimal(20, 6)
+  divergenceZScore         Decimal? @db.Decimal(10, 6)
+  divergenceAlertActive    Boolean  @default(false)
+
+  averageConfidence        Decimal? @db.Decimal(10, 6)
+  confidenceTrend          Decimal? @db.Decimal(10, 6)
+
+  lastUpdatedAt            DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@unique([alpacaAccountId, strategyName])
+  @@index([currentState])
+  @@index([alpacaAccountId, currentState])
 }
