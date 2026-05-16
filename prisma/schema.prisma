@@ -1446,6 +1446,9 @@ model AlpacaAccount {
   /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   alerts Alert[]
 
+  /// Risk metrics snapshot for this Alpaca account (FSM state, HWM, drawdown, P&L windows). TYPESTRING.SKIP=true GQL.SKIP=true
+  accountRiskMetrics AccountRiskMetrics?
+
   @@index([userId])
   @@map(name: "alpaca_accounts")
 }
@@ -5338,4 +5341,40 @@ enum RiskEscalationActor {
   OPERATOR
   COMPLIANCE_OFFICER
   AUTOMATED_RECOVERY
+}
+
+/// Per-account risk metrics snapshot: FSM state, high-water mark, drawdown, and D/W/M P&L windows.
+model AccountRiskMetrics {
+  id                       String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId          String   @unique @db.Uuid
+  alpacaAccount            AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  currentRiskState         AccountRiskState @default(NORMAL)
+  currentScopeState        Json?    // map of scope (asset_class, strategy, symbol) -> state
+  riskStateChangedAt       DateTime?
+  riskStateChangedBy       String?
+  riskStateChangeReason    String?
+
+  accountHighWaterMark     Decimal? @db.Decimal(20, 2)
+  accountHighWaterMarkAt   DateTime?
+  currentEquity            Decimal? @db.Decimal(20, 2)
+  currentDrawdownPct       Decimal? @db.Decimal(10, 6)
+  intradayDrawdownPct      Decimal? @db.Decimal(10, 6)
+  maxDrawdownPctLifetime   Decimal? @db.Decimal(10, 6)
+
+  dailyPnlAmount           Decimal? @db.Decimal(20, 2)
+  dailyPnlPct              Decimal? @db.Decimal(10, 6)
+  weeklyPnlAmount          Decimal? @db.Decimal(20, 2)
+  weeklyPnlPct             Decimal? @db.Decimal(10, 6)
+  monthlyPnlAmount         Decimal? @db.Decimal(20, 2)
+  monthlyPnlPct            Decimal? @db.Decimal(10, 6)
+  peakToTroughAmount       Decimal? @db.Decimal(20, 2)
+  peakToTroughPct          Decimal? @db.Decimal(10, 6)
+
+  nextRecoveryEligibleAt   DateTime?
+  lastSyncedAt             DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@index([alpacaAccountId])
+  @@index([currentRiskState, riskStateChangedAt])
 }
