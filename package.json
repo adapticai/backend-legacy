@@ -97,7 +97,8 @@
     "reflect-metadata": "^0.2.2",
     "type-graphql": "^2.0.0-rc.2",
     "typegraphql-prisma": "^0.28.0",
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "google-auth-library": "^9.14.2"
   },
   "optionalDependencies": {
     "@aws-sdk/client-lambda": "^3.859.0"
