@@ -9,7 +9,6 @@ import * as TypeGraphQL from 'type-graphql';
 import {
   validatePercentage,
   validatePositiveNumber,
-  validateNonEmpty,
   validateFields,
   ValidationError,
 } from './input-validator';
@@ -101,26 +100,25 @@ export class ValidationExamplesResolver {
     // The validation plugin handles basic validation automatically.
     // Use validateFields for additional custom validations.
 
-    try {
-      validateFields([
-        // Custom validation: minPercentageChange should be less than tradeAllocationPct
-        () => {
-          if (input.minPercentageChange >= input.tradeAllocationPct) {
-            throw new ValidationError('Invalid configuration', [
-              {
-                field: 'minPercentageChange',
-                value: input.minPercentageChange,
-                message: 'Must be less than tradeAllocationPct',
-                constraint: 'comparison',
-              },
-            ]);
-          }
-        },
-      ]);
-    } catch (error) {
-      // ValidationError is automatically formatted by Apollo Server
-      throw error;
-    }
+    // The validation plugin handles basic validation automatically;
+    // validateFields lets us layer custom cross-field checks on top.
+    // No try/catch wrapper here — ValidationError propagates naturally
+    // and is formatted by Apollo Server at the resolver boundary.
+    validateFields([
+      // Custom validation: minPercentageChange should be less than tradeAllocationPct
+      () => {
+        if (input.minPercentageChange >= input.tradeAllocationPct) {
+          throw new ValidationError('Invalid configuration', [
+            {
+              field: 'minPercentageChange',
+              value: input.minPercentageChange,
+              message: 'Must be less than tradeAllocationPct',
+              constraint: 'comparison',
+            },
+          ]);
+        }
+      },
+    ]);
 
     // Resolver implementation...
     return true;
