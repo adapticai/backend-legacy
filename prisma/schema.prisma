@@ -1452,6 +1452,9 @@ model AlpacaAccount {
   /// Per-strategy rolling-window health snapshots for this Alpaca account. TYPESTRING.SKIP=true GQL.SKIP=true
   strategyHealthSnapshots  StrategyHealthSnapshot[]
 
+  /// Risk FSM state-transition audit log for this Alpaca account. TYPESTRING.SKIP=true GQL.SKIP=true
+  riskEscalationEvents     RiskEscalationEvent[]
+
   @@index([userId])
   @@map(name: "alpaca_accounts")
 }
@@ -5089,6 +5092,12 @@ model PolicyOverlay {
   correlationId     String?
   triggerEventId    String?
 
+  riskEscalationEventId    String?  @unique @db.Uuid
+  /// The escalation event that caused this overlay to be activated (FK on this side). TYPESTRING.SKIP=true GQL.SKIP=true
+  riskEscalationEvent      RiskEscalationEvent? @relation("PolicyOverlayActivatedBy", fields: [riskEscalationEventId], references: [id])
+  /// Escalation events that were triggered while this overlay was active. TYPESTRING.SKIP=true GQL.SKIP=true
+  triggeredRiskEvents      RiskEscalationEvent[] @relation("PolicyOverlayTriggeredEvents")
+
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 
@@ -5415,4 +5424,46 @@ model StrategyHealthSnapshot {
   @@unique([alpacaAccountId, strategyName])
   @@index([currentState])
   @@index([alpacaAccountId, currentState])
+}
+
+/// Immutable audit record of every risk FSM state transition, operator intervention, and automated recovery event.
+model RiskEscalationEvent {
+  id                       String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId          String?  @db.Uuid
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  alpacaAccount            AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: SetNull)
+
+  scopeKind                String
+  scopeValue               String?
+
+  fromState                String
+  toState                  String
+  reason                   RiskEscalationReason
+  severity                 OverlaySeverity
+
+  triggeringObserver       String?
+  observedValue            Decimal? @db.Decimal(20, 6)
+  breachedThreshold        Decimal? @db.Decimal(20, 6)
+  breachedThresholdKey     String?
+
+  correlationId            String?
+  triggeringEventId        String?
+  actor                    RiskEscalationActor
+  actorUserId              String?
+  rationale                String?
+
+  /// Back-reference: the overlay this event activated (FK owned by PolicyOverlay.riskEscalationEventId). TYPESTRING.SKIP=true GQL.SKIP=true
+  activatedPolicyOverlay      PolicyOverlay? @relation("PolicyOverlayActivatedBy")
+
+  triggeredByPolicyOverlayId  String?  @db.Uuid
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  triggeredByPolicyOverlay    PolicyOverlay? @relation("PolicyOverlayTriggeredEvents", fields: [triggeredByPolicyOverlayId], references: [id])
+
+  createdAt                DateTime @default(now())
+
+  @@index([alpacaAccountId, createdAt])
+  @@index([scopeKind, scopeValue, createdAt])
+  @@index([reason, severity, createdAt])
+  @@index([correlationId])
+  @@index([triggeredByPolicyOverlayId])
 }
