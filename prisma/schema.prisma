@@ -5062,6 +5062,13 @@ model TradingPolicy {
   /// List of policy overlays. GQL.SKIP=true
   overlays                  PolicyOverlay[]
 
+  // Risk-governance: per-account escalation policy overrides + denormalized FSM state
+  escalationPolicyOverrides Json?
+  currentRiskState          AccountRiskState @default(NORMAL)
+  currentRiskStateAt        DateTime?
+  lastRiskStateChangedBy    String?
+  lastRiskEscalationEventId String?  @db.Uuid
+
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt
 
