@@ -10,7 +10,27 @@ import { logger } from './utils/logger';
    */
 
   const selectionSet = `
-    undefined
+    
+  id
+  alpacaAccountId
+  scopeKind
+  scopeValue
+  fromState
+  toState
+  reason
+  severity
+  triggeringObserver
+  observedValue
+  breachedThreshold
+  breachedThresholdKey
+  correlationId
+  triggeringEventId
+  actor
+  actorUserId
+  rationale
+  triggeredByPolicyOverlayId
+  createdAt
+
   `;
 
   export const RiskEscalationEvent = {

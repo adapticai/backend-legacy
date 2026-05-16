@@ -26,6 +26,7 @@ import { logger } from './utils/logger';
   deactivatedBy
   correlationId
   triggerEventId
+  riskEscalationEventId
   createdAt
   updatedAt
 

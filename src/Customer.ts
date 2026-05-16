@@ -145,6 +145,11 @@ import { logger } from './utils/logger';
         advancedModelId
         modelPrefs
         auditNotificationPrefs
+        escalationPolicyOverrides
+        currentRiskState
+        currentRiskStateAt
+        lastRiskStateChangedBy
+        lastRiskEscalationEventId
         createdAt
         updatedAt
       }
