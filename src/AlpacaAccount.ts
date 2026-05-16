@@ -362,6 +362,11 @@ import { logger } from './utils/logger';
         advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
         modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: props.tradingPolicy.escalationPolicyOverrides !== undefined ? props.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: props.tradingPolicy.currentRiskState !== undefined ? props.tradingPolicy.currentRiskState : undefined,
+        currentRiskStateAt: props.tradingPolicy.currentRiskStateAt !== undefined ? props.tradingPolicy.currentRiskStateAt : undefined,
+        lastRiskStateChangedBy: props.tradingPolicy.lastRiskStateChangedBy !== undefined ? props.tradingPolicy.lastRiskStateChangedBy : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? props.tradingPolicy.lastRiskEscalationEventId : undefined,
     overlays: props.tradingPolicy.overlays ? 
       Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.tradingPolicy.overlays.map((item) => ({
@@ -371,6 +376,7 @@ import { logger } from './utils/logger';
  : { connectOrCreate: props.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
@@ -398,6 +404,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -721,6 +803,481 @@ import { logger } from './utils/logger';
         suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
         retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  accountRiskMetrics: props.accountRiskMetrics ? 
+    typeof props.accountRiskMetrics === 'object' && Object.keys(props.accountRiskMetrics).length === 1 && Object.keys(props.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+        id: props.accountRiskMetrics.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.accountRiskMetrics.id !== undefined ? props.accountRiskMetrics.id : undefined,
+        alpacaAccountId: props.accountRiskMetrics.alpacaAccountId !== undefined ? props.accountRiskMetrics.alpacaAccountId : undefined,
+      },
+      create: {
+        currentRiskState: props.accountRiskMetrics.currentRiskState !== undefined ? props.accountRiskMetrics.currentRiskState : undefined,
+        currentScopeState: props.accountRiskMetrics.currentScopeState !== undefined ? props.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: props.accountRiskMetrics.riskStateChangedAt !== undefined ? props.accountRiskMetrics.riskStateChangedAt : undefined,
+        riskStateChangedBy: props.accountRiskMetrics.riskStateChangedBy !== undefined ? props.accountRiskMetrics.riskStateChangedBy : undefined,
+        riskStateChangeReason: props.accountRiskMetrics.riskStateChangeReason !== undefined ? props.accountRiskMetrics.riskStateChangeReason : undefined,
+        accountHighWaterMark: props.accountRiskMetrics.accountHighWaterMark !== undefined ? props.accountRiskMetrics.accountHighWaterMark : undefined,
+        accountHighWaterMarkAt: props.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+        currentEquity: props.accountRiskMetrics.currentEquity !== undefined ? props.accountRiskMetrics.currentEquity : undefined,
+        currentDrawdownPct: props.accountRiskMetrics.currentDrawdownPct !== undefined ? props.accountRiskMetrics.currentDrawdownPct : undefined,
+        intradayDrawdownPct: props.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.accountRiskMetrics.intradayDrawdownPct : undefined,
+        maxDrawdownPctLifetime: props.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+        dailyPnlAmount: props.accountRiskMetrics.dailyPnlAmount !== undefined ? props.accountRiskMetrics.dailyPnlAmount : undefined,
+        dailyPnlPct: props.accountRiskMetrics.dailyPnlPct !== undefined ? props.accountRiskMetrics.dailyPnlPct : undefined,
+        weeklyPnlAmount: props.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.accountRiskMetrics.weeklyPnlAmount : undefined,
+        weeklyPnlPct: props.accountRiskMetrics.weeklyPnlPct !== undefined ? props.accountRiskMetrics.weeklyPnlPct : undefined,
+        monthlyPnlAmount: props.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.accountRiskMetrics.monthlyPnlAmount : undefined,
+        monthlyPnlPct: props.accountRiskMetrics.monthlyPnlPct !== undefined ? props.accountRiskMetrics.monthlyPnlPct : undefined,
+        peakToTroughAmount: props.accountRiskMetrics.peakToTroughAmount !== undefined ? props.accountRiskMetrics.peakToTroughAmount : undefined,
+        peakToTroughPct: props.accountRiskMetrics.peakToTroughPct !== undefined ? props.accountRiskMetrics.peakToTroughPct : undefined,
+        nextRecoveryEligibleAt: props.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+        lastSyncedAt: props.accountRiskMetrics.lastSyncedAt !== undefined ? props.accountRiskMetrics.lastSyncedAt : undefined,
+      },
+    }
+  } : undefined,
+  strategyHealthSnapshots: props.strategyHealthSnapshots ? 
+    Array.isArray(props.strategyHealthSnapshots) && props.strategyHealthSnapshots.length > 0 &&  props.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.strategyHealthSnapshots.map((item) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.strategyHealthSnapshots.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId 
+           } : undefined,
+      },
+      create: {
+        strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+        currentState: item.currentState !== undefined ? item.currentState : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+        windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+        windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+      },
+    }))
+  } : undefined,
+  riskEscalationEvents: props.riskEscalationEvents ? 
+    Array.isArray(props.riskEscalationEvents) && props.riskEscalationEvents.length > 0 &&  props.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.riskEscalationEvents.map((item) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.riskEscalationEvents.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            equals: item.correlationId 
+           } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            equals: item.triggeringEventId 
+           } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            equals: item.actorUserId 
+           } : undefined,
+      },
+      create: {
+        scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+        scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+        fromState: item.fromState !== undefined ? item.fromState : undefined,
+        toState: item.toState !== undefined ? item.toState : undefined,
+        reason: item.reason !== undefined ? item.reason : undefined,
+        severity: item.severity !== undefined ? item.severity : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+        observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+        correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+        actor: item.actor !== undefined ? item.actor : undefined,
+        actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+        rationale: item.rationale !== undefined ? item.rationale : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+      typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && Object.keys(item.activatedPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.activatedPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? item.activatedPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? item.activatedPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+      typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && Object.keys(item.triggeredByPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.triggeredByPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? item.triggeredByPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }))
   } : undefined,
@@ -1213,6 +1770,9 @@ import { logger } from './utils/logger';
         advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
             equals: props.tradingPolicy.advancedModelId
           } : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+            equals: props.tradingPolicy.lastRiskEscalationEventId
+          } : undefined,
       },
       update: {
         id: props.tradingPolicy.id !== undefined ? {
@@ -1424,6 +1984,19 @@ import { logger } from './utils/logger';
           } : undefined,
         modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: props.tradingPolicy.escalationPolicyOverrides !== undefined ? props.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: props.tradingPolicy.currentRiskState !== undefined ? {
+            set: props.tradingPolicy.currentRiskState
+          } : undefined,
+        currentRiskStateAt: props.tradingPolicy.currentRiskStateAt !== undefined ? {
+            set: props.tradingPolicy.currentRiskStateAt
+          } : undefined,
+        lastRiskStateChangedBy: props.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+            set: props.tradingPolicy.lastRiskStateChangedBy
+          } : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+            set: props.tradingPolicy.lastRiskEscalationEventId
+          } : undefined,
     overlays: props.tradingPolicy.overlays ? 
     Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 && props.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.tradingPolicy.overlays.map((item) => ({
@@ -1432,6 +2005,7 @@ import { logger } from './utils/logger';
 } : { upsert: props.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId
             } : undefined,
@@ -1486,6 +2060,195 @@ import { logger } from './utils/logger';
           triggerEventId: item.triggerEventId !== undefined ? {
               set: item.triggerEventId
             } : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+      typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && (Object.keys(item.riskEscalationEvent)[0] === 'id' || Object.keys(item.riskEscalationEvent)[0] === 'symbol')
+? {
+      connect: {
+        id: item.riskEscalationEvent.id
+      }
+} : { upsert: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? {
+                equals: item.riskEscalationEvent.id
+              } : undefined,
+            alpacaAccountId: item.riskEscalationEvent.alpacaAccountId !== undefined ? {
+                equals: item.riskEscalationEvent.alpacaAccountId
+              } : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.riskEscalationEvent.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.riskEscalationEvent.id !== undefined ? {
+                set: item.riskEscalationEvent.id
+              } : undefined,
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? {
+                set: item.riskEscalationEvent.scopeKind
+              } : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? {
+                set: item.riskEscalationEvent.scopeValue
+              } : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? {
+                set: item.riskEscalationEvent.fromState
+              } : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? {
+                set: item.riskEscalationEvent.toState
+              } : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? {
+                set: item.riskEscalationEvent.reason
+              } : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? {
+                set: item.riskEscalationEvent.severity
+              } : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? {
+                set: item.riskEscalationEvent.triggeringObserver
+              } : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? {
+                set: item.riskEscalationEvent.observedValue
+              } : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? {
+                set: item.riskEscalationEvent.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? {
+                set: item.riskEscalationEvent.breachedThresholdKey
+              } : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                set: item.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                set: item.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? {
+                set: item.riskEscalationEvent.actor
+              } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                set: item.riskEscalationEvent.actorUserId
+              } : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? {
+                set: item.riskEscalationEvent.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+      Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 && item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.triggeredRiskEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
@@ -1501,6 +2264,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -1582,6 +2421,11 @@ import { logger } from './utils/logger';
         advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
         modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: props.tradingPolicy.escalationPolicyOverrides !== undefined ? props.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: props.tradingPolicy.currentRiskState !== undefined ? props.tradingPolicy.currentRiskState : undefined,
+        currentRiskStateAt: props.tradingPolicy.currentRiskStateAt !== undefined ? props.tradingPolicy.currentRiskStateAt : undefined,
+        lastRiskStateChangedBy: props.tradingPolicy.lastRiskStateChangedBy !== undefined ? props.tradingPolicy.lastRiskStateChangedBy : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? props.tradingPolicy.lastRiskEscalationEventId : undefined,
     overlays: props.tradingPolicy.overlays ? 
       Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.tradingPolicy.overlays.map((item) => ({
@@ -1591,6 +2435,7 @@ import { logger } from './utils/logger';
  : { connectOrCreate: props.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
@@ -1618,6 +2463,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -2574,6 +3495,1983 @@ import { logger } from './utils/logger';
       },
     }))
   } : undefined,
+  accountRiskMetrics: props.accountRiskMetrics ? 
+  typeof props.accountRiskMetrics === 'object' && Object.keys(props.accountRiskMetrics).length === 1 && (Object.keys(props.accountRiskMetrics)[0] === 'id' || Object.keys(props.accountRiskMetrics)[0] === 'symbol')
+? {
+  connect: {
+    id: props.accountRiskMetrics.id
+  }
+} : { upsert: {
+      where: {
+        id: props.accountRiskMetrics.id !== undefined ? {
+            equals: props.accountRiskMetrics.id
+          } : undefined,
+        alpacaAccountId: props.accountRiskMetrics.alpacaAccountId !== undefined ? {
+            equals: props.accountRiskMetrics.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: props.accountRiskMetrics.id !== undefined ? {
+            set: props.accountRiskMetrics.id
+          } : undefined,
+        currentRiskState: props.accountRiskMetrics.currentRiskState !== undefined ? {
+            set: props.accountRiskMetrics.currentRiskState
+          } : undefined,
+        currentScopeState: props.accountRiskMetrics.currentScopeState !== undefined ? props.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: props.accountRiskMetrics.riskStateChangedAt !== undefined ? {
+            set: props.accountRiskMetrics.riskStateChangedAt
+          } : undefined,
+        riskStateChangedBy: props.accountRiskMetrics.riskStateChangedBy !== undefined ? {
+            set: props.accountRiskMetrics.riskStateChangedBy
+          } : undefined,
+        riskStateChangeReason: props.accountRiskMetrics.riskStateChangeReason !== undefined ? {
+            set: props.accountRiskMetrics.riskStateChangeReason
+          } : undefined,
+        accountHighWaterMark: props.accountRiskMetrics.accountHighWaterMark !== undefined ? {
+            set: props.accountRiskMetrics.accountHighWaterMark
+          } : undefined,
+        accountHighWaterMarkAt: props.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
+            set: props.accountRiskMetrics.accountHighWaterMarkAt
+          } : undefined,
+        currentEquity: props.accountRiskMetrics.currentEquity !== undefined ? {
+            set: props.accountRiskMetrics.currentEquity
+          } : undefined,
+        currentDrawdownPct: props.accountRiskMetrics.currentDrawdownPct !== undefined ? {
+            set: props.accountRiskMetrics.currentDrawdownPct
+          } : undefined,
+        intradayDrawdownPct: props.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
+            set: props.accountRiskMetrics.intradayDrawdownPct
+          } : undefined,
+        maxDrawdownPctLifetime: props.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
+            set: props.accountRiskMetrics.maxDrawdownPctLifetime
+          } : undefined,
+        dailyPnlAmount: props.accountRiskMetrics.dailyPnlAmount !== undefined ? {
+            set: props.accountRiskMetrics.dailyPnlAmount
+          } : undefined,
+        dailyPnlPct: props.accountRiskMetrics.dailyPnlPct !== undefined ? {
+            set: props.accountRiskMetrics.dailyPnlPct
+          } : undefined,
+        weeklyPnlAmount: props.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
+            set: props.accountRiskMetrics.weeklyPnlAmount
+          } : undefined,
+        weeklyPnlPct: props.accountRiskMetrics.weeklyPnlPct !== undefined ? {
+            set: props.accountRiskMetrics.weeklyPnlPct
+          } : undefined,
+        monthlyPnlAmount: props.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
+            set: props.accountRiskMetrics.monthlyPnlAmount
+          } : undefined,
+        monthlyPnlPct: props.accountRiskMetrics.monthlyPnlPct !== undefined ? {
+            set: props.accountRiskMetrics.monthlyPnlPct
+          } : undefined,
+        peakToTroughAmount: props.accountRiskMetrics.peakToTroughAmount !== undefined ? {
+            set: props.accountRiskMetrics.peakToTroughAmount
+          } : undefined,
+        peakToTroughPct: props.accountRiskMetrics.peakToTroughPct !== undefined ? {
+            set: props.accountRiskMetrics.peakToTroughPct
+          } : undefined,
+        nextRecoveryEligibleAt: props.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
+            set: props.accountRiskMetrics.nextRecoveryEligibleAt
+          } : undefined,
+        lastSyncedAt: props.accountRiskMetrics.lastSyncedAt !== undefined ? {
+            set: props.accountRiskMetrics.lastSyncedAt
+          } : undefined,
+      },
+      create: {
+        currentRiskState: props.accountRiskMetrics.currentRiskState !== undefined ? props.accountRiskMetrics.currentRiskState : undefined,
+        currentScopeState: props.accountRiskMetrics.currentScopeState !== undefined ? props.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: props.accountRiskMetrics.riskStateChangedAt !== undefined ? props.accountRiskMetrics.riskStateChangedAt : undefined,
+        riskStateChangedBy: props.accountRiskMetrics.riskStateChangedBy !== undefined ? props.accountRiskMetrics.riskStateChangedBy : undefined,
+        riskStateChangeReason: props.accountRiskMetrics.riskStateChangeReason !== undefined ? props.accountRiskMetrics.riskStateChangeReason : undefined,
+        accountHighWaterMark: props.accountRiskMetrics.accountHighWaterMark !== undefined ? props.accountRiskMetrics.accountHighWaterMark : undefined,
+        accountHighWaterMarkAt: props.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+        currentEquity: props.accountRiskMetrics.currentEquity !== undefined ? props.accountRiskMetrics.currentEquity : undefined,
+        currentDrawdownPct: props.accountRiskMetrics.currentDrawdownPct !== undefined ? props.accountRiskMetrics.currentDrawdownPct : undefined,
+        intradayDrawdownPct: props.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.accountRiskMetrics.intradayDrawdownPct : undefined,
+        maxDrawdownPctLifetime: props.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+        dailyPnlAmount: props.accountRiskMetrics.dailyPnlAmount !== undefined ? props.accountRiskMetrics.dailyPnlAmount : undefined,
+        dailyPnlPct: props.accountRiskMetrics.dailyPnlPct !== undefined ? props.accountRiskMetrics.dailyPnlPct : undefined,
+        weeklyPnlAmount: props.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.accountRiskMetrics.weeklyPnlAmount : undefined,
+        weeklyPnlPct: props.accountRiskMetrics.weeklyPnlPct !== undefined ? props.accountRiskMetrics.weeklyPnlPct : undefined,
+        monthlyPnlAmount: props.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.accountRiskMetrics.monthlyPnlAmount : undefined,
+        monthlyPnlPct: props.accountRiskMetrics.monthlyPnlPct !== undefined ? props.accountRiskMetrics.monthlyPnlPct : undefined,
+        peakToTroughAmount: props.accountRiskMetrics.peakToTroughAmount !== undefined ? props.accountRiskMetrics.peakToTroughAmount : undefined,
+        peakToTroughPct: props.accountRiskMetrics.peakToTroughPct !== undefined ? props.accountRiskMetrics.peakToTroughPct : undefined,
+        nextRecoveryEligibleAt: props.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+        lastSyncedAt: props.accountRiskMetrics.lastSyncedAt !== undefined ? props.accountRiskMetrics.lastSyncedAt : undefined,
+      },
+    }
+  } : undefined,
+  strategyHealthSnapshots: props.strategyHealthSnapshots ? 
+  Array.isArray(props.strategyHealthSnapshots) && props.strategyHealthSnapshots.length > 0 && props.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.strategyHealthSnapshots.map((item) => ({
+    id: item.id
+  }))
+} : { upsert: props.strategyHealthSnapshots.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        strategyName: item.strategyName !== undefined ? {
+            set: item.strategyName
+          } : undefined,
+        currentState: item.currentState !== undefined ? {
+            set: item.currentState
+          } : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? {
+            set: item.stateChangedAt
+          } : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? {
+            set: item.stateChangedReason
+          } : undefined,
+        windowSize: item.windowSize !== undefined ? {
+            set: item.windowSize
+          } : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? {
+            set: item.windowTradeCount
+          } : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? {
+            set: item.windowHitRate
+          } : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? {
+            set: item.windowExpectancy
+          } : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? {
+            set: item.windowProfitFactor
+          } : undefined,
+        windowSortino: item.windowSortino !== undefined ? {
+            set: item.windowSortino
+          } : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? {
+            set: item.windowMaxDrawdownPct
+          } : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? {
+            set: item.windowCumulativePnlAmt
+          } : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? {
+            set: item.backtestExpectancy
+          } : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? {
+            set: item.divergenceZScore
+          } : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? {
+            set: item.divergenceAlertActive
+          } : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? {
+            set: item.averageConfidence
+          } : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? {
+            set: item.confidenceTrend
+          } : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? {
+            set: item.lastUpdatedAt
+          } : undefined,
+      },
+      create: {
+        strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+        currentState: item.currentState !== undefined ? item.currentState : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+        windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+        windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+      },
+    }))
+  } : undefined,
+  riskEscalationEvents: props.riskEscalationEvents ? 
+  Array.isArray(props.riskEscalationEvents) && props.riskEscalationEvents.length > 0 && props.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.riskEscalationEvents.map((item) => ({
+    id: item.id
+  }))
+} : { upsert: props.riskEscalationEvents.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            equals: item.correlationId
+          } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            equals: item.triggeringEventId
+          } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            equals: item.actorUserId
+          } : undefined,
+        triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+            equals: item.triggeredByPolicyOverlayId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        scopeKind: item.scopeKind !== undefined ? {
+            set: item.scopeKind
+          } : undefined,
+        scopeValue: item.scopeValue !== undefined ? {
+            set: item.scopeValue
+          } : undefined,
+        fromState: item.fromState !== undefined ? {
+            set: item.fromState
+          } : undefined,
+        toState: item.toState !== undefined ? {
+            set: item.toState
+          } : undefined,
+        reason: item.reason !== undefined ? {
+            set: item.reason
+          } : undefined,
+        severity: item.severity !== undefined ? {
+            set: item.severity
+          } : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? {
+            set: item.triggeringObserver
+          } : undefined,
+        observedValue: item.observedValue !== undefined ? {
+            set: item.observedValue
+          } : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? {
+            set: item.breachedThreshold
+          } : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+            set: item.breachedThresholdKey
+          } : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            set: item.correlationId
+          } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            set: item.triggeringEventId
+          } : undefined,
+        actor: item.actor !== undefined ? {
+            set: item.actor
+          } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            set: item.actorUserId
+          } : undefined,
+        rationale: item.rationale !== undefined ? {
+            set: item.rationale
+          } : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+    typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && (Object.keys(item.activatedPolicyOverlay)[0] === 'id' || Object.keys(item.activatedPolicyOverlay)[0] === 'symbol')
+? {
+    connect: {
+      id: item.activatedPolicyOverlay.id
+    }
+} : { upsert: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? {
+              equals: item.activatedPolicyOverlay.id
+            } : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId
+            } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status
+            } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId
+            } : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.riskEscalationEventId
+            } : undefined,
+        },
+        update: {
+          id: item.activatedPolicyOverlay.id !== undefined ? {
+              set: item.activatedPolicyOverlay.id
+            } : undefined,
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? {
+              set: item.activatedPolicyOverlay.overlayType
+            } : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? {
+              set: item.activatedPolicyOverlay.source
+            } : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? {
+              set: item.activatedPolicyOverlay.reason
+            } : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? {
+              set: item.activatedPolicyOverlay.severity
+            } : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? {
+              set: item.activatedPolicyOverlay.version
+            } : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              set: item.activatedPolicyOverlay.status
+            } : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? {
+              set: item.activatedPolicyOverlay.activatedAt
+            } : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? {
+              set: item.activatedPolicyOverlay.expiresAt
+            } : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? {
+              set: item.activatedPolicyOverlay.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? {
+              set: item.activatedPolicyOverlay.deactivatedBy
+            } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              set: item.activatedPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              set: item.activatedPolicyOverlay.triggerEventId
+            } : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+      typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && (Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id' || Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'symbol')
+? {
+      connect: {
+        id: item.activatedPolicyOverlay.tradingPolicy.id
+      }
+} : { upsert: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId
+              } : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          update: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.version
+              } : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy
+              } : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt
+              } : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.autonomyMode
+              } : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled
+              } : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly
+              } : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled
+              } : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled
+              } : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled
+              } : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled
+              } : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled
+              } : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled
+              } : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.forexEnabled
+              } : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled
+              } : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.marginEnabled
+              } : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled
+              } : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct
+              } : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct
+              } : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct
+              } : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct
+              } : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxLeverage
+              } : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct
+              } : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct
+              } : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions
+              } : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders
+              } : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly
+              } : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled
+              } : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled
+              } : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled
+              } : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled
+              } : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled
+              } : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled
+              } : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled
+              } : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled
+              } : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled
+              } : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled
+              } : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider
+              } : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider
+              } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider
+              } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+      Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 && item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+    typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && (Object.keys(item.triggeredByPolicyOverlay)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay)[0] === 'symbol')
+? {
+    connect: {
+      id: item.triggeredByPolicyOverlay.id
+    }
+} : { upsert: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.id
+            } : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId
+            } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status
+            } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId
+            } : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.riskEscalationEventId
+            } : undefined,
+        },
+        update: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? {
+              set: item.triggeredByPolicyOverlay.id
+            } : undefined,
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? {
+              set: item.triggeredByPolicyOverlay.overlayType
+            } : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? {
+              set: item.triggeredByPolicyOverlay.source
+            } : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? {
+              set: item.triggeredByPolicyOverlay.reason
+            } : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? {
+              set: item.triggeredByPolicyOverlay.severity
+            } : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? {
+              set: item.triggeredByPolicyOverlay.version
+            } : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              set: item.triggeredByPolicyOverlay.status
+            } : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.activatedAt
+            } : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.expiresAt
+            } : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? {
+              set: item.triggeredByPolicyOverlay.deactivatedBy
+            } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              set: item.triggeredByPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              set: item.triggeredByPolicyOverlay.triggerEventId
+            } : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+      typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && (Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'symbol')
+? {
+      connect: {
+        id: item.triggeredByPolicyOverlay.tradingPolicy.id
+      }
+} : { upsert: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId
+              } : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          update: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.version
+              } : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy
+              } : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt
+              } : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode
+              } : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled
+              } : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly
+              } : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled
+              } : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled
+              } : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled
+              } : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled
+              } : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled
+              } : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled
+              } : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled
+              } : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled
+              } : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled
+              } : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled
+              } : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct
+              } : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct
+              } : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct
+              } : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct
+              } : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage
+              } : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct
+              } : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct
+              } : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions
+              } : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders
+              } : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly
+              } : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled
+              } : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled
+              } : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled
+              } : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled
+              } : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled
+              } : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled
+              } : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled
+              } : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled
+              } : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled
+              } : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled
+              } : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider
+              } : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider
+              } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider
+              } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+      typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && (Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'symbol')
+? {
+      connect: {
+        id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+      }
+} : { upsert: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+              } : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.riskEscalationEvent.alpacaAccountId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.alpacaAccountId
+              } : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+              } : undefined,
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind
+              } : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue
+              } : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState
+              } : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.toState
+              } : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.reason
+              } : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.severity
+              } : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver
+              } : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue
+              } : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey
+              } : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.actor
+              } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId
+              } : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+        scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+        fromState: item.fromState !== undefined ? item.fromState : undefined,
+        toState: item.toState !== undefined ? item.toState : undefined,
+        reason: item.reason !== undefined ? item.reason : undefined,
+        severity: item.severity !== undefined ? item.severity : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+        observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+        correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+        actor: item.actor !== undefined ? item.actor : undefined,
+        actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+        rationale: item.rationale !== undefined ? item.rationale : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+      typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && Object.keys(item.activatedPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.activatedPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? item.activatedPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? item.activatedPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+      typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && Object.keys(item.triggeredByPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.triggeredByPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? item.triggeredByPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
       },
         };
 
@@ -2881,6 +5779,11 @@ import { logger } from './utils/logger';
         advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
         modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: props.tradingPolicy.escalationPolicyOverrides !== undefined ? props.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: props.tradingPolicy.currentRiskState !== undefined ? props.tradingPolicy.currentRiskState : undefined,
+        currentRiskStateAt: props.tradingPolicy.currentRiskStateAt !== undefined ? props.tradingPolicy.currentRiskStateAt : undefined,
+        lastRiskStateChangedBy: props.tradingPolicy.lastRiskStateChangedBy !== undefined ? props.tradingPolicy.lastRiskStateChangedBy : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? props.tradingPolicy.lastRiskEscalationEventId : undefined,
     overlays: props.tradingPolicy.overlays ? 
       Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.tradingPolicy.overlays.map((item) => ({
@@ -2890,6 +5793,7 @@ import { logger } from './utils/logger';
  : { connectOrCreate: props.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
@@ -2917,6 +5821,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -3243,6 +6223,481 @@ import { logger } from './utils/logger';
       },
     }))
   } : undefined,
+  accountRiskMetrics: props.accountRiskMetrics ? 
+    typeof props.accountRiskMetrics === 'object' && Object.keys(props.accountRiskMetrics).length === 1 && Object.keys(props.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+        id: props.accountRiskMetrics.id
+        }
+      }
+    : { connectOrCreate: {
+      where: {
+        id: props.accountRiskMetrics.id !== undefined ? props.accountRiskMetrics.id : undefined,
+        alpacaAccountId: props.accountRiskMetrics.alpacaAccountId !== undefined ? props.accountRiskMetrics.alpacaAccountId : undefined,
+      },
+      create: {
+        currentRiskState: props.accountRiskMetrics.currentRiskState !== undefined ? props.accountRiskMetrics.currentRiskState : undefined,
+        currentScopeState: props.accountRiskMetrics.currentScopeState !== undefined ? props.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: props.accountRiskMetrics.riskStateChangedAt !== undefined ? props.accountRiskMetrics.riskStateChangedAt : undefined,
+        riskStateChangedBy: props.accountRiskMetrics.riskStateChangedBy !== undefined ? props.accountRiskMetrics.riskStateChangedBy : undefined,
+        riskStateChangeReason: props.accountRiskMetrics.riskStateChangeReason !== undefined ? props.accountRiskMetrics.riskStateChangeReason : undefined,
+        accountHighWaterMark: props.accountRiskMetrics.accountHighWaterMark !== undefined ? props.accountRiskMetrics.accountHighWaterMark : undefined,
+        accountHighWaterMarkAt: props.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+        currentEquity: props.accountRiskMetrics.currentEquity !== undefined ? props.accountRiskMetrics.currentEquity : undefined,
+        currentDrawdownPct: props.accountRiskMetrics.currentDrawdownPct !== undefined ? props.accountRiskMetrics.currentDrawdownPct : undefined,
+        intradayDrawdownPct: props.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.accountRiskMetrics.intradayDrawdownPct : undefined,
+        maxDrawdownPctLifetime: props.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+        dailyPnlAmount: props.accountRiskMetrics.dailyPnlAmount !== undefined ? props.accountRiskMetrics.dailyPnlAmount : undefined,
+        dailyPnlPct: props.accountRiskMetrics.dailyPnlPct !== undefined ? props.accountRiskMetrics.dailyPnlPct : undefined,
+        weeklyPnlAmount: props.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.accountRiskMetrics.weeklyPnlAmount : undefined,
+        weeklyPnlPct: props.accountRiskMetrics.weeklyPnlPct !== undefined ? props.accountRiskMetrics.weeklyPnlPct : undefined,
+        monthlyPnlAmount: props.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.accountRiskMetrics.monthlyPnlAmount : undefined,
+        monthlyPnlPct: props.accountRiskMetrics.monthlyPnlPct !== undefined ? props.accountRiskMetrics.monthlyPnlPct : undefined,
+        peakToTroughAmount: props.accountRiskMetrics.peakToTroughAmount !== undefined ? props.accountRiskMetrics.peakToTroughAmount : undefined,
+        peakToTroughPct: props.accountRiskMetrics.peakToTroughPct !== undefined ? props.accountRiskMetrics.peakToTroughPct : undefined,
+        nextRecoveryEligibleAt: props.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+        lastSyncedAt: props.accountRiskMetrics.lastSyncedAt !== undefined ? props.accountRiskMetrics.lastSyncedAt : undefined,
+      },
+    }
+  } : undefined,
+  strategyHealthSnapshots: props.strategyHealthSnapshots ? 
+    Array.isArray(props.strategyHealthSnapshots) && props.strategyHealthSnapshots.length > 0 &&  props.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.strategyHealthSnapshots.map((item) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.strategyHealthSnapshots.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId 
+           } : undefined,
+      },
+      create: {
+        strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+        currentState: item.currentState !== undefined ? item.currentState : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+        windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+        windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+      },
+    }))
+  } : undefined,
+  riskEscalationEvents: props.riskEscalationEvents ? 
+    Array.isArray(props.riskEscalationEvents) && props.riskEscalationEvents.length > 0 &&  props.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+      connect:    props.riskEscalationEvents.map((item) => ({
+         id: item.id
+      }))
+ }
+ : { connectOrCreate: props.riskEscalationEvents.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            equals: item.correlationId 
+           } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            equals: item.triggeringEventId 
+           } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            equals: item.actorUserId 
+           } : undefined,
+      },
+      create: {
+        scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+        scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+        fromState: item.fromState !== undefined ? item.fromState : undefined,
+        toState: item.toState !== undefined ? item.toState : undefined,
+        reason: item.reason !== undefined ? item.reason : undefined,
+        severity: item.severity !== undefined ? item.severity : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+        observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+        correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+        actor: item.actor !== undefined ? item.actor : undefined,
+        actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+        rationale: item.rationale !== undefined ? item.rationale : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+      typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && Object.keys(item.activatedPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.activatedPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? item.activatedPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? item.activatedPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+      typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && Object.keys(item.triggeredByPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.triggeredByPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? item.triggeredByPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
       },
           update: {
       type: props.type !== undefined ? {
@@ -3393,6 +6848,9 @@ import { logger } from './utils/logger';
           } : undefined,
         advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? {
             equals: props.tradingPolicy.advancedModelId
+          } : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+            equals: props.tradingPolicy.lastRiskEscalationEventId
           } : undefined,
       },
       update: {
@@ -3605,6 +7063,19 @@ import { logger } from './utils/logger';
           } : undefined,
         modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: props.tradingPolicy.escalationPolicyOverrides !== undefined ? props.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: props.tradingPolicy.currentRiskState !== undefined ? {
+            set: props.tradingPolicy.currentRiskState
+          } : undefined,
+        currentRiskStateAt: props.tradingPolicy.currentRiskStateAt !== undefined ? {
+            set: props.tradingPolicy.currentRiskStateAt
+          } : undefined,
+        lastRiskStateChangedBy: props.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+            set: props.tradingPolicy.lastRiskStateChangedBy
+          } : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+            set: props.tradingPolicy.lastRiskEscalationEventId
+          } : undefined,
     overlays: props.tradingPolicy.overlays ? 
     Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 && props.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.tradingPolicy.overlays.map((item) => ({
@@ -3613,6 +7084,7 @@ import { logger } from './utils/logger';
 } : { upsert: props.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId
             } : undefined,
@@ -3667,6 +7139,195 @@ import { logger } from './utils/logger';
           triggerEventId: item.triggerEventId !== undefined ? {
               set: item.triggerEventId
             } : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+      typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && (Object.keys(item.riskEscalationEvent)[0] === 'id' || Object.keys(item.riskEscalationEvent)[0] === 'symbol')
+? {
+      connect: {
+        id: item.riskEscalationEvent.id
+      }
+} : { upsert: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? {
+                equals: item.riskEscalationEvent.id
+              } : undefined,
+            alpacaAccountId: item.riskEscalationEvent.alpacaAccountId !== undefined ? {
+                equals: item.riskEscalationEvent.alpacaAccountId
+              } : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.riskEscalationEvent.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.riskEscalationEvent.id !== undefined ? {
+                set: item.riskEscalationEvent.id
+              } : undefined,
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? {
+                set: item.riskEscalationEvent.scopeKind
+              } : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? {
+                set: item.riskEscalationEvent.scopeValue
+              } : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? {
+                set: item.riskEscalationEvent.fromState
+              } : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? {
+                set: item.riskEscalationEvent.toState
+              } : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? {
+                set: item.riskEscalationEvent.reason
+              } : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? {
+                set: item.riskEscalationEvent.severity
+              } : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? {
+                set: item.riskEscalationEvent.triggeringObserver
+              } : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? {
+                set: item.riskEscalationEvent.observedValue
+              } : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? {
+                set: item.riskEscalationEvent.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? {
+                set: item.riskEscalationEvent.breachedThresholdKey
+              } : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                set: item.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                set: item.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? {
+                set: item.riskEscalationEvent.actor
+              } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                set: item.riskEscalationEvent.actorUserId
+              } : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? {
+                set: item.riskEscalationEvent.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+      Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 && item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.triggeredRiskEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
@@ -3682,6 +7343,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -3763,6 +7500,11 @@ import { logger } from './utils/logger';
         advancedModelId: props.tradingPolicy.advancedModelId !== undefined ? props.tradingPolicy.advancedModelId : undefined,
         modelPrefs: props.tradingPolicy.modelPrefs !== undefined ? props.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: props.tradingPolicy.auditNotificationPrefs !== undefined ? props.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: props.tradingPolicy.escalationPolicyOverrides !== undefined ? props.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: props.tradingPolicy.currentRiskState !== undefined ? props.tradingPolicy.currentRiskState : undefined,
+        currentRiskStateAt: props.tradingPolicy.currentRiskStateAt !== undefined ? props.tradingPolicy.currentRiskStateAt : undefined,
+        lastRiskStateChangedBy: props.tradingPolicy.lastRiskStateChangedBy !== undefined ? props.tradingPolicy.lastRiskStateChangedBy : undefined,
+        lastRiskEscalationEventId: props.tradingPolicy.lastRiskEscalationEventId !== undefined ? props.tradingPolicy.lastRiskEscalationEventId : undefined,
     overlays: props.tradingPolicy.overlays ? 
       Array.isArray(props.tradingPolicy.overlays) && props.tradingPolicy.overlays.length > 0 &&  props.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.tradingPolicy.overlays.map((item) => ({
@@ -3772,6 +7514,7 @@ import { logger } from './utils/logger';
  : { connectOrCreate: props.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
@@ -3799,6 +7542,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -4755,6 +8574,1983 @@ import { logger } from './utils/logger';
       },
     }))
   } : undefined,
+  accountRiskMetrics: props.accountRiskMetrics ? 
+  typeof props.accountRiskMetrics === 'object' && Object.keys(props.accountRiskMetrics).length === 1 && (Object.keys(props.accountRiskMetrics)[0] === 'id' || Object.keys(props.accountRiskMetrics)[0] === 'symbol')
+? {
+  connect: {
+    id: props.accountRiskMetrics.id
+  }
+} : { upsert: {
+      where: {
+        id: props.accountRiskMetrics.id !== undefined ? {
+            equals: props.accountRiskMetrics.id
+          } : undefined,
+        alpacaAccountId: props.accountRiskMetrics.alpacaAccountId !== undefined ? {
+            equals: props.accountRiskMetrics.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: props.accountRiskMetrics.id !== undefined ? {
+            set: props.accountRiskMetrics.id
+          } : undefined,
+        currentRiskState: props.accountRiskMetrics.currentRiskState !== undefined ? {
+            set: props.accountRiskMetrics.currentRiskState
+          } : undefined,
+        currentScopeState: props.accountRiskMetrics.currentScopeState !== undefined ? props.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: props.accountRiskMetrics.riskStateChangedAt !== undefined ? {
+            set: props.accountRiskMetrics.riskStateChangedAt
+          } : undefined,
+        riskStateChangedBy: props.accountRiskMetrics.riskStateChangedBy !== undefined ? {
+            set: props.accountRiskMetrics.riskStateChangedBy
+          } : undefined,
+        riskStateChangeReason: props.accountRiskMetrics.riskStateChangeReason !== undefined ? {
+            set: props.accountRiskMetrics.riskStateChangeReason
+          } : undefined,
+        accountHighWaterMark: props.accountRiskMetrics.accountHighWaterMark !== undefined ? {
+            set: props.accountRiskMetrics.accountHighWaterMark
+          } : undefined,
+        accountHighWaterMarkAt: props.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
+            set: props.accountRiskMetrics.accountHighWaterMarkAt
+          } : undefined,
+        currentEquity: props.accountRiskMetrics.currentEquity !== undefined ? {
+            set: props.accountRiskMetrics.currentEquity
+          } : undefined,
+        currentDrawdownPct: props.accountRiskMetrics.currentDrawdownPct !== undefined ? {
+            set: props.accountRiskMetrics.currentDrawdownPct
+          } : undefined,
+        intradayDrawdownPct: props.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
+            set: props.accountRiskMetrics.intradayDrawdownPct
+          } : undefined,
+        maxDrawdownPctLifetime: props.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
+            set: props.accountRiskMetrics.maxDrawdownPctLifetime
+          } : undefined,
+        dailyPnlAmount: props.accountRiskMetrics.dailyPnlAmount !== undefined ? {
+            set: props.accountRiskMetrics.dailyPnlAmount
+          } : undefined,
+        dailyPnlPct: props.accountRiskMetrics.dailyPnlPct !== undefined ? {
+            set: props.accountRiskMetrics.dailyPnlPct
+          } : undefined,
+        weeklyPnlAmount: props.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
+            set: props.accountRiskMetrics.weeklyPnlAmount
+          } : undefined,
+        weeklyPnlPct: props.accountRiskMetrics.weeklyPnlPct !== undefined ? {
+            set: props.accountRiskMetrics.weeklyPnlPct
+          } : undefined,
+        monthlyPnlAmount: props.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
+            set: props.accountRiskMetrics.monthlyPnlAmount
+          } : undefined,
+        monthlyPnlPct: props.accountRiskMetrics.monthlyPnlPct !== undefined ? {
+            set: props.accountRiskMetrics.monthlyPnlPct
+          } : undefined,
+        peakToTroughAmount: props.accountRiskMetrics.peakToTroughAmount !== undefined ? {
+            set: props.accountRiskMetrics.peakToTroughAmount
+          } : undefined,
+        peakToTroughPct: props.accountRiskMetrics.peakToTroughPct !== undefined ? {
+            set: props.accountRiskMetrics.peakToTroughPct
+          } : undefined,
+        nextRecoveryEligibleAt: props.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
+            set: props.accountRiskMetrics.nextRecoveryEligibleAt
+          } : undefined,
+        lastSyncedAt: props.accountRiskMetrics.lastSyncedAt !== undefined ? {
+            set: props.accountRiskMetrics.lastSyncedAt
+          } : undefined,
+      },
+      create: {
+        currentRiskState: props.accountRiskMetrics.currentRiskState !== undefined ? props.accountRiskMetrics.currentRiskState : undefined,
+        currentScopeState: props.accountRiskMetrics.currentScopeState !== undefined ? props.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: props.accountRiskMetrics.riskStateChangedAt !== undefined ? props.accountRiskMetrics.riskStateChangedAt : undefined,
+        riskStateChangedBy: props.accountRiskMetrics.riskStateChangedBy !== undefined ? props.accountRiskMetrics.riskStateChangedBy : undefined,
+        riskStateChangeReason: props.accountRiskMetrics.riskStateChangeReason !== undefined ? props.accountRiskMetrics.riskStateChangeReason : undefined,
+        accountHighWaterMark: props.accountRiskMetrics.accountHighWaterMark !== undefined ? props.accountRiskMetrics.accountHighWaterMark : undefined,
+        accountHighWaterMarkAt: props.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+        currentEquity: props.accountRiskMetrics.currentEquity !== undefined ? props.accountRiskMetrics.currentEquity : undefined,
+        currentDrawdownPct: props.accountRiskMetrics.currentDrawdownPct !== undefined ? props.accountRiskMetrics.currentDrawdownPct : undefined,
+        intradayDrawdownPct: props.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.accountRiskMetrics.intradayDrawdownPct : undefined,
+        maxDrawdownPctLifetime: props.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+        dailyPnlAmount: props.accountRiskMetrics.dailyPnlAmount !== undefined ? props.accountRiskMetrics.dailyPnlAmount : undefined,
+        dailyPnlPct: props.accountRiskMetrics.dailyPnlPct !== undefined ? props.accountRiskMetrics.dailyPnlPct : undefined,
+        weeklyPnlAmount: props.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.accountRiskMetrics.weeklyPnlAmount : undefined,
+        weeklyPnlPct: props.accountRiskMetrics.weeklyPnlPct !== undefined ? props.accountRiskMetrics.weeklyPnlPct : undefined,
+        monthlyPnlAmount: props.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.accountRiskMetrics.monthlyPnlAmount : undefined,
+        monthlyPnlPct: props.accountRiskMetrics.monthlyPnlPct !== undefined ? props.accountRiskMetrics.monthlyPnlPct : undefined,
+        peakToTroughAmount: props.accountRiskMetrics.peakToTroughAmount !== undefined ? props.accountRiskMetrics.peakToTroughAmount : undefined,
+        peakToTroughPct: props.accountRiskMetrics.peakToTroughPct !== undefined ? props.accountRiskMetrics.peakToTroughPct : undefined,
+        nextRecoveryEligibleAt: props.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+        lastSyncedAt: props.accountRiskMetrics.lastSyncedAt !== undefined ? props.accountRiskMetrics.lastSyncedAt : undefined,
+      },
+    }
+  } : undefined,
+  strategyHealthSnapshots: props.strategyHealthSnapshots ? 
+  Array.isArray(props.strategyHealthSnapshots) && props.strategyHealthSnapshots.length > 0 && props.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.strategyHealthSnapshots.map((item) => ({
+    id: item.id
+  }))
+} : { upsert: props.strategyHealthSnapshots.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        strategyName: item.strategyName !== undefined ? {
+            set: item.strategyName
+          } : undefined,
+        currentState: item.currentState !== undefined ? {
+            set: item.currentState
+          } : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? {
+            set: item.stateChangedAt
+          } : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? {
+            set: item.stateChangedReason
+          } : undefined,
+        windowSize: item.windowSize !== undefined ? {
+            set: item.windowSize
+          } : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? {
+            set: item.windowTradeCount
+          } : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? {
+            set: item.windowHitRate
+          } : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? {
+            set: item.windowExpectancy
+          } : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? {
+            set: item.windowProfitFactor
+          } : undefined,
+        windowSortino: item.windowSortino !== undefined ? {
+            set: item.windowSortino
+          } : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? {
+            set: item.windowMaxDrawdownPct
+          } : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? {
+            set: item.windowCumulativePnlAmt
+          } : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? {
+            set: item.backtestExpectancy
+          } : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? {
+            set: item.divergenceZScore
+          } : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? {
+            set: item.divergenceAlertActive
+          } : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? {
+            set: item.averageConfidence
+          } : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? {
+            set: item.confidenceTrend
+          } : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? {
+            set: item.lastUpdatedAt
+          } : undefined,
+      },
+      create: {
+        strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+        currentState: item.currentState !== undefined ? item.currentState : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+        windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+        windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+      },
+    }))
+  } : undefined,
+  riskEscalationEvents: props.riskEscalationEvents ? 
+  Array.isArray(props.riskEscalationEvents) && props.riskEscalationEvents.length > 0 && props.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: props.riskEscalationEvents.map((item) => ({
+    id: item.id
+  }))
+} : { upsert: props.riskEscalationEvents.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            equals: item.correlationId
+          } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            equals: item.triggeringEventId
+          } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            equals: item.actorUserId
+          } : undefined,
+        triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+            equals: item.triggeredByPolicyOverlayId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        scopeKind: item.scopeKind !== undefined ? {
+            set: item.scopeKind
+          } : undefined,
+        scopeValue: item.scopeValue !== undefined ? {
+            set: item.scopeValue
+          } : undefined,
+        fromState: item.fromState !== undefined ? {
+            set: item.fromState
+          } : undefined,
+        toState: item.toState !== undefined ? {
+            set: item.toState
+          } : undefined,
+        reason: item.reason !== undefined ? {
+            set: item.reason
+          } : undefined,
+        severity: item.severity !== undefined ? {
+            set: item.severity
+          } : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? {
+            set: item.triggeringObserver
+          } : undefined,
+        observedValue: item.observedValue !== undefined ? {
+            set: item.observedValue
+          } : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? {
+            set: item.breachedThreshold
+          } : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+            set: item.breachedThresholdKey
+          } : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            set: item.correlationId
+          } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            set: item.triggeringEventId
+          } : undefined,
+        actor: item.actor !== undefined ? {
+            set: item.actor
+          } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            set: item.actorUserId
+          } : undefined,
+        rationale: item.rationale !== undefined ? {
+            set: item.rationale
+          } : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+    typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && (Object.keys(item.activatedPolicyOverlay)[0] === 'id' || Object.keys(item.activatedPolicyOverlay)[0] === 'symbol')
+? {
+    connect: {
+      id: item.activatedPolicyOverlay.id
+    }
+} : { upsert: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? {
+              equals: item.activatedPolicyOverlay.id
+            } : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId
+            } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status
+            } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId
+            } : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.riskEscalationEventId
+            } : undefined,
+        },
+        update: {
+          id: item.activatedPolicyOverlay.id !== undefined ? {
+              set: item.activatedPolicyOverlay.id
+            } : undefined,
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? {
+              set: item.activatedPolicyOverlay.overlayType
+            } : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? {
+              set: item.activatedPolicyOverlay.source
+            } : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? {
+              set: item.activatedPolicyOverlay.reason
+            } : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? {
+              set: item.activatedPolicyOverlay.severity
+            } : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? {
+              set: item.activatedPolicyOverlay.version
+            } : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              set: item.activatedPolicyOverlay.status
+            } : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? {
+              set: item.activatedPolicyOverlay.activatedAt
+            } : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? {
+              set: item.activatedPolicyOverlay.expiresAt
+            } : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? {
+              set: item.activatedPolicyOverlay.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? {
+              set: item.activatedPolicyOverlay.deactivatedBy
+            } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              set: item.activatedPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              set: item.activatedPolicyOverlay.triggerEventId
+            } : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+      typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && (Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id' || Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'symbol')
+? {
+      connect: {
+        id: item.activatedPolicyOverlay.tradingPolicy.id
+      }
+} : { upsert: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId
+              } : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          update: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.version
+              } : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy
+              } : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt
+              } : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.autonomyMode
+              } : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled
+              } : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly
+              } : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled
+              } : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled
+              } : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled
+              } : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled
+              } : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled
+              } : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled
+              } : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.forexEnabled
+              } : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled
+              } : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.marginEnabled
+              } : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled
+              } : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct
+              } : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct
+              } : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct
+              } : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct
+              } : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxLeverage
+              } : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct
+              } : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct
+              } : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions
+              } : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders
+              } : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly
+              } : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled
+              } : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled
+              } : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled
+              } : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled
+              } : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled
+              } : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled
+              } : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled
+              } : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled
+              } : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled
+              } : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled
+              } : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider
+              } : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider
+              } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider
+              } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+      Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 && item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+    typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && (Object.keys(item.triggeredByPolicyOverlay)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay)[0] === 'symbol')
+? {
+    connect: {
+      id: item.triggeredByPolicyOverlay.id
+    }
+} : { upsert: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.id
+            } : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId
+            } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status
+            } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId
+            } : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.riskEscalationEventId
+            } : undefined,
+        },
+        update: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? {
+              set: item.triggeredByPolicyOverlay.id
+            } : undefined,
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? {
+              set: item.triggeredByPolicyOverlay.overlayType
+            } : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? {
+              set: item.triggeredByPolicyOverlay.source
+            } : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? {
+              set: item.triggeredByPolicyOverlay.reason
+            } : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? {
+              set: item.triggeredByPolicyOverlay.severity
+            } : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? {
+              set: item.triggeredByPolicyOverlay.version
+            } : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              set: item.triggeredByPolicyOverlay.status
+            } : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.activatedAt
+            } : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.expiresAt
+            } : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? {
+              set: item.triggeredByPolicyOverlay.deactivatedBy
+            } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              set: item.triggeredByPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              set: item.triggeredByPolicyOverlay.triggerEventId
+            } : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+      typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && (Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'symbol')
+? {
+      connect: {
+        id: item.triggeredByPolicyOverlay.tradingPolicy.id
+      }
+} : { upsert: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId
+              } : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          update: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.version
+              } : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy
+              } : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt
+              } : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode
+              } : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled
+              } : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly
+              } : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled
+              } : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled
+              } : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled
+              } : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled
+              } : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled
+              } : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled
+              } : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled
+              } : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled
+              } : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled
+              } : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled
+              } : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct
+              } : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct
+              } : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct
+              } : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct
+              } : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage
+              } : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct
+              } : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct
+              } : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions
+              } : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders
+              } : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly
+              } : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled
+              } : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled
+              } : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled
+              } : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled
+              } : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled
+              } : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled
+              } : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled
+              } : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled
+              } : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled
+              } : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled
+              } : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider
+              } : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider
+              } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider
+              } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+      typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && (Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'symbol')
+? {
+      connect: {
+        id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+      }
+} : { upsert: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+              } : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.riskEscalationEvent.alpacaAccountId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.alpacaAccountId
+              } : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+              } : undefined,
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind
+              } : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue
+              } : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState
+              } : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.toState
+              } : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.reason
+              } : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.severity
+              } : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver
+              } : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue
+              } : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey
+              } : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.actor
+              } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId
+              } : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+        scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+        fromState: item.fromState !== undefined ? item.fromState : undefined,
+        toState: item.toState !== undefined ? item.toState : undefined,
+        reason: item.reason !== undefined ? item.reason : undefined,
+        severity: item.severity !== undefined ? item.severity : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+        observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+        correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+        actor: item.actor !== undefined ? item.actor : undefined,
+        actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+        rationale: item.rationale !== undefined ? item.rationale : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+      typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && Object.keys(item.activatedPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.activatedPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? item.activatedPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? item.activatedPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+      typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && Object.keys(item.triggeredByPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.triggeredByPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? item.triggeredByPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+    }))
+  } : undefined,
       },
         };
 
@@ -5069,6 +10865,9 @@ import { logger } from './utils/logger';
         advancedModelId: prop.tradingPolicy.advancedModelId !== undefined ? {
             equals: prop.tradingPolicy.advancedModelId
           } : undefined,
+        lastRiskEscalationEventId: prop.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+            equals: prop.tradingPolicy.lastRiskEscalationEventId
+          } : undefined,
       },
       update: {
         id: prop.tradingPolicy.id !== undefined ? {
@@ -5280,6 +11079,19 @@ import { logger } from './utils/logger';
           } : undefined,
         modelPrefs: prop.tradingPolicy.modelPrefs !== undefined ? prop.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: prop.tradingPolicy.auditNotificationPrefs !== undefined ? prop.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: prop.tradingPolicy.escalationPolicyOverrides !== undefined ? prop.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: prop.tradingPolicy.currentRiskState !== undefined ? {
+            set: prop.tradingPolicy.currentRiskState
+          } : undefined,
+        currentRiskStateAt: prop.tradingPolicy.currentRiskStateAt !== undefined ? {
+            set: prop.tradingPolicy.currentRiskStateAt
+          } : undefined,
+        lastRiskStateChangedBy: prop.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+            set: prop.tradingPolicy.lastRiskStateChangedBy
+          } : undefined,
+        lastRiskEscalationEventId: prop.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+            set: prop.tradingPolicy.lastRiskEscalationEventId
+          } : undefined,
     overlays: prop.tradingPolicy.overlays ? 
     Array.isArray(prop.tradingPolicy.overlays) && prop.tradingPolicy.overlays.length > 0 && prop.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.tradingPolicy.overlays.map((item) => ({
@@ -5288,6 +11100,7 @@ import { logger } from './utils/logger';
 } : { upsert: prop.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId
             } : undefined,
@@ -5342,6 +11155,195 @@ import { logger } from './utils/logger';
           triggerEventId: item.triggerEventId !== undefined ? {
               set: item.triggerEventId
             } : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+      typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && (Object.keys(item.riskEscalationEvent)[0] === 'id' || Object.keys(item.riskEscalationEvent)[0] === 'symbol')
+? {
+      connect: {
+        id: item.riskEscalationEvent.id
+      }
+} : { upsert: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? {
+                equals: item.riskEscalationEvent.id
+              } : undefined,
+            alpacaAccountId: item.riskEscalationEvent.alpacaAccountId !== undefined ? {
+                equals: item.riskEscalationEvent.alpacaAccountId
+              } : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.riskEscalationEvent.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.riskEscalationEvent.id !== undefined ? {
+                set: item.riskEscalationEvent.id
+              } : undefined,
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? {
+                set: item.riskEscalationEvent.scopeKind
+              } : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? {
+                set: item.riskEscalationEvent.scopeValue
+              } : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? {
+                set: item.riskEscalationEvent.fromState
+              } : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? {
+                set: item.riskEscalationEvent.toState
+              } : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? {
+                set: item.riskEscalationEvent.reason
+              } : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? {
+                set: item.riskEscalationEvent.severity
+              } : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? {
+                set: item.riskEscalationEvent.triggeringObserver
+              } : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? {
+                set: item.riskEscalationEvent.observedValue
+              } : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? {
+                set: item.riskEscalationEvent.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? {
+                set: item.riskEscalationEvent.breachedThresholdKey
+              } : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                set: item.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                set: item.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? {
+                set: item.riskEscalationEvent.actor
+              } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                set: item.riskEscalationEvent.actorUserId
+              } : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? {
+                set: item.riskEscalationEvent.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+      Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 && item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.triggeredRiskEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           overlayType: item.overlayType !== undefined ? item.overlayType : undefined,
@@ -5357,6 +11359,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -5438,6 +11516,11 @@ import { logger } from './utils/logger';
         advancedModelId: prop.tradingPolicy.advancedModelId !== undefined ? prop.tradingPolicy.advancedModelId : undefined,
         modelPrefs: prop.tradingPolicy.modelPrefs !== undefined ? prop.tradingPolicy.modelPrefs : undefined,
         auditNotificationPrefs: prop.tradingPolicy.auditNotificationPrefs !== undefined ? prop.tradingPolicy.auditNotificationPrefs : undefined,
+        escalationPolicyOverrides: prop.tradingPolicy.escalationPolicyOverrides !== undefined ? prop.tradingPolicy.escalationPolicyOverrides : undefined,
+        currentRiskState: prop.tradingPolicy.currentRiskState !== undefined ? prop.tradingPolicy.currentRiskState : undefined,
+        currentRiskStateAt: prop.tradingPolicy.currentRiskStateAt !== undefined ? prop.tradingPolicy.currentRiskStateAt : undefined,
+        lastRiskStateChangedBy: prop.tradingPolicy.lastRiskStateChangedBy !== undefined ? prop.tradingPolicy.lastRiskStateChangedBy : undefined,
+        lastRiskEscalationEventId: prop.tradingPolicy.lastRiskEscalationEventId !== undefined ? prop.tradingPolicy.lastRiskEscalationEventId : undefined,
     overlays: prop.tradingPolicy.overlays ? 
       Array.isArray(prop.tradingPolicy.overlays) && prop.tradingPolicy.overlays.length > 0 &&  prop.tradingPolicy.overlays.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.tradingPolicy.overlays.map((item) => ({
@@ -5447,6 +11530,7 @@ import { logger } from './utils/logger';
  : { connectOrCreate: prop.tradingPolicy.overlays.map((item) => ({
         where: {
           id: item.id !== undefined ? item.id : undefined,
+          riskEscalationEventId: item.riskEscalationEventId !== undefined ? item.riskEscalationEventId : undefined,
           tradingPolicyId: item.tradingPolicyId !== undefined ? {
               equals: item.tradingPolicyId 
              } : undefined,
@@ -5474,6 +11558,82 @@ import { logger } from './utils/logger';
           deactivatedBy: item.deactivatedBy !== undefined ? item.deactivatedBy : undefined,
           correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           triggerEventId: item.triggerEventId !== undefined ? item.triggerEventId : undefined,
+      riskEscalationEvent: item.riskEscalationEvent ? 
+        typeof item.riskEscalationEvent === 'object' && Object.keys(item.riskEscalationEvent).length === 1 && Object.keys(item.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.riskEscalationEvent.id !== undefined ? item.riskEscalationEvent.id : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.riskEscalationEvent.scopeKind !== undefined ? item.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.riskEscalationEvent.scopeValue !== undefined ? item.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.riskEscalationEvent.fromState !== undefined ? item.riskEscalationEvent.fromState : undefined,
+            toState: item.riskEscalationEvent.toState !== undefined ? item.riskEscalationEvent.toState : undefined,
+            reason: item.riskEscalationEvent.reason !== undefined ? item.riskEscalationEvent.reason : undefined,
+            severity: item.riskEscalationEvent.severity !== undefined ? item.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.riskEscalationEvent.triggeringObserver !== undefined ? item.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.riskEscalationEvent.observedValue !== undefined ? item.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.riskEscalationEvent.breachedThreshold !== undefined ? item.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.riskEscalationEvent.breachedThresholdKey !== undefined ? item.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.riskEscalationEvent.correlationId !== undefined ? item.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.riskEscalationEvent.triggeringEventId !== undefined ? item.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.riskEscalationEvent.actor !== undefined ? item.riskEscalationEvent.actor : undefined,
+            actorUserId: item.riskEscalationEvent.actorUserId !== undefined ? item.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.riskEscalationEvent.rationale !== undefined ? item.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.triggeredRiskEvents ? 
+        Array.isArray(item.triggeredRiskEvents) && item.triggeredRiskEvents.length > 0 &&  item.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
         },
       }))
     } : undefined,
@@ -6427,6 +12587,1983 @@ import { logger } from './utils/logger';
         suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
         retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
         metadata: item.metadata !== undefined ? item.metadata : undefined,
+      },
+    }))
+  } : undefined,
+  accountRiskMetrics: prop.accountRiskMetrics ? 
+  typeof prop.accountRiskMetrics === 'object' && Object.keys(prop.accountRiskMetrics).length === 1 && (Object.keys(prop.accountRiskMetrics)[0] === 'id' || Object.keys(prop.accountRiskMetrics)[0] === 'symbol')
+? {
+  connect: {
+    id: prop.accountRiskMetrics.id
+  }
+} : { upsert: {
+      where: {
+        id: prop.accountRiskMetrics.id !== undefined ? {
+            equals: prop.accountRiskMetrics.id
+          } : undefined,
+        alpacaAccountId: prop.accountRiskMetrics.alpacaAccountId !== undefined ? {
+            equals: prop.accountRiskMetrics.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: prop.accountRiskMetrics.id !== undefined ? {
+            set: prop.accountRiskMetrics.id
+          } : undefined,
+        currentRiskState: prop.accountRiskMetrics.currentRiskState !== undefined ? {
+            set: prop.accountRiskMetrics.currentRiskState
+          } : undefined,
+        currentScopeState: prop.accountRiskMetrics.currentScopeState !== undefined ? prop.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: prop.accountRiskMetrics.riskStateChangedAt !== undefined ? {
+            set: prop.accountRiskMetrics.riskStateChangedAt
+          } : undefined,
+        riskStateChangedBy: prop.accountRiskMetrics.riskStateChangedBy !== undefined ? {
+            set: prop.accountRiskMetrics.riskStateChangedBy
+          } : undefined,
+        riskStateChangeReason: prop.accountRiskMetrics.riskStateChangeReason !== undefined ? {
+            set: prop.accountRiskMetrics.riskStateChangeReason
+          } : undefined,
+        accountHighWaterMark: prop.accountRiskMetrics.accountHighWaterMark !== undefined ? {
+            set: prop.accountRiskMetrics.accountHighWaterMark
+          } : undefined,
+        accountHighWaterMarkAt: prop.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
+            set: prop.accountRiskMetrics.accountHighWaterMarkAt
+          } : undefined,
+        currentEquity: prop.accountRiskMetrics.currentEquity !== undefined ? {
+            set: prop.accountRiskMetrics.currentEquity
+          } : undefined,
+        currentDrawdownPct: prop.accountRiskMetrics.currentDrawdownPct !== undefined ? {
+            set: prop.accountRiskMetrics.currentDrawdownPct
+          } : undefined,
+        intradayDrawdownPct: prop.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
+            set: prop.accountRiskMetrics.intradayDrawdownPct
+          } : undefined,
+        maxDrawdownPctLifetime: prop.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
+            set: prop.accountRiskMetrics.maxDrawdownPctLifetime
+          } : undefined,
+        dailyPnlAmount: prop.accountRiskMetrics.dailyPnlAmount !== undefined ? {
+            set: prop.accountRiskMetrics.dailyPnlAmount
+          } : undefined,
+        dailyPnlPct: prop.accountRiskMetrics.dailyPnlPct !== undefined ? {
+            set: prop.accountRiskMetrics.dailyPnlPct
+          } : undefined,
+        weeklyPnlAmount: prop.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
+            set: prop.accountRiskMetrics.weeklyPnlAmount
+          } : undefined,
+        weeklyPnlPct: prop.accountRiskMetrics.weeklyPnlPct !== undefined ? {
+            set: prop.accountRiskMetrics.weeklyPnlPct
+          } : undefined,
+        monthlyPnlAmount: prop.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
+            set: prop.accountRiskMetrics.monthlyPnlAmount
+          } : undefined,
+        monthlyPnlPct: prop.accountRiskMetrics.monthlyPnlPct !== undefined ? {
+            set: prop.accountRiskMetrics.monthlyPnlPct
+          } : undefined,
+        peakToTroughAmount: prop.accountRiskMetrics.peakToTroughAmount !== undefined ? {
+            set: prop.accountRiskMetrics.peakToTroughAmount
+          } : undefined,
+        peakToTroughPct: prop.accountRiskMetrics.peakToTroughPct !== undefined ? {
+            set: prop.accountRiskMetrics.peakToTroughPct
+          } : undefined,
+        nextRecoveryEligibleAt: prop.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
+            set: prop.accountRiskMetrics.nextRecoveryEligibleAt
+          } : undefined,
+        lastSyncedAt: prop.accountRiskMetrics.lastSyncedAt !== undefined ? {
+            set: prop.accountRiskMetrics.lastSyncedAt
+          } : undefined,
+      },
+      create: {
+        currentRiskState: prop.accountRiskMetrics.currentRiskState !== undefined ? prop.accountRiskMetrics.currentRiskState : undefined,
+        currentScopeState: prop.accountRiskMetrics.currentScopeState !== undefined ? prop.accountRiskMetrics.currentScopeState : undefined,
+        riskStateChangedAt: prop.accountRiskMetrics.riskStateChangedAt !== undefined ? prop.accountRiskMetrics.riskStateChangedAt : undefined,
+        riskStateChangedBy: prop.accountRiskMetrics.riskStateChangedBy !== undefined ? prop.accountRiskMetrics.riskStateChangedBy : undefined,
+        riskStateChangeReason: prop.accountRiskMetrics.riskStateChangeReason !== undefined ? prop.accountRiskMetrics.riskStateChangeReason : undefined,
+        accountHighWaterMark: prop.accountRiskMetrics.accountHighWaterMark !== undefined ? prop.accountRiskMetrics.accountHighWaterMark : undefined,
+        accountHighWaterMarkAt: prop.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? prop.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+        currentEquity: prop.accountRiskMetrics.currentEquity !== undefined ? prop.accountRiskMetrics.currentEquity : undefined,
+        currentDrawdownPct: prop.accountRiskMetrics.currentDrawdownPct !== undefined ? prop.accountRiskMetrics.currentDrawdownPct : undefined,
+        intradayDrawdownPct: prop.accountRiskMetrics.intradayDrawdownPct !== undefined ? prop.accountRiskMetrics.intradayDrawdownPct : undefined,
+        maxDrawdownPctLifetime: prop.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? prop.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+        dailyPnlAmount: prop.accountRiskMetrics.dailyPnlAmount !== undefined ? prop.accountRiskMetrics.dailyPnlAmount : undefined,
+        dailyPnlPct: prop.accountRiskMetrics.dailyPnlPct !== undefined ? prop.accountRiskMetrics.dailyPnlPct : undefined,
+        weeklyPnlAmount: prop.accountRiskMetrics.weeklyPnlAmount !== undefined ? prop.accountRiskMetrics.weeklyPnlAmount : undefined,
+        weeklyPnlPct: prop.accountRiskMetrics.weeklyPnlPct !== undefined ? prop.accountRiskMetrics.weeklyPnlPct : undefined,
+        monthlyPnlAmount: prop.accountRiskMetrics.monthlyPnlAmount !== undefined ? prop.accountRiskMetrics.monthlyPnlAmount : undefined,
+        monthlyPnlPct: prop.accountRiskMetrics.monthlyPnlPct !== undefined ? prop.accountRiskMetrics.monthlyPnlPct : undefined,
+        peakToTroughAmount: prop.accountRiskMetrics.peakToTroughAmount !== undefined ? prop.accountRiskMetrics.peakToTroughAmount : undefined,
+        peakToTroughPct: prop.accountRiskMetrics.peakToTroughPct !== undefined ? prop.accountRiskMetrics.peakToTroughPct : undefined,
+        nextRecoveryEligibleAt: prop.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? prop.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+        lastSyncedAt: prop.accountRiskMetrics.lastSyncedAt !== undefined ? prop.accountRiskMetrics.lastSyncedAt : undefined,
+      },
+    }
+  } : undefined,
+  strategyHealthSnapshots: prop.strategyHealthSnapshots ? 
+  Array.isArray(prop.strategyHealthSnapshots) && prop.strategyHealthSnapshots.length > 0 && prop.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.strategyHealthSnapshots.map((item) => ({
+    id: item.id
+  }))
+} : { upsert: prop.strategyHealthSnapshots.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        strategyName: item.strategyName !== undefined ? {
+            set: item.strategyName
+          } : undefined,
+        currentState: item.currentState !== undefined ? {
+            set: item.currentState
+          } : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? {
+            set: item.stateChangedAt
+          } : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? {
+            set: item.stateChangedReason
+          } : undefined,
+        windowSize: item.windowSize !== undefined ? {
+            set: item.windowSize
+          } : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? {
+            set: item.windowTradeCount
+          } : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? {
+            set: item.windowHitRate
+          } : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? {
+            set: item.windowExpectancy
+          } : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? {
+            set: item.windowProfitFactor
+          } : undefined,
+        windowSortino: item.windowSortino !== undefined ? {
+            set: item.windowSortino
+          } : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? {
+            set: item.windowMaxDrawdownPct
+          } : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? {
+            set: item.windowCumulativePnlAmt
+          } : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? {
+            set: item.backtestExpectancy
+          } : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? {
+            set: item.divergenceZScore
+          } : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? {
+            set: item.divergenceAlertActive
+          } : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? {
+            set: item.averageConfidence
+          } : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? {
+            set: item.confidenceTrend
+          } : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? {
+            set: item.lastUpdatedAt
+          } : undefined,
+      },
+      create: {
+        strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+        currentState: item.currentState !== undefined ? item.currentState : undefined,
+        stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+        stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+        windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+        windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+        windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+        windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+        windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+        windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+        windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+        windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+        backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+        divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+        divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+        averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+        confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+        lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+      },
+    }))
+  } : undefined,
+  riskEscalationEvents: prop.riskEscalationEvents ? 
+  Array.isArray(prop.riskEscalationEvents) && prop.riskEscalationEvents.length > 0 && prop.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+  connect: prop.riskEscalationEvents.map((item) => ({
+    id: item.id
+  }))
+} : { upsert: prop.riskEscalationEvents.map((item) => ({
+      where: {
+        id: item.id !== undefined ? item.id : undefined,
+        alpacaAccountId: item.alpacaAccountId !== undefined ? {
+            equals: item.alpacaAccountId
+          } : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            equals: item.correlationId
+          } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            equals: item.triggeringEventId
+          } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            equals: item.actorUserId
+          } : undefined,
+        triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+            equals: item.triggeredByPolicyOverlayId
+          } : undefined,
+      },
+      update: {
+        id: item.id !== undefined ? {
+            set: item.id
+          } : undefined,
+        scopeKind: item.scopeKind !== undefined ? {
+            set: item.scopeKind
+          } : undefined,
+        scopeValue: item.scopeValue !== undefined ? {
+            set: item.scopeValue
+          } : undefined,
+        fromState: item.fromState !== undefined ? {
+            set: item.fromState
+          } : undefined,
+        toState: item.toState !== undefined ? {
+            set: item.toState
+          } : undefined,
+        reason: item.reason !== undefined ? {
+            set: item.reason
+          } : undefined,
+        severity: item.severity !== undefined ? {
+            set: item.severity
+          } : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? {
+            set: item.triggeringObserver
+          } : undefined,
+        observedValue: item.observedValue !== undefined ? {
+            set: item.observedValue
+          } : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? {
+            set: item.breachedThreshold
+          } : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+            set: item.breachedThresholdKey
+          } : undefined,
+        correlationId: item.correlationId !== undefined ? {
+            set: item.correlationId
+          } : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? {
+            set: item.triggeringEventId
+          } : undefined,
+        actor: item.actor !== undefined ? {
+            set: item.actor
+          } : undefined,
+        actorUserId: item.actorUserId !== undefined ? {
+            set: item.actorUserId
+          } : undefined,
+        rationale: item.rationale !== undefined ? {
+            set: item.rationale
+          } : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+    typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && (Object.keys(item.activatedPolicyOverlay)[0] === 'id' || Object.keys(item.activatedPolicyOverlay)[0] === 'symbol')
+? {
+    connect: {
+      id: item.activatedPolicyOverlay.id
+    }
+} : { upsert: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? {
+              equals: item.activatedPolicyOverlay.id
+            } : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId
+            } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status
+            } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId
+            } : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.riskEscalationEventId
+            } : undefined,
+        },
+        update: {
+          id: item.activatedPolicyOverlay.id !== undefined ? {
+              set: item.activatedPolicyOverlay.id
+            } : undefined,
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? {
+              set: item.activatedPolicyOverlay.overlayType
+            } : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? {
+              set: item.activatedPolicyOverlay.source
+            } : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? {
+              set: item.activatedPolicyOverlay.reason
+            } : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? {
+              set: item.activatedPolicyOverlay.severity
+            } : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? {
+              set: item.activatedPolicyOverlay.version
+            } : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              set: item.activatedPolicyOverlay.status
+            } : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? {
+              set: item.activatedPolicyOverlay.activatedAt
+            } : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? {
+              set: item.activatedPolicyOverlay.expiresAt
+            } : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? {
+              set: item.activatedPolicyOverlay.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? {
+              set: item.activatedPolicyOverlay.deactivatedBy
+            } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              set: item.activatedPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              set: item.activatedPolicyOverlay.triggerEventId
+            } : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+      typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && (Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id' || Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'symbol')
+? {
+      connect: {
+        id: item.activatedPolicyOverlay.tradingPolicy.id
+      }
+} : { upsert: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId
+              } : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          update: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.version
+              } : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy
+              } : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt
+              } : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.autonomyMode
+              } : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled
+              } : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly
+              } : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled
+              } : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled
+              } : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled
+              } : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled
+              } : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled
+              } : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled
+              } : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.forexEnabled
+              } : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled
+              } : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.marginEnabled
+              } : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled
+              } : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct
+              } : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct
+              } : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct
+              } : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct
+              } : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxLeverage
+              } : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct
+              } : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct
+              } : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions
+              } : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders
+              } : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly
+              } : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled
+              } : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled
+              } : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled
+              } : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled
+              } : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled
+              } : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled
+              } : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled
+              } : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled
+              } : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled
+              } : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled
+              } : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider
+              } : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider
+              } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider
+              } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+      Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 && item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+    typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && (Object.keys(item.triggeredByPolicyOverlay)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay)[0] === 'symbol')
+? {
+    connect: {
+      id: item.triggeredByPolicyOverlay.id
+    }
+} : { upsert: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.id
+            } : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId
+            } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status
+            } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId
+            } : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.riskEscalationEventId
+            } : undefined,
+        },
+        update: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? {
+              set: item.triggeredByPolicyOverlay.id
+            } : undefined,
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? {
+              set: item.triggeredByPolicyOverlay.overlayType
+            } : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? {
+              set: item.triggeredByPolicyOverlay.source
+            } : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? {
+              set: item.triggeredByPolicyOverlay.reason
+            } : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? {
+              set: item.triggeredByPolicyOverlay.severity
+            } : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? {
+              set: item.triggeredByPolicyOverlay.version
+            } : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              set: item.triggeredByPolicyOverlay.status
+            } : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.activatedAt
+            } : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.expiresAt
+            } : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? {
+              set: item.triggeredByPolicyOverlay.deactivatedAt
+            } : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? {
+              set: item.triggeredByPolicyOverlay.deactivatedBy
+            } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              set: item.triggeredByPolicyOverlay.correlationId
+            } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              set: item.triggeredByPolicyOverlay.triggerEventId
+            } : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+      typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && (Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'symbol')
+? {
+      connect: {
+        id: item.triggeredByPolicyOverlay.tradingPolicy.id
+      }
+} : { upsert: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId
+              } : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          update: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.id
+              } : undefined,
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.version
+              } : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy
+              } : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt
+              } : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode
+              } : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled
+              } : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly
+              } : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled
+              } : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled
+              } : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled
+              } : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled
+              } : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled
+              } : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled
+              } : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled
+              } : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled
+              } : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled
+              } : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled
+              } : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct
+              } : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct
+              } : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct
+              } : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct
+              } : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage
+              } : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct
+              } : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct
+              } : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions
+              } : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders
+              } : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct
+              } : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct
+              } : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100
+              } : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs
+              } : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares
+              } : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps
+              } : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs
+              } : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage
+              } : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage
+              } : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares
+              } : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps
+              } : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes
+              } : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow
+              } : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds
+              } : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly
+              } : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled
+              } : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled
+              } : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled
+              } : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled
+              } : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled
+              } : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled
+              } : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled
+              } : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled
+              } : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled
+              } : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled
+              } : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider
+              } : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId
+              } : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider
+              } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId
+              } : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider
+              } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId
+              } : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+      typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && (Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id' || Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'symbol')
+? {
+      connect: {
+        id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+      }
+} : { upsert: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+              } : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.riskEscalationEvent.alpacaAccountId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.alpacaAccountId
+              } : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+              } : undefined,
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind
+              } : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue
+              } : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState
+              } : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.toState
+              } : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.reason
+              } : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.severity
+              } : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver
+              } : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue
+              } : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey
+              } : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId
+              } : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.actor
+              } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId
+              } : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? {
+                set: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
+      },
+      create: {
+        scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+        scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+        fromState: item.fromState !== undefined ? item.fromState : undefined,
+        toState: item.toState !== undefined ? item.toState : undefined,
+        reason: item.reason !== undefined ? item.reason : undefined,
+        severity: item.severity !== undefined ? item.severity : undefined,
+        triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+        observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+        breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+        breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+        correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+        triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+        actor: item.actor !== undefined ? item.actor : undefined,
+        actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+        rationale: item.rationale !== undefined ? item.rationale : undefined,
+    activatedPolicyOverlay: item.activatedPolicyOverlay ? 
+      typeof item.activatedPolicyOverlay === 'object' && Object.keys(item.activatedPolicyOverlay).length === 1 && Object.keys(item.activatedPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.activatedPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.activatedPolicyOverlay.id !== undefined ? item.activatedPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.activatedPolicyOverlay.riskEscalationEventId !== undefined ? item.activatedPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.activatedPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.activatedPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? {
+              equals: item.activatedPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? {
+              equals: item.activatedPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.activatedPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.activatedPolicyOverlay.overlayType !== undefined ? item.activatedPolicyOverlay.overlayType : undefined,
+          source: item.activatedPolicyOverlay.source !== undefined ? item.activatedPolicyOverlay.source : undefined,
+          reason: item.activatedPolicyOverlay.reason !== undefined ? item.activatedPolicyOverlay.reason : undefined,
+          severity: item.activatedPolicyOverlay.severity !== undefined ? item.activatedPolicyOverlay.severity : undefined,
+          version: item.activatedPolicyOverlay.version !== undefined ? item.activatedPolicyOverlay.version : undefined,
+          mutations: item.activatedPolicyOverlay.mutations !== undefined ? item.activatedPolicyOverlay.mutations : undefined,
+          status: item.activatedPolicyOverlay.status !== undefined ? item.activatedPolicyOverlay.status : undefined,
+          activatedAt: item.activatedPolicyOverlay.activatedAt !== undefined ? item.activatedPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.activatedPolicyOverlay.expiresAt !== undefined ? item.activatedPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.activatedPolicyOverlay.deactivatedAt !== undefined ? item.activatedPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.activatedPolicyOverlay.deactivatedBy !== undefined ? item.activatedPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.activatedPolicyOverlay.correlationId !== undefined ? item.activatedPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.activatedPolicyOverlay.triggerEventId !== undefined ? item.activatedPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.activatedPolicyOverlay.tradingPolicy ? 
+        typeof item.activatedPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.activatedPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.activatedPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.activatedPolicyOverlay.tradingPolicy.id !== undefined ? item.activatedPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.activatedPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.activatedPolicyOverlay.tradingPolicy.version !== undefined ? item.activatedPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.activatedPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.activatedPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.activatedPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.activatedPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.activatedPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.activatedPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.activatedPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.activatedPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.activatedPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.activatedPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.activatedPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.activatedPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.activatedPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.activatedPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.activatedPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.activatedPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.activatedPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.activatedPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.activatedPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.activatedPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.activatedPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.activatedPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.activatedPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.activatedPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.activatedPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.activatedPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.activatedPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.activatedPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.activatedPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.activatedPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      triggeredRiskEvents: item.activatedPolicyOverlay.triggeredRiskEvents ? 
+        Array.isArray(item.activatedPolicyOverlay.triggeredRiskEvents) && item.activatedPolicyOverlay.triggeredRiskEvents.length > 0 &&  item.activatedPolicyOverlay.triggeredRiskEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.activatedPolicyOverlay.triggeredRiskEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
+    triggeredByPolicyOverlay: item.triggeredByPolicyOverlay ? 
+      typeof item.triggeredByPolicyOverlay === 'object' && Object.keys(item.triggeredByPolicyOverlay).length === 1 && Object.keys(item.triggeredByPolicyOverlay)[0] === 'id'
+    ? { connect: {
+          id: item.triggeredByPolicyOverlay.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: item.triggeredByPolicyOverlay.id !== undefined ? item.triggeredByPolicyOverlay.id : undefined,
+          riskEscalationEventId: item.triggeredByPolicyOverlay.riskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEventId : undefined,
+          tradingPolicyId: item.triggeredByPolicyOverlay.tradingPolicyId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.tradingPolicyId 
+             } : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.status 
+             } : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.correlationId 
+             } : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? {
+              equals: item.triggeredByPolicyOverlay.triggerEventId 
+             } : undefined,
+        },
+        create: {
+          overlayType: item.triggeredByPolicyOverlay.overlayType !== undefined ? item.triggeredByPolicyOverlay.overlayType : undefined,
+          source: item.triggeredByPolicyOverlay.source !== undefined ? item.triggeredByPolicyOverlay.source : undefined,
+          reason: item.triggeredByPolicyOverlay.reason !== undefined ? item.triggeredByPolicyOverlay.reason : undefined,
+          severity: item.triggeredByPolicyOverlay.severity !== undefined ? item.triggeredByPolicyOverlay.severity : undefined,
+          version: item.triggeredByPolicyOverlay.version !== undefined ? item.triggeredByPolicyOverlay.version : undefined,
+          mutations: item.triggeredByPolicyOverlay.mutations !== undefined ? item.triggeredByPolicyOverlay.mutations : undefined,
+          status: item.triggeredByPolicyOverlay.status !== undefined ? item.triggeredByPolicyOverlay.status : undefined,
+          activatedAt: item.triggeredByPolicyOverlay.activatedAt !== undefined ? item.triggeredByPolicyOverlay.activatedAt : undefined,
+          expiresAt: item.triggeredByPolicyOverlay.expiresAt !== undefined ? item.triggeredByPolicyOverlay.expiresAt : undefined,
+          deactivatedAt: item.triggeredByPolicyOverlay.deactivatedAt !== undefined ? item.triggeredByPolicyOverlay.deactivatedAt : undefined,
+          deactivatedBy: item.triggeredByPolicyOverlay.deactivatedBy !== undefined ? item.triggeredByPolicyOverlay.deactivatedBy : undefined,
+          correlationId: item.triggeredByPolicyOverlay.correlationId !== undefined ? item.triggeredByPolicyOverlay.correlationId : undefined,
+          triggerEventId: item.triggeredByPolicyOverlay.triggerEventId !== undefined ? item.triggeredByPolicyOverlay.triggerEventId : undefined,
+      tradingPolicy: item.triggeredByPolicyOverlay.tradingPolicy ? 
+        typeof item.triggeredByPolicyOverlay.tradingPolicy === 'object' && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy).length === 1 && Object.keys(item.triggeredByPolicyOverlay.tradingPolicy)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.tradingPolicy.id !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.id : undefined,
+            alpacaAccountId: item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.alpacaAccountId : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId 
+               } : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId 
+               } : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId 
+               } : undefined,
+          },
+          create: {
+            version: item.triggeredByPolicyOverlay.tradingPolicy.version !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.version : undefined,
+            lastModifiedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedBy : undefined,
+            lastModifiedAt: item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastModifiedAt : undefined,
+            autonomyMode: item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyMode : undefined,
+            realtimeTradingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.realtimeTradingEnabled : undefined,
+            paperTradingOnly: item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.paperTradingOnly : undefined,
+            killSwitchEnabled: item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.killSwitchEnabled : undefined,
+            autonomyPrefs: item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.autonomyPrefs : undefined,
+            equitiesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equitiesEnabled : undefined,
+            etfsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.etfsEnabled : undefined,
+            cryptoEnabled: item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cryptoEnabled : undefined,
+            optionsEnabled: item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.optionsEnabled : undefined,
+            futuresEnabled: item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.futuresEnabled : undefined,
+            forexEnabled: item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.forexEnabled : undefined,
+            shortingEnabled: item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.shortingEnabled : undefined,
+            marginEnabled: item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.marginEnabled : undefined,
+            fractionalSharesEnabled: item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.fractionalSharesEnabled : undefined,
+            assetUniversePrefs: item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.assetUniversePrefs : undefined,
+            maxBuyingPowerUtilPct: item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxBuyingPowerUtilPct : undefined,
+            cashFloorPct: item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.cashFloorPct : undefined,
+            maxGrossExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxGrossExposurePct : undefined,
+            maxNetExposurePct: item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxNetExposurePct : undefined,
+            maxLeverage: item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxLeverage : undefined,
+            maxSymbolConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSymbolConcentrationPct : undefined,
+            maxSectorConcentrationPct: item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxSectorConcentrationPct : undefined,
+            maxOpenPositions: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenPositions : undefined,
+            maxOpenOrders: item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOpenOrders : undefined,
+            perTradeEquityAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeEquityAllocationPct : undefined,
+            perTradeCryptoAllocationPct: item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.perTradeCryptoAllocationPct : undefined,
+            enablePortfolioTrailingStop: item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minimumPriceChangePercent100 : undefined,
+            equityWashTradeCooldownMs: item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.equityWashTradeCooldownMs : undefined,
+            minIntradayLiquidityShares: item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minIntradayLiquidityShares : undefined,
+            maxEntrySpreadBps: item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxEntrySpreadBps : undefined,
+            sameSideReentryDelayMs: item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sameSideReentryDelayMs : undefined,
+            minAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minAtrPercentage : undefined,
+            maxAtrPercentage: item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAtrPercentage : undefined,
+            minBookDepthShares: item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.minBookDepthShares : undefined,
+            maxAnomalousSlippageBps: item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxAnomalousSlippageBps : undefined,
+            intradayTradingWindows: item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.intradayTradingWindows : undefined,
+            hardPositionExitMinutes: item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.hardPositionExitMinutes : undefined,
+            maxOrdersPerWindow: item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.maxOrdersPerWindow : undefined,
+            orderWindowSeconds: item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.orderWindowSeconds : undefined,
+            dayTradeOnly: item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dayTradeOnly : undefined,
+            riskBudgetPrefs: item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.riskBudgetPrefs : undefined,
+            signalConsumptionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.signalConsumptionPrefs : undefined,
+            executionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.executionPrefs : undefined,
+            positionManagementPrefs: item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.positionManagementPrefs : undefined,
+            portfolioConstructionPrefs: item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.portfolioConstructionPrefs : undefined,
+            macroOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.macroOverlayEnabled : undefined,
+            sectorOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.sectorOverlayEnabled : undefined,
+            volatilityOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.volatilityOverlayEnabled : undefined,
+            liquidityStressOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.liquidityStressOverlayEnabled : undefined,
+            blackSwanProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.blackSwanProtectionEnabled : undefined,
+            drawdownGuardianEnabled: item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.drawdownGuardianEnabled : undefined,
+            correlationSpikeProtectionEnabled: item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.correlationSpikeProtectionEnabled : undefined,
+            newsEventRiskOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.newsEventRiskOverlayEnabled : undefined,
+            exchangeHealthOverlayEnabled: item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.exchangeHealthOverlayEnabled : undefined,
+            dataQualitySentinelEnabled: item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.dataQualitySentinelEnabled : undefined,
+            overlayResponsePrefs: item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.overlayResponsePrefs : undefined,
+            miniModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelProvider : undefined,
+            miniModelId: item.triggeredByPolicyOverlay.tradingPolicy.miniModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.miniModelId : undefined,
+            normalModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelProvider : undefined,
+            normalModelId: item.triggeredByPolicyOverlay.tradingPolicy.normalModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.normalModelId : undefined,
+            advancedModelProvider: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelProvider : undefined,
+            advancedModelId: item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.advancedModelId : undefined,
+            modelPrefs: item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.modelPrefs : undefined,
+            auditNotificationPrefs: item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.triggeredByPolicyOverlay.tradingPolicy.lastRiskEscalationEventId : undefined,
+          },
+        }
+      } : undefined,
+      riskEscalationEvent: item.triggeredByPolicyOverlay.riskEscalationEvent ? 
+        typeof item.triggeredByPolicyOverlay.riskEscalationEvent === 'object' && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent).length === 1 && Object.keys(item.triggeredByPolicyOverlay.riskEscalationEvent)[0] === 'id'
+    ? { connect: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.triggeredByPolicyOverlay.riskEscalationEvent.id !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.id : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId 
+               } : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? {
+                equals: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeKind : undefined,
+            scopeValue: item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.scopeValue : undefined,
+            fromState: item.triggeredByPolicyOverlay.riskEscalationEvent.fromState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.fromState : undefined,
+            toState: item.triggeredByPolicyOverlay.riskEscalationEvent.toState !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.toState : undefined,
+            reason: item.triggeredByPolicyOverlay.riskEscalationEvent.reason !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.reason : undefined,
+            severity: item.triggeredByPolicyOverlay.riskEscalationEvent.severity !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.severity : undefined,
+            triggeringObserver: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringObserver : undefined,
+            observedValue: item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.observedValue : undefined,
+            breachedThreshold: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThreshold : undefined,
+            breachedThresholdKey: item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.breachedThresholdKey : undefined,
+            correlationId: item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.correlationId : undefined,
+            triggeringEventId: item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.triggeringEventId : undefined,
+            actor: item.triggeredByPolicyOverlay.riskEscalationEvent.actor !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actor : undefined,
+            actorUserId: item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.actorUserId : undefined,
+            rationale: item.triggeredByPolicyOverlay.riskEscalationEvent.rationale !== undefined ? item.triggeredByPolicyOverlay.riskEscalationEvent.rationale : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }))
   } : undefined,

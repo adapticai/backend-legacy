@@ -35,6 +35,7 @@ import { ABTest } from './ABTest';
 import { Account } from './Account';
 import { AccountDecisionRecord } from './AccountDecisionRecord';
 import { AccountLinkingRequest } from './AccountLinkingRequest';
+import { AccountRiskMetrics } from './AccountRiskMetrics';
 import { Action } from './Action';
 import { Alert } from './Alert';
 import { Allocation } from './Allocation';
@@ -79,12 +80,14 @@ import { OptionsPositionEvent } from './OptionsPositionEvent';
 import { OptionsTradeExecution } from './OptionsTradeExecution';
 import { PolicyOverlay } from './PolicyOverlay';
 import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
+import { RiskEscalationEvent } from './RiskEscalationEvent';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
 import { SignalGeneratorMetrics } from './SignalGeneratorMetrics';
 import { SignalLineage } from './SignalLineage';
 import { SignalOutcome } from './SignalOutcome';
 import { SignalPriorityQueue } from './SignalPriorityQueue';
+import { StrategyHealthSnapshot } from './StrategyHealthSnapshot';
 import { SyncEvent } from './SyncEvent';
 import { SystemAlert } from './SystemAlert';
 import { Trade } from './Trade';
@@ -101,6 +104,7 @@ const adaptic = {
   account: Account,
   accountDecisionRecord: AccountDecisionRecord,
   accountLinkingRequest: AccountLinkingRequest,
+  accountRiskMetrics: AccountRiskMetrics,
   action: Action,
   alert: Alert,
   allocation: Allocation,
@@ -145,12 +149,14 @@ const adaptic = {
   optionsTradeExecution: OptionsTradeExecution,
   policyOverlay: PolicyOverlay,
   portfolioGreeksHistory: PortfolioGreeksHistory,
+  riskEscalationEvent: RiskEscalationEvent,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
   signalGeneratorMetrics: SignalGeneratorMetrics,
   signalLineage: SignalLineage,
   signalOutcome: SignalOutcome,
   signalPriorityQueue: SignalPriorityQueue,
+  strategyHealthSnapshot: StrategyHealthSnapshot,
   syncEvent: SyncEvent,
   systemAlert: SystemAlert,
   trade: Trade,

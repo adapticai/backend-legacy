@@ -344,6 +344,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -382,6 +387,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -1263,6 +1377,9 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? {
                 equals: item.tradingPolicy.advancedModelId
               } : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
           },
           update: {
             id: item.tradingPolicy.id !== undefined ? {
@@ -1474,6 +1591,19 @@ import { logger } from './utils/logger';
               } : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
           },
           create: {
             version: item.tradingPolicy.version !== undefined ? item.tradingPolicy.version : undefined,
@@ -1552,6 +1682,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -1628,6 +1763,298 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+      typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && (Object.keys(item.accountRiskMetrics)[0] === 'id' || Object.keys(item.accountRiskMetrics)[0] === 'symbol')
+? {
+      connect: {
+        id: item.accountRiskMetrics.id
+      }
+} : { upsert: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? {
+                equals: item.accountRiskMetrics.id
+              } : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? {
+                equals: item.accountRiskMetrics.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.accountRiskMetrics.id !== undefined ? {
+                set: item.accountRiskMetrics.id
+              } : undefined,
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? {
+                set: item.accountRiskMetrics.currentRiskState
+              } : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangedAt
+              } : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangedBy
+              } : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangeReason
+              } : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? {
+                set: item.accountRiskMetrics.accountHighWaterMark
+              } : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
+                set: item.accountRiskMetrics.accountHighWaterMarkAt
+              } : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? {
+                set: item.accountRiskMetrics.currentEquity
+              } : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? {
+                set: item.accountRiskMetrics.currentDrawdownPct
+              } : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
+                set: item.accountRiskMetrics.intradayDrawdownPct
+              } : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
+                set: item.accountRiskMetrics.maxDrawdownPctLifetime
+              } : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.dailyPnlAmount
+              } : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.dailyPnlPct
+              } : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.weeklyPnlAmount
+              } : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.weeklyPnlPct
+              } : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.monthlyPnlAmount
+              } : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.monthlyPnlPct
+              } : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? {
+                set: item.accountRiskMetrics.peakToTroughAmount
+              } : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? {
+                set: item.accountRiskMetrics.peakToTroughPct
+              } : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
+                set: item.accountRiskMetrics.nextRecoveryEligibleAt
+              } : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? {
+                set: item.accountRiskMetrics.lastSyncedAt
+              } : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+      Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 && item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.strategyHealthSnapshots.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            strategyName: item.strategyName !== undefined ? {
+                set: item.strategyName
+              } : undefined,
+            currentState: item.currentState !== undefined ? {
+                set: item.currentState
+              } : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? {
+                set: item.stateChangedAt
+              } : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? {
+                set: item.stateChangedReason
+              } : undefined,
+            windowSize: item.windowSize !== undefined ? {
+                set: item.windowSize
+              } : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? {
+                set: item.windowTradeCount
+              } : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? {
+                set: item.windowHitRate
+              } : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? {
+                set: item.windowExpectancy
+              } : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? {
+                set: item.windowProfitFactor
+              } : undefined,
+            windowSortino: item.windowSortino !== undefined ? {
+                set: item.windowSortino
+              } : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? {
+                set: item.windowMaxDrawdownPct
+              } : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? {
+                set: item.windowCumulativePnlAmt
+              } : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? {
+                set: item.backtestExpectancy
+              } : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? {
+                set: item.divergenceZScore
+              } : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? {
+                set: item.divergenceAlertActive
+              } : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? {
+                set: item.averageConfidence
+              } : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? {
+                set: item.confidenceTrend
+              } : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? {
+                set: item.lastUpdatedAt
+              } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+      Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 && item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.riskEscalationEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -1779,6 +2206,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -1817,6 +2249,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -2426,6 +2967,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -2464,6 +3010,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -3056,6 +3711,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -3094,6 +3754,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -3660,6 +4429,9 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? {
                 equals: item.tradingPolicy.advancedModelId
               } : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
           },
           update: {
             id: item.tradingPolicy.id !== undefined ? {
@@ -3871,6 +4643,19 @@ import { logger } from './utils/logger';
               } : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
           },
           create: {
             version: item.tradingPolicy.version !== undefined ? item.tradingPolicy.version : undefined,
@@ -3949,6 +4734,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -4025,6 +4815,298 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+      typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && (Object.keys(item.accountRiskMetrics)[0] === 'id' || Object.keys(item.accountRiskMetrics)[0] === 'symbol')
+? {
+      connect: {
+        id: item.accountRiskMetrics.id
+      }
+} : { upsert: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? {
+                equals: item.accountRiskMetrics.id
+              } : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? {
+                equals: item.accountRiskMetrics.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.accountRiskMetrics.id !== undefined ? {
+                set: item.accountRiskMetrics.id
+              } : undefined,
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? {
+                set: item.accountRiskMetrics.currentRiskState
+              } : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangedAt
+              } : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangedBy
+              } : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangeReason
+              } : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? {
+                set: item.accountRiskMetrics.accountHighWaterMark
+              } : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
+                set: item.accountRiskMetrics.accountHighWaterMarkAt
+              } : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? {
+                set: item.accountRiskMetrics.currentEquity
+              } : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? {
+                set: item.accountRiskMetrics.currentDrawdownPct
+              } : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
+                set: item.accountRiskMetrics.intradayDrawdownPct
+              } : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
+                set: item.accountRiskMetrics.maxDrawdownPctLifetime
+              } : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.dailyPnlAmount
+              } : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.dailyPnlPct
+              } : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.weeklyPnlAmount
+              } : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.weeklyPnlPct
+              } : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.monthlyPnlAmount
+              } : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.monthlyPnlPct
+              } : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? {
+                set: item.accountRiskMetrics.peakToTroughAmount
+              } : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? {
+                set: item.accountRiskMetrics.peakToTroughPct
+              } : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
+                set: item.accountRiskMetrics.nextRecoveryEligibleAt
+              } : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? {
+                set: item.accountRiskMetrics.lastSyncedAt
+              } : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+      Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 && item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.strategyHealthSnapshots.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            strategyName: item.strategyName !== undefined ? {
+                set: item.strategyName
+              } : undefined,
+            currentState: item.currentState !== undefined ? {
+                set: item.currentState
+              } : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? {
+                set: item.stateChangedAt
+              } : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? {
+                set: item.stateChangedReason
+              } : undefined,
+            windowSize: item.windowSize !== undefined ? {
+                set: item.windowSize
+              } : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? {
+                set: item.windowTradeCount
+              } : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? {
+                set: item.windowHitRate
+              } : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? {
+                set: item.windowExpectancy
+              } : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? {
+                set: item.windowProfitFactor
+              } : undefined,
+            windowSortino: item.windowSortino !== undefined ? {
+                set: item.windowSortino
+              } : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? {
+                set: item.windowMaxDrawdownPct
+              } : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? {
+                set: item.windowCumulativePnlAmt
+              } : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? {
+                set: item.backtestExpectancy
+              } : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? {
+                set: item.divergenceZScore
+              } : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? {
+                set: item.divergenceAlertActive
+              } : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? {
+                set: item.averageConfidence
+              } : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? {
+                set: item.confidenceTrend
+              } : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? {
+                set: item.lastUpdatedAt
+              } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+      Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 && item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.riskEscalationEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -4176,6 +5258,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -4214,6 +5301,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -4823,6 +6019,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -4861,6 +6062,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -5590,6 +6900,9 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? {
                 equals: item.tradingPolicy.advancedModelId
               } : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                equals: item.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
           },
           update: {
             id: item.tradingPolicy.id !== undefined ? {
@@ -5801,6 +7114,19 @@ import { logger } from './utils/logger';
               } : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? {
+                set: item.tradingPolicy.currentRiskState
+              } : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? {
+                set: item.tradingPolicy.currentRiskStateAt
+              } : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? {
+                set: item.tradingPolicy.lastRiskStateChangedBy
+              } : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? {
+                set: item.tradingPolicy.lastRiskEscalationEventId
+              } : undefined,
           },
           create: {
             version: item.tradingPolicy.version !== undefined ? item.tradingPolicy.version : undefined,
@@ -5879,6 +7205,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -5955,6 +7286,298 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+      typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && (Object.keys(item.accountRiskMetrics)[0] === 'id' || Object.keys(item.accountRiskMetrics)[0] === 'symbol')
+? {
+      connect: {
+        id: item.accountRiskMetrics.id
+      }
+} : { upsert: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? {
+                equals: item.accountRiskMetrics.id
+              } : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? {
+                equals: item.accountRiskMetrics.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.accountRiskMetrics.id !== undefined ? {
+                set: item.accountRiskMetrics.id
+              } : undefined,
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? {
+                set: item.accountRiskMetrics.currentRiskState
+              } : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangedAt
+              } : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangedBy
+              } : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? {
+                set: item.accountRiskMetrics.riskStateChangeReason
+              } : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? {
+                set: item.accountRiskMetrics.accountHighWaterMark
+              } : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
+                set: item.accountRiskMetrics.accountHighWaterMarkAt
+              } : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? {
+                set: item.accountRiskMetrics.currentEquity
+              } : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? {
+                set: item.accountRiskMetrics.currentDrawdownPct
+              } : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
+                set: item.accountRiskMetrics.intradayDrawdownPct
+              } : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
+                set: item.accountRiskMetrics.maxDrawdownPctLifetime
+              } : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.dailyPnlAmount
+              } : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.dailyPnlPct
+              } : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.weeklyPnlAmount
+              } : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.weeklyPnlPct
+              } : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
+                set: item.accountRiskMetrics.monthlyPnlAmount
+              } : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? {
+                set: item.accountRiskMetrics.monthlyPnlPct
+              } : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? {
+                set: item.accountRiskMetrics.peakToTroughAmount
+              } : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? {
+                set: item.accountRiskMetrics.peakToTroughPct
+              } : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
+                set: item.accountRiskMetrics.nextRecoveryEligibleAt
+              } : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? {
+                set: item.accountRiskMetrics.lastSyncedAt
+              } : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+      Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 && item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.strategyHealthSnapshots.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            strategyName: item.strategyName !== undefined ? {
+                set: item.strategyName
+              } : undefined,
+            currentState: item.currentState !== undefined ? {
+                set: item.currentState
+              } : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? {
+                set: item.stateChangedAt
+              } : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? {
+                set: item.stateChangedReason
+              } : undefined,
+            windowSize: item.windowSize !== undefined ? {
+                set: item.windowSize
+              } : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? {
+                set: item.windowTradeCount
+              } : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? {
+                set: item.windowHitRate
+              } : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? {
+                set: item.windowExpectancy
+              } : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? {
+                set: item.windowProfitFactor
+              } : undefined,
+            windowSortino: item.windowSortino !== undefined ? {
+                set: item.windowSortino
+              } : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? {
+                set: item.windowMaxDrawdownPct
+              } : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? {
+                set: item.windowCumulativePnlAmt
+              } : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? {
+                set: item.backtestExpectancy
+              } : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? {
+                set: item.divergenceZScore
+              } : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? {
+                set: item.divergenceAlertActive
+              } : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? {
+                set: item.averageConfidence
+              } : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? {
+                set: item.confidenceTrend
+              } : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? {
+                set: item.lastUpdatedAt
+              } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+      Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 && item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.riskEscalationEvents.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId
+              } : undefined,
+            triggeredByPolicyOverlayId: item.triggeredByPolicyOverlayId !== undefined ? {
+                equals: item.triggeredByPolicyOverlayId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            scopeValue: item.scopeValue !== undefined ? {
+                set: item.scopeValue
+              } : undefined,
+            fromState: item.fromState !== undefined ? {
+                set: item.fromState
+              } : undefined,
+            toState: item.toState !== undefined ? {
+                set: item.toState
+              } : undefined,
+            reason: item.reason !== undefined ? {
+                set: item.reason
+              } : undefined,
+            severity: item.severity !== undefined ? {
+                set: item.severity
+              } : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? {
+                set: item.triggeringObserver
+              } : undefined,
+            observedValue: item.observedValue !== undefined ? {
+                set: item.observedValue
+              } : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? {
+                set: item.breachedThreshold
+              } : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? {
+                set: item.breachedThresholdKey
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                set: item.triggeringEventId
+              } : undefined,
+            actor: item.actor !== undefined ? {
+                set: item.actor
+              } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                set: item.actorUserId
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -6106,6 +7729,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -6144,6 +7772,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,
@@ -6753,6 +8490,11 @@ import { logger } from './utils/logger';
             advancedModelId: item.tradingPolicy.advancedModelId !== undefined ? item.tradingPolicy.advancedModelId : undefined,
             modelPrefs: item.tradingPolicy.modelPrefs !== undefined ? item.tradingPolicy.modelPrefs : undefined,
             auditNotificationPrefs: item.tradingPolicy.auditNotificationPrefs !== undefined ? item.tradingPolicy.auditNotificationPrefs : undefined,
+            escalationPolicyOverrides: item.tradingPolicy.escalationPolicyOverrides !== undefined ? item.tradingPolicy.escalationPolicyOverrides : undefined,
+            currentRiskState: item.tradingPolicy.currentRiskState !== undefined ? item.tradingPolicy.currentRiskState : undefined,
+            currentRiskStateAt: item.tradingPolicy.currentRiskStateAt !== undefined ? item.tradingPolicy.currentRiskStateAt : undefined,
+            lastRiskStateChangedBy: item.tradingPolicy.lastRiskStateChangedBy !== undefined ? item.tradingPolicy.lastRiskStateChangedBy : undefined,
+            lastRiskEscalationEventId: item.tradingPolicy.lastRiskEscalationEventId !== undefined ? item.tradingPolicy.lastRiskEscalationEventId : undefined,
           },
         }
       } : undefined,
@@ -6791,6 +8533,115 @@ import { logger } from './utils/logger';
             suppressedUntil: item.suppressedUntil !== undefined ? item.suppressedUntil : undefined,
             retryCount: item.retryCount !== undefined ? item.retryCount : undefined,
             metadata: item.metadata !== undefined ? item.metadata : undefined,
+          },
+        }))
+      } : undefined,
+      accountRiskMetrics: item.accountRiskMetrics ? 
+        typeof item.accountRiskMetrics === 'object' && Object.keys(item.accountRiskMetrics).length === 1 && Object.keys(item.accountRiskMetrics)[0] === 'id'
+    ? { connect: {
+            id: item.accountRiskMetrics.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.accountRiskMetrics.id !== undefined ? item.accountRiskMetrics.id : undefined,
+            alpacaAccountId: item.accountRiskMetrics.alpacaAccountId !== undefined ? item.accountRiskMetrics.alpacaAccountId : undefined,
+          },
+          create: {
+            currentRiskState: item.accountRiskMetrics.currentRiskState !== undefined ? item.accountRiskMetrics.currentRiskState : undefined,
+            currentScopeState: item.accountRiskMetrics.currentScopeState !== undefined ? item.accountRiskMetrics.currentScopeState : undefined,
+            riskStateChangedAt: item.accountRiskMetrics.riskStateChangedAt !== undefined ? item.accountRiskMetrics.riskStateChangedAt : undefined,
+            riskStateChangedBy: item.accountRiskMetrics.riskStateChangedBy !== undefined ? item.accountRiskMetrics.riskStateChangedBy : undefined,
+            riskStateChangeReason: item.accountRiskMetrics.riskStateChangeReason !== undefined ? item.accountRiskMetrics.riskStateChangeReason : undefined,
+            accountHighWaterMark: item.accountRiskMetrics.accountHighWaterMark !== undefined ? item.accountRiskMetrics.accountHighWaterMark : undefined,
+            accountHighWaterMarkAt: item.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? item.accountRiskMetrics.accountHighWaterMarkAt : undefined,
+            currentEquity: item.accountRiskMetrics.currentEquity !== undefined ? item.accountRiskMetrics.currentEquity : undefined,
+            currentDrawdownPct: item.accountRiskMetrics.currentDrawdownPct !== undefined ? item.accountRiskMetrics.currentDrawdownPct : undefined,
+            intradayDrawdownPct: item.accountRiskMetrics.intradayDrawdownPct !== undefined ? item.accountRiskMetrics.intradayDrawdownPct : undefined,
+            maxDrawdownPctLifetime: item.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? item.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
+            dailyPnlAmount: item.accountRiskMetrics.dailyPnlAmount !== undefined ? item.accountRiskMetrics.dailyPnlAmount : undefined,
+            dailyPnlPct: item.accountRiskMetrics.dailyPnlPct !== undefined ? item.accountRiskMetrics.dailyPnlPct : undefined,
+            weeklyPnlAmount: item.accountRiskMetrics.weeklyPnlAmount !== undefined ? item.accountRiskMetrics.weeklyPnlAmount : undefined,
+            weeklyPnlPct: item.accountRiskMetrics.weeklyPnlPct !== undefined ? item.accountRiskMetrics.weeklyPnlPct : undefined,
+            monthlyPnlAmount: item.accountRiskMetrics.monthlyPnlAmount !== undefined ? item.accountRiskMetrics.monthlyPnlAmount : undefined,
+            monthlyPnlPct: item.accountRiskMetrics.monthlyPnlPct !== undefined ? item.accountRiskMetrics.monthlyPnlPct : undefined,
+            peakToTroughAmount: item.accountRiskMetrics.peakToTroughAmount !== undefined ? item.accountRiskMetrics.peakToTroughAmount : undefined,
+            peakToTroughPct: item.accountRiskMetrics.peakToTroughPct !== undefined ? item.accountRiskMetrics.peakToTroughPct : undefined,
+            nextRecoveryEligibleAt: item.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? item.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
+            lastSyncedAt: item.accountRiskMetrics.lastSyncedAt !== undefined ? item.accountRiskMetrics.lastSyncedAt : undefined,
+          },
+        }
+      } : undefined,
+      strategyHealthSnapshots: item.strategyHealthSnapshots ? 
+        Array.isArray(item.strategyHealthSnapshots) && item.strategyHealthSnapshots.length > 0 &&  item.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategyHealthSnapshots.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategyHealthSnapshots.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+          },
+          create: {
+            strategyName: item.strategyName !== undefined ? item.strategyName : undefined,
+            currentState: item.currentState !== undefined ? item.currentState : undefined,
+            stateChangedAt: item.stateChangedAt !== undefined ? item.stateChangedAt : undefined,
+            stateChangedReason: item.stateChangedReason !== undefined ? item.stateChangedReason : undefined,
+            windowSize: item.windowSize !== undefined ? item.windowSize : undefined,
+            windowTradeCount: item.windowTradeCount !== undefined ? item.windowTradeCount : undefined,
+            windowHitRate: item.windowHitRate !== undefined ? item.windowHitRate : undefined,
+            windowExpectancy: item.windowExpectancy !== undefined ? item.windowExpectancy : undefined,
+            windowProfitFactor: item.windowProfitFactor !== undefined ? item.windowProfitFactor : undefined,
+            windowSortino: item.windowSortino !== undefined ? item.windowSortino : undefined,
+            windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
+            windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
+            backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+            divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
+            divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
+            averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
+            confidenceTrend: item.confidenceTrend !== undefined ? item.confidenceTrend : undefined,
+            lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
+          },
+        }))
+      } : undefined,
+      riskEscalationEvents: item.riskEscalationEvents ? 
+        Array.isArray(item.riskEscalationEvents) && item.riskEscalationEvents.length > 0 &&  item.riskEscalationEvents.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.riskEscalationEvents.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.riskEscalationEvents.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? {
+                equals: item.triggeringEventId 
+               } : undefined,
+            actorUserId: item.actorUserId !== undefined ? {
+                equals: item.actorUserId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            scopeValue: item.scopeValue !== undefined ? item.scopeValue : undefined,
+            fromState: item.fromState !== undefined ? item.fromState : undefined,
+            toState: item.toState !== undefined ? item.toState : undefined,
+            reason: item.reason !== undefined ? item.reason : undefined,
+            severity: item.severity !== undefined ? item.severity : undefined,
+            triggeringObserver: item.triggeringObserver !== undefined ? item.triggeringObserver : undefined,
+            observedValue: item.observedValue !== undefined ? item.observedValue : undefined,
+            breachedThreshold: item.breachedThreshold !== undefined ? item.breachedThreshold : undefined,
+            breachedThresholdKey: item.breachedThresholdKey !== undefined ? item.breachedThresholdKey : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+            triggeringEventId: item.triggeringEventId !== undefined ? item.triggeringEventId : undefined,
+            actor: item.actor !== undefined ? item.actor : undefined,
+            actorUserId: item.actorUserId !== undefined ? item.actorUserId : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
       } : undefined,

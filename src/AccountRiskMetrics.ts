@@ -1,59 +1,35 @@
 
   
-import { Allocation as AllocationType } from './generated/typegraphql-prisma/models/Allocation';
+import { AccountRiskMetrics as AccountRiskMetricsType } from './generated/typegraphql-prisma/models/AccountRiskMetrics';
 import { getApolloClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
-import { assertValidAllocation } from './validators/allocation-validator';
   
   /**
-   * CRUD operations for the Allocation model.
+   * CRUD operations for the AccountRiskMetrics model.
    */
 
   const selectionSet = `
-    
-  id
-  equities
-  optionsContracts
-  futures
-  etfs
-  forex
-  crypto
-  stocks
-  options
-  alpacaAccountId
-  createdAt
-  updatedAt
-
+    undefined
   `;
 
-  export const Allocation = {
+  export const AccountRiskMetrics = {
 
     /**
-     * Create a new Allocation record.
+     * Create a new AccountRiskMetrics record.
      * @param props - Properties for the new record.
      * @param client - Apollo Client instance.
-     * @returns The created Allocation or null.
+     * @returns The created AccountRiskMetrics or null.
      */
 
     /**
-     * Create a new Allocation record.
+     * Create a new AccountRiskMetrics record.
      * Enhanced with connection resilience against Prisma connection errors.
      * @param props - Properties for the new record.
      * @param globalClient - Apollo Client instance.
-     * @returns The created Allocation or null.
+     * @returns The created AccountRiskMetrics or null.
      */
-    async create(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
-      // Validate allocation percentages before creating
-      assertValidAllocation({
-        equities: props.equities,
-        optionsContracts: props.optionsContracts,
-        futures: props.futures,
-        etfs: props.etfs,
-        forex: props.forex,
-        crypto: props.crypto
-      });
-
+    async create(props: AccountRiskMetricsType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountRiskMetricsType> {
       // Maximum number of retries for database connection issues
       const MAX_RETRIES = 3;
       let retryCount = 0;
@@ -71,9 +47,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
           const { gql, ApolloError } = modules;
 
-          const CREATE_ONE_ALLOCATION = gql`
-              mutation createOneAllocation($data: AllocationCreateInput!) {
-                createOneAllocation(data: $data) {
+          const CREATE_ONE_ACCOUNTRISKMETRICS = gql`
+              mutation createOneAccountRiskMetrics($data: AccountRiskMetricsCreateInput!) {
+                createOneAccountRiskMetrics(data: $data) {
                   ${selectionSet}
                 }
               }
@@ -81,14 +57,27 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
           const variables = {
             data: {
-                equities: props.equities !== undefined ? props.equities : undefined,
-  optionsContracts: props.optionsContracts !== undefined ? props.optionsContracts : undefined,
-  futures: props.futures !== undefined ? props.futures : undefined,
-  etfs: props.etfs !== undefined ? props.etfs : undefined,
-  forex: props.forex !== undefined ? props.forex : undefined,
-  crypto: props.crypto !== undefined ? props.crypto : undefined,
-  stocks: props.stocks !== undefined ? props.stocks : undefined,
-  options: props.options !== undefined ? props.options : undefined,
+                currentRiskState: props.currentRiskState !== undefined ? props.currentRiskState : undefined,
+  currentScopeState: props.currentScopeState !== undefined ? props.currentScopeState : undefined,
+  riskStateChangedAt: props.riskStateChangedAt !== undefined ? props.riskStateChangedAt : undefined,
+  riskStateChangedBy: props.riskStateChangedBy !== undefined ? props.riskStateChangedBy : undefined,
+  riskStateChangeReason: props.riskStateChangeReason !== undefined ? props.riskStateChangeReason : undefined,
+  accountHighWaterMark: props.accountHighWaterMark !== undefined ? props.accountHighWaterMark : undefined,
+  accountHighWaterMarkAt: props.accountHighWaterMarkAt !== undefined ? props.accountHighWaterMarkAt : undefined,
+  currentEquity: props.currentEquity !== undefined ? props.currentEquity : undefined,
+  currentDrawdownPct: props.currentDrawdownPct !== undefined ? props.currentDrawdownPct : undefined,
+  intradayDrawdownPct: props.intradayDrawdownPct !== undefined ? props.intradayDrawdownPct : undefined,
+  maxDrawdownPctLifetime: props.maxDrawdownPctLifetime !== undefined ? props.maxDrawdownPctLifetime : undefined,
+  dailyPnlAmount: props.dailyPnlAmount !== undefined ? props.dailyPnlAmount : undefined,
+  dailyPnlPct: props.dailyPnlPct !== undefined ? props.dailyPnlPct : undefined,
+  weeklyPnlAmount: props.weeklyPnlAmount !== undefined ? props.weeklyPnlAmount : undefined,
+  weeklyPnlPct: props.weeklyPnlPct !== undefined ? props.weeklyPnlPct : undefined,
+  monthlyPnlAmount: props.monthlyPnlAmount !== undefined ? props.monthlyPnlAmount : undefined,
+  monthlyPnlPct: props.monthlyPnlPct !== undefined ? props.monthlyPnlPct : undefined,
+  peakToTroughAmount: props.peakToTroughAmount !== undefined ? props.peakToTroughAmount : undefined,
+  peakToTroughPct: props.peakToTroughPct !== undefined ? props.peakToTroughPct : undefined,
+  nextRecoveryEligibleAt: props.nextRecoveryEligibleAt !== undefined ? props.nextRecoveryEligibleAt : undefined,
+  lastSyncedAt: props.lastSyncedAt !== undefined ? props.lastSyncedAt : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -132,6 +121,29 @@ import { assertValidAllocation } from './validators/allocation-validator';
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    allocation: props.alpacaAccount.allocation ? 
+      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.allocation.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
+          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
+        },
+        create: {
+          equities: props.alpacaAccount.allocation.equities !== undefined ? props.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? props.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? props.alpacaAccount.allocation.futures : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? props.alpacaAccount.allocation.forex : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: props.alpacaAccount.tradingPolicy ? 
       typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
     ? { connect: {
@@ -573,42 +585,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
-    } : undefined,
-    accountRiskMetrics: props.alpacaAccount.accountRiskMetrics ? 
-      typeof props.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(props.alpacaAccount.accountRiskMetrics).length === 1 && Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.accountRiskMetrics.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? props.alpacaAccount.accountRiskMetrics.id : undefined,
-          alpacaAccountId: props.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? props.alpacaAccount.accountRiskMetrics.alpacaAccountId : undefined,
-        },
-        create: {
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? props.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
     } : undefined,
     strategyHealthSnapshots: props.alpacaAccount.strategyHealthSnapshots ? 
       Array.isArray(props.alpacaAccount.strategyHealthSnapshots) && props.alpacaAccount.strategyHealthSnapshots.length > 0 &&  props.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
@@ -773,17 +749,17 @@ import { assertValidAllocation } from './validators/allocation-validator';
           const filteredVariables = removeUndefinedProps(variables);
 
           const response = await client.mutate({
-            mutation: CREATE_ONE_ALLOCATION,
+            mutation: CREATE_ONE_ACCOUNTRISKMETRICS,
             variables: filteredVariables,
             // Don't cache mutations, but ensure we're using the freshest context
             fetchPolicy: 'no-cache'
           });
 
           if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneAllocation) {
-            return response.data.createOneAllocation;
+          if (response && response.data && response.data.createOneAccountRiskMetrics) {
+            return response.data.createOneAccountRiskMetrics;
           } else {
-            return null as unknown as AllocationType;
+            return null as unknown as AccountRiskMetricsType;
           }
         } catch (caughtError: unknown) {
           const error = caughtError as Error & { networkError?: { message?: string } };
@@ -802,9 +778,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
           if (isConstraintViolation) {
             const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-            logger.error("Non-retryable constraint violation in createOneAllocation", {
-              operation: 'createOneAllocation',
-              model: 'Allocation',
+            logger.error("Non-retryable constraint violation in createOneAccountRiskMetrics", {
+              operation: 'createOneAccountRiskMetrics',
+              model: 'AccountRiskMetrics',
               error: String(error),
               constraintName: constraintMatch ? constraintMatch[1] : undefined,
               errorCategory: 'CONSTRAINT_VIOLATION',
@@ -845,9 +821,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           if (isConnectionError && retryCount < MAX_RETRIES - 1) {
             retryCount++;
             const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-            logger.warn("Database connection error in createOneAllocation, retrying...", {
-              operation: 'createOneAllocation',
-              model: 'Allocation',
+            logger.warn("Database connection error in createOneAccountRiskMetrics, retrying...", {
+              operation: 'createOneAccountRiskMetrics',
+              model: 'AccountRiskMetrics',
               attempt: retryCount,
               maxRetries: MAX_RETRIES,
             });
@@ -861,8 +837,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           // from true defects.
           if (isConnectionError) {
             logger.warn("Database create operation failed (transient after retries)", {
-              operation: 'createOneAllocation',
-              model: 'Allocation',
+              operation: 'createOneAccountRiskMetrics',
+              model: 'AccountRiskMetrics',
               error: String(error),
               isRetryable: true,
               transient: true,
@@ -870,8 +846,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
             });
           } else {
             logger.error("Database create operation failed", {
-              operation: 'createOneAllocation',
-              model: 'Allocation',
+              operation: 'createOneAccountRiskMetrics',
+              model: 'AccountRiskMetrics',
               error: String(error),
               isRetryable: false,
             });
@@ -885,14 +861,14 @@ import { assertValidAllocation } from './validators/allocation-validator';
     },
 
   /**
-   * Create multiple Allocation records.
+   * Create multiple AccountRiskMetrics records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Allocation objects for the new records.
+   * @param props - Array of AccountRiskMetrics objects for the new records.
    * @param globalClient - Apollo Client instance.
    * @param options - Optional control flags (e.g., skipDuplicates).
    * @returns The count of created records or null.
    */
-  async createMany(props: AllocationType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
+  async createMany(props: AccountRiskMetricsType[], globalClient?: ApolloClientType<NormalizedCacheObject>, options?: { skipDuplicates?: boolean }): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -910,24 +886,37 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const CREATE_MANY_ALLOCATION = gql`
-          mutation createManyAllocation($data: [AllocationCreateManyInput!]!, $skipDuplicates: Boolean) {
-            createManyAllocation(data: $data, skipDuplicates: $skipDuplicates) {
+        const CREATE_MANY_ACCOUNTRISKMETRICS = gql`
+          mutation createManyAccountRiskMetrics($data: [AccountRiskMetricsCreateManyInput!]!, $skipDuplicates: Boolean) {
+            createManyAccountRiskMetrics(data: $data, skipDuplicates: $skipDuplicates) {
               count
             }
           }`;
 
         const variables = {
           data: props.map(prop => ({
-      equities: prop.equities !== undefined ? prop.equities : undefined,
-  optionsContracts: prop.optionsContracts !== undefined ? prop.optionsContracts : undefined,
-  futures: prop.futures !== undefined ? prop.futures : undefined,
-  etfs: prop.etfs !== undefined ? prop.etfs : undefined,
-  forex: prop.forex !== undefined ? prop.forex : undefined,
-  crypto: prop.crypto !== undefined ? prop.crypto : undefined,
-  stocks: prop.stocks !== undefined ? prop.stocks : undefined,
-  options: prop.options !== undefined ? prop.options : undefined,
-  alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
+      alpacaAccountId: prop.alpacaAccountId !== undefined ? prop.alpacaAccountId : undefined,
+  currentRiskState: prop.currentRiskState !== undefined ? prop.currentRiskState : undefined,
+  currentScopeState: prop.currentScopeState !== undefined ? prop.currentScopeState : undefined,
+  riskStateChangedAt: prop.riskStateChangedAt !== undefined ? prop.riskStateChangedAt : undefined,
+  riskStateChangedBy: prop.riskStateChangedBy !== undefined ? prop.riskStateChangedBy : undefined,
+  riskStateChangeReason: prop.riskStateChangeReason !== undefined ? prop.riskStateChangeReason : undefined,
+  accountHighWaterMark: prop.accountHighWaterMark !== undefined ? prop.accountHighWaterMark : undefined,
+  accountHighWaterMarkAt: prop.accountHighWaterMarkAt !== undefined ? prop.accountHighWaterMarkAt : undefined,
+  currentEquity: prop.currentEquity !== undefined ? prop.currentEquity : undefined,
+  currentDrawdownPct: prop.currentDrawdownPct !== undefined ? prop.currentDrawdownPct : undefined,
+  intradayDrawdownPct: prop.intradayDrawdownPct !== undefined ? prop.intradayDrawdownPct : undefined,
+  maxDrawdownPctLifetime: prop.maxDrawdownPctLifetime !== undefined ? prop.maxDrawdownPctLifetime : undefined,
+  dailyPnlAmount: prop.dailyPnlAmount !== undefined ? prop.dailyPnlAmount : undefined,
+  dailyPnlPct: prop.dailyPnlPct !== undefined ? prop.dailyPnlPct : undefined,
+  weeklyPnlAmount: prop.weeklyPnlAmount !== undefined ? prop.weeklyPnlAmount : undefined,
+  weeklyPnlPct: prop.weeklyPnlPct !== undefined ? prop.weeklyPnlPct : undefined,
+  monthlyPnlAmount: prop.monthlyPnlAmount !== undefined ? prop.monthlyPnlAmount : undefined,
+  monthlyPnlPct: prop.monthlyPnlPct !== undefined ? prop.monthlyPnlPct : undefined,
+  peakToTroughAmount: prop.peakToTroughAmount !== undefined ? prop.peakToTroughAmount : undefined,
+  peakToTroughPct: prop.peakToTroughPct !== undefined ? prop.peakToTroughPct : undefined,
+  nextRecoveryEligibleAt: prop.nextRecoveryEligibleAt !== undefined ? prop.nextRecoveryEligibleAt : undefined,
+  lastSyncedAt: prop.lastSyncedAt !== undefined ? prop.lastSyncedAt : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -935,15 +924,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: CREATE_MANY_ALLOCATION,
+          mutation: CREATE_MANY_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyAllocation) {
-          return response.data.createManyAllocation;
+        if (response && response.data && response.data.createManyAccountRiskMetrics) {
+          return response.data.createManyAccountRiskMetrics;
         } else {
           return null;
         }
@@ -964,9 +953,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.warn("Duplicate key in createManyAllocation (expected during overlapping fetches)", {
-            operation: 'createManyAllocation',
-            model: 'Allocation',
+          logger.warn("Duplicate key in createManyAccountRiskMetrics (expected during overlapping fetches)", {
+            operation: 'createManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
             isRetryable: false,
@@ -1006,9 +995,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in createManyAllocation, retrying...", {
-            operation: 'createManyAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in createManyAccountRiskMetrics, retrying...", {
+            operation: 'createManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -1019,8 +1008,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database createMany operation failed (transient after retries)", {
-            operation: 'createManyAllocation',
-            model: 'Allocation',
+            operation: 'createManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: true,
             transient: true,
@@ -1028,8 +1017,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database createMany operation failed", {
-            operation: 'createManyAllocation',
-            model: 'Allocation',
+            operation: 'createManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: false,
           });
@@ -1043,23 +1032,13 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Update a single Allocation record.
+   * Update a single AccountRiskMetrics record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Allocation or null.
+   * @returns The updated AccountRiskMetrics or null.
    */
-  async update(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
-    // Validate allocation percentages before updating
-    assertValidAllocation({
-      equities: props.equities,
-      optionsContracts: props.optionsContracts,
-      futures: props.futures,
-      etfs: props.etfs,
-      forex: props.forex,
-      crypto: props.crypto
-    });
-
+  async update(props: AccountRiskMetricsType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountRiskMetricsType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -1077,9 +1056,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_ONE_ALLOCATION = gql`
-          mutation updateOneAllocation($data: AllocationUpdateInput!, $where: AllocationWhereUniqueInput!) {
-            updateOneAllocation(data: $data, where: $where) {
+        const UPDATE_ONE_ACCOUNTRISKMETRICS = gql`
+          mutation updateOneAccountRiskMetrics($data: AccountRiskMetricsUpdateInput!, $where: AccountRiskMetricsWhereUniqueInput!) {
+            updateOneAccountRiskMetrics(data: $data, where: $where) {
               ${selectionSet}
             }
           }`;
@@ -1092,32 +1071,66 @@ import { assertValidAllocation } from './validators/allocation-validator';
       id: props.id !== undefined ? {
             set: props.id 
            } : undefined,
-  equities: props.equities !== undefined ? {
-            set: props.equities 
+  currentRiskState: props.currentRiskState !== undefined ? {
+            set: props.currentRiskState 
            } : undefined,
-  optionsContracts: props.optionsContracts !== undefined ? {
-            set: props.optionsContracts 
+  currentScopeState: props.currentScopeState !== undefined ? props.currentScopeState : undefined,
+  riskStateChangedAt: props.riskStateChangedAt !== undefined ? {
+            set: props.riskStateChangedAt 
            } : undefined,
-  futures: props.futures !== undefined ? {
-            set: props.futures 
+  riskStateChangedBy: props.riskStateChangedBy !== undefined ? {
+            set: props.riskStateChangedBy 
            } : undefined,
-  etfs: props.etfs !== undefined ? {
-            set: props.etfs 
+  riskStateChangeReason: props.riskStateChangeReason !== undefined ? {
+            set: props.riskStateChangeReason 
            } : undefined,
-  forex: props.forex !== undefined ? {
-            set: props.forex 
+  accountHighWaterMark: props.accountHighWaterMark !== undefined ? {
+            set: props.accountHighWaterMark 
            } : undefined,
-  crypto: props.crypto !== undefined ? {
-            set: props.crypto 
+  accountHighWaterMarkAt: props.accountHighWaterMarkAt !== undefined ? {
+            set: props.accountHighWaterMarkAt 
            } : undefined,
-  stocks: props.stocks !== undefined ? {
-            set: props.stocks 
+  currentEquity: props.currentEquity !== undefined ? {
+            set: props.currentEquity 
            } : undefined,
-  options: props.options !== undefined ? {
-            set: props.options 
+  currentDrawdownPct: props.currentDrawdownPct !== undefined ? {
+            set: props.currentDrawdownPct 
            } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-            set: props.createdAt 
+  intradayDrawdownPct: props.intradayDrawdownPct !== undefined ? {
+            set: props.intradayDrawdownPct 
+           } : undefined,
+  maxDrawdownPctLifetime: props.maxDrawdownPctLifetime !== undefined ? {
+            set: props.maxDrawdownPctLifetime 
+           } : undefined,
+  dailyPnlAmount: props.dailyPnlAmount !== undefined ? {
+            set: props.dailyPnlAmount 
+           } : undefined,
+  dailyPnlPct: props.dailyPnlPct !== undefined ? {
+            set: props.dailyPnlPct 
+           } : undefined,
+  weeklyPnlAmount: props.weeklyPnlAmount !== undefined ? {
+            set: props.weeklyPnlAmount 
+           } : undefined,
+  weeklyPnlPct: props.weeklyPnlPct !== undefined ? {
+            set: props.weeklyPnlPct 
+           } : undefined,
+  monthlyPnlAmount: props.monthlyPnlAmount !== undefined ? {
+            set: props.monthlyPnlAmount 
+           } : undefined,
+  monthlyPnlPct: props.monthlyPnlPct !== undefined ? {
+            set: props.monthlyPnlPct 
+           } : undefined,
+  peakToTroughAmount: props.peakToTroughAmount !== undefined ? {
+            set: props.peakToTroughAmount 
+           } : undefined,
+  peakToTroughPct: props.peakToTroughPct !== undefined ? {
+            set: props.peakToTroughPct 
+           } : undefined,
+  nextRecoveryEligibleAt: props.nextRecoveryEligibleAt !== undefined ? {
+            set: props.nextRecoveryEligibleAt 
+           } : undefined,
+  lastSyncedAt: props.lastSyncedAt !== undefined ? {
+            set: props.lastSyncedAt 
            } : undefined,
   updatedAt: props.updatedAt !== undefined ? {
             set: props.updatedAt 
@@ -1214,6 +1227,62 @@ import { assertValidAllocation } from './validators/allocation-validator';
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? {
             set: props.alpacaAccount.deletedAt
           } : undefined,
+    allocation: props.alpacaAccount.allocation ? 
+    typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && (Object.keys(props.alpacaAccount.allocation)[0] === 'id' || Object.keys(props.alpacaAccount.allocation)[0] === 'symbol')
+? {
+    connect: {
+      id: props.alpacaAccount.allocation.id
+    }
+} : { upsert: {
+        where: {
+          id: props.alpacaAccount.allocation.id !== undefined ? {
+              equals: props.alpacaAccount.allocation.id
+            } : undefined,
+          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? {
+              equals: props.alpacaAccount.allocation.alpacaAccountId
+            } : undefined,
+        },
+        update: {
+          id: props.alpacaAccount.allocation.id !== undefined ? {
+              set: props.alpacaAccount.allocation.id
+            } : undefined,
+          equities: props.alpacaAccount.allocation.equities !== undefined ? {
+              set: props.alpacaAccount.allocation.equities
+            } : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? {
+              set: props.alpacaAccount.allocation.optionsContracts
+            } : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? {
+              set: props.alpacaAccount.allocation.futures
+            } : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? {
+              set: props.alpacaAccount.allocation.etfs
+            } : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? {
+              set: props.alpacaAccount.allocation.forex
+            } : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? {
+              set: props.alpacaAccount.allocation.crypto
+            } : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? {
+              set: props.alpacaAccount.allocation.stocks
+            } : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? {
+              set: props.alpacaAccount.allocation.options
+            } : undefined,
+        },
+        create: {
+          equities: props.alpacaAccount.allocation.equities !== undefined ? props.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? props.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? props.alpacaAccount.allocation.futures : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? props.alpacaAccount.allocation.forex : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: props.alpacaAccount.tradingPolicy ? 
     typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && (Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id' || Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'symbol')
 ? {
@@ -2528,112 +2597,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
-    accountRiskMetrics: props.alpacaAccount.accountRiskMetrics ? 
-    typeof props.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(props.alpacaAccount.accountRiskMetrics).length === 1 && (Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'id' || Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'symbol')
-? {
-    connect: {
-      id: props.alpacaAccount.accountRiskMetrics.id
-    }
-} : { upsert: {
-        where: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? {
-              equals: props.alpacaAccount.accountRiskMetrics.id
-            } : undefined,
-          alpacaAccountId: props.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? {
-              equals: props.alpacaAccount.accountRiskMetrics.alpacaAccountId
-            } : undefined,
-        },
-        update: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.id
-            } : undefined,
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.currentRiskState
-            } : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt
-            } : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy
-            } : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason
-            } : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark
-            } : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt
-            } : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.currentEquity
-            } : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct
-            } : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct
-            } : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime
-            } : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount
-            } : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.dailyPnlPct
-            } : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount
-            } : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct
-            } : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount
-            } : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct
-            } : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount
-            } : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.peakToTroughPct
-            } : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt
-            } : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.lastSyncedAt
-            } : undefined,
-        },
-        create: {
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? props.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
-    } : undefined,
     strategyHealthSnapshots: props.alpacaAccount.strategyHealthSnapshots ? 
     Array.isArray(props.alpacaAccount.strategyHealthSnapshots) && props.alpacaAccount.strategyHealthSnapshots.length > 0 && props.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.strategyHealthSnapshots.map((item) => ({
@@ -3100,6 +3063,29 @@ import { assertValidAllocation } from './validators/allocation-validator';
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    allocation: props.alpacaAccount.allocation ? 
+      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.allocation.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
+          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
+        },
+        create: {
+          equities: props.alpacaAccount.allocation.equities !== undefined ? props.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? props.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? props.alpacaAccount.allocation.futures : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? props.alpacaAccount.allocation.forex : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: props.alpacaAccount.tradingPolicy ? 
       typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
     ? { connect: {
@@ -3541,42 +3527,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
           metadata: item.metadata !== undefined ? item.metadata : undefined,
         },
       }))
-    } : undefined,
-    accountRiskMetrics: props.alpacaAccount.accountRiskMetrics ? 
-      typeof props.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(props.alpacaAccount.accountRiskMetrics).length === 1 && Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.accountRiskMetrics.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? props.alpacaAccount.accountRiskMetrics.id : undefined,
-          alpacaAccountId: props.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? props.alpacaAccount.accountRiskMetrics.alpacaAccountId : undefined,
-        },
-        create: {
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? props.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
     } : undefined,
     strategyHealthSnapshots: props.alpacaAccount.strategyHealthSnapshots ? 
       Array.isArray(props.alpacaAccount.strategyHealthSnapshots) && props.alpacaAccount.strategyHealthSnapshots.length > 0 &&  props.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
@@ -3740,17 +3690,17 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_ONE_ALLOCATION,
+          mutation: UPDATE_ONE_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneAllocation) {
-          return response.data.updateOneAllocation;
+        if (response && response.data && response.data.updateOneAccountRiskMetrics) {
+          return response.data.updateOneAccountRiskMetrics;
         } else {
-          return null as unknown as AllocationType;
+          return null as unknown as AccountRiskMetricsType;
         }
       } catch (caughtError: unknown) {
         const error = caughtError as Error & { networkError?: { message?: string } };
@@ -3769,9 +3719,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in updateOneAllocation", {
-            operation: 'updateOneAllocation',
-            model: 'Allocation',
+          logger.error("Non-retryable constraint violation in updateOneAccountRiskMetrics", {
+            operation: 'updateOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
@@ -3813,9 +3763,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in updateOneAllocation, retrying...", {
-            operation: 'updateOneAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in updateOneAccountRiskMetrics, retrying...", {
+            operation: 'updateOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
             recordId: props.id,
@@ -3827,8 +3777,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database update operation failed (transient after retries)", {
-            operation: 'updateOneAllocation',
-            model: 'Allocation',
+            operation: 'updateOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             isRetryable: true,
@@ -3837,8 +3787,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database update operation failed", {
-            operation: 'updateOneAllocation',
-            model: 'Allocation',
+            operation: 'updateOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             isRetryable: false,
@@ -3853,13 +3803,13 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Upsert a single Allocation record.
+   * Upsert a single AccountRiskMetrics record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to update.
    * @param globalClient - Apollo Client instance.
-   * @returns The updated Allocation or null.
+   * @returns The updated AccountRiskMetrics or null.
    */
-  async upsert(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
+  async upsert(props: AccountRiskMetricsType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountRiskMetricsType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -3877,9 +3827,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const UPSERT_ONE_ALLOCATION = gql`
-          mutation upsertOneAllocation($where: AllocationWhereUniqueInput!, $create: AllocationCreateInput!, $update: AllocationUpdateInput!) {
-            upsertOneAllocation(where: $where, create: $create, update: $update) {
+        const UPSERT_ONE_ACCOUNTRISKMETRICS = gql`
+          mutation upsertOneAccountRiskMetrics($where: AccountRiskMetricsWhereUniqueInput!, $create: AccountRiskMetricsCreateInput!, $update: AccountRiskMetricsUpdateInput!) {
+            upsertOneAccountRiskMetrics(where: $where, create: $create, update: $update) {
               ${selectionSet}
             }
           }`;
@@ -3890,14 +3840,27 @@ import { assertValidAllocation } from './validators/allocation-validator';
   alpacaAccountId: props.alpacaAccountId !== undefined ? props.alpacaAccountId : undefined,
       },
           create: {
-        equities: props.equities !== undefined ? props.equities : undefined,
-  optionsContracts: props.optionsContracts !== undefined ? props.optionsContracts : undefined,
-  futures: props.futures !== undefined ? props.futures : undefined,
-  etfs: props.etfs !== undefined ? props.etfs : undefined,
-  forex: props.forex !== undefined ? props.forex : undefined,
-  crypto: props.crypto !== undefined ? props.crypto : undefined,
-  stocks: props.stocks !== undefined ? props.stocks : undefined,
-  options: props.options !== undefined ? props.options : undefined,
+        currentRiskState: props.currentRiskState !== undefined ? props.currentRiskState : undefined,
+  currentScopeState: props.currentScopeState !== undefined ? props.currentScopeState : undefined,
+  riskStateChangedAt: props.riskStateChangedAt !== undefined ? props.riskStateChangedAt : undefined,
+  riskStateChangedBy: props.riskStateChangedBy !== undefined ? props.riskStateChangedBy : undefined,
+  riskStateChangeReason: props.riskStateChangeReason !== undefined ? props.riskStateChangeReason : undefined,
+  accountHighWaterMark: props.accountHighWaterMark !== undefined ? props.accountHighWaterMark : undefined,
+  accountHighWaterMarkAt: props.accountHighWaterMarkAt !== undefined ? props.accountHighWaterMarkAt : undefined,
+  currentEquity: props.currentEquity !== undefined ? props.currentEquity : undefined,
+  currentDrawdownPct: props.currentDrawdownPct !== undefined ? props.currentDrawdownPct : undefined,
+  intradayDrawdownPct: props.intradayDrawdownPct !== undefined ? props.intradayDrawdownPct : undefined,
+  maxDrawdownPctLifetime: props.maxDrawdownPctLifetime !== undefined ? props.maxDrawdownPctLifetime : undefined,
+  dailyPnlAmount: props.dailyPnlAmount !== undefined ? props.dailyPnlAmount : undefined,
+  dailyPnlPct: props.dailyPnlPct !== undefined ? props.dailyPnlPct : undefined,
+  weeklyPnlAmount: props.weeklyPnlAmount !== undefined ? props.weeklyPnlAmount : undefined,
+  weeklyPnlPct: props.weeklyPnlPct !== undefined ? props.weeklyPnlPct : undefined,
+  monthlyPnlAmount: props.monthlyPnlAmount !== undefined ? props.monthlyPnlAmount : undefined,
+  monthlyPnlPct: props.monthlyPnlPct !== undefined ? props.monthlyPnlPct : undefined,
+  peakToTroughAmount: props.peakToTroughAmount !== undefined ? props.peakToTroughAmount : undefined,
+  peakToTroughPct: props.peakToTroughPct !== undefined ? props.peakToTroughPct : undefined,
+  nextRecoveryEligibleAt: props.nextRecoveryEligibleAt !== undefined ? props.nextRecoveryEligibleAt : undefined,
+  lastSyncedAt: props.lastSyncedAt !== undefined ? props.lastSyncedAt : undefined,
   alpacaAccount: props.alpacaAccount ? 
     typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && Object.keys(props.alpacaAccount)[0] === 'id'
     ? { connect: {
@@ -3941,6 +3904,29 @@ import { assertValidAllocation } from './validators/allocation-validator';
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    allocation: props.alpacaAccount.allocation ? 
+      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.allocation.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
+          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
+        },
+        create: {
+          equities: props.alpacaAccount.allocation.equities !== undefined ? props.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? props.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? props.alpacaAccount.allocation.futures : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? props.alpacaAccount.allocation.forex : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: props.alpacaAccount.tradingPolicy ? 
       typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
     ? { connect: {
@@ -4383,42 +4369,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
-    accountRiskMetrics: props.alpacaAccount.accountRiskMetrics ? 
-      typeof props.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(props.alpacaAccount.accountRiskMetrics).length === 1 && Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.accountRiskMetrics.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? props.alpacaAccount.accountRiskMetrics.id : undefined,
-          alpacaAccountId: props.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? props.alpacaAccount.accountRiskMetrics.alpacaAccountId : undefined,
-        },
-        create: {
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? props.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
-    } : undefined,
     strategyHealthSnapshots: props.alpacaAccount.strategyHealthSnapshots ? 
       Array.isArray(props.alpacaAccount.strategyHealthSnapshots) && props.alpacaAccount.strategyHealthSnapshots.length > 0 &&  props.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.strategyHealthSnapshots.map((item) => ({
@@ -4577,29 +4527,66 @@ import { assertValidAllocation } from './validators/allocation-validator';
   } : undefined,
       },
           update: {
-      equities: props.equities !== undefined ? {
-            set: props.equities 
+      currentRiskState: props.currentRiskState !== undefined ? {
+            set: props.currentRiskState 
            } : undefined,
-  optionsContracts: props.optionsContracts !== undefined ? {
-            set: props.optionsContracts 
+  currentScopeState: props.currentScopeState !== undefined ? props.currentScopeState : undefined,
+  riskStateChangedAt: props.riskStateChangedAt !== undefined ? {
+            set: props.riskStateChangedAt 
            } : undefined,
-  futures: props.futures !== undefined ? {
-            set: props.futures 
+  riskStateChangedBy: props.riskStateChangedBy !== undefined ? {
+            set: props.riskStateChangedBy 
            } : undefined,
-  etfs: props.etfs !== undefined ? {
-            set: props.etfs 
+  riskStateChangeReason: props.riskStateChangeReason !== undefined ? {
+            set: props.riskStateChangeReason 
            } : undefined,
-  forex: props.forex !== undefined ? {
-            set: props.forex 
+  accountHighWaterMark: props.accountHighWaterMark !== undefined ? {
+            set: props.accountHighWaterMark 
            } : undefined,
-  crypto: props.crypto !== undefined ? {
-            set: props.crypto 
+  accountHighWaterMarkAt: props.accountHighWaterMarkAt !== undefined ? {
+            set: props.accountHighWaterMarkAt 
            } : undefined,
-  stocks: props.stocks !== undefined ? {
-            set: props.stocks 
+  currentEquity: props.currentEquity !== undefined ? {
+            set: props.currentEquity 
            } : undefined,
-  options: props.options !== undefined ? {
-            set: props.options 
+  currentDrawdownPct: props.currentDrawdownPct !== undefined ? {
+            set: props.currentDrawdownPct 
+           } : undefined,
+  intradayDrawdownPct: props.intradayDrawdownPct !== undefined ? {
+            set: props.intradayDrawdownPct 
+           } : undefined,
+  maxDrawdownPctLifetime: props.maxDrawdownPctLifetime !== undefined ? {
+            set: props.maxDrawdownPctLifetime 
+           } : undefined,
+  dailyPnlAmount: props.dailyPnlAmount !== undefined ? {
+            set: props.dailyPnlAmount 
+           } : undefined,
+  dailyPnlPct: props.dailyPnlPct !== undefined ? {
+            set: props.dailyPnlPct 
+           } : undefined,
+  weeklyPnlAmount: props.weeklyPnlAmount !== undefined ? {
+            set: props.weeklyPnlAmount 
+           } : undefined,
+  weeklyPnlPct: props.weeklyPnlPct !== undefined ? {
+            set: props.weeklyPnlPct 
+           } : undefined,
+  monthlyPnlAmount: props.monthlyPnlAmount !== undefined ? {
+            set: props.monthlyPnlAmount 
+           } : undefined,
+  monthlyPnlPct: props.monthlyPnlPct !== undefined ? {
+            set: props.monthlyPnlPct 
+           } : undefined,
+  peakToTroughAmount: props.peakToTroughAmount !== undefined ? {
+            set: props.peakToTroughAmount 
+           } : undefined,
+  peakToTroughPct: props.peakToTroughPct !== undefined ? {
+            set: props.peakToTroughPct 
+           } : undefined,
+  nextRecoveryEligibleAt: props.nextRecoveryEligibleAt !== undefined ? {
+            set: props.nextRecoveryEligibleAt 
+           } : undefined,
+  lastSyncedAt: props.lastSyncedAt !== undefined ? {
+            set: props.lastSyncedAt 
            } : undefined,
   alpacaAccount: props.alpacaAccount ? 
   typeof props.alpacaAccount === 'object' && Object.keys(props.alpacaAccount).length === 1 && (Object.keys(props.alpacaAccount)[0] === 'id' || Object.keys(props.alpacaAccount)[0] === 'symbol')
@@ -4693,6 +4680,62 @@ import { assertValidAllocation } from './validators/allocation-validator';
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? {
             set: props.alpacaAccount.deletedAt
           } : undefined,
+    allocation: props.alpacaAccount.allocation ? 
+    typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && (Object.keys(props.alpacaAccount.allocation)[0] === 'id' || Object.keys(props.alpacaAccount.allocation)[0] === 'symbol')
+? {
+    connect: {
+      id: props.alpacaAccount.allocation.id
+    }
+} : { upsert: {
+        where: {
+          id: props.alpacaAccount.allocation.id !== undefined ? {
+              equals: props.alpacaAccount.allocation.id
+            } : undefined,
+          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? {
+              equals: props.alpacaAccount.allocation.alpacaAccountId
+            } : undefined,
+        },
+        update: {
+          id: props.alpacaAccount.allocation.id !== undefined ? {
+              set: props.alpacaAccount.allocation.id
+            } : undefined,
+          equities: props.alpacaAccount.allocation.equities !== undefined ? {
+              set: props.alpacaAccount.allocation.equities
+            } : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? {
+              set: props.alpacaAccount.allocation.optionsContracts
+            } : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? {
+              set: props.alpacaAccount.allocation.futures
+            } : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? {
+              set: props.alpacaAccount.allocation.etfs
+            } : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? {
+              set: props.alpacaAccount.allocation.forex
+            } : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? {
+              set: props.alpacaAccount.allocation.crypto
+            } : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? {
+              set: props.alpacaAccount.allocation.stocks
+            } : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? {
+              set: props.alpacaAccount.allocation.options
+            } : undefined,
+        },
+        create: {
+          equities: props.alpacaAccount.allocation.equities !== undefined ? props.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? props.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? props.alpacaAccount.allocation.futures : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? props.alpacaAccount.allocation.forex : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: props.alpacaAccount.tradingPolicy ? 
     typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && (Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id' || Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'symbol')
 ? {
@@ -6007,112 +6050,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
-    accountRiskMetrics: props.alpacaAccount.accountRiskMetrics ? 
-    typeof props.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(props.alpacaAccount.accountRiskMetrics).length === 1 && (Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'id' || Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'symbol')
-? {
-    connect: {
-      id: props.alpacaAccount.accountRiskMetrics.id
-    }
-} : { upsert: {
-        where: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? {
-              equals: props.alpacaAccount.accountRiskMetrics.id
-            } : undefined,
-          alpacaAccountId: props.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? {
-              equals: props.alpacaAccount.accountRiskMetrics.alpacaAccountId
-            } : undefined,
-        },
-        update: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.id
-            } : undefined,
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.currentRiskState
-            } : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt
-            } : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy
-            } : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason
-            } : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark
-            } : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt
-            } : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.currentEquity
-            } : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct
-            } : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct
-            } : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime
-            } : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount
-            } : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.dailyPnlPct
-            } : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount
-            } : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct
-            } : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount
-            } : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct
-            } : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount
-            } : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.peakToTroughPct
-            } : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt
-            } : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? {
-              set: props.alpacaAccount.accountRiskMetrics.lastSyncedAt
-            } : undefined,
-        },
-        create: {
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? props.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
-    } : undefined,
     strategyHealthSnapshots: props.alpacaAccount.strategyHealthSnapshots ? 
     Array.isArray(props.alpacaAccount.strategyHealthSnapshots) && props.alpacaAccount.strategyHealthSnapshots.length > 0 && props.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: props.alpacaAccount.strategyHealthSnapshots.map((item) => ({
@@ -6579,6 +6516,29 @@ import { assertValidAllocation } from './validators/allocation-validator';
         secondReducedTrailPercentage100: props.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: props.alpacaAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: props.alpacaAccount.deletedAt !== undefined ? props.alpacaAccount.deletedAt : undefined,
+    allocation: props.alpacaAccount.allocation ? 
+      typeof props.alpacaAccount.allocation === 'object' && Object.keys(props.alpacaAccount.allocation).length === 1 && Object.keys(props.alpacaAccount.allocation)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.allocation.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.allocation.id !== undefined ? props.alpacaAccount.allocation.id : undefined,
+          alpacaAccountId: props.alpacaAccount.allocation.alpacaAccountId !== undefined ? props.alpacaAccount.allocation.alpacaAccountId : undefined,
+        },
+        create: {
+          equities: props.alpacaAccount.allocation.equities !== undefined ? props.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: props.alpacaAccount.allocation.optionsContracts !== undefined ? props.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: props.alpacaAccount.allocation.futures !== undefined ? props.alpacaAccount.allocation.futures : undefined,
+          etfs: props.alpacaAccount.allocation.etfs !== undefined ? props.alpacaAccount.allocation.etfs : undefined,
+          forex: props.alpacaAccount.allocation.forex !== undefined ? props.alpacaAccount.allocation.forex : undefined,
+          crypto: props.alpacaAccount.allocation.crypto !== undefined ? props.alpacaAccount.allocation.crypto : undefined,
+          stocks: props.alpacaAccount.allocation.stocks !== undefined ? props.alpacaAccount.allocation.stocks : undefined,
+          options: props.alpacaAccount.allocation.options !== undefined ? props.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: props.alpacaAccount.tradingPolicy ? 
       typeof props.alpacaAccount.tradingPolicy === 'object' && Object.keys(props.alpacaAccount.tradingPolicy).length === 1 && Object.keys(props.alpacaAccount.tradingPolicy)[0] === 'id'
     ? { connect: {
@@ -7021,42 +6981,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
-    accountRiskMetrics: props.alpacaAccount.accountRiskMetrics ? 
-      typeof props.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(props.alpacaAccount.accountRiskMetrics).length === 1 && Object.keys(props.alpacaAccount.accountRiskMetrics)[0] === 'id'
-    ? { connect: {
-          id: props.alpacaAccount.accountRiskMetrics.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: props.alpacaAccount.accountRiskMetrics.id !== undefined ? props.alpacaAccount.accountRiskMetrics.id : undefined,
-          alpacaAccountId: props.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? props.alpacaAccount.accountRiskMetrics.alpacaAccountId : undefined,
-        },
-        create: {
-          currentRiskState: props.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: props.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? props.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: props.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: props.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: props.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? props.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: props.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? props.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: props.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? props.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: props.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? props.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? props.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: props.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: props.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: props.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: props.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? props.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: props.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: props.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? props.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? props.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: props.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? props.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
-    } : undefined,
     strategyHealthSnapshots: props.alpacaAccount.strategyHealthSnapshots ? 
       Array.isArray(props.alpacaAccount.strategyHealthSnapshots) && props.alpacaAccount.strategyHealthSnapshots.length > 0 &&  props.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      props.alpacaAccount.strategyHealthSnapshots.map((item) => ({
@@ -7219,17 +7143,17 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPSERT_ONE_ALLOCATION,
+          mutation: UPSERT_ONE_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneAllocation) {
-          return response.data.upsertOneAllocation;
+        if (response && response.data && response.data.upsertOneAccountRiskMetrics) {
+          return response.data.upsertOneAccountRiskMetrics;
         } else {
-          return null as unknown as AllocationType;
+          return null as unknown as AccountRiskMetricsType;
         }
       } catch (caughtError: unknown) {
         const error = caughtError as Error & { networkError?: { message?: string } };
@@ -7248,9 +7172,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in upsertOneAllocation", {
-            operation: 'upsertOneAllocation',
-            model: 'Allocation',
+          logger.error("Non-retryable constraint violation in upsertOneAccountRiskMetrics", {
+            operation: 'upsertOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
@@ -7292,9 +7216,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in upsertOneAllocation, retrying...", {
-            operation: 'upsertOneAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in upsertOneAccountRiskMetrics, retrying...", {
+            operation: 'upsertOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
             recordId: props.id,
@@ -7306,8 +7230,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database upsert operation failed (transient after retries)", {
-            operation: 'upsertOneAllocation',
-            model: 'Allocation',
+            operation: 'upsertOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             isRetryable: true,
@@ -7316,8 +7240,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database upsert operation failed", {
-            operation: 'upsertOneAllocation',
-            model: 'Allocation',
+            operation: 'upsertOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             isRetryable: false,
@@ -7332,13 +7256,13 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Update multiple Allocation records.
+   * Update multiple AccountRiskMetrics records.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of Allocation objects for the updated records.
+   * @param props - Array of AccountRiskMetrics objects for the updated records.
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AllocationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(props: AccountRiskMetricsType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -7356,9 +7280,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const UPDATE_MANY_ALLOCATION = gql`
-          mutation updateManyAllocation($data: [AllocationCreateManyInput!]!) {
-            updateManyAllocation(data: $data) {
+        const UPDATE_MANY_ACCOUNTRISKMETRICS = gql`
+          mutation updateManyAccountRiskMetrics($data: [AccountRiskMetricsCreateManyInput!]!) {
+            updateManyAccountRiskMetrics(data: $data) {
               count
             }
           }`;
@@ -7372,32 +7296,66 @@ import { assertValidAllocation } from './validators/allocation-validator';
               id: prop.id !== undefined ? {
             set: prop.id 
            } : undefined,
-  equities: prop.equities !== undefined ? {
-            set: prop.equities 
+  currentRiskState: prop.currentRiskState !== undefined ? {
+            set: prop.currentRiskState 
            } : undefined,
-  optionsContracts: prop.optionsContracts !== undefined ? {
-            set: prop.optionsContracts 
+  currentScopeState: prop.currentScopeState !== undefined ? prop.currentScopeState : undefined,
+  riskStateChangedAt: prop.riskStateChangedAt !== undefined ? {
+            set: prop.riskStateChangedAt 
            } : undefined,
-  futures: prop.futures !== undefined ? {
-            set: prop.futures 
+  riskStateChangedBy: prop.riskStateChangedBy !== undefined ? {
+            set: prop.riskStateChangedBy 
            } : undefined,
-  etfs: prop.etfs !== undefined ? {
-            set: prop.etfs 
+  riskStateChangeReason: prop.riskStateChangeReason !== undefined ? {
+            set: prop.riskStateChangeReason 
            } : undefined,
-  forex: prop.forex !== undefined ? {
-            set: prop.forex 
+  accountHighWaterMark: prop.accountHighWaterMark !== undefined ? {
+            set: prop.accountHighWaterMark 
            } : undefined,
-  crypto: prop.crypto !== undefined ? {
-            set: prop.crypto 
+  accountHighWaterMarkAt: prop.accountHighWaterMarkAt !== undefined ? {
+            set: prop.accountHighWaterMarkAt 
            } : undefined,
-  stocks: prop.stocks !== undefined ? {
-            set: prop.stocks 
+  currentEquity: prop.currentEquity !== undefined ? {
+            set: prop.currentEquity 
            } : undefined,
-  options: prop.options !== undefined ? {
-            set: prop.options 
+  currentDrawdownPct: prop.currentDrawdownPct !== undefined ? {
+            set: prop.currentDrawdownPct 
            } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-            set: prop.createdAt 
+  intradayDrawdownPct: prop.intradayDrawdownPct !== undefined ? {
+            set: prop.intradayDrawdownPct 
+           } : undefined,
+  maxDrawdownPctLifetime: prop.maxDrawdownPctLifetime !== undefined ? {
+            set: prop.maxDrawdownPctLifetime 
+           } : undefined,
+  dailyPnlAmount: prop.dailyPnlAmount !== undefined ? {
+            set: prop.dailyPnlAmount 
+           } : undefined,
+  dailyPnlPct: prop.dailyPnlPct !== undefined ? {
+            set: prop.dailyPnlPct 
+           } : undefined,
+  weeklyPnlAmount: prop.weeklyPnlAmount !== undefined ? {
+            set: prop.weeklyPnlAmount 
+           } : undefined,
+  weeklyPnlPct: prop.weeklyPnlPct !== undefined ? {
+            set: prop.weeklyPnlPct 
+           } : undefined,
+  monthlyPnlAmount: prop.monthlyPnlAmount !== undefined ? {
+            set: prop.monthlyPnlAmount 
+           } : undefined,
+  monthlyPnlPct: prop.monthlyPnlPct !== undefined ? {
+            set: prop.monthlyPnlPct 
+           } : undefined,
+  peakToTroughAmount: prop.peakToTroughAmount !== undefined ? {
+            set: prop.peakToTroughAmount 
+           } : undefined,
+  peakToTroughPct: prop.peakToTroughPct !== undefined ? {
+            set: prop.peakToTroughPct 
+           } : undefined,
+  nextRecoveryEligibleAt: prop.nextRecoveryEligibleAt !== undefined ? {
+            set: prop.nextRecoveryEligibleAt 
+           } : undefined,
+  lastSyncedAt: prop.lastSyncedAt !== undefined ? {
+            set: prop.lastSyncedAt 
            } : undefined,
   updatedAt: prop.updatedAt !== undefined ? {
             set: prop.updatedAt 
@@ -7494,6 +7452,62 @@ import { assertValidAllocation } from './validators/allocation-validator';
         deletedAt: prop.alpacaAccount.deletedAt !== undefined ? {
             set: prop.alpacaAccount.deletedAt
           } : undefined,
+    allocation: prop.alpacaAccount.allocation ? 
+    typeof prop.alpacaAccount.allocation === 'object' && Object.keys(prop.alpacaAccount.allocation).length === 1 && (Object.keys(prop.alpacaAccount.allocation)[0] === 'id' || Object.keys(prop.alpacaAccount.allocation)[0] === 'symbol')
+? {
+    connect: {
+      id: prop.alpacaAccount.allocation.id
+    }
+} : { upsert: {
+        where: {
+          id: prop.alpacaAccount.allocation.id !== undefined ? {
+              equals: prop.alpacaAccount.allocation.id
+            } : undefined,
+          alpacaAccountId: prop.alpacaAccount.allocation.alpacaAccountId !== undefined ? {
+              equals: prop.alpacaAccount.allocation.alpacaAccountId
+            } : undefined,
+        },
+        update: {
+          id: prop.alpacaAccount.allocation.id !== undefined ? {
+              set: prop.alpacaAccount.allocation.id
+            } : undefined,
+          equities: prop.alpacaAccount.allocation.equities !== undefined ? {
+              set: prop.alpacaAccount.allocation.equities
+            } : undefined,
+          optionsContracts: prop.alpacaAccount.allocation.optionsContracts !== undefined ? {
+              set: prop.alpacaAccount.allocation.optionsContracts
+            } : undefined,
+          futures: prop.alpacaAccount.allocation.futures !== undefined ? {
+              set: prop.alpacaAccount.allocation.futures
+            } : undefined,
+          etfs: prop.alpacaAccount.allocation.etfs !== undefined ? {
+              set: prop.alpacaAccount.allocation.etfs
+            } : undefined,
+          forex: prop.alpacaAccount.allocation.forex !== undefined ? {
+              set: prop.alpacaAccount.allocation.forex
+            } : undefined,
+          crypto: prop.alpacaAccount.allocation.crypto !== undefined ? {
+              set: prop.alpacaAccount.allocation.crypto
+            } : undefined,
+          stocks: prop.alpacaAccount.allocation.stocks !== undefined ? {
+              set: prop.alpacaAccount.allocation.stocks
+            } : undefined,
+          options: prop.alpacaAccount.allocation.options !== undefined ? {
+              set: prop.alpacaAccount.allocation.options
+            } : undefined,
+        },
+        create: {
+          equities: prop.alpacaAccount.allocation.equities !== undefined ? prop.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: prop.alpacaAccount.allocation.optionsContracts !== undefined ? prop.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: prop.alpacaAccount.allocation.futures !== undefined ? prop.alpacaAccount.allocation.futures : undefined,
+          etfs: prop.alpacaAccount.allocation.etfs !== undefined ? prop.alpacaAccount.allocation.etfs : undefined,
+          forex: prop.alpacaAccount.allocation.forex !== undefined ? prop.alpacaAccount.allocation.forex : undefined,
+          crypto: prop.alpacaAccount.allocation.crypto !== undefined ? prop.alpacaAccount.allocation.crypto : undefined,
+          stocks: prop.alpacaAccount.allocation.stocks !== undefined ? prop.alpacaAccount.allocation.stocks : undefined,
+          options: prop.alpacaAccount.allocation.options !== undefined ? prop.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: prop.alpacaAccount.tradingPolicy ? 
     typeof prop.alpacaAccount.tradingPolicy === 'object' && Object.keys(prop.alpacaAccount.tradingPolicy).length === 1 && (Object.keys(prop.alpacaAccount.tradingPolicy)[0] === 'id' || Object.keys(prop.alpacaAccount.tradingPolicy)[0] === 'symbol')
 ? {
@@ -8808,112 +8822,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
-    accountRiskMetrics: prop.alpacaAccount.accountRiskMetrics ? 
-    typeof prop.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(prop.alpacaAccount.accountRiskMetrics).length === 1 && (Object.keys(prop.alpacaAccount.accountRiskMetrics)[0] === 'id' || Object.keys(prop.alpacaAccount.accountRiskMetrics)[0] === 'symbol')
-? {
-    connect: {
-      id: prop.alpacaAccount.accountRiskMetrics.id
-    }
-} : { upsert: {
-        where: {
-          id: prop.alpacaAccount.accountRiskMetrics.id !== undefined ? {
-              equals: prop.alpacaAccount.accountRiskMetrics.id
-            } : undefined,
-          alpacaAccountId: prop.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? {
-              equals: prop.alpacaAccount.accountRiskMetrics.alpacaAccountId
-            } : undefined,
-        },
-        update: {
-          id: prop.alpacaAccount.accountRiskMetrics.id !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.id
-            } : undefined,
-          currentRiskState: prop.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.currentRiskState
-            } : undefined,
-          currentScopeState: prop.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: prop.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.riskStateChangedAt
-            } : undefined,
-          riskStateChangedBy: prop.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.riskStateChangedBy
-            } : undefined,
-          riskStateChangeReason: prop.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.riskStateChangeReason
-            } : undefined,
-          accountHighWaterMark: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMark
-            } : undefined,
-          accountHighWaterMarkAt: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt
-            } : undefined,
-          currentEquity: prop.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.currentEquity
-            } : undefined,
-          currentDrawdownPct: prop.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.currentDrawdownPct
-            } : undefined,
-          intradayDrawdownPct: prop.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.intradayDrawdownPct
-            } : undefined,
-          maxDrawdownPctLifetime: prop.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime
-            } : undefined,
-          dailyPnlAmount: prop.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.dailyPnlAmount
-            } : undefined,
-          dailyPnlPct: prop.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.dailyPnlPct
-            } : undefined,
-          weeklyPnlAmount: prop.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.weeklyPnlAmount
-            } : undefined,
-          weeklyPnlPct: prop.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.weeklyPnlPct
-            } : undefined,
-          monthlyPnlAmount: prop.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.monthlyPnlAmount
-            } : undefined,
-          monthlyPnlPct: prop.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.monthlyPnlPct
-            } : undefined,
-          peakToTroughAmount: prop.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.peakToTroughAmount
-            } : undefined,
-          peakToTroughPct: prop.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.peakToTroughPct
-            } : undefined,
-          nextRecoveryEligibleAt: prop.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt
-            } : undefined,
-          lastSyncedAt: prop.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? {
-              set: prop.alpacaAccount.accountRiskMetrics.lastSyncedAt
-            } : undefined,
-        },
-        create: {
-          currentRiskState: prop.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: prop.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: prop.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: prop.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? prop.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: prop.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? prop.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? prop.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: prop.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: prop.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: prop.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: prop.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? prop.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: prop.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: prop.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: prop.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: prop.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: prop.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: prop.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: prop.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: prop.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: prop.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: prop.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
-    } : undefined,
     strategyHealthSnapshots: prop.alpacaAccount.strategyHealthSnapshots ? 
     Array.isArray(prop.alpacaAccount.strategyHealthSnapshots) && prop.alpacaAccount.strategyHealthSnapshots.length > 0 && prop.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
     connect: prop.alpacaAccount.strategyHealthSnapshots.map((item) => ({
@@ -9380,6 +9288,29 @@ import { assertValidAllocation } from './validators/allocation-validator';
         secondReducedTrailPercentage100: prop.alpacaAccount.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.secondReducedTrailPercentage100 : undefined,
         minimumPriceChangePercent100: prop.alpacaAccount.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.minimumPriceChangePercent100 : undefined,
         deletedAt: prop.alpacaAccount.deletedAt !== undefined ? prop.alpacaAccount.deletedAt : undefined,
+    allocation: prop.alpacaAccount.allocation ? 
+      typeof prop.alpacaAccount.allocation === 'object' && Object.keys(prop.alpacaAccount.allocation).length === 1 && Object.keys(prop.alpacaAccount.allocation)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.allocation.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.alpacaAccount.allocation.id !== undefined ? prop.alpacaAccount.allocation.id : undefined,
+          alpacaAccountId: prop.alpacaAccount.allocation.alpacaAccountId !== undefined ? prop.alpacaAccount.allocation.alpacaAccountId : undefined,
+        },
+        create: {
+          equities: prop.alpacaAccount.allocation.equities !== undefined ? prop.alpacaAccount.allocation.equities : undefined,
+          optionsContracts: prop.alpacaAccount.allocation.optionsContracts !== undefined ? prop.alpacaAccount.allocation.optionsContracts : undefined,
+          futures: prop.alpacaAccount.allocation.futures !== undefined ? prop.alpacaAccount.allocation.futures : undefined,
+          etfs: prop.alpacaAccount.allocation.etfs !== undefined ? prop.alpacaAccount.allocation.etfs : undefined,
+          forex: prop.alpacaAccount.allocation.forex !== undefined ? prop.alpacaAccount.allocation.forex : undefined,
+          crypto: prop.alpacaAccount.allocation.crypto !== undefined ? prop.alpacaAccount.allocation.crypto : undefined,
+          stocks: prop.alpacaAccount.allocation.stocks !== undefined ? prop.alpacaAccount.allocation.stocks : undefined,
+          options: prop.alpacaAccount.allocation.options !== undefined ? prop.alpacaAccount.allocation.options : undefined,
+        },
+      }
+    } : undefined,
     tradingPolicy: prop.alpacaAccount.tradingPolicy ? 
       typeof prop.alpacaAccount.tradingPolicy === 'object' && Object.keys(prop.alpacaAccount.tradingPolicy).length === 1 && Object.keys(prop.alpacaAccount.tradingPolicy)[0] === 'id'
     ? { connect: {
@@ -9822,42 +9753,6 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
-    accountRiskMetrics: prop.alpacaAccount.accountRiskMetrics ? 
-      typeof prop.alpacaAccount.accountRiskMetrics === 'object' && Object.keys(prop.alpacaAccount.accountRiskMetrics).length === 1 && Object.keys(prop.alpacaAccount.accountRiskMetrics)[0] === 'id'
-    ? { connect: {
-          id: prop.alpacaAccount.accountRiskMetrics.id
-          }
-        }
-    : { connectOrCreate: {
-        where: {
-          id: prop.alpacaAccount.accountRiskMetrics.id !== undefined ? prop.alpacaAccount.accountRiskMetrics.id : undefined,
-          alpacaAccountId: prop.alpacaAccount.accountRiskMetrics.alpacaAccountId !== undefined ? prop.alpacaAccount.accountRiskMetrics.alpacaAccountId : undefined,
-        },
-        create: {
-          currentRiskState: prop.alpacaAccount.accountRiskMetrics.currentRiskState !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentRiskState : undefined,
-          currentScopeState: prop.alpacaAccount.accountRiskMetrics.currentScopeState !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentScopeState : undefined,
-          riskStateChangedAt: prop.alpacaAccount.accountRiskMetrics.riskStateChangedAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.riskStateChangedAt : undefined,
-          riskStateChangedBy: prop.alpacaAccount.accountRiskMetrics.riskStateChangedBy !== undefined ? prop.alpacaAccount.accountRiskMetrics.riskStateChangedBy : undefined,
-          riskStateChangeReason: prop.alpacaAccount.accountRiskMetrics.riskStateChangeReason !== undefined ? prop.alpacaAccount.accountRiskMetrics.riskStateChangeReason : undefined,
-          accountHighWaterMark: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMark !== undefined ? prop.alpacaAccount.accountRiskMetrics.accountHighWaterMark : undefined,
-          accountHighWaterMarkAt: prop.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.accountHighWaterMarkAt : undefined,
-          currentEquity: prop.alpacaAccount.accountRiskMetrics.currentEquity !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentEquity : undefined,
-          currentDrawdownPct: prop.alpacaAccount.accountRiskMetrics.currentDrawdownPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.currentDrawdownPct : undefined,
-          intradayDrawdownPct: prop.alpacaAccount.accountRiskMetrics.intradayDrawdownPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.intradayDrawdownPct : undefined,
-          maxDrawdownPctLifetime: prop.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime !== undefined ? prop.alpacaAccount.accountRiskMetrics.maxDrawdownPctLifetime : undefined,
-          dailyPnlAmount: prop.alpacaAccount.accountRiskMetrics.dailyPnlAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.dailyPnlAmount : undefined,
-          dailyPnlPct: prop.alpacaAccount.accountRiskMetrics.dailyPnlPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.dailyPnlPct : undefined,
-          weeklyPnlAmount: prop.alpacaAccount.accountRiskMetrics.weeklyPnlAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.weeklyPnlAmount : undefined,
-          weeklyPnlPct: prop.alpacaAccount.accountRiskMetrics.weeklyPnlPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.weeklyPnlPct : undefined,
-          monthlyPnlAmount: prop.alpacaAccount.accountRiskMetrics.monthlyPnlAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.monthlyPnlAmount : undefined,
-          monthlyPnlPct: prop.alpacaAccount.accountRiskMetrics.monthlyPnlPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.monthlyPnlPct : undefined,
-          peakToTroughAmount: prop.alpacaAccount.accountRiskMetrics.peakToTroughAmount !== undefined ? prop.alpacaAccount.accountRiskMetrics.peakToTroughAmount : undefined,
-          peakToTroughPct: prop.alpacaAccount.accountRiskMetrics.peakToTroughPct !== undefined ? prop.alpacaAccount.accountRiskMetrics.peakToTroughPct : undefined,
-          nextRecoveryEligibleAt: prop.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.nextRecoveryEligibleAt : undefined,
-          lastSyncedAt: prop.alpacaAccount.accountRiskMetrics.lastSyncedAt !== undefined ? prop.alpacaAccount.accountRiskMetrics.lastSyncedAt : undefined,
-        },
-      }
-    } : undefined,
     strategyHealthSnapshots: prop.alpacaAccount.strategyHealthSnapshots ? 
       Array.isArray(prop.alpacaAccount.strategyHealthSnapshots) && prop.alpacaAccount.strategyHealthSnapshots.length > 0 &&  prop.alpacaAccount.strategyHealthSnapshots.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
         connect:      prop.alpacaAccount.strategyHealthSnapshots.map((item) => ({
@@ -10021,15 +9916,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: UPDATE_MANY_ALLOCATION,
+          mutation: UPDATE_MANY_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyAllocation) {
-          return response.data.updateManyAllocation;
+        if (response && response.data && response.data.updateManyAccountRiskMetrics) {
+          return response.data.updateManyAccountRiskMetrics;
         } else {
           return null;
         }
@@ -10050,9 +9945,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in updateManyAllocation", {
-            operation: 'updateManyAllocation',
-            model: 'Allocation',
+          logger.error("Non-retryable constraint violation in updateManyAccountRiskMetrics", {
+            operation: 'updateManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
             errorCategory: 'CONSTRAINT_VIOLATION',
@@ -10093,9 +9988,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in updateManyAllocation, retrying...", {
-            operation: 'updateManyAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in updateManyAccountRiskMetrics, retrying...", {
+            operation: 'updateManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -10106,8 +10001,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database updateMany operation failed (transient after retries)", {
-            operation: 'updateManyAllocation',
-            model: 'Allocation',
+            operation: 'updateManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: true,
             transient: true,
@@ -10115,8 +10010,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database updateMany operation failed", {
-            operation: 'updateManyAllocation',
-            model: 'Allocation',
+            operation: 'updateManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: false,
           });
@@ -10130,13 +10025,13 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Delete a single Allocation record.
+   * Delete a single AccountRiskMetrics record.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record to delete.
    * @param globalClient - Apollo Client instance.
-   * @returns The deleted Allocation or null.
+   * @returns The deleted AccountRiskMetrics or null.
    */
-  async delete(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType> {
+  async delete(props: AccountRiskMetricsType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountRiskMetricsType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -10154,9 +10049,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const DELETE_ONE_ALLOCATION = gql`
-          mutation deleteOneAllocation($where: AllocationWhereUniqueInput!) {
-            deleteOneAllocation(where: $where) {
+        const DELETE_ONE_ACCOUNTRISKMETRICS = gql`
+          mutation deleteOneAccountRiskMetrics($where: AccountRiskMetricsWhereUniqueInput!) {
+            deleteOneAccountRiskMetrics(where: $where) {
               id
             }
           }`;
@@ -10170,17 +10065,17 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.mutate({
-          mutation: DELETE_ONE_ALLOCATION,
+          mutation: DELETE_ONE_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
           fetchPolicy: 'no-cache'
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneAllocation) {
-          return response.data.deleteOneAllocation;
+        if (response && response.data && response.data.deleteOneAccountRiskMetrics) {
+          return response.data.deleteOneAccountRiskMetrics;
         } else {
-          return null as unknown as AllocationType;
+          return null as unknown as AccountRiskMetricsType;
         }
       } catch (caughtError: unknown) {
         const error = caughtError as Error & { networkError?: { message?: string } };
@@ -10202,9 +10097,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         if (isConstraintViolation) {
           const constraintMatch = error.message?.match(/constraint\s+"([^"]+)"/);
-          logger.error("Non-retryable constraint violation in deleteOneAllocation", {
-            operation: 'deleteOneAllocation',
-            model: 'Allocation',
+          logger.error("Non-retryable constraint violation in deleteOneAccountRiskMetrics", {
+            operation: 'deleteOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             constraintName: constraintMatch ? constraintMatch[1] : undefined,
@@ -10246,9 +10141,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in deleteOneAllocation, retrying...", {
-            operation: 'deleteOneAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in deleteOneAccountRiskMetrics, retrying...", {
+            operation: 'deleteOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
             recordId: props.id,
@@ -10260,8 +10155,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database delete operation failed (transient after retries)", {
-            operation: 'deleteOneAllocation',
-            model: 'Allocation',
+            operation: 'deleteOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             isRetryable: true,
@@ -10270,8 +10165,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database delete operation failed", {
-            operation: 'deleteOneAllocation',
-            model: 'Allocation',
+            operation: 'deleteOneAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             recordId: props.id,
             isRetryable: false,
@@ -10286,14 +10181,14 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Retrieve a single Allocation record by ID.
+   * Retrieve a single AccountRiskMetrics record by ID.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Properties to identify the record.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns The retrieved Allocation or null.
+   * @returns The retrieved AccountRiskMetrics or null.
    */
-  async get(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AllocationType | null> {
+  async get(props: AccountRiskMetricsType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AccountRiskMetricsType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -10311,9 +10206,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALLOCATION = gql`
-          query getAllocation($where: AllocationWhereUniqueInput!) {
-            getAllocation(where: $where) {
+        const GET_ACCOUNTRISKMETRICS = gql`
+          query getAccountRiskMetrics($where: AccountRiskMetricsWhereUniqueInput!) {
+            getAccountRiskMetrics(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -10327,19 +10222,19 @@ import { assertValidAllocation } from './validators/allocation-validator';
         const filteredVariables = removeUndefinedProps(variables);
 
         const response = await client.query({
-          query: GET_ALLOCATION,
+          query: GET_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.getAllocation ?? null;
+        return response.data?.getAccountRiskMetrics ?? null;
       } catch (caughtError: unknown) {
         const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Allocation found') {
+        if (error.message === 'No AccountRiskMetrics found') {
           return null;
         }
 
@@ -10375,9 +10270,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in getAllocation, retrying...", {
-            operation: 'getAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in getAccountRiskMetrics, retrying...", {
+            operation: 'getAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -10388,8 +10283,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database get operation failed (transient after retries)", {
-            operation: 'getAllocation',
-            model: 'Allocation',
+            operation: 'getAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: true,
             transient: true,
@@ -10397,8 +10292,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database get operation failed", {
-            operation: 'getAllocation',
-            model: 'Allocation',
+            operation: 'getAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: false,
           });
@@ -10412,12 +10307,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Retrieve all Allocations records.
+   * Retrieve all AccountRiskMetrics records.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param globalClient - Apollo Client instance.
-   * @returns An array of Allocation records or null.
+   * @returns An array of AccountRiskMetrics records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AllocationType[] | null> {
+  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AccountRiskMetricsType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -10435,26 +10330,26 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const GET_ALL_ALLOCATION = gql`
-          query getAllAllocation {
-            allocations {
+        const GET_ALL_ACCOUNTRISKMETRICS = gql`
+          query getAllAccountRiskMetrics {
+            accountRiskMetrics {
               ${selectionSet}
             }
           }`;
 
         const response = await client.query({
-          query: GET_ALL_ALLOCATION,
+          query: GET_ALL_ACCOUNTRISKMETRICS,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        return response.data?.allocations ?? null;
+        return response.data?.accountRiskMetrics ?? null;
       } catch (caughtError: unknown) {
         const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Allocation found') {
+        if (error.message === 'No AccountRiskMetrics found') {
           return null;
         }
 
@@ -10490,9 +10385,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in getAllAllocation, retrying...", {
-            operation: 'getAllAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in getAllAccountRiskMetrics, retrying...", {
+            operation: 'getAllAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -10503,8 +10398,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database getAll operation failed (transient after retries)", {
-            operation: 'getAllAllocation',
-            model: 'Allocation',
+            operation: 'getAllAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: true,
             transient: true,
@@ -10512,8 +10407,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database getAll operation failed", {
-            operation: 'getAllAllocation',
-            model: 'Allocation',
+            operation: 'getAllAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: false,
           });
@@ -10527,14 +10422,14 @@ import { assertValidAllocation } from './validators/allocation-validator';
   },
 
   /**
-   * Find multiple Allocation records based on conditions.
+   * Find multiple AccountRiskMetrics records based on conditions.
    * Enhanced with connection resilience against Prisma connection errors.
    * @param props - Conditions to find records.
    * @param globalClient - Apollo Client instance.
    * @param whereInput - Optional custom where input.
-   * @returns An array of found Allocation records or null.
+   * @returns An array of found AccountRiskMetrics records or null.
    */
-  async findMany(props: AllocationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AllocationType[] | null> {
+  async findMany(props: AccountRiskMetricsType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: Record<string, unknown>): Promise<AccountRiskMetricsType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 3;
     let retryCount = 0;
@@ -10552,9 +10447,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
 
         const { gql, ApolloError } = modules;
 
-        const FIND_MANY_ALLOCATION = gql`
-          query findManyAllocation($where: AllocationWhereInput!) {
-            allocations(where: $where) {
+        const FIND_MANY_ACCOUNTRISKMETRICS = gql`
+          query findManyAccountRiskMetrics($where: AccountRiskMetricsWhereInput!) {
+            accountRiskMetrics(where: $where) {
               ${selectionSet}
             }
           }`;
@@ -10575,27 +10470,27 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Validate that we have at least one filter criteria
         // GraphQL requires a non-empty where clause for findMany
         if (!filteredVariables || !filteredVariables.where || Object.keys(filteredVariables.where).length === 0) {
-          throw new Error(`findManyAllocation requires at least one filter criterion. Received empty where clause.`);
+          throw new Error(`findManyAccountRiskMetrics requires at least one filter criterion. Received empty where clause.`);
         }
 
         const response = await client.query({
-          query: FIND_MANY_ALLOCATION,
+          query: FIND_MANY_ACCOUNTRISKMETRICS,
           variables: filteredVariables,
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
         if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.allocations) {
-          return response.data.allocations;
+        if (response && response.data && response.data.accountRiskMetrics) {
+          return response.data.accountRiskMetrics;
         } else {
-          return [] as AllocationType[];
+          return [] as AccountRiskMetricsType[];
         }
       } catch (caughtError: unknown) {
         const error = caughtError as Error & { networkError?: { message?: string } };
         lastError = error;
 
         // Check if this is a "No record found" error - this is an expected condition, not a failure
-        if (error.message === 'No Allocation found') {
+        if (error.message === 'No AccountRiskMetrics found') {
           return null;
         }
 
@@ -10631,9 +10526,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const delay = Math.pow(2, retryCount) * 100; // Exponential backoff: 200ms, 400ms, 800ms
-          logger.warn("Database connection error in findManyAllocation, retrying...", {
-            operation: 'findManyAllocation',
-            model: 'Allocation',
+          logger.warn("Database connection error in findManyAccountRiskMetrics, retrying...", {
+            operation: 'findManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             attempt: retryCount,
             maxRetries: MAX_RETRIES,
           });
@@ -10644,8 +10539,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
         // Log structured error details and rethrow (transient -> WARN).
         if (isConnectionError) {
           logger.warn("Database findMany operation failed (transient after retries)", {
-            operation: 'findManyAllocation',
-            model: 'Allocation',
+            operation: 'findManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: true,
             transient: true,
@@ -10653,8 +10548,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           });
         } else {
           logger.error("Database findMany operation failed", {
-            operation: 'findManyAllocation',
-            model: 'Allocation',
+            operation: 'findManyAccountRiskMetrics',
+            model: 'AccountRiskMetrics',
             error: String(error),
             isRetryable: false,
           });
