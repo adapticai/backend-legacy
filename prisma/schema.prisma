@@ -411,6 +411,9 @@ enum AlertCategory {
 
   /// Alerts related to portfolio management.
   PORTFOLIO
+
+  /// Alerts related to risk governance (account/strategy state changes, escalations).
+  GOVERNANCE
 }
 
 // Specifies the importance level of an event.
@@ -5261,4 +5264,78 @@ model MLModelVersion {
 
   @@index([assetClass, slot])
   @@index([assetClass, trainedAt])
+}
+
+// ---------------------------------------------------------------------------
+// Risk-governance enums (Phase B — P0 institutional-risk-protection)
+// ---------------------------------------------------------------------------
+
+/// Operational state of a trading account from the risk-governance perspective.
+enum AccountRiskState {
+  NORMAL
+  WARN
+  THROTTLE
+  PAUSED
+  FLATTEN
+  HALT
+}
+
+/// Operational state of an individual trading strategy from the risk-governance perspective.
+enum StrategyState {
+  ACTIVE
+  WARN
+  THROTTLE
+  PAUSED
+  DISABLED
+}
+
+/// Reason codes that trigger a risk escalation event.
+enum RiskEscalationReason {
+  // Drawdown
+  DRAWDOWN_WARN
+  DRAWDOWN_THROTTLE
+  DRAWDOWN_PAUSE
+  // Loss windows
+  DAILY_LOSS_BREACH
+  WEEKLY_LOSS_BREACH
+  MONTHLY_LOSS_BREACH
+  PEAK_TO_TROUGH_BREACH
+  // Broker
+  BROKER_FAILURE_RATE
+  BROKER_LATENCY_SPIKE
+  BROKER_OUTAGE
+  // Data
+  DATA_QUALITY_STALE
+  DATA_QUALITY_MISSING
+  DATA_QUALITY_FEED_FAIL
+  // Concentration
+  CONCENTRATION_POSITION
+  CONCENTRATION_SECTOR
+  CONCENTRATION_FACTOR
+  // Volatility / regime
+  VOLATILITY_SPIKE
+  REGIME_CRISIS
+  REGIME_UNCERTAIN
+  // Strategy / model
+  STRATEGY_DRAWDOWN
+  STRATEGY_EXPECTANCY_DEGRADATION
+  STRATEGY_HIT_RATE_DEGRADATION
+  LIVE_VS_BACKTEST_DIVERGENCE
+  MODEL_CONFIDENCE_COLLAPSE
+  MODEL_DRIFT_DETECTED
+  // Operator / manual
+  OPERATOR_OVERRIDE
+  OPERATOR_RECOVERY
+  OPERATOR_CLEAR
+  // System
+  SCHEDULED_MAINTENANCE
+  EMERGENCY_HALT
+}
+
+/// Actor that initiated a risk escalation event.
+enum RiskEscalationActor {
+  SYSTEM_OBSERVER
+  OPERATOR
+  COMPLIANCE_OFFICER
+  AUTOMATED_RECOVERY
 }
