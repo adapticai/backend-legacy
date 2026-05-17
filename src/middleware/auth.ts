@@ -1,10 +1,21 @@
 import { Request, Response, NextFunction } from 'express';
+
+import type { JwtPayload } from 'jsonwebtoken';
+
+export interface AuthenticatedUser {
+  sub?: string;
+  name?: string;
+  role?: string;
+  provider?: string;
+  token?: string;
+  [key: string]: unknown;
+}
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../config/jwtConfig';
 import { logger } from '../utils/logger';
 
 export interface AuthenticatedRequest extends Request {
-  user?: any;
+  user?: AuthenticatedUser | JwtPayload | string;
 }
 
 export const authMiddleware = (

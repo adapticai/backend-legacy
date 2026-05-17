@@ -59,7 +59,7 @@ function base64UrlDecode(str: string): Buffer {
  * Encrypt a JSON payload into JWE using 'dir' and 'A256GCM'
  */
 async function encryptJWT(
-  payload: Record<string, any>,
+  payload: Record<string, unknown>,
   encryptionKey: Buffer
 ): Promise<string> {
   const header = {
@@ -90,7 +90,7 @@ async function encryptJWT(
 async function decryptJWT(
   jwe: string,
   encryptionKey: Buffer
-): Promise<Record<string, any>> {
+): Promise<Record<string, unknown>> {
   const parts = jwe.split('.');
   if (parts.length !== 5) {
     throw new Error('Invalid JWE format');
@@ -163,7 +163,7 @@ async function getDerivedEncryptionKey(
  * JWT Encode Parameters
  */
 interface JWTEncodeParams {
-  token?: Record<string, any>;
+  token?: Record<string, unknown>;
   secret: string | Buffer;
   maxAge?: number;
   salt?: string;
@@ -198,7 +198,7 @@ interface JWTDecodeParams {
  */
 export async function decode(
   params: JWTDecodeParams
-): Promise<Record<string, any> | null> {
+): Promise<Record<string, unknown> | null> {
   const { token, secret, salt = '' } = params;
   if (!token) return null;
   try {
@@ -340,7 +340,7 @@ class SessionStore {
  */
 export async function getToken<R extends boolean = false>(
   params: GetTokenParams<R>
-): Promise<R extends true ? string : Record<string, any> | null> {
+): Promise<R extends true ? string : Record<string, unknown> | null> {
   const {
     req,
     secureCookie = (process.env.NEXTAUTH_URL?.startsWith('https://') ??
@@ -380,20 +380,20 @@ export async function getToken<R extends boolean = false>(
 
   if (!token) {
     logger.info('No token found in cookies or Authorization header');
-    return null as R extends true ? string : Record<string, any> | null;
+    return null as R extends true ? string : Record<string, unknown> | null;
   }
 
   if (raw) {
     logger.info('Returning raw token');
-    return token as R extends true ? string : Record<string, any> | null;
+    return token as R extends true ? string : Record<string, unknown> | null;
   }
 
   try {
     const decoded = await _decode({ token, secret, salt });
     logger.info('Token successfully decoded');
-    return decoded as R extends true ? string : Record<string, any> | null;
+    return decoded as R extends true ? string : Record<string, unknown> | null;
   } catch (err) {
     logger.error('Failed to decode token');
-    return null as R extends true ? string : Record<string, any> | null;
+    return null as R extends true ? string : Record<string, unknown> | null;
   }
 }

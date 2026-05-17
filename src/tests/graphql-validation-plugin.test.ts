@@ -80,7 +80,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).resolves.not.toThrow();
     });
 
@@ -97,7 +97,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).rejects.toThrow(GraphQLError);
     });
 
@@ -114,7 +114,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).resolves.not.toThrow();
     });
 
@@ -136,7 +136,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       try {
-        await listener.didResolveOperation!(requestContext as any);
+        await listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0]);
         fail('Should have thrown GraphQLError');
       } catch (error) {
         expect(error).toBeInstanceOf(GraphQLError);
@@ -144,7 +144,7 @@ describe('GraphQL Validation Plugin', () => {
           expect(error.extensions.code).toBe('BAD_USER_INPUT');
           expect(error.extensions.validationErrors).toBeDefined();
           expect(
-            (error.extensions.validationErrors as any[]).length
+            (error.extensions.validationErrors as Array<{ message: string }>).length
           ).toBeGreaterThan(0);
         }
       }
@@ -167,12 +167,12 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       try {
-        await listener.didResolveOperation!(requestContext as any);
+        await listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0]);
         fail('Should have thrown GraphQLError');
       } catch (error) {
         expect(error).toBeInstanceOf(GraphQLError);
         if (error instanceof GraphQLError) {
-          const validationErrors = error.extensions.validationErrors as any[];
+          const validationErrors = error.extensions.validationErrors as Array<{ message: string }>;
           expect(validationErrors.length).toBeGreaterThanOrEqual(2); // At least percentage and quantity
         }
       }
@@ -195,7 +195,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).resolves.not.toThrow();
     });
 
@@ -214,7 +214,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).rejects.toThrow(GraphQLError);
     });
 
@@ -233,7 +233,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).resolves.not.toThrow();
     });
 
@@ -256,7 +256,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).rejects.toThrow(GraphQLError);
     });
 
@@ -271,7 +271,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).resolves.not.toThrow();
     });
 
@@ -284,7 +284,7 @@ describe('GraphQL Validation Plugin', () => {
       };
 
       await expect(
-        listener.didResolveOperation!(requestContext as any)
+        listener.didResolveOperation!(requestContext as Parameters<typeof listener.didResolveOperation>[0])
       ).resolves.not.toThrow();
     });
   });

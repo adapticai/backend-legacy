@@ -107,7 +107,7 @@ describe('Allocation Validator', () => {
 
     it('should reject allocation with non-numeric values', () => {
       const allocation = {
-        equities: 'invalid' as any,
+        equities: 'invalid' as unknown as number,
         optionsContracts: 5,
         futures: 0,
         etfs: 10,
