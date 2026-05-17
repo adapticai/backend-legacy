@@ -27,10 +27,10 @@ export type {
   TokenProvider,
 } from './client';
 
-// Canonical TradingPolicy / LlmConfiguration / PolicyOverlay JSON shapes
-// and effective-policy / effective-llm-config / kms-envelope helpers.
-// Per charter §2.2, §2.4 F4/F6 and sub-project 2 spec §4.2, §4.3, §4.4.
-// Consumers in engine, utils, lumic-utils, and platform import from here.
+// Sub-project 2 Area A1 — canonical JSON shapes + read-time helpers
+// for the AlpacaAccount → BrokerageAccount port. These exports MUST
+// be preserved across codegen runs; the generator template embeds
+// them so they survive every `npm run build`.
 export type { TradingPolicyJson } from './types/trading-policy';
 export { DEFAULT_TRADING_POLICY } from './types/trading-policy';
 export type {
@@ -88,6 +88,7 @@ import { Investment } from './Investment';
 import { Investor } from './Investor';
 import { InviteToken } from './InviteToken';
 import { LinkedProvider } from './LinkedProvider';
+import { LlmConfiguration } from './LlmConfiguration';
 import { MLTrainingData } from './MLTrainingData';
 import { MarketSentiment } from './MarketSentiment';
 import { ModelArtifact } from './ModelArtifact';
@@ -101,6 +102,7 @@ import { OptionsPosition } from './OptionsPosition';
 import { OptionsTradeExecution } from './OptionsTradeExecution';
 import { OrgMembership } from './OrgMembership';
 import { Organization } from './Organization';
+import { PolicyOverlay } from './PolicyOverlay';
 import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
 import { ScheduledOptionOrder } from './ScheduledOptionOrder';
 import { Session } from './Session';
@@ -113,6 +115,7 @@ import { SystemAlert } from './SystemAlert';
 import { Trade } from './Trade';
 import { TradeAuditEvent } from './TradeAuditEvent';
 import { TradeExecutionHistory } from './TradeExecutionHistory';
+import { TradingPolicy } from './TradingPolicy';
 import { User } from './User';
 import { VerificationToken } from './VerificationToken';
 import { WaitlistEntry } from './WaitlistEntry';
@@ -152,6 +155,7 @@ const adaptic = {
   investor: Investor,
   inviteToken: InviteToken,
   linkedProvider: LinkedProvider,
+  llmConfiguration: LlmConfiguration,
   mLTrainingData: MLTrainingData,
   marketSentiment: MarketSentiment,
   modelArtifact: ModelArtifact,
@@ -165,6 +169,7 @@ const adaptic = {
   optionsTradeExecution: OptionsTradeExecution,
   orgMembership: OrgMembership,
   organization: Organization,
+  policyOverlay: PolicyOverlay,
   portfolioGreeksHistory: PortfolioGreeksHistory,
   scheduledOptionOrder: ScheduledOptionOrder,
   session: Session,
@@ -177,6 +182,7 @@ const adaptic = {
   trade: Trade,
   tradeAuditEvent: TradeAuditEvent,
   tradeExecutionHistory: TradeExecutionHistory,
+  tradingPolicy: TradingPolicy,
   user: User,
   verificationToken: VerificationToken,
   waitlistEntry: WaitlistEntry,

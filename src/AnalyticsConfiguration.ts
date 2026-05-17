@@ -1,15 +1,18 @@
-
-  
 import { AnalyticsConfiguration as AnalyticsConfigurationType } from './generated/typegraphql-prisma/models/AnalyticsConfiguration';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
+import {
+  client as importedClient,
+  ApolloClientType,
+  NormalizedCacheObject,
+  getApolloModules,
+} from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
-  
-  /**
-   * CRUD operations for the AnalyticsConfiguration model.
-   */
 
-  const selectionSet = `
+/**
+ * CRUD operations for the AnalyticsConfiguration model.
+ */
+
+const selectionSet = `
     
   id
   configKey
@@ -22,113 +25,25 @@ import { logger } from './utils/logger';
 
   `;
 
-  export const AnalyticsConfiguration = {
-
-    /**
-     * Create a new AnalyticsConfiguration record.
-     * @param props - Properties for the new record.
-     * @param client - Apollo Client instance.
-     * @returns The created AnalyticsConfiguration or null.
-     */
-
-    /**
-     * Create a new AnalyticsConfiguration record.
-     * Enhanced with connection resilience against Prisma connection errors.
-     * @param props - Properties for the new record.
-     * @param globalClient - Apollo Client instance.
-     * @returns The created AnalyticsConfiguration or null.
-     */
-    async create(props: AnalyticsConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AnalyticsConfigurationType> {
-      // Maximum number of retries for database connection issues
-      const MAX_RETRIES = 2;
-      let retryCount = 0;
-      let lastError: any = null;
-
-      // Retry loop to handle potential database connection issues
-      while (retryCount < MAX_RETRIES) {
-        try {
-          const [modules, client] = await Promise.all([
-            getApolloModules(),
-            globalClient
-              ? Promise.resolve(globalClient)
-              : importedClient
-          ]);
-
-          const { gql, ApolloError } = modules;
-
-          const CREATE_ONE_ANALYTICSCONFIGURATION = gql`
-              mutation createOneAnalyticsConfiguration($data: AnalyticsConfigurationCreateInput!) {
-                createOneAnalyticsConfiguration(data: $data) {
-                  ${selectionSet}
-                }
-              }
-           `;
-
-          const variables = {
-            data: {
-                configKey: props.configKey !== undefined ? props.configKey : undefined,
-  configType: props.configType !== undefined ? props.configType : undefined,
-  configValue: props.configValue !== undefined ? props.configValue : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  metadata: props.metadata !== undefined ? props.metadata : undefined,
-
-            },
-          };
-
-          const filteredVariables = removeUndefinedProps(variables);
-
-          const response = await client.mutate({
-            mutation: CREATE_ONE_ANALYTICSCONFIGURATION,
-            variables: filteredVariables,
-            // Don't cache mutations, but ensure we're using the freshest context
-            fetchPolicy: 'no-cache'
-          });
-
-          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneAnalyticsConfiguration) {
-            return response.data.createOneAnalyticsConfiguration;
-          } else {
-            return null as any;
-          }
-        } catch (error: any) {
-          lastError = error;
-
-          // Check if this is a database connection error that we should retry
-          const isConnectionError =
-            error.message?.includes('Server has closed the connection') ||
-            error.message?.includes('Cannot reach database server') ||
-            error.message?.includes('Connection timed out') ||
-            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
-
-          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-            retryCount++;
-            const baseDelay = Math.pow(2, retryCount) * 500;
-            const jitter = Math.floor(Math.random() * 500);
-            const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-            logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-            await new Promise(resolve => setTimeout(resolve, delay));
-            continue;
-          }
-
-          // Log the error and rethrow
-          logger.error("Database error occurred", { error: String(error) });
-          throw error;
-        }
-      }
-
-      // If we exhausted retries, throw the last error
-      throw lastError;
-    },
+export const AnalyticsConfiguration = {
+  /**
+   * Create a new AnalyticsConfiguration record.
+   * @param props - Properties for the new record.
+   * @param client - Apollo Client instance.
+   * @returns The created AnalyticsConfiguration or null.
+   */
 
   /**
-   * Create multiple AnalyticsConfiguration records.
+   * Create a new AnalyticsConfiguration record.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of AnalyticsConfiguration objects for the new records.
+   * @param props - Properties for the new record.
    * @param globalClient - Apollo Client instance.
-   * @returns The count of created records or null.
+   * @returns The created AnalyticsConfiguration or null.
    */
-  async createMany(props: AnalyticsConfigurationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async create(
+    props: AnalyticsConfigurationType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<AnalyticsConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -139,28 +54,134 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
+        ]);
+
+        const { gql, ApolloError } = modules;
+
+        const CREATE_ONE_ANALYTICSCONFIGURATION = gql`
+              mutation createOneAnalyticsConfiguration($data: AnalyticsConfigurationCreateInput!) {
+                createOneAnalyticsConfiguration(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
+
+        const variables = {
+          data: {
+            configKey:
+              props.configKey !== undefined ? props.configKey : undefined,
+            configType:
+              props.configType !== undefined ? props.configType : undefined,
+            configValue:
+              props.configValue !== undefined ? props.configValue : undefined,
+            symbol: props.symbol !== undefined ? props.symbol : undefined,
+            metadata: props.metadata !== undefined ? props.metadata : undefined,
+          },
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: CREATE_ONE_ANALYTICSCONFIGURATION,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache',
+        });
+
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.createOneAnalyticsConfiguration
+        ) {
+          return response.data.createOneAnalyticsConfiguration;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        logger.error('Database error occurred', { error: String(error) });
+        throw error;
+      }
+    }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
+  },
+
+  /**
+   * Create multiple AnalyticsConfiguration records.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Array of AnalyticsConfiguration objects for the new records.
+   * @param globalClient - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async createMany(
+    props: AnalyticsConfigurationType[],
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 2;
+    let retryCount = 0;
+    let lastError: any = null;
+
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_ANALYTICSCONFIGURATION = gql`
-          mutation createManyAnalyticsConfiguration($data: [AnalyticsConfigurationCreateManyInput!]!) {
+          mutation createManyAnalyticsConfiguration(
+            $data: [AnalyticsConfigurationCreateManyInput!]!
+          ) {
             createManyAnalyticsConfiguration(data: $data) {
               count
             }
-          }`;
+          }
+        `;
 
         const variables = {
-          data: props.map(prop => ({
-      configKey: prop.configKey !== undefined ? prop.configKey : undefined,
-  configType: prop.configType !== undefined ? prop.configType : undefined,
-  configValue: prop.configValue !== undefined ? prop.configValue : undefined,
-  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
-  metadata: prop.metadata !== undefined ? prop.metadata : undefined,
-      })),
+          data: props.map((prop) => ({
+            configKey:
+              prop.configKey !== undefined ? prop.configKey : undefined,
+            configType:
+              prop.configType !== undefined ? prop.configType : undefined,
+            configValue:
+              prop.configValue !== undefined ? prop.configValue : undefined,
+            symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+            metadata: prop.metadata !== undefined ? prop.metadata : undefined,
+          })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -169,11 +190,16 @@ import { logger } from './utils/logger';
           mutation: CREATE_MANY_ANALYTICSCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManyAnalyticsConfiguration) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.createManyAnalyticsConfiguration
+        ) {
           return response.data.createManyAnalyticsConfiguration;
         } else {
           return null as any;
@@ -187,20 +213,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -216,7 +246,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The updated AnalyticsConfiguration or null.
    */
-  async update(props: AnalyticsConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AnalyticsConfigurationType> {
+  async update(
+    props: AnalyticsConfigurationType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<AnalyticsConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -227,9 +260,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -244,36 +275,63 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-      },
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    equals: props.symbol,
+                  }
+                : undefined,
+          },
           data: {
-      id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
-  configKey: props.configKey !== undefined ? {
-            set: props.configKey 
-           } : undefined,
-  configType: props.configType !== undefined ? {
-            set: props.configType 
-           } : undefined,
-  configValue: props.configValue !== undefined ? {
-            set: props.configValue 
-           } : undefined,
-  symbol: props.symbol !== undefined ? {
-            set: props.symbol 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-  createdAt: props.createdAt !== undefined ? {
-            set: props.createdAt 
-           } : undefined,
-  updatedAt: props.updatedAt !== undefined ? {
-            set: props.updatedAt 
-           } : undefined,
-      },
+            id:
+              props.id !== undefined
+                ? {
+                    set: props.id,
+                  }
+                : undefined,
+            configKey:
+              props.configKey !== undefined
+                ? {
+                    set: props.configKey,
+                  }
+                : undefined,
+            configType:
+              props.configType !== undefined
+                ? {
+                    set: props.configType,
+                  }
+                : undefined,
+            configValue:
+              props.configValue !== undefined
+                ? {
+                    set: props.configValue,
+                  }
+                : undefined,
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    set: props.symbol,
+                  }
+                : undefined,
+            metadata:
+              props.metadata !== undefined
+                ? {
+                    set: props.metadata,
+                  }
+                : undefined,
+            createdAt:
+              props.createdAt !== undefined
+                ? {
+                    set: props.createdAt,
+                  }
+                : undefined,
+            updatedAt:
+              props.updatedAt !== undefined
+                ? {
+                    set: props.updatedAt,
+                  }
+                : undefined,
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -282,11 +340,16 @@ import { logger } from './utils/logger';
           mutation: UPDATE_ONE_ANALYTICSCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateOneAnalyticsConfiguration) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.updateOneAnalyticsConfiguration
+        ) {
           return response.data.updateOneAnalyticsConfiguration;
         } else {
           return null as any;
@@ -300,20 +363,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -329,7 +396,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The updated AnalyticsConfiguration or null.
    */
-  async upsert(props: AnalyticsConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AnalyticsConfigurationType> {
+  async upsert(
+    props: AnalyticsConfigurationType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<AnalyticsConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -340,9 +410,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -357,34 +425,55 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-      },
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    equals: props.symbol,
+                  }
+                : undefined,
+          },
           create: {
-        configKey: props.configKey !== undefined ? props.configKey : undefined,
-  configType: props.configType !== undefined ? props.configType : undefined,
-  configValue: props.configValue !== undefined ? props.configValue : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  metadata: props.metadata !== undefined ? props.metadata : undefined,
-      },
+            configKey:
+              props.configKey !== undefined ? props.configKey : undefined,
+            configType:
+              props.configType !== undefined ? props.configType : undefined,
+            configValue:
+              props.configValue !== undefined ? props.configValue : undefined,
+            symbol: props.symbol !== undefined ? props.symbol : undefined,
+            metadata: props.metadata !== undefined ? props.metadata : undefined,
+          },
           update: {
-      configKey: props.configKey !== undefined ? {
-            set: props.configKey 
-           } : undefined,
-  configType: props.configType !== undefined ? {
-            set: props.configType 
-           } : undefined,
-  configValue: props.configValue !== undefined ? {
-            set: props.configValue 
-           } : undefined,
-  symbol: props.symbol !== undefined ? {
-            set: props.symbol 
-           } : undefined,
-  metadata: props.metadata !== undefined ? {
-            set: props.metadata 
-           } : undefined,
-      },
+            configKey:
+              props.configKey !== undefined
+                ? {
+                    set: props.configKey,
+                  }
+                : undefined,
+            configType:
+              props.configType !== undefined
+                ? {
+                    set: props.configType,
+                  }
+                : undefined,
+            configValue:
+              props.configValue !== undefined
+                ? {
+                    set: props.configValue,
+                  }
+                : undefined,
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    set: props.symbol,
+                  }
+                : undefined,
+            metadata:
+              props.metadata !== undefined
+                ? {
+                    set: props.metadata,
+                  }
+                : undefined,
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -393,11 +482,16 @@ import { logger } from './utils/logger';
           mutation: UPSERT_ONE_ANALYTICSCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.upsertOneAnalyticsConfiguration) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.upsertOneAnalyticsConfiguration
+        ) {
           return response.data.upsertOneAnalyticsConfiguration;
         } else {
           return null as any;
@@ -411,20 +505,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -440,7 +538,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: AnalyticsConfigurationType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(
+    props: AnalyticsConfigurationType[],
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -451,54 +552,80 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
 
         const UPDATE_MANY_ANALYTICSCONFIGURATION = gql`
-          mutation updateManyAnalyticsConfiguration($data: [AnalyticsConfigurationCreateManyInput!]!) {
+          mutation updateManyAnalyticsConfiguration(
+            $data: [AnalyticsConfigurationCreateManyInput!]!
+          ) {
             updateManyAnalyticsConfiguration(data: $data) {
               count
             }
-          }`;
+          }
+        `;
 
-        const variables = props.map(prop => ({
+        const variables = props.map((prop) => ({
           where: {
-              id: prop.id !== undefined ? prop.id : undefined,
-  symbol: prop.symbol !== undefined ? {
-    equals: prop.symbol 
-  } : undefined,
-
+            id: prop.id !== undefined ? prop.id : undefined,
+            symbol:
+              prop.symbol !== undefined
+                ? {
+                    equals: prop.symbol,
+                  }
+                : undefined,
           },
           data: {
-              id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
-  configKey: prop.configKey !== undefined ? {
-            set: prop.configKey 
-           } : undefined,
-  configType: prop.configType !== undefined ? {
-            set: prop.configType 
-           } : undefined,
-  configValue: prop.configValue !== undefined ? {
-            set: prop.configValue 
-           } : undefined,
-  symbol: prop.symbol !== undefined ? {
-            set: prop.symbol 
-           } : undefined,
-  metadata: prop.metadata !== undefined ? {
-            set: prop.metadata 
-           } : undefined,
-  createdAt: prop.createdAt !== undefined ? {
-            set: prop.createdAt 
-           } : undefined,
-  updatedAt: prop.updatedAt !== undefined ? {
-            set: prop.updatedAt 
-           } : undefined,
-
+            id:
+              prop.id !== undefined
+                ? {
+                    set: prop.id,
+                  }
+                : undefined,
+            configKey:
+              prop.configKey !== undefined
+                ? {
+                    set: prop.configKey,
+                  }
+                : undefined,
+            configType:
+              prop.configType !== undefined
+                ? {
+                    set: prop.configType,
+                  }
+                : undefined,
+            configValue:
+              prop.configValue !== undefined
+                ? {
+                    set: prop.configValue,
+                  }
+                : undefined,
+            symbol:
+              prop.symbol !== undefined
+                ? {
+                    set: prop.symbol,
+                  }
+                : undefined,
+            metadata:
+              prop.metadata !== undefined
+                ? {
+                    set: prop.metadata,
+                  }
+                : undefined,
+            createdAt:
+              prop.createdAt !== undefined
+                ? {
+                    set: prop.createdAt,
+                  }
+                : undefined,
+            updatedAt:
+              prop.updatedAt !== undefined
+                ? {
+                    set: prop.updatedAt,
+                  }
+                : undefined,
           },
         }));
 
@@ -508,11 +635,16 @@ import { logger } from './utils/logger';
           mutation: UPDATE_MANY_ANALYTICSCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManyAnalyticsConfiguration) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.updateManyAnalyticsConfiguration
+        ) {
           return response.data.updateManyAnalyticsConfiguration;
         } else {
           return null as any;
@@ -526,20 +658,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -555,7 +691,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The deleted AnalyticsConfiguration or null.
    */
-  async delete(props: AnalyticsConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AnalyticsConfigurationType> {
+  async delete(
+    props: AnalyticsConfigurationType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<AnalyticsConfigurationType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -566,24 +705,25 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
 
         const DELETE_ONE_ANALYTICSCONFIGURATION = gql`
-          mutation deleteOneAnalyticsConfiguration($where: AnalyticsConfigurationWhereUniqueInput!) {
+          mutation deleteOneAnalyticsConfiguration(
+            $where: AnalyticsConfigurationWhereUniqueInput!
+          ) {
             deleteOneAnalyticsConfiguration(where: $where) {
               id
             }
-          }`;
+          }
+        `;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          }
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -592,11 +732,16 @@ import { logger } from './utils/logger';
           mutation: DELETE_ONE_ANALYTICSCONFIGURATION,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.deleteOneAnalyticsConfiguration) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.deleteOneAnalyticsConfiguration
+        ) {
           return response.data.deleteOneAnalyticsConfiguration;
         } else {
           return null as any;
@@ -610,20 +755,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -640,7 +789,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved AnalyticsConfiguration or null.
    */
-  async get(props: AnalyticsConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AnalyticsConfigurationType | null> {
+  async get(
+    props: AnalyticsConfigurationType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>,
+    whereInput?: any
+  ): Promise<AnalyticsConfigurationType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -651,9 +804,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -666,12 +817,17 @@ import { logger } from './utils/logger';
           }`;
 
         const variables = {
-          where: whereInput ? whereInput : {
-            id: props.id !== undefined ? props.id : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-},
+          where: whereInput
+            ? whereInput
+            : {
+                id: props.id !== undefined ? props.id : undefined,
+                symbol:
+                  props.symbol !== undefined
+                    ? {
+                        equals: props.symbol,
+                      }
+                    : undefined,
+              },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -681,7 +837,8 @@ import { logger } from './utils/logger';
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         return response.data?.getAnalyticsConfiguration ?? null;
       } catch (error: any) {
         lastError = error;
@@ -697,20 +854,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -725,7 +886,9 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns An array of AnalyticsConfiguration records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<AnalyticsConfigurationType[] | null> {
+  async getAll(
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<AnalyticsConfigurationType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -736,9 +899,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -755,7 +916,8 @@ import { logger } from './utils/logger';
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         return response.data?.analyticsConfigurations ?? null;
       } catch (error: any) {
         lastError = error;
@@ -771,20 +933,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -801,7 +967,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found AnalyticsConfiguration records or null.
    */
-  async findMany(props: AnalyticsConfigurationType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<AnalyticsConfigurationType[] | null> {
+  async findMany(
+    props: AnalyticsConfigurationType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>,
+    whereInput?: any
+  ): Promise<AnalyticsConfigurationType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -812,9 +982,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -827,14 +995,22 @@ import { logger } from './utils/logger';
           }`;
 
         const variables = {
-          where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-      },
+          where: whereInput
+            ? whereInput
+            : {
+                id:
+                  props.id !== undefined
+                    ? {
+                        equals: props.id,
+                      }
+                    : undefined,
+                symbol:
+                  props.symbol !== undefined
+                    ? {
+                        equals: props.symbol,
+                      }
+                    : undefined,
+              },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -845,8 +1021,13 @@ import { logger } from './utils/logger';
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.analyticsconfigurations) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.analyticsconfigurations
+        ) {
           return response.data.analyticsConfigurations;
         } else {
           return [] as AnalyticsConfigurationType[];
@@ -865,25 +1046,29 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  }
+  },
 };

@@ -1,15 +1,18 @@
-
-  
 import { SignalOutcome as SignalOutcomeType } from './generated/typegraphql-prisma/models/SignalOutcome';
-import { client as importedClient, ApolloClientType, NormalizedCacheObject, getApolloModules } from './client';
+import {
+  client as importedClient,
+  ApolloClientType,
+  NormalizedCacheObject,
+  getApolloModules,
+} from './client';
 import { removeUndefinedProps } from './utils';
 import { logger } from './utils/logger';
-  
-  /**
-   * CRUD operations for the SignalOutcome model.
-   */
 
-  const selectionSet = `
+/**
+ * CRUD operations for the SignalOutcome model.
+ */
+
+const selectionSet = `
     
   id
   timestamp
@@ -29,119 +32,25 @@ import { logger } from './utils/logger';
 
   `;
 
-  export const SignalOutcome = {
-
-    /**
-     * Create a new SignalOutcome record.
-     * @param props - Properties for the new record.
-     * @param client - Apollo Client instance.
-     * @returns The created SignalOutcome or null.
-     */
-
-    /**
-     * Create a new SignalOutcome record.
-     * Enhanced with connection resilience against Prisma connection errors.
-     * @param props - Properties for the new record.
-     * @param globalClient - Apollo Client instance.
-     * @returns The created SignalOutcome or null.
-     */
-    async create(props: SignalOutcomeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalOutcomeType> {
-      // Maximum number of retries for database connection issues
-      const MAX_RETRIES = 2;
-      let retryCount = 0;
-      let lastError: any = null;
-
-      // Retry loop to handle potential database connection issues
-      while (retryCount < MAX_RETRIES) {
-        try {
-          const [modules, client] = await Promise.all([
-            getApolloModules(),
-            globalClient
-              ? Promise.resolve(globalClient)
-              : importedClient
-          ]);
-
-          const { gql, ApolloError } = modules;
-
-          const CREATE_ONE_SIGNALOUTCOME = gql`
-              mutation createOneSignalOutcome($data: SignalOutcomeCreateInput!) {
-                createOneSignalOutcome(data: $data) {
-                  ${selectionSet}
-                }
-              }
-           `;
-
-          const variables = {
-            data: {
-                timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  signalId: props.signalId !== undefined ? props.signalId : undefined,
-  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  signalType: props.signalType !== undefined ? props.signalType : undefined,
-  outcome: props.outcome !== undefined ? props.outcome : undefined,
-  timeToOutcome: props.timeToOutcome !== undefined ? props.timeToOutcome : undefined,
-  outcomeTimestamp: props.outcomeTimestamp !== undefined ? props.outcomeTimestamp : undefined,
-  outcomeReason: props.outcomeReason !== undefined ? props.outcomeReason : undefined,
-  generatedAt: props.generatedAt !== undefined ? props.generatedAt : undefined,
-  marketConditions: props.marketConditions !== undefined ? props.marketConditions : undefined,
-
-            },
-          };
-
-          const filteredVariables = removeUndefinedProps(variables);
-
-          const response = await client.mutate({
-            mutation: CREATE_ONE_SIGNALOUTCOME,
-            variables: filteredVariables,
-            // Don't cache mutations, but ensure we're using the freshest context
-            fetchPolicy: 'no-cache'
-          });
-
-          if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-          if (response && response.data && response.data.createOneSignalOutcome) {
-            return response.data.createOneSignalOutcome;
-          } else {
-            return null as any;
-          }
-        } catch (error: any) {
-          lastError = error;
-
-          // Check if this is a database connection error that we should retry
-          const isConnectionError =
-            error.message?.includes('Server has closed the connection') ||
-            error.message?.includes('Cannot reach database server') ||
-            error.message?.includes('Connection timed out') ||
-            error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-            (error.networkError && error.networkError.message?.includes('Failed to fetch'));
-
-          if (isConnectionError && retryCount < MAX_RETRIES - 1) {
-            retryCount++;
-            const baseDelay = Math.pow(2, retryCount) * 500;
-            const jitter = Math.floor(Math.random() * 500);
-            const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-            logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-            await new Promise(resolve => setTimeout(resolve, delay));
-            continue;
-          }
-
-          // Log the error and rethrow
-          logger.error("Database error occurred", { error: String(error) });
-          throw error;
-        }
-      }
-
-      // If we exhausted retries, throw the last error
-      throw lastError;
-    },
+export const SignalOutcome = {
+  /**
+   * Create a new SignalOutcome record.
+   * @param props - Properties for the new record.
+   * @param client - Apollo Client instance.
+   * @returns The created SignalOutcome or null.
+   */
 
   /**
-   * Create multiple SignalOutcome records.
+   * Create a new SignalOutcome record.
    * Enhanced with connection resilience against Prisma connection errors.
-   * @param props - Array of SignalOutcome objects for the new records.
+   * @param props - Properties for the new record.
    * @param globalClient - Apollo Client instance.
-   * @returns The count of created records or null.
+   * @returns The created SignalOutcome or null.
    */
-  async createMany(props: SignalOutcomeType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async create(
+    props: SignalOutcomeType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<SignalOutcomeType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -152,34 +61,168 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
+        ]);
+
+        const { gql, ApolloError } = modules;
+
+        const CREATE_ONE_SIGNALOUTCOME = gql`
+              mutation createOneSignalOutcome($data: SignalOutcomeCreateInput!) {
+                createOneSignalOutcome(data: $data) {
+                  ${selectionSet}
+                }
+              }
+           `;
+
+        const variables = {
+          data: {
+            timestamp:
+              props.timestamp !== undefined ? props.timestamp : undefined,
+            signalId: props.signalId !== undefined ? props.signalId : undefined,
+            generatorSource:
+              props.generatorSource !== undefined
+                ? props.generatorSource
+                : undefined,
+            symbol: props.symbol !== undefined ? props.symbol : undefined,
+            signalType:
+              props.signalType !== undefined ? props.signalType : undefined,
+            outcome: props.outcome !== undefined ? props.outcome : undefined,
+            timeToOutcome:
+              props.timeToOutcome !== undefined
+                ? props.timeToOutcome
+                : undefined,
+            outcomeTimestamp:
+              props.outcomeTimestamp !== undefined
+                ? props.outcomeTimestamp
+                : undefined,
+            outcomeReason:
+              props.outcomeReason !== undefined
+                ? props.outcomeReason
+                : undefined,
+            generatedAt:
+              props.generatedAt !== undefined ? props.generatedAt : undefined,
+            marketConditions:
+              props.marketConditions !== undefined
+                ? props.marketConditions
+                : undefined,
+          },
+        };
+
+        const filteredVariables = removeUndefinedProps(variables);
+
+        const response = await client.mutate({
+          mutation: CREATE_ONE_SIGNALOUTCOME,
+          variables: filteredVariables,
+          // Don't cache mutations, but ensure we're using the freshest context
+          fetchPolicy: 'no-cache',
+        });
+
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (response && response.data && response.data.createOneSignalOutcome) {
+          return response.data.createOneSignalOutcome;
+        } else {
+          return null as any;
+        }
+      } catch (error: any) {
+        lastError = error;
+
+        // Check if this is a database connection error that we should retry
+        const isConnectionError =
+          error.message?.includes('Server has closed the connection') ||
+          error.message?.includes('Cannot reach database server') ||
+          error.message?.includes('Connection timed out') ||
+          error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
+
+        if (isConnectionError && retryCount < MAX_RETRIES - 1) {
+          retryCount++;
+          const baseDelay = Math.pow(2, retryCount) * 500;
+          const jitter = Math.floor(Math.random() * 500);
+          const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
+          continue;
+        }
+
+        // Log the error and rethrow
+        logger.error('Database error occurred', { error: String(error) });
+        throw error;
+      }
+    }
+
+    // If we exhausted retries, throw the last error
+    throw lastError;
+  },
+
+  /**
+   * Create multiple SignalOutcome records.
+   * Enhanced with connection resilience against Prisma connection errors.
+   * @param props - Array of SignalOutcome objects for the new records.
+   * @param globalClient - Apollo Client instance.
+   * @returns The count of created records or null.
+   */
+  async createMany(
+    props: SignalOutcomeType[],
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<{ count: number } | null> {
+    // Maximum number of retries for database connection issues
+    const MAX_RETRIES = 2;
+    let retryCount = 0;
+    let lastError: any = null;
+
+    // Retry loop to handle potential database connection issues
+    while (retryCount < MAX_RETRIES) {
+      try {
+        const [modules, client] = await Promise.all([
+          getApolloModules(),
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
 
         const CREATE_MANY_SIGNALOUTCOME = gql`
-          mutation createManySignalOutcome($data: [SignalOutcomeCreateManyInput!]!) {
+          mutation createManySignalOutcome(
+            $data: [SignalOutcomeCreateManyInput!]!
+          ) {
             createManySignalOutcome(data: $data) {
               count
             }
-          }`;
+          }
+        `;
 
         const variables = {
-          data: props.map(prop => ({
-      timestamp: prop.timestamp !== undefined ? prop.timestamp : undefined,
-  signalId: prop.signalId !== undefined ? prop.signalId : undefined,
-  generatorSource: prop.generatorSource !== undefined ? prop.generatorSource : undefined,
-  symbol: prop.symbol !== undefined ? prop.symbol : undefined,
-  signalType: prop.signalType !== undefined ? prop.signalType : undefined,
-  outcome: prop.outcome !== undefined ? prop.outcome : undefined,
-  timeToOutcome: prop.timeToOutcome !== undefined ? prop.timeToOutcome : undefined,
-  outcomeTimestamp: prop.outcomeTimestamp !== undefined ? prop.outcomeTimestamp : undefined,
-  outcomeReason: prop.outcomeReason !== undefined ? prop.outcomeReason : undefined,
-  generatedAt: prop.generatedAt !== undefined ? prop.generatedAt : undefined,
-  marketConditions: prop.marketConditions !== undefined ? prop.marketConditions : undefined,
-      })),
+          data: props.map((prop) => ({
+            timestamp:
+              prop.timestamp !== undefined ? prop.timestamp : undefined,
+            signalId: prop.signalId !== undefined ? prop.signalId : undefined,
+            generatorSource:
+              prop.generatorSource !== undefined
+                ? prop.generatorSource
+                : undefined,
+            symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+            signalType:
+              prop.signalType !== undefined ? prop.signalType : undefined,
+            outcome: prop.outcome !== undefined ? prop.outcome : undefined,
+            timeToOutcome:
+              prop.timeToOutcome !== undefined ? prop.timeToOutcome : undefined,
+            outcomeTimestamp:
+              prop.outcomeTimestamp !== undefined
+                ? prop.outcomeTimestamp
+                : undefined,
+            outcomeReason:
+              prop.outcomeReason !== undefined ? prop.outcomeReason : undefined,
+            generatedAt:
+              prop.generatedAt !== undefined ? prop.generatedAt : undefined,
+            marketConditions:
+              prop.marketConditions !== undefined
+                ? prop.marketConditions
+                : undefined,
+          })),
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -188,11 +231,16 @@ import { logger } from './utils/logger';
           mutation: CREATE_MANY_SIGNALOUTCOME,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.createManySignalOutcome) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.createManySignalOutcome
+        ) {
           return response.data.createManySignalOutcome;
         } else {
           return null as any;
@@ -206,20 +254,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -235,7 +287,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The updated SignalOutcome or null.
    */
-  async update(props: SignalOutcomeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalOutcomeType> {
+  async update(
+    props: SignalOutcomeType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<SignalOutcomeType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -246,9 +301,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -263,60 +316,111 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  signalId: props.signalId !== undefined ? {
-    equals: props.signalId 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-      },
+            signalId:
+              props.signalId !== undefined
+                ? {
+                    equals: props.signalId,
+                  }
+                : undefined,
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    equals: props.symbol,
+                  }
+                : undefined,
+          },
           data: {
-      id: props.id !== undefined ? {
-            set: props.id 
-           } : undefined,
-  timestamp: props.timestamp !== undefined ? {
-            set: props.timestamp 
-           } : undefined,
-  signalId: props.signalId !== undefined ? {
-            set: props.signalId 
-           } : undefined,
-  generatorSource: props.generatorSource !== undefined ? {
-            set: props.generatorSource 
-           } : undefined,
-  symbol: props.symbol !== undefined ? {
-            set: props.symbol 
-           } : undefined,
-  signalType: props.signalType !== undefined ? {
-            set: props.signalType 
-           } : undefined,
-  originalConfidence: props.originalConfidence !== undefined ? {
-            set: props.originalConfidence 
-           } : undefined,
-  priorityScore: props.priorityScore !== undefined ? {
-            set: props.priorityScore 
-           } : undefined,
-  outcome: props.outcome !== undefined ? {
-            set: props.outcome 
-           } : undefined,
-  pnlPercentage: props.pnlPercentage !== undefined ? {
-            set: props.pnlPercentage 
-           } : undefined,
-  timeToOutcome: props.timeToOutcome !== undefined ? {
-            set: props.timeToOutcome 
-           } : undefined,
-  outcomeTimestamp: props.outcomeTimestamp !== undefined ? {
-            set: props.outcomeTimestamp 
-           } : undefined,
-  outcomeReason: props.outcomeReason !== undefined ? {
-            set: props.outcomeReason 
-           } : undefined,
-  generatedAt: props.generatedAt !== undefined ? {
-            set: props.generatedAt 
-           } : undefined,
-  marketConditions: props.marketConditions !== undefined ? {
-            set: props.marketConditions 
-           } : undefined,
-      },
+            id:
+              props.id !== undefined
+                ? {
+                    set: props.id,
+                  }
+                : undefined,
+            timestamp:
+              props.timestamp !== undefined
+                ? {
+                    set: props.timestamp,
+                  }
+                : undefined,
+            signalId:
+              props.signalId !== undefined
+                ? {
+                    set: props.signalId,
+                  }
+                : undefined,
+            generatorSource:
+              props.generatorSource !== undefined
+                ? {
+                    set: props.generatorSource,
+                  }
+                : undefined,
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    set: props.symbol,
+                  }
+                : undefined,
+            signalType:
+              props.signalType !== undefined
+                ? {
+                    set: props.signalType,
+                  }
+                : undefined,
+            originalConfidence:
+              props.originalConfidence !== undefined
+                ? {
+                    set: props.originalConfidence,
+                  }
+                : undefined,
+            priorityScore:
+              props.priorityScore !== undefined
+                ? {
+                    set: props.priorityScore,
+                  }
+                : undefined,
+            outcome:
+              props.outcome !== undefined
+                ? {
+                    set: props.outcome,
+                  }
+                : undefined,
+            pnlPercentage:
+              props.pnlPercentage !== undefined
+                ? {
+                    set: props.pnlPercentage,
+                  }
+                : undefined,
+            timeToOutcome:
+              props.timeToOutcome !== undefined
+                ? {
+                    set: props.timeToOutcome,
+                  }
+                : undefined,
+            outcomeTimestamp:
+              props.outcomeTimestamp !== undefined
+                ? {
+                    set: props.outcomeTimestamp,
+                  }
+                : undefined,
+            outcomeReason:
+              props.outcomeReason !== undefined
+                ? {
+                    set: props.outcomeReason,
+                  }
+                : undefined,
+            generatedAt:
+              props.generatedAt !== undefined
+                ? {
+                    set: props.generatedAt,
+                  }
+                : undefined,
+            marketConditions:
+              props.marketConditions !== undefined
+                ? {
+                    set: props.marketConditions,
+                  }
+                : undefined,
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -325,10 +429,11 @@ import { logger } from './utils/logger';
           mutation: UPDATE_ONE_SIGNALOUTCOME,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         if (response && response.data && response.data.updateOneSignalOutcome) {
           return response.data.updateOneSignalOutcome;
         } else {
@@ -343,20 +448,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -372,7 +481,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The updated SignalOutcome or null.
    */
-  async upsert(props: SignalOutcomeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalOutcomeType> {
+  async upsert(
+    props: SignalOutcomeType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<SignalOutcomeType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -383,9 +495,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -400,70 +510,136 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  signalId: props.signalId !== undefined ? {
-    equals: props.signalId 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-      },
+            signalId:
+              props.signalId !== undefined
+                ? {
+                    equals: props.signalId,
+                  }
+                : undefined,
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    equals: props.symbol,
+                  }
+                : undefined,
+          },
           create: {
-        timestamp: props.timestamp !== undefined ? props.timestamp : undefined,
-  signalId: props.signalId !== undefined ? props.signalId : undefined,
-  generatorSource: props.generatorSource !== undefined ? props.generatorSource : undefined,
-  symbol: props.symbol !== undefined ? props.symbol : undefined,
-  signalType: props.signalType !== undefined ? props.signalType : undefined,
-  outcome: props.outcome !== undefined ? props.outcome : undefined,
-  timeToOutcome: props.timeToOutcome !== undefined ? props.timeToOutcome : undefined,
-  outcomeTimestamp: props.outcomeTimestamp !== undefined ? props.outcomeTimestamp : undefined,
-  outcomeReason: props.outcomeReason !== undefined ? props.outcomeReason : undefined,
-  generatedAt: props.generatedAt !== undefined ? props.generatedAt : undefined,
-  marketConditions: props.marketConditions !== undefined ? props.marketConditions : undefined,
-      },
+            timestamp:
+              props.timestamp !== undefined ? props.timestamp : undefined,
+            signalId: props.signalId !== undefined ? props.signalId : undefined,
+            generatorSource:
+              props.generatorSource !== undefined
+                ? props.generatorSource
+                : undefined,
+            symbol: props.symbol !== undefined ? props.symbol : undefined,
+            signalType:
+              props.signalType !== undefined ? props.signalType : undefined,
+            outcome: props.outcome !== undefined ? props.outcome : undefined,
+            timeToOutcome:
+              props.timeToOutcome !== undefined
+                ? props.timeToOutcome
+                : undefined,
+            outcomeTimestamp:
+              props.outcomeTimestamp !== undefined
+                ? props.outcomeTimestamp
+                : undefined,
+            outcomeReason:
+              props.outcomeReason !== undefined
+                ? props.outcomeReason
+                : undefined,
+            generatedAt:
+              props.generatedAt !== undefined ? props.generatedAt : undefined,
+            marketConditions:
+              props.marketConditions !== undefined
+                ? props.marketConditions
+                : undefined,
+          },
           update: {
-      timestamp: props.timestamp !== undefined ? {
-            set: props.timestamp 
-           } : undefined,
-  signalId: props.signalId !== undefined ? {
-            set: props.signalId 
-           } : undefined,
-  generatorSource: props.generatorSource !== undefined ? {
-            set: props.generatorSource 
-           } : undefined,
-  symbol: props.symbol !== undefined ? {
-            set: props.symbol 
-           } : undefined,
-  signalType: props.signalType !== undefined ? {
-            set: props.signalType 
-           } : undefined,
-  originalConfidence: props.originalConfidence !== undefined ? {
-            set: props.originalConfidence 
-           } : undefined,
-  priorityScore: props.priorityScore !== undefined ? {
-            set: props.priorityScore 
-           } : undefined,
-  outcome: props.outcome !== undefined ? {
-            set: props.outcome 
-           } : undefined,
-  pnlPercentage: props.pnlPercentage !== undefined ? {
-            set: props.pnlPercentage 
-           } : undefined,
-  timeToOutcome: props.timeToOutcome !== undefined ? {
-            set: props.timeToOutcome 
-           } : undefined,
-  outcomeTimestamp: props.outcomeTimestamp !== undefined ? {
-            set: props.outcomeTimestamp 
-           } : undefined,
-  outcomeReason: props.outcomeReason !== undefined ? {
-            set: props.outcomeReason 
-           } : undefined,
-  generatedAt: props.generatedAt !== undefined ? {
-            set: props.generatedAt 
-           } : undefined,
-  marketConditions: props.marketConditions !== undefined ? {
-            set: props.marketConditions 
-           } : undefined,
-      },
+            timestamp:
+              props.timestamp !== undefined
+                ? {
+                    set: props.timestamp,
+                  }
+                : undefined,
+            signalId:
+              props.signalId !== undefined
+                ? {
+                    set: props.signalId,
+                  }
+                : undefined,
+            generatorSource:
+              props.generatorSource !== undefined
+                ? {
+                    set: props.generatorSource,
+                  }
+                : undefined,
+            symbol:
+              props.symbol !== undefined
+                ? {
+                    set: props.symbol,
+                  }
+                : undefined,
+            signalType:
+              props.signalType !== undefined
+                ? {
+                    set: props.signalType,
+                  }
+                : undefined,
+            originalConfidence:
+              props.originalConfidence !== undefined
+                ? {
+                    set: props.originalConfidence,
+                  }
+                : undefined,
+            priorityScore:
+              props.priorityScore !== undefined
+                ? {
+                    set: props.priorityScore,
+                  }
+                : undefined,
+            outcome:
+              props.outcome !== undefined
+                ? {
+                    set: props.outcome,
+                  }
+                : undefined,
+            pnlPercentage:
+              props.pnlPercentage !== undefined
+                ? {
+                    set: props.pnlPercentage,
+                  }
+                : undefined,
+            timeToOutcome:
+              props.timeToOutcome !== undefined
+                ? {
+                    set: props.timeToOutcome,
+                  }
+                : undefined,
+            outcomeTimestamp:
+              props.outcomeTimestamp !== undefined
+                ? {
+                    set: props.outcomeTimestamp,
+                  }
+                : undefined,
+            outcomeReason:
+              props.outcomeReason !== undefined
+                ? {
+                    set: props.outcomeReason,
+                  }
+                : undefined,
+            generatedAt:
+              props.generatedAt !== undefined
+                ? {
+                    set: props.generatedAt,
+                  }
+                : undefined,
+            marketConditions:
+              props.marketConditions !== undefined
+                ? {
+                    set: props.marketConditions,
+                  }
+                : undefined,
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -472,10 +648,11 @@ import { logger } from './utils/logger';
           mutation: UPSERT_ONE_SIGNALOUTCOME,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         if (response && response.data && response.data.upsertOneSignalOutcome) {
           return response.data.upsertOneSignalOutcome;
         } else {
@@ -490,20 +667,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -519,7 +700,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The count of created records or null.
    */
-  async updateMany(props: SignalOutcomeType[], globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<{ count: number } | null> {
+  async updateMany(
+    props: SignalOutcomeType[],
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<{ count: number } | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -530,78 +714,128 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
 
         const UPDATE_MANY_SIGNALOUTCOME = gql`
-          mutation updateManySignalOutcome($data: [SignalOutcomeCreateManyInput!]!) {
+          mutation updateManySignalOutcome(
+            $data: [SignalOutcomeCreateManyInput!]!
+          ) {
             updateManySignalOutcome(data: $data) {
               count
             }
-          }`;
+          }
+        `;
 
-        const variables = props.map(prop => ({
+        const variables = props.map((prop) => ({
           where: {
-              id: prop.id !== undefined ? prop.id : undefined,
-  signalId: prop.signalId !== undefined ? {
-    equals: prop.signalId 
-  } : undefined,
-  symbol: prop.symbol !== undefined ? {
-    equals: prop.symbol 
-  } : undefined,
-
+            id: prop.id !== undefined ? prop.id : undefined,
+            signalId:
+              prop.signalId !== undefined
+                ? {
+                    equals: prop.signalId,
+                  }
+                : undefined,
+            symbol:
+              prop.symbol !== undefined
+                ? {
+                    equals: prop.symbol,
+                  }
+                : undefined,
           },
           data: {
-              id: prop.id !== undefined ? {
-            set: prop.id 
-           } : undefined,
-  timestamp: prop.timestamp !== undefined ? {
-            set: prop.timestamp 
-           } : undefined,
-  signalId: prop.signalId !== undefined ? {
-            set: prop.signalId 
-           } : undefined,
-  generatorSource: prop.generatorSource !== undefined ? {
-            set: prop.generatorSource 
-           } : undefined,
-  symbol: prop.symbol !== undefined ? {
-            set: prop.symbol 
-           } : undefined,
-  signalType: prop.signalType !== undefined ? {
-            set: prop.signalType 
-           } : undefined,
-  originalConfidence: prop.originalConfidence !== undefined ? {
-            set: prop.originalConfidence 
-           } : undefined,
-  priorityScore: prop.priorityScore !== undefined ? {
-            set: prop.priorityScore 
-           } : undefined,
-  outcome: prop.outcome !== undefined ? {
-            set: prop.outcome 
-           } : undefined,
-  pnlPercentage: prop.pnlPercentage !== undefined ? {
-            set: prop.pnlPercentage 
-           } : undefined,
-  timeToOutcome: prop.timeToOutcome !== undefined ? {
-            set: prop.timeToOutcome 
-           } : undefined,
-  outcomeTimestamp: prop.outcomeTimestamp !== undefined ? {
-            set: prop.outcomeTimestamp 
-           } : undefined,
-  outcomeReason: prop.outcomeReason !== undefined ? {
-            set: prop.outcomeReason 
-           } : undefined,
-  generatedAt: prop.generatedAt !== undefined ? {
-            set: prop.generatedAt 
-           } : undefined,
-  marketConditions: prop.marketConditions !== undefined ? {
-            set: prop.marketConditions 
-           } : undefined,
-
+            id:
+              prop.id !== undefined
+                ? {
+                    set: prop.id,
+                  }
+                : undefined,
+            timestamp:
+              prop.timestamp !== undefined
+                ? {
+                    set: prop.timestamp,
+                  }
+                : undefined,
+            signalId:
+              prop.signalId !== undefined
+                ? {
+                    set: prop.signalId,
+                  }
+                : undefined,
+            generatorSource:
+              prop.generatorSource !== undefined
+                ? {
+                    set: prop.generatorSource,
+                  }
+                : undefined,
+            symbol:
+              prop.symbol !== undefined
+                ? {
+                    set: prop.symbol,
+                  }
+                : undefined,
+            signalType:
+              prop.signalType !== undefined
+                ? {
+                    set: prop.signalType,
+                  }
+                : undefined,
+            originalConfidence:
+              prop.originalConfidence !== undefined
+                ? {
+                    set: prop.originalConfidence,
+                  }
+                : undefined,
+            priorityScore:
+              prop.priorityScore !== undefined
+                ? {
+                    set: prop.priorityScore,
+                  }
+                : undefined,
+            outcome:
+              prop.outcome !== undefined
+                ? {
+                    set: prop.outcome,
+                  }
+                : undefined,
+            pnlPercentage:
+              prop.pnlPercentage !== undefined
+                ? {
+                    set: prop.pnlPercentage,
+                  }
+                : undefined,
+            timeToOutcome:
+              prop.timeToOutcome !== undefined
+                ? {
+                    set: prop.timeToOutcome,
+                  }
+                : undefined,
+            outcomeTimestamp:
+              prop.outcomeTimestamp !== undefined
+                ? {
+                    set: prop.outcomeTimestamp,
+                  }
+                : undefined,
+            outcomeReason:
+              prop.outcomeReason !== undefined
+                ? {
+                    set: prop.outcomeReason,
+                  }
+                : undefined,
+            generatedAt:
+              prop.generatedAt !== undefined
+                ? {
+                    set: prop.generatedAt,
+                  }
+                : undefined,
+            marketConditions:
+              prop.marketConditions !== undefined
+                ? {
+                    set: prop.marketConditions,
+                  }
+                : undefined,
           },
         }));
 
@@ -611,11 +845,16 @@ import { logger } from './utils/logger';
           mutation: UPDATE_MANY_SIGNALOUTCOME,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
-        if (response && response.data && response.data.updateManySignalOutcome) {
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
+        if (
+          response &&
+          response.data &&
+          response.data.updateManySignalOutcome
+        ) {
           return response.data.updateManySignalOutcome;
         } else {
           return null as any;
@@ -629,20 +868,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -658,7 +901,10 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns The deleted SignalOutcome or null.
    */
-  async delete(props: SignalOutcomeType, globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalOutcomeType> {
+  async delete(
+    props: SignalOutcomeType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<SignalOutcomeType> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -669,24 +915,25 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
 
         const DELETE_ONE_SIGNALOUTCOME = gql`
-          mutation deleteOneSignalOutcome($where: SignalOutcomeWhereUniqueInput!) {
+          mutation deleteOneSignalOutcome(
+            $where: SignalOutcomeWhereUniqueInput!
+          ) {
             deleteOneSignalOutcome(where: $where) {
               id
             }
-          }`;
+          }
+        `;
 
         const variables = {
           where: {
             id: props.id ? props.id : undefined,
-          }
+          },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -695,10 +942,11 @@ import { logger } from './utils/logger';
           mutation: DELETE_ONE_SIGNALOUTCOME,
           variables: filteredVariables,
           // Don't cache mutations, but ensure we're using the freshest context
-          fetchPolicy: 'no-cache'
+          fetchPolicy: 'no-cache',
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         if (response && response.data && response.data.deleteOneSignalOutcome) {
           return response.data.deleteOneSignalOutcome;
         } else {
@@ -713,20 +961,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -743,7 +995,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns The retrieved SignalOutcome or null.
    */
-  async get(props: SignalOutcomeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SignalOutcomeType | null> {
+  async get(
+    props: SignalOutcomeType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>,
+    whereInput?: any
+  ): Promise<SignalOutcomeType | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -754,9 +1010,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -769,15 +1023,23 @@ import { logger } from './utils/logger';
           }`;
 
         const variables = {
-          where: whereInput ? whereInput : {
-            id: props.id !== undefined ? props.id : undefined,
-  signalId: props.signalId !== undefined ? {
-    equals: props.signalId 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-},
+          where: whereInput
+            ? whereInput
+            : {
+                id: props.id !== undefined ? props.id : undefined,
+                signalId:
+                  props.signalId !== undefined
+                    ? {
+                        equals: props.signalId,
+                      }
+                    : undefined,
+                symbol:
+                  props.symbol !== undefined
+                    ? {
+                        equals: props.symbol,
+                      }
+                    : undefined,
+              },
         };
         const filteredVariables = removeUndefinedProps(variables);
 
@@ -787,7 +1049,8 @@ import { logger } from './utils/logger';
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         return response.data?.getSignalOutcome ?? null;
       } catch (error: any) {
         lastError = error;
@@ -803,20 +1066,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -831,7 +1098,9 @@ import { logger } from './utils/logger';
    * @param globalClient - Apollo Client instance.
    * @returns An array of SignalOutcome records or null.
    */
-  async getAll(globalClient?: ApolloClientType<NormalizedCacheObject>): Promise<SignalOutcomeType[] | null> {
+  async getAll(
+    globalClient?: ApolloClientType<NormalizedCacheObject>
+  ): Promise<SignalOutcomeType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -842,9 +1111,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -861,7 +1128,8 @@ import { logger } from './utils/logger';
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         return response.data?.signalOutcomes ?? null;
       } catch (error: any) {
         lastError = error;
@@ -877,20 +1145,24 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
@@ -907,7 +1179,11 @@ import { logger } from './utils/logger';
    * @param whereInput - Optional custom where input.
    * @returns An array of found SignalOutcome records or null.
    */
-  async findMany(props: SignalOutcomeType, globalClient?: ApolloClientType<NormalizedCacheObject>, whereInput?: any): Promise<SignalOutcomeType[] | null> {
+  async findMany(
+    props: SignalOutcomeType,
+    globalClient?: ApolloClientType<NormalizedCacheObject>,
+    whereInput?: any
+  ): Promise<SignalOutcomeType[] | null> {
     // Maximum number of retries for database connection issues
     const MAX_RETRIES = 2;
     let retryCount = 0;
@@ -918,9 +1194,7 @@ import { logger } from './utils/logger';
       try {
         const [modules, client] = await Promise.all([
           getApolloModules(),
-          globalClient
-            ? Promise.resolve(globalClient)
-            : importedClient
+          globalClient ? Promise.resolve(globalClient) : importedClient,
         ]);
 
         const { gql, ApolloError } = modules;
@@ -933,17 +1207,28 @@ import { logger } from './utils/logger';
           }`;
 
         const variables = {
-          where: whereInput ? whereInput : {
-      id: props.id !== undefined ? {
-    equals: props.id 
-  } : undefined,
-  signalId: props.signalId !== undefined ? {
-    equals: props.signalId 
-  } : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
-      },
+          where: whereInput
+            ? whereInput
+            : {
+                id:
+                  props.id !== undefined
+                    ? {
+                        equals: props.id,
+                      }
+                    : undefined,
+                signalId:
+                  props.signalId !== undefined
+                    ? {
+                        equals: props.signalId,
+                      }
+                    : undefined,
+                symbol:
+                  props.symbol !== undefined
+                    ? {
+                        equals: props.symbol,
+                      }
+                    : undefined,
+              },
         };
 
         const filteredVariables = removeUndefinedProps(variables);
@@ -954,7 +1239,8 @@ import { logger } from './utils/logger';
           fetchPolicy: 'network-only', // Force network request to avoid stale cache
         });
 
-        if (response.errors && response.errors.length > 0) throw new Error(response.errors[0].message);
+        if (response.errors && response.errors.length > 0)
+          throw new Error(response.errors[0].message);
         if (response && response.data && response.data.signaloutcomes) {
           return response.data.signalOutcomes;
         } else {
@@ -974,25 +1260,29 @@ import { logger } from './utils/logger';
           error.message?.includes('Cannot reach database server') ||
           error.message?.includes('Connection timed out') ||
           error.message?.includes('Accelerate') || // Prisma Accelerate proxy errors
-          (error.networkError && error.networkError.message?.includes('Failed to fetch'));
+          (error.networkError &&
+            error.networkError.message?.includes('Failed to fetch'));
 
         if (isConnectionError && retryCount < MAX_RETRIES - 1) {
           retryCount++;
           const baseDelay = Math.pow(2, retryCount) * 500;
           const jitter = Math.floor(Math.random() * 500);
           const delay = baseDelay + jitter; // Exponential backoff with jitter to avoid thundering herd
-          logger.warn("Database connection error, retrying...", { retryCount, delayMs: delay });
-          await new Promise(resolve => setTimeout(resolve, delay));
+          logger.warn('Database connection error, retrying...', {
+            retryCount,
+            delayMs: delay,
+          });
+          await new Promise((resolve) => setTimeout(resolve, delay));
           continue;
         }
 
         // Log the error and rethrow
-        logger.error("Database error occurred", { error: String(error) });
+        logger.error('Database error occurred', { error: String(error) });
         throw error;
       }
     }
 
     // If we exhausted retries, throw the last error
     throw lastError;
-  }
+  },
 };

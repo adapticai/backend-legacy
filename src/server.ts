@@ -123,9 +123,13 @@ const startServer = async () => {
         message.includes('Inconsistent column data: Error creating UUID');
 
       if (isExpectedDeleteRace) {
-        logger.info('GraphQL expected race (record already removed)', { graphqlError: err });
+        logger.info('GraphQL expected race (record already removed)', {
+          graphqlError: err,
+        });
       } else if (isInvalidUuidInput) {
-        logger.warn('GraphQL rejected invalid UUID input', { graphqlError: err });
+        logger.warn('GraphQL rejected invalid UUID input', {
+          graphqlError: err,
+        });
       } else {
         logger.error('GraphQL Error', { graphqlError: err });
       }

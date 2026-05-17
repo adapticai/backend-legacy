@@ -1448,6 +1448,9 @@ model User {
   /// Saved dashboard layouts per role. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
   dashboardLayouts DashboardLayout[]
 
+  /// Per-user LLM provider configuration (model tiers, API keys, fallback chains). Pivot-neutral port from SR. TYPESTRING.SKIP=true GQL.EXCLUDE=['user']
+  llmConfiguration LlmConfiguration?
+
   @@index([customerId])
   @@map(name: "users")
 }
@@ -1688,6 +1691,9 @@ model BrokerageAccount {
 
   /// List of options trade executions on this brokerage account. TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount']
   optionsTradeExecutions OptionsTradeExecution[]
+
+  /// Trading policy for this brokerage account (one-to-one). Pivot-adapted from SR (was AlpacaAccount → TradingPolicy). TYPESTRING.SKIP=true GQL.EXCLUDE=['brokerageAccount']
+  tradingPolicy TradingPolicy?
 
   @@index([fundId])
   @@map(name: "brokerage_accounts")
@@ -5049,4 +5055,267 @@ model AuditLog {
   @@index([recordId])
   @@index([operationType, timestamp])
   @@map(name: "audit_logs")
+}
+
+model TradingPolicy {
+  id                 String @id @default(uuid()) @db.Uuid
+  brokerageAccountId String @unique @db.Uuid
+
+  /// Relation to BrokerageAccount. GQL.SKIP=true
+  brokerageAccount BrokerageAccount @relation(fields: [brokerageAccountId], references: [id], onDelete: Cascade)
+
+  version        Int      @default(1)
+  lastModifiedBy String?
+  lastModifiedAt DateTime @default(now())
+
+  autonomyMode           AutonomyMode @default(ADVISORY_ONLY)
+  realtimeTradingEnabled Boolean      @default(false)
+  paperTradingOnly       Boolean      @default(false)
+  killSwitchEnabled      Boolean      @default(false)
+  autonomyPrefs          Json?
+
+  equitiesEnabled         Boolean @default(true)
+  etfsEnabled             Boolean @default(true)
+  cryptoEnabled           Boolean @default(true)
+  optionsEnabled          Boolean @default(true)
+  futuresEnabled          Boolean @default(true)
+  forexEnabled            Boolean @default(true)
+  shortingEnabled         Boolean @default(false)
+  marginEnabled           Boolean @default(false)
+  fractionalSharesEnabled Boolean @default(true)
+  assetUniversePrefs      Json?
+
+  maxBuyingPowerUtilPct     Float @default(90)
+  cashFloorPct              Float @default(10)
+  maxGrossExposurePct       Float @default(100)
+  maxNetExposurePct         Float @default(100)
+  maxLeverage               Float @default(1)
+  maxSymbolConcentrationPct Float @default(15)
+  maxSectorConcentrationPct Float @default(30)
+  maxOpenPositions          Int   @default(20)
+  maxOpenOrders             Int   @default(50)
+
+  /// Percentage of account equity (with leverage) allocated per equities trade. Canonical replacement for legacy BrokerageAccount.tradeAllocationPct.
+  perTradeEquityAllocationPct Float @default(5)
+
+  /// Percentage of the crypto allocation slice of account equity allocated per crypto trade. Canonical replacement for legacy BrokerageAccount.cryptoTradeAllocationPct.
+  perTradeCryptoAllocationPct Float @default(5)
+
+  /// Opt-in for enabling the portfolio-level trailing stop service within Adaptic's Realtime Trade Engine. Canonical replacement for legacy BrokerageAccount.enablePortfolioTrailingStop.
+  enablePortfolioTrailingStop Boolean @default(false)
+
+  /// Portfolio-level trailing stop percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. Canonical replacement for legacy BrokerageAccount.portfolioTrailPercent.
+  portfolioTrailPercent Float @default(4.0)
+
+  /// Portfolio-level profit threshold percentage used by the Realtime Trade Engine, if opted into the portfolio-level trailing stop service. Canonical replacement for legacy BrokerageAccount.portfolioProfitThresholdPercent.
+  portfolioProfitThresholdPercent Float @default(2.0)
+
+  /// Portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop once the profit threshold is exceeded. Canonical replacement for legacy BrokerageAccount.reducedPortfolioTrailPercent.
+  reducedPortfolioTrailPercent Float @default(0.5)
+
+  /// Initial trailing stop percentage used by the Position Trailing Stop Service. Canonical replacement for legacy BrokerageAccount.defaultTrailingStopPercentage100.
+  defaultTrailingStopPercentage100 Float @default(4.0)
+
+  /// First profit threshold at which the Position Trailing Stop Service reduces the trailing stop. Canonical replacement for legacy BrokerageAccount.firstTrailReductionThreshold100.
+  firstTrailReductionThreshold100 Float @default(2.0)
+
+  /// Second profit threshold at which the Position Trailing Stop Service further reduces the trailing stop. Canonical replacement for legacy BrokerageAccount.secondTrailReductionThreshold100.
+  secondTrailReductionThreshold100 Float @default(5.0)
+
+  /// Trailing stop percentage to use when profit exceeds the first threshold. Canonical replacement for legacy BrokerageAccount.firstReducedTrailPercentage100.
+  firstReducedTrailPercentage100 Float @default(1.0)
+
+  /// Trailing stop percentage to use when profit exceeds the second threshold. Canonical replacement for legacy BrokerageAccount.secondReducedTrailPercentage100.
+  secondReducedTrailPercentage100 Float @default(0.5)
+
+  /// Minimum change in trailing stop percent to warrant an adjustment. Canonical replacement for legacy BrokerageAccount.minimumPriceChangePercent100.
+  minimumPriceChangePercent100 Float @default(0.5)
+
+  /// Wash-trade cooldown period in milliseconds for equities — minimum elapsed time between opposing-side fills on the same symbol per FINRA Rule 5210. Mirrors the 30s default already enforced for crypto. Default: 30000 (30 seconds).
+  equityWashTradeCooldownMs Int @default(30000)
+
+  /// Minimum intraday liquidity threshold (shares traded in last 5 min). Required for scalping. Default: 10000 (10k shares in last 5 min).
+  minIntradayLiquidityShares Int @default(10000)
+
+  /// Maximum spread in basis points (1/100ths of 1%) to allow entry. Scalping requires tight spreads; use 1-3 bps. Default: 5 (0.05%).
+  maxEntrySpreadBps Int @default(5)
+
+  /// Minimum time between same-symbol same-side entries (ms). FINRA Rule 5210 requires 30s for opposite-side trades; this controls same-side rapid re-entry. Default: 5000 (5 seconds) for scalping; 30000 for normal trading.
+  sameSideReentryDelayMs Int @default(5000)
+
+  /// Volatility filter: only trade if ATR(14) >= minAtrPercentage. Scalping needs moderate volatility; too low = no edge. Default: 0.3 (0.3%).
+  minAtrPercentage Float @default(0.3)
+
+  /// Volatility filter: only trade if ATR(14) <= maxAtrPercentage. Scalping needs moderate volatility; too high = whipsaws. Default: 2.0 (2.0%).
+  maxAtrPercentage Float @default(2.0)
+
+  /// Order book depth requirement: minimum shares at best bid/ask to qualify for entry. Scalping needs guaranteed liquidity. Default: 5000 shares.
+  minBookDepthShares Int @default(5000)
+
+  /// Maximum market order slippage in basis points before flagging as anomaly. Helps detect liquidity crunches. Default: 10 bps.
+  maxAnomalousSlippageBps Int @default(10)
+
+  /// Intraday session windows allowed (JSON array). Format: [{ startMinutesFromOpen, endMinutesFromOpen, active }]. Example: skip first 5 min and last 10 min of RTH.
+  intradayTradingWindows Json?
+
+  /// Hard position exit clock (minutes from entry). 0 = disabled. Forces liquidation regardless of signal. Useful for strict day-trading discipline. Default: 0.
+  hardPositionExitMinutes Int @default(0)
+
+  /// Rapid-fire order-rate limit: max orders within orderWindowSeconds. Default: 10 orders per 5 seconds.
+  maxOrdersPerWindow Int @default(10)
+
+  /// Window size for maxOrdersPerWindow rate limit (seconds). Default: 5.
+  orderWindowSeconds Int @default(5)
+
+  /// Enforce intraday-only trading (auto-close all positions before EOD). Default: false.
+  dayTradeOnly Boolean @default(false)
+
+  riskBudgetPrefs Json?
+
+  signalConsumptionPrefs     Json?
+  executionPrefs             Json?
+  positionManagementPrefs    Json?
+  portfolioConstructionPrefs Json?
+
+  macroOverlayEnabled               Boolean @default(false)
+  sectorOverlayEnabled              Boolean @default(false)
+  volatilityOverlayEnabled          Boolean @default(false)
+  liquidityStressOverlayEnabled     Boolean @default(false)
+  blackSwanProtectionEnabled        Boolean @default(false)
+  drawdownGuardianEnabled           Boolean @default(false)
+  correlationSpikeProtectionEnabled Boolean @default(false)
+  newsEventRiskOverlayEnabled       Boolean @default(false)
+  exchangeHealthOverlayEnabled      Boolean @default(false)
+  dataQualitySentinelEnabled        Boolean @default(false)
+  overlayResponsePrefs              Json?
+
+  miniModelProvider     LlmProvider?
+  miniModelId           String?
+  normalModelProvider   LlmProvider?
+  normalModelId         String?
+  advancedModelProvider LlmProvider?
+  advancedModelId       String?
+  modelPrefs            Json?
+
+  auditNotificationPrefs Json?
+
+  /// List of policy overlays. GQL.SKIP=true
+  overlays PolicyOverlay[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("trading_policies")
+}
+
+model LlmConfiguration {
+  id     String @id @default(uuid()) @db.Uuid
+  userId String @unique @db.Uuid
+
+  /// Relation to the User model. GQL.SKIP=true
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Default provider used for all tiers unless overridden
+  defaultProvider LlmProvider @default(OPENAI)
+
+  /// Per-tier provider overrides (null = inherit from defaultProvider)
+  miniProvider     LlmProvider?
+  normalProvider   LlmProvider?
+  advancedProvider LlmProvider?
+
+  /// Per-tier model overrides (null = use provider's default for that tier).
+  /// These are model ID strings. The canonical sets are documented by the per-provider enums
+  /// (OpenaiModel, AnthropicModel, DeepseekModel, KimiModel, QwenModel, XaiModel, GeminiModel)
+  /// — e.g. "gpt-5.5", "claude-opus-4-7", "deepseek-v4-pro", "grok-4.3", "gemini-3.1-pro-preview".
+  miniModel     String?
+  normalModel   String?
+  advancedModel String?
+
+  /// Provider API keys (encrypted at rest). TYPESTRING.SKIP=true GQL.SKIP=true
+  openaiApiKey    String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  anthropicApiKey String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  deepseekApiKey  String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  kimiApiKey      String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  qwenApiKey      String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  xaiApiKey       String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  geminiApiKey    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PolicyOverlay {
+  id              String @id @default(uuid()) @db.Uuid
+  tradingPolicyId String @db.Uuid
+
+  /// Relation to TradingPolicy. GQL.SKIP=true
+  tradingPolicy TradingPolicy @relation(fields: [tradingPolicyId], references: [id], onDelete: Cascade)
+
+  overlayType OverlayType
+  source      String
+  reason      String
+  severity    OverlaySeverity @default(MEDIUM)
+  version     Int             @default(1)
+
+  mutations Json
+
+  status        OverlayStatus @default(ACTIVE)
+  activatedAt   DateTime      @default(now())
+  expiresAt     DateTime?
+  deactivatedAt DateTime?
+  deactivatedBy String?
+
+  correlationId  String?
+  triggerEventId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([tradingPolicyId, status])
+  @@index([overlayType, status])
+  @@index([expiresAt])
+  @@map("policy_overlays")
+}
+
+enum AutonomyMode {
+  ADVISORY_ONLY
+  EXECUTION_ON_APPROVAL
+  SEMI_AUTONOMOUS
+  FULLY_AUTONOMOUS
+  EMERGENCY_SAFE_MODE
+}
+
+enum OverlayType {
+  BLACK_SWAN
+  VOLATILITY_REGIME
+  SECTOR_DETERIORATION
+  DRAWDOWN_BREACH
+  CORRELATION_SPIKE
+  LIQUIDITY_STRESS
+  EXCHANGE_DEGRADATION
+  DATA_QUALITY
+  NEWS_EVENT_RISK
+  RATES_BONDS_STRESS
+  MANUAL_OVERRIDE
+  INCIDENT_RESPONSE
+}
+
+enum OverlaySeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum OverlayStatus {
+  ACTIVE
+  EXPIRED
+  DEACTIVATED
+  SUPERSEDED
 }
