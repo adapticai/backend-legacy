@@ -411,6 +411,9 @@ enum AlertCategory {
 
   /// Alerts related to portfolio management.
   PORTFOLIO
+
+  /// Alerts related to risk governance (account/strategy state changes, escalations).
+  GOVERNANCE
 }
 
 // Specifies the importance level of an event.
@@ -1442,6 +1445,15 @@ model AlpacaAccount {
 
   /// List of alerts generated for this Alpaca account. TYPESTRING.SKIP=true GQL.EXCLUDE=['alpacaAccount']
   alerts Alert[]
+
+  /// Risk metrics snapshot for this Alpaca account (FSM state, HWM, drawdown, P&L windows). TYPESTRING.SKIP=true GQL.SKIP=true
+  accountRiskMetrics AccountRiskMetrics?
+
+  /// Per-strategy rolling-window health snapshots for this Alpaca account. TYPESTRING.SKIP=true GQL.SKIP=true
+  strategyHealthSnapshots  StrategyHealthSnapshot[]
+
+  /// Risk FSM state-transition audit log for this Alpaca account. TYPESTRING.SKIP=true GQL.SKIP=true
+  riskEscalationEvents     RiskEscalationEvent[]
 
   @@index([userId])
   @@map(name: "alpaca_accounts")
@@ -5050,6 +5062,13 @@ model TradingPolicy {
   /// List of policy overlays. GQL.SKIP=true
   overlays                  PolicyOverlay[]
 
+  // Risk-governance: per-account escalation policy overrides + denormalized FSM state
+  escalationPolicyOverrides Json?
+  currentRiskState          AccountRiskState @default(NORMAL)
+  currentRiskStateAt        DateTime?
+  lastRiskStateChangedBy    String?
+  lastRiskEscalationEventId String?  @db.Uuid
+
   createdAt                 DateTime @default(now())
   updatedAt                 DateTime @updatedAt
 
@@ -5079,6 +5098,12 @@ model PolicyOverlay {
 
   correlationId     String?
   triggerEventId    String?
+
+  riskEscalationEventId    String?  @unique @db.Uuid
+  /// The escalation event that caused this overlay to be activated (FK on this side). TYPESTRING.SKIP=true GQL.SKIP=true
+  riskEscalationEvent      RiskEscalationEvent? @relation("PolicyOverlayActivatedBy", fields: [riskEscalationEventId], references: [id])
+  /// Escalation events that were triggered while this overlay was active. TYPESTRING.SKIP=true GQL.SKIP=true
+  triggeredRiskEvents      RiskEscalationEvent[] @relation("PolicyOverlayTriggeredEvents")
 
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
@@ -5261,4 +5286,191 @@ model MLModelVersion {
 
   @@index([assetClass, slot])
   @@index([assetClass, trainedAt])
+}
+
+// ---------------------------------------------------------------------------
+// Risk-governance enums (Phase B — P0 institutional-risk-protection)
+// ---------------------------------------------------------------------------
+
+/// Operational state of a trading account from the risk-governance perspective.
+enum AccountRiskState {
+  NORMAL
+  WARN
+  THROTTLE
+  PAUSED
+  FLATTEN
+  HALT
+}
+
+/// Operational state of an individual trading strategy from the risk-governance perspective.
+enum StrategyState {
+  ACTIVE
+  WARN
+  THROTTLE
+  PAUSED
+  DISABLED
+}
+
+/// Reason codes that trigger a risk escalation event.
+enum RiskEscalationReason {
+  // Drawdown
+  DRAWDOWN_WARN
+  DRAWDOWN_THROTTLE
+  DRAWDOWN_PAUSE
+  // Loss windows
+  DAILY_LOSS_BREACH
+  WEEKLY_LOSS_BREACH
+  MONTHLY_LOSS_BREACH
+  PEAK_TO_TROUGH_BREACH
+  // Broker
+  BROKER_FAILURE_RATE
+  BROKER_LATENCY_SPIKE
+  BROKER_OUTAGE
+  // Data
+  DATA_QUALITY_STALE
+  DATA_QUALITY_MISSING
+  DATA_QUALITY_FEED_FAIL
+  // Concentration
+  CONCENTRATION_POSITION
+  CONCENTRATION_SECTOR
+  CONCENTRATION_FACTOR
+  // Volatility / regime
+  VOLATILITY_SPIKE
+  REGIME_CRISIS
+  REGIME_UNCERTAIN
+  // Strategy / model
+  STRATEGY_DRAWDOWN
+  STRATEGY_EXPECTANCY_DEGRADATION
+  STRATEGY_HIT_RATE_DEGRADATION
+  LIVE_VS_BACKTEST_DIVERGENCE
+  MODEL_CONFIDENCE_COLLAPSE
+  MODEL_DRIFT_DETECTED
+  // Operator / manual
+  OPERATOR_OVERRIDE
+  OPERATOR_RECOVERY
+  OPERATOR_CLEAR
+  // System
+  SCHEDULED_MAINTENANCE
+  EMERGENCY_HALT
+}
+
+/// Actor that initiated a risk escalation event.
+enum RiskEscalationActor {
+  SYSTEM_OBSERVER
+  OPERATOR
+  COMPLIANCE_OFFICER
+  AUTOMATED_RECOVERY
+}
+
+/// Per-account risk metrics snapshot: FSM state, high-water mark, drawdown, and D/W/M P&L windows.
+model AccountRiskMetrics {
+  id                       String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId          String   @unique @db.Uuid
+  alpacaAccount            AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+
+  currentRiskState         AccountRiskState @default(NORMAL)
+  currentScopeState        Json?    // map of scope (asset_class, strategy, symbol) -> state
+  riskStateChangedAt       DateTime?
+  riskStateChangedBy       String?
+  riskStateChangeReason    String?
+
+  accountHighWaterMark     Decimal? @db.Decimal(20, 2)
+  accountHighWaterMarkAt   DateTime?
+  currentEquity            Decimal? @db.Decimal(20, 2)
+  currentDrawdownPct       Decimal? @db.Decimal(10, 6)
+  intradayDrawdownPct      Decimal? @db.Decimal(10, 6)
+  maxDrawdownPctLifetime   Decimal? @db.Decimal(10, 6)
+
+  dailyPnlAmount           Decimal? @db.Decimal(20, 2)
+  dailyPnlPct              Decimal? @db.Decimal(10, 6)
+  weeklyPnlAmount          Decimal? @db.Decimal(20, 2)
+  weeklyPnlPct             Decimal? @db.Decimal(10, 6)
+  monthlyPnlAmount         Decimal? @db.Decimal(20, 2)
+  monthlyPnlPct            Decimal? @db.Decimal(10, 6)
+  peakToTroughAmount       Decimal? @db.Decimal(20, 2)
+  peakToTroughPct          Decimal? @db.Decimal(10, 6)
+
+  nextRecoveryEligibleAt   DateTime?
+  lastSyncedAt             DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@index([alpacaAccountId])
+  @@index([currentRiskState, riskStateChangedAt])
+}
+
+/// Per-strategy rolling-window health snapshot: FSM state, rolling stats, backtest divergence, and confidence trend.
+model StrategyHealthSnapshot {
+  id                       String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId          String   @db.Uuid
+  alpacaAccount            AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  strategyName             String
+
+  currentState             StrategyState @default(ACTIVE)
+  stateChangedAt           DateTime?
+  stateChangedReason       String?
+
+  windowSize               Int      @default(20)
+  windowTradeCount         Int      @default(0)
+  windowHitRate            Decimal? @db.Decimal(10, 6)
+  windowExpectancy         Decimal? @db.Decimal(20, 6)
+  windowProfitFactor       Decimal? @db.Decimal(20, 6)
+  windowSortino            Decimal? @db.Decimal(20, 6)
+  windowMaxDrawdownPct     Decimal? @db.Decimal(10, 6)
+  windowCumulativePnlAmt   Decimal? @db.Decimal(20, 2)
+
+  backtestExpectancy       Decimal? @db.Decimal(20, 6)
+  divergenceZScore         Decimal? @db.Decimal(10, 6)
+  divergenceAlertActive    Boolean  @default(false)
+
+  averageConfidence        Decimal? @db.Decimal(10, 6)
+  confidenceTrend          Decimal? @db.Decimal(10, 6)
+
+  lastUpdatedAt            DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@unique([alpacaAccountId, strategyName])
+  @@index([currentState])
+  @@index([alpacaAccountId, currentState])
+}
+
+/// Immutable audit record of every risk FSM state transition, operator intervention, and automated recovery event.
+model RiskEscalationEvent {
+  id                       String   @id @default(uuid()) @db.Uuid
+  alpacaAccountId          String?  @db.Uuid
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  alpacaAccount            AlpacaAccount? @relation(fields: [alpacaAccountId], references: [id], onDelete: SetNull)
+
+  scopeKind                String
+  scopeValue               String?
+
+  fromState                String
+  toState                  String
+  reason                   RiskEscalationReason
+  severity                 OverlaySeverity
+
+  triggeringObserver       String?
+  observedValue            Decimal? @db.Decimal(20, 6)
+  breachedThreshold        Decimal? @db.Decimal(20, 6)
+  breachedThresholdKey     String?
+
+  correlationId            String?
+  triggeringEventId        String?
+  actor                    RiskEscalationActor
+  actorUserId              String?
+  rationale                String?
+
+  /// Back-reference: the overlay this event activated (FK owned by PolicyOverlay.riskEscalationEventId). TYPESTRING.SKIP=true GQL.SKIP=true
+  activatedPolicyOverlay      PolicyOverlay? @relation("PolicyOverlayActivatedBy")
+
+  triggeredByPolicyOverlayId  String?  @db.Uuid
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  triggeredByPolicyOverlay    PolicyOverlay? @relation("PolicyOverlayTriggeredEvents", fields: [triggeredByPolicyOverlayId], references: [id])
+
+  createdAt                DateTime @default(now())
+
+  @@index([alpacaAccountId, createdAt])
+  @@index([scopeKind, scopeValue, createdAt])
+  @@index([reason, severity, createdAt])
+  @@index([correlationId])
+  @@index([triggeredByPolicyOverlayId])
 }
