@@ -5419,6 +5419,9 @@ model StrategyHealthSnapshot {
   windowCumulativePnlAmt   Decimal? @db.Decimal(20, 2)
 
   backtestExpectancy       Decimal? @db.Decimal(20, 6)
+  backtestHitRate          Float?
+  backtestHitRateStdDev    Float?
+  backtestExpectancyStdDev Float?
   divergenceZScore         Decimal? @db.Decimal(10, 6)
   divergenceAlertActive    Boolean  @default(false)
 
