@@ -191,6 +191,9 @@ import { logger } from './utils/logger';
   windowMaxDrawdownPct
   windowCumulativePnlAmt
   backtestExpectancy
+  backtestHitRate
+  backtestHitRateStdDev
+  backtestExpectancyStdDev
   divergenceZScore
   divergenceAlertActive
   averageConfidence
@@ -257,6 +260,9 @@ import { logger } from './utils/logger';
   windowMaxDrawdownPct: props.windowMaxDrawdownPct !== undefined ? props.windowMaxDrawdownPct : undefined,
   windowCumulativePnlAmt: props.windowCumulativePnlAmt !== undefined ? props.windowCumulativePnlAmt : undefined,
   backtestExpectancy: props.backtestExpectancy !== undefined ? props.backtestExpectancy : undefined,
+  backtestHitRate: props.backtestHitRate !== undefined ? props.backtestHitRate : undefined,
+  backtestHitRateStdDev: props.backtestHitRateStdDev !== undefined ? props.backtestHitRateStdDev : undefined,
+  backtestExpectancyStdDev: props.backtestExpectancyStdDev !== undefined ? props.backtestExpectancyStdDev : undefined,
   divergenceZScore: props.divergenceZScore !== undefined ? props.divergenceZScore : undefined,
   divergenceAlertActive: props.divergenceAlertActive !== undefined ? props.divergenceAlertActive : undefined,
   averageConfidence: props.averageConfidence !== undefined ? props.averageConfidence : undefined,
@@ -1094,6 +1100,9 @@ import { logger } from './utils/logger';
   windowMaxDrawdownPct: prop.windowMaxDrawdownPct !== undefined ? prop.windowMaxDrawdownPct : undefined,
   windowCumulativePnlAmt: prop.windowCumulativePnlAmt !== undefined ? prop.windowCumulativePnlAmt : undefined,
   backtestExpectancy: prop.backtestExpectancy !== undefined ? prop.backtestExpectancy : undefined,
+  backtestHitRate: prop.backtestHitRate !== undefined ? prop.backtestHitRate : undefined,
+  backtestHitRateStdDev: prop.backtestHitRateStdDev !== undefined ? prop.backtestHitRateStdDev : undefined,
+  backtestExpectancyStdDev: prop.backtestExpectancyStdDev !== undefined ? prop.backtestExpectancyStdDev : undefined,
   divergenceZScore: prop.divergenceZScore !== undefined ? prop.divergenceZScore : undefined,
   divergenceAlertActive: prop.divergenceAlertActive !== undefined ? prop.divergenceAlertActive : undefined,
   averageConfidence: prop.averageConfidence !== undefined ? prop.averageConfidence : undefined,
@@ -1291,6 +1300,15 @@ import { logger } from './utils/logger';
            } : undefined,
   backtestExpectancy: props.backtestExpectancy !== undefined ? {
             set: props.backtestExpectancy 
+           } : undefined,
+  backtestHitRate: props.backtestHitRate !== undefined ? {
+            set: props.backtestHitRate 
+           } : undefined,
+  backtestHitRateStdDev: props.backtestHitRateStdDev !== undefined ? {
+            set: props.backtestHitRateStdDev 
+           } : undefined,
+  backtestExpectancyStdDev: props.backtestExpectancyStdDev !== undefined ? {
+            set: props.backtestExpectancyStdDev 
            } : undefined,
   divergenceZScore: props.divergenceZScore !== undefined ? {
             set: props.divergenceZScore 
@@ -4044,6 +4062,9 @@ import { logger } from './utils/logger';
   windowMaxDrawdownPct: props.windowMaxDrawdownPct !== undefined ? props.windowMaxDrawdownPct : undefined,
   windowCumulativePnlAmt: props.windowCumulativePnlAmt !== undefined ? props.windowCumulativePnlAmt : undefined,
   backtestExpectancy: props.backtestExpectancy !== undefined ? props.backtestExpectancy : undefined,
+  backtestHitRate: props.backtestHitRate !== undefined ? props.backtestHitRate : undefined,
+  backtestHitRateStdDev: props.backtestHitRateStdDev !== undefined ? props.backtestHitRateStdDev : undefined,
+  backtestExpectancyStdDev: props.backtestExpectancyStdDev !== undefined ? props.backtestExpectancyStdDev : undefined,
   divergenceZScore: props.divergenceZScore !== undefined ? props.divergenceZScore : undefined,
   divergenceAlertActive: props.divergenceAlertActive !== undefined ? props.divergenceAlertActive : undefined,
   averageConfidence: props.averageConfidence !== undefined ? props.averageConfidence : undefined,
@@ -4754,6 +4775,15 @@ import { logger } from './utils/logger';
            } : undefined,
   backtestExpectancy: props.backtestExpectancy !== undefined ? {
             set: props.backtestExpectancy 
+           } : undefined,
+  backtestHitRate: props.backtestHitRate !== undefined ? {
+            set: props.backtestHitRate 
+           } : undefined,
+  backtestHitRateStdDev: props.backtestHitRateStdDev !== undefined ? {
+            set: props.backtestHitRateStdDev 
+           } : undefined,
+  backtestExpectancyStdDev: props.backtestExpectancyStdDev !== undefined ? {
+            set: props.backtestExpectancyStdDev 
            } : undefined,
   divergenceZScore: props.divergenceZScore !== undefined ? {
             set: props.divergenceZScore 
@@ -7530,6 +7560,15 @@ import { logger } from './utils/logger';
            } : undefined,
   backtestExpectancy: prop.backtestExpectancy !== undefined ? {
             set: prop.backtestExpectancy 
+           } : undefined,
+  backtestHitRate: prop.backtestHitRate !== undefined ? {
+            set: prop.backtestHitRate 
+           } : undefined,
+  backtestHitRateStdDev: prop.backtestHitRateStdDev !== undefined ? {
+            set: prop.backtestHitRateStdDev 
+           } : undefined,
+  backtestExpectancyStdDev: prop.backtestExpectancyStdDev !== undefined ? {
+            set: prop.backtestExpectancyStdDev 
            } : undefined,
   divergenceZScore: prop.divergenceZScore !== undefined ? {
             set: prop.divergenceZScore 

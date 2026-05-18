@@ -637,6 +637,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -2689,6 +2692,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
           backtestExpectancy: item.backtestExpectancy !== undefined ? {
               set: item.backtestExpectancy
             } : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? {
+              set: item.backtestHitRate
+            } : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? {
+              set: item.backtestHitRateStdDev
+            } : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? {
+              set: item.backtestExpectancyStdDev
+            } : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? {
               set: item.divergenceZScore
             } : undefined,
@@ -2719,6 +2731,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -3605,6 +3620,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -4446,6 +4464,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -6168,6 +6189,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
           backtestExpectancy: item.backtestExpectancy !== undefined ? {
               set: item.backtestExpectancy
             } : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? {
+              set: item.backtestHitRate
+            } : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? {
+              set: item.backtestHitRateStdDev
+            } : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? {
+              set: item.backtestExpectancyStdDev
+            } : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? {
               set: item.divergenceZScore
             } : undefined,
@@ -6198,6 +6228,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -7084,6 +7117,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -8969,6 +9005,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
           backtestExpectancy: item.backtestExpectancy !== undefined ? {
               set: item.backtestExpectancy
             } : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? {
+              set: item.backtestHitRate
+            } : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? {
+              set: item.backtestHitRateStdDev
+            } : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? {
+              set: item.backtestExpectancyStdDev
+            } : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? {
               set: item.divergenceZScore
             } : undefined,
@@ -8999,6 +9044,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
@@ -9885,6 +9933,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           windowMaxDrawdownPct: item.windowMaxDrawdownPct !== undefined ? item.windowMaxDrawdownPct : undefined,
           windowCumulativePnlAmt: item.windowCumulativePnlAmt !== undefined ? item.windowCumulativePnlAmt : undefined,
           backtestExpectancy: item.backtestExpectancy !== undefined ? item.backtestExpectancy : undefined,
+          backtestHitRate: item.backtestHitRate !== undefined ? item.backtestHitRate : undefined,
+          backtestHitRateStdDev: item.backtestHitRateStdDev !== undefined ? item.backtestHitRateStdDev : undefined,
+          backtestExpectancyStdDev: item.backtestExpectancyStdDev !== undefined ? item.backtestExpectancyStdDev : undefined,
           divergenceZScore: item.divergenceZScore !== undefined ? item.divergenceZScore : undefined,
           divergenceAlertActive: item.divergenceAlertActive !== undefined ? item.divergenceAlertActive : undefined,
           averageConfidence: item.averageConfidence !== undefined ? item.averageConfidence : undefined,
