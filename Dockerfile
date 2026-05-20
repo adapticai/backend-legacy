@@ -16,11 +16,11 @@ ARG NODE_VERSION=22
 FROM node:${NODE_VERSION}-bookworm-slim AS deps
 ENV HUSKY=0
 WORKDIR /app
-COPY package.json package-lock.json ./
+COPY package.json package-lock.json* ./
 RUN apt-get update \
   && apt-get install -y --no-install-recommends openssl ca-certificates \
   && rm -rf /var/lib/apt/lists/* \
-  && npm ci --include=dev
+  && npm install --no-audit --no-fund --include=dev
 
 FROM node:${NODE_VERSION}-bookworm-slim AS builder
 ENV HUSKY=0 \
