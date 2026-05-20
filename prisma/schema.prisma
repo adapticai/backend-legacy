@@ -5352,6 +5352,15 @@ enum RiskEscalationReason {
   // System
   SCHEDULED_MAINTENANCE
   EMERGENCY_HALT
+  /// System-driven auto-recovery from a halted/throttled FSM state once the
+  /// cooldown window has elapsed AND the consecutive-clear-sample threshold
+  /// has been observed. Distinguished from `OPERATOR_RECOVERY` (operator
+  /// manually un-halted a scope) for audit-trail / regulatory clarity:
+  /// regulators differentiate between human-discretionary recoveries and
+  /// machine-deterministic recoveries.
+  /// Emitted by `engine/src/services/risk/governance/recovery-coordinator.ts`
+  /// `_fireRecovery()` / `_fireAiEvaluatedRecovery()`.
+  AUTOMATED_RECOVERY
 }
 
 /// Actor that initiated a risk escalation event.
