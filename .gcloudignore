@@ -25,6 +25,11 @@ coverage
 .DS_Store
 Thumbs.db
 
+# Claude Code agent worktrees / scratch
+.claude
+.claude.json
+*.code-workspace
+
 # Local environment / secrets
 .env
 .env.*
