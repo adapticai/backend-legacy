@@ -11,7 +11,7 @@
 # start; a dedicated Cloud Run Job (see cloudbuild.yaml) runs `prisma migrate
 # deploy` against DIRECT_DATABASE_URL before each new revision is promoted.
 
-ARG NODE_VERSION=22.11.0
+ARG NODE_VERSION=22
 
 FROM node:${NODE_VERSION}-bookworm-slim AS deps
 ENV HUSKY=0
