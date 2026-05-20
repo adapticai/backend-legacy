@@ -22,7 +22,6 @@ import prisma, {
   disconnectWithTimeout,
 } from './prismaClient';
 import { createHealthRouter } from './health';
-import { exec } from 'child_process';
 import { logger } from './utils/logger';
 import { shutdownTracing } from './config/tracing';
 import {
@@ -82,52 +81,6 @@ function principalToUser(principal: BackendPrincipal): AuthUser {
   }
 }
 
-let dbUnreachableCount = 0;
-let lastRestartAttempt = 0;
-async function restartDatabase(): Promise<void> {
-  return new Promise<void>((resolve, reject) => {
-    logger.info(
-      'Attempting to redeploy the Railway Postgres service in production'
-    );
-
-    // Check for both types of tokens
-    const projectToken = process.env.RAILWAY_TOKEN;
-    const apiToken = process.env.RAILWAY_API_TOKEN;
-
-    if (!projectToken && !apiToken) {
-      return reject(
-        new Error(
-          'Neither RAILWAY_TOKEN nor RAILWAY_API_TOKEN found in environment variables'
-        )
-      );
-    }
-
-    // Simplified command based on Railway CLI documentation
-    const deployCommand = `RAILWAY_TOKEN=${projectToken || ''} RAILWAY_API_TOKEN=${apiToken || ''} railway redeploy --service Postgres -y`;
-
-    exec(
-      deployCommand,
-      {
-        env: process.env,
-        shell: '/bin/sh',
-      },
-      (error, stdout, stderr) => {
-        if (error) {
-          logger.error('Failed to redeploy DB via Railway CLI', {
-            error: String(error),
-            stdout,
-            stderr,
-          });
-          return reject(error);
-        }
-
-        logger.info('Railway deployment output', { stdout });
-        resolve();
-      }
-    );
-  });
-}
-
 const startServer = async () => {
   // Boot-time invariant: in production, `GOOGLE_OAUTH_CLIENT_IDS` must be set.
   // Without it, no Google ID token can be safely verified — and the verifier
@@ -149,7 +102,7 @@ const startServer = async () => {
 
   const server = new ApolloServer({
     schema,
-    introspection: true,
+    introspection: process.env.NODE_ENV !== 'production',
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       createAuditLogPlugin(),
@@ -182,29 +135,8 @@ const startServer = async () => {
         logger.error('GraphQL Error', { graphqlError: err });
       }
 
-      // Check if this error is due to unreachable DB
       if (message.includes("Can't reach database server")) {
-        dbUnreachableCount += 1;
-        logger.warn('Database unreachable', { dbUnreachableCount });
-
-        // If we've hit 3 (for example) attempts
-        if (dbUnreachableCount >= 3) {
-          const now = Date.now();
-          if (now - lastRestartAttempt > 5 * 60 * 1000) {
-            lastRestartAttempt = now;
-            dbUnreachableCount = 0;
-            restartDatabase().catch((restartError) => {
-              logger.error('Error trying to restart DB', {
-                restartError: String(restartError),
-              });
-            });
-          }
-        }
-      } else {
-        // If the error is not a DB unreachable error, we might want
-        // to reset the counter or leave it as is. Generally, if we see
-        // a successful query or a different error, we might reset:
-        dbUnreachableCount = 0;
+        logger.warn('Database unreachable', { graphqlError: err });
       }
 
       // Surface the verifier's `reason` enum on UNAUTHENTICATED responses so
