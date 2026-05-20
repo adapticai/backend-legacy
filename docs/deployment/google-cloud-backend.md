@@ -25,13 +25,13 @@ rollback, and troubleshooting all live here.
 - **Secrets:** stored in Secret Manager, mounted into Cloud Run at deploy.
 - **CI/CD:** Cloud Build pipeline (`cloudbuild.yaml`) runs prisma
   migrations as a Cloud Run Job before promoting traffic.
-- **Public hostname:** `stable.adaptic.ai` — DNS-flip cutover from Railway.
+- **Public hostname:** `stable-api.adaptic.ai` — DNS-flip cutover from Railway.
 
 ## Architecture
 
 ```
                       ┌────────────────────────┐
-                      │ stable.adaptic.ai (Cloud  │
+                      │ stable-api.adaptic.ai (Cloud  │
                       │   DNS A → Cloud Run    │
                       └───────────┬────────────┘
                                   │  HTTPS / WSS
@@ -87,7 +87,7 @@ rollback, and troubleshooting all live here.
 | Target HTTP proxy | `adaptic-backend-http-proxy` | uses HTTP redirect URL map |
 | Forwarding rule | `adaptic-backend-https-fr` | global, port 443 → HTTPS proxy |
 | Forwarding rule | `adaptic-backend-http-fr` | global, port 80 → HTTP redirect proxy |
-| Managed SSL cert | `adaptic-backend-cert` | stable.adaptic.ai, provisions after DNS cutover |
+| Managed SSL cert | `adaptic-backend-cert` | stable-api.adaptic.ai, provisions after DNS cutover |
 | Cloud Armor policy | `adaptic-backend-armor` | SQLi/XSS WAF + PHP/scanner blocks + /graphql rate limit |
 | Cloud Build SA + bucket | `adaptic-cloud-build`, `gs://adaptic-cloudbuild` | CI identity + source/log storage |
 
@@ -184,21 +184,21 @@ Before cutover (pre-flight):
    ```
 2. Confirm `/readyz` reports `database: connected` through the LB:
    ```bash
-   curl -sSL -H 'Host: stable.adaptic.ai' http://8.233.34.153/readyz
+   curl -sSL -H 'Host: stable-api.adaptic.ai' http://8.233.34.153/readyz
    ```
 
 Cutover (the moment you flip prod traffic to GCP):
 
-3. **Lower the existing `stable.adaptic.ai` DNS TTL** at the registrar
+3. **Lower the existing `stable-api.adaptic.ai` DNS TTL** at the registrar
    (currently 3600s). Set it to 60s. Wait at least 1 hour for the old
    long TTL to flush from public resolvers before step 4.
 4. **Replace the CNAME with an A record** at the registrar:
    ```
-   stable.adaptic.ai.   60   IN   A   8.233.34.153
+   stable-api.adaptic.ai.   60   IN   A   8.233.34.153
    ```
    (Remove the `CNAME → nvbo4m73.up.railway.app` entry.)
 5. **Watch the managed SSL cert provision** — Google's managed cert checks
-   DNS every minute. When `stable.adaptic.ai` resolves to `8.233.34.153`, the
+   DNS every minute. When `stable-api.adaptic.ai` resolves to `8.233.34.153`, the
    cert moves PROVISIONING → ACTIVE within ~10–30 minutes:
    ```bash
    gcloud compute ssl-certificates describe adaptic-backend-cert \
@@ -207,13 +207,13 @@ Cutover (the moment you flip prod traffic to GCP):
    ```
 6. **Smoke test over HTTPS** once the cert is ACTIVE:
    ```bash
-   curl -fsSL https://stable.adaptic.ai/livez
-   curl -fsSL https://stable.adaptic.ai/readyz
-   curl -fsSL -X POST https://stable.adaptic.ai/graphql \
+   curl -fsSL https://stable-api.adaptic.ai/livez
+   curl -fsSL https://stable-api.adaptic.ai/readyz
+   curl -fsSL -X POST https://stable-api.adaptic.ai/graphql \
      -H 'content-type: application/json' -d '{"query":"{__typename}"}'
    ```
 7. **Verify end-to-end** from the engine / app / platform sides — these
-   already default to `stable.adaptic.ai`, so they pick up the new backend
+   already default to `stable-api.adaptic.ai`, so they pick up the new backend
    transparently as DNS propagates. Watch Cloud Run logs and AlloyDB
    active-connection count for 15 min.
 8. **Raise the TTL back** to a reasonable value (300s or 3600s) at the
@@ -227,9 +227,9 @@ not curl plain HTTP except for the validation step above.
 
 ### Engine / app / utils / platform env-var changes
 
-If you keep `stable.adaptic.ai`, **no env-var changes are required** in any of
+If you keep `stable-api.adaptic.ai`, **no env-var changes are required** in any of
 `engine/`, `utils/`, `app/`, `platform/`, `backend-legacy/`. All consumers
-already default to `stable.adaptic.ai`.
+already default to `stable-api.adaptic.ai`.
 
 If you switch to a GCP-native hostname, update these:
 
@@ -266,7 +266,7 @@ gcloud alloydb clusters restore-from-backup ...   # see AlloyDB docs
 
 To return to Railway during the rollback window:
 
-1. Re-point `stable.adaptic.ai` CNAME at `adaptic-backend-stable.up.railway.app`.
+1. Re-point `stable-api.adaptic.ai` CNAME at `adaptic-backend-stable.up.railway.app`.
 2. Re-enable the Railway service (it has been left stopped, not deleted).
 3. Wait for DNS to propagate (~5min at TTL=300s).
 
