@@ -113,8 +113,11 @@ steps:
   # - 8 vCPU / 16 GiB per instance (Cloud Run gen2 maximum CPU; memory headroom for
   #   Apollo persisted-query cache + Prisma pool + GraphQL resolution working set).
   # - min=3 ensures HA across zones and warm capacity for sub-100ms p50.
-  # - max=100 caps blast radius on a runaway scale event but absorbs ~25k RPS
-  #   at concurrency=250 (3.2x current peak).
+  # - max=25 fits the default project quota (200 vCPU / 400 GiB per region).
+  #   Quota-increase request filed at deploy time will lift this to 100 once
+  #   approved; the cap is the only constraint forcing 25 today.
+  # - concurrency=150 is the Node/Apollo sweet spot: more than this and event-loop
+  #   tail latency degrades; less than this and we waste committed CPU.
   # - --no-cpu-throttling keeps the Node event loop, Prisma heartbeat, and the
   #   rate-limiter sweep ticking even when no requests are in-flight.
   # - --cpu-boost: ~5x CPU during cold start to satisfy the startup probe quickly.
@@ -157,8 +160,8 @@ steps:
           --cpu=8 \
           --memory=16Gi \
           --min-instances=3 \
-          --max-instances=100 \
-          --concurrency=250 \
+          --max-instances=25 \
+          --concurrency=150 \
           --timeout=300 \
           --cpu-boost \
           --execution-environment=gen2 \
