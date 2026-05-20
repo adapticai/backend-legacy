@@ -33,9 +33,9 @@ substitutions:
   _RUNTIME_SA: adaptic-run-runtime@adaptic-438004.iam.gserviceaccount.com
   _VPC_NETWORK: adaptic-vpc
   _VPC_SUBNET: adaptic-us-east4
-  _ALLOWED_ORIGINS: https://adaptic.ai,https://stable.adaptic.ai,https://app.adaptic.ai,https://os.adaptic.ai,https://stable.adaptic.ai,https://engine.adaptic.ai,https://adaptic-platform-stable.up.railway.app,https://adaptic-engine-stable.up.railway.app,https://adaptic-app-stable.up.railway.app
-  _BACKEND_HTTPS_URL: https://stable.adaptic.ai/graphql
-  _BACKEND_WS_URL: wss://stable.adaptic.ai/graphql
+  _ALLOWED_ORIGINS: https://adaptic.ai,https://stable.adaptic.ai,https://app.adaptic.ai,https://os.adaptic.ai,https://engine.adaptic.ai,https://adaptic-platform-stable.up.railway.app,https://adaptic-engine-stable.up.railway.app,https://adaptic-app-stable.up.railway.app
+  _BACKEND_HTTPS_URL: https://stable-api.adaptic.ai/graphql
+  _BACKEND_WS_URL: wss://stable-api.adaptic.ai/graphql
 
 options:
   logging: CLOUD_LOGGING_ONLY
