@@ -24,7 +24,8 @@ RUN apt-get update \
 
 FROM node:${NODE_VERSION}-bookworm-slim AS builder
 ENV HUSKY=0 \
-    SKIP_PRISMA_VERSION_CHECK=true
+    SKIP_PRISMA_VERSION_CHECK=true \
+    NODE_OPTIONS=--max-old-space-size=6144
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
