@@ -84,9 +84,9 @@ steps:
         else
           ACTION=create
         fi
-        gcloud run jobs "$ACTION" "${_MIGRATE_JOB_NAME}" \
+        gcloud run jobs "$$ACTION" "${_MIGRATE_JOB_NAME}" \
           --region="${_REGION}" \
-          --image="$IMAGE" \
+          --image="$$IMAGE" \
           --service-account="${_RUNTIME_SA}" \
           --command=npm \
           --args=run,migrate \
