@@ -244,7 +244,6 @@ const startServer = async () => {
     'http://localhost:3001',
     'http://localhost:4000',
     'https://adaptic.ai',
-    'https://api.adaptic.ai',
     'https://os.adaptic.ai',
     'https://stable.adaptic.ai',
   ];

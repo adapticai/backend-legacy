@@ -180,8 +180,8 @@ DATABASE_URL="<railway-or-prisma-accelerate-url>"
 
 ```env
 ALLOWED_ORIGINS="https://app.adaptic.ai,https://adaptic.ai"
-BACKEND_HTTPS_URL="https://api.adaptic.ai/graphql"
-BACKEND_WS_URL="wss://api.adaptic.ai/subscriptions"
+BACKEND_HTTPS_URL="https://stable.adaptic.ai/graphql"
+BACKEND_WS_URL="wss://stable.adaptic.ai/subscriptions"
 DATABASE_URL="<production-database-url>"
 ```
 
