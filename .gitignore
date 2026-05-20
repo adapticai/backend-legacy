@@ -38,3 +38,6 @@ docker-compose.yml
 # Lock files
 package-lock.json
 yarn.lock
+
+# Claude Code agent worktrees
+.claude/
