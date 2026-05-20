@@ -735,7 +735,7 @@ export async function getApolloClient(): Promise<
       process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL ||
       process.env.BACKEND_HTTPS_URL ||
       (isProduction
-        ? 'https://api.adaptic.ai/graphql'
+        ? 'https://stable.adaptic.ai/graphql'
         : 'http://localhost:4000/graphql');
 
     // Create the HTTP link. The `fetch` global resolves to Node.js's
