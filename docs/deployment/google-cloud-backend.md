@@ -264,11 +264,20 @@ gcloud alloydb backups list --project=adaptic-438004
 gcloud alloydb clusters restore-from-backup ...   # see AlloyDB docs
 ```
 
-To return to Railway during the rollback window:
+To return to Railway during the rollback window (only valid while the
+Railway `adaptic-backend` service is still present and reachable —
+Railway is being decommissioned after the migration stabilises):
 
-1. Re-point `stable-api.adaptic.ai` CNAME at `adaptic-backend-stable.up.railway.app`.
-2. Re-enable the Railway service (it has been left stopped, not deleted).
-3. Wait for DNS to propagate (~5min at TTL=300s).
+1. In the Railway dashboard, re-enable the `adaptic-backend` service in
+   `adaptic-os/stable` and wait for it to deploy successfully.
+2. At the registrar, change the `stable-api.adaptic.ai` A record back to
+   a CNAME pointing at the Railway-generated domain shown in the Railway
+   service settings (Settings → Networking → Public Networking).
+3. Wait for DNS to propagate (~1min at the current TTL=60s).
+
+Once Railway is fully decommissioned, this rollback path no longer
+applies — use the Cloud Run `update-traffic --to-revisions=...` command
+above to roll back to a known-good revision instead.
 
 ## Troubleshooting
 
