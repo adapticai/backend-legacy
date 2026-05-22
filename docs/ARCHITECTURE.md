@@ -4,7 +4,7 @@
 
 `@adaptic/backend-legacy` is the canonical data layer and code generation package for the Adaptic.ai platform. It serves three primary functions:
 
-1. **Type Authority** -- Defines all 62 Prisma models and 63 enums that form the data contract for the entire monorepo
+1. **Type Authority** -- Defines all 67 Prisma models and 73 enums (as of 2026-05-22) that form the data contract for the entire monorepo
 2. **Code Generation** -- Produces typed CRUD functions, GraphQL selection sets, and LLM type strings from the Prisma schema
 3. **GraphQL API Server** -- Runs an Apollo Server 5 + Express 4 backend with WebSocket subscriptions
 
@@ -12,7 +12,7 @@
 
 ```
                     prisma/schema.prisma
-                    (62 models, 63 enums)
+                    (67 models, 73 enums)
                            |
                     prisma generate
                            |
@@ -26,8 +26,9 @@
   generateSelections   generator.ts   generateStrings
             |              |               |
    src/generated/     src/*.ts         src/generated/
-   selectionSets/   (62 CRUD files)    typeStrings/
-   (62 files)       + index.ts         (62 files)
+   selectionSets/   (one CRUD file    typeStrings/
+   (one file per     per model +       (one file per
+    model + index)   index.ts)         model + index)
             |              |               |
             +--------------+---------------+
                            |
@@ -136,7 +137,7 @@ npx prisma generate --no-engine
 
 Reads `prisma/schema.prisma` and produces TypeGraphQL-compatible models and resolvers via the `typegraphql-prisma` generator.
 
-**Input:** `prisma/schema.prisma` (62 models, 63 enums)
+**Input:** `prisma/schema.prisma` (67 models, 73 enums)
 **Output:** `src/generated/typegraphql-prisma/` (models, resolvers, enums, scalars, helpers)
 
 The generator configuration in the schema:
@@ -174,7 +175,7 @@ Parses the Prisma schema via `@prisma/internals` DMMF (Data Model Meta Format), 
 - LRU cache for repeated model traversals
 - Maximum depth of 4 levels for nested relations
 
-**Output:** `src/generated/selectionSets/` (62 files + index.ts)
+**Output:** `src/generated/selectionSets/` (one file per model + index.ts)
 
 ### Step 4: Generate CRUD Functions
 
@@ -199,7 +200,7 @@ Produces typed CRUD function files for each Prisma model. Each model gets a file
 
 The generator also rebuilds `src/index.ts`, which aggregates all model CRUD objects into the `adaptic` default export.
 
-**Output:** 62 model CRUD files in `src/` + regenerated `src/index.ts`
+**Output:** one CRUD file per model in `src/` + regenerated `src/index.ts`
 
 ### Step 5: Generate Type Strings
 
@@ -216,46 +217,46 @@ Produces TypeScript type string representations for each model, designed for LLM
 - Resolves nested relations up to depth 5
 - Prevents circular reference via ancestor tracking
 
-**Output:** `src/generated/typeStrings/` (62 files + index.ts)
+**Output:** `src/generated/typeStrings/` (one file per model + index.ts)
 
 ## Data Model Overview
 
-### Models by Domain (62 total)
+The Prisma schema is the authoritative catalogue of models and enums. The lists
+below are summary inventories grouped by domain and reflect the schema **as of
+2026-05-22 (67 models, 73 enums)**. When the count changes, regenerate this
+section against `prisma/schema.prisma`:
+
+```bash
+grep -c '^model ' prisma/schema.prisma   # 67
+grep -c '^enum '  prisma/schema.prisma   # 73
+```
+
+### Models by Domain (67 total)
 
 #### Identity and Authentication (9 models)
 
-| Model                   | Description                                         |
-| ----------------------- | --------------------------------------------------- |
-| `User`                  | Platform user with roles, subscription, preferences |
-| `Session`               | User sessions (NextAuth compatible)                 |
-| `Account`               | OAuth account connections                           |
-| `Authenticator`         | WebAuthn/FIDO2 authenticators                       |
-| `LinkedProvider`        | Linked authentication providers per user            |
-| `AccountLinkingRequest` | Cross-provider account linking workflow             |
-| `VerificationToken`     | Email/token verification                            |
-| `WaitlistEntry`         | Platform access waitlist                            |
-| `InviteToken`           | Invitation tokens for new users                     |
+| Model                   | Description                                              |
+| ----------------------- | -------------------------------------------------------- |
+| `User`                  | Platform user with roles, subscription, preferences      |
+| `Session`               | User sessions (NextAuth compatible)                      |
+| `Account`               | OAuth account connections                                |
+| `Authenticator`         | WebAuthn/FIDO2 authenticators                            |
+| `LinkedProvider`        | Linked authentication providers per user                 |
+| `AccountLinkingRequest` | Cross-provider account linking workflow                  |
+| `VerificationToken`     | Email/token verification                                 |
+| `WaitlistEntry`         | Platform access waitlist                                 |
+| `InviteToken`           | Invitation tokens for new users                          |
 
-#### Organization and Fund Management (6 models)
-
-| Model            | Description                                    |
-| ---------------- | ---------------------------------------------- |
-| `Organization`   | ManCo / fund operator firm                     |
-| `OrgMembership`  | User membership in organizations with roles    |
-| `Fund`           | Investment fund within an organization         |
-| `FundAssignment` | User assignment to funds with fund-level roles |
-| `Investor`       | KYC-verified investor entity                   |
-| `Investment`     | Investor capital allocation to a fund          |
-
-#### Brokerage and Portfolio (5 models)
+#### Brokerage and Portfolio (6 models)
 
 | Model              | Description                                                        |
 | ------------------ | ------------------------------------------------------------------ |
-| `BrokerageAccount` | Brokerage connection (Alpaca, IBKR, Coinbase)                      |
+| `AlpacaAccount`    | Alpaca brokerage account binding (paper / live)                    |
 | `Allocation`       | Portfolio allocation percentages (equities, options, crypto, etc.) |
 | `Trade`            | Individual trade records with entry/exit data                      |
 | `Action`           | Trade execution actions (BUY, SELL, HEDGE, etc.)                   |
 | `Customer`         | Customer/account holder records                                    |
+| `EquityBar`        | Persistent equity OHLCV bar cache (multi-timespan)                 |
 
 #### Assets and Market Data (5 models)
 
@@ -267,27 +268,37 @@ Produces TypeScript type string representations for each model, designed for LLM
 | `MarketSentiment`           | Overall market sentiment snapshots                 |
 | `EconomicEvent`             | Economic calendar events with importance levels    |
 
-#### Options Trading (6 models)
+#### Options Trading (7 models)
 
-| Model                    | Description                              |
-| ------------------------ | ---------------------------------------- |
-| `OptionsContract`        | Options contract definitions (call/put)  |
-| `OptionsPosition`        | Open options positions                   |
-| `OptionsGreeksHistory`   | Historical Greeks snapshots per contract |
-| `PortfolioGreeksHistory` | Portfolio-level Greeks aggregations      |
-| `OptionsTradeExecution`  | Options trade execution records          |
-| `ScheduledOptionOrder`   | Scheduled/pending option orders          |
+| Model                    | Description                                       |
+| ------------------------ | ------------------------------------------------- |
+| `OptionsContract`        | Options contract definitions (call/put)           |
+| `OptionsPosition`        | Open options positions                            |
+| `OptionsPositionEvent`   | Lifecycle events on options positions             |
+| `OptionsGreeksHistory`   | Historical Greeks snapshots per contract          |
+| `PortfolioGreeksHistory` | Portfolio-level Greeks aggregations               |
+| `OptionsTradeExecution`  | Options trade execution records                   |
+| `ScheduledOptionOrder`   | Scheduled/pending option orders                   |
+
+#### Trading Policy and Risk Governance (4 models)
+
+| Model                  | Description                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------- |
+| `TradingPolicy`        | Per-account autonomous-trading policy (autonomy mode, asset-class toggles, risk parameters). |
+| `PolicyOverlay`        | Dynamic policy overlays (escalation, throttle, kill-switch) on top of a `TradingPolicy`.     |
+| `AccountRiskMetrics`   | Periodic snapshot of account-level risk metrics (drawdown, exposure, leverage).              |
+| `RiskEscalationEvent`  | Risk escalation events surfaced for operator review.                                         |
 
 #### ML and Model Management (6 models)
 
-| Model                       | Description                                 |
-| --------------------------- | ------------------------------------------- |
-| `MLTrainingData`            | Training data for ML models                 |
-| `ModelVersion`              | ML model version lifecycle tracking         |
-| `ModelArtifact`             | Model artifact storage references           |
-| `ModelVersionArtifact`      | Junction: model version to artifact mapping |
-| `ABTest`                    | A/B test definitions and results            |
-| `FeatureImportanceAnalysis` | Feature importance/SHAP analysis results    |
+| Model                       | Description                                          |
+| --------------------------- | ---------------------------------------------------- |
+| `MLTrainingData`            | Training data for ML models                          |
+| `MLModelVersion`            | ML model version registry (engine-managed)           |
+| `ModelVersion`              | Backend-managed model version lifecycle              |
+| `ModelArtifact`             | Model artifact storage references                    |
+| `ModelVersionArtifact`      | Junction: model version to artifact mapping          |
+| `ABTest`                    | A/B test definitions and results                     |
 
 #### Signal Processing (5 models)
 
@@ -299,91 +310,83 @@ Produces TypeScript type string representations for each model, designed for LLM
 | `SignalOutcome`          | Signal outcome tracking (hit/miss/partial) |
 | `TradeExecutionHistory`  | Detailed trade execution audit trail       |
 
-#### Institutional Data (4 models)
+#### Decision Engine and Memory (3 models)
 
-| Model                           | Description                                |
-| ------------------------------- | ------------------------------------------ |
-| `InstitutionalHolding`          | Institutional investor holding disclosures |
-| `InstitutionalFlowSignal`       | Institutional money flow signals           |
-| `InstitutionalSentimentHistory` | Historical institutional sentiment         |
-| `InstitutionalSentimentMetrics` | Aggregated institutional sentiment metrics |
+| Model                         | Description                                                                          |
+| ----------------------------- | ------------------------------------------------------------------------------------ |
+| `AccountDecisionRecord`       | Per-account decision artefact (input context, outcome, model version, reasoning).    |
+| `DecisionMemorySummary`       | Aggregated decision-memory rollup per account / strategy / period.                   |
+| `FeatureImportanceAnalysis`   | Feature importance / SHAP analysis output                                            |
+
+#### Institutional Data (6 models)
+
+| Model                            | Description                                |
+| -------------------------------- | ------------------------------------------ |
+| `InstitutionalHolding`           | Institutional investor holding disclosures |
+| `InstitutionalFlowSignal`        | Institutional money flow signals           |
+| `InstitutionalSentimentHistory`  | Historical institutional sentiment         |
+| `InstitutionalSentimentMetrics`  | Aggregated institutional sentiment metrics |
+| `InstitutionalSentimentAlerts`   | Institutional data pipeline alerts         |
+| `InstitutionalSentimentErrors`   | Institutional data pipeline errors         |
 
 #### Analytics and Configuration (4 models)
 
-| Model                    | Description                          |
-| ------------------------ | ------------------------------------ |
-| `AnalyticsSnapshot`      | Point-in-time analytics snapshots    |
-| `AnalyticsConfiguration` | Analytics pipeline configuration     |
-| `Configuration`          | System configuration key-value store |
-| `DashboardLayout`        | User dashboard layout preferences    |
+| Model                    | Description                                                          |
+| ------------------------ | -------------------------------------------------------------------- |
+| `AnalyticsSnapshot`      | Point-in-time analytics snapshots                                    |
+| `AnalyticsConfiguration` | Analytics pipeline configuration                                     |
+| `Configuration`          | System configuration key-value store                                 |
+| `LlmConfiguration`       | LLM provider/model configuration (per account or system-wide)        |
 
-#### Monitoring and Operations (7 models)
+#### Monitoring, Audit, and Operations (8 models)
 
-| Model                      | Description                                         |
-| -------------------------- | --------------------------------------------------- |
-| `Alert`                    | User-facing alerts (trade, portfolio, risk, system) |
-| `SystemAlert`              | System-level operational alerts                     |
-| `ConnectionHealthSnapshot` | Connection health monitoring snapshots              |
-| `AuditLog`                 | Mutation audit log (who changed what, when)         |
-| `TradeAuditEvent`          | Trade-specific audit events                         |
-| `Event`                    | System events with categorization                   |
-| `EventSnapshot`            | Point-in-time event snapshots                       |
+| Model                      | Description                                                                      |
+| -------------------------- | -------------------------------------------------------------------------------- |
+| `Alert`                    | User-facing alerts (trade, portfolio, risk, system)                              |
+| `SystemAlert`              | System-level operational alerts                                                  |
+| `ConnectionHealthSnapshot` | Connection health monitoring snapshots                                           |
+| `AuditLog`                 | Mutation audit log (who changed what, when)                                      |
+| `TradeAuditEvent`          | Trade-specific audit events (SEC Rule 15c3-5 / FINRA audit-event target)         |
+| `StrategyHealthSnapshot`   | Periodic snapshot of strategy operational health                                 |
+| `Event`                    | System events with categorization                                                |
+| `EventSnapshot`            | Point-in-time event snapshots                                                    |
 
-#### Sync and Error Handling (5 models)
+#### Trade Outcomes (1 model)
 
-| Model                          | Description                            |
-| ------------------------------ | -------------------------------------- |
-| `SyncEvent`                    | Cross-system synchronization events    |
-| `ConflictEvent`                | Data conflict detection and resolution |
-| `DeadLetterMessage`            | Failed message processing queue        |
-| `InstitutionalSentimentErrors` | Institutional data pipeline errors     |
-| `InstitutionalSentimentAlerts` | Institutional data pipeline alerts     |
+| Model           | Description                                                          |
+| --------------- | -------------------------------------------------------------------- |
+| `TradeOutcome`  | Closed-trade outcome record (P&L, hold time, quality classification) |
 
-### Enums by Domain (63 total)
+#### Sync and Error Handling (3 models)
 
-#### Trading Enums (11)
+| Model               | Description                            |
+| ------------------- | -------------------------------------- |
+| `SyncEvent`         | Cross-system synchronization events    |
+| `ConflictEvent`     | Data conflict detection and resolution |
+| `DeadLetterMessage` | Failed message processing queue        |
 
-`TradeStrategy`, `TradeSignal`, `TradeStatus`, `ActionType`, `ActionStatus`, `TradeExitReason`, `TradeOutcomeQuality`, `MarketCondition`, `OptionType`, `OptionPositionStatus`, `OptionExecutionSide`
+### Enums by Domain (73 total)
 
-#### Market Data Enums (7)
+The schema currently defines 73 enums spanning trading, risk governance,
+autonomy / decision modes, market regime, ML model lifecycle, audit operations,
+signal processing, options, broker LLM/provider catalogues, alert taxonomies,
+and operational status states. The list is too long to enumerate inline without
+drifting; treat `prisma/schema.prisma` as the source of truth and refresh with:
 
-`MarketSentimentLevel`, `MarketSentimentContext`, `MarketRegime`, `VolatilityLevel`, `VolumeLevel`, `AssetType`, `EventImportance`
+```bash
+grep '^enum ' prisma/schema.prisma | sed 's/enum //;s/ {//' | sort
+```
 
-#### Brokerage Enums (3)
-
-`BrokerageAccountType`, `BrokerageProvider`, `SubscriptionPlan`
-
-#### Alert and Monitoring Enums (7)
-
-`AlertType`, `AlertStatus`, `AlertCategory`, `AlertSeverity`, `SystemAlertType`, `SystemAlertStatus`, `EventCategory`, `EventSeverity`
-
-#### Organization and Fund Enums (9)
-
-`UserRole`, `OrgBusinessType`, `RegulatoryStatus`, `OrgRole`, `FundRole`, `FundStatus`, `InvestorType`, `KycStatus`, `InvestmentStatus`
-
-#### ML and Model Enums (8)
-
-`ModelVersionStatus`, `DeploymentEnvironment`, `RolloutStrategy`, `ArtifactType`, `StorageProvider`, `ABTestStatus`, `ABTestRecommendation`, `FeatureImportanceAnalysisType`
-
-#### Auth and Account Enums (4)
-
-`AuthProvider`, `AccountLinkingStatus`, `WaitlistStatus`, `ScheduledOptionOrderStatus`
-
-#### Signal Processing Enums (6)
-
-`SignalGeneratorSource`, `SignalPriorityTier`, `SignalQueueStatus`, `SignalOutcomeType`, `SignalExecutionStatus`, `SignalDecisionType`
-
-#### Sync and Operations Enums (4)
-
-`SyncDirection`, `ConflictResolutionStrategy`, `DeadLetterStatus`, `DeadLetterSeverity`
-
-#### Configuration Enums (2)
-
-`ConfigType`, `OpenaiModel`
-
-#### Audit Enums (1)
-
-`AuditOperationType`
+Major newer enums (added in the trading-policy / decision-engine /
+risk-governance / ML-governance expansions) include `AutonomyMode`,
+`AccountRiskState`, `OverlayType`, `OverlaySeverity`, `OverlayStatus`,
+`DecisionOutcome`, `DecisionRecordStatus`, `DecisionMemoryOutcome`,
+`RiskEscalationActor`, `RiskEscalationReason`, `ModelVersionStatus`,
+`SignalDecisionType`, `SignalExecutionStatus`, `SignalGeneratorSource`,
+`SignalOutcomeType`, `SignalPriorityTier`, `SignalQueueStatus`,
+`TradeExitReason`, `TradeOutcomeQuality`, plus the LLM provider/model
+enums (`AnthropicModel`, `OpenaiModel`, `DeepseekModel`, `GeminiModel`,
+`KimiModel`, `QwenModel`, `XaiModel`, `LlmProvider`).
 
 ## Server Architecture
 
@@ -447,19 +450,27 @@ startServer()
 | Query Complexity      | Auth/unauth complexity limits                      | `src/middleware/query-complexity.ts`          |
 | Error Sanitization    | Strip stack traces in production                   | `src/plugins/error-sanitizer.ts`              |
 | Audit Logging         | All mutations logged to AuditLog model             | `src/middleware/audit-logger.ts`              |
-| Soft Deletes          | deletedAt on User, BrokerageAccount, Trade, Action | `src/middleware/soft-delete.ts`               |
+| Soft Deletes          | deletedAt on User, AlpacaAccount, Trade, Action    | `src/middleware/soft-delete.ts`               |
 | Database Constraints  | CHECK constraints on prices, quantities, strings   | Prisma migration                              |
 | Allocation Validation | Sum validation for allocation percentages          | `src/validators/allocation-validator.ts`      |
 
 ## Observability
 
-| Capability            | Implementation                               | Status                                   |
-| --------------------- | -------------------------------------------- | ---------------------------------------- |
-| Structured Logging    | Custom JSON logger (`src/utils/logger.ts`)   | Active                                   |
-| Health Check          | `GET /health` (DB, uptime, memory, version)  | Active                                   |
-| OpenTelemetry Tracing | OTLP exporter, HTTP/Express/GraphQL spans    | Implemented, needs wiring into server.ts |
-| Prometheus Metrics    | HTTP/GraphQL/DB metrics, `/metrics` endpoint | Implemented, needs wiring into server.ts |
-| Persisted Queries     | APQ LRU cache (1000 entries)                 | Implemented, needs wiring into server.ts |
+All listed capabilities are wired into `src/server.ts` and gated by environment
+variables (defaults: on in production/staging, off in development unless the
+operator explicitly enables them). See `docs/ENVIRONMENT_SETUP.md` for the
+complete env-var list and `docs/audits/2026-05-22-readability/README.md` for the
+2026-05-22 wire/delete decisions.
+
+| Capability            | Implementation                               | Toggle                            | Status |
+| --------------------- | -------------------------------------------- | --------------------------------- | ------ |
+| Structured Logging    | Custom JSON logger (`src/utils/logger.ts`)   | Always on                         | Active |
+| Health Check          | `GET /health` (DB, uptime, memory, version)  | Always on                         | Active |
+| OpenTelemetry Tracing | OTLP exporter, HTTP/Express/GraphQL spans    | `OTEL_TRACING_ENABLED`            | Active |
+| Prometheus Metrics    | HTTP/GraphQL/DB metrics, `/metrics` endpoint | `PROMETHEUS_METRICS_ENABLED`      | Active |
+| Persisted Queries     | APQ in-memory LRU cache (default 1000)       | `APQ_ENABLED`                     | Active |
+| Query Complexity/Depth | Auth/unauth complexity and depth limits     | `GRAPHQL_COMPLEXITY_ENABLED`      | Active |
+| Input Validation      | GraphQL mutation input validation plugin    | Always on                         | Active |
 
 ## Cross-Package Integration
 
@@ -553,7 +564,7 @@ Vitest with v8 coverage provider. Configuration in `vitest.config.ts`:
 
 ## Migration History
 
-- **149 migrations** from July 2024 through February 2026
+- **165 migrations** from July 2024 through May 2026
 - PostgreSQL database accessed via Prisma Accelerate
 - Notable recent migrations:
   - `trade_timestamp_string_to_datetime` -- Converted Trade.timestamp from String to DateTime
@@ -565,11 +576,11 @@ Vitest with v8 coverage provider. Configuration in `vitest.config.ts`:
 
 ## Known Issues and Remaining Work
 
-| Priority | Issue                      | Detail                                                        |
-| -------- | -------------------------- | ------------------------------------------------------------- |
-| P1       | TypeGraphQL RC             | Using 2.0.0-rc.2 (waiting on stable release)                  |
-| P2       | Tracing not wired          | `initTracing()` needs wiring into server.ts startup           |
-| P2       | Metrics not wired          | Prometheus metrics/middleware needs wiring into server.ts     |
-| P2       | APQ not wired              | `createAPQCache()` needs wiring into Apollo Server config     |
-| P2       | Query complexity not wired | `createQueryComplexityPlugin` needs wiring into Apollo Server |
-| Low      | Git history                | .env may exist in git history (manual BFG cleanup needed)     |
+| Priority | Issue           | Detail                                                                                          |
+| -------- | --------------- | ----------------------------------------------------------------------------------------------- |
+| P1       | TypeGraphQL RC  | Using 2.0.0-rc.2 (waiting on stable release)                                                    |
+| Low      | Git history     | .env may exist in git history (manual BFG cleanup needed)                                       |
+
+The dormant tracing/metrics/APQ/query-complexity/validation plugins flagged
+in the 2026-02-08 architecture campaign were all wired into `src/server.ts`
+during the 2026-05-22 readability sweep. See `docs/audits/2026-05-22-readability/README.md`.

@@ -2,7 +2,7 @@
 
 ## Overview
 
-GraphQL/Prisma backend providing canonical type definitions and codegen pipeline for the entire Adaptic.ai platform. Published as `@adaptic/backend-legacy` on NPM (v0.0.43).
+GraphQL/Prisma backend providing canonical type definitions and codegen pipeline for the entire Adaptic.ai platform. Published as `@adaptic/backend-legacy` on NPM (currently `0.0.984` on the `latest` channel; `stable-release` publishes the `stable` dist-tag).
 
 ## Ownership & Execution Doctrine
 
@@ -53,7 +53,7 @@ Do not behave like a task-completion assistant. Behave like an owner, an archite
 
 ## Critical Role
 
-This package OWNS all Prisma-generated canonical types (62 models, 63 enums). All other packages depend on these types. Changes here propagate across the entire monorepo.
+This package OWNS all Prisma-generated canonical types (67 models, 73 enums as of 2026-05-22; verify with `grep -c '^model ' prisma/schema.prisma` and `grep -c '^enum ' prisma/schema.prisma`). All other packages depend on these types. Changes here propagate across the entire monorepo.
 
 **Type resolution priority across the monorepo:**
 `@adaptic/backend-legacy` -> `@adaptic/utils` -> `@adaptic/lumic-utils` -> `src/interfaces/`
@@ -66,9 +66,9 @@ This package OWNS all Prisma-generated canonical types (62 models, 63 enums). Al
 npm run build               # Full pipeline: clean -> generate -> fix-imports -> generate:selections -> generate:functions -> generate:strings -> tsc -> build:server
 npm run clean               # rm -rf dist && rm -rf src/generated
 npm run generate            # prisma generate (TypeGraphQL + Prisma types)
-npm run generate:functions  # Generate typed CRUD functions (62 model files + index.ts)
-npm run generate:selections # Generate GraphQL selection sets (62 files)
-npm run generate:strings    # Generate type string representations for LLM context (62 files)
+npm run generate:functions  # Generate typed CRUD functions (one file per model + index.ts)
+npm run generate:selections # Generate GraphQL selection sets (one file per model)
+npm run generate:strings    # Generate type string representations for LLM context (one file per model)
 npm run fix-imports         # Post-process generated file import paths
 npm run migrate:dev         # prisma migrate dev + deploy
 npm run migrate             # prisma migrate deploy
@@ -90,10 +90,11 @@ cd backend-legacy && npx vitest run src/tests/[test-file].test.ts
 
 ### Prisma Schema
 
-- **62 models**, **63 enums** in `prisma/schema.prisma` (~121 KB)
-- **149 migrations** (healthy history)
-- **50+ indexes**, **13 cascading delete relations**, **~15 unique constraints**
+- **67 models**, **73 enums** in `prisma/schema.prisma` (~5,500 lines as of 2026-05-22; verify with `wc -l prisma/schema.prisma`)
+- **165 migrations** (healthy history; verify with `ls prisma/migrations/ | wc -l`)
+- **50+ indexes**, **13+ cascading delete relations**, **15+ unique constraints**
 - PostgreSQL via Prisma Accelerate (connection pooling + edge caching)
+- Authoritative count refresh procedure: any agent updating these stats must regenerate from the live schema before committing — these are the most-cited and most-stale numbers in the package docs.
 
 ### Codegen Pipeline (5 Sequential Steps)
 
@@ -109,13 +110,13 @@ prisma/schema.prisma
 2. fix-import-paths.cjs --> corrected imports in generated files
     |
     v
-3. generateSelections.ts --> src/generated/selectionSets/ (62 files)
+3. generateSelections.ts --> src/generated/selectionSets/ (one file per model + index.ts)
     |
     v
-4. generator.ts (generate:functions) --> src/*.ts (62 CRUD model files + index.ts)
+4. generator.ts (generate:functions) --> src/*.ts (one CRUD file per model + index.ts)
     |
     v
-5. generateStrings.ts --> src/generated/typeStrings/ (62 files)
+5. generateStrings.ts --> src/generated/typeStrings/ (one file per model + index.ts)
 ```
 
 ### Dual TypeScript Build
@@ -137,8 +138,8 @@ The published package (`dist/`) exposes:
 
 | Export                      | Description                                                               |
 | --------------------------- | ------------------------------------------------------------------------- |
-| `types` namespace           | All 62 Prisma model types (canonical for entire monorepo)                 |
-| `enums` namespace           | All 63 Prisma enums                                                       |
+| `types` namespace           | All Prisma model types (canonical for entire monorepo)                    |
+| `enums` namespace           | All Prisma enums                                                          |
 | `typeStrings`               | String representations of model types (for LLM context injection)         |
 | `adaptic.<model>.<op>()`    | CRUD functions: create, get, getAll, findMany, update, delete, createMany |
 | `getApolloClient()`         | Singleton Apollo Client with connection pooling, retry, token validation  |
@@ -214,7 +215,7 @@ After modifying inline comments:
 
 | File                                          | Purpose                                                                         |
 | --------------------------------------------- | ------------------------------------------------------------------------------- |
-| `prisma/schema.prisma`                        | Source of truth: 62 models, 63 enums                                            |
+| `prisma/schema.prisma`                        | Source of truth: 67 models, 73 enums (as of 2026-05-22)                          |
 | `src/index.ts`                                | Package entry: exports types, enums, typeStrings, CRUD functions, Apollo Client |
 | `src/server.ts`                               | Apollo Server 5 + Express 4 + WebSocket subscriptions                           |
 | `src/client.ts`                               | Apollo Client factory (singleton, connection pooling, retry, token validation)  |
@@ -281,7 +282,7 @@ Schema changes affect ALL packages. Always:
 - `npm run build` must pass (all 8 pipeline steps)
 - `npm run lint` must pass
 - `npm run test` must pass
-- All codegen outputs regenerated (62 selection sets, 62 CRUD files, 62 type strings)
+- All codegen outputs regenerated (selection sets, CRUD files, type strings — one of each per model)
 - Dependent packages must typecheck after changes
 
 ### Autonomous Bug Fixing

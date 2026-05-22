@@ -1,6 +1,6 @@
 # Backend-Legacy Debugging Playbook
 
-This playbook covers the most common failure modes in the backend-legacy package and how to resolve them. The package owns the Prisma schema (62 models, 63 enums), the codegen pipeline, and type exports consumed by engine, utils, and platform.
+This playbook covers the most common failure modes in the backend-legacy package and how to resolve them. The package owns the Prisma schema (67 models, 73 enums as of 2026-05-22; verify with `grep -c '^model ' prisma/schema.prisma` and `grep -c '^enum ' prisma/schema.prisma`), the codegen pipeline, and type exports consumed by engine, utils, and platform.
 
 ---
 
