@@ -1,6 +1,14 @@
 import 'reflect-metadata';
 import dotenv from 'dotenv';
 dotenv.config();
+
+// IMPORTANT: tracing initialization must happen before any other instrumented
+// import is loaded. `initTracing()` is a no-op unless `OTEL_TRACING_ENABLED=true`
+// (or NODE_ENV ∈ {production, staging}), so this remains safe in development.
+// See: src/config/tracing.ts and docs/ENVIRONMENT_SETUP.md.
+import { initTracing, shutdownTracing } from './config/tracing';
+initTracing();
+
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express4';
@@ -17,13 +25,21 @@ import { useServer } from 'graphql-ws/lib/use/ws';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { createHttpStatusMapperPlugin } from './plugins/http-status-mapper';
+import { createValidationPlugin } from './middleware/graphql-validation-plugin';
+import { createQueryComplexityPlugin } from './middleware/query-complexity';
+import {
+  initMetrics,
+  metricsMiddleware,
+  createMetricsPlugin,
+  createMetricsRouter,
+} from './config/metrics';
+import { createAPQCache, isAPQEnabled } from './config/persisted-queries';
 import prisma, {
   startConnectionHealthMonitor,
   disconnectWithTimeout,
 } from './prismaClient';
 import { createHealthRouter } from './health';
 import { logger } from './utils/logger';
-import { shutdownTracing } from './config/tracing';
 import {
   verifyBackendToken,
   AuthError,
@@ -88,6 +104,11 @@ const startServer = async () => {
   // boot with broken identity configuration.
   assertGoogleAudienceConfiguredForProd();
 
+  // Prometheus metrics initialization. No-op unless `PROMETHEUS_METRICS_ENABLED`
+  // is on (defaults on in production/staging). Registers default Node.js metrics
+  // and starts the uptime gauge ticker. See: src/config/metrics.ts.
+  initMetrics();
+
   const schema = await buildSchema({
     resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
     validate: false,
@@ -96,9 +117,19 @@ const startServer = async () => {
   const app = express();
   const httpServer = createServer(app);
 
+  // HTTP request metrics — must be mounted early to capture every request.
+  // The middleware is a no-op when metrics are disabled.
+  app.use(metricsMiddleware);
+
   app.use('/api', (req, res, next) =>
     authMiddleware(req as AuthenticatedRequest, res, next)
   );
+
+  // APQ cache: in-memory LRU, gated by `APQ_ENABLED` (default on). The
+  // Apollo Server option only accepts a value when a cache is provided;
+  // omit the option when APQ is disabled rather than passing `false` so
+  // Apollo's default in-memory cache can take over if needed.
+  const apqCache = createAPQCache();
 
   const server = new ApolloServer({
     schema,
@@ -107,7 +138,20 @@ const startServer = async () => {
       ApolloServerPluginDrainHttpServer({ httpServer }),
       createAuditLogPlugin(),
       createHttpStatusMapperPlugin(),
+      // Validation plugin — runs on `didResolveOperation` and rejects
+      // mutations whose input variables fail pattern-based validation
+      // (percentages, positive numbers, non-empty strings).
+      createValidationPlugin(),
+      // Query complexity + depth guard. No-op unless
+      // `GRAPHQL_COMPLEXITY_ENABLED` is on (defaults on in production /
+      // staging). Tunable via `GRAPHQL_MAX_DEPTH`,
+      // `GRAPHQL_MAX_COMPLEXITY_AUTH`, `GRAPHQL_MAX_COMPLEXITY_UNAUTH`.
+      createQueryComplexityPlugin(schema),
+      // GraphQL operation metrics (count, duration, error counts).
+      // No-op when metrics are disabled.
+      createMetricsPlugin(),
     ],
+    ...(apqCache && isAPQEnabled() ? { persistedQueries: { cache: apqCache } } : {}),
     formatError: (err) => {
       const message = err.message || '';
 
@@ -169,6 +213,14 @@ const startServer = async () => {
 
   // Health check endpoint - mounted before Apollo middleware so it's not behind GraphQL or auth
   app.use(createHealthRouter());
+
+  // Prometheus metrics endpoint — GET /metrics returns metrics in the
+  // Prometheus text exposition format. Mounted outside of Apollo and auth
+  // so a scraper can pull metrics without a Bearer token. In production
+  // this endpoint should be protected via firewall / Cloud Run ingress
+  // rules rather than at the application layer. No-op response if
+  // `PROMETHEUS_METRICS_ENABLED` is off (the registry is simply empty).
+  app.use(createMetricsRouter());
 
   // Configure CORS with allowed origins
   const defaultOrigins = [
