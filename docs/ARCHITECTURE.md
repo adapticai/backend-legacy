@@ -483,6 +483,39 @@ backend-legacy's Prisma models are THE canonical type definitions for the entire
 - `platform` consumes types at runtime via GraphQL queries/mutations and WebSocket events
 - Selection sets ensure consistent field requests across all consumers
 
+### Schema-Ownership Boundary: Tier A (engine) vs Tier B (backend-legacy)
+
+The Adaptic monorepo splits database tables across two PostgreSQL instances.
+**This package owns Tier B.** Engine telemetry / governance data lives in a
+separate Postgres owned by the engine. Both tiers are documented here so
+agents adding new models know where to put them.
+
+**Tier B — Adaptic-domain data (this package).** User, Session, Account,
+AlpacaAccount, Customer, Trade, Action, Alert, Asset, TradingPolicy,
+Allocation, NewsArticle, AuditLog, Configuration, TradeAuditEvent — anything
+with cross-model relations or that is a system-of-record for identity,
+audit, or trade lifecycle. All Tier B access is through `adaptic.*` CRUD
+functions; no package may instantiate a `PrismaClient` against this database.
+
+**Tier A — Engine-system telemetry, cache, event-sourcing, decision memory,
+and ML-governance data.** Lives in a separate engine-local Postgres
+(Railway `adaptic-os/stable`, internal hostname
+`postgres-nxbe.railway.internal`) accessed via `telemetryDb` — the
+PrismaClient singleton at `engine/src/db/engine-prisma.ts`. The
+authoritative Tier A model list lives in `engine/prisma/schema.prisma` and
+is enforced by ESLint (`@typescript-eslint/no-restricted-imports`).
+
+**Classification rule.** If a feature is system-of-record for identity,
+audit, regulatory, or trade-lifecycle state, it is Tier B (backend-legacy).
+If it is engine-internal telemetry, observability, governance, or cache, it
+is Tier A (engine `telemetryDb`).
+
+**Cross-references.** The root [`CLAUDE.md`](../../CLAUDE.md) carries the
+canonical statement of this rule; the engine spec
+[`engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md`](../../engine/docs/superpowers/specs/2026-04-15-engine-local-telemetry-db-design.md)
+captures the design rationale. The consumer-facing version of this section
+lives in [`docs/using-adaptic-backend.md`](./using-adaptic-backend.md).
+
 ### Generated Code Drift Detection
 
 The CI workflow (`.github/workflows/ci.yml`) includes a `verify-generated-code` job that:

@@ -11,6 +11,25 @@ This package is the **TYPE AUTHORITY** for the entire Adaptic.ai platform. The P
 **Type resolution priority across the monorepo:**
 `@adaptic/backend-legacy` -> `@adaptic/utils` -> `@adaptic/lumic-utils` -> `src/interfaces/`
 
+### Schema-Ownership Boundary (Tier A vs Tier B)
+
+This package owns **Tier B** data only — User, Trade, Action, Alert,
+TradingPolicy, AuditLog, TradeAuditEvent, AccountRiskMetrics, etc. **Tier A
+telemetry, cache, decision-memory, and ML-governance data live in a separate
+engine-local Postgres** (`engine/src/db/engine-prisma.ts` → `telemetryDb`).
+
+Before adding a new model here, confirm which tier it belongs to:
+
+| If the data is...                                         | Tier | Lives in                                                                |
+| --------------------------------------------------------- | ---- | ----------------------------------------------------------------------- |
+| System-of-record for identity / audit / trade lifecycle   | B    | `backend-legacy/prisma/schema.prisma`, accessed via `adaptic.*`         |
+| Engine-internal telemetry / cache / event-sourcing / ML governance | A | `engine/prisma/schema.prisma`, accessed via `telemetryDb` (engine only) |
+
+Engine-only telemetry models accidentally added here will pollute the
+canonical type surface for every downstream consumer. See
+[`docs/ARCHITECTURE.md`](./ARCHITECTURE.md) §Schema-Ownership Boundary for
+the canonical statement and cross-references.
+
 ## Before Making Changes
 
 1. **Understand the FULL impact of schema changes.** Every model and enum change affects downstream packages.
