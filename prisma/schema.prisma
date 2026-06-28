@@ -4973,6 +4973,11 @@ model TradingPolicy {
   /// Portfolio-level trailing stop percentage used by the Realtime Trade Engine for reducing the trailing stop once the profit threshold is exceeded. Canonical replacement for legacy AlpacaAccount.reducedPortfolioTrailPercent.
   reducedPortfolioTrailPercent Float @default(0.5)
 
+  /// Whether the portfolio-level daily take-profit circuit breaker is enabled for this account.
+  enablePortfolioTakeProfit          Boolean? @default(false)
+  /// Daily gain target (whole percent, e.g. 1 = 1%) since the 09:30 open that trips the take-profit breaker.
+  portfolioTakeProfitThresholdPercent Float?   @default(1)
+
   /// Initial trailing stop percentage used by the Position Trailing Stop Service. Canonical replacement for legacy AlpacaAccount.defaultTrailingStopPercentage100.
   defaultTrailingStopPercentage100 Float @default(4.0)
 
