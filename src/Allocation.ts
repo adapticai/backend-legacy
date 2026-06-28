@@ -186,6 +186,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -1343,6 +1345,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent
             } : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit
+            } : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent
+            } : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100
             } : undefined,
@@ -1583,6 +1591,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -3169,6 +3179,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -4013,6 +4025,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -4840,6 +4854,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent
             } : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit
+            } : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? {
+              set: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent
+            } : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
               set: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100
             } : undefined,
@@ -5080,6 +5100,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -6666,6 +6688,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: props.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? props.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? props.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -7656,6 +7680,12 @@ import { assertValidAllocation } from './validators/allocation-validator';
           reducedPortfolioTrailPercent: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent
             } : undefined,
+          enablePortfolioTakeProfit: prop.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit
+            } : undefined,
+          portfolioTakeProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? {
+              set: prop.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent
+            } : undefined,
           defaultTrailingStopPercentage100: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? {
               set: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100
             } : undefined,
@@ -7896,6 +7926,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: prop.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: prop.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? prop.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,
@@ -9482,6 +9514,8 @@ import { assertValidAllocation } from './validators/allocation-validator';
           portfolioTrailPercent: prop.alpacaAccount.tradingPolicy.portfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioTrailPercent : undefined,
           portfolioProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioProfitThresholdPercent : undefined,
           reducedPortfolioTrailPercent: prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.tradingPolicy.reducedPortfolioTrailPercent : undefined,
+          enablePortfolioTakeProfit: prop.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit !== undefined ? prop.alpacaAccount.tradingPolicy.enablePortfolioTakeProfit : undefined,
+          portfolioTakeProfitThresholdPercent: prop.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent !== undefined ? prop.alpacaAccount.tradingPolicy.portfolioTakeProfitThresholdPercent : undefined,
           defaultTrailingStopPercentage100: prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 !== undefined ? prop.alpacaAccount.tradingPolicy.defaultTrailingStopPercentage100 : undefined,
           firstTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.firstTrailReductionThreshold100 : undefined,
           secondTrailReductionThreshold100: prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.tradingPolicy.secondTrailReductionThreshold100 : undefined,

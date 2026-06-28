@@ -46,6 +46,8 @@ import { logger } from './utils/logger';
   portfolioTrailPercent
   portfolioProfitThresholdPercent
   reducedPortfolioTrailPercent
+  enablePortfolioTakeProfit
+  portfolioTakeProfitThresholdPercent
   defaultTrailingStopPercentage100
   firstTrailReductionThreshold100
   secondTrailReductionThreshold100
@@ -176,6 +178,8 @@ import { logger } from './utils/logger';
   portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
+  enablePortfolioTakeProfit: props.enablePortfolioTakeProfit !== undefined ? props.enablePortfolioTakeProfit : undefined,
+  portfolioTakeProfitThresholdPercent: props.portfolioTakeProfitThresholdPercent !== undefined ? props.portfolioTakeProfitThresholdPercent : undefined,
   defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? props.defaultTrailingStopPercentage100 : undefined,
   firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? props.firstTrailReductionThreshold100 : undefined,
   secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? props.secondTrailReductionThreshold100 : undefined,
@@ -1257,6 +1261,8 @@ import { logger } from './utils/logger';
   portfolioTrailPercent: prop.portfolioTrailPercent !== undefined ? prop.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: prop.portfolioProfitThresholdPercent !== undefined ? prop.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? prop.reducedPortfolioTrailPercent : undefined,
+  enablePortfolioTakeProfit: prop.enablePortfolioTakeProfit !== undefined ? prop.enablePortfolioTakeProfit : undefined,
+  portfolioTakeProfitThresholdPercent: prop.portfolioTakeProfitThresholdPercent !== undefined ? prop.portfolioTakeProfitThresholdPercent : undefined,
   defaultTrailingStopPercentage100: prop.defaultTrailingStopPercentage100 !== undefined ? prop.defaultTrailingStopPercentage100 : undefined,
   firstTrailReductionThreshold100: prop.firstTrailReductionThreshold100 !== undefined ? prop.firstTrailReductionThreshold100 : undefined,
   secondTrailReductionThreshold100: prop.secondTrailReductionThreshold100 !== undefined ? prop.secondTrailReductionThreshold100 : undefined,
@@ -1553,6 +1559,12 @@ import { logger } from './utils/logger';
            } : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
             set: props.reducedPortfolioTrailPercent 
+           } : undefined,
+  enablePortfolioTakeProfit: props.enablePortfolioTakeProfit !== undefined ? {
+            set: props.enablePortfolioTakeProfit 
+           } : undefined,
+  portfolioTakeProfitThresholdPercent: props.portfolioTakeProfitThresholdPercent !== undefined ? {
+            set: props.portfolioTakeProfitThresholdPercent 
            } : undefined,
   defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
             set: props.defaultTrailingStopPercentage100 
@@ -5094,6 +5106,8 @@ import { logger } from './utils/logger';
   portfolioTrailPercent: props.portfolioTrailPercent !== undefined ? props.portfolioTrailPercent : undefined,
   portfolioProfitThresholdPercent: props.portfolioProfitThresholdPercent !== undefined ? props.portfolioProfitThresholdPercent : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? props.reducedPortfolioTrailPercent : undefined,
+  enablePortfolioTakeProfit: props.enablePortfolioTakeProfit !== undefined ? props.enablePortfolioTakeProfit : undefined,
+  portfolioTakeProfitThresholdPercent: props.portfolioTakeProfitThresholdPercent !== undefined ? props.portfolioTakeProfitThresholdPercent : undefined,
   defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? props.defaultTrailingStopPercentage100 : undefined,
   firstTrailReductionThreshold100: props.firstTrailReductionThreshold100 !== undefined ? props.firstTrailReductionThreshold100 : undefined,
   secondTrailReductionThreshold100: props.secondTrailReductionThreshold100 !== undefined ? props.secondTrailReductionThreshold100 : undefined,
@@ -6084,6 +6098,12 @@ import { logger } from './utils/logger';
            } : undefined,
   reducedPortfolioTrailPercent: props.reducedPortfolioTrailPercent !== undefined ? {
             set: props.reducedPortfolioTrailPercent 
+           } : undefined,
+  enablePortfolioTakeProfit: props.enablePortfolioTakeProfit !== undefined ? {
+            set: props.enablePortfolioTakeProfit 
+           } : undefined,
+  portfolioTakeProfitThresholdPercent: props.portfolioTakeProfitThresholdPercent !== undefined ? {
+            set: props.portfolioTakeProfitThresholdPercent 
            } : undefined,
   defaultTrailingStopPercentage100: props.defaultTrailingStopPercentage100 !== undefined ? {
             set: props.defaultTrailingStopPercentage100 
@@ -9674,6 +9694,12 @@ import { logger } from './utils/logger';
            } : undefined,
   reducedPortfolioTrailPercent: prop.reducedPortfolioTrailPercent !== undefined ? {
             set: prop.reducedPortfolioTrailPercent 
+           } : undefined,
+  enablePortfolioTakeProfit: prop.enablePortfolioTakeProfit !== undefined ? {
+            set: prop.enablePortfolioTakeProfit 
+           } : undefined,
+  portfolioTakeProfitThresholdPercent: prop.portfolioTakeProfitThresholdPercent !== undefined ? {
+            set: prop.portfolioTakeProfitThresholdPercent 
            } : undefined,
   defaultTrailingStopPercentage100: prop.defaultTrailingStopPercentage100 !== undefined ? {
             set: prop.defaultTrailingStopPercentage100 
