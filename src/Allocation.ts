@@ -298,6 +298,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? props.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? props.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? props.alpacaAccount.user.signupCategory : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
@@ -535,6 +538,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 &&  props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 &&  props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+        Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 &&  props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 &&  props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -767,6 +902,94 @@ import { assertValidAllocation } from './validators/allocation-validator';
       } : undefined,
         },
       }))
+    } : undefined,
+    brokerageAccount: props.alpacaAccount.brokerageAccount ? 
+      typeof props.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.brokerageAccount.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? props.alpacaAccount.brokerageAccount.id : undefined,
+          engineAccountId: props.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.type 
+             } : undefined,
+          fundId: props.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.fundId 
+             } : undefined,
+        },
+        create: {
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? props.alpacaAccount.brokerageAccount.provider : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? props.alpacaAccount.brokerageAccount.type : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? props.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? props.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+        typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? props.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -1721,6 +1944,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
           image: props.alpacaAccount.user.image !== undefined ? {
               set: props.alpacaAccount.user.image
             } : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? {
+              set: props.alpacaAccount.user.avatarUrl
+            } : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? {
+              set: props.alpacaAccount.user.onboardingComplete
+            } : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? {
+              set: props.alpacaAccount.user.signupCategory
+            } : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? {
               set: props.alpacaAccount.user.deletedAt
             } : undefined,
@@ -2219,12 +2451,263 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+      Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 && props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.orgMemberships.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+      Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 && props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.fundAssignments.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+      Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 && props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.managedFunds.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            managerId: item.managerId !== undefined ? {
+                equals: item.managerId
+              } : undefined,
+            operatorId: item.operatorId !== undefined ? {
+                equals: item.operatorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? {
+                set: item.inceptionDate
+              } : undefined,
+            aum: item.aum !== undefined ? {
+                set: item.aum
+              } : undefined,
+            navPerShare: item.navPerShare !== undefined ? {
+                set: item.navPerShare
+              } : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? {
+                set: item.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? {
+                set: item.highWaterMarkNav
+              } : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+      Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 && props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.operatedFunds.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            managerId: item.managerId !== undefined ? {
+                equals: item.managerId
+              } : undefined,
+            operatorId: item.operatorId !== undefined ? {
+                equals: item.operatorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? {
+                set: item.inceptionDate
+              } : undefined,
+            aum: item.aum !== undefined ? {
+                set: item.aum
+              } : undefined,
+            navPerShare: item.navPerShare !== undefined ? {
+                set: item.navPerShare
+              } : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? {
+                set: item.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? {
+                set: item.highWaterMarkNav
+              } : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? props.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? props.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? props.alpacaAccount.user.signupCategory : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
@@ -2461,6 +2944,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
           },
         }
+      } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 &&  props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 &&  props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+        Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 &&  props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 &&  props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -3097,6 +3712,263 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
+    brokerageAccount: props.alpacaAccount.brokerageAccount ? 
+    typeof props.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+    connect: {
+      id: props.alpacaAccount.brokerageAccount.id
+    }
+} : { upsert: {
+        where: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.id
+            } : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.type
+            } : undefined,
+          fundId: props.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.fundId
+            } : undefined,
+          engineAccountId: props.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.engineAccountId
+            } : undefined,
+        },
+        update: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.id
+            } : undefined,
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.provider
+            } : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.type
+            } : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.label
+            } : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.apiKey
+            } : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.apiSecret
+            } : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.marketOpen
+            } : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.realTime
+            } : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.autoAllocation
+            } : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.minPercentageChange
+            } : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.volumeThreshold
+            } : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs
+            } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+            } : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+            } : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.deletedAt
+            } : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+      typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && (Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id' || Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'symbol')
+? {
+      connect: {
+        id: props.alpacaAccount.brokerageAccount.fund.id
+      }
+} : { upsert: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.id
+              } : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name
+              } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug
+              } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status
+              } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId
+              } : undefined,
+            managerId: props.alpacaAccount.brokerageAccount.fund.managerId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.managerId
+              } : undefined,
+            operatorId: props.alpacaAccount.brokerageAccount.fund.operatorId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.operatorId
+              } : undefined,
+          },
+          update: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.id
+              } : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.name
+              } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.slug
+              } : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.description
+              } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.status
+              } : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.currency
+              } : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.inceptionDate
+              } : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.aum
+              } : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.navPerShare
+              } : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav
+              } : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? props.alpacaAccount.brokerageAccount.provider : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? props.alpacaAccount.brokerageAccount.type : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? props.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? props.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+        typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? props.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
@@ -3291,6 +4163,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? props.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? props.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? props.alpacaAccount.user.signupCategory : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
@@ -3528,6 +4403,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 &&  props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 &&  props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+        Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 &&  props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 &&  props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -3760,6 +4767,94 @@ import { assertValidAllocation } from './validators/allocation-validator';
       } : undefined,
         },
       }))
+    } : undefined,
+    brokerageAccount: props.alpacaAccount.brokerageAccount ? 
+      typeof props.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.brokerageAccount.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? props.alpacaAccount.brokerageAccount.id : undefined,
+          engineAccountId: props.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.type 
+             } : undefined,
+          fundId: props.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.fundId 
+             } : undefined,
+        },
+        create: {
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? props.alpacaAccount.brokerageAccount.provider : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? props.alpacaAccount.brokerageAccount.type : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? props.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? props.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+        typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? props.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -4137,6 +5232,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? props.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? props.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? props.alpacaAccount.user.signupCategory : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
@@ -4374,6 +5472,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 &&  props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 &&  props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+        Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 &&  props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 &&  props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -4606,6 +5836,94 @@ import { assertValidAllocation } from './validators/allocation-validator';
       } : undefined,
         },
       }))
+    } : undefined,
+    brokerageAccount: props.alpacaAccount.brokerageAccount ? 
+      typeof props.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.brokerageAccount.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? props.alpacaAccount.brokerageAccount.id : undefined,
+          engineAccountId: props.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.type 
+             } : undefined,
+          fundId: props.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.fundId 
+             } : undefined,
+        },
+        create: {
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? props.alpacaAccount.brokerageAccount.provider : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? props.alpacaAccount.brokerageAccount.type : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? props.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? props.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+        typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? props.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -5230,6 +6548,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
           image: props.alpacaAccount.user.image !== undefined ? {
               set: props.alpacaAccount.user.image
             } : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? {
+              set: props.alpacaAccount.user.avatarUrl
+            } : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? {
+              set: props.alpacaAccount.user.onboardingComplete
+            } : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? {
+              set: props.alpacaAccount.user.signupCategory
+            } : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? {
               set: props.alpacaAccount.user.deletedAt
             } : undefined,
@@ -5728,12 +7055,263 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+      Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 && props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.orgMemberships.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+      Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 && props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.fundAssignments.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+      Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 && props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.managedFunds.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            managerId: item.managerId !== undefined ? {
+                equals: item.managerId
+              } : undefined,
+            operatorId: item.operatorId !== undefined ? {
+                equals: item.operatorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? {
+                set: item.inceptionDate
+              } : undefined,
+            aum: item.aum !== undefined ? {
+                set: item.aum
+              } : undefined,
+            navPerShare: item.navPerShare !== undefined ? {
+                set: item.navPerShare
+              } : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? {
+                set: item.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? {
+                set: item.highWaterMarkNav
+              } : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+      Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 && props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.operatedFunds.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            managerId: item.managerId !== undefined ? {
+                equals: item.managerId
+              } : undefined,
+            operatorId: item.operatorId !== undefined ? {
+                equals: item.operatorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? {
+                set: item.inceptionDate
+              } : undefined,
+            aum: item.aum !== undefined ? {
+                set: item.aum
+              } : undefined,
+            navPerShare: item.navPerShare !== undefined ? {
+                set: item.navPerShare
+              } : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? {
+                set: item.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? {
+                set: item.highWaterMarkNav
+              } : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? props.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? props.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? props.alpacaAccount.user.signupCategory : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
@@ -5970,6 +7548,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
           },
         }
+      } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 &&  props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 &&  props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+        Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 &&  props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 &&  props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -6606,6 +8316,263 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
+    brokerageAccount: props.alpacaAccount.brokerageAccount ? 
+    typeof props.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+    connect: {
+      id: props.alpacaAccount.brokerageAccount.id
+    }
+} : { upsert: {
+        where: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.id
+            } : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.type
+            } : undefined,
+          fundId: props.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.fundId
+            } : undefined,
+          engineAccountId: props.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.engineAccountId
+            } : undefined,
+        },
+        update: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.id
+            } : undefined,
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.provider
+            } : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.type
+            } : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.label
+            } : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.apiKey
+            } : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.apiSecret
+            } : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.marketOpen
+            } : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.realTime
+            } : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.autoAllocation
+            } : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.minPercentageChange
+            } : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.volumeThreshold
+            } : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs
+            } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+            } : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+            } : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.deletedAt
+            } : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+      typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && (Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id' || Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'symbol')
+? {
+      connect: {
+        id: props.alpacaAccount.brokerageAccount.fund.id
+      }
+} : { upsert: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.id
+              } : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name
+              } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug
+              } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status
+              } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId
+              } : undefined,
+            managerId: props.alpacaAccount.brokerageAccount.fund.managerId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.managerId
+              } : undefined,
+            operatorId: props.alpacaAccount.brokerageAccount.fund.operatorId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.operatorId
+              } : undefined,
+          },
+          update: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.id
+              } : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.name
+              } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.slug
+              } : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.description
+              } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.status
+              } : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.currency
+              } : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.inceptionDate
+              } : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.aum
+              } : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.navPerShare
+              } : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav
+              } : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? {
+                set: props.alpacaAccount.brokerageAccount.fund.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? props.alpacaAccount.brokerageAccount.provider : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? props.alpacaAccount.brokerageAccount.type : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? props.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? props.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+        typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? props.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         type: props.alpacaAccount.type !== undefined ? props.alpacaAccount.type : undefined,
@@ -6800,6 +8767,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           email: props.alpacaAccount.user.email !== undefined ? props.alpacaAccount.user.email : undefined,
           emailVerified: props.alpacaAccount.user.emailVerified !== undefined ? props.alpacaAccount.user.emailVerified : undefined,
           image: props.alpacaAccount.user.image !== undefined ? props.alpacaAccount.user.image : undefined,
+          avatarUrl: props.alpacaAccount.user.avatarUrl !== undefined ? props.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: props.alpacaAccount.user.onboardingComplete !== undefined ? props.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: props.alpacaAccount.user.signupCategory !== undefined ? props.alpacaAccount.user.signupCategory : undefined,
           deletedAt: props.alpacaAccount.user.deletedAt !== undefined ? props.alpacaAccount.user.deletedAt : undefined,
           role: props.alpacaAccount.user.role !== undefined ? props.alpacaAccount.user.role : undefined,
           bio: props.alpacaAccount.user.bio !== undefined ? props.alpacaAccount.user.bio : undefined,
@@ -7037,6 +9007,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: props.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(props.alpacaAccount.user.orgMemberships) && props.alpacaAccount.user.orgMemberships.length > 0 &&  props.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: props.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(props.alpacaAccount.user.fundAssignments) && props.alpacaAccount.user.fundAssignments.length > 0 &&  props.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: props.alpacaAccount.user.managedFunds ? 
+        Array.isArray(props.alpacaAccount.user.managedFunds) && props.alpacaAccount.user.managedFunds.length > 0 &&  props.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: props.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(props.alpacaAccount.user.operatedFunds) && props.alpacaAccount.user.operatedFunds.length > 0 &&  props.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -7269,6 +9371,94 @@ import { assertValidAllocation } from './validators/allocation-validator';
       } : undefined,
         },
       }))
+    } : undefined,
+    brokerageAccount: props.alpacaAccount.brokerageAccount ? 
+      typeof props.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+          id: props.alpacaAccount.brokerageAccount.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.alpacaAccount.brokerageAccount.id !== undefined ? props.alpacaAccount.brokerageAccount.id : undefined,
+          engineAccountId: props.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.type 
+             } : undefined,
+          fundId: props.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: props.alpacaAccount.brokerageAccount.fundId 
+             } : undefined,
+        },
+        create: {
+          provider: props.alpacaAccount.brokerageAccount.provider !== undefined ? props.alpacaAccount.brokerageAccount.provider : undefined,
+          type: props.alpacaAccount.brokerageAccount.type !== undefined ? props.alpacaAccount.brokerageAccount.type : undefined,
+          label: props.alpacaAccount.brokerageAccount.label !== undefined ? props.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: props.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: props.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: props.alpacaAccount.brokerageAccount.configuration !== undefined ? props.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: props.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: props.alpacaAccount.brokerageAccount.realTime !== undefined ? props.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: props.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: props.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: props.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: props.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: props.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: props.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: props.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: props.alpacaAccount.brokerageAccount.fund ? 
+        typeof props.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(props.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(props.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: props.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.alpacaAccount.brokerageAccount.fund.id !== undefined ? props.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: props.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: props.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: props.alpacaAccount.brokerageAccount.fund.name !== undefined ? props.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: props.alpacaAccount.brokerageAccount.fund.slug !== undefined ? props.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: props.alpacaAccount.brokerageAccount.fund.description !== undefined ? props.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: props.alpacaAccount.brokerageAccount.fund.status !== undefined ? props.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: props.alpacaAccount.brokerageAccount.fund.currency !== undefined ? props.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: props.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? props.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: props.alpacaAccount.brokerageAccount.fund.aum !== undefined ? props.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: props.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? props.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: props.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? props.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? props.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: props.alpacaAccount.brokerageAccount.fund.fees !== undefined ? props.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: props.alpacaAccount.brokerageAccount.fund.terms !== undefined ? props.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: props.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? props.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: props.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? props.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: props.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? props.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: props.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? props.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
     } : undefined,
       },
     }
@@ -8056,6 +10246,15 @@ import { assertValidAllocation } from './validators/allocation-validator';
           image: prop.alpacaAccount.user.image !== undefined ? {
               set: prop.alpacaAccount.user.image
             } : undefined,
+          avatarUrl: prop.alpacaAccount.user.avatarUrl !== undefined ? {
+              set: prop.alpacaAccount.user.avatarUrl
+            } : undefined,
+          onboardingComplete: prop.alpacaAccount.user.onboardingComplete !== undefined ? {
+              set: prop.alpacaAccount.user.onboardingComplete
+            } : undefined,
+          signupCategory: prop.alpacaAccount.user.signupCategory !== undefined ? {
+              set: prop.alpacaAccount.user.signupCategory
+            } : undefined,
           deletedAt: prop.alpacaAccount.user.deletedAt !== undefined ? {
               set: prop.alpacaAccount.user.deletedAt
             } : undefined,
@@ -8554,12 +10753,263 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: prop.alpacaAccount.user.orgMemberships ? 
+      Array.isArray(prop.alpacaAccount.user.orgMemberships) && prop.alpacaAccount.user.orgMemberships.length > 0 && prop.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.orgMemberships.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: prop.alpacaAccount.user.fundAssignments ? 
+      Array.isArray(prop.alpacaAccount.user.fundAssignments) && prop.alpacaAccount.user.fundAssignments.length > 0 && prop.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.fundAssignments.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            role: item.role !== undefined ? {
+                set: item.role
+              } : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions
+              } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: prop.alpacaAccount.user.managedFunds ? 
+      Array.isArray(prop.alpacaAccount.user.managedFunds) && prop.alpacaAccount.user.managedFunds.length > 0 && prop.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.managedFunds.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            managerId: item.managerId !== undefined ? {
+                equals: item.managerId
+              } : undefined,
+            operatorId: item.operatorId !== undefined ? {
+                equals: item.operatorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? {
+                set: item.inceptionDate
+              } : undefined,
+            aum: item.aum !== undefined ? {
+                set: item.aum
+              } : undefined,
+            navPerShare: item.navPerShare !== undefined ? {
+                set: item.navPerShare
+              } : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? {
+                set: item.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? {
+                set: item.highWaterMarkNav
+              } : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: prop.alpacaAccount.user.operatedFunds ? 
+      Array.isArray(prop.alpacaAccount.user.operatedFunds) && prop.alpacaAccount.user.operatedFunds.length > 0 && prop.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.operatedFunds.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            managerId: item.managerId !== undefined ? {
+                equals: item.managerId
+              } : undefined,
+            operatorId: item.operatorId !== undefined ? {
+                equals: item.operatorId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            slug: item.slug !== undefined ? {
+                set: item.slug
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? {
+                set: item.inceptionDate
+              } : undefined,
+            aum: item.aum !== undefined ? {
+                set: item.aum
+              } : undefined,
+            navPerShare: item.navPerShare !== undefined ? {
+                set: item.navPerShare
+              } : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? {
+                set: item.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? {
+                set: item.highWaterMarkNav
+              } : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
           email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
           emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
           image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          avatarUrl: prop.alpacaAccount.user.avatarUrl !== undefined ? prop.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: prop.alpacaAccount.user.onboardingComplete !== undefined ? prop.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: prop.alpacaAccount.user.signupCategory !== undefined ? prop.alpacaAccount.user.signupCategory : undefined,
           deletedAt: prop.alpacaAccount.user.deletedAt !== undefined ? prop.alpacaAccount.user.deletedAt : undefined,
           role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
           bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
@@ -8796,6 +11246,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
             geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
           },
         }
+      } : undefined,
+      orgMemberships: prop.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(prop.alpacaAccount.user.orgMemberships) && prop.alpacaAccount.user.orgMemberships.length > 0 &&  prop.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: prop.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(prop.alpacaAccount.user.fundAssignments) && prop.alpacaAccount.user.fundAssignments.length > 0 &&  prop.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: prop.alpacaAccount.user.managedFunds ? 
+        Array.isArray(prop.alpacaAccount.user.managedFunds) && prop.alpacaAccount.user.managedFunds.length > 0 &&  prop.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: prop.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(prop.alpacaAccount.user.operatedFunds) && prop.alpacaAccount.user.operatedFunds.length > 0 &&  prop.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -9432,6 +12014,263 @@ import { assertValidAllocation } from './validators/allocation-validator';
         },
       }))
     } : undefined,
+    brokerageAccount: prop.alpacaAccount.brokerageAccount ? 
+    typeof prop.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(prop.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(prop.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+    connect: {
+      id: prop.alpacaAccount.brokerageAccount.id
+    }
+} : { upsert: {
+        where: {
+          id: prop.alpacaAccount.brokerageAccount.id !== undefined ? {
+              equals: prop.alpacaAccount.brokerageAccount.id
+            } : undefined,
+          type: prop.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: prop.alpacaAccount.brokerageAccount.type
+            } : undefined,
+          fundId: prop.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: prop.alpacaAccount.brokerageAccount.fundId
+            } : undefined,
+          engineAccountId: prop.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+              equals: prop.alpacaAccount.brokerageAccount.engineAccountId
+            } : undefined,
+        },
+        update: {
+          id: prop.alpacaAccount.brokerageAccount.id !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.id
+            } : undefined,
+          provider: prop.alpacaAccount.brokerageAccount.provider !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.provider
+            } : undefined,
+          type: prop.alpacaAccount.brokerageAccount.type !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.type
+            } : undefined,
+          label: prop.alpacaAccount.brokerageAccount.label !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.label
+            } : undefined,
+          apiKey: prop.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.apiKey
+            } : undefined,
+          apiSecret: prop.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.apiSecret
+            } : undefined,
+          configuration: prop.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: prop.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.marketOpen
+            } : undefined,
+          realTime: prop.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.realTime
+            } : undefined,
+          autoAllocation: prop.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.autoAllocation
+            } : undefined,
+          minPercentageChange: prop.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.minPercentageChange
+            } : undefined,
+          volumeThreshold: prop.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.volumeThreshold
+            } : undefined,
+          cryptoTradingPairs: prop.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.cryptoTradingPairs
+            } : undefined,
+          enablePortfolioTrailingStop: prop.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+            } : undefined,
+          portfolioTrailPercent: prop.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.portfolioTrailPercent
+            } : undefined,
+          portfolioProfitThresholdPercent: prop.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+            } : undefined,
+          reducedPortfolioTrailPercent: prop.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+            } : undefined,
+          defaultTrailingStopPercentage100: prop.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+            } : undefined,
+          firstTrailReductionThreshold100: prop.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+            } : undefined,
+          secondTrailReductionThreshold100: prop.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+            } : undefined,
+          firstReducedTrailPercentage100: prop.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+            } : undefined,
+          secondReducedTrailPercentage100: prop.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+            } : undefined,
+          minimumPriceChangePercent100: prop.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+            } : undefined,
+          deletedAt: prop.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.deletedAt
+            } : undefined,
+      fund: prop.alpacaAccount.brokerageAccount.fund ? 
+      typeof prop.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(prop.alpacaAccount.brokerageAccount.fund).length === 1 && (Object.keys(prop.alpacaAccount.brokerageAccount.fund)[0] === 'id' || Object.keys(prop.alpacaAccount.brokerageAccount.fund)[0] === 'symbol')
+? {
+      connect: {
+        id: prop.alpacaAccount.brokerageAccount.fund.id
+      }
+} : { upsert: {
+          where: {
+            id: prop.alpacaAccount.brokerageAccount.fund.id !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.id
+              } : undefined,
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.name
+              } : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.slug
+              } : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.status
+              } : undefined,
+            organizationId: prop.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.organizationId
+              } : undefined,
+            managerId: prop.alpacaAccount.brokerageAccount.fund.managerId !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.managerId
+              } : undefined,
+            operatorId: prop.alpacaAccount.brokerageAccount.fund.operatorId !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.operatorId
+              } : undefined,
+          },
+          update: {
+            id: prop.alpacaAccount.brokerageAccount.fund.id !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.id
+              } : undefined,
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.name
+              } : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.slug
+              } : undefined,
+            description: prop.alpacaAccount.brokerageAccount.fund.description !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.description
+              } : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.status
+              } : undefined,
+            currency: prop.alpacaAccount.brokerageAccount.fund.currency !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.currency
+              } : undefined,
+            inceptionDate: prop.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.inceptionDate
+              } : undefined,
+            aum: prop.alpacaAccount.brokerageAccount.fund.aum !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.aum
+              } : undefined,
+            navPerShare: prop.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.navPerShare
+              } : undefined,
+            sharesOutstanding: prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding
+              } : undefined,
+            highWaterMarkNav: prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav
+              } : undefined,
+            fees: prop.alpacaAccount.brokerageAccount.fund.fees !== undefined ? prop.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: prop.alpacaAccount.brokerageAccount.fund.terms !== undefined ? prop.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: prop.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? prop.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: prop.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? prop.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: prop.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? prop.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: prop.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? {
+                set: prop.alpacaAccount.brokerageAccount.fund.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? prop.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? prop.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: prop.alpacaAccount.brokerageAccount.fund.description !== undefined ? prop.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? prop.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: prop.alpacaAccount.brokerageAccount.fund.currency !== undefined ? prop.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: prop.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? prop.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: prop.alpacaAccount.brokerageAccount.fund.aum !== undefined ? prop.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: prop.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? prop.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: prop.alpacaAccount.brokerageAccount.fund.fees !== undefined ? prop.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: prop.alpacaAccount.brokerageAccount.fund.terms !== undefined ? prop.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: prop.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? prop.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: prop.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? prop.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: prop.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? prop.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: prop.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? prop.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+        create: {
+          provider: prop.alpacaAccount.brokerageAccount.provider !== undefined ? prop.alpacaAccount.brokerageAccount.provider : undefined,
+          type: prop.alpacaAccount.brokerageAccount.type !== undefined ? prop.alpacaAccount.brokerageAccount.type : undefined,
+          label: prop.alpacaAccount.brokerageAccount.label !== undefined ? prop.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: prop.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: prop.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: prop.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: prop.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: prop.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: prop.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: prop.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: prop.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: prop.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: prop.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: prop.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: prop.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: prop.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: prop.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: prop.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: prop.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: prop.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: prop.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: prop.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: prop.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: prop.alpacaAccount.brokerageAccount.fund ? 
+        typeof prop.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(prop.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(prop.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: prop.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.alpacaAccount.brokerageAccount.fund.id !== undefined ? prop.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: prop.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? prop.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? prop.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: prop.alpacaAccount.brokerageAccount.fund.description !== undefined ? prop.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? prop.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: prop.alpacaAccount.brokerageAccount.fund.currency !== undefined ? prop.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: prop.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? prop.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: prop.alpacaAccount.brokerageAccount.fund.aum !== undefined ? prop.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: prop.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? prop.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: prop.alpacaAccount.brokerageAccount.fund.fees !== undefined ? prop.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: prop.alpacaAccount.brokerageAccount.fund.terms !== undefined ? prop.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: prop.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? prop.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: prop.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? prop.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: prop.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? prop.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: prop.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? prop.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         type: prop.alpacaAccount.type !== undefined ? prop.alpacaAccount.type : undefined,
@@ -9626,6 +12465,9 @@ import { assertValidAllocation } from './validators/allocation-validator';
           email: prop.alpacaAccount.user.email !== undefined ? prop.alpacaAccount.user.email : undefined,
           emailVerified: prop.alpacaAccount.user.emailVerified !== undefined ? prop.alpacaAccount.user.emailVerified : undefined,
           image: prop.alpacaAccount.user.image !== undefined ? prop.alpacaAccount.user.image : undefined,
+          avatarUrl: prop.alpacaAccount.user.avatarUrl !== undefined ? prop.alpacaAccount.user.avatarUrl : undefined,
+          onboardingComplete: prop.alpacaAccount.user.onboardingComplete !== undefined ? prop.alpacaAccount.user.onboardingComplete : undefined,
+          signupCategory: prop.alpacaAccount.user.signupCategory !== undefined ? prop.alpacaAccount.user.signupCategory : undefined,
           deletedAt: prop.alpacaAccount.user.deletedAt !== undefined ? prop.alpacaAccount.user.deletedAt : undefined,
           role: prop.alpacaAccount.user.role !== undefined ? prop.alpacaAccount.user.role : undefined,
           bio: prop.alpacaAccount.user.bio !== undefined ? prop.alpacaAccount.user.bio : undefined,
@@ -9863,6 +12705,138 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }
       } : undefined,
+      orgMemberships: prop.alpacaAccount.user.orgMemberships ? 
+        Array.isArray(prop.alpacaAccount.user.orgMemberships) && prop.alpacaAccount.user.orgMemberships.length > 0 &&  prop.alpacaAccount.user.orgMemberships.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.orgMemberships.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.orgMemberships.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      fundAssignments: prop.alpacaAccount.user.fundAssignments ? 
+        Array.isArray(prop.alpacaAccount.user.fundAssignments) && prop.alpacaAccount.user.fundAssignments.length > 0 &&  prop.alpacaAccount.user.fundAssignments.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.fundAssignments.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.fundAssignments.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId 
+               } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+          },
+          create: {
+            role: item.role !== undefined ? item.role : undefined,
+            permissions: item.permissions !== undefined ? {
+                set: item.permissions 
+               } : undefined,
+          },
+        }))
+      } : undefined,
+      managedFunds: prop.alpacaAccount.user.managedFunds ? 
+        Array.isArray(prop.alpacaAccount.user.managedFunds) && prop.alpacaAccount.user.managedFunds.length > 0 &&  prop.alpacaAccount.user.managedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.managedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.managedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      operatedFunds: prop.alpacaAccount.user.operatedFunds ? 
+        Array.isArray(prop.alpacaAccount.user.operatedFunds) && prop.alpacaAccount.user.operatedFunds.length > 0 &&  prop.alpacaAccount.user.operatedFunds.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.operatedFunds.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.operatedFunds.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            slug: item.slug !== undefined ? {
+                equals: item.slug 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            slug: item.slug !== undefined ? item.slug : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            inceptionDate: item.inceptionDate !== undefined ? item.inceptionDate : undefined,
+            aum: item.aum !== undefined ? item.aum : undefined,
+            navPerShare: item.navPerShare !== undefined ? item.navPerShare : undefined,
+            sharesOutstanding: item.sharesOutstanding !== undefined ? item.sharesOutstanding : undefined,
+            highWaterMarkNav: item.highWaterMarkNav !== undefined ? item.highWaterMarkNav : undefined,
+            fees: item.fees !== undefined ? item.fees : undefined,
+            terms: item.terms !== undefined ? item.terms : undefined,
+            regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
+            serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
+            tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -10095,6 +13069,94 @@ import { assertValidAllocation } from './validators/allocation-validator';
       } : undefined,
         },
       }))
+    } : undefined,
+    brokerageAccount: prop.alpacaAccount.brokerageAccount ? 
+      typeof prop.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.alpacaAccount.brokerageAccount).length === 1 && Object.keys(prop.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+          id: prop.alpacaAccount.brokerageAccount.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.alpacaAccount.brokerageAccount.id !== undefined ? prop.alpacaAccount.brokerageAccount.id : undefined,
+          engineAccountId: prop.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? prop.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+          type: prop.alpacaAccount.brokerageAccount.type !== undefined ? {
+              equals: prop.alpacaAccount.brokerageAccount.type 
+             } : undefined,
+          fundId: prop.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+              equals: prop.alpacaAccount.brokerageAccount.fundId 
+             } : undefined,
+        },
+        create: {
+          provider: prop.alpacaAccount.brokerageAccount.provider !== undefined ? prop.alpacaAccount.brokerageAccount.provider : undefined,
+          type: prop.alpacaAccount.brokerageAccount.type !== undefined ? prop.alpacaAccount.brokerageAccount.type : undefined,
+          label: prop.alpacaAccount.brokerageAccount.label !== undefined ? prop.alpacaAccount.brokerageAccount.label : undefined,
+          apiKey: prop.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.alpacaAccount.brokerageAccount.apiKey : undefined,
+          apiSecret: prop.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.alpacaAccount.brokerageAccount.apiSecret : undefined,
+          configuration: prop.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.alpacaAccount.brokerageAccount.configuration : undefined,
+          marketOpen: prop.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.alpacaAccount.brokerageAccount.marketOpen : undefined,
+          realTime: prop.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.alpacaAccount.brokerageAccount.realTime : undefined,
+          autoAllocation: prop.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+          minPercentageChange: prop.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+          volumeThreshold: prop.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+          cryptoTradingPairs: prop.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+              set: prop.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+             } : undefined,
+          enablePortfolioTrailingStop: prop.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+          portfolioTrailPercent: prop.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+          portfolioProfitThresholdPercent: prop.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+          reducedPortfolioTrailPercent: prop.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+          defaultTrailingStopPercentage100: prop.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+          firstTrailReductionThreshold100: prop.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+          secondTrailReductionThreshold100: prop.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+          firstReducedTrailPercentage100: prop.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+          secondReducedTrailPercentage100: prop.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+          minimumPriceChangePercent100: prop.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+          deletedAt: prop.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.alpacaAccount.brokerageAccount.deletedAt : undefined,
+      fund: prop.alpacaAccount.brokerageAccount.fund ? 
+        typeof prop.alpacaAccount.brokerageAccount.fund === 'object' && Object.keys(prop.alpacaAccount.brokerageAccount.fund).length === 1 && Object.keys(prop.alpacaAccount.brokerageAccount.fund)[0] === 'id'
+    ? { connect: {
+            id: prop.alpacaAccount.brokerageAccount.fund.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.alpacaAccount.brokerageAccount.fund.id !== undefined ? prop.alpacaAccount.brokerageAccount.fund.id : undefined,
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.name 
+               } : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.slug 
+               } : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.status 
+               } : undefined,
+            organizationId: prop.alpacaAccount.brokerageAccount.fund.organizationId !== undefined ? {
+                equals: prop.alpacaAccount.brokerageAccount.fund.organizationId 
+               } : undefined,
+          },
+          create: {
+            name: prop.alpacaAccount.brokerageAccount.fund.name !== undefined ? prop.alpacaAccount.brokerageAccount.fund.name : undefined,
+            slug: prop.alpacaAccount.brokerageAccount.fund.slug !== undefined ? prop.alpacaAccount.brokerageAccount.fund.slug : undefined,
+            description: prop.alpacaAccount.brokerageAccount.fund.description !== undefined ? prop.alpacaAccount.brokerageAccount.fund.description : undefined,
+            status: prop.alpacaAccount.brokerageAccount.fund.status !== undefined ? prop.alpacaAccount.brokerageAccount.fund.status : undefined,
+            currency: prop.alpacaAccount.brokerageAccount.fund.currency !== undefined ? prop.alpacaAccount.brokerageAccount.fund.currency : undefined,
+            inceptionDate: prop.alpacaAccount.brokerageAccount.fund.inceptionDate !== undefined ? prop.alpacaAccount.brokerageAccount.fund.inceptionDate : undefined,
+            aum: prop.alpacaAccount.brokerageAccount.fund.aum !== undefined ? prop.alpacaAccount.brokerageAccount.fund.aum : undefined,
+            navPerShare: prop.alpacaAccount.brokerageAccount.fund.navPerShare !== undefined ? prop.alpacaAccount.brokerageAccount.fund.navPerShare : undefined,
+            sharesOutstanding: prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding !== undefined ? prop.alpacaAccount.brokerageAccount.fund.sharesOutstanding : undefined,
+            highWaterMarkNav: prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav !== undefined ? prop.alpacaAccount.brokerageAccount.fund.highWaterMarkNav : undefined,
+            fees: prop.alpacaAccount.brokerageAccount.fund.fees !== undefined ? prop.alpacaAccount.brokerageAccount.fund.fees : undefined,
+            terms: prop.alpacaAccount.brokerageAccount.fund.terms !== undefined ? prop.alpacaAccount.brokerageAccount.fund.terms : undefined,
+            regulatory: prop.alpacaAccount.brokerageAccount.fund.regulatory !== undefined ? prop.alpacaAccount.brokerageAccount.fund.regulatory : undefined,
+            serviceProviders: prop.alpacaAccount.brokerageAccount.fund.serviceProviders !== undefined ? prop.alpacaAccount.brokerageAccount.fund.serviceProviders : undefined,
+            tradingOverrides: prop.alpacaAccount.brokerageAccount.fund.tradingOverrides !== undefined ? prop.alpacaAccount.brokerageAccount.fund.tradingOverrides : undefined,
+            deletedAt: prop.alpacaAccount.brokerageAccount.fund.deletedAt !== undefined ? prop.alpacaAccount.brokerageAccount.fund.deletedAt : undefined,
+          },
+        }
+      } : undefined,
+        },
+      }
     } : undefined,
       },
     }

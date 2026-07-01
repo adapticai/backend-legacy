@@ -45,6 +45,7 @@ import { AnalyticsSnapshot } from './AnalyticsSnapshot';
 import { Asset } from './Asset';
 import { AuditLog } from './AuditLog';
 import { Authenticator } from './Authenticator';
+import { BrokerageAccount } from './BrokerageAccount';
 import { Configuration } from './Configuration';
 import { ConflictEvent } from './ConflictEvent';
 import { ConnectionHealthSnapshot } from './ConnectionHealthSnapshot';
@@ -56,6 +57,8 @@ import { EquityBar } from './EquityBar';
 import { Event } from './Event';
 import { EventSnapshot } from './EventSnapshot';
 import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
+import { Fund } from './Fund';
+import { FundAssignment } from './FundAssignment';
 import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
 import { InstitutionalHolding } from './InstitutionalHolding';
 import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
@@ -78,6 +81,8 @@ import { OptionsGreeksHistory } from './OptionsGreeksHistory';
 import { OptionsPosition } from './OptionsPosition';
 import { OptionsPositionEvent } from './OptionsPositionEvent';
 import { OptionsTradeExecution } from './OptionsTradeExecution';
+import { OrgMembership } from './OrgMembership';
+import { Organization } from './Organization';
 import { PolicyOverlay } from './PolicyOverlay';
 import { PortfolioGreeksHistory } from './PortfolioGreeksHistory';
 import { RiskEscalationEvent } from './RiskEscalationEvent';
@@ -114,6 +119,7 @@ const adaptic = {
   asset: Asset,
   auditLog: AuditLog,
   authenticator: Authenticator,
+  brokerageAccount: BrokerageAccount,
   configuration: Configuration,
   conflictEvent: ConflictEvent,
   connectionHealthSnapshot: ConnectionHealthSnapshot,
@@ -125,6 +131,8 @@ const adaptic = {
   event: Event,
   eventSnapshot: EventSnapshot,
   featureImportanceAnalysis: FeatureImportanceAnalysis,
+  fund: Fund,
+  fundAssignment: FundAssignment,
   institutionalFlowSignal: InstitutionalFlowSignal,
   institutionalHolding: InstitutionalHolding,
   institutionalSentimentAlerts: InstitutionalSentimentAlerts,
@@ -147,6 +155,8 @@ const adaptic = {
   optionsPosition: OptionsPosition,
   optionsPositionEvent: OptionsPositionEvent,
   optionsTradeExecution: OptionsTradeExecution,
+  orgMembership: OrgMembership,
+  organization: Organization,
   policyOverlay: PolicyOverlay,
   portfolioGreeksHistory: PortfolioGreeksHistory,
   riskEscalationEvent: RiskEscalationEvent,
