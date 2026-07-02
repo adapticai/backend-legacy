@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - stable-release
+      - platform-alignment
 
 jobs:
   publish:
@@ -23,9 +24,15 @@ jobs:
           if [ "$BRANCH" = "stable-release" ]; then
             echo "npm_tag=stable" >> $GITHUB_OUTPUT
             echo "is_stable=true" >> $GITHUB_OUTPUT
+            echo "is_alignment=false" >> $GITHUB_OUTPUT
+          elif [ "$BRANCH" = "platform-alignment" ]; then
+            echo "npm_tag=alignment" >> $GITHUB_OUTPUT
+            echo "is_stable=false" >> $GITHUB_OUTPUT
+            echo "is_alignment=true" >> $GITHUB_OUTPUT
           else
             echo "npm_tag=latest" >> $GITHUB_OUTPUT
             echo "is_stable=false" >> $GITHUB_OUTPUT
+            echo "is_alignment=false" >> $GITHUB_OUTPUT
           fi
           echo "branch=$BRANCH" >> $GITHUB_OUTPUT
           echo "Release channel: branch=$BRANCH"
@@ -119,8 +126,16 @@ jobs:
         if: steps.should_publish.outputs.should_publish == 'true'
         env:
           IS_STABLE: ${{ steps.channel.outputs.is_stable }}
+          IS_ALIGNMENT: ${{ steps.channel.outputs.is_alignment }}
         run: |
-          if [ "$IS_STABLE" = "true" ]; then
+          if [ "$IS_ALIGNMENT" = "true" ]; then
+            # Alignment channel: prerelease derived from the stable base so it
+            # never collides with (and always sorts below) the next stable patch.
+            STABLE_VERSION=$(npm view "$PACKAGE_NAME" dist-tags.stable 2>/dev/null || echo "0.0.900")
+            PATCH=$(echo "$STABLE_VERSION" | cut -d'.' -f3)
+            NEW_VERSION="0.0.$((PATCH + 1))-alignment.${GITHUB_RUN_NUMBER}"
+            echo "Alignment prerelease version: $NEW_VERSION (stable base $STABLE_VERSION)"
+          elif [ "$IS_STABLE" = "true" ]; then
             # Stable channel: derive version from latest stable-tagged npm release
             STABLE_VERSION=$(npm view "$PACKAGE_NAME" dist-tags.stable 2>/dev/null || echo "")
             if [ -z "$STABLE_VERSION" ]; then
