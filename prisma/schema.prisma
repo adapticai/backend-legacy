@@ -1131,6 +1131,15 @@ model User {
   /// URL to the user's profile image.
   image String?
 
+  /// URL to the user's avatar image used by the OS client (user-uploaded, distinct from the OAuth-sourced image). TYPESTRING.SKIP=true
+  avatarUrl String?
+
+  /// Whether the user has completed the OS-client onboarding flow. TYPESTRING.SKIP=true
+  onboardingComplete Boolean @default(false)
+
+  /// Signup category chosen at onboarding ('investor' | 'fund_operator' | 'family_office' | 'independent_professional'); lowercase String to match the platform contract. TYPESTRING.SKIP=true
+  signupCategory String?
+
   /// Timestamp when the user account was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -1190,6 +1199,24 @@ model User {
 
   /// Per-user LLM provider and model configuration. TYPESTRING.SKIP=true GQL.SKIP=true
   llmConfiguration LlmConfiguration?
+
+  /// Organization memberships held by this user (org → fund tenancy layer). TYPESTRING.SKIP=true GQL.SKIP=true
+  orgMemberships OrgMembership[]
+
+  /// Fund assignments held by this user (org → fund tenancy layer). TYPESTRING.SKIP=true GQL.SKIP=true
+  fundAssignments FundAssignment[]
+
+  /// Funds this user manages. TYPESTRING.SKIP=true GQL.SKIP=true
+  managedFunds Fund[] @relation("FundManager")
+
+  /// Funds this user operates. TYPESTRING.SKIP=true GQL.SKIP=true
+  operatedFunds Fund[] @relation("FundOperator")
+
+  /// Notification deliveries addressed to this user. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationDeliveries NotificationDelivery[]
+
+  /// Notification preferences set by this user. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationPreferences NotificationPreference[]
 
   @@index([customerId])
   @@map(name: "users")
@@ -1454,6 +1481,9 @@ model AlpacaAccount {
 
   /// Risk FSM state-transition audit log for this Alpaca account. TYPESTRING.SKIP=true GQL.SKIP=true
   riskEscalationEvents     RiskEscalationEvent[]
+
+  /// Fund-layer BrokerageAccount bridged to this engine account via BrokerageAccount.engineAccountId (SP2 org → fund tenancy). TYPESTRING.SKIP=true GQL.SKIP=true
+  brokerageAccount BrokerageAccount?
 
   @@index([userId])
   @@map(name: "alpaca_accounts")
@@ -5490,4 +5520,610 @@ model RiskEscalationEvent {
   @@index([reason, severity, createdAt])
   @@index([correlationId])
   @@index([triggeredByPolicyOverlayId])
+}
+
+// ============================================================================
+// Organization → Fund → BrokerageAccount tenancy layer (SP2-A, 2026-07-02).
+// Strictly additive over the canonical User → AlpacaAccount ownership chain:
+// AlpacaAccount and TradingPolicy remain untouched and canonical, and the
+// engine keeps consuming them unchanged via adaptic.* on the 0.0.x lineage.
+// BrokerageAccount bridges to the engine via engineAccountId; for ALPACA
+// accounts the backfill invariant is id = engineAccountId = alpaca_accounts.id.
+// ============================================================================
+
+// Brokerage provider backing a fund-owned BrokerageAccount.
+enum BrokerageProvider {
+  /// Alpaca Markets — the only provider bridged to the engine today.
+  ALPACA
+
+  /// Interactive Brokers — reserved for engine multi-broker support.
+  IBKR
+
+  /// Coinbase — reserved for engine multi-broker crypto support.
+  COINBASE
+}
+
+// Environment type of a brokerage account (value-compatible with AlpacaAccountType).
+enum BrokerageAccountType {
+  /// A simulated trading account for testing strategies without real money.
+  PAPER
+
+  /// A live trading account with real funds.
+  LIVE
+}
+
+// Lifecycle status of a Fund. Values mirror the platform FundStatus contract
+// (platform packages/database/src/types/fund.ts); operative traffic filters on ACTIVE.
+enum FundStatus {
+  /// Initial setup phase.
+  DRAFT
+
+  /// Awaiting regulatory approval.
+  PENDING_APPROVAL
+
+  /// Approved and active.
+  ACTIVE
+
+  /// Temporarily suspended.
+  SUSPENDED
+
+  /// In liquidation process.
+  LIQUIDATING
+
+  /// Fully liquidated and closed.
+  CLOSED
+}
+
+// Role a user holds within an Organization. The platform's org-level RBAC
+// lives here (OrgMembership.role), NOT in UserRole — do not extend UserRole.
+enum OrgRole {
+  /// Full control of the organization, including deletion and billing.
+  OWNER
+
+  /// Administrative control short of ownership transfer/deletion.
+  ADMIN
+
+  /// Manages portfolios and trading for the organization's funds.
+  PORTFOLIO_MANAGER
+
+  /// Oversees regulatory compliance for the organization.
+  COMPLIANCE_OFFICER
+
+  /// Handles KYC/AML verification workflows.
+  KYC_AML_OFFICER
+
+  /// Read-only audit access across the organization.
+  AUDITOR
+
+  /// Baseline membership with no elevated permissions.
+  MEMBER
+}
+
+// Role a user holds within a specific Fund (FundAssignment.role). Superset of
+// the platform FundRole contract and the 2026-03-10 fund-centric design roles.
+enum FundRole {
+  /// Full control over the fund: trading, configuration, investor management.
+  MANAGER
+
+  /// Executes trades within the fund's policy limits.
+  TRADER
+
+  /// Read-only access to fund data, positions, and analytics.
+  ANALYST
+
+  /// Compliance oversight scoped to this fund.
+  COMPLIANCE
+
+  /// Read-only audit access scoped to this fund.
+  AUDITOR
+
+  /// Read-only access to fund summary and NAV.
+  VIEWER
+
+  /// Investor-facing access: holdings, NAV, documents.
+  INVESTOR
+}
+
+// Top-level tenancy unit that owns funds. Users belong to organizations via OrgMembership.
+model Organization {
+  /// Unique identifier for the organization. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Organization display name.
+  name String
+
+  /// URL-safe unique slug identifying the organization.
+  slug String @unique
+
+  /// URL of the organization's logo image. TYPESTRING.SKIP=true
+  logoUrl String?
+
+  /// The organization's website URL. TYPESTRING.SKIP=true
+  website String?
+
+  /// Business structure ('fund_operator' | 'family_office'); lowercase String to match the platform contract.
+  businessType String?
+
+  /// Email domains associated with this organization for domain-based member matching. TYPESTRING.SKIP=true
+  emailDomains String[] @default([])
+
+  /// Jurisdiction country code (ISO 3166-1 alpha-2).
+  jurisdiction String?
+
+  /// Regulatory registration status ('registered' | 'exempt' | 'pending_registration' | 'not_applicable'); lowercase String to match the platform contract.
+  regulatoryStatus String?
+
+  /// Brief description of the organization.
+  description String?
+
+  /// Default trading settings applied to all funds in this organization (JSON; per-fund overrides live in Fund.tradingOverrides). TYPESTRING.SKIP=true
+  tradingDefaults Json?
+
+  /// Memberships linking users to this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
+  members OrgMembership[]
+
+  /// Funds owned by this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
+  funds Fund[]
+
+  /// Notification events scoped to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationEvents NotificationEvent[]
+
+  /// Timestamp when the organization was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the organization was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the organization was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@map(name: "organizations")
+}
+
+// Links a user to an organization with an org-level role and granular permissions.
+model OrgMembership {
+  /// Unique identifier for the membership. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Organization. TYPESTRING.SKIP=true
+  organizationId String @db.Uuid
+
+  /// Relation to the Organization model. TYPESTRING.INCLUDE=['id','name','slug'] GQL.EXCLUDE=['members','funds']
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
+  userId String @db.Uuid
+
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email','image']
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Role the user holds within the organization.
+  role OrgRole @default(MEMBER)
+
+  /// Granular permissions granted to this member. TYPESTRING.SKIP=true
+  permissions String[] @default([])
+
+  /// Timestamp when the membership was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the membership was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([organizationId, userId])
+  @@index([userId])
+  @@map(name: "org_memberships")
+}
+
+// A fund owned by an organization. Owns brokerage accounts and carries the
+// per-fund trading overrides merged over Organization.tradingDefaults.
+model Fund {
+  /// Unique identifier for the fund. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Fund display name.
+  name String
+
+  /// URL-safe slug, unique within the owning organization.
+  slug String
+
+  /// Brief description of the fund.
+  description String?
+
+  /// Lifecycle status of the fund.
+  status FundStatus @default(DRAFT)
+
+  /// Base currency of the fund (ISO 4217 code).
+  currency String @default("USD")
+
+  /// Foreign key referencing the owning Organization. TYPESTRING.SKIP=true
+  organizationId String @db.Uuid
+
+  /// Relation to the owning Organization. TYPESTRING.INCLUDE=['id','name','slug'] GQL.INCLUDE=['id','name','slug']
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the managing User. TYPESTRING.SKIP=true
+  managerId String? @db.Uuid
+
+  /// Relation to the User who manages this fund. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','email']
+  manager User? @relation("FundManager", fields: [managerId], references: [id], onDelete: SetNull)
+
+  /// Foreign key referencing the operating User. TYPESTRING.SKIP=true
+  operatorId String? @db.Uuid
+
+  /// Relation to the User who operates this fund. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','email']
+  operator User? @relation("FundOperator", fields: [operatorId], references: [id], onDelete: SetNull)
+
+  /// Date the fund began operations.
+  inceptionDate DateTime?
+
+  /// Assets under management in the fund's base currency.
+  aum Float @default(0)
+
+  /// Net asset value per share/unit.
+  navPerShare Float @default(1)
+
+  /// Total shares/units outstanding.
+  sharesOutstanding Float @default(0)
+
+  /// High-water-mark NAV used for performance-fee calculation.
+  highWaterMarkNav Float?
+
+  /// Fee structure (management/performance fees; JSON). TYPESTRING.SKIP=true
+  fees Json?
+
+  /// Fund terms (lockup, redemption windows, minimums; JSON). TYPESTRING.SKIP=true
+  terms Json?
+
+  /// Regulatory metadata (jurisdiction, exemptions, sharia compliance; JSON). TYPESTRING.SKIP=true
+  regulatory Json?
+
+  /// Service providers (administrator, custodian, auditor; JSON). TYPESTRING.SKIP=true
+  serviceProviders Json?
+
+  /// Per-fund overrides of Organization.tradingDefaults (JSON). TYPESTRING.SKIP=true
+  tradingOverrides Json?
+
+  /// Brokerage accounts owned by this fund. TYPESTRING.SKIP=true GQL.EXCLUDE=['fund']
+  brokerageAccounts BrokerageAccount[]
+
+  /// User assignments for this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  assignments FundAssignment[]
+
+  /// Notification events scoped to this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationEvents NotificationEvent[]
+
+  /// Timestamp when the fund was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the fund was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the fund was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@unique([organizationId, slug])
+  @@index([organizationId])
+  @@index([status])
+  @@map(name: "funds")
+}
+
+// Links a user to a fund with a fund-level role and granular permissions.
+model FundAssignment {
+  /// Unique identifier for the assignment. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
+  fundId String @db.Uuid
+
+  /// Relation to the Fund model. TYPESTRING.INCLUDE=['id','name','slug'] GQL.INCLUDE=['id','name','slug','status','organizationId']
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
+  userId String @db.Uuid
+
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email','image']
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Role the user holds within this fund.
+  role FundRole @default(VIEWER)
+
+  /// Granular permissions granted for this fund. TYPESTRING.SKIP=true
+  permissions String[] @default([])
+
+  /// Timestamp when the assignment was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the assignment was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([fundId, userId])
+  @@index([userId])
+  @@map(name: "fund_assignments")
+}
+
+// Fund-owned brokerage account: the platform-facing account entity. For
+// ALPACA accounts it bridges 1:1 to the engine-canonical AlpacaAccount via
+// engineAccountId (backfill invariant: id = engineAccountId). The policy
+// columns mirror AlpacaAccount defaults for the platform policy editor;
+// TradingPolicy remains canonical for the engine during the SP2 transition.
+model BrokerageAccount {
+  /// Unique identifier. For ALPACA accounts this equals engineAccountId (= alpaca_accounts.id) by the backfill invariant. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Brokerage provider backing this account.
+  provider BrokerageProvider @default(ALPACA)
+
+  /// Account environment (paper or live).
+  type BrokerageAccountType @default(PAPER)
+
+  /// Human-friendly display label for the account.
+  label String?
+
+  /// Foreign key referencing the owning Fund. TYPESTRING.SKIP=true
+  fundId String @db.Uuid
+
+  /// Relation to the owning Fund. TYPESTRING.INCLUDE=['id','name','slug'] GQL.INCLUDE=['id','name','slug','organizationId']
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Engine-side AlpacaAccount id this account is bridged to (the WS-scoping id). Null for non-ALPACA providers until engine multi-broker support lands. TYPESTRING.SKIP=true
+  engineAccountId String? @unique @db.Uuid
+
+  /// Relation to the engine-canonical AlpacaAccount. Never exposed through generated selection sets. TYPESTRING.SKIP=true GQL.SKIP=true
+  engineAccount AlpacaAccount? @relation(fields: [engineAccountId], references: [id], onDelete: SetNull)
+
+  /// Provider API key. Never exposed through generated selection sets. TYPESTRING.SKIP=true GQL.SKIP=true
+  apiKey String?
+
+  /// Provider API secret. Never exposed through generated selection sets. TYPESTRING.SKIP=true GQL.SKIP=true
+  apiSecret String?
+
+  /// Provider-specific configuration (JSON). TYPESTRING.SKIP=true
+  configuration Json?
+
+  /// Opt-in for preparing orders for the next trading day. TYPESTRING.SKIP=true
+  marketOpen Boolean @default(false)
+
+  /// Opt-in for connecting to real-time monitoring and trading. TYPESTRING.SKIP=true
+  realTime Boolean @default(false)
+
+  /// Whether the system should automatically determine allocation percentages based on market conditions. TYPESTRING.SKIP=true
+  autoAllocation Boolean @default(true)
+
+  /// Minimum percentage change (from intraday high/low) to consider for a trade signal. TYPESTRING.SKIP=true
+  minPercentageChange Float @default(0.5)
+
+  /// Volume threshold for a trade signal (minimum volume qualifier to consider an asset for trading). TYPESTRING.SKIP=true
+  volumeThreshold Float @default(50000)
+
+  /// List of crypto trading pairs available for the account. TYPESTRING.SKIP=true
+  cryptoTradingPairs String[] @default([])
+
+  /// Opt-in for the portfolio-level trailing stop service. Platform-facing mirror; engine reads TradingPolicy.enablePortfolioTrailingStop. TYPESTRING.SKIP=true
+  enablePortfolioTrailingStop Boolean @default(false)
+
+  /// Portfolio-level trailing stop percentage. Platform-facing mirror; engine reads TradingPolicy.portfolioTrailPercent. TYPESTRING.SKIP=true
+  portfolioTrailPercent Float @default(4.0)
+
+  /// Portfolio-level profit threshold percentage. Platform-facing mirror; engine reads TradingPolicy.portfolioProfitThresholdPercent. TYPESTRING.SKIP=true
+  portfolioProfitThresholdPercent Float @default(2.0)
+
+  /// Reduced portfolio trailing stop percentage once the profit threshold is exceeded. Platform-facing mirror; engine reads TradingPolicy.reducedPortfolioTrailPercent. TYPESTRING.SKIP=true
+  reducedPortfolioTrailPercent Float @default(0.5)
+
+  /// Initial position trailing stop percentage. Platform-facing mirror; engine reads TradingPolicy.defaultTrailingStopPercentage100. TYPESTRING.SKIP=true
+  defaultTrailingStopPercentage100 Float @default(4.0)
+
+  /// First profit threshold at which the position trailing stop is reduced. Platform-facing mirror; engine reads TradingPolicy.firstTrailReductionThreshold100. TYPESTRING.SKIP=true
+  firstTrailReductionThreshold100 Float @default(2.0)
+
+  /// Second profit threshold at which the position trailing stop is further reduced. Platform-facing mirror; engine reads TradingPolicy.secondTrailReductionThreshold100. TYPESTRING.SKIP=true
+  secondTrailReductionThreshold100 Float @default(5.0)
+
+  /// Trailing stop percentage used beyond the first threshold. Platform-facing mirror; engine reads TradingPolicy.firstReducedTrailPercentage100. TYPESTRING.SKIP=true
+  firstReducedTrailPercentage100 Float @default(1.0)
+
+  /// Trailing stop percentage used beyond the second threshold. Platform-facing mirror; engine reads TradingPolicy.secondReducedTrailPercentage100. TYPESTRING.SKIP=true
+  secondReducedTrailPercentage100 Float @default(0.5)
+
+  /// Minimum change in trailing stop percent to warrant an adjustment. Platform-facing mirror; engine reads TradingPolicy.minimumPriceChangePercent100. TYPESTRING.SKIP=true
+  minimumPriceChangePercent100 Float @default(0.5)
+
+  /// Timestamp when the brokerage account was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the brokerage account was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the brokerage account was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@index([fundId])
+  @@map(name: "brokerage_accounts")
+}
+
+// ============================================================================
+// Notification pipeline (SP3 W4-N, 2026-07-02).
+// System-of-record models for the triggered email/push/in-app pipeline:
+// trigger source → durable NotificationEvent → platform dispatcher
+// (audience resolution + NotificationPreference) → renderer/provider adapter →
+// NotificationDelivery audit rows. Strictly additive. Catalog channel defaults
+// and `always:true` locks are resolved in the dispatcher service layer at
+// dispatch time from the 88-entry notification catalog — they are intentionally
+// NOT materialised as preference rows here.
+// ============================================================================
+
+// Delivery channel for a notification (mirrors the catalog's email/push/inapp channel set).
+enum NotificationChannel {
+  /// Rendered email sent through the platform provider adapter (Resend primary).
+  EMAIL
+
+  /// Native/web push notification.
+  PUSH
+
+  /// In-app notification-feed entry (bell / Notification Center).
+  IN_APP
+}
+
+// Lifecycle status of a single recipient×channel notification delivery.
+enum NotificationDeliveryStatus {
+  /// Fan-out row created; not yet handed to a provider.
+  PENDING
+
+  /// Accepted by the provider (or written to the in-app feed).
+  SENT
+
+  /// Provider confirmed delivery (e.g. Resend/SES delivery webhook).
+  DELIVERED
+
+  /// Provider reported a hard bounce.
+  BOUNCED
+
+  /// Dispatcher or provider failed permanently after retries.
+  FAILED
+
+  /// Suppressed before send (preference opt-out, suppression list, or policy).
+  SUPPRESSED
+}
+
+// Durable, idempotent record of a notification-worthy domain event. Written by
+// trigger sources (engine via adaptic.*, platform actions, schedulers, billing
+// webhooks); consumed by the platform dispatcher, which fans out one
+// NotificationDelivery per recipient×channel. Rows are append-only.
+model NotificationEvent {
+  /// Unique identifier for the notification event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Notification-catalog event id this event instantiates (e.g. 'risk_limit_breach'). Not a foreign key — the 88-entry catalog lives in platform code.
+  eventId String
+
+  /// Foreign key referencing the scoping Organization, when the event is org-scoped. TYPESTRING.SKIP=true
+  orgId String? @db.Uuid
+
+  /// Relation to the scoping Organization. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','slug']
+  organization Organization? @relation(fields: [orgId], references: [id], onDelete: SetNull)
+
+  /// Foreign key referencing the scoping Fund, when the event is fund-scoped. TYPESTRING.SKIP=true
+  fundId String? @db.Uuid
+
+  /// Relation to the scoping Fund. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','slug']
+  fund Fund? @relation(fields: [fundId], references: [id], onDelete: SetNull)
+
+  /// ID of the user whose action produced the event, when user-initiated. Plain scalar (no relation) per the AuditLog.userId convention so event rows survive user deletion. TYPESTRING.SKIP=true
+  actorUserId String? @db.Uuid
+
+  /// Template payload for the catalog event (typed per eventId in the platform spec registry; JSON).
+  payload Json
+
+  /// Producer-supplied idempotency key; the UNIQUE constraint makes event writes exactly-once under trigger retries. TYPESTRING.SKIP=true
+  idempotencyKey String @unique
+
+  /// Trigger source that produced the event ('engine' | 'platform' | 'scheduler' | 'billing'); lowercase String to match the platform contract.
+  source String
+
+  /// Deliveries fanned out from this event. TYPESTRING.SKIP=true GQL.SKIP=true
+  deliveries NotificationDelivery[]
+
+  /// Timestamp when the event was recorded. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@index([eventId, createdAt])
+  @@index([orgId])
+  @@index([fundId])
+  @@map(name: "notification_events")
+}
+
+// SOC2 delivery-audit record: one row per recipient×channel fan-out of a
+// NotificationEvent, updated by the dispatcher and provider delivery webhooks
+// (delivered/bounced/complained). Together with AuditLog this is the evidence
+// trail proving what was sent, to whom, with which template version.
+model NotificationDelivery {
+  /// Unique identifier for the delivery. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the NotificationEvent this delivery fans out from. TYPESTRING.SKIP=true
+  eventId String @db.Uuid
+
+  /// Relation to the source NotificationEvent. TYPESTRING.INCLUDE=['id','eventId','source'] GQL.INCLUDE=['id','eventId','payload','source','createdAt']
+  event NotificationEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the recipient User. TYPESTRING.SKIP=true
+  recipientUserId String @db.Uuid
+
+  /// Relation to the recipient User. Cascade keeps erasure complete when a user row is hard-deleted (users are soft-deleted in normal operation). TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email']
+  recipient User @relation(fields: [recipientUserId], references: [id], onDelete: Cascade)
+
+  /// Channel this delivery targets.
+  channel NotificationChannel
+
+  /// Template id used to render the notification (catalog id; equals event.eventId unless a variant was selected).
+  templateId String
+
+  /// Version of the template at render time (SOC2: proves exactly what was rendered and sent).
+  templateVersion String
+
+  /// Delivery provider selected by the dispatcher ('resend' | 'ses' | 'apns' | 'fcm' | 'inapp'); lowercase String, null until dispatch.
+  provider String?
+
+  /// Provider-side message id used to correlate delivery/bounce webhooks. TYPESTRING.SKIP=true
+  providerMessageId String?
+
+  /// Lifecycle status of the delivery.
+  status NotificationDeliveryStatus @default(PENDING)
+
+  /// Human-readable detail for the current status (bounce reason, suppression cause, provider error). TYPESTRING.SKIP=true
+  statusDetail String?
+
+  /// Timestamp when the provider accepted the message. TYPESTRING.SKIP=true
+  sentAt DateTime?
+
+  /// Timestamp when the provider confirmed delivery. TYPESTRING.SKIP=true
+  deliveredAt DateTime?
+
+  /// Timestamp when the recipient read the notification (IN_APP feed read-state; null = unread). Dedicated column so read-state is not overloaded onto the DELIVERED delivery status; the platform feed adopts this later. TYPESTRING.SKIP=true
+  readAt DateTime?
+
+  /// Timestamp when the delivery row was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the delivery row was last updated (status transitions from dispatcher/webhooks). TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventId, recipientUserId, channel])
+  @@index([recipientUserId, createdAt])
+  @@index([status])
+  @@index([providerMessageId])
+  @@map(name: "notification_deliveries")
+}
+
+// Per-user notification preference: one row per user×catalog-event×channel
+// override. Absence of a row means the catalog channel default applies;
+// `always:true` catalog locks (required/security emails) are enforced in the
+// dispatcher service layer — a row here can never disable them.
+model NotificationPreference {
+  /// Unique identifier for the preference. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
+  userId String @db.Uuid
+
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email']
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Notification-catalog event id this preference applies to (e.g. 'risk_limit_breach').
+  eventId String
+
+  /// Channel this preference applies to.
+  channel NotificationChannel
+
+  /// Whether the user has this event×channel enabled.
+  enabled Boolean
+
+  /// Timestamp when the preference was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the preference was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, eventId, channel])
+  @@map(name: "notification_preferences")
 }

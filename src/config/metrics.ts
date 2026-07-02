@@ -102,6 +102,20 @@ export const activeWebSocketConnections = new Gauge({
   registers: [metricsRegistry],
 });
 
+/**
+ * Counts row-level tenancy-scoping decisions for user-scoped principals.
+ * Labelled by `mode` (off/shadow/enforce), the governed `model`, the resolver
+ * `operation` field, and the `decision` (allow/restrict/deny). In `shadow` mode
+ * a non-`allow` decision is the signal proving whether flipping to `enforce`
+ * would catch any legitimate platform or engine query.
+ */
+export const tenancyScopingDecisionsTotal = new Counter({
+  name: 'tenancy_scoping_decisions_total',
+  help: 'Row-level tenancy-scoping decisions by mode, model, operation, and decision',
+  labelNames: ['mode', 'model', 'operation', 'decision'] as const,
+  registers: [metricsRegistry],
+});
+
 // ---------------------------------------------------------------------------
 // Application metrics
 // ---------------------------------------------------------------------------

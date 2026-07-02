@@ -278,6 +278,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -438,6 +441,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -672,6 +721,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -794,6 +846,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -1213,6 +1311,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -1335,6 +1436,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -2333,6 +2480,15 @@ import { logger } from './utils/logger';
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? {
                 set: props.tradingPolicy.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? {
                 set: props.tradingPolicy.alpacaAccount.user.deletedAt
               } : undefined,
@@ -2363,6 +2519,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -2754,6 +2913,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+      typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: props.tradingPolicy.alpacaAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.type : undefined,
@@ -2824,6 +3105,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -2984,6 +3268,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -3158,6 +3488,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -3318,6 +3651,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -3930,6 +4309,15 @@ import { logger } from './utils/logger';
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? {
                 set: props.riskEscalationEvent.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? {
                 set: props.riskEscalationEvent.alpacaAccount.user.deletedAt
               } : undefined,
@@ -3960,6 +4348,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -4258,6 +4649,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+      typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: props.riskEscalationEvent.alpacaAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.type : undefined,
@@ -4435,6 +4948,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -4557,6 +5073,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -5441,6 +6003,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -5563,6 +6128,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -6357,6 +6968,15 @@ import { logger } from './utils/logger';
             image: item.alpacaAccount.user.image !== undefined ? {
                 set: item.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: item.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: item.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? {
+                set: item.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? {
                 set: item.alpacaAccount.user.deletedAt
               } : undefined,
@@ -6387,6 +7007,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -6685,6 +7308,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+      typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: item.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
@@ -6862,6 +7607,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -6984,6 +7732,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -7865,6 +8659,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -7987,6 +8784,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -8549,6 +9392,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -8709,6 +9555,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -8943,6 +9835,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -9065,6 +9960,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -9484,6 +10425,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -9606,6 +10550,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -10278,6 +11268,15 @@ import { logger } from './utils/logger';
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? {
                 set: props.tradingPolicy.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? {
                 set: props.tradingPolicy.alpacaAccount.user.deletedAt
               } : undefined,
@@ -10308,6 +11307,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -10699,6 +11701,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+      typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: props.tradingPolicy.alpacaAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.type : undefined,
@@ -10769,6 +11893,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -10929,6 +12056,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -11103,6 +12276,9 @@ import { logger } from './utils/logger';
             email: props.tradingPolicy.alpacaAccount.user.email !== undefined ? props.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: props.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? props.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: props.tradingPolicy.alpacaAccount.user.image !== undefined ? props.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: props.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? props.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? props.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? props.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: props.tradingPolicy.alpacaAccount.user.role !== undefined ? props.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: props.tradingPolicy.alpacaAccount.user.bio !== undefined ? props.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -11263,6 +12439,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof props.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -11875,6 +13097,15 @@ import { logger } from './utils/logger';
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? {
                 set: props.riskEscalationEvent.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? {
                 set: props.riskEscalationEvent.alpacaAccount.user.deletedAt
               } : undefined,
@@ -11905,6 +13136,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -12203,6 +13437,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+      typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: props.riskEscalationEvent.alpacaAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.type : undefined,
@@ -12380,6 +13736,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -12502,6 +13861,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -13386,6 +14791,9 @@ import { logger } from './utils/logger';
             email: props.riskEscalationEvent.alpacaAccount.user.email !== undefined ? props.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: props.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? props.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: props.riskEscalationEvent.alpacaAccount.user.image !== undefined ? props.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: props.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? props.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: props.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? props.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: props.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? props.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: props.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: props.riskEscalationEvent.alpacaAccount.user.role !== undefined ? props.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: props.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? props.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -13508,6 +14916,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: props.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof props.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(props.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: props.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: props.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: props.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: props.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -14302,6 +15756,15 @@ import { logger } from './utils/logger';
             image: item.alpacaAccount.user.image !== undefined ? {
                 set: item.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: item.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: item.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? {
+                set: item.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? {
                 set: item.alpacaAccount.user.deletedAt
               } : undefined,
@@ -14332,6 +15795,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -14630,6 +16096,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+      typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: item.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
@@ -14807,6 +16395,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -14929,6 +16520,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -15810,6 +17447,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -15932,6 +17572,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -16767,6 +18453,15 @@ import { logger } from './utils/logger';
             image: prop.tradingPolicy.alpacaAccount.user.image !== undefined ? {
                 set: prop.tradingPolicy.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: prop.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: prop.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: prop.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: prop.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? {
                 set: prop.tradingPolicy.alpacaAccount.user.deletedAt
               } : undefined,
@@ -16797,6 +18492,9 @@ import { logger } from './utils/logger';
             email: prop.tradingPolicy.alpacaAccount.user.email !== undefined ? prop.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: prop.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? prop.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: prop.tradingPolicy.alpacaAccount.user.image !== undefined ? prop.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: prop.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? prop.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: prop.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? prop.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: prop.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? prop.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: prop.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: prop.tradingPolicy.alpacaAccount.user.role !== undefined ? prop.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: prop.tradingPolicy.alpacaAccount.user.bio !== undefined ? prop.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -17188,6 +18886,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: prop.tradingPolicy.alpacaAccount.brokerageAccount ? 
+      typeof prop.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: prop.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: prop.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: prop.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: prop.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: prop.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: prop.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: prop.tradingPolicy.alpacaAccount.type !== undefined ? prop.tradingPolicy.alpacaAccount.type : undefined,
@@ -17258,6 +19078,9 @@ import { logger } from './utils/logger';
             email: prop.tradingPolicy.alpacaAccount.user.email !== undefined ? prop.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: prop.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? prop.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: prop.tradingPolicy.alpacaAccount.user.image !== undefined ? prop.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: prop.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? prop.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: prop.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? prop.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: prop.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? prop.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: prop.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: prop.tradingPolicy.alpacaAccount.user.role !== undefined ? prop.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: prop.tradingPolicy.alpacaAccount.user.bio !== undefined ? prop.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -17418,6 +19241,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: prop.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof prop.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: prop.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: prop.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: prop.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: prop.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -17592,6 +19461,9 @@ import { logger } from './utils/logger';
             email: prop.tradingPolicy.alpacaAccount.user.email !== undefined ? prop.tradingPolicy.alpacaAccount.user.email : undefined,
             emailVerified: prop.tradingPolicy.alpacaAccount.user.emailVerified !== undefined ? prop.tradingPolicy.alpacaAccount.user.emailVerified : undefined,
             image: prop.tradingPolicy.alpacaAccount.user.image !== undefined ? prop.tradingPolicy.alpacaAccount.user.image : undefined,
+            avatarUrl: prop.tradingPolicy.alpacaAccount.user.avatarUrl !== undefined ? prop.tradingPolicy.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: prop.tradingPolicy.alpacaAccount.user.onboardingComplete !== undefined ? prop.tradingPolicy.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: prop.tradingPolicy.alpacaAccount.user.signupCategory !== undefined ? prop.tradingPolicy.alpacaAccount.user.signupCategory : undefined,
             deletedAt: prop.tradingPolicy.alpacaAccount.user.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.user.deletedAt : undefined,
             role: prop.tradingPolicy.alpacaAccount.user.role !== undefined ? prop.tradingPolicy.alpacaAccount.user.role : undefined,
             bio: prop.tradingPolicy.alpacaAccount.user.bio !== undefined ? prop.tradingPolicy.alpacaAccount.user.bio : undefined,
@@ -17752,6 +19624,52 @@ import { logger } from './utils/logger';
             rationale: item.rationale !== undefined ? item.rationale : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: prop.tradingPolicy.alpacaAccount.brokerageAccount ? 
+        typeof prop.tradingPolicy.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount).length === 1 && Object.keys(prop.tradingPolicy.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.tradingPolicy.alpacaAccount.brokerageAccount.id !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: prop.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: prop.tradingPolicy.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: prop.tradingPolicy.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: prop.tradingPolicy.alpacaAccount.brokerageAccount.provider !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.provider : undefined,
+            type: prop.tradingPolicy.alpacaAccount.brokerageAccount.type !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.type : undefined,
+            label: prop.tradingPolicy.alpacaAccount.brokerageAccount.label !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.tradingPolicy.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -18364,6 +20282,15 @@ import { logger } from './utils/logger';
             image: prop.riskEscalationEvent.alpacaAccount.user.image !== undefined ? {
                 set: prop.riskEscalationEvent.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: prop.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: prop.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: prop.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? {
                 set: prop.riskEscalationEvent.alpacaAccount.user.deletedAt
               } : undefined,
@@ -18394,6 +20321,9 @@ import { logger } from './utils/logger';
             email: prop.riskEscalationEvent.alpacaAccount.user.email !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: prop.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: prop.riskEscalationEvent.alpacaAccount.user.image !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: prop.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: prop.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: prop.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: prop.riskEscalationEvent.alpacaAccount.user.role !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: prop.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -18692,6 +20622,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: prop.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+      typeof prop.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: prop.riskEscalationEvent.alpacaAccount.type !== undefined ? prop.riskEscalationEvent.alpacaAccount.type : undefined,
@@ -18869,6 +20921,9 @@ import { logger } from './utils/logger';
             email: prop.riskEscalationEvent.alpacaAccount.user.email !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: prop.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: prop.riskEscalationEvent.alpacaAccount.user.image !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: prop.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: prop.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: prop.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: prop.riskEscalationEvent.alpacaAccount.user.role !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: prop.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -18991,6 +21046,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: prop.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof prop.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -19875,6 +21976,9 @@ import { logger } from './utils/logger';
             email: prop.riskEscalationEvent.alpacaAccount.user.email !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.email : undefined,
             emailVerified: prop.riskEscalationEvent.alpacaAccount.user.emailVerified !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.emailVerified : undefined,
             image: prop.riskEscalationEvent.alpacaAccount.user.image !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.image : undefined,
+            avatarUrl: prop.riskEscalationEvent.alpacaAccount.user.avatarUrl !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: prop.riskEscalationEvent.alpacaAccount.user.signupCategory !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.signupCategory : undefined,
             deletedAt: prop.riskEscalationEvent.alpacaAccount.user.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.deletedAt : undefined,
             role: prop.riskEscalationEvent.alpacaAccount.user.role !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.role : undefined,
             bio: prop.riskEscalationEvent.alpacaAccount.user.bio !== undefined ? prop.riskEscalationEvent.alpacaAccount.user.bio : undefined,
@@ -19997,6 +22101,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: prop.riskEscalationEvent.alpacaAccount.brokerageAccount ? 
+        typeof prop.riskEscalationEvent.alpacaAccount.brokerageAccount === 'object' && Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount).length === 1 && Object.keys(prop.riskEscalationEvent.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.provider : undefined,
+            type: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.type : undefined,
+            label: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -20791,6 +22941,15 @@ import { logger } from './utils/logger';
             image: item.alpacaAccount.user.image !== undefined ? {
                 set: item.alpacaAccount.user.image
               } : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? {
+                set: item.alpacaAccount.user.avatarUrl
+              } : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? {
+                set: item.alpacaAccount.user.onboardingComplete
+              } : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? {
+                set: item.alpacaAccount.user.signupCategory
+              } : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? {
                 set: item.alpacaAccount.user.deletedAt
               } : undefined,
@@ -20821,6 +22980,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -21119,6 +23281,128 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+      typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && (Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id' || Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'symbol')
+? {
+      connect: {
+        id: item.alpacaAccount.brokerageAccount.id
+      }
+} : { upsert: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId
+              } : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.engineAccountId
+              } : undefined,
+          },
+          update: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.id
+              } : undefined,
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.provider
+              } : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.type
+              } : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.label
+              } : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.apiKey
+              } : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.apiSecret
+              } : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.marketOpen
+              } : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.realTime
+              } : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.autoAllocation
+              } : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.minPercentageChange
+              } : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.volumeThreshold
+              } : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs
+              } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop
+              } : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.portfolioTrailPercent
+              } : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent
+              } : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent
+              } : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100
+              } : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100
+              } : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100
+              } : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100
+              } : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100
+              } : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100
+              } : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.deletedAt
+              } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
+      } : undefined,
         },
         create: {
           type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
@@ -21296,6 +23580,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -21418,6 +23705,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
@@ -22299,6 +24632,9 @@ import { logger } from './utils/logger';
             email: item.alpacaAccount.user.email !== undefined ? item.alpacaAccount.user.email : undefined,
             emailVerified: item.alpacaAccount.user.emailVerified !== undefined ? item.alpacaAccount.user.emailVerified : undefined,
             image: item.alpacaAccount.user.image !== undefined ? item.alpacaAccount.user.image : undefined,
+            avatarUrl: item.alpacaAccount.user.avatarUrl !== undefined ? item.alpacaAccount.user.avatarUrl : undefined,
+            onboardingComplete: item.alpacaAccount.user.onboardingComplete !== undefined ? item.alpacaAccount.user.onboardingComplete : undefined,
+            signupCategory: item.alpacaAccount.user.signupCategory !== undefined ? item.alpacaAccount.user.signupCategory : undefined,
             deletedAt: item.alpacaAccount.user.deletedAt !== undefined ? item.alpacaAccount.user.deletedAt : undefined,
             role: item.alpacaAccount.user.role !== undefined ? item.alpacaAccount.user.role : undefined,
             bio: item.alpacaAccount.user.bio !== undefined ? item.alpacaAccount.user.bio : undefined,
@@ -22421,6 +24757,52 @@ import { logger } from './utils/logger';
             lastUpdatedAt: item.lastUpdatedAt !== undefined ? item.lastUpdatedAt : undefined,
           },
         }))
+      } : undefined,
+      brokerageAccount: item.alpacaAccount.brokerageAccount ? 
+        typeof item.alpacaAccount.brokerageAccount === 'object' && Object.keys(item.alpacaAccount.brokerageAccount).length === 1 && Object.keys(item.alpacaAccount.brokerageAccount)[0] === 'id'
+    ? { connect: {
+            id: item.alpacaAccount.brokerageAccount.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: item.alpacaAccount.brokerageAccount.id !== undefined ? item.alpacaAccount.brokerageAccount.id : undefined,
+            engineAccountId: item.alpacaAccount.brokerageAccount.engineAccountId !== undefined ? item.alpacaAccount.brokerageAccount.engineAccountId : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.type 
+               } : undefined,
+            fundId: item.alpacaAccount.brokerageAccount.fundId !== undefined ? {
+                equals: item.alpacaAccount.brokerageAccount.fundId 
+               } : undefined,
+          },
+          create: {
+            provider: item.alpacaAccount.brokerageAccount.provider !== undefined ? item.alpacaAccount.brokerageAccount.provider : undefined,
+            type: item.alpacaAccount.brokerageAccount.type !== undefined ? item.alpacaAccount.brokerageAccount.type : undefined,
+            label: item.alpacaAccount.brokerageAccount.label !== undefined ? item.alpacaAccount.brokerageAccount.label : undefined,
+            apiKey: item.alpacaAccount.brokerageAccount.apiKey !== undefined ? item.alpacaAccount.brokerageAccount.apiKey : undefined,
+            apiSecret: item.alpacaAccount.brokerageAccount.apiSecret !== undefined ? item.alpacaAccount.brokerageAccount.apiSecret : undefined,
+            configuration: item.alpacaAccount.brokerageAccount.configuration !== undefined ? item.alpacaAccount.brokerageAccount.configuration : undefined,
+            marketOpen: item.alpacaAccount.brokerageAccount.marketOpen !== undefined ? item.alpacaAccount.brokerageAccount.marketOpen : undefined,
+            realTime: item.alpacaAccount.brokerageAccount.realTime !== undefined ? item.alpacaAccount.brokerageAccount.realTime : undefined,
+            autoAllocation: item.alpacaAccount.brokerageAccount.autoAllocation !== undefined ? item.alpacaAccount.brokerageAccount.autoAllocation : undefined,
+            minPercentageChange: item.alpacaAccount.brokerageAccount.minPercentageChange !== undefined ? item.alpacaAccount.brokerageAccount.minPercentageChange : undefined,
+            volumeThreshold: item.alpacaAccount.brokerageAccount.volumeThreshold !== undefined ? item.alpacaAccount.brokerageAccount.volumeThreshold : undefined,
+            cryptoTradingPairs: item.alpacaAccount.brokerageAccount.cryptoTradingPairs !== undefined ? {
+                set: item.alpacaAccount.brokerageAccount.cryptoTradingPairs 
+               } : undefined,
+            enablePortfolioTrailingStop: item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop !== undefined ? item.alpacaAccount.brokerageAccount.enablePortfolioTrailingStop : undefined,
+            portfolioTrailPercent: item.alpacaAccount.brokerageAccount.portfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioTrailPercent : undefined,
+            portfolioProfitThresholdPercent: item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent !== undefined ? item.alpacaAccount.brokerageAccount.portfolioProfitThresholdPercent : undefined,
+            reducedPortfolioTrailPercent: item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent !== undefined ? item.alpacaAccount.brokerageAccount.reducedPortfolioTrailPercent : undefined,
+            defaultTrailingStopPercentage100: item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.defaultTrailingStopPercentage100 : undefined,
+            firstTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.firstTrailReductionThreshold100 : undefined,
+            secondTrailReductionThreshold100: item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 !== undefined ? item.alpacaAccount.brokerageAccount.secondTrailReductionThreshold100 : undefined,
+            firstReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.firstReducedTrailPercentage100 : undefined,
+            secondReducedTrailPercentage100: item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 !== undefined ? item.alpacaAccount.brokerageAccount.secondReducedTrailPercentage100 : undefined,
+            minimumPriceChangePercent100: item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 !== undefined ? item.alpacaAccount.brokerageAccount.minimumPriceChangePercent100 : undefined,
+            deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
+          },
+        }
       } : undefined,
         },
       }
