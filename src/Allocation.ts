@@ -670,6 +670,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 &&  props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -2699,6 +2760,111 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+      Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 && props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                set: item.templateId
+              } : undefined,
+            templateVersion: item.templateVersion !== undefined ? {
+                set: item.templateVersion
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                set: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            statusDetail: item.statusDetail !== undefined ? {
+                set: item.statusDetail
+              } : undefined,
+            sentAt: item.sentAt !== undefined ? {
+                set: item.sentAt
+              } : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? {
+                set: item.deliveredAt
+              } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+      Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 && props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                set: item.eventId
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            enabled: item.enabled !== undefined ? {
+                set: item.enabled
+              } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -3074,6 +3240,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 &&  props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -4535,6 +4762,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 &&  props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -5601,6 +5889,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 &&  props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -7303,6 +7652,111 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+      Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 && props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                set: item.templateId
+              } : undefined,
+            templateVersion: item.templateVersion !== undefined ? {
+                set: item.templateVersion
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                set: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            statusDetail: item.statusDetail !== undefined ? {
+                set: item.statusDetail
+              } : undefined,
+            sentAt: item.sentAt !== undefined ? {
+                set: item.sentAt
+              } : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? {
+                set: item.deliveredAt
+              } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+      Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 && props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                set: item.eventId
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            enabled: item.enabled !== undefined ? {
+                set: item.enabled
+              } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.alpacaAccount.user.name !== undefined ? props.alpacaAccount.user.name : undefined,
@@ -7678,6 +8132,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 &&  props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -9136,6 +9651,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(props.alpacaAccount.user.notificationPreferences) && props.alpacaAccount.user.notificationPreferences.length > 0 &&  props.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -11001,6 +11577,111 @@ import { assertValidAllocation } from './validators/allocation-validator';
           },
         }))
       } : undefined,
+      notificationDeliveries: prop.alpacaAccount.user.notificationDeliveries ? 
+      Array.isArray(prop.alpacaAccount.user.notificationDeliveries) && prop.alpacaAccount.user.notificationDeliveries.length > 0 && prop.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                set: item.templateId
+              } : undefined,
+            templateVersion: item.templateVersion !== undefined ? {
+                set: item.templateVersion
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                set: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            statusDetail: item.statusDetail !== undefined ? {
+                set: item.statusDetail
+              } : undefined,
+            sentAt: item.sentAt !== undefined ? {
+                set: item.sentAt
+              } : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? {
+                set: item.deliveredAt
+              } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: prop.alpacaAccount.user.notificationPreferences ? 
+      Array.isArray(prop.alpacaAccount.user.notificationPreferences) && prop.alpacaAccount.user.notificationPreferences.length > 0 && prop.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.notificationPreferences.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                set: item.eventId
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            enabled: item.enabled !== undefined ? {
+                set: item.enabled
+              } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.alpacaAccount.user.name !== undefined ? prop.alpacaAccount.user.name : undefined,
@@ -11376,6 +12057,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: prop.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(prop.alpacaAccount.user.notificationDeliveries) && prop.alpacaAccount.user.notificationDeliveries.length > 0 &&  prop.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: prop.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(prop.alpacaAccount.user.notificationPreferences) && prop.alpacaAccount.user.notificationPreferences.length > 0 &&  prop.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -12834,6 +13576,67 @@ import { assertValidAllocation } from './validators/allocation-validator';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: prop.alpacaAccount.user.notificationDeliveries ? 
+        Array.isArray(prop.alpacaAccount.user.notificationDeliveries) && prop.alpacaAccount.user.notificationDeliveries.length > 0 &&  prop.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: prop.alpacaAccount.user.notificationPreferences ? 
+        Array.isArray(prop.alpacaAccount.user.notificationPreferences) && prop.alpacaAccount.user.notificationPreferences.length > 0 &&  prop.alpacaAccount.user.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,

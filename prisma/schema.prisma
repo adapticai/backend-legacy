@@ -1212,6 +1212,12 @@ model User {
   /// Funds this user operates. TYPESTRING.SKIP=true GQL.SKIP=true
   operatedFunds Fund[] @relation("FundOperator")
 
+  /// Notification deliveries addressed to this user. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationDeliveries NotificationDelivery[]
+
+  /// Notification preferences set by this user. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationPreferences NotificationPreference[]
+
   @@index([customerId])
   @@map(name: "users")
 }
@@ -5659,6 +5665,9 @@ model Organization {
   /// Funds owned by this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
   funds Fund[]
 
+  /// Notification events scoped to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationEvents NotificationEvent[]
+
   /// Timestamp when the organization was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -5779,6 +5788,9 @@ model Fund {
 
   /// User assignments for this fund. TYPESTRING.SKIP=true GQL.SKIP=true
   assignments FundAssignment[]
+
+  /// Notification events scoped to this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  notificationEvents NotificationEvent[]
 
   /// Timestamp when the fund was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
@@ -5927,4 +5939,187 @@ model BrokerageAccount {
 
   @@index([fundId])
   @@map(name: "brokerage_accounts")
+}
+
+// ============================================================================
+// Notification pipeline (SP3 W4-N, 2026-07-02).
+// System-of-record models for the triggered email/push/in-app pipeline:
+// trigger source → durable NotificationEvent → platform dispatcher
+// (audience resolution + NotificationPreference) → renderer/provider adapter →
+// NotificationDelivery audit rows. Strictly additive. Catalog channel defaults
+// and `always:true` locks are resolved in the dispatcher service layer at
+// dispatch time from the 88-entry notification catalog — they are intentionally
+// NOT materialised as preference rows here.
+// ============================================================================
+
+// Delivery channel for a notification (mirrors the catalog's email/push/inapp channel set).
+enum NotificationChannel {
+  /// Rendered email sent through the platform provider adapter (Resend primary).
+  EMAIL
+
+  /// Native/web push notification.
+  PUSH
+
+  /// In-app notification-feed entry (bell / Notification Center).
+  IN_APP
+}
+
+// Lifecycle status of a single recipient×channel notification delivery.
+enum NotificationDeliveryStatus {
+  /// Fan-out row created; not yet handed to a provider.
+  PENDING
+
+  /// Accepted by the provider (or written to the in-app feed).
+  SENT
+
+  /// Provider confirmed delivery (e.g. Resend/SES delivery webhook).
+  DELIVERED
+
+  /// Provider reported a hard bounce.
+  BOUNCED
+
+  /// Dispatcher or provider failed permanently after retries.
+  FAILED
+
+  /// Suppressed before send (preference opt-out, suppression list, or policy).
+  SUPPRESSED
+}
+
+// Durable, idempotent record of a notification-worthy domain event. Written by
+// trigger sources (engine via adaptic.*, platform actions, schedulers, billing
+// webhooks); consumed by the platform dispatcher, which fans out one
+// NotificationDelivery per recipient×channel. Rows are append-only.
+model NotificationEvent {
+  /// Unique identifier for the notification event. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Notification-catalog event id this event instantiates (e.g. 'risk_limit_breach'). Not a foreign key — the 88-entry catalog lives in platform code.
+  eventId String
+
+  /// Foreign key referencing the scoping Organization, when the event is org-scoped. TYPESTRING.SKIP=true
+  orgId String? @db.Uuid
+
+  /// Relation to the scoping Organization. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','slug']
+  organization Organization? @relation(fields: [orgId], references: [id], onDelete: SetNull)
+
+  /// Foreign key referencing the scoping Fund, when the event is fund-scoped. TYPESTRING.SKIP=true
+  fundId String? @db.Uuid
+
+  /// Relation to the scoping Fund. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','slug']
+  fund Fund? @relation(fields: [fundId], references: [id], onDelete: SetNull)
+
+  /// ID of the user whose action produced the event, when user-initiated. Plain scalar (no relation) per the AuditLog.userId convention so event rows survive user deletion. TYPESTRING.SKIP=true
+  actorUserId String? @db.Uuid
+
+  /// Template payload for the catalog event (typed per eventId in the platform spec registry; JSON).
+  payload Json
+
+  /// Producer-supplied idempotency key; the UNIQUE constraint makes event writes exactly-once under trigger retries. TYPESTRING.SKIP=true
+  idempotencyKey String @unique
+
+  /// Trigger source that produced the event ('engine' | 'platform' | 'scheduler' | 'billing'); lowercase String to match the platform contract.
+  source String
+
+  /// Deliveries fanned out from this event. TYPESTRING.SKIP=true GQL.SKIP=true
+  deliveries NotificationDelivery[]
+
+  /// Timestamp when the event was recorded. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@index([eventId, createdAt])
+  @@index([orgId])
+  @@index([fundId])
+  @@map(name: "notification_events")
+}
+
+// SOC2 delivery-audit record: one row per recipient×channel fan-out of a
+// NotificationEvent, updated by the dispatcher and provider delivery webhooks
+// (delivered/bounced/complained). Together with AuditLog this is the evidence
+// trail proving what was sent, to whom, with which template version.
+model NotificationDelivery {
+  /// Unique identifier for the delivery. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the NotificationEvent this delivery fans out from. TYPESTRING.SKIP=true
+  eventId String @db.Uuid
+
+  /// Relation to the source NotificationEvent. TYPESTRING.INCLUDE=['id','eventId','source'] GQL.INCLUDE=['id','eventId','payload','source','createdAt']
+  event NotificationEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the recipient User. TYPESTRING.SKIP=true
+  recipientUserId String @db.Uuid
+
+  /// Relation to the recipient User. Cascade keeps erasure complete when a user row is hard-deleted (users are soft-deleted in normal operation). TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email']
+  recipient User @relation(fields: [recipientUserId], references: [id], onDelete: Cascade)
+
+  /// Channel this delivery targets.
+  channel NotificationChannel
+
+  /// Template id used to render the notification (catalog id; equals event.eventId unless a variant was selected).
+  templateId String
+
+  /// Version of the template at render time (SOC2: proves exactly what was rendered and sent).
+  templateVersion String
+
+  /// Delivery provider selected by the dispatcher ('resend' | 'ses' | 'apns' | 'fcm' | 'inapp'); lowercase String, null until dispatch.
+  provider String?
+
+  /// Provider-side message id used to correlate delivery/bounce webhooks. TYPESTRING.SKIP=true
+  providerMessageId String?
+
+  /// Lifecycle status of the delivery.
+  status NotificationDeliveryStatus @default(PENDING)
+
+  /// Human-readable detail for the current status (bounce reason, suppression cause, provider error). TYPESTRING.SKIP=true
+  statusDetail String?
+
+  /// Timestamp when the provider accepted the message. TYPESTRING.SKIP=true
+  sentAt DateTime?
+
+  /// Timestamp when the provider confirmed delivery. TYPESTRING.SKIP=true
+  deliveredAt DateTime?
+
+  /// Timestamp when the delivery row was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the delivery row was last updated (status transitions from dispatcher/webhooks). TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@index([recipientUserId, createdAt])
+  @@index([status])
+  @@index([providerMessageId])
+  @@map(name: "notification_deliveries")
+}
+
+// Per-user notification preference: one row per user×catalog-event×channel
+// override. Absence of a row means the catalog channel default applies;
+// `always:true` catalog locks (required/security emails) are enforced in the
+// dispatcher service layer — a row here can never disable them.
+model NotificationPreference {
+  /// Unique identifier for the preference. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the User. TYPESTRING.SKIP=true
+  userId String @db.Uuid
+
+  /// Relation to the User model. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email']
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  /// Notification-catalog event id this preference applies to (e.g. 'risk_limit_breach').
+  eventId String
+
+  /// Channel this preference applies to.
+  channel NotificationChannel
+
+  /// Whether the user has this event×channel enabled.
+  enabled Boolean
+
+  /// Timestamp when the preference was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the preference was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, eventId, channel])
+  @@map(name: "notification_preferences")
 }

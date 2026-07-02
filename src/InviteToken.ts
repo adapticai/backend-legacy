@@ -505,6 +505,67 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1745,6 +1806,111 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 && props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                set: item.templateId
+              } : undefined,
+            templateVersion: item.templateVersion !== undefined ? {
+                set: item.templateVersion
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                set: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            statusDetail: item.statusDetail !== undefined ? {
+                set: item.statusDetail
+              } : undefined,
+            sentAt: item.sentAt !== undefined ? {
+                set: item.sentAt
+              } : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? {
+                set: item.deliveredAt
+              } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 && props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                set: item.eventId
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            enabled: item.enabled !== undefined ? {
+                set: item.enabled
+              } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -2139,6 +2305,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -2563,6 +2790,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -3167,6 +3455,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -4096,6 +4445,111 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 && props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                set: item.templateId
+              } : undefined,
+            templateVersion: item.templateVersion !== undefined ? {
+                set: item.templateVersion
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                set: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            statusDetail: item.statusDetail !== undefined ? {
+                set: item.statusDetail
+              } : undefined,
+            sentAt: item.sentAt !== undefined ? {
+                set: item.sentAt
+              } : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? {
+                set: item.deliveredAt
+              } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 && props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                set: item.eventId
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            enabled: item.enabled !== undefined ? {
+                set: item.enabled
+              } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -4490,6 +4944,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -4914,6 +5429,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: props.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationDeliveries) && props.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  props.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: props.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.notificationPreferences) && props.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  props.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -6003,6 +6579,111 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      notificationDeliveries: prop.waitlistEntry.reviewedBy.notificationDeliveries ? 
+      Array.isArray(prop.waitlistEntry.reviewedBy.notificationDeliveries) && prop.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 && prop.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            templateId: item.templateId !== undefined ? {
+                set: item.templateId
+              } : undefined,
+            templateVersion: item.templateVersion !== undefined ? {
+                set: item.templateVersion
+              } : undefined,
+            provider: item.provider !== undefined ? {
+                set: item.provider
+              } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                set: item.providerMessageId
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            statusDetail: item.statusDetail !== undefined ? {
+                set: item.statusDetail
+              } : undefined,
+            sentAt: item.sentAt !== undefined ? {
+                set: item.sentAt
+              } : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? {
+                set: item.deliveredAt
+              } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: prop.waitlistEntry.reviewedBy.notificationPreferences ? 
+      Array.isArray(prop.waitlistEntry.reviewedBy.notificationPreferences) && prop.waitlistEntry.reviewedBy.notificationPreferences.length > 0 && prop.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            eventId: item.eventId !== undefined ? {
+                set: item.eventId
+              } : undefined,
+            channel: item.channel !== undefined ? {
+                set: item.channel
+              } : undefined,
+            enabled: item.enabled !== undefined ? {
+                set: item.enabled
+              } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.waitlistEntry.reviewedBy.name !== undefined ? prop.waitlistEntry.reviewedBy.name : undefined,
@@ -6397,6 +7078,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: prop.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.notificationDeliveries) && prop.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  prop.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: prop.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.notificationPreferences) && prop.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  prop.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,
@@ -6821,6 +7563,67 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationDeliveries: prop.waitlistEntry.reviewedBy.notificationDeliveries ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.notificationDeliveries) && prop.waitlistEntry.reviewedBy.notificationDeliveries.length > 0 &&  prop.waitlistEntry.reviewedBy.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.notificationDeliveries.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+            recipientUserId: item.recipientUserId !== undefined ? {
+                equals: item.recipientUserId 
+               } : undefined,
+            templateId: item.templateId !== undefined ? {
+                equals: item.templateId 
+               } : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? {
+                equals: item.providerMessageId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            channel: item.channel !== undefined ? item.channel : undefined,
+            templateId: item.templateId !== undefined ? item.templateId : undefined,
+            templateVersion: item.templateVersion !== undefined ? item.templateVersion : undefined,
+            provider: item.provider !== undefined ? item.provider : undefined,
+            providerMessageId: item.providerMessageId !== undefined ? item.providerMessageId : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
+            sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
+            deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          },
+        }))
+      } : undefined,
+      notificationPreferences: prop.waitlistEntry.reviewedBy.notificationPreferences ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.notificationPreferences) && prop.waitlistEntry.reviewedBy.notificationPreferences.length > 0 &&  prop.waitlistEntry.reviewedBy.notificationPreferences.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.notificationPreferences.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId 
+               } : undefined,
+            eventId: item.eventId !== undefined ? {
+                equals: item.eventId 
+               } : undefined,
+          },
+          create: {
+            eventId: item.eventId !== undefined ? item.eventId : undefined,
+            channel: item.channel !== undefined ? item.channel : undefined,
+            enabled: item.enabled !== undefined ? item.enabled : undefined,
           },
         }))
       } : undefined,

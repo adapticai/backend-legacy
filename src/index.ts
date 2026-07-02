@@ -76,6 +76,9 @@ import { ModelVersion } from './ModelVersion';
 import { ModelVersionArtifact } from './ModelVersionArtifact';
 import { NewsArticle } from './NewsArticle';
 import { NewsArticleAssetSentiment } from './NewsArticleAssetSentiment';
+import { NotificationDelivery } from './NotificationDelivery';
+import { NotificationEvent } from './NotificationEvent';
+import { NotificationPreference } from './NotificationPreference';
 import { OptionsContract } from './OptionsContract';
 import { OptionsGreeksHistory } from './OptionsGreeksHistory';
 import { OptionsPosition } from './OptionsPosition';
@@ -150,6 +153,9 @@ const adaptic = {
   modelVersionArtifact: ModelVersionArtifact,
   newsArticle: NewsArticle,
   newsArticleAssetSentiment: NewsArticleAssetSentiment,
+  notificationDelivery: NotificationDelivery,
+  notificationEvent: NotificationEvent,
+  notificationPreference: NotificationPreference,
   optionsContract: OptionsContract,
   optionsGreeksHistory: OptionsGreeksHistory,
   optionsPosition: OptionsPosition,
