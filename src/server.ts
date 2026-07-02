@@ -24,6 +24,7 @@ import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { authMiddleware } from './middleware/auth';
 import { createAuditLogPlugin } from './middleware/audit-logger';
+import { createTenancyScopingMiddleware } from './middleware/tenancy-scoping';
 import { createHttpStatusMapperPlugin } from './plugins/http-status-mapper';
 import { createValidationPlugin } from './middleware/graphql-validation-plugin';
 import { createQueryComplexityPlugin } from './middleware/query-complexity';
@@ -112,6 +113,11 @@ const startServer = async () => {
   const schema = await buildSchema({
     resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
     validate: false,
+    // Row-level tenancy scoping (SP2-G7 / SOC2). Applies ONLY to user-scoped
+    // principals on the tenancy + notification models; service/admin principals
+    // and unauthenticated callers are bypassed in every mode. Gated by
+    // `TENANCY_SCOPING_MODE` (default `shadow`).
+    globalMiddlewares: [createTenancyScopingMiddleware()],
   });
 
   const app = express();
@@ -277,7 +283,7 @@ const startServer = async () => {
         // that requires a principal; this contract preserves the current
         // unauthenticated-public-query path until P0-001 lands.
         if (!token) {
-          return { prisma: global.prisma, req, user: null };
+          return { prisma: global.prisma, req, user: null, principal: null };
         }
 
         // Verify the bearer token through the SINGLE typed entry point. There
@@ -289,6 +295,10 @@ const startServer = async () => {
             prisma: global.prisma,
             req,
             user: principalToUser(principal),
+            // The typed principal is consumed by the tenancy-scoping middleware
+            // to distinguish user-scoped callers (scoped) from server/admin
+            // callers (never scoped).
+            principal,
           };
         } catch (e) {
           const reason =
@@ -371,7 +381,7 @@ const startServer = async () => {
         // landing in CORTEX-P0-001 will reject any subscription that requires
         // a principal. Until then, public subscriptions continue to work.
         if (!token) {
-          return { prisma: global.prisma, user: null };
+          return { prisma: global.prisma, user: null, principal: null };
         }
 
         // Verify the bearer token via the single typed entry point.
@@ -384,6 +394,7 @@ const startServer = async () => {
           return {
             prisma: global.prisma,
             user: principalToUser(principal),
+            principal,
           };
         } catch (e) {
           const reason =
