@@ -145,6 +145,11 @@ steps:
         RATE_LIMIT_MAX_UNAUTH: "1000"
         APQ_ENABLED: "true"
         APQ_MAX_CACHE_SIZE: "5000"
+        # Mutation-input validation scope. 'scoped' validates only top-level
+        # scalar input fields (Json audit columns exempt); 'legacy' restores the
+        # pre-2026-07 deep name-pattern recursion (rollback lever); 'off' kills
+        # the plugin. See src/middleware/graphql-validation-plugin.ts.
+        GRAPHQL_VALIDATION_MODE: "scoped"
         OTEL_TRACING_ENABLED: "false"
         PROMETHEUS_METRICS_ENABLED: "true"
         NODE_OPTIONS: "--max-old-space-size=12288"
