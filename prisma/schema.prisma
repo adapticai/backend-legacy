@@ -6079,12 +6079,16 @@ model NotificationDelivery {
   /// Timestamp when the provider confirmed delivery. TYPESTRING.SKIP=true
   deliveredAt DateTime?
 
+  /// Timestamp when the recipient read the notification (IN_APP feed read-state; null = unread). Dedicated column so read-state is not overloaded onto the DELIVERED delivery status; the platform feed adopts this later. TYPESTRING.SKIP=true
+  readAt DateTime?
+
   /// Timestamp when the delivery row was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
   /// Timestamp when the delivery row was last updated (status transitions from dispatcher/webhooks). TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
+  @@unique([eventId, recipientUserId, channel])
   @@index([recipientUserId, createdAt])
   @@index([status])
   @@index([providerMessageId])

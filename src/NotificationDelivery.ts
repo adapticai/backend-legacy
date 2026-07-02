@@ -23,6 +23,7 @@ import { logger } from './utils/logger';
   statusDetail
   sentAt
   deliveredAt
+  readAt
   createdAt
   updatedAt
 
@@ -81,6 +82,7 @@ import { logger } from './utils/logger';
   statusDetail: props.statusDetail !== undefined ? props.statusDetail : undefined,
   sentAt: props.sentAt !== undefined ? props.sentAt : undefined,
   deliveredAt: props.deliveredAt !== undefined ? props.deliveredAt : undefined,
+  readAt: props.readAt !== undefined ? props.readAt : undefined,
   event: props.event ? 
     typeof props.event === 'object' && Object.keys(props.event).length === 1 && Object.keys(props.event)[0] === 'id'
     ? { connect: {
@@ -1770,6 +1772,7 @@ import { logger } from './utils/logger';
   statusDetail: prop.statusDetail !== undefined ? prop.statusDetail : undefined,
   sentAt: prop.sentAt !== undefined ? prop.sentAt : undefined,
   deliveredAt: prop.deliveredAt !== undefined ? prop.deliveredAt : undefined,
+  readAt: prop.readAt !== undefined ? prop.readAt : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -1950,6 +1953,9 @@ import { logger } from './utils/logger';
            } : undefined,
   deliveredAt: props.deliveredAt !== undefined ? {
             set: props.deliveredAt 
+           } : undefined,
+  readAt: props.readAt !== undefined ? {
+            set: props.readAt 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -8115,6 +8121,7 @@ import { logger } from './utils/logger';
   statusDetail: props.statusDetail !== undefined ? props.statusDetail : undefined,
   sentAt: props.sentAt !== undefined ? props.sentAt : undefined,
   deliveredAt: props.deliveredAt !== undefined ? props.deliveredAt : undefined,
+  readAt: props.readAt !== undefined ? props.readAt : undefined,
   event: props.event ? 
     typeof props.event === 'object' && Object.keys(props.event).length === 1 && Object.keys(props.event)[0] === 'id'
     ? { connect: {
@@ -9668,6 +9675,9 @@ import { logger } from './utils/logger';
            } : undefined,
   deliveredAt: props.deliveredAt !== undefined ? {
             set: props.deliveredAt 
+           } : undefined,
+  readAt: props.readAt !== undefined ? {
+            set: props.readAt 
            } : undefined,
   event: props.event ? 
   typeof props.event === 'object' && Object.keys(props.event).length === 1 && (Object.keys(props.event)[0] === 'id' || Object.keys(props.event)[0] === 'symbol')
@@ -15833,6 +15843,9 @@ import { logger } from './utils/logger';
            } : undefined,
   deliveredAt: prop.deliveredAt !== undefined ? {
             set: prop.deliveredAt 
+           } : undefined,
+  readAt: prop.readAt !== undefined ? {
+            set: prop.readAt 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 

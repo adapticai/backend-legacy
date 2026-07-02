@@ -912,6 +912,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -3079,6 +3080,9 @@ import { logger } from './utils/logger';
             deliveredAt: item.deliveredAt !== undefined ? {
                 set: item.deliveredAt
               } : undefined,
+            readAt: item.readAt !== undefined ? {
+                set: item.readAt
+              } : undefined,
           },
           create: {
             channel: item.channel !== undefined ? item.channel : undefined,
@@ -3090,6 +3094,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -3542,6 +3547,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -4978,6 +4984,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -6108,6 +6115,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -7945,6 +7953,9 @@ import { logger } from './utils/logger';
             deliveredAt: item.deliveredAt !== undefined ? {
                 set: item.deliveredAt
               } : undefined,
+            readAt: item.readAt !== undefined ? {
+                set: item.readAt
+              } : undefined,
           },
           create: {
             channel: item.channel !== undefined ? item.channel : undefined,
@@ -7956,6 +7967,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -8408,6 +8420,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -9844,6 +9857,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -11841,6 +11855,9 @@ import { logger } from './utils/logger';
             deliveredAt: item.deliveredAt !== undefined ? {
                 set: item.deliveredAt
               } : undefined,
+            readAt: item.readAt !== undefined ? {
+                set: item.readAt
+              } : undefined,
           },
           create: {
             channel: item.channel !== undefined ? item.channel : undefined,
@@ -11852,6 +11869,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -12304,6 +12322,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,
@@ -13740,6 +13759,7 @@ import { logger } from './utils/logger';
             statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
             sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
             deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+            readAt: item.readAt !== undefined ? item.readAt : undefined,
           },
         }))
       } : undefined,

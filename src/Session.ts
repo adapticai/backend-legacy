@@ -1253,6 +1253,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -5131,6 +5132,9 @@ import { logger } from './utils/logger';
           deliveredAt: item.deliveredAt !== undefined ? {
               set: item.deliveredAt
             } : undefined,
+          readAt: item.readAt !== undefined ? {
+              set: item.readAt
+            } : undefined,
       event: item.event ? 
       typeof item.event === 'object' && Object.keys(item.event).length === 1 && (Object.keys(item.event)[0] === 'id' || Object.keys(item.event)[0] === 'symbol')
 ? {
@@ -5193,6 +5197,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -6428,6 +6433,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -7826,6 +7832,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -11390,6 +11397,9 @@ import { logger } from './utils/logger';
           deliveredAt: item.deliveredAt !== undefined ? {
               set: item.deliveredAt
             } : undefined,
+          readAt: item.readAt !== undefined ? {
+              set: item.readAt
+            } : undefined,
       event: item.event ? 
       typeof item.event === 'object' && Object.keys(item.event).length === 1 && (Object.keys(item.event)[0] === 'id' || Object.keys(item.event)[0] === 'symbol')
 ? {
@@ -11452,6 +11462,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -12687,6 +12698,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -16414,6 +16426,9 @@ import { logger } from './utils/logger';
           deliveredAt: item.deliveredAt !== undefined ? {
               set: item.deliveredAt
             } : undefined,
+          readAt: item.readAt !== undefined ? {
+              set: item.readAt
+            } : undefined,
       event: item.event ? 
       typeof item.event === 'object' && Object.keys(item.event).length === 1 && (Object.keys(item.event)[0] === 'id' || Object.keys(item.event)[0] === 'symbol')
 ? {
@@ -16476,6 +16491,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
@@ -17711,6 +17727,7 @@ import { logger } from './utils/logger';
           statusDetail: item.statusDetail !== undefined ? item.statusDetail : undefined,
           sentAt: item.sentAt !== undefined ? item.sentAt : undefined,
           deliveredAt: item.deliveredAt !== undefined ? item.deliveredAt : undefined,
+          readAt: item.readAt !== undefined ? item.readAt : undefined,
       event: item.event ? 
         typeof item.event === 'object' && Object.keys(item.event).length === 1 && Object.keys(item.event)[0] === 'id'
     ? { connect: {
