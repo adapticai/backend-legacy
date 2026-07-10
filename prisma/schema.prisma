@@ -1212,6 +1212,9 @@ model User {
   /// Funds this user operates. TYPESTRING.SKIP=true GQL.SKIP=true
   operatedFunds Fund[] @relation("FundOperator")
 
+  /// Investor profiles linked to this user for self-service portal access. TYPESTRING.SKIP=true GQL.SKIP=true
+  investorProfiles Investor[]
+
   /// Notification deliveries addressed to this user. TYPESTRING.SKIP=true GQL.SKIP=true
   notificationDeliveries NotificationDelivery[]
 
@@ -1680,6 +1683,9 @@ model Customer {
 
   /// List of users associated with the customer. TYPESTRING.INCLUDE=['id','name','email'] GQL.EXCLUDE=['customer']
   users User[]
+
+  /// Fund investors linked to this customer for KYC/AML reuse. TYPESTRING.SKIP=true GQL.SKIP=true
+  investors Investor[]
 
   @@index([authUserId])
 }
@@ -5665,6 +5671,15 @@ model Organization {
   /// Funds owned by this organization. TYPESTRING.SKIP=true GQL.EXCLUDE=['organization']
   funds Fund[]
 
+  /// Investors belonging to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
+  investors Investor[]
+
+  /// Investor-relations documents scoped to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
+  investorDocuments InvestorDocument[]
+
+  /// Investor tax documents scoped to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
+  taxDocuments TaxDocument[]
+
   /// Notification events scoped to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
   notificationEvents NotificationEvent[]
 
@@ -5788,6 +5803,18 @@ model Fund {
 
   /// User assignments for this fund. TYPESTRING.SKIP=true GQL.SKIP=true
   assignments FundAssignment[]
+
+  /// Per-investor holdings (capital accounts) in this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  holdings Holding[]
+
+  /// Investor capital-ledger transactions for this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  investorTransactions InvestorTransaction[]
+
+  /// Investor-relations documents scoped to this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  investorDocuments InvestorDocument[]
+
+  /// Investor tax documents scoped to this fund. TYPESTRING.SKIP=true GQL.SKIP=true
+  taxDocuments TaxDocument[]
 
   /// Notification events scoped to this fund. TYPESTRING.SKIP=true GQL.SKIP=true
   notificationEvents NotificationEvent[]
@@ -6127,3 +6154,548 @@ model NotificationPreference {
   @@unique([userId, eventId, channel])
   @@map(name: "notification_preferences")
 }
+
+// ============================================================================
+// Investor Relations (IR) domain
+// Investor capital accounts, per-fund holdings, capital-ledger transactions,
+// and IR / tax documents. Consumed by the engine IR REST layer and the
+// platform investor-relations surfaces.
+// ============================================================================
+
+enum InvestorType {
+  /// A single natural person.
+  INDIVIDUAL
+
+  /// A jointly-held individual account.
+  JOINT
+
+  /// A legal entity (LLC, corporation, partnership).
+  ENTITY
+
+  /// An institutional allocator (pension, endowment, fund-of-funds).
+  INSTITUTION
+
+  /// A trust vehicle.
+  TRUST
+
+  /// A tax-advantaged retirement account (IRA, 401k).
+  RETIREMENT_ACCOUNT
+}
+
+enum InvestorKycStatus {
+  /// KYC not yet started or awaiting documents.
+  PENDING
+
+  /// KYC submitted and under review.
+  REVIEW
+
+  /// KYC approved; the investor may transact.
+  APPROVED
+
+  /// KYC rejected; the investor is blocked from transacting.
+  REJECTED
+}
+
+enum InvestorStatus {
+  /// Identified but not yet onboarding.
+  PROSPECT
+
+  /// In the onboarding / subscription-agreement process.
+  ONBOARDING
+
+  /// Active investor with (or eligible for) holdings.
+  ACTIVE
+
+  /// Temporarily inactive (no active holdings, relationship retained).
+  INACTIVE
+
+  /// Fully redeemed and closed.
+  CLOSED
+}
+
+enum HoldingStatus {
+  /// The investor currently holds units in the fund.
+  ACTIVE
+
+  /// The position has been fully redeemed and closed.
+  CLOSED
+}
+
+enum InvestorTransactionType {
+  /// Capital into the fund (units issued).
+  SUBSCRIPTION
+
+  /// Capital out of the fund (units redeemed).
+  REDEMPTION
+
+  /// A drawdown notice against a committed amount.
+  CAPITAL_CALL
+
+  /// A cash distribution paid to the investor.
+  DISTRIBUTION
+
+  /// A transfer of units between investors.
+  TRANSFER
+
+  /// A fee charged to the investor (management/performance).
+  FEE
+}
+
+enum InvestorTransactionStatus {
+  /// Requested; awaiting operator review.
+  PENDING
+
+  /// Under operator review.
+  REVIEWING
+
+  /// Approved; awaiting execution at the next NAV strike.
+  APPROVED
+
+  /// Execution in progress.
+  PROCESSING
+
+  /// Executed at NAV; units issued/redeemed.
+  COMPLETED
+
+  /// Cash settled with the investor.
+  SETTLED
+
+  /// Rejected by the operator (see rejectionReason).
+  REJECTED
+
+  /// Cancelled by the investor or operator before execution.
+  CANCELLED
+
+  /// Execution failed after approval.
+  FAILED
+}
+
+enum InvestorDocumentType {
+  /// Periodic capital-account statement.
+  STATEMENT
+
+  /// Periodic investor report (quarterly/annual letter).
+  REPORT
+
+  /// Subscription agreement.
+  SUBSCRIPTION_AGREEMENT
+
+  /// Offering memorandum / private-placement memorandum.
+  OFFERING_MEMORANDUM
+
+  /// Capital-call notice.
+  CAPITAL_CALL_NOTICE
+
+  /// Distribution notice.
+  DISTRIBUTION_NOTICE
+
+  /// KYC/AML documentation.
+  KYC
+
+  /// Tax-related document (see TaxDocument for structured tax forms).
+  TAX
+
+  /// Any other investor-relations document.
+  OTHER
+}
+
+enum InvestorDocumentStatus {
+  /// Drafted but not yet published to investors.
+  DRAFT
+
+  /// Published and available to the investor.
+  AVAILABLE
+
+  /// Archived / superseded.
+  ARCHIVED
+}
+
+enum TaxDocumentType {
+  /// Schedule K-1 (partnership).
+  K1
+
+  /// Form 1099 series.
+  FORM_1099
+
+  /// Form 1042-S (foreign persons' US-source income).
+  FORM_1042S
+
+  /// Form 8949 (sales and dispositions of capital assets).
+  FORM_8949
+
+  /// Consolidated annual tax summary.
+  ANNUAL_SUMMARY
+
+  /// Any other tax document.
+  OTHER
+}
+
+enum TaxDocumentStatus {
+  /// Not yet issued (in preparation).
+  PENDING
+
+  /// Issued and available to the investor.
+  AVAILABLE
+
+  /// Amended after original issuance.
+  AMENDED
+
+  /// Superseded by a later version.
+  SUPERSEDED
+}
+
+model Investor {
+  /// Unique identifier for the investor. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the owning Organization. TYPESTRING.SKIP=true
+  organizationId String @db.Uuid
+
+  /// Relation to the owning Organization. TYPESTRING.INCLUDE=['id','name','slug'] GQL.INCLUDE=['id','name','slug']
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing a platform User for self-service access (optional). TYPESTRING.SKIP=true
+  userId String? @db.Uuid
+
+  /// Relation to the linked platform User, if the investor has portal access. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','email','image']
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  /// Foreign key referencing the KYC/AML + billing Customer (optional). TYPESTRING.SKIP=true
+  customerId Int?
+
+  /// Relation to the linked Customer for KYC/AML reuse. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','amlStatus','riskProfile','jurisdiction']
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  /// Investor legal / display name.
+  name String
+
+  /// Primary contact email.
+  email String?
+
+  /// Classification of the investor.
+  type InvestorType @default(INDIVIDUAL)
+
+  /// Lifecycle status of the investor relationship.
+  status InvestorStatus @default(ACTIVE)
+
+  /// KYC/AML verification state.
+  kycStatus InvestorKycStatus @default(PENDING)
+
+  /// Jurisdiction country code (ISO 3166-1 alpha-2).
+  jurisdiction String?
+
+  /// Date the investor was onboarded / first subscribed.
+  joinedAt DateTime?
+
+  /// External LP-register reference id (administrator/transfer-agent). TYPESTRING.SKIP=true
+  externalRef String?
+
+  /// Free-form operator notes. TYPESTRING.SKIP=true
+  notes String?
+
+  /// Per-fund holdings for this investor. TYPESTRING.SKIP=true GQL.EXCLUDE=['investor']
+  holdings Holding[]
+
+  /// Capital-ledger transactions for this investor. TYPESTRING.SKIP=true GQL.SKIP=true
+  transactions InvestorTransaction[]
+
+  /// Investor-relations documents for this investor. TYPESTRING.SKIP=true GQL.SKIP=true
+  documents InvestorDocument[]
+
+  /// Tax documents for this investor. TYPESTRING.SKIP=true GQL.SKIP=true
+  taxDocuments TaxDocument[]
+
+  /// Timestamp when the investor was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the investor was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the investor was soft-deleted. Null means active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@index([organizationId])
+  @@index([userId])
+  @@index([customerId])
+  @@index([status])
+  @@map(name: "investors")
+}
+
+model Holding {
+  /// Unique identifier for the holding. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Investor. TYPESTRING.SKIP=true
+  investorId String @db.Uuid
+
+  /// Relation to the owning Investor. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','type']
+  investor Investor @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
+  fundId String @db.Uuid
+
+  /// Relation to the Fund. TYPESTRING.INCLUDE=['id','name','currency'] GQL.INCLUDE=['id','name','slug','currency','navPerShare','status']
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Units (shares) currently held.
+  units Float @default(0)
+
+  /// Cumulative net cost basis (total contributed, net of redemptions).
+  costBasis Float @default(0)
+
+  /// Cumulative realized P/L from completed redemptions.
+  realizedPL Float @default(0)
+
+  /// Cumulative distributions paid to the investor for this holding.
+  distributionsPaid Float @default(0)
+
+  /// Base currency of the holding (ISO 4217).
+  currency String @default("USD")
+
+  /// Lifecycle status of the holding.
+  status HoldingStatus @default(ACTIVE)
+
+  /// Date of the first subscription into this holding.
+  firstInvestedAt DateTime?
+
+  /// Date of the most recent transaction affecting this holding.
+  lastTransactionAt DateTime?
+
+  /// Capital-ledger transactions affecting this holding. TYPESTRING.SKIP=true GQL.SKIP=true
+  transactions InvestorTransaction[]
+
+  /// Timestamp when the holding was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the holding was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the holding was soft-deleted. Null means active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@unique([investorId, fundId])
+  @@index([fundId])
+  @@index([investorId])
+  @@map(name: "holdings")
+}
+
+model InvestorTransaction {
+  /// Unique identifier for the transaction. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the Investor. TYPESTRING.SKIP=true
+  investorId String @db.Uuid
+
+  /// Relation to the Investor. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','type']
+  investor Investor @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Fund. TYPESTRING.SKIP=true
+  fundId String @db.Uuid
+
+  /// Relation to the Fund. TYPESTRING.INCLUDE=['id','name','currency'] GQL.INCLUDE=['id','name','currency']
+  fund Fund @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the affected Holding (optional). TYPESTRING.SKIP=true
+  holdingId String? @db.Uuid
+
+  /// Relation to the affected Holding. TYPESTRING.SKIP=true GQL.SKIP=true
+  holding Holding? @relation(fields: [holdingId], references: [id], onDelete: SetNull)
+
+  /// Type of capital transaction.
+  type InvestorTransactionType
+
+  /// Processing status of the transaction.
+  status InvestorTransactionStatus @default(PENDING)
+
+  /// Gross cash amount of the transaction.
+  amount Float?
+
+  /// Units (shares) requested.
+  units Float?
+
+  /// NAV per unit at the time of request.
+  requestNav Float?
+
+  /// NAV per unit at execution.
+  executionNav Float?
+
+  /// Units (shares) actually executed.
+  executedUnits Float?
+
+  /// Fees applied to the transaction.
+  fees Float?
+
+  /// Net cash amount after fees.
+  netAmount Float?
+
+  /// Base currency of the transaction (ISO 4217).
+  currency String @default("USD")
+
+  /// Timestamp when the transaction was requested.
+  requestedAt DateTime?
+
+  /// Timestamp when the transaction was reviewed.
+  reviewedAt DateTime?
+
+  /// Timestamp when the transaction was executed.
+  executedAt DateTime?
+
+  /// Timestamp when the transaction settled.
+  settledAt DateTime?
+
+  /// Reason the transaction was rejected, if applicable.
+  rejectionReason String?
+
+  /// Free-form notes on the transaction. TYPESTRING.SKIP=true
+  notes String?
+
+  /// External reference id (administrator/custodian). TYPESTRING.SKIP=true
+  externalRef String?
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@index([investorId])
+  @@index([fundId])
+  @@index([holdingId])
+  @@index([status])
+  @@index([type])
+  @@map(name: "investor_transactions")
+}
+
+model InvestorDocument {
+  /// Unique identifier for the document. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the owning Organization. TYPESTRING.SKIP=true
+  organizationId String @db.Uuid
+
+  /// Relation to the owning Organization. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','slug']
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Fund this document belongs to (optional). TYPESTRING.SKIP=true
+  fundId String? @db.Uuid
+
+  /// Relation to the Fund. TYPESTRING.INCLUDE=['id','name'] GQL.INCLUDE=['id','name','slug']
+  fund Fund? @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Investor this document targets (optional; null = fund-wide). TYPESTRING.SKIP=true
+  investorId String? @db.Uuid
+
+  /// Relation to the targeted Investor. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name']
+  investor Investor? @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  /// Category of the document.
+  type InvestorDocumentType
+
+  /// Availability state of the document.
+  status InvestorDocumentStatus @default(AVAILABLE)
+
+  /// Document title.
+  title String
+
+  /// Brief description of the document. TYPESTRING.SKIP=true
+  description String?
+
+  /// Publicly resolvable URL for the document (may be a signed URL).
+  url String?
+
+  /// Internal object-storage key. TYPESTRING.SKIP=true GQL.SKIP=true
+  storageKey String?
+
+  /// Document version label.
+  version String @default("1")
+
+  /// Start of the period the document covers.
+  periodStart DateTime?
+
+  /// End of the period the document covers.
+  periodEnd DateTime?
+
+  /// Effective date of the document.
+  effectiveDate DateTime?
+
+  /// Whether the investor must acknowledge this document.
+  requiresAcknowledgment Boolean @default(false)
+
+  /// Whether the document is visible to all fund investors.
+  isPublic Boolean @default(false)
+
+  /// Timestamp when the document was published.
+  publishedAt DateTime?
+
+  /// Timestamp when the document was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the document was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the document was soft-deleted. Null means active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@index([organizationId])
+  @@index([fundId])
+  @@index([investorId])
+  @@index([type])
+  @@map(name: "investor_documents")
+}
+
+model TaxDocument {
+  /// Unique identifier for the tax document. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the owning Organization. TYPESTRING.SKIP=true
+  organizationId String @db.Uuid
+
+  /// Relation to the owning Organization. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name','slug']
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Investor. TYPESTRING.SKIP=true
+  investorId String @db.Uuid
+
+  /// Relation to the Investor. TYPESTRING.SKIP=true GQL.INCLUDE=['id','name']
+  investor Investor @relation(fields: [investorId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Fund (optional). TYPESTRING.SKIP=true
+  fundId String? @db.Uuid
+
+  /// Relation to the Fund. TYPESTRING.INCLUDE=['id','name'] GQL.INCLUDE=['id','name']
+  fund Fund? @relation(fields: [fundId], references: [id], onDelete: SetNull)
+
+  /// Tax year the document covers.
+  taxYear Int
+
+  /// Category of the tax form.
+  formType TaxDocumentType
+
+  /// Availability state of the tax document.
+  status TaxDocumentStatus @default(PENDING)
+
+  /// Publicly resolvable URL for the document (may be a signed URL).
+  url String?
+
+  /// Internal object-storage key. TYPESTRING.SKIP=true GQL.SKIP=true
+  storageKey String?
+
+  /// Timestamp when the document was issued to the investor.
+  issuedAt DateTime?
+
+  /// Timestamp when the record was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the record was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the record was soft-deleted. Null means active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@index([organizationId])
+  @@index([investorId])
+  @@index([fundId])
+  @@index([taxYear])
+  @@map(name: "tax_documents")
+}
+
