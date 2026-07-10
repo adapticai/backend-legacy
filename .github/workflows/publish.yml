@@ -54,6 +54,11 @@ jobs:
 
       - name: Build npm package
         run: npm run build:package
+        env:
+          # tsc peaks >4GB compiling the full generated CRUD surface (grew with the
+          # IR domain); the default Node heap OOMs here. Railway builds via the
+          # Dockerfile (NODE_OPTIONS=--max-old-space-size=6144); match with headroom.
+          NODE_OPTIONS: --max-old-space-size=8192
 
       - name: Install dependencies in dist folder
         working-directory: dist
