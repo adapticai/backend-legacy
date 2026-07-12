@@ -1,8 +1,53 @@
-// Integration: add to server.ts - app.use('/graphql', graphqlRateLimiter) and app.use('/auth', authRateLimiter)
+// CORTEX-P0-001: mounted in server.ts as
+//   app.use('/graphql', graphqlRateLimiter)   // GraphQL surface
+//   app.use('/api', authRateLimiter)          // authenticated Express surface
+// SHADOW-FIRST: 429 enforcement is gated behind CORTEX_RATE_LIMIT_ENFORCE.
+// While OFF (default), the limiters observe + count requests that WOULD be
+// blocked but never touch the response — live behaviour is byte-identical.
 
 import { Request, Response, NextFunction } from 'express';
+import { Counter } from 'prom-client';
+import { metricsRegistry } from '../config/metrics';
+import { logger } from '../utils/logger';
+
+/**
+ * Environment variable gating 429 enforcement. When set to `true`/`1`, the
+ * limiters block over-limit requests with HTTP 429. Unset or any other value
+ * keeps them in SHADOW mode (observe + count + always proceed).
+ */
+export const CORTEX_RATE_LIMIT_ENFORCE_ENV = 'CORTEX_RATE_LIMIT_ENFORCE';
+
+/**
+ * Whether rate-limit 429 enforcement is ON. Read fresh on each request (a cheap
+ * env read) so the shadow→enforce graduation can be flipped operationally
+ * without a restart. Defaults to OFF (shadow) for any unset/unrecognised value.
+ *
+ * @param env - Environment source (defaults to `process.env`); injectable for tests.
+ * @returns `true` only when the flag is explicitly `true`/`1`.
+ */
+export function isRateLimitEnforced(
+  env: Record<string, string | undefined> = process.env
+): boolean {
+  const raw = (env[CORTEX_RATE_LIMIT_ENFORCE_ENV] ?? '').trim().toLowerCase();
+  return raw === 'true' || raw === '1';
+}
+
+/**
+ * Counts requests that rate limiting WOULD block (HTTP 429). In shadow mode this
+ * is the signal proving whether flipping `CORTEX_RATE_LIMIT_ENFORCE` to enforce
+ * would reject legitimate traffic. Labelled by the `limiter` name
+ * (`graphql`/`auth`) and the request `tier` (`auth`/`anon`).
+ */
+export const cortexRateLimitWouldBlockTotal = new Counter({
+  name: 'cortex_rate_limit_would_block_total',
+  help: 'Requests rate limiting would block (429), by limiter and tier (counted in shadow mode without blocking)',
+  labelNames: ['limiter', 'tier'] as const,
+  registers: [metricsRegistry],
+});
 
 interface RateLimitConfig {
+  /** Stable limiter identifier used as the `limiter` metric label. */
+  name: string;
   windowMs: number;
   maxAuthenticated: number;
   maxUnauthenticated: number;
@@ -68,10 +113,11 @@ function createRateLimiter(config: RateLimitConfig) {
   return (req: Request, res: Response, next: NextFunction): void => {
     const identifier = req.ip || req.connection.remoteAddress || 'unknown';
     const authenticated = isAuthenticated(req);
+    const tier = authenticated ? 'auth' : 'anon';
     const effectiveMax = authenticated
       ? config.maxAuthenticated
       : config.maxUnauthenticated;
-    const storeKey = `${identifier}:${authenticated ? 'auth' : 'anon'}`;
+    const storeKey = `${identifier}:${tier}`;
     const now = Date.now();
 
     if (!store[storeKey] || store[storeKey].resetTime < now) {
@@ -86,17 +132,39 @@ function createRateLimiter(config: RateLimitConfig) {
     const current = store[storeKey];
     const remaining = Math.max(0, effectiveMax - current.count);
     const resetSeconds = Math.ceil((current.resetTime - now) / 1000);
+    const overLimit = current.count > effectiveMax;
 
-    // Add rate limit headers
+    // SHADOW mode (default): observe + count over-limit requests but NEVER touch
+    // the response — no rate-limit headers, no 429. This keeps live behaviour
+    // byte-identical until CORTEX_RATE_LIMIT_ENFORCE is flipped on.
+    if (!isRateLimitEnforced()) {
+      if (overLimit) {
+        cortexRateLimitWouldBlockTotal.inc({ limiter: config.name, tier });
+        logger.warn('[cortex-rate-limit] shadow would-block (allowing)', {
+          limiter: config.name,
+          identifier,
+          tier,
+          count: current.count,
+          limit: effectiveMax,
+          resetSeconds,
+        });
+      }
+      next();
+      return;
+    }
+
+    // ENFORCE mode: emit the informational rate-limit headers and block
+    // over-limit requests with HTTP 429.
     if (config.standardHeaders !== false) {
       res.setHeader('X-RateLimit-Limit', effectiveMax.toString());
       res.setHeader('X-RateLimit-Remaining', remaining.toString());
       res.setHeader('X-RateLimit-Reset', resetSeconds.toString());
     }
 
-    if (current.count > effectiveMax) {
+    if (overLimit) {
       // Include Retry-After header on 429 responses (RFC 6585 / RFC 7231)
       res.setHeader('Retry-After', resetSeconds.toString());
+      cortexRateLimitWouldBlockTotal.inc({ limiter: config.name, tier });
       res.status(429).json(config.message);
       return;
     }
@@ -112,6 +180,7 @@ function createRateLimiter(config: RateLimitConfig) {
  * Unauthenticated requests: 200 requests per 15 minutes (configurable via RATE_LIMIT_MAX_UNAUTH)
  */
 export const graphqlRateLimiter = createRateLimiter({
+  name: 'graphql',
   windowMs: 15 * 60 * 1000, // 15 minutes
   maxAuthenticated: parseInt(process.env.RATE_LIMIT_MAX || '1000', 10),
   maxUnauthenticated: parseInt(process.env.RATE_LIMIT_MAX_UNAUTH || '200', 10),
@@ -129,6 +198,7 @@ export const graphqlRateLimiter = createRateLimiter({
  * Unauthenticated requests: 20 requests per 15 minutes
  */
 export const authRateLimiter = createRateLimiter({
+  name: 'auth',
   windowMs: 15 * 60 * 1000, // 15 minutes
   maxAuthenticated: 50,
   maxUnauthenticated: 20,

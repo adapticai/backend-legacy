@@ -23,8 +23,13 @@ import bodyParser from 'body-parser';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { authMiddleware } from './middleware/auth';
+import {
+  graphqlRateLimiter,
+  authRateLimiter,
+} from './middleware/rate-limiter';
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { createTenancyScopingMiddleware } from './middleware/tenancy-scoping';
+import { cortexAuthChecker } from './auth/cortex-auth-checker';
 import { createHttpStatusMapperPlugin } from './plugins/http-status-mapper';
 import { createValidationPlugin } from './middleware/graphql-validation-plugin';
 import { createQueryComplexityPlugin } from './middleware/query-complexity';
@@ -118,6 +123,11 @@ const startServer = async () => {
     // and unauthenticated callers are bypassed in every mode. Gated by
     // `TENANCY_SCOPING_MODE` (default `shadow`).
     globalMiddlewares: [createTenancyScopingMiddleware()],
+    // Resolver-level authorization (CORTEX-P0-001). SHADOW-FIRST: only invoked
+    // for `@Authorized()`-decorated fields and, while `CORTEX_AUTHCHECKER_ENFORCE`
+    // is OFF (default), it observes + counts would-deny operations but always
+    // allows — byte-identical live behaviour until enforcement is flipped on.
+    authChecker: cortexAuthChecker,
   });
 
   const app = express();
@@ -126,6 +136,14 @@ const startServer = async () => {
   // HTTP request metrics — must be mounted early to capture every request.
   // The middleware is a no-op when metrics are disabled.
   app.use(metricsMiddleware);
+
+  // Rate limiting (CORTEX-P0-001). SHADOW-FIRST: mounted on the GraphQL surface
+  // and the authenticated Express `/api` surface. While `CORTEX_RATE_LIMIT_ENFORCE`
+  // is OFF (default), they observe + count requests that WOULD be blocked but
+  // never touch the response, so live behaviour is byte-identical. Mounted
+  // before `/api` auth so limiting precedes the (more expensive) auth work.
+  app.use('/graphql', graphqlRateLimiter);
+  app.use('/api', authRateLimiter);
 
   app.use('/api', (req, res, next) =>
     authMiddleware(req as AuthenticatedRequest, res, next)
