@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+
       - run: npm ci
       - run: npm run lint
       - run: npx tsc --noEmit
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+
       - run: npm ci
       - run: npm run test:coverage
       - name: Upload coverage report
@@ -65,7 +65,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+
       - run: npm ci
 
       - name: Validate Prisma schema
@@ -102,6 +102,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
+
       - run: npm ci
       - run: npm run build

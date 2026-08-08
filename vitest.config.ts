@@ -8,6 +8,15 @@ export default defineConfig({
     exclude: ['node_modules', 'dist', 'src/generated/**', 'src/modules/**'],
     testTimeout: 10000,
     hookTimeout: 10000,
+    // The generator suite runs the full codegen in-process, and its logger
+    // emits tens of thousands of warn lines. With console interception ON,
+    // every line is forwarded over the vitest worker-RPC channel, which can
+    // starve it past its timeout and fail the run with an unhandled
+    // "[vitest-worker]: Timeout calling onTaskUpdate" error even when all
+    // tests pass (observed on the CI publish gate, run 31244014211).
+    // Writing console output straight to stdout removes the RPC flood
+    // without hiding any output.
+    disableConsoleIntercept: true,
     coverage: {
       provider: 'v8',
       reporter: [
