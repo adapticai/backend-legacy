@@ -685,6 +685,45 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
       notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
         Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
@@ -2921,6 +2960,85 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+      Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 && props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.investorProfiles.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            customerId: item.customerId !== undefined ? {
+                equals: item.customerId
+              } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            kycStatus: item.kycStatus !== undefined ? {
+                set: item.kycStatus
+              } : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? {
+                set: item.jurisdiction
+              } : undefined,
+            joinedAt: item.joinedAt !== undefined ? {
+                set: item.joinedAt
+              } : undefined,
+            externalRef: item.externalRef !== undefined ? {
+                set: item.externalRef
+              } : undefined,
+            notes: item.notes !== undefined ? {
+                set: item.notes
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
       notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
       Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 && props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
@@ -3404,6 +3522,45 @@ import { logger } from './utils/logger';
             regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
@@ -4800,6 +4957,45 @@ import { logger } from './utils/logger';
             regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
@@ -7003,6 +7199,45 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
       notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
         Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 &&  props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        props.alpacaAccount.user.notificationDeliveries.map((item) => ({
@@ -8844,6 +9079,85 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+      Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 && props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.investorProfiles.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            customerId: item.customerId !== undefined ? {
+                equals: item.customerId
+              } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            kycStatus: item.kycStatus !== undefined ? {
+                set: item.kycStatus
+              } : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? {
+                set: item.jurisdiction
+              } : undefined,
+            joinedAt: item.joinedAt !== undefined ? {
+                set: item.joinedAt
+              } : undefined,
+            externalRef: item.externalRef !== undefined ? {
+                set: item.externalRef
+              } : undefined,
+            notes: item.notes !== undefined ? {
+                set: item.notes
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
       notificationDeliveries: props.alpacaAccount.user.notificationDeliveries ? 
       Array.isArray(props.alpacaAccount.user.notificationDeliveries) && props.alpacaAccount.user.notificationDeliveries.length > 0 && props.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.notificationDeliveries.map((item) => ({
@@ -9327,6 +9641,45 @@ import { logger } from './utils/logger';
             regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
@@ -10723,6 +11076,45 @@ import { logger } from './utils/logger';
             regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investorProfiles: props.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
@@ -13551,6 +13943,85 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      investorProfiles: prop.alpacaAccount.user.investorProfiles ? 
+      Array.isArray(prop.alpacaAccount.user.investorProfiles) && prop.alpacaAccount.user.investorProfiles.length > 0 && prop.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.investorProfiles.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            userId: item.userId !== undefined ? {
+                equals: item.userId
+              } : undefined,
+            customerId: item.customerId !== undefined ? {
+                equals: item.customerId
+              } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email
+              } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            email: item.email !== undefined ? {
+                set: item.email
+              } : undefined,
+            type: item.type !== undefined ? {
+                set: item.type
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            kycStatus: item.kycStatus !== undefined ? {
+                set: item.kycStatus
+              } : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? {
+                set: item.jurisdiction
+              } : undefined,
+            joinedAt: item.joinedAt !== undefined ? {
+                set: item.joinedAt
+              } : undefined,
+            externalRef: item.externalRef !== undefined ? {
+                set: item.externalRef
+              } : undefined,
+            notes: item.notes !== undefined ? {
+                set: item.notes
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
       notificationDeliveries: prop.alpacaAccount.user.notificationDeliveries ? 
       Array.isArray(prop.alpacaAccount.user.notificationDeliveries) && prop.alpacaAccount.user.notificationDeliveries.length > 0 && prop.alpacaAccount.user.notificationDeliveries.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: prop.alpacaAccount.user.notificationDeliveries.map((item) => ({
@@ -14034,6 +14505,45 @@ import { logger } from './utils/logger';
             regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investorProfiles: prop.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(prop.alpacaAccount.user.investorProfiles) && prop.alpacaAccount.user.investorProfiles.length > 0 &&  prop.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
@@ -15430,6 +15940,45 @@ import { logger } from './utils/logger';
             regulatory: item.regulatory !== undefined ? item.regulatory : undefined,
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      investorProfiles: prop.alpacaAccount.user.investorProfiles ? 
+        Array.isArray(prop.alpacaAccount.user.investorProfiles) && prop.alpacaAccount.user.investorProfiles.length > 0 &&  prop.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.investorProfiles.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.investorProfiles.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            email: item.email !== undefined ? {
+                equals: item.email 
+               } : undefined,
+            type: item.type !== undefined ? {
+                equals: item.type 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            name: item.name !== undefined ? item.name : undefined,
+            email: item.email !== undefined ? item.email : undefined,
+            type: item.type !== undefined ? item.type : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            kycStatus: item.kycStatus !== undefined ? item.kycStatus : undefined,
+            jurisdiction: item.jurisdiction !== undefined ? item.jurisdiction : undefined,
+            joinedAt: item.joinedAt !== undefined ? item.joinedAt : undefined,
+            externalRef: item.externalRef !== undefined ? item.externalRef : undefined,
+            notes: item.notes !== undefined ? item.notes : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))

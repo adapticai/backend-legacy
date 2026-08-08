@@ -59,12 +59,16 @@ import { EventSnapshot } from './EventSnapshot';
 import { FeatureImportanceAnalysis } from './FeatureImportanceAnalysis';
 import { Fund } from './Fund';
 import { FundAssignment } from './FundAssignment';
+import { Holding } from './Holding';
 import { InstitutionalFlowSignal } from './InstitutionalFlowSignal';
 import { InstitutionalHolding } from './InstitutionalHolding';
 import { InstitutionalSentimentAlerts } from './InstitutionalSentimentAlerts';
 import { InstitutionalSentimentErrors } from './InstitutionalSentimentErrors';
 import { InstitutionalSentimentHistory } from './InstitutionalSentimentHistory';
 import { InstitutionalSentimentMetrics } from './InstitutionalSentimentMetrics';
+import { Investor } from './Investor';
+import { InvestorDocument } from './InvestorDocument';
+import { InvestorTransaction } from './InvestorTransaction';
 import { InviteToken } from './InviteToken';
 import { LinkedProvider } from './LinkedProvider';
 import { LlmConfiguration } from './LlmConfiguration';
@@ -98,6 +102,7 @@ import { SignalPriorityQueue } from './SignalPriorityQueue';
 import { StrategyHealthSnapshot } from './StrategyHealthSnapshot';
 import { SyncEvent } from './SyncEvent';
 import { SystemAlert } from './SystemAlert';
+import { TaxDocument } from './TaxDocument';
 import { Trade } from './Trade';
 import { TradeAuditEvent } from './TradeAuditEvent';
 import { TradeExecutionHistory } from './TradeExecutionHistory';
@@ -136,12 +141,16 @@ const adaptic = {
   featureImportanceAnalysis: FeatureImportanceAnalysis,
   fund: Fund,
   fundAssignment: FundAssignment,
+  holding: Holding,
   institutionalFlowSignal: InstitutionalFlowSignal,
   institutionalHolding: InstitutionalHolding,
   institutionalSentimentAlerts: InstitutionalSentimentAlerts,
   institutionalSentimentErrors: InstitutionalSentimentErrors,
   institutionalSentimentHistory: InstitutionalSentimentHistory,
   institutionalSentimentMetrics: InstitutionalSentimentMetrics,
+  investor: Investor,
+  investorDocument: InvestorDocument,
+  investorTransaction: InvestorTransaction,
   inviteToken: InviteToken,
   linkedProvider: LinkedProvider,
   llmConfiguration: LlmConfiguration,
@@ -175,6 +184,7 @@ const adaptic = {
   strategyHealthSnapshot: StrategyHealthSnapshot,
   syncEvent: SyncEvent,
   systemAlert: SystemAlert,
+  taxDocument: TaxDocument,
   trade: Trade,
   tradeAuditEvent: TradeAuditEvent,
   tradeExecutionHistory: TradeExecutionHistory,
