@@ -1,20 +1,26 @@
 name: CI - Backend Legacy
 
+# stable-release is the PRODUCTION branch (publishes @stable, consumed by the
+# trading engine). It must run the same CI gate as main — its absence here meant
+# every production publish shipped with zero test/lint/codegen-drift execution
+# (audit B01-backend-legacy-01).
 on:
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, stable-release]
     paths:
       - 'src/**'
       - 'prisma/**'
       - 'package.json'
       - 'tsconfig.json'
+      - '.github/workflows/**'
   push:
-    branches: [main]
+    branches: [main, stable-release]
     paths:
       - 'src/**'
       - 'prisma/**'
       - 'package.json'
       - 'tsconfig.json'
+      - '.github/workflows/**'
 
 jobs:
   lint-typecheck:

@@ -7,6 +7,14 @@ on:
       - stable-release
       - platform-alignment
 
+# Serialize publish runs per branch (audit B01-backend-legacy-04): two overlapping
+# runs both read dist-tags, derive the same NEW_VERSION, and the loser fails at
+# `npm publish` (duplicate version) or at the post-publish `git push` — after
+# already publishing. Never cancel an in-flight publish; queue instead.
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -60,6 +68,20 @@ jobs:
           # Dockerfile (NODE_OPTIONS=--max-old-space-size=6144); match with headroom.
           NODE_OPTIONS: --max-old-space-size=8192
 
+      # Quality gate (audit B01-backend-legacy-01): the publish flow previously ran
+      # zero tests/lint before shipping @stable to npm — the branch the trading
+      # engine consumes. Typecheck is enforced by the full `tsc` inside
+      # `build:package` above (the job fails on any type error); this step adds the
+      # lint and vitest gates. Runs AFTER the build because the vitest suite and
+      # lint config resolve against `src/generated/**`, which is gitignored and only
+      # exists post-codegen. Any failure here aborts the job before `npm publish`.
+      - name: Quality gate (lint + unit tests)
+        run: |
+          npm run lint
+          npm run test
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
+
       - name: Install dependencies in dist folder
         working-directory: dist
         run: npm install --legacy-peer-deps
@@ -78,35 +100,54 @@ jobs:
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
           echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
 
+      # Skip-if-unchanged gate (audit B01-backend-legacy-04). The previous
+      # implementation was dead logic on THREE counts: (1) it compared npm tarball
+      # listings (paths prefixed `package/`) against unprefixed `find` output, so
+      # every line always differed; (2) the tarball listing was written to the
+      # PARENT of the workspace while the compare step read it from the workspace
+      # root, so `comm` compared against an empty stream; (3) the local listing was
+      # taken AFTER `npm install` in dist/, so it always contained node_modules.
+      # Net effect: diff_output was unconditionally true and every push published a
+      # new version. This rewrite compares actual file CONTENT (diff -r) between
+      # dist/ and the extracted published tarball, excluding node_modules,
+      # package.json (carries the version bump), and package-lock.json (created by
+      # the dist install, never published).
       - name: Get current package content from npm
         id: get_npm_package_content
         env:
           NPM_TAG: ${{ steps.channel.outputs.npm_tag }}
         run: |
+          rm -rf npm_published_package && mkdir -p npm_published_package
           TARBALL_URL=$(npm view "$PACKAGE_NAME@$NPM_TAG" dist.tarball 2>/dev/null || echo "")
           if [ -n "$TARBALL_URL" ]; then
-            curl -sL "$TARBALL_URL" | tar -tzf - > ../npm_package_files.txt
+            curl -sL "$TARBALL_URL" | tar -xzf - -C npm_published_package
+            echo "tarball_found=true" >> $GITHUB_OUTPUT
           else
             echo "No published version found for tag '$NPM_TAG', treating as first publish"
-            touch ../npm_package_files.txt
+            echo "tarball_found=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: List local dist files
-        id: list_dist_files
-        run: find . -type f | sed 's|^\./||' > ../local_dist_files.txt
-        working-directory: dist
 
       - name: Compare dist content with published package
         id: compare_dist
+        env:
+          TARBALL_FOUND: ${{ steps.get_npm_package_content.outputs.tarball_found }}
         run: |
-          comm -3 <(sort local_dist_files.txt) <(sort npm_package_files.txt) > diff.txt
-          if [ -s diff.txt ]; then
-            echo "Differences found."
-            cat diff.txt
+          if [ "$TARBALL_FOUND" != "true" ]; then
+            echo "First publish for this tag — publishing."
             echo "diff_output=true" >> $GITHUB_OUTPUT
-          else
-            echo "No differences found."
+            exit 0
+          fi
+          if diff -r -q \
+               --exclude=node_modules \
+               --exclude=package.json \
+               --exclude=package-lock.json \
+               dist npm_published_package/package > dist_diff.txt 2>&1; then
+            echo "No content differences vs published package."
             echo "diff_output=false" >> $GITHUB_OUTPUT
+          else
+            echo "Content differences found vs published package:"
+            head -50 dist_diff.txt
+            echo "diff_output=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Check always-build-npm flag
@@ -191,8 +232,8 @@ jobs:
           NPM_TAG: ${{ steps.channel.outputs.npm_tag }}
         working-directory: dist
         run: |
-          # Ensure temporary files are removed
-          rm -f ../npm_package_files.txt ../local_dist_files.txt diff.txt
+          # Ensure compare-step artifacts are removed before publishing
+          rm -rf ../npm_published_package ../dist_diff.txt
           echo "Publishing package..."
           echo "Registry URL: $(npm config get registry)"
           echo "Package name: $(jq -r .name package.json)"
