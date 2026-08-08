@@ -81,6 +81,21 @@ export function isAuthCheckerEnforced(
 export type WouldDenyReason = 'unauthenticated' | 'insufficient_role';
 
 /**
+ * Counts EVERY AuthChecker invocation, regardless of outcome (audit
+ * B01-backend-legacy-07). A flat-zero {@link cortexAuthCheckerWouldDenyTotal}
+ * is ambiguous on its own: it can mean "no traffic would be denied" OR "the
+ * checker never ran" (no `@Authorized()` field was ever executed) — exactly the
+ * false-confidence pattern that preceded the beta-net-cap fail-open. Graduation
+ * rule: enforce only when this counter is > 0 and the would-deny series has
+ * been observed over a full trading week.
+ */
+export const cortexAuthCheckerEvaluationsTotal = new Counter({
+  name: 'cortex_authchecker_evaluations_total',
+  help: 'Total AuthChecker invocations, any outcome (zero means no @Authorized field was executed — distinct from "no would-denies")',
+  registers: [metricsRegistry],
+});
+
+/**
  * Counts operations that resolver-level authorization WOULD deny. In shadow mode
  * this is the primary signal proving whether flipping `CORTEX_AUTHCHECKER_ENFORCE`
  * to `enforce` would reject any legitimate platform or engine traffic. Labelled
@@ -179,6 +194,10 @@ export const cortexAuthChecker: AuthChecker<CortexAuthContext> = (
   resolverData,
   roles
 ): boolean => {
+  // Unconditional: proves the checker is actually reachable (see
+  // cortexAuthCheckerEvaluationsTotal TSDoc / audit B01-backend-legacy-07).
+  cortexAuthCheckerEvaluationsTotal.inc();
+
   const principal = resolverData.context.principal ?? null;
   const evaluation = evaluateWouldAllow(principal, roles);
 

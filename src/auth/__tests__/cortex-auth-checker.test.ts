@@ -4,6 +4,7 @@ import type { GraphQLResolveInfo } from 'graphql';
 import {
   cortexAuthChecker,
   cortexAuthCheckerWouldDenyTotal,
+  cortexAuthCheckerEvaluationsTotal,
   evaluateWouldAllow,
   isAuthCheckerEnforced,
   CORTEX_AUTHCHECKER_ENFORCE_ENV,
@@ -49,6 +50,12 @@ async function wouldDenyCount(reason: string): Promise<number> {
   const metric = await cortexAuthCheckerWouldDenyTotal.get();
   const sample = metric.values.find((v) => v.labels.reason === reason);
   return sample?.value ?? 0;
+}
+
+/** Read the current value of the unconditional evaluations counter. */
+async function evaluationsCount(): Promise<number> {
+  const metric = await cortexAuthCheckerEvaluationsTotal.get();
+  return metric.values[0]?.value ?? 0;
 }
 
 const SERVER_PRINCIPAL: BackendPrincipal = { kind: 'server' };
@@ -170,5 +177,29 @@ describe('cortexAuthChecker', () => {
       ['admin']
     );
     expect(allowed).toBe(false);
+  });
+
+  // Audit B01-backend-legacy-07: without an unconditional evaluations counter,
+  // a flat-zero would-deny series is indistinguishable from "the checker never
+  // ran" — the false-confidence pattern that must be excluded before any
+  // shadow→enforce graduation.
+  it('increments the evaluations counter on an ALLOWED evaluation without touching would-deny', async () => {
+    const evalBefore = await evaluationsCount();
+    const denyBefore = await wouldDenyCount('unauthenticated');
+
+    const allowed = cortexAuthChecker(buildResolverData(SERVER_PRINCIPAL), []);
+
+    expect(allowed).toBe(true);
+    expect(await evaluationsCount()).toBe(evalBefore + 1);
+    expect(await wouldDenyCount('unauthenticated')).toBe(denyBefore);
+  });
+
+  it('increments the evaluations counter on a would-deny evaluation too', async () => {
+    const evalBefore = await evaluationsCount();
+
+    const allowed = cortexAuthChecker(buildResolverData(null), []);
+
+    expect(allowed).toBe(true); // shadow still allows
+    expect(await evaluationsCount()).toBe(evalBefore + 1);
   });
 });

@@ -30,6 +30,7 @@ import {
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { createTenancyScopingMiddleware } from './middleware/tenancy-scoping';
 import { cortexAuthChecker } from './auth/cortex-auth-checker';
+import { applyCortexAuthorizationMap } from './auth/authorization-map';
 import { createHttpStatusMapperPlugin } from './plugins/http-status-mapper';
 import { createValidationPlugin } from './middleware/graphql-validation-plugin';
 import { createQueryComplexityPlugin } from './middleware/query-complexity';
@@ -123,6 +124,22 @@ const startServer = async () => {
   // and starts the uptime gauge ticker. See: src/config/metrics.ts.
   initMetrics();
 
+  // CORTEX-P0-001 phase 2 (audit B01-backend-legacy-03): decorate generated
+  // CRUD resolvers with @Authorized() — full coverage on the 5 investor-relations
+  // models, delete mutations elsewhere — so the authChecker below actually
+  // executes. Must run BEFORE buildSchema (decorators land in TypeGraphQL's
+  // metadata storage). The checker stays SHADOW-FIRST: would-denies are logged
+  // + counted but ALLOWED until CORTEX_AUTHCHECKER_ENFORCE is flipped on.
+  // The boot log satisfies audit B01-backend-legacy-07: a zero decorated-action
+  // count means the checker is unreachable and its metrics are meaningless.
+  const authzSummary = applyCortexAuthorizationMap();
+  logger.info('[cortex-authz] applied @Authorized coverage (authChecker in shadow unless CORTEX_AUTHCHECKER_ENFORCE)', {
+    fullCoverageModels: authzSummary.fullCoverageModels,
+    deleteCoverageModels: authzSummary.deleteCoverageModels,
+    decoratedActions: authzSummary.decoratedActions,
+    skippedActions: authzSummary.skippedActions.length,
+  });
+
   const schema = await buildSchema({
     resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
     validate: false,
@@ -131,10 +148,11 @@ const startServer = async () => {
     // and unauthenticated callers are bypassed in every mode. Gated by
     // `TENANCY_SCOPING_MODE` (default `shadow`).
     globalMiddlewares: [createTenancyScopingMiddleware()],
-    // Resolver-level authorization (CORTEX-P0-001). SHADOW-FIRST: only invoked
-    // for `@Authorized()`-decorated fields and, while `CORTEX_AUTHCHECKER_ENFORCE`
-    // is OFF (default), it observes + counts would-deny operations but always
-    // allows — byte-identical live behaviour until enforcement is flipped on.
+    // Resolver-level authorization (CORTEX-P0-001). Invoked for the
+    // `@Authorized()`-decorated fields applied by applyCortexAuthorizationMap
+    // above. SHADOW-FIRST: while `CORTEX_AUTHCHECKER_ENFORCE` is OFF (default),
+    // it observes + counts would-deny operations but always allows —
+    // byte-identical live behaviour until enforcement is flipped on.
     authChecker: cortexAuthChecker,
   });
 
