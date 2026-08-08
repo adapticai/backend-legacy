@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm ci
+      - run: npm install
       - run: npm run lint
       - run: npx tsc --noEmit
 
@@ -45,7 +45,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm ci
+      - run: npm install
       - run: npm run test:coverage
       - name: Upload coverage report
         if: always()
@@ -66,7 +66,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm ci
+      - run: npm install
 
       - name: Validate Prisma schema
         run: SKIP_PRISMA_VERSION_CHECK=true npx prisma validate
@@ -103,5 +103,5 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm ci
+      - run: npm install
       - run: npm run build
