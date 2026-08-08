@@ -103,6 +103,14 @@ function principalToUser(principal: BackendPrincipal): AuthUser {
   }
 }
 
+/**
+ * Default number of proxy hops trusted for X-Forwarded-For resolution when
+ * `TRUST_PROXY` is unset. One hop matches a single fronting LB/ingress proxy;
+ * operators must set `TRUST_PROXY` to the exact hop count of their deployment
+ * (audit B01-backend-legacy-02 / -12).
+ */
+const DEFAULT_TRUST_PROXY_HOPS = 1;
+
 const startServer = async () => {
   // Boot-time invariant: in production, `GOOGLE_OAUTH_CLIENT_IDS` must be set.
   // Without it, no Google ID token can be safely verified — and the verifier
@@ -133,16 +141,35 @@ const startServer = async () => {
   const app = express();
   const httpServer = createServer(app);
 
+  // Trust the load-balancer proxy chain so `req.ip` resolves the CLIENT address
+  // from X-Forwarded-For instead of the proxy hop (audit B01-backend-legacy-02).
+  // Without this, every external caller shares one rate-limit bucket per tier,
+  // invalidating the shadow signal and making any future enforce flip an outage
+  // switch for the whole /graphql surface. `TRUST_PROXY` accepts a hop count
+  // (recommended: the EXACT number of proxy hops, so a spoofed X-Forwarded-For
+  // cannot mint arbitrary identifiers — audit B01-backend-legacy-12) or an
+  // Express trust-proxy string (CIDR / preset). Defaults to 1 hop.
+  const rawTrustProxy = (process.env.TRUST_PROXY ?? '').trim();
+  const trustProxy: number | string =
+    rawTrustProxy === ''
+      ? DEFAULT_TRUST_PROXY_HOPS
+      : /^\d+$/.test(rawTrustProxy)
+        ? parseInt(rawTrustProxy, 10)
+        : rawTrustProxy;
+  app.set('trust proxy', trustProxy);
+
   // HTTP request metrics — must be mounted early to capture every request.
   // The middleware is a no-op when metrics are disabled.
   app.use(metricsMiddleware);
 
-  // Rate limiting (CORTEX-P0-001). SHADOW-FIRST: mounted on the GraphQL surface
-  // and the authenticated Express `/api` surface. While `CORTEX_RATE_LIMIT_ENFORCE`
-  // is OFF (default), they observe + count requests that WOULD be blocked but
-  // never touch the response, so live behaviour is byte-identical. Mounted
-  // before `/api` auth so limiting precedes the (more expensive) auth work.
-  app.use('/graphql', graphqlRateLimiter);
+  // Rate limiting (CORTEX-P0-001). SHADOW-FIRST: while `CORTEX_RATE_LIMIT_ENFORCE`
+  // is OFF (default), the limiters observe + count requests that WOULD be blocked
+  // but never touch the response, so live behaviour is byte-identical. The
+  // GraphQL limiter is mounted INSIDE the /graphql chain after cors() (see below)
+  // so an enforce-mode 429 carries CORS headers and browser clients can read the
+  // Retry-After instead of seeing an opaque CORS failure
+  // (audit B01-backend-legacy-11). Mounted before `/api` auth so limiting
+  // precedes the (more expensive) auth work.
   app.use('/api', authRateLimiter);
 
   app.use('/api', (req, res, next) =>
@@ -279,6 +306,10 @@ const startServer = async () => {
   app.use(
     '/graphql',
     cors<Request>(corsOptions),
+    // After cors() so enforce-mode 429s carry CORS headers; before body parsing
+    // so limiting stays cheap. OPTIONS preflights are skipped inside the
+    // limiter (audit B01-backend-legacy-11).
+    graphqlRateLimiter,
     bodyParser.json(),
     expressMiddleware(server, {
       context: async ({ req }: { req: Request }) => {
