@@ -58,7 +58,11 @@ jobs:
         run: npm cache clean --force
 
       - name: Install dependencies in the root folder
-        run: npm install
+        # npm ci: reproducible install from the committed lockfile (supply-chain
+        # pin, post-audit security-review follow-up). The dist-folder install
+        # below stays npm install — dist/package.json is generated per-build
+        # and has no lockfile by design.
+        run: npm ci
 
       - name: Build npm package
         run: npm run build:package
@@ -214,7 +218,7 @@ jobs:
           echo "Updated dist/package.json to version $NEW_VERSION"
 
           # Ensure both files are staged for commit
-          git add package-npm.json dist/package.json -f
+          git add package-npm.json package-lock.json dist/package.json -f
 
           # Check for changes and commit if there are any
           if git diff-index --cached --quiet HEAD --; then

@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm install
+      - run: npm ci
       # src/generated/** is gitignored; lint passes without it but tsc and
       # the vitest suite resolve imports from it, so every checking job must
       # run the codegen chain first (mirrors the publish workflow's build).
@@ -63,7 +63,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm install
+      - run: npm ci
       # src/generated/** is gitignored; lint passes without it but tsc and
       # the vitest suite resolve imports from it, so every checking job must
       # run the codegen chain first (mirrors the publish workflow's build).
@@ -101,7 +101,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm install
+      - run: npm ci
 
       - name: Validate Prisma schema
         run: SKIP_PRISMA_VERSION_CHECK=true npx prisma validate
@@ -141,7 +141,7 @@ jobs:
         with:
           node-version: '22'
 
-      - run: npm install
+      - run: npm ci
       # Full pipeline (codegen + dual tsc) needs the same heap allowance the
       # publish workflow grants (Dockerfile parity: 6-8GB); default 4GB OOMs.
       - run: npm run build
