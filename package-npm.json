@@ -20,6 +20,8 @@
     "esm/",
     "server/",
     "resolvers/",
+    "utils/",
+    "validators/",
     "*.d.ts",
     "*.js",
     "*.cjs",
