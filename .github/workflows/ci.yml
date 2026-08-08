@@ -33,6 +33,19 @@ jobs:
           node-version: '22'
 
       - run: npm install
+      # src/generated/** is gitignored; lint passes without it but tsc and
+      # the vitest suite resolve imports from it, so every checking job must
+      # run the codegen chain first (mirrors the publish workflow's build).
+      - name: Generate code from schema
+        run: |
+          npm run generate
+          npm run fix-imports
+          npm run generate:selections
+          npm run generate:functions
+          npm run generate:strings
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+          DIRECT_DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
       - run: npm run lint
       - run: npx tsc --noEmit
 
@@ -46,6 +59,19 @@ jobs:
           node-version: '22'
 
       - run: npm install
+      # src/generated/** is gitignored; lint passes without it but tsc and
+      # the vitest suite resolve imports from it, so every checking job must
+      # run the codegen chain first (mirrors the publish workflow's build).
+      - name: Generate code from schema
+        run: |
+          npm run generate
+          npm run fix-imports
+          npm run generate:selections
+          npm run generate:functions
+          npm run generate:strings
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+          DIRECT_DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
       - run: npm run test:coverage
       - name: Upload coverage report
         if: always()
@@ -59,7 +85,11 @@ jobs:
     name: Verify Generated Code Matches Schema
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      # prisma validate/generate only need the datasource env vars to
+      # RESOLVE (no connection is made); fall back to a syntactically valid
+      # dummy so the job does not depend on repo secrets being configured.
+      DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgresql://ci:ci@localhost:5432/ci' }}
+      DIRECT_DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -80,18 +110,21 @@ jobs:
           npx ts-node src/modules/generateStrings.ts
 
       - name: Check for generated code drift
+        # src/generated/** is gitignored, so diffing it can never detect
+        # drift. The TRACKED generated surface is the per-model CRUD files
+        # at src/*.ts (written by generate:functions) — regenerating from
+        # the committed schema and diffing those is the real check. WARNING
+        # only for now: the committed surface intentionally excludes the
+        # in-flight investor-relations models (audit B01-backend-legacy-13);
+        # escalate to a hard failure once that codegen lands.
         run: |
-          if ! git diff --quiet src/generated/; then
-            echo "::error::Generated code is out of date. Run 'npm run build' and commit the regenerated files."
-            echo ""
-            echo "=== Changed files ==="
-            git diff --name-only src/generated/
-            echo ""
-            echo "=== Diff summary ==="
-            git diff --stat src/generated/
-            exit 1
+          if ! git diff --quiet -- 'src/*.ts'; then
+            echo "::warning::Committed CRUD surface differs from a fresh regeneration of the committed schema (known in-flight divergence: investor-relations models, audit B01-13)."
+            git diff --name-only -- 'src/*.ts'
+            git diff --stat -- 'src/*.ts' | tail -3
+          else
+            echo "Committed CRUD surface matches the committed schema."
           fi
-          echo "Generated code is up to date."
 
   build:
     name: Build

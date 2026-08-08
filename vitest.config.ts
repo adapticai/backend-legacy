@@ -17,6 +17,14 @@ export default defineConfig({
     // Writing console output straight to stdout removes the RPC flood
     // without hiding any output.
     disableConsoleIntercept: true,
+    // The generator writes through src/utils/logger.ts (raw process.stdout,
+    // not console), so interception is not the only flood path — the sheer
+    // stdout volume through the forked worker's IPC pipe can still starve
+    // the task-update RPC. Suppress sub-error log noise at the source for
+    // test runs; production default (LOG_LEVEL unset → debug) is unchanged.
+    env: {
+      LOG_LEVEL: 'error',
+    },
     coverage: {
       provider: 'v8',
       reporter: [
