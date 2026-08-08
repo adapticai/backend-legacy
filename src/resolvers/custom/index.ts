@@ -6,3 +6,5 @@
 
 export { OptionsGreeksHistoryCustomResolver } from './OptionsGreeksHistoryCustomResolver';
 export { OptionsGreeksHistorySystemSummary } from './OptionsGreeksHistorySystemSummary';
+export { AlpacaAccountCredentialsResolver } from './AlpacaAccountCredentialsResolver';
+export { AlpacaAccountCredentials } from './AlpacaAccountCredentials';
