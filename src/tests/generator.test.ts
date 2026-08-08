@@ -4,7 +4,18 @@ import path from 'path';
 import fs from 'fs';
 import os from 'os';
 
-describe('Generator Module', () => {
+/**
+ * Generating CRUD functions for the `user` model walks its full generated
+ * input/model surface, which has grown with the IR + investor domains to the
+ * point that a single generation exceeds the global 10s test timeout on a
+ * typical runner. These are correctness tests, not latency tests — give them
+ * the headroom the real codegen pipeline needs. Without this, the suite
+ * fails on timeout alone and (since the publish quality gate runs vitest —
+ * audit B01-backend-legacy-01) would block production publishes spuriously.
+ */
+const GENERATOR_TEST_TIMEOUT_MS = 120_000;
+
+describe('Generator Module', { timeout: GENERATOR_TEST_TIMEOUT_MS }, () => {
   const modelsPath = path.join(
     __dirname,
     '../../src/generated/typegraphql-prisma/models'
