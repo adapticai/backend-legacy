@@ -47,7 +47,12 @@ jobs:
           DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
           DIRECT_DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
       - run: npm run lint
+      # Type-checking the full surface incl. ~1.3M generated lines exceeds
+      # the runner's default Node heap (observed OOM at exit 134); match the
+      # publish workflow's allowance.
       - run: npx tsc --noEmit
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
 
   test:
     name: Test & Coverage
