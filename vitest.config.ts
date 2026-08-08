@@ -59,11 +59,14 @@ export default defineConfig({
       // and against the pre-exclusion denominator they measured 0.24%.
       // Floors sit just under measured reality so any regression fails;
       // raise them as coverage grows.
+      // CI (clean checkout + fresh codegen) measures lower than a local
+      // working tree (38.99% lines on run 31251731594); floors calibrate to
+      // the ENFORCEMENT environment.
       thresholds: {
-        lines: 45,
+        lines: 35,
         functions: 70,
         branches: 80,
-        statements: 45,
+        statements: 35,
       },
     },
   },

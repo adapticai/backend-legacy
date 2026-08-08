@@ -36,7 +36,8 @@
     "validate:schema": "bash scripts/validate-schema.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run",
+    "test": "vitest run && npm run test:generator",
+    "test:generator": "LOG_LEVEL=error ts-node --transpile-only scripts/generator-smoke.ts",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "prepare": "husky"
