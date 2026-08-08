@@ -107,7 +107,9 @@
     "ws": "^8.18.3"
   },
   "optionalDependencies": {
-    "@aws-sdk/client-lambda": "^3.859.0"
+    "@aws-sdk/client-lambda": "^3.859.0",
+    "@rollup/rollup-linux-x64-gnu": "*",
+    "@rollup/rollup-darwin-arm64": "*"
   },
   "overrides": {
     "@prisma/client": "^6.19.2",
