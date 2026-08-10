@@ -165,7 +165,7 @@ steps:
           --cpu=8 \
           --memory=16Gi \
           --min-instances=3 \
-          --max-instances=25 \
+          --max-instances=12 \
           --concurrency=150 \
           --timeout=300 \
           --cpu-boost \
