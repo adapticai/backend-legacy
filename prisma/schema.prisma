@@ -521,7 +521,15 @@ enum OpenaiModel {
 
 /// Anthropic Claude language models available for text generation.
 enum AnthropicModel {
-  /// Claude Opus 4.7 (current flagship; recommended for advanced/complex queries)
+  /// Claude Fable 5 (current most capable model; recommended for advanced/complex queries)
+  /// API model id: "claude-fable-5"
+  CLAUDE_FABLE_5
+
+  /// Claude Opus 5 (current flagship for agentic and enterprise workloads)
+  /// API model id: "claude-opus-5"
+  CLAUDE_OPUS_5
+
+  /// Claude Opus 4.7 (prior flagship; still supported)
   /// API model id: "claude-opus-4-7"
   CLAUDE_OPUS_4_7
 
