@@ -101,6 +101,11 @@ import { logger } from './utils/logger';
             set: props.news.topics 
            } : undefined,
         logo: props.news.logo !== undefined ? props.news.logo : undefined,
+        symbols: props.news.symbols !== undefined ? {
+            set: props.news.symbols 
+           } : undefined,
+        relevance: props.news.relevance !== undefined ? props.news.relevance : undefined,
+        publishedAt: props.news.publishedAt !== undefined ? props.news.publishedAt : undefined,
       },
     }
   } : undefined,
@@ -613,6 +618,15 @@ import { logger } from './utils/logger';
         logo: props.news.logo !== undefined ? {
             set: props.news.logo
           } : undefined,
+        symbols: props.news.symbols !== undefined ? {
+            set: props.news.symbols
+          } : undefined,
+        relevance: props.news.relevance !== undefined ? {
+            set: props.news.relevance
+          } : undefined,
+        publishedAt: props.news.publishedAt !== undefined ? {
+            set: props.news.publishedAt
+          } : undefined,
       },
       create: {
         title: props.news.title !== undefined ? props.news.title : undefined,
@@ -632,6 +646,11 @@ import { logger } from './utils/logger';
             set: props.news.topics 
            } : undefined,
         logo: props.news.logo !== undefined ? props.news.logo : undefined,
+        symbols: props.news.symbols !== undefined ? {
+            set: props.news.symbols 
+           } : undefined,
+        relevance: props.news.relevance !== undefined ? props.news.relevance : undefined,
+        publishedAt: props.news.publishedAt !== undefined ? props.news.publishedAt : undefined,
       },
     }
   } : undefined,
@@ -1227,6 +1246,11 @@ import { logger } from './utils/logger';
             set: props.news.topics 
            } : undefined,
         logo: props.news.logo !== undefined ? props.news.logo : undefined,
+        symbols: props.news.symbols !== undefined ? {
+            set: props.news.symbols 
+           } : undefined,
+        relevance: props.news.relevance !== undefined ? props.news.relevance : undefined,
+        publishedAt: props.news.publishedAt !== undefined ? props.news.publishedAt : undefined,
       },
     }
   } : undefined,
@@ -1428,6 +1452,15 @@ import { logger } from './utils/logger';
         logo: props.news.logo !== undefined ? {
             set: props.news.logo
           } : undefined,
+        symbols: props.news.symbols !== undefined ? {
+            set: props.news.symbols
+          } : undefined,
+        relevance: props.news.relevance !== undefined ? {
+            set: props.news.relevance
+          } : undefined,
+        publishedAt: props.news.publishedAt !== undefined ? {
+            set: props.news.publishedAt
+          } : undefined,
       },
       create: {
         title: props.news.title !== undefined ? props.news.title : undefined,
@@ -1447,6 +1480,11 @@ import { logger } from './utils/logger';
             set: props.news.topics 
            } : undefined,
         logo: props.news.logo !== undefined ? props.news.logo : undefined,
+        symbols: props.news.symbols !== undefined ? {
+            set: props.news.symbols 
+           } : undefined,
+        relevance: props.news.relevance !== undefined ? props.news.relevance : undefined,
+        publishedAt: props.news.publishedAt !== undefined ? props.news.publishedAt : undefined,
       },
     }
   } : undefined,
@@ -2079,6 +2117,15 @@ import { logger } from './utils/logger';
         logo: prop.news.logo !== undefined ? {
             set: prop.news.logo
           } : undefined,
+        symbols: prop.news.symbols !== undefined ? {
+            set: prop.news.symbols
+          } : undefined,
+        relevance: prop.news.relevance !== undefined ? {
+            set: prop.news.relevance
+          } : undefined,
+        publishedAt: prop.news.publishedAt !== undefined ? {
+            set: prop.news.publishedAt
+          } : undefined,
       },
       create: {
         title: prop.news.title !== undefined ? prop.news.title : undefined,
@@ -2098,6 +2145,11 @@ import { logger } from './utils/logger';
             set: prop.news.topics 
            } : undefined,
         logo: prop.news.logo !== undefined ? prop.news.logo : undefined,
+        symbols: prop.news.symbols !== undefined ? {
+            set: prop.news.symbols 
+           } : undefined,
+        relevance: prop.news.relevance !== undefined ? prop.news.relevance : undefined,
+        publishedAt: prop.news.publishedAt !== undefined ? prop.news.publishedAt : undefined,
       },
     }
   } : undefined,

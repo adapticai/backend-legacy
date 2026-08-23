@@ -222,6 +222,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -903,6 +908,15 @@ import { logger } from './utils/logger';
           logo: item.news.logo !== undefined ? {
               set: item.news.logo
             } : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols
+            } : undefined,
+          relevance: item.news.relevance !== undefined ? {
+              set: item.news.relevance
+            } : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? {
+              set: item.news.publishedAt
+            } : undefined,
         },
         create: {
           title: item.news.title !== undefined ? item.news.title : undefined,
@@ -922,6 +936,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -963,6 +982,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -1333,6 +1357,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -1648,6 +1677,15 @@ import { logger } from './utils/logger';
           logo: item.news.logo !== undefined ? {
               set: item.news.logo
             } : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols
+            } : undefined,
+          relevance: item.news.relevance !== undefined ? {
+              set: item.news.relevance
+            } : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? {
+              set: item.news.publishedAt
+            } : undefined,
         },
         create: {
           title: item.news.title !== undefined ? item.news.title : undefined,
@@ -1667,6 +1705,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -1708,6 +1751,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -2235,6 +2283,15 @@ import { logger } from './utils/logger';
           logo: item.news.logo !== undefined ? {
               set: item.news.logo
             } : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols
+            } : undefined,
+          relevance: item.news.relevance !== undefined ? {
+              set: item.news.relevance
+            } : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? {
+              set: item.news.publishedAt
+            } : undefined,
         },
         create: {
           title: item.news.title !== undefined ? item.news.title : undefined,
@@ -2254,6 +2311,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,
@@ -2295,6 +2357,11 @@ import { logger } from './utils/logger';
               set: item.news.topics 
              } : undefined,
           logo: item.news.logo !== undefined ? item.news.logo : undefined,
+          symbols: item.news.symbols !== undefined ? {
+              set: item.news.symbols 
+             } : undefined,
+          relevance: item.news.relevance !== undefined ? item.news.relevance : undefined,
+          publishedAt: item.news.publishedAt !== undefined ? item.news.publishedAt : undefined,
         },
       }
     } : undefined,

@@ -2165,6 +2165,15 @@ model NewsArticle {
   /// URL to the logo image of the news source.
   logo String?
 
+  /// Denormalized ticker symbols this article references, used by the news-feed read-path (filtered via `symbols.has`). Complements the per-asset scores on the NewsArticleAssetSentiment relation as a pragmatic feed read-model.
+  symbols String[]
+
+  /// Overall relevance score of the article to the requested symbol scope (typically 0.0–1.0), when computed by the ingesting news provider.
+  relevance Float?
+
+  /// Orderable publication timestamp of the article. Numeric/temporal successor to the legacy string `timePublished`, which cannot be reliably range-filtered or ordered; backfill from `timePublished`.
+  publishedAt DateTime?
+
   /// Timestamp when the news article was added to the database. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -2175,6 +2184,7 @@ model NewsArticle {
   assets NewsArticleAssetSentiment[]
 
   @@index([createdAt])
+  @@index([publishedAt])
   @@map(name: "news")
 }
 
@@ -2228,12 +2238,34 @@ model EconomicEvent {
   /// Importance level of the event, defined by EventImportance enum.
   importance EventImportance
 
+  /// ISO country or region code the economic event pertains to (e.g., "US", "EU", "JP").
+  country String?
+
+  /// Scheduled release timestamp of the event, distinct from the calendar `date`. Orderable field the market-data feed sorts by; consider consolidating with `date` long-term.
+  eventTime DateTime?
+
+  /// Actual reported value of the economic indicator once released (null until publication).
+  actual Float?
+
+  /// Consensus forecast value for the economic indicator ahead of release.
+  forecast Float?
+
+  /// Previously reported value of the economic indicator for the prior period.
+  previous Float?
+
+  /// Unit of measurement for the actual/forecast/previous values (e.g., "%", "K", "M", "index").
+  unit String?
+
+  /// Data provider or source of the economic event (e.g., "TradingEconomics", "BLS").
+  source String?
+
   /// Timestamp when the economic event was created in the database. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
   /// Timestamp when the economic event was last updated in the database. TYPESTRING.SKIP=true
   updatedAt DateTime @updatedAt
 
+  @@index([eventTime])
   @@map(name: "economic_events")
 }
 
