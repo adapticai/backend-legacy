@@ -43,3 +43,6 @@ yarn.lock
 
 # Claude Code agent worktrees
 .claude/
+
+# Graphify code-graph output (regenerate with ../scripts/graphify-refresh.sh backend-legacy)
+graphify-out/

@@ -6,6 +6,20 @@ on:
       - main
       - stable-release
       - platform-alignment
+    # Only publish-relevant inputs (anything that can alter dist/) trigger this pipeline; the dist-content
+    # diff below still gates the actual publish. README-npm.md IS an input — prepare-package.mjs copies it to dist/README.md.
+    paths:
+      - 'src/**'
+      - 'prisma/**'
+      - 'scripts/**'
+      - '*.json'
+      - '*.mjs'
+      - '*.cjs'
+      - '*.js'
+      - 'tsconfig*.json'
+      - 'vitest.config.ts'
+      - 'README-npm.md'
+      - '.github/workflows/publish.yml'
 
 # Serialize publish runs per branch (audit B01-backend-legacy-04): two overlapping
 # runs both read dist-tags, derive the same NEW_VERSION, and the loser fails at

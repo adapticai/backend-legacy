@@ -215,7 +215,7 @@ After modifying inline comments:
 
 | File                                          | Purpose                                                                         |
 | --------------------------------------------- | ------------------------------------------------------------------------------- |
-| `prisma/schema.prisma`                        | Source of truth: 67 models, 73 enums (as of 2026-05-22)                          |
+| `prisma/schema.prisma`                        | Source of truth: 67 models, 73 enums (as of 2026-05-22)                         |
 | `src/index.ts`                                | Package entry: exports types, enums, typeStrings, CRUD functions, Apollo Client |
 | `src/server.ts`                               | Apollo Server 5 + Express 4 + WebSocket subscriptions                           |
 | `src/client.ts`                               | Apollo Client factory (singleton, connection pooling, retry, token validation)  |
@@ -335,6 +335,15 @@ When debugging backend-legacy issues:
 - Health check: `GET /health` (no auth required)
 - GraphQL: `POST /graphql` (Bearer token auth)
 - WebSocket subscriptions: `ws://host/subscriptions`
+
+### Publish triggers (stable-release)
+
+`.github/workflows/publish.yml` (branches `main`, `stable-release`, `platform-alignment`) is paths-filtered: a push runs the pipeline only when it touches `src/**`, `prisma/**`, `scripts/**`, root `*.json` / `*.mjs` / `*.cjs` / `*.js`, `tsconfig*.json`, `vitest.config.ts`, `README-npm.md`, or `.github/workflows/publish.yml` itself. Docs-only pushes (`README.md`, `docs/**`, `CLAUDE.md`) no longer run the ~20-min pipeline.
+
+- **Actual publishing is gated by a dist-content diff**, not the trigger: the workflow builds `dist/` and `diff -r`s it against the published npm tarball (excluding `node_modules`, `package.json`, `package-lock.json`); it version-bumps and publishes only when content differs (or `always-build-npm` is set in `package-npm.json`).
+- **`README-npm.md` IS publish-relevant**: `prepare-package.mjs` copies it to `dist/README.md`, so editing it changes dist content and publishes a new version. Root `README.md` is NOT published.
+- Canonical deploy routines: `~/adapticai/docs/DEPLOY_ROUTINES.md`.
+- Graphify code graph: `graphify-out/` (gitignored; refresh with `../scripts/graphify-refresh.sh backend-legacy`) — query it before grepping, per the mono CLAUDE.md.
 
 ## Core Principles
 
