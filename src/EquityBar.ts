@@ -586,9 +586,13 @@ import { logger } from './utils/logger';
         const variables = {
           where: {
             id: props.id !== undefined ? props.id : undefined,
-  symbol: props.symbol !== undefined ? {
-    equals: props.symbol 
-  } : undefined,
+  ...(props.symbol !== undefined && props.timeStamp !== undefined && props.timespan !== undefined ? {
+    symbol_timeStamp_timespan: {
+      symbol: props.symbol,
+      timeStamp: props.timeStamp,
+      timespan: props.timespan,
+    },
+  } : {}),
       },
           create: {
         symbol: props.symbol !== undefined ? props.symbol : undefined,

@@ -16,6 +16,13 @@ import { logger } from './utils/logger';
   description
   date
   importance
+  country
+  eventTime
+  actual
+  forecast
+  previous
+  unit
+  source
   createdAt
   updatedAt
 
@@ -69,6 +76,13 @@ import { logger } from './utils/logger';
   description: props.description !== undefined ? props.description : undefined,
   date: props.date !== undefined ? props.date : undefined,
   importance: props.importance !== undefined ? props.importance : undefined,
+  country: props.country !== undefined ? props.country : undefined,
+  eventTime: props.eventTime !== undefined ? props.eventTime : undefined,
+  actual: props.actual !== undefined ? props.actual : undefined,
+  forecast: props.forecast !== undefined ? props.forecast : undefined,
+  previous: props.previous !== undefined ? props.previous : undefined,
+  unit: props.unit !== undefined ? props.unit : undefined,
+  source: props.source !== undefined ? props.source : undefined,
 
             },
           };
@@ -226,6 +240,13 @@ import { logger } from './utils/logger';
   description: prop.description !== undefined ? prop.description : undefined,
   date: prop.date !== undefined ? prop.date : undefined,
   importance: prop.importance !== undefined ? prop.importance : undefined,
+  country: prop.country !== undefined ? prop.country : undefined,
+  eventTime: prop.eventTime !== undefined ? prop.eventTime : undefined,
+  actual: prop.actual !== undefined ? prop.actual : undefined,
+  forecast: prop.forecast !== undefined ? prop.forecast : undefined,
+  previous: prop.previous !== undefined ? prop.previous : undefined,
+  unit: prop.unit !== undefined ? prop.unit : undefined,
+  source: prop.source !== undefined ? prop.source : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -391,6 +412,27 @@ import { logger } from './utils/logger';
            } : undefined,
   importance: props.importance !== undefined ? {
             set: props.importance 
+           } : undefined,
+  country: props.country !== undefined ? {
+            set: props.country 
+           } : undefined,
+  eventTime: props.eventTime !== undefined ? {
+            set: props.eventTime 
+           } : undefined,
+  actual: props.actual !== undefined ? {
+            set: props.actual 
+           } : undefined,
+  forecast: props.forecast !== undefined ? {
+            set: props.forecast 
+           } : undefined,
+  previous: props.previous !== undefined ? {
+            set: props.previous 
+           } : undefined,
+  unit: props.unit !== undefined ? {
+            set: props.unit 
+           } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -560,6 +602,13 @@ import { logger } from './utils/logger';
   description: props.description !== undefined ? props.description : undefined,
   date: props.date !== undefined ? props.date : undefined,
   importance: props.importance !== undefined ? props.importance : undefined,
+  country: props.country !== undefined ? props.country : undefined,
+  eventTime: props.eventTime !== undefined ? props.eventTime : undefined,
+  actual: props.actual !== undefined ? props.actual : undefined,
+  forecast: props.forecast !== undefined ? props.forecast : undefined,
+  previous: props.previous !== undefined ? props.previous : undefined,
+  unit: props.unit !== undefined ? props.unit : undefined,
+  source: props.source !== undefined ? props.source : undefined,
       },
           update: {
       title: props.title !== undefined ? {
@@ -573,6 +622,27 @@ import { logger } from './utils/logger';
            } : undefined,
   importance: props.importance !== undefined ? {
             set: props.importance 
+           } : undefined,
+  country: props.country !== undefined ? {
+            set: props.country 
+           } : undefined,
+  eventTime: props.eventTime !== undefined ? {
+            set: props.eventTime 
+           } : undefined,
+  actual: props.actual !== undefined ? {
+            set: props.actual 
+           } : undefined,
+  forecast: props.forecast !== undefined ? {
+            set: props.forecast 
+           } : undefined,
+  previous: props.previous !== undefined ? {
+            set: props.previous 
+           } : undefined,
+  unit: props.unit !== undefined ? {
+            set: props.unit 
+           } : undefined,
+  source: props.source !== undefined ? {
+            set: props.source 
            } : undefined,
       },
         };
@@ -744,6 +814,27 @@ import { logger } from './utils/logger';
            } : undefined,
   importance: prop.importance !== undefined ? {
             set: prop.importance 
+           } : undefined,
+  country: prop.country !== undefined ? {
+            set: prop.country 
+           } : undefined,
+  eventTime: prop.eventTime !== undefined ? {
+            set: prop.eventTime 
+           } : undefined,
+  actual: prop.actual !== undefined ? {
+            set: prop.actual 
+           } : undefined,
+  forecast: prop.forecast !== undefined ? {
+            set: prop.forecast 
+           } : undefined,
+  previous: prop.previous !== undefined ? {
+            set: prop.previous 
+           } : undefined,
+  unit: prop.unit !== undefined ? {
+            set: prop.unit 
+           } : undefined,
+  source: prop.source !== undefined ? {
+            set: prop.source 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 

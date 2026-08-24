@@ -25,6 +25,9 @@ import { logger } from './utils/logger';
   category
   topics
   logo
+  symbols
+  relevance
+  publishedAt
   createdAt
   updatedAt
 
@@ -91,6 +94,11 @@ import { logger } from './utils/logger';
     set: props.topics 
   } : undefined,
   logo: props.logo !== undefined ? props.logo : undefined,
+  symbols: props.symbols !== undefined ? {
+    set: props.symbols 
+  } : undefined,
+  relevance: props.relevance !== undefined ? props.relevance : undefined,
+  publishedAt: props.publishedAt !== undefined ? props.publishedAt : undefined,
   assets: props.assets ? 
     Array.isArray(props.assets) && props.assets.length > 0 &&  props.assets.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.assets.map((item) => ({
@@ -406,6 +414,11 @@ import { logger } from './utils/logger';
     set: prop.topics 
   } : undefined,
   logo: prop.logo !== undefined ? prop.logo : undefined,
+  symbols: prop.symbols !== undefined ? {
+    set: prop.symbols 
+  } : undefined,
+  relevance: prop.relevance !== undefined ? prop.relevance : undefined,
+  publishedAt: prop.publishedAt !== undefined ? prop.publishedAt : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -598,6 +611,15 @@ import { logger } from './utils/logger';
            } : undefined,
   logo: props.logo !== undefined ? {
             set: props.logo 
+           } : undefined,
+  symbols: props.symbols !== undefined ? {
+            set: props.symbols 
+           } : undefined,
+  relevance: props.relevance !== undefined ? {
+            set: props.relevance 
+           } : undefined,
+  publishedAt: props.publishedAt !== undefined ? {
+            set: props.publishedAt 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -1342,6 +1364,11 @@ import { logger } from './utils/logger';
     set: props.topics 
   } : undefined,
   logo: props.logo !== undefined ? props.logo : undefined,
+  symbols: props.symbols !== undefined ? {
+    set: props.symbols 
+  } : undefined,
+  relevance: props.relevance !== undefined ? props.relevance : undefined,
+  publishedAt: props.publishedAt !== undefined ? props.publishedAt : undefined,
   assets: props.assets ? 
     Array.isArray(props.assets) && props.assets.length > 0 &&  props.assets.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.assets.map((item) => ({
@@ -1527,6 +1554,15 @@ import { logger } from './utils/logger';
            } : undefined,
   logo: props.logo !== undefined ? {
             set: props.logo 
+           } : undefined,
+  symbols: props.symbols !== undefined ? {
+            set: props.symbols 
+           } : undefined,
+  relevance: props.relevance !== undefined ? {
+            set: props.relevance 
+           } : undefined,
+  publishedAt: props.publishedAt !== undefined ? {
+            set: props.publishedAt 
            } : undefined,
   assets: props.assets ? 
   Array.isArray(props.assets) && props.assets.length > 0 && props.assets.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -2286,6 +2322,15 @@ import { logger } from './utils/logger';
            } : undefined,
   logo: prop.logo !== undefined ? {
             set: prop.logo 
+           } : undefined,
+  symbols: prop.symbols !== undefined ? {
+            set: prop.symbols 
+           } : undefined,
+  relevance: prop.relevance !== undefined ? {
+            set: prop.relevance 
+           } : undefined,
+  publishedAt: prop.publishedAt !== undefined ? {
+            set: prop.publishedAt 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 

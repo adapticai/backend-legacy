@@ -23,10 +23,7 @@ import bodyParser from 'body-parser';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { authMiddleware } from './middleware/auth';
-import {
-  graphqlRateLimiter,
-  authRateLimiter,
-} from './middleware/rate-limiter';
+import { graphqlRateLimiter, authRateLimiter } from './middleware/rate-limiter';
 import { createAuditLogPlugin } from './middleware/audit-logger';
 import { createTenancyScopingMiddleware } from './middleware/tenancy-scoping';
 import { cortexAuthChecker } from './auth/cortex-auth-checker';
@@ -53,6 +50,14 @@ import {
   assertGoogleAudienceConfiguredForProd,
   type BackendPrincipal,
 } from './auth/token-verifier';
+import {
+  recordShadowAuthMiss,
+  recordAuthContextOutcome,
+  extractOperationName,
+  extractOperationNameFromArgs,
+  extractHeaderIdentityFromWsExtra,
+  headerToString,
+} from './auth/graphql-auth-shadow';
 
 import { Request } from 'express';
 import { CorsOptions } from 'cors';
@@ -133,12 +138,15 @@ const startServer = async () => {
   // The boot log satisfies audit B01-backend-legacy-07: a zero decorated-action
   // count means the checker is unreachable and its metrics are meaningless.
   const authzSummary = applyCortexAuthorizationMap();
-  logger.info('[cortex-authz] applied @Authorized coverage (authChecker in shadow unless CORTEX_AUTHCHECKER_ENFORCE)', {
-    fullCoverageModels: authzSummary.fullCoverageModels,
-    deleteCoverageModels: authzSummary.deleteCoverageModels,
-    decoratedActions: authzSummary.decoratedActions,
-    skippedActions: authzSummary.skippedActions.length,
-  });
+  logger.info(
+    '[cortex-authz] applied @Authorized coverage (authChecker in shadow unless CORTEX_AUTHCHECKER_ENFORCE)',
+    {
+      fullCoverageModels: authzSummary.fullCoverageModels,
+      deleteCoverageModels: authzSummary.deleteCoverageModels,
+      decoratedActions: authzSummary.decoratedActions,
+      skippedActions: authzSummary.skippedActions.length,
+    }
+  );
 
   const schema = await buildSchema({
     resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
@@ -220,7 +228,9 @@ const startServer = async () => {
       // No-op when metrics are disabled.
       createMetricsPlugin(),
     ],
-    ...(apqCache && isAPQEnabled() ? { persistedQueries: { cache: apqCache } } : {}),
+    ...(apqCache && isAPQEnabled()
+      ? { persistedQueries: { cache: apqCache } }
+      : {}),
     formatError: (err) => {
       const message = err.message || '';
 
@@ -350,6 +360,21 @@ const startServer = async () => {
         // that requires a principal; this contract preserves the current
         // unauthenticated-public-query path until P0-001 lands.
         if (!token) {
+          // Shadow-observe the would-deny WITHOUT blocking: this null-principal
+          // request is exactly what a principal-required enforcement flip would
+          // reject. Counting + (throttled) logging it here is how we measure the
+          // enforcement blast radius in production before ever flipping it.
+          // See src/auth/graphql-auth-shadow.ts and
+          // docs/security/2026-08-23-graphql-auth-enforcement-runbook.md.
+          const rawBody: unknown = req.body;
+          recordShadowAuthMiss({
+            transport: 'http',
+            operationName: extractOperationName(rawBody),
+            origin: headerToString(req.headers.origin),
+            ip: req.ip,
+            userAgent: headerToString(req.headers['user-agent']),
+            authHeaderPresent: authHeader.length > 0,
+          });
           return { prisma: global.prisma, req, user: null, principal: null };
         }
 
@@ -358,6 +383,7 @@ const startServer = async () => {
         // downgrade to an unverified principal on failure.
         try {
           const principal = await verifyBackendToken(token);
+          recordAuthContextOutcome('http', 'authenticated');
           return {
             prisma: global.prisma,
             req,
@@ -368,8 +394,10 @@ const startServer = async () => {
             principal,
           };
         } catch (e) {
-          const reason =
-            e instanceof AuthError ? e.reason : 'bad_signature';
+          const reason = e instanceof AuthError ? e.reason : 'bad_signature';
+          // Already rejected today (HTTP 401). Counted only to complete the
+          // shadow denominator alongside authenticated / no_principal outcomes.
+          recordAuthContextOutcome('http', 'invalid_token');
           logger.warn('GraphQL HTTP auth rejected', { reason });
           // Throw `UNAUTHENTICATED` so Apollo's HTTP transport returns a
           // GraphQL-shaped error response. The `formatError` hook above
@@ -428,7 +456,7 @@ const startServer = async () => {
   useServer(
     {
       schema,
-      context: async (ctx, _msg, _args) => {
+      context: async (ctx, _msg, args) => {
         // Ensure we're using the global prisma instance for WebSocket connections too
         if (!global.prisma) {
           logger.warn(
@@ -448,6 +476,19 @@ const startServer = async () => {
         // landing in CORTEX-P0-001 will reject any subscription that requires
         // a principal. Until then, public subscriptions continue to work.
         if (!token) {
+          // Shadow-observe the would-deny WITHOUT blocking — the WebSocket
+          // parallel of the HTTP path. Operation name is best-effort from
+          // ExecutionArgs; origin / user-agent / IP come from the upgrade
+          // request carried on ctx.extra.
+          const wsIdentity = extractHeaderIdentityFromWsExtra(ctx.extra);
+          recordShadowAuthMiss({
+            transport: 'ws',
+            operationName: extractOperationNameFromArgs(args),
+            origin: wsIdentity.origin,
+            ip: wsIdentity.ip,
+            userAgent: wsIdentity.userAgent,
+            authHeaderPresent: authHeader.length > 0,
+          });
           return { prisma: global.prisma, user: null, principal: null };
         }
 
@@ -458,14 +499,17 @@ const startServer = async () => {
         // to an unauthenticated socket.
         try {
           const principal = await verifyBackendToken(token);
+          recordAuthContextOutcome('ws', 'authenticated');
           return {
             prisma: global.prisma,
             user: principalToUser(principal),
             principal,
           };
         } catch (e) {
-          const reason =
-            e instanceof AuthError ? e.reason : 'bad_signature';
+          const reason = e instanceof AuthError ? e.reason : 'bad_signature';
+          // Already rejected today (connection closed). Counted only to complete
+          // the shadow denominator alongside authenticated / no_principal.
+          recordAuthContextOutcome('ws', 'invalid_token');
           logger.warn('WebSocket auth rejected — closing connection', {
             reason,
           });
