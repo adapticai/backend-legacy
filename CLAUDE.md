@@ -343,7 +343,23 @@ When debugging backend-legacy issues:
 - **Actual publishing is gated by a dist-content diff**, not the trigger: the workflow builds `dist/` and `diff -r`s it against the published npm tarball (excluding `node_modules`, `package.json`, `package-lock.json`); it version-bumps and publishes only when content differs (or `always-build-npm` is set in `package-npm.json`).
 - **`README-npm.md` IS publish-relevant**: `prepare-package.mjs` copies it to `dist/README.md`, so editing it changes dist content and publishes a new version. Root `README.md` is NOT published.
 - Canonical deploy routines: `~/adapticai/docs/DEPLOY_ROUTINES.md`.
-- Graphify code graph: `graphify-out/` (gitignored; refresh with `../scripts/graphify-refresh.sh backend-legacy`) — query it before grepping, per the mono CLAUDE.md.
+## Codebase Graph — Graphify (query before you grep)
+
+This repo is indexed into a [Graphify](https://github.com/Graphify-Labs/graphify) knowledge graph — the queryable source of truth for how the codegen pipeline, the Apollo/GraphQL server, the auth surface, and the per-model generated type layer actually wire together. Extraction is local tree-sitter AST parsing: deterministic, free, nothing leaves the machine. It earns its keep here specifically because backend-legacy emits one near-identical `.ts` file per Prisma model — hundreds of them, each importing `getApolloClient()` at L4 — so `grep` is noisy; the graph answers "what imports / generates / calls X" precisely.
+
+- **This repo's graph:** `/Users/ravi/adapticai/backend-legacy/graphify-out/graph.json` (gitignored; regenerate any time). The **global cross-repo graph** merging all seven repos lives at `~/.graphify/global-graph.json`.
+- **Query before you grep.** For any codebase question, reach for the graph first:
+  - `graphify query "<question>" --graph /Users/ravi/adapticai/backend-legacy/graphify-out/graph.json` — natural-language BFS over the graph.
+  - Same `--graph …/backend-legacy/graphify-out/graph.json` flag on: `graphify explain "<symbol>"` (a symbol's callers/callees), `graphify path "A" "B"` (how two symbols connect), `graphify affected "<symbol>"` (reverse-impact / blast radius), `graphify god-nodes` (architectural hubs).
+  - Swap in `--graph ~/.graphify/global-graph.json` for cross-repo questions — e.g. how a schema/type change here ripples into engine, utils, and platform.
+- **Refresh** after meaningful edits (schema, codegen, resolvers, auth): run `scripts/graphify-refresh.sh backend-legacy` from `/Users/ravi/adapticai` (incremental, AST-only). The hygiene workflows do this automatically.
+
+Real examples, run against this repo's graph:
+
+- `graphify query "where are GraphQL selection sets generated"` → 90 nodes; surfaces `generateSelections.ts` (`src/modules/generateSelections.ts`) alongside `getApolloClient()` (`src/client.ts:L697`) and `removeUndefinedProps()` (`src/utils.ts:L26`).
+- `graphify explain "verifyBackendToken"` → degree 13; called by `startServer()` (`src/server.ts:L385`) and `authMiddleware()` (`src/middleware/auth.ts:L89`); calls `parseRolesFromJWT()` / `classifyJwtError()` / `getOAuthClient()`.
+
+**Caveat:** the CLI is pinned (`graphifyy==0.9.48`, pre-1.0) — re-verify flags on any upgrade, and never adopt its auto-installed PreToolUse hooks or CLAUDE.md auto-edits; this file is curated by hand.
 
 ## Core Principles
 
