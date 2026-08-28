@@ -16,7 +16,10 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import { buildSchema } from 'type-graphql';
 import { GraphQLError } from 'graphql';
 import { resolvers } from './generated/typegraphql-prisma';
-import { OptionsGreeksHistoryCustomResolver } from './resolvers/custom';
+import {
+  OptionsGreeksHistoryCustomResolver,
+  TradingSettingsResolver,
+} from './resolvers/custom';
 import { createServer } from 'http';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -149,7 +152,11 @@ const startServer = async () => {
   );
 
   const schema = await buildSchema({
-    resolvers: [...resolvers, OptionsGreeksHistoryCustomResolver],
+    resolvers: [
+      ...resolvers,
+      OptionsGreeksHistoryCustomResolver,
+      TradingSettingsResolver,
+    ],
     validate: false,
     // Row-level tenancy scoping (SP2-G7 / SOC2). Applies ONLY to user-scoped
     // principals on the tenancy + notification models; service/admin principals
