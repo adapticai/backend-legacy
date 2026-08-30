@@ -51,6 +51,42 @@ Communicate with precision and intellectual honesty. Explain tradeoffs, root cau
 
 Do not behave like a task-completion assistant. Behave like an owner, an architect, a systems thinker, and a long-term steward of a mission-critical platform.
 
+## Functional Architecture & Agent Engineering Rules
+
+**Canonical doctrine:** the monorepo-wide engineering shape — **deterministic decision core · explicit stateful runtime · isolated external adapters** — and the first-principles reason it is correct for a latency-sensitive, stateful, stochastic, regulated trading system live in [`docs/ENGINEERING_DOCTRINE.md`](../docs/ENGINEERING_DOCTRINE.md) (`~/adapticai/docs/ENGINEERING_DOCTRINE.md`). This section is backend-legacy's binding extract. It is **additive** to the Ownership & Execution Doctrine above and to the trading doctrines in [`~/adapticai/CLAUDE.md`](../CLAUDE.md) (Trade-Lifecycle · Direct-to-Live vs Shadow-Graduate · First-Principles Predictive Posture) — it never overrides or relaxes them.
+
+**This package's place in the shape.** backend-legacy is the monorepo's **canonical domain-modeling layer** and the **external-effect boundary for all Adaptic-domain persistence** (Doctrine §3, categories A + C). Two of its responsibilities are load-bearing across every consuming repo:
+
+- **Strong domain modeling lives here (Doctrine §9).** `prisma/schema.prisma` is where money- and risk-carrying concepts (`Price`, `Quantity`, `OrderSide`, `OrderStatus`, `RiskDecision`, and the governance/provenance models) are given their canonical shape for the whole platform. Make invalid financial/execution states hard to construct **at the schema level** — prefer enums, explicit lifecycle variants, constraints, and non-null invariants over a bag of optional fields that admits nonsense combinations. A weakly-modeled type here becomes institutional debt in six downstream repos.
+- **Effect isolation lives here (Doctrine §3-C, §10).** Resolvers, the Apollo/Prisma layer, and the codegen pipeline are the effect boundary. Extract deterministic domain logic (validation predicates, allocation-sum checks, input normalization) **out** of the effectful resolver so it is unit-testable without a DB, and normalize DB/broker/GraphQL failures into typed, coded outcomes (`BaseError`/`AppError`) at that boundary — no Prisma or vendor exception detail should leak into the generated type surface.
+
+### Mandatory Agent Engineering Rules (§51)
+
+Every agent touching this package inherits these — the Doctrine §15 "Do" list, made concrete for backend-legacy:
+
+1. **Prefer deterministic functions for domain decisions; isolate external effects.** A validation / authorization / allocation decision should be a pure function of explicit inputs, extracted from the resolver that fetches them. The resolver gathers; the pure predicate decides; the persistence layer acts.
+2. **Make important dependencies explicit.** Pass `now`, auth context, the token provider, and the Apollo/Prisma client in — never read a hidden clock or `process.env` from inside domain logic, and do not `.getInstance()`-bypass the established singletons (`getApolloClient()`, `prismaClient`).
+3. **Immutable outside performance-sensitive internals.** Prefer immutable values; localized mutation is legitimate where it is **justified, bounded, and documented** (the APQ LRU cache, codegen accumulators, connection-pool state).
+4. **Never sacrifice latency/throughput for stylistic purity.** This GraphQL server fronts the entire platform; **benchmark before/after** any change to the resolver · Apollo · Prisma · codegen path, and do not fracture a coherent path into indirection layers to satisfy "composition."
+5. **Treat LLM/model stochasticity explicitly and record provenance.** This package **owns** the provenance store (`SignalLineage`, `SignalOutcome`, `MLModelVersion`, `ModelArtifact`, `AuditLog`, `TradeAuditEvent`). Model it strongly enough that any engine-consumed model output stays traceable to the model, version, prompt, and inputs that produced it.
+6. **Make state transitions explicit; model important domain states strongly; make invalid states hard to construct.** Order / position / signal / approval lifecycles get explicit variants at the schema level, each carrying only the fields valid in that state — not a superset of optional timestamps and reasons.
+7. **Expected failures explicit; keep broker/vendor concerns out of the core; idempotency around irreversible effects.** DB and broker rejections are first-class typed outcomes, not a generic `catch (error)`; mutations that must not double-apply carry idempotency keys.
+8. **No silent failure.** No swallowed catch, no `?? 0` on a measured quantity, no default that turns absence into a value. Unknown stays unknown all the way to the consumer (CLAUDE.md Delivery Standard #5) — doubly binding inside a fix for a silent failure.
+9. **Preserve live/backtest/sim parity — never silently change behavior in a structural refactor.** The types, selection sets, typeStrings, and CRUD surface generated here flow through every runtime, so a mechanical change to any of them is a **behavioral** change across the monorepo. Never alter the generated type/CRUD surface — or any strategy-affecting semantic — under cover of a refactor; if the output moves, it is a behavioral change and must be treated (and reviewed) as one.
+10. **Discipline on the edges.** No synchronous audit/telemetry write on a hot path without a genuine-precondition justification (Doctrine §12); **test the invariants** (money math, order-state transitions, allocation sums, serialization round-trips, `filledQuantity ≤ quantity`) with **mutation-proof tests** (Delivery Standard #3 — the test must fail without the change); **avoid unnecessary abstraction** (no cargo-culted monads, point-free style, or nested `Result<Option<Either<…>>>` — idiomatic TypeScript in the repo's existing style); and **improve the surrounding architecture when you touch legacy code** (the Ownership & Execution Doctrine above is not optional).
+
+### Self-Review Before "Done" (§52)
+
+Confirm each before declaring work complete, then run the gates (`npm run build` · `npm run lint` · `npm run test`, plus downstream typecheck for any schema/type change):
+
+- [ ] **Determinism & effects** — Could this decision be a pure function? Are its dependencies explicit? Are effects isolated at the resolver/adapter boundary rather than mixed into domain logic?
+- [ ] **Domain modeling** — Are new money/risk/lifecycle concepts modeled strongly at the schema level, with invalid states unrepresentable rather than merely validated downstream?
+- [ ] **Provenance** — For any governance / model / audit data, is enough captured to explain a downstream decision months later?
+- [ ] **No silent failure** — No swallowed error, no `?? 0` on a measured quantity, no default that turns "unknown" into a value?
+- [ ] **Parity & surface** — Did a "refactor" silently move the generated type / CRUD / selection-set surface or a strategy-affecting semantic? If so, treat and review it as the behavioral change it is.
+- [ ] **Performance** — Did I add unbenchmarked work to the resolver/codegen hot path, or unnecessary abstraction/indirection?
+- [ ] **Tests** — Do the invariant tests fail without my change (mutation-proven), and are the downstream consumers (`engine`, `utils`) still green?
+
 ## Critical Role
 
 This package OWNS all Prisma-generated canonical types (67 models, 73 enums as of 2026-05-22; verify with `grep -c '^model ' prisma/schema.prisma` and `grep -c '^enum ' prisma/schema.prisma`). All other packages depend on these types. Changes here propagate across the entire monorepo.
