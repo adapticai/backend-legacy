@@ -14,6 +14,7 @@ import { logger } from './utils/logger';
   id
   tradeId
   symbol
+  side
   assetClass
   accountId
   entryPrice
@@ -27,6 +28,7 @@ import { logger } from './utils/logger';
   maxAdverseExcursionPct
   maxFavorableExcursionPct
   signalSource
+  signalSourceType
   transformerConfidence
   llmConfidence
   ensembleConfidence
@@ -84,6 +86,7 @@ import { logger } from './utils/logger';
             data: {
                 tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
+  side: props.side !== undefined ? props.side : undefined,
   assetClass: props.assetClass !== undefined ? props.assetClass : undefined,
   accountId: props.accountId !== undefined ? props.accountId : undefined,
   entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
@@ -97,6 +100,7 @@ import { logger } from './utils/logger';
   maxAdverseExcursionPct: props.maxAdverseExcursionPct !== undefined ? props.maxAdverseExcursionPct : undefined,
   maxFavorableExcursionPct: props.maxFavorableExcursionPct !== undefined ? props.maxFavorableExcursionPct : undefined,
   signalSource: props.signalSource !== undefined ? props.signalSource : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? props.signalSourceType : undefined,
   transformerConfidence: props.transformerConfidence !== undefined ? props.transformerConfidence : undefined,
   llmConfidence: props.llmConfidence !== undefined ? props.llmConfidence : undefined,
   ensembleConfidence: props.ensembleConfidence !== undefined ? props.ensembleConfidence : undefined,
@@ -258,6 +262,7 @@ import { logger } from './utils/logger';
           data: props.map(prop => ({
       tradeId: prop.tradeId !== undefined ? prop.tradeId : undefined,
   symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  side: prop.side !== undefined ? prop.side : undefined,
   assetClass: prop.assetClass !== undefined ? prop.assetClass : undefined,
   accountId: prop.accountId !== undefined ? prop.accountId : undefined,
   entryPrice: prop.entryPrice !== undefined ? prop.entryPrice : undefined,
@@ -271,6 +276,7 @@ import { logger } from './utils/logger';
   maxAdverseExcursionPct: prop.maxAdverseExcursionPct !== undefined ? prop.maxAdverseExcursionPct : undefined,
   maxFavorableExcursionPct: prop.maxFavorableExcursionPct !== undefined ? prop.maxFavorableExcursionPct : undefined,
   signalSource: prop.signalSource !== undefined ? prop.signalSource : undefined,
+  signalSourceType: prop.signalSourceType !== undefined ? prop.signalSourceType : undefined,
   transformerConfidence: prop.transformerConfidence !== undefined ? prop.transformerConfidence : undefined,
   llmConfidence: prop.llmConfidence !== undefined ? prop.llmConfidence : undefined,
   ensembleConfidence: prop.ensembleConfidence !== undefined ? prop.ensembleConfidence : undefined,
@@ -437,6 +443,9 @@ import { logger } from './utils/logger';
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
            } : undefined,
+  side: props.side !== undefined ? {
+            set: props.side 
+           } : undefined,
   assetClass: props.assetClass !== undefined ? {
             set: props.assetClass 
            } : undefined,
@@ -475,6 +484,9 @@ import { logger } from './utils/logger';
            } : undefined,
   signalSource: props.signalSource !== undefined ? {
             set: props.signalSource 
+           } : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? {
+            set: props.signalSourceType 
            } : undefined,
   transformerConfidence: props.transformerConfidence !== undefined ? {
             set: props.transformerConfidence 
@@ -664,6 +676,7 @@ import { logger } from './utils/logger';
           create: {
         tradeId: props.tradeId !== undefined ? props.tradeId : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
+  side: props.side !== undefined ? props.side : undefined,
   assetClass: props.assetClass !== undefined ? props.assetClass : undefined,
   accountId: props.accountId !== undefined ? props.accountId : undefined,
   entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
@@ -677,6 +690,7 @@ import { logger } from './utils/logger';
   maxAdverseExcursionPct: props.maxAdverseExcursionPct !== undefined ? props.maxAdverseExcursionPct : undefined,
   maxFavorableExcursionPct: props.maxFavorableExcursionPct !== undefined ? props.maxFavorableExcursionPct : undefined,
   signalSource: props.signalSource !== undefined ? props.signalSource : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? props.signalSourceType : undefined,
   transformerConfidence: props.transformerConfidence !== undefined ? props.transformerConfidence : undefined,
   llmConfidence: props.llmConfidence !== undefined ? props.llmConfidence : undefined,
   ensembleConfidence: props.ensembleConfidence !== undefined ? props.ensembleConfidence : undefined,
@@ -690,6 +704,9 @@ import { logger } from './utils/logger';
            } : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
+           } : undefined,
+  side: props.side !== undefined ? {
+            set: props.side 
            } : undefined,
   assetClass: props.assetClass !== undefined ? {
             set: props.assetClass 
@@ -729,6 +746,9 @@ import { logger } from './utils/logger';
            } : undefined,
   signalSource: props.signalSource !== undefined ? {
             set: props.signalSource 
+           } : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? {
+            set: props.signalSourceType 
            } : undefined,
   transformerConfidence: props.transformerConfidence !== undefined ? {
             set: props.transformerConfidence 
@@ -911,6 +931,9 @@ import { logger } from './utils/logger';
   symbol: prop.symbol !== undefined ? {
             set: prop.symbol 
            } : undefined,
+  side: prop.side !== undefined ? {
+            set: prop.side 
+           } : undefined,
   assetClass: prop.assetClass !== undefined ? {
             set: prop.assetClass 
            } : undefined,
@@ -949,6 +972,9 @@ import { logger } from './utils/logger';
            } : undefined,
   signalSource: prop.signalSource !== undefined ? {
             set: prop.signalSource 
+           } : undefined,
+  signalSourceType: prop.signalSourceType !== undefined ? {
+            set: prop.signalSourceType 
            } : undefined,
   transformerConfidence: prop.transformerConfidence !== undefined ? {
             set: prop.transformerConfidence 

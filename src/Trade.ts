@@ -24,6 +24,7 @@ import { logger } from './utils/logger';
   status
   deletedAt
   symbol
+  side
   actions {
     id
     sequence
@@ -38,6 +39,7 @@ import { logger } from './utils/logger';
     alpacaOrderId
     supersededActionId
     triggerSource
+    triggerSourceType
   }
   entryPrice
   exitPrice
@@ -59,9 +61,12 @@ import { logger } from './utils/logger';
   supersededById
   rejectionMetadata
   signalSource
+  signalSourceType
   signalId
   pathway
+  pathwayType
   exitTier
+  exitTierType
 
   `;
 
@@ -119,6 +124,7 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? props.status : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
+  side: props.side !== undefined ? props.side : undefined,
   entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
   exitPrice: props.exitPrice !== undefined ? props.exitPrice : undefined,
   entryQty: props.entryQty !== undefined ? props.entryQty : undefined,
@@ -139,9 +145,12 @@ import { logger } from './utils/logger';
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
   signalSource: props.signalSource !== undefined ? props.signalSource : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? props.signalSourceType : undefined,
   signalId: props.signalId !== undefined ? props.signalId : undefined,
   pathway: props.pathway !== undefined ? props.pathway : undefined,
+  pathwayType: props.pathwayType !== undefined ? props.pathwayType : undefined,
   exitTier: props.exitTier !== undefined ? props.exitTier : undefined,
+  exitTierType: props.exitTierType !== undefined ? props.exitTierType : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item) => ({
@@ -172,6 +181,7 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
         triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? item.triggerSourceType : undefined,
       },
     }))
   } : undefined,
@@ -338,6 +348,7 @@ import { logger } from './utils/logger';
   status: prop.status !== undefined ? prop.status : undefined,
   deletedAt: prop.deletedAt !== undefined ? prop.deletedAt : undefined,
   symbol: prop.symbol !== undefined ? prop.symbol : undefined,
+  side: prop.side !== undefined ? prop.side : undefined,
   entryPrice: prop.entryPrice !== undefined ? prop.entryPrice : undefined,
   exitPrice: prop.exitPrice !== undefined ? prop.exitPrice : undefined,
   entryQty: prop.entryQty !== undefined ? prop.entryQty : undefined,
@@ -358,9 +369,12 @@ import { logger } from './utils/logger';
   supersededById: prop.supersededById !== undefined ? prop.supersededById : undefined,
   rejectionMetadata: prop.rejectionMetadata !== undefined ? prop.rejectionMetadata : undefined,
   signalSource: prop.signalSource !== undefined ? prop.signalSource : undefined,
+  signalSourceType: prop.signalSourceType !== undefined ? prop.signalSourceType : undefined,
   signalId: prop.signalId !== undefined ? prop.signalId : undefined,
   pathway: prop.pathway !== undefined ? prop.pathway : undefined,
+  pathwayType: prop.pathwayType !== undefined ? prop.pathwayType : undefined,
   exitTier: prop.exitTier !== undefined ? prop.exitTier : undefined,
+  exitTierType: prop.exitTierType !== undefined ? prop.exitTierType : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -551,6 +565,9 @@ import { logger } from './utils/logger';
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
            } : undefined,
+  side: props.side !== undefined ? {
+            set: props.side 
+           } : undefined,
   entryPrice: props.entryPrice !== undefined ? {
             set: props.entryPrice 
            } : undefined,
@@ -609,14 +626,23 @@ import { logger } from './utils/logger';
   signalSource: props.signalSource !== undefined ? {
             set: props.signalSource 
            } : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? {
+            set: props.signalSourceType 
+           } : undefined,
   signalId: props.signalId !== undefined ? {
             set: props.signalId 
            } : undefined,
   pathway: props.pathway !== undefined ? {
             set: props.pathway 
            } : undefined,
+  pathwayType: props.pathwayType !== undefined ? {
+            set: props.pathwayType 
+           } : undefined,
   exitTier: props.exitTier !== undefined ? {
             set: props.exitTier 
+           } : undefined,
+  exitTierType: props.exitTierType !== undefined ? {
+            set: props.exitTierType 
            } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -671,6 +697,9 @@ import { logger } from './utils/logger';
         triggerSource: item.triggerSource !== undefined ? {
             set: item.triggerSource
           } : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? {
+            set: item.triggerSourceType
+          } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -682,6 +711,7 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
         triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? item.triggerSourceType : undefined,
       },
     }))
   } : undefined,
@@ -862,6 +892,7 @@ import { logger } from './utils/logger';
   status: props.status !== undefined ? props.status : undefined,
   deletedAt: props.deletedAt !== undefined ? props.deletedAt : undefined,
   symbol: props.symbol !== undefined ? props.symbol : undefined,
+  side: props.side !== undefined ? props.side : undefined,
   entryPrice: props.entryPrice !== undefined ? props.entryPrice : undefined,
   exitPrice: props.exitPrice !== undefined ? props.exitPrice : undefined,
   entryQty: props.entryQty !== undefined ? props.entryQty : undefined,
@@ -882,9 +913,12 @@ import { logger } from './utils/logger';
   supersededById: props.supersededById !== undefined ? props.supersededById : undefined,
   rejectionMetadata: props.rejectionMetadata !== undefined ? props.rejectionMetadata : undefined,
   signalSource: props.signalSource !== undefined ? props.signalSource : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? props.signalSourceType : undefined,
   signalId: props.signalId !== undefined ? props.signalId : undefined,
   pathway: props.pathway !== undefined ? props.pathway : undefined,
+  pathwayType: props.pathwayType !== undefined ? props.pathwayType : undefined,
   exitTier: props.exitTier !== undefined ? props.exitTier : undefined,
+  exitTierType: props.exitTierType !== undefined ? props.exitTierType : undefined,
   actions: props.actions ? 
     Array.isArray(props.actions) && props.actions.length > 0 &&  props.actions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
       connect:    props.actions.map((item) => ({
@@ -915,6 +949,7 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
         triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? item.triggerSourceType : undefined,
       },
     }))
   } : undefined,
@@ -949,6 +984,9 @@ import { logger } from './utils/logger';
            } : undefined,
   symbol: props.symbol !== undefined ? {
             set: props.symbol 
+           } : undefined,
+  side: props.side !== undefined ? {
+            set: props.side 
            } : undefined,
   entryPrice: props.entryPrice !== undefined ? {
             set: props.entryPrice 
@@ -1008,14 +1046,23 @@ import { logger } from './utils/logger';
   signalSource: props.signalSource !== undefined ? {
             set: props.signalSource 
            } : undefined,
+  signalSourceType: props.signalSourceType !== undefined ? {
+            set: props.signalSourceType 
+           } : undefined,
   signalId: props.signalId !== undefined ? {
             set: props.signalId 
            } : undefined,
   pathway: props.pathway !== undefined ? {
             set: props.pathway 
            } : undefined,
+  pathwayType: props.pathwayType !== undefined ? {
+            set: props.pathwayType 
+           } : undefined,
   exitTier: props.exitTier !== undefined ? {
             set: props.exitTier 
+           } : undefined,
+  exitTierType: props.exitTierType !== undefined ? {
+            set: props.exitTierType 
            } : undefined,
   actions: props.actions ? 
   Array.isArray(props.actions) && props.actions.length > 0 && props.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -1070,6 +1117,9 @@ import { logger } from './utils/logger';
         triggerSource: item.triggerSource !== undefined ? {
             set: item.triggerSource
           } : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? {
+            set: item.triggerSourceType
+          } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -1081,6 +1131,7 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
         triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? item.triggerSourceType : undefined,
       },
     }))
   } : undefined,
@@ -1279,6 +1330,9 @@ import { logger } from './utils/logger';
   symbol: prop.symbol !== undefined ? {
             set: prop.symbol 
            } : undefined,
+  side: prop.side !== undefined ? {
+            set: prop.side 
+           } : undefined,
   entryPrice: prop.entryPrice !== undefined ? {
             set: prop.entryPrice 
            } : undefined,
@@ -1337,14 +1391,23 @@ import { logger } from './utils/logger';
   signalSource: prop.signalSource !== undefined ? {
             set: prop.signalSource 
            } : undefined,
+  signalSourceType: prop.signalSourceType !== undefined ? {
+            set: prop.signalSourceType 
+           } : undefined,
   signalId: prop.signalId !== undefined ? {
             set: prop.signalId 
            } : undefined,
   pathway: prop.pathway !== undefined ? {
             set: prop.pathway 
            } : undefined,
+  pathwayType: prop.pathwayType !== undefined ? {
+            set: prop.pathwayType 
+           } : undefined,
   exitTier: prop.exitTier !== undefined ? {
             set: prop.exitTier 
+           } : undefined,
+  exitTierType: prop.exitTierType !== undefined ? {
+            set: prop.exitTierType 
            } : undefined,
   actions: prop.actions ? 
   Array.isArray(prop.actions) && prop.actions.length > 0 && prop.actions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
@@ -1399,6 +1462,9 @@ import { logger } from './utils/logger';
         triggerSource: item.triggerSource !== undefined ? {
             set: item.triggerSource
           } : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? {
+            set: item.triggerSourceType
+          } : undefined,
       },
       create: {
         sequence: item.sequence !== undefined ? item.sequence : undefined,
@@ -1410,6 +1476,7 @@ import { logger } from './utils/logger';
         alpacaOrderId: item.alpacaOrderId !== undefined ? item.alpacaOrderId : undefined,
         supersededActionId: item.supersededActionId !== undefined ? item.supersededActionId : undefined,
         triggerSource: item.triggerSource !== undefined ? item.triggerSource : undefined,
+        triggerSourceType: item.triggerSourceType !== undefined ? item.triggerSourceType : undefined,
       },
     }))
   } : undefined,

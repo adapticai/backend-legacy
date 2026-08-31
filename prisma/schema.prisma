@@ -365,6 +365,94 @@ enum TradeStatus {
   FAILED
 }
 
+// === Wave F (F8.3 / F8.4) — canonical decision/attribution axes as typed enums ===
+// Additive typed domains for axes historically stored as free String, or (for direction)
+// re-derived from order verbs. The paired columns are NULLABLE and dual-written; the legacy
+// String columns are RETAINED for back-compat and dropped only in a later coordinated change.
+
+// Derived position direction (thesis side) for a trade or realized outcome.
+enum TradeSide {
+  /// Net-bullish thesis: the position profits when the name rises.
+  LONG
+
+  /// Net-bearish thesis: the position profits when the name falls.
+  SHORT
+}
+
+// Upstream ensemble producer that emitted the merged signal behind a trade/outcome. Typed
+// domain of the legacy free-string `signalSource` (whose live values are lowercase, e.g.
+// "ensemble" | "llm_only"); the dual-write mapper normalises case to these members.
+enum TradeSignalSource {
+  /// Blended transformer + LLM ensemble signal.
+  ENSEMBLE
+
+  /// LLM-only decision path (no transformer contribution).
+  LLM_ONLY
+
+  /// Transformer-only decision path (no LLM contribution).
+  TRANSFORMER_ONLY
+
+  /// Drift-fallback path taken when the primary producers were unavailable or degraded.
+  DRIFT_FALLBACK
+
+  /// Manually initiated (operator) trade.
+  MANUAL
+}
+
+// High-level decision pathway that produced a trade. Mirrors the engine ML-system
+// DecisionPathway; typed domain of the legacy free-string `pathway`.
+enum DecisionPathway {
+  /// Decision made purely by the ML / transformer stack.
+  ML_ONLY
+
+  /// Decision made purely by the LLM.
+  LLM_ONLY
+
+  /// Blended ML + LLM decision.
+  HYBRID
+
+  /// Fallback path taken when the primary pathways were unavailable.
+  FALLBACK
+
+  /// Deterministic rules-engine decision.
+  RULES
+
+  /// Pathway could not be determined.
+  UNKNOWN
+}
+
+// Exit-tier classification for exit trades. Typed domain of the legacy free-string
+// `exitTier`; NULL on open trades.
+enum ExitTier {
+  /// Tier A — volatility / regime circuit-breaker exit.
+  TIER_A
+
+  /// Tier B — engine-internal stop-logic exit.
+  TIER_B
+
+  /// Tier C — LLM advisory re-evaluation exit.
+  TIER_C
+
+  /// Manually initiated (operator) exit.
+  MANUAL
+
+  /// End-of-day flatten exit.
+  EOD
+}
+
+// What triggered an action within a trade. Typed domain of the legacy free-string
+// `triggerSource`.
+enum ActionTriggerSource {
+  /// The original entry signal.
+  ORIGINAL_SIGNAL
+
+  /// A re-underwriting re-evaluation of the standing thesis.
+  REUNDERWRITING
+
+  /// A reversal response (thesis flip / hard-close).
+  REVERSAL
+}
+
 // Categorizes the types of alerts that can be generated.
 enum AlertType {
   /// Indicates a successful operation or event.
@@ -1939,6 +2027,9 @@ model Trade {
   /// The symbol of the asset associated with this trade.
   symbol String
 
+  /// Wave F — Derived position direction for this trade's persistent per-name thesis (the NameThesis home). NULL until the thesis is formed/backfilled; nothing reads it yet — consumers switch shadow-first later. Set explicitly at trade creation from the derived directional call — NOT re-derived from Action.type BUY/SELL, which is order-verb-ambiguous (BUY = open-long | cover-short; SELL = close-long | open-short).
+  side TradeSide?
+
   /// List of actions associated with this trade. TYPESTRING.INCLUDE=["id","sequence","type","note","status", "order"] GQL.EXCLUDE=['trade']
   actions Action[]
 
@@ -2002,14 +2093,23 @@ model Trade {
   /// Wave 234 — Upstream ensemble signal source that produced this trade. One of "ensemble" | "llm_only" | "transformer_only" | "drift_fallback" | "manual". Populated at trade creation from `TradeSideAndSignal.metadata.signalSource`. Consumed at exit-fill time to populate `TradeOutcome.signalSource` (replacing the legacy hardcoded "ensemble" default in `order-fill-handler.ts:labelExitOutcomeFromFill`). Calibration trainer joins on this for cohort partition.
   signalSource String?
 
+  /// Wave F — Typed mirror of `signalSource` (dual-write). NULL until backfilled from the paired String by mapping known members (case-normalised); unmappable values stay NULL — unknown stays unknown, never defaulted to a member. Retained alongside the String until a later coordinated change drops the String. TYPESTRING.SKIP=true
+  signalSourceType TradeSignalSource?
+
   /// Wave 234 — Unique signal identifier (UUID, cuid-style) from the upstream TradeSignalEvent. Threaded end-to-end so live-IC computation can correlate (signal_score, forward_return) on a one-to-one basis. Joined to `PredictionPair.tradeId` (which Wave 213 populated with `signal.signalId`) at calibration training time. TYPESTRING.SKIP=true
   signalId String?
 
   /// Wave 234 — Decision pathway as a free-form string (matches the ML system DecisionPathway enum: ML_ONLY | LLM_ONLY | HYBRID | FALLBACK | RULES | UNKNOWN). Carried separately from signalSource to support richer attribution analytics: signalSource describes which producer emitted the merged signal; pathway describes the high-level decision pathway (the typed system enum). TYPESTRING.SKIP=true
   pathway String?
 
+  /// Wave F — Typed mirror of `pathway` (dual-write). NULL until backfilled from the paired String; unmappable values stay NULL. Retained alongside the String until a later coordinated change drops the String. TYPESTRING.SKIP=true
+  pathwayType DecisionPathway?
+
   /// Wave 236 — Exit tier classification (TIER_A | TIER_B | TIER_C | MANUAL | EOD) for exit trades. NULL on open trades. Populated when the exit is initiated by the exit-framework orchestrator (Tier A = volatility/regime circuit breakers; Tier B = engine-internal stop logic; Tier C = LLM advisory re-evaluation). Refines `TradeOutcome.exitReason` (which is derived from order shape) with the upstream decision tier. TYPESTRING.SKIP=true
   exitTier String?
+
+  /// Wave F — Typed mirror of `exitTier` (dual-write). NULL on open trades and until backfilled from the paired String; unmappable values stay NULL. Retained alongside the String until a later coordinated change drops the String. TYPESTRING.SKIP=true
+  exitTierType ExitTier?
 
   @@index([alpacaAccountId])
   @@index([alpacaAccountId, status])
@@ -2062,6 +2162,9 @@ model Action {
 
   /// What triggered this action: 'original_signal', 'reunderwriting', or 'reversal'. TYPESTRING.SKIP=true
   triggerSource String?
+
+  /// Wave F — Typed mirror of `triggerSource` (dual-write). NULL until backfilled from the paired String; unmappable values stay NULL. Retained alongside the String until a later coordinated change drops the String. TYPESTRING.SKIP=true
+  triggerSourceType ActionTriggerSource?
 
   @@index([tradeId])
   @@index([tradeId, status])
@@ -5332,6 +5435,8 @@ model TradeOutcome {
   id                       String   @id @default(cuid())
   tradeId                  String?
   symbol                   String
+  /// Wave F — Position direction the realized outcome was underwriting. NULL until backfilled/dual-written. Lets realized grossReturnPct/netReturnPct be partitioned by side without re-deriving from price action.
+  side                     TradeSide?
   assetClass               String
   accountId                String
   entryPrice               Float
@@ -5345,6 +5450,8 @@ model TradeOutcome {
   maxAdverseExcursionPct   Float
   maxFavorableExcursionPct Float
   signalSource             String
+  /// Wave F — Typed mirror of `signalSource` (dual-write). NULL until backfilled from the paired String; unmappable values stay NULL. Retained alongside the String until a later coordinated change drops the String.
+  signalSourceType         TradeSignalSource?
   transformerConfidence    Float?
   llmConfidence            Float?
   ensembleConfidence       Float

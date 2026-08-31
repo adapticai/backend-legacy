@@ -24,6 +24,7 @@ import { logger } from './utils/logger';
   alpacaOrderId
   supersededActionId
   triggerSource
+  triggerSourceType
 
   `;
 
@@ -80,6 +81,7 @@ import { logger } from './utils/logger';
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   supersededActionId: props.supersededActionId !== undefined ? props.supersededActionId : undefined,
   triggerSource: props.triggerSource !== undefined ? props.triggerSource : undefined,
+  triggerSourceType: props.triggerSourceType !== undefined ? props.triggerSourceType : undefined,
   trade: props.trade ? 
     typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && Object.keys(props.trade)[0] === 'id'
     ? { connect: {
@@ -113,6 +115,7 @@ import { logger } from './utils/logger';
         status: props.trade.status !== undefined ? props.trade.status : undefined,
         deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
+        side: props.trade.side !== undefined ? props.trade.side : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
         entryQty: props.trade.entryQty !== undefined ? props.trade.entryQty : undefined,
@@ -133,9 +136,12 @@ import { logger } from './utils/logger';
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
         rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
         signalSource: props.trade.signalSource !== undefined ? props.trade.signalSource : undefined,
+        signalSourceType: props.trade.signalSourceType !== undefined ? props.trade.signalSourceType : undefined,
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
+        pathwayType: props.trade.pathwayType !== undefined ? props.trade.pathwayType : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+        exitTierType: props.trade.exitTierType !== undefined ? props.trade.exitTierType : undefined,
       },
     }
   } : undefined,
@@ -302,6 +308,7 @@ import { logger } from './utils/logger';
   alpacaOrderId: prop.alpacaOrderId !== undefined ? prop.alpacaOrderId : undefined,
   supersededActionId: prop.supersededActionId !== undefined ? prop.supersededActionId : undefined,
   triggerSource: prop.triggerSource !== undefined ? prop.triggerSource : undefined,
+  triggerSourceType: prop.triggerSourceType !== undefined ? prop.triggerSourceType : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -489,6 +496,9 @@ import { logger } from './utils/logger';
   triggerSource: props.triggerSource !== undefined ? {
             set: props.triggerSource 
            } : undefined,
+  triggerSourceType: props.triggerSourceType !== undefined ? {
+            set: props.triggerSourceType 
+           } : undefined,
   trade: props.trade ? 
   typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && (Object.keys(props.trade)[0] === 'id' || Object.keys(props.trade)[0] === 'symbol')
 ? {
@@ -550,6 +560,9 @@ import { logger } from './utils/logger';
         symbol: props.trade.symbol !== undefined ? {
             set: props.trade.symbol
           } : undefined,
+        side: props.trade.side !== undefined ? {
+            set: props.trade.side
+          } : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? {
             set: props.trade.entryPrice
           } : undefined,
@@ -608,14 +621,23 @@ import { logger } from './utils/logger';
         signalSource: props.trade.signalSource !== undefined ? {
             set: props.trade.signalSource
           } : undefined,
+        signalSourceType: props.trade.signalSourceType !== undefined ? {
+            set: props.trade.signalSourceType
+          } : undefined,
         signalId: props.trade.signalId !== undefined ? {
             set: props.trade.signalId
           } : undefined,
         pathway: props.trade.pathway !== undefined ? {
             set: props.trade.pathway
           } : undefined,
+        pathwayType: props.trade.pathwayType !== undefined ? {
+            set: props.trade.pathwayType
+          } : undefined,
         exitTier: props.trade.exitTier !== undefined ? {
             set: props.trade.exitTier
+          } : undefined,
+        exitTierType: props.trade.exitTierType !== undefined ? {
+            set: props.trade.exitTierType
           } : undefined,
       },
       create: {
@@ -629,6 +651,7 @@ import { logger } from './utils/logger';
         status: props.trade.status !== undefined ? props.trade.status : undefined,
         deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
+        side: props.trade.side !== undefined ? props.trade.side : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
         entryQty: props.trade.entryQty !== undefined ? props.trade.entryQty : undefined,
@@ -649,9 +672,12 @@ import { logger } from './utils/logger';
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
         rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
         signalSource: props.trade.signalSource !== undefined ? props.trade.signalSource : undefined,
+        signalSourceType: props.trade.signalSourceType !== undefined ? props.trade.signalSourceType : undefined,
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
+        pathwayType: props.trade.pathwayType !== undefined ? props.trade.pathwayType : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+        exitTierType: props.trade.exitTierType !== undefined ? props.trade.exitTierType : undefined,
       },
     }
   } : undefined,
@@ -829,6 +855,7 @@ import { logger } from './utils/logger';
   alpacaOrderId: props.alpacaOrderId !== undefined ? props.alpacaOrderId : undefined,
   supersededActionId: props.supersededActionId !== undefined ? props.supersededActionId : undefined,
   triggerSource: props.triggerSource !== undefined ? props.triggerSource : undefined,
+  triggerSourceType: props.triggerSourceType !== undefined ? props.triggerSourceType : undefined,
   trade: props.trade ? 
     typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && Object.keys(props.trade)[0] === 'id'
     ? { connect: {
@@ -862,6 +889,7 @@ import { logger } from './utils/logger';
         status: props.trade.status !== undefined ? props.trade.status : undefined,
         deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
+        side: props.trade.side !== undefined ? props.trade.side : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
         entryQty: props.trade.entryQty !== undefined ? props.trade.entryQty : undefined,
@@ -882,9 +910,12 @@ import { logger } from './utils/logger';
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
         rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
         signalSource: props.trade.signalSource !== undefined ? props.trade.signalSource : undefined,
+        signalSourceType: props.trade.signalSourceType !== undefined ? props.trade.signalSourceType : undefined,
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
+        pathwayType: props.trade.pathwayType !== undefined ? props.trade.pathwayType : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+        exitTierType: props.trade.exitTierType !== undefined ? props.trade.exitTierType : undefined,
       },
     }
   } : undefined,
@@ -916,6 +947,9 @@ import { logger } from './utils/logger';
            } : undefined,
   triggerSource: props.triggerSource !== undefined ? {
             set: props.triggerSource 
+           } : undefined,
+  triggerSourceType: props.triggerSourceType !== undefined ? {
+            set: props.triggerSourceType 
            } : undefined,
   trade: props.trade ? 
   typeof props.trade === 'object' && Object.keys(props.trade).length === 1 && (Object.keys(props.trade)[0] === 'id' || Object.keys(props.trade)[0] === 'symbol')
@@ -978,6 +1012,9 @@ import { logger } from './utils/logger';
         symbol: props.trade.symbol !== undefined ? {
             set: props.trade.symbol
           } : undefined,
+        side: props.trade.side !== undefined ? {
+            set: props.trade.side
+          } : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? {
             set: props.trade.entryPrice
           } : undefined,
@@ -1036,14 +1073,23 @@ import { logger } from './utils/logger';
         signalSource: props.trade.signalSource !== undefined ? {
             set: props.trade.signalSource
           } : undefined,
+        signalSourceType: props.trade.signalSourceType !== undefined ? {
+            set: props.trade.signalSourceType
+          } : undefined,
         signalId: props.trade.signalId !== undefined ? {
             set: props.trade.signalId
           } : undefined,
         pathway: props.trade.pathway !== undefined ? {
             set: props.trade.pathway
           } : undefined,
+        pathwayType: props.trade.pathwayType !== undefined ? {
+            set: props.trade.pathwayType
+          } : undefined,
         exitTier: props.trade.exitTier !== undefined ? {
             set: props.trade.exitTier
+          } : undefined,
+        exitTierType: props.trade.exitTierType !== undefined ? {
+            set: props.trade.exitTierType
           } : undefined,
       },
       create: {
@@ -1057,6 +1103,7 @@ import { logger } from './utils/logger';
         status: props.trade.status !== undefined ? props.trade.status : undefined,
         deletedAt: props.trade.deletedAt !== undefined ? props.trade.deletedAt : undefined,
         symbol: props.trade.symbol !== undefined ? props.trade.symbol : undefined,
+        side: props.trade.side !== undefined ? props.trade.side : undefined,
         entryPrice: props.trade.entryPrice !== undefined ? props.trade.entryPrice : undefined,
         exitPrice: props.trade.exitPrice !== undefined ? props.trade.exitPrice : undefined,
         entryQty: props.trade.entryQty !== undefined ? props.trade.entryQty : undefined,
@@ -1077,9 +1124,12 @@ import { logger } from './utils/logger';
         supersededById: props.trade.supersededById !== undefined ? props.trade.supersededById : undefined,
         rejectionMetadata: props.trade.rejectionMetadata !== undefined ? props.trade.rejectionMetadata : undefined,
         signalSource: props.trade.signalSource !== undefined ? props.trade.signalSource : undefined,
+        signalSourceType: props.trade.signalSourceType !== undefined ? props.trade.signalSourceType : undefined,
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
+        pathwayType: props.trade.pathwayType !== undefined ? props.trade.pathwayType : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+        exitTierType: props.trade.exitTierType !== undefined ? props.trade.exitTierType : undefined,
       },
     }
   } : undefined,
@@ -1275,6 +1325,9 @@ import { logger } from './utils/logger';
   triggerSource: prop.triggerSource !== undefined ? {
             set: prop.triggerSource 
            } : undefined,
+  triggerSourceType: prop.triggerSourceType !== undefined ? {
+            set: prop.triggerSourceType 
+           } : undefined,
   trade: prop.trade ? 
   typeof prop.trade === 'object' && Object.keys(prop.trade).length === 1 && (Object.keys(prop.trade)[0] === 'id' || Object.keys(prop.trade)[0] === 'symbol')
 ? {
@@ -1336,6 +1389,9 @@ import { logger } from './utils/logger';
         symbol: prop.trade.symbol !== undefined ? {
             set: prop.trade.symbol
           } : undefined,
+        side: prop.trade.side !== undefined ? {
+            set: prop.trade.side
+          } : undefined,
         entryPrice: prop.trade.entryPrice !== undefined ? {
             set: prop.trade.entryPrice
           } : undefined,
@@ -1394,14 +1450,23 @@ import { logger } from './utils/logger';
         signalSource: prop.trade.signalSource !== undefined ? {
             set: prop.trade.signalSource
           } : undefined,
+        signalSourceType: prop.trade.signalSourceType !== undefined ? {
+            set: prop.trade.signalSourceType
+          } : undefined,
         signalId: prop.trade.signalId !== undefined ? {
             set: prop.trade.signalId
           } : undefined,
         pathway: prop.trade.pathway !== undefined ? {
             set: prop.trade.pathway
           } : undefined,
+        pathwayType: prop.trade.pathwayType !== undefined ? {
+            set: prop.trade.pathwayType
+          } : undefined,
         exitTier: prop.trade.exitTier !== undefined ? {
             set: prop.trade.exitTier
+          } : undefined,
+        exitTierType: prop.trade.exitTierType !== undefined ? {
+            set: prop.trade.exitTierType
           } : undefined,
       },
       create: {
@@ -1415,6 +1480,7 @@ import { logger } from './utils/logger';
         status: prop.trade.status !== undefined ? prop.trade.status : undefined,
         deletedAt: prop.trade.deletedAt !== undefined ? prop.trade.deletedAt : undefined,
         symbol: prop.trade.symbol !== undefined ? prop.trade.symbol : undefined,
+        side: prop.trade.side !== undefined ? prop.trade.side : undefined,
         entryPrice: prop.trade.entryPrice !== undefined ? prop.trade.entryPrice : undefined,
         exitPrice: prop.trade.exitPrice !== undefined ? prop.trade.exitPrice : undefined,
         entryQty: prop.trade.entryQty !== undefined ? prop.trade.entryQty : undefined,
@@ -1435,9 +1501,12 @@ import { logger } from './utils/logger';
         supersededById: prop.trade.supersededById !== undefined ? prop.trade.supersededById : undefined,
         rejectionMetadata: prop.trade.rejectionMetadata !== undefined ? prop.trade.rejectionMetadata : undefined,
         signalSource: prop.trade.signalSource !== undefined ? prop.trade.signalSource : undefined,
+        signalSourceType: prop.trade.signalSourceType !== undefined ? prop.trade.signalSourceType : undefined,
         signalId: prop.trade.signalId !== undefined ? prop.trade.signalId : undefined,
         pathway: prop.trade.pathway !== undefined ? prop.trade.pathway : undefined,
+        pathwayType: prop.trade.pathwayType !== undefined ? prop.trade.pathwayType : undefined,
         exitTier: prop.trade.exitTier !== undefined ? prop.trade.exitTier : undefined,
+        exitTierType: prop.trade.exitTierType !== undefined ? prop.trade.exitTierType : undefined,
       },
     }
   } : undefined,
