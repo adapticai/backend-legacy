@@ -136,6 +136,93 @@ import { logger } from './utils/logger';
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+    strategyRef: props.trade.strategyRef ? 
+      typeof props.trade.strategyRef === 'object' && Object.keys(props.trade.strategyRef).length === 1 && Object.keys(props.trade.strategyRef)[0] === 'id'
+    ? { connect: {
+          id: props.trade.strategyRef.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.trade.strategyRef.id !== undefined ? props.trade.strategyRef.id : undefined,
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+        },
+        create: {
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? props.trade.strategyRef.displayName : undefined,
+          description: props.trade.strategyRef.description !== undefined ? props.trade.strategyRef.description : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? props.trade.strategyRef.origin : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? props.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? props.trade.strategyRef.manifestHash : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? props.trade.strategyRef.deletedAt : undefined,
+      owner: props.trade.strategyRef.owner ? 
+        typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && Object.keys(props.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: props.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? props.trade.strategyRef.owner.id : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+        Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 &&  props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -515,6 +602,9 @@ import { logger } from './utils/logger';
         signalId: props.trade.signalId !== undefined ? {
             equals: props.trade.signalId
           } : undefined,
+        strategyId: props.trade.strategyId !== undefined ? {
+            equals: props.trade.strategyId
+          } : undefined,
       },
       update: {
         id: props.trade.id !== undefined ? {
@@ -617,6 +707,279 @@ import { logger } from './utils/logger';
         exitTier: props.trade.exitTier !== undefined ? {
             set: props.trade.exitTier
           } : undefined,
+    strategyRef: props.trade.strategyRef ? 
+    typeof props.trade.strategyRef === 'object' && Object.keys(props.trade.strategyRef).length === 1 && (Object.keys(props.trade.strategyRef)[0] === 'id' || Object.keys(props.trade.strategyRef)[0] === 'symbol')
+? {
+    connect: {
+      id: props.trade.strategyRef.id
+    }
+} : { upsert: {
+        where: {
+          id: props.trade.strategyRef.id !== undefined ? {
+              equals: props.trade.strategyRef.id
+            } : undefined,
+          key: props.trade.strategyRef.key !== undefined ? {
+              equals: props.trade.strategyRef.key
+            } : undefined,
+          ownerUserId: props.trade.strategyRef.ownerUserId !== undefined ? {
+              equals: props.trade.strategyRef.ownerUserId
+            } : undefined,
+        },
+        update: {
+          id: props.trade.strategyRef.id !== undefined ? {
+              set: props.trade.strategyRef.id
+            } : undefined,
+          key: props.trade.strategyRef.key !== undefined ? {
+              set: props.trade.strategyRef.key
+            } : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? {
+              set: props.trade.strategyRef.displayName
+            } : undefined,
+          description: props.trade.strategyRef.description !== undefined ? {
+              set: props.trade.strategyRef.description
+            } : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? {
+              set: props.trade.strategyRef.origin
+            } : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? {
+              set: props.trade.strategyRef.lifecycleState
+            } : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? {
+              set: props.trade.strategyRef.manifestHash
+            } : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? {
+              set: props.trade.strategyRef.deletedAt
+            } : undefined,
+      owner: props.trade.strategyRef.owner ? 
+      typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && (Object.keys(props.trade.strategyRef.owner)[0] === 'id' || Object.keys(props.trade.strategyRef.owner)[0] === 'symbol')
+? {
+      connect: {
+        id: props.trade.strategyRef.owner.id
+      }
+} : { upsert: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? {
+                equals: props.trade.strategyRef.owner.id
+              } : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name
+              } : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? {
+                equals: props.trade.strategyRef.owner.email
+              } : undefined,
+            customerId: props.trade.strategyRef.owner.customerId !== undefined ? {
+                equals: props.trade.strategyRef.owner.customerId
+              } : undefined,
+          },
+          update: {
+            id: props.trade.strategyRef.owner.id !== undefined ? {
+                set: props.trade.strategyRef.owner.id
+              } : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                set: props.trade.strategyRef.owner.name
+              } : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? {
+                set: props.trade.strategyRef.owner.email
+              } : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? {
+                set: props.trade.strategyRef.owner.emailVerified
+              } : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? {
+                set: props.trade.strategyRef.owner.image
+              } : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? {
+                set: props.trade.strategyRef.owner.avatarUrl
+              } : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? {
+                set: props.trade.strategyRef.owner.onboardingComplete
+              } : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? {
+                set: props.trade.strategyRef.owner.signupCategory
+              } : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? {
+                set: props.trade.strategyRef.owner.deletedAt
+              } : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? {
+                set: props.trade.strategyRef.owner.role
+              } : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? {
+                set: props.trade.strategyRef.owner.bio
+              } : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? {
+                set: props.trade.strategyRef.owner.jobTitle
+              } : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? {
+                set: props.trade.strategyRef.owner.currentAccount
+              } : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? {
+                set: props.trade.strategyRef.owner.plan
+              } : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? {
+                set: props.trade.strategyRef.owner.openaiAPIKey
+              } : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? {
+                set: props.trade.strategyRef.owner.openaiModel
+              } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+      Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 && props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.trade.strategyRef.subscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? props.trade.strategyRef.displayName : undefined,
+          description: props.trade.strategyRef.description !== undefined ? props.trade.strategyRef.description : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? props.trade.strategyRef.origin : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? props.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? props.trade.strategyRef.manifestHash : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? props.trade.strategyRef.deletedAt : undefined,
+      owner: props.trade.strategyRef.owner ? 
+        typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && Object.keys(props.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: props.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? props.trade.strategyRef.owner.id : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+        Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 &&  props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
@@ -652,6 +1015,93 @@ import { logger } from './utils/logger';
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+    strategyRef: props.trade.strategyRef ? 
+      typeof props.trade.strategyRef === 'object' && Object.keys(props.trade.strategyRef).length === 1 && Object.keys(props.trade.strategyRef)[0] === 'id'
+    ? { connect: {
+          id: props.trade.strategyRef.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.trade.strategyRef.id !== undefined ? props.trade.strategyRef.id : undefined,
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+        },
+        create: {
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? props.trade.strategyRef.displayName : undefined,
+          description: props.trade.strategyRef.description !== undefined ? props.trade.strategyRef.description : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? props.trade.strategyRef.origin : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? props.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? props.trade.strategyRef.manifestHash : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? props.trade.strategyRef.deletedAt : undefined,
+      owner: props.trade.strategyRef.owner ? 
+        typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && Object.keys(props.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: props.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? props.trade.strategyRef.owner.id : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+        Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 &&  props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -885,6 +1335,93 @@ import { logger } from './utils/logger';
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+    strategyRef: props.trade.strategyRef ? 
+      typeof props.trade.strategyRef === 'object' && Object.keys(props.trade.strategyRef).length === 1 && Object.keys(props.trade.strategyRef)[0] === 'id'
+    ? { connect: {
+          id: props.trade.strategyRef.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.trade.strategyRef.id !== undefined ? props.trade.strategyRef.id : undefined,
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+        },
+        create: {
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? props.trade.strategyRef.displayName : undefined,
+          description: props.trade.strategyRef.description !== undefined ? props.trade.strategyRef.description : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? props.trade.strategyRef.origin : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? props.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? props.trade.strategyRef.manifestHash : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? props.trade.strategyRef.deletedAt : undefined,
+      owner: props.trade.strategyRef.owner ? 
+        typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && Object.keys(props.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: props.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? props.trade.strategyRef.owner.id : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+        Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 &&  props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -942,6 +1479,9 @@ import { logger } from './utils/logger';
           } : undefined,
         signalId: props.trade.signalId !== undefined ? {
             equals: props.trade.signalId
+          } : undefined,
+        strategyId: props.trade.strategyId !== undefined ? {
+            equals: props.trade.strategyId
           } : undefined,
       },
       update: {
@@ -1045,6 +1585,279 @@ import { logger } from './utils/logger';
         exitTier: props.trade.exitTier !== undefined ? {
             set: props.trade.exitTier
           } : undefined,
+    strategyRef: props.trade.strategyRef ? 
+    typeof props.trade.strategyRef === 'object' && Object.keys(props.trade.strategyRef).length === 1 && (Object.keys(props.trade.strategyRef)[0] === 'id' || Object.keys(props.trade.strategyRef)[0] === 'symbol')
+? {
+    connect: {
+      id: props.trade.strategyRef.id
+    }
+} : { upsert: {
+        where: {
+          id: props.trade.strategyRef.id !== undefined ? {
+              equals: props.trade.strategyRef.id
+            } : undefined,
+          key: props.trade.strategyRef.key !== undefined ? {
+              equals: props.trade.strategyRef.key
+            } : undefined,
+          ownerUserId: props.trade.strategyRef.ownerUserId !== undefined ? {
+              equals: props.trade.strategyRef.ownerUserId
+            } : undefined,
+        },
+        update: {
+          id: props.trade.strategyRef.id !== undefined ? {
+              set: props.trade.strategyRef.id
+            } : undefined,
+          key: props.trade.strategyRef.key !== undefined ? {
+              set: props.trade.strategyRef.key
+            } : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? {
+              set: props.trade.strategyRef.displayName
+            } : undefined,
+          description: props.trade.strategyRef.description !== undefined ? {
+              set: props.trade.strategyRef.description
+            } : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? {
+              set: props.trade.strategyRef.origin
+            } : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? {
+              set: props.trade.strategyRef.lifecycleState
+            } : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? {
+              set: props.trade.strategyRef.manifestHash
+            } : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? {
+              set: props.trade.strategyRef.deletedAt
+            } : undefined,
+      owner: props.trade.strategyRef.owner ? 
+      typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && (Object.keys(props.trade.strategyRef.owner)[0] === 'id' || Object.keys(props.trade.strategyRef.owner)[0] === 'symbol')
+? {
+      connect: {
+        id: props.trade.strategyRef.owner.id
+      }
+} : { upsert: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? {
+                equals: props.trade.strategyRef.owner.id
+              } : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name
+              } : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? {
+                equals: props.trade.strategyRef.owner.email
+              } : undefined,
+            customerId: props.trade.strategyRef.owner.customerId !== undefined ? {
+                equals: props.trade.strategyRef.owner.customerId
+              } : undefined,
+          },
+          update: {
+            id: props.trade.strategyRef.owner.id !== undefined ? {
+                set: props.trade.strategyRef.owner.id
+              } : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                set: props.trade.strategyRef.owner.name
+              } : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? {
+                set: props.trade.strategyRef.owner.email
+              } : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? {
+                set: props.trade.strategyRef.owner.emailVerified
+              } : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? {
+                set: props.trade.strategyRef.owner.image
+              } : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? {
+                set: props.trade.strategyRef.owner.avatarUrl
+              } : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? {
+                set: props.trade.strategyRef.owner.onboardingComplete
+              } : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? {
+                set: props.trade.strategyRef.owner.signupCategory
+              } : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? {
+                set: props.trade.strategyRef.owner.deletedAt
+              } : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? {
+                set: props.trade.strategyRef.owner.role
+              } : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? {
+                set: props.trade.strategyRef.owner.bio
+              } : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? {
+                set: props.trade.strategyRef.owner.jobTitle
+              } : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? {
+                set: props.trade.strategyRef.owner.currentAccount
+              } : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? {
+                set: props.trade.strategyRef.owner.plan
+              } : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? {
+                set: props.trade.strategyRef.owner.openaiAPIKey
+              } : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? {
+                set: props.trade.strategyRef.owner.openaiModel
+              } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+      Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 && props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.trade.strategyRef.subscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? props.trade.strategyRef.displayName : undefined,
+          description: props.trade.strategyRef.description !== undefined ? props.trade.strategyRef.description : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? props.trade.strategyRef.origin : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? props.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? props.trade.strategyRef.manifestHash : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? props.trade.strategyRef.deletedAt : undefined,
+      owner: props.trade.strategyRef.owner ? 
+        typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && Object.keys(props.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: props.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? props.trade.strategyRef.owner.id : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+        Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 &&  props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         alpacaAccountId: props.trade.alpacaAccountId !== undefined ? props.trade.alpacaAccountId : undefined,
@@ -1080,6 +1893,93 @@ import { logger } from './utils/logger';
         signalId: props.trade.signalId !== undefined ? props.trade.signalId : undefined,
         pathway: props.trade.pathway !== undefined ? props.trade.pathway : undefined,
         exitTier: props.trade.exitTier !== undefined ? props.trade.exitTier : undefined,
+    strategyRef: props.trade.strategyRef ? 
+      typeof props.trade.strategyRef === 'object' && Object.keys(props.trade.strategyRef).length === 1 && Object.keys(props.trade.strategyRef)[0] === 'id'
+    ? { connect: {
+          id: props.trade.strategyRef.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: props.trade.strategyRef.id !== undefined ? props.trade.strategyRef.id : undefined,
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+        },
+        create: {
+          key: props.trade.strategyRef.key !== undefined ? props.trade.strategyRef.key : undefined,
+          displayName: props.trade.strategyRef.displayName !== undefined ? props.trade.strategyRef.displayName : undefined,
+          description: props.trade.strategyRef.description !== undefined ? props.trade.strategyRef.description : undefined,
+          origin: props.trade.strategyRef.origin !== undefined ? props.trade.strategyRef.origin : undefined,
+          lifecycleState: props.trade.strategyRef.lifecycleState !== undefined ? props.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: props.trade.strategyRef.manifestHash !== undefined ? props.trade.strategyRef.manifestHash : undefined,
+          deletedAt: props.trade.strategyRef.deletedAt !== undefined ? props.trade.strategyRef.deletedAt : undefined,
+      owner: props.trade.strategyRef.owner ? 
+        typeof props.trade.strategyRef.owner === 'object' && Object.keys(props.trade.strategyRef.owner).length === 1 && Object.keys(props.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: props.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: props.trade.strategyRef.owner.id !== undefined ? props.trade.strategyRef.owner.id : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            name: props.trade.strategyRef.owner.name !== undefined ? {
+                equals: props.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: props.trade.strategyRef.owner.name !== undefined ? props.trade.strategyRef.owner.name : undefined,
+            email: props.trade.strategyRef.owner.email !== undefined ? props.trade.strategyRef.owner.email : undefined,
+            emailVerified: props.trade.strategyRef.owner.emailVerified !== undefined ? props.trade.strategyRef.owner.emailVerified : undefined,
+            image: props.trade.strategyRef.owner.image !== undefined ? props.trade.strategyRef.owner.image : undefined,
+            avatarUrl: props.trade.strategyRef.owner.avatarUrl !== undefined ? props.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: props.trade.strategyRef.owner.onboardingComplete !== undefined ? props.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: props.trade.strategyRef.owner.signupCategory !== undefined ? props.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: props.trade.strategyRef.owner.deletedAt !== undefined ? props.trade.strategyRef.owner.deletedAt : undefined,
+            role: props.trade.strategyRef.owner.role !== undefined ? props.trade.strategyRef.owner.role : undefined,
+            bio: props.trade.strategyRef.owner.bio !== undefined ? props.trade.strategyRef.owner.bio : undefined,
+            jobTitle: props.trade.strategyRef.owner.jobTitle !== undefined ? props.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: props.trade.strategyRef.owner.currentAccount !== undefined ? props.trade.strategyRef.owner.currentAccount : undefined,
+            plan: props.trade.strategyRef.owner.plan !== undefined ? props.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: props.trade.strategyRef.owner.openaiAPIKey !== undefined ? props.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: props.trade.strategyRef.owner.openaiModel !== undefined ? props.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: props.trade.strategyRef.subscriptions ? 
+        Array.isArray(props.trade.strategyRef.subscriptions) && props.trade.strategyRef.subscriptions.length > 0 &&  props.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
@@ -1301,6 +2201,9 @@ import { logger } from './utils/logger';
         signalId: prop.trade.signalId !== undefined ? {
             equals: prop.trade.signalId
           } : undefined,
+        strategyId: prop.trade.strategyId !== undefined ? {
+            equals: prop.trade.strategyId
+          } : undefined,
       },
       update: {
         id: prop.trade.id !== undefined ? {
@@ -1403,6 +2306,279 @@ import { logger } from './utils/logger';
         exitTier: prop.trade.exitTier !== undefined ? {
             set: prop.trade.exitTier
           } : undefined,
+    strategyRef: prop.trade.strategyRef ? 
+    typeof prop.trade.strategyRef === 'object' && Object.keys(prop.trade.strategyRef).length === 1 && (Object.keys(prop.trade.strategyRef)[0] === 'id' || Object.keys(prop.trade.strategyRef)[0] === 'symbol')
+? {
+    connect: {
+      id: prop.trade.strategyRef.id
+    }
+} : { upsert: {
+        where: {
+          id: prop.trade.strategyRef.id !== undefined ? {
+              equals: prop.trade.strategyRef.id
+            } : undefined,
+          key: prop.trade.strategyRef.key !== undefined ? {
+              equals: prop.trade.strategyRef.key
+            } : undefined,
+          ownerUserId: prop.trade.strategyRef.ownerUserId !== undefined ? {
+              equals: prop.trade.strategyRef.ownerUserId
+            } : undefined,
+        },
+        update: {
+          id: prop.trade.strategyRef.id !== undefined ? {
+              set: prop.trade.strategyRef.id
+            } : undefined,
+          key: prop.trade.strategyRef.key !== undefined ? {
+              set: prop.trade.strategyRef.key
+            } : undefined,
+          displayName: prop.trade.strategyRef.displayName !== undefined ? {
+              set: prop.trade.strategyRef.displayName
+            } : undefined,
+          description: prop.trade.strategyRef.description !== undefined ? {
+              set: prop.trade.strategyRef.description
+            } : undefined,
+          origin: prop.trade.strategyRef.origin !== undefined ? {
+              set: prop.trade.strategyRef.origin
+            } : undefined,
+          lifecycleState: prop.trade.strategyRef.lifecycleState !== undefined ? {
+              set: prop.trade.strategyRef.lifecycleState
+            } : undefined,
+          manifestHash: prop.trade.strategyRef.manifestHash !== undefined ? {
+              set: prop.trade.strategyRef.manifestHash
+            } : undefined,
+          deletedAt: prop.trade.strategyRef.deletedAt !== undefined ? {
+              set: prop.trade.strategyRef.deletedAt
+            } : undefined,
+      owner: prop.trade.strategyRef.owner ? 
+      typeof prop.trade.strategyRef.owner === 'object' && Object.keys(prop.trade.strategyRef.owner).length === 1 && (Object.keys(prop.trade.strategyRef.owner)[0] === 'id' || Object.keys(prop.trade.strategyRef.owner)[0] === 'symbol')
+? {
+      connect: {
+        id: prop.trade.strategyRef.owner.id
+      }
+} : { upsert: {
+          where: {
+            id: prop.trade.strategyRef.owner.id !== undefined ? {
+                equals: prop.trade.strategyRef.owner.id
+              } : undefined,
+            name: prop.trade.strategyRef.owner.name !== undefined ? {
+                equals: prop.trade.strategyRef.owner.name
+              } : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? {
+                equals: prop.trade.strategyRef.owner.email
+              } : undefined,
+            customerId: prop.trade.strategyRef.owner.customerId !== undefined ? {
+                equals: prop.trade.strategyRef.owner.customerId
+              } : undefined,
+          },
+          update: {
+            id: prop.trade.strategyRef.owner.id !== undefined ? {
+                set: prop.trade.strategyRef.owner.id
+              } : undefined,
+            name: prop.trade.strategyRef.owner.name !== undefined ? {
+                set: prop.trade.strategyRef.owner.name
+              } : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? {
+                set: prop.trade.strategyRef.owner.email
+              } : undefined,
+            emailVerified: prop.trade.strategyRef.owner.emailVerified !== undefined ? {
+                set: prop.trade.strategyRef.owner.emailVerified
+              } : undefined,
+            image: prop.trade.strategyRef.owner.image !== undefined ? {
+                set: prop.trade.strategyRef.owner.image
+              } : undefined,
+            avatarUrl: prop.trade.strategyRef.owner.avatarUrl !== undefined ? {
+                set: prop.trade.strategyRef.owner.avatarUrl
+              } : undefined,
+            onboardingComplete: prop.trade.strategyRef.owner.onboardingComplete !== undefined ? {
+                set: prop.trade.strategyRef.owner.onboardingComplete
+              } : undefined,
+            signupCategory: prop.trade.strategyRef.owner.signupCategory !== undefined ? {
+                set: prop.trade.strategyRef.owner.signupCategory
+              } : undefined,
+            deletedAt: prop.trade.strategyRef.owner.deletedAt !== undefined ? {
+                set: prop.trade.strategyRef.owner.deletedAt
+              } : undefined,
+            role: prop.trade.strategyRef.owner.role !== undefined ? {
+                set: prop.trade.strategyRef.owner.role
+              } : undefined,
+            bio: prop.trade.strategyRef.owner.bio !== undefined ? {
+                set: prop.trade.strategyRef.owner.bio
+              } : undefined,
+            jobTitle: prop.trade.strategyRef.owner.jobTitle !== undefined ? {
+                set: prop.trade.strategyRef.owner.jobTitle
+              } : undefined,
+            currentAccount: prop.trade.strategyRef.owner.currentAccount !== undefined ? {
+                set: prop.trade.strategyRef.owner.currentAccount
+              } : undefined,
+            plan: prop.trade.strategyRef.owner.plan !== undefined ? {
+                set: prop.trade.strategyRef.owner.plan
+              } : undefined,
+            openaiAPIKey: prop.trade.strategyRef.owner.openaiAPIKey !== undefined ? {
+                set: prop.trade.strategyRef.owner.openaiAPIKey
+              } : undefined,
+            openaiModel: prop.trade.strategyRef.owner.openaiModel !== undefined ? {
+                set: prop.trade.strategyRef.owner.openaiModel
+              } : undefined,
+          },
+          create: {
+            name: prop.trade.strategyRef.owner.name !== undefined ? prop.trade.strategyRef.owner.name : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? prop.trade.strategyRef.owner.email : undefined,
+            emailVerified: prop.trade.strategyRef.owner.emailVerified !== undefined ? prop.trade.strategyRef.owner.emailVerified : undefined,
+            image: prop.trade.strategyRef.owner.image !== undefined ? prop.trade.strategyRef.owner.image : undefined,
+            avatarUrl: prop.trade.strategyRef.owner.avatarUrl !== undefined ? prop.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: prop.trade.strategyRef.owner.onboardingComplete !== undefined ? prop.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: prop.trade.strategyRef.owner.signupCategory !== undefined ? prop.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: prop.trade.strategyRef.owner.deletedAt !== undefined ? prop.trade.strategyRef.owner.deletedAt : undefined,
+            role: prop.trade.strategyRef.owner.role !== undefined ? prop.trade.strategyRef.owner.role : undefined,
+            bio: prop.trade.strategyRef.owner.bio !== undefined ? prop.trade.strategyRef.owner.bio : undefined,
+            jobTitle: prop.trade.strategyRef.owner.jobTitle !== undefined ? prop.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: prop.trade.strategyRef.owner.currentAccount !== undefined ? prop.trade.strategyRef.owner.currentAccount : undefined,
+            plan: prop.trade.strategyRef.owner.plan !== undefined ? prop.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: prop.trade.strategyRef.owner.openaiAPIKey !== undefined ? prop.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: prop.trade.strategyRef.owner.openaiModel !== undefined ? prop.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: prop.trade.strategyRef.subscriptions ? 
+      Array.isArray(prop.trade.strategyRef.subscriptions) && prop.trade.strategyRef.subscriptions.length > 0 && prop.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.trade.strategyRef.subscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          key: prop.trade.strategyRef.key !== undefined ? prop.trade.strategyRef.key : undefined,
+          displayName: prop.trade.strategyRef.displayName !== undefined ? prop.trade.strategyRef.displayName : undefined,
+          description: prop.trade.strategyRef.description !== undefined ? prop.trade.strategyRef.description : undefined,
+          origin: prop.trade.strategyRef.origin !== undefined ? prop.trade.strategyRef.origin : undefined,
+          lifecycleState: prop.trade.strategyRef.lifecycleState !== undefined ? prop.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: prop.trade.strategyRef.manifestHash !== undefined ? prop.trade.strategyRef.manifestHash : undefined,
+          deletedAt: prop.trade.strategyRef.deletedAt !== undefined ? prop.trade.strategyRef.deletedAt : undefined,
+      owner: prop.trade.strategyRef.owner ? 
+        typeof prop.trade.strategyRef.owner === 'object' && Object.keys(prop.trade.strategyRef.owner).length === 1 && Object.keys(prop.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: prop.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.trade.strategyRef.owner.id !== undefined ? prop.trade.strategyRef.owner.id : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? prop.trade.strategyRef.owner.email : undefined,
+            name: prop.trade.strategyRef.owner.name !== undefined ? {
+                equals: prop.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: prop.trade.strategyRef.owner.name !== undefined ? prop.trade.strategyRef.owner.name : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? prop.trade.strategyRef.owner.email : undefined,
+            emailVerified: prop.trade.strategyRef.owner.emailVerified !== undefined ? prop.trade.strategyRef.owner.emailVerified : undefined,
+            image: prop.trade.strategyRef.owner.image !== undefined ? prop.trade.strategyRef.owner.image : undefined,
+            avatarUrl: prop.trade.strategyRef.owner.avatarUrl !== undefined ? prop.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: prop.trade.strategyRef.owner.onboardingComplete !== undefined ? prop.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: prop.trade.strategyRef.owner.signupCategory !== undefined ? prop.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: prop.trade.strategyRef.owner.deletedAt !== undefined ? prop.trade.strategyRef.owner.deletedAt : undefined,
+            role: prop.trade.strategyRef.owner.role !== undefined ? prop.trade.strategyRef.owner.role : undefined,
+            bio: prop.trade.strategyRef.owner.bio !== undefined ? prop.trade.strategyRef.owner.bio : undefined,
+            jobTitle: prop.trade.strategyRef.owner.jobTitle !== undefined ? prop.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: prop.trade.strategyRef.owner.currentAccount !== undefined ? prop.trade.strategyRef.owner.currentAccount : undefined,
+            plan: prop.trade.strategyRef.owner.plan !== undefined ? prop.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: prop.trade.strategyRef.owner.openaiAPIKey !== undefined ? prop.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: prop.trade.strategyRef.owner.openaiModel !== undefined ? prop.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: prop.trade.strategyRef.subscriptions ? 
+        Array.isArray(prop.trade.strategyRef.subscriptions) && prop.trade.strategyRef.subscriptions.length > 0 &&  prop.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
       create: {
         alpacaAccountId: prop.trade.alpacaAccountId !== undefined ? prop.trade.alpacaAccountId : undefined,
@@ -1438,6 +2614,93 @@ import { logger } from './utils/logger';
         signalId: prop.trade.signalId !== undefined ? prop.trade.signalId : undefined,
         pathway: prop.trade.pathway !== undefined ? prop.trade.pathway : undefined,
         exitTier: prop.trade.exitTier !== undefined ? prop.trade.exitTier : undefined,
+    strategyRef: prop.trade.strategyRef ? 
+      typeof prop.trade.strategyRef === 'object' && Object.keys(prop.trade.strategyRef).length === 1 && Object.keys(prop.trade.strategyRef)[0] === 'id'
+    ? { connect: {
+          id: prop.trade.strategyRef.id
+          }
+        }
+    : { connectOrCreate: {
+        where: {
+          id: prop.trade.strategyRef.id !== undefined ? prop.trade.strategyRef.id : undefined,
+          key: prop.trade.strategyRef.key !== undefined ? prop.trade.strategyRef.key : undefined,
+        },
+        create: {
+          key: prop.trade.strategyRef.key !== undefined ? prop.trade.strategyRef.key : undefined,
+          displayName: prop.trade.strategyRef.displayName !== undefined ? prop.trade.strategyRef.displayName : undefined,
+          description: prop.trade.strategyRef.description !== undefined ? prop.trade.strategyRef.description : undefined,
+          origin: prop.trade.strategyRef.origin !== undefined ? prop.trade.strategyRef.origin : undefined,
+          lifecycleState: prop.trade.strategyRef.lifecycleState !== undefined ? prop.trade.strategyRef.lifecycleState : undefined,
+          manifestHash: prop.trade.strategyRef.manifestHash !== undefined ? prop.trade.strategyRef.manifestHash : undefined,
+          deletedAt: prop.trade.strategyRef.deletedAt !== undefined ? prop.trade.strategyRef.deletedAt : undefined,
+      owner: prop.trade.strategyRef.owner ? 
+        typeof prop.trade.strategyRef.owner === 'object' && Object.keys(prop.trade.strategyRef.owner).length === 1 && Object.keys(prop.trade.strategyRef.owner)[0] === 'id'
+    ? { connect: {
+            id: prop.trade.strategyRef.owner.id
+            }
+          }
+    : { connectOrCreate: {
+          where: {
+            id: prop.trade.strategyRef.owner.id !== undefined ? prop.trade.strategyRef.owner.id : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? prop.trade.strategyRef.owner.email : undefined,
+            name: prop.trade.strategyRef.owner.name !== undefined ? {
+                equals: prop.trade.strategyRef.owner.name 
+               } : undefined,
+          },
+          create: {
+            name: prop.trade.strategyRef.owner.name !== undefined ? prop.trade.strategyRef.owner.name : undefined,
+            email: prop.trade.strategyRef.owner.email !== undefined ? prop.trade.strategyRef.owner.email : undefined,
+            emailVerified: prop.trade.strategyRef.owner.emailVerified !== undefined ? prop.trade.strategyRef.owner.emailVerified : undefined,
+            image: prop.trade.strategyRef.owner.image !== undefined ? prop.trade.strategyRef.owner.image : undefined,
+            avatarUrl: prop.trade.strategyRef.owner.avatarUrl !== undefined ? prop.trade.strategyRef.owner.avatarUrl : undefined,
+            onboardingComplete: prop.trade.strategyRef.owner.onboardingComplete !== undefined ? prop.trade.strategyRef.owner.onboardingComplete : undefined,
+            signupCategory: prop.trade.strategyRef.owner.signupCategory !== undefined ? prop.trade.strategyRef.owner.signupCategory : undefined,
+            deletedAt: prop.trade.strategyRef.owner.deletedAt !== undefined ? prop.trade.strategyRef.owner.deletedAt : undefined,
+            role: prop.trade.strategyRef.owner.role !== undefined ? prop.trade.strategyRef.owner.role : undefined,
+            bio: prop.trade.strategyRef.owner.bio !== undefined ? prop.trade.strategyRef.owner.bio : undefined,
+            jobTitle: prop.trade.strategyRef.owner.jobTitle !== undefined ? prop.trade.strategyRef.owner.jobTitle : undefined,
+            currentAccount: prop.trade.strategyRef.owner.currentAccount !== undefined ? prop.trade.strategyRef.owner.currentAccount : undefined,
+            plan: prop.trade.strategyRef.owner.plan !== undefined ? prop.trade.strategyRef.owner.plan : undefined,
+            openaiAPIKey: prop.trade.strategyRef.owner.openaiAPIKey !== undefined ? prop.trade.strategyRef.owner.openaiAPIKey : undefined,
+            openaiModel: prop.trade.strategyRef.owner.openaiModel !== undefined ? prop.trade.strategyRef.owner.openaiModel : undefined,
+          },
+        }
+      } : undefined,
+      subscriptions: prop.trade.strategyRef.subscriptions ? 
+        Array.isArray(prop.trade.strategyRef.subscriptions) && prop.trade.strategyRef.subscriptions.length > 0 &&  prop.trade.strategyRef.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.trade.strategyRef.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.trade.strategyRef.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }
+    } : undefined,
       },
     }
   } : undefined,
