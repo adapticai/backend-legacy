@@ -1232,6 +1232,15 @@ model User {
   /// Funds this user operates. TYPESTRING.SKIP=true GQL.SKIP=true
   operatedFunds Fund[] @relation("FundOperator")
 
+  /// Governance mandates this user owns/stewards. TYPESTRING.SKIP=true GQL.SKIP=true
+  ownedMandates Mandate[] @relation("MandateOwner")
+
+  /// Mandate versions this user authored. TYPESTRING.SKIP=true GQL.SKIP=true
+  authoredMandateVersions MandateVersion[] @relation("MandateVersionAuthor")
+
+  /// Mandate approval decisions recorded by this user (append-only four-eyes trail). TYPESTRING.SKIP=true GQL.SKIP=true
+  mandateApprovalsDecided MandateApproval[] @relation("MandateApprovalDecider")
+
   /// Investor profiles linked to this user for self-service portal access. TYPESTRING.SKIP=true GQL.SKIP=true
   investorProfiles Investor[]
 
@@ -5735,6 +5744,9 @@ model Organization {
   /// Notification events scoped to this organization. TYPESTRING.SKIP=true GQL.SKIP=true
   notificationEvents NotificationEvent[]
 
+  /// Governance mandates owned by this organization (org-scoped mandates plus the roll-up of its fund-scoped mandates); read via adaptic.mandate.* rather than through the org to avoid pulling the version/rules tree on every org read. TYPESTRING.SKIP=true GQL.SKIP=true
+  mandates Mandate[]
+
   /// Timestamp when the organization was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
 
@@ -5870,6 +5882,9 @@ model Fund {
 
   /// Notification events scoped to this fund. TYPESTRING.SKIP=true GQL.SKIP=true
   notificationEvents NotificationEvent[]
+
+  /// Governance mandates scoped to this fund; read via adaptic.mandate.* rather than through the fund to avoid pulling the version/rules tree on every fund read. TYPESTRING.SKIP=true GQL.SKIP=true
+  mandates Mandate[]
 
   /// Timestamp when the fund was created. TYPESTRING.SKIP=true
   createdAt DateTime @default(now())
@@ -6751,3 +6766,308 @@ model TaxDocument {
   @@map(name: "tax_documents")
 }
 
+
+/// ### Governance Mandate Store (intent/authoring layer above TradingPolicy)
+//
+// The Mandate store is the Tier-B, org/fund-scoped, authored INTENT layer for governance:
+// mandates/charters/policies are drafted, versioned, and approved here. It sits ABOVE the
+// per-account TradingPolicy (schema.prisma:5008) — the engine's canonical *enforceable*
+// operating envelope. On approval, a MandateVersion's MandateRules PROJECT down into
+// TradingPolicy (see the projection note on MandateRule); the engine reads TradingPolicy
+// only, never a Mandate. Authoring/approval lives here; enforcement lives in TradingPolicy —
+// one rail, one source of truth, projected in one direction.
+
+// Whether a Mandate applies to an entire Organization or to a single Fund within it.
+enum MandateScopeKind {
+  /// Applies across the whole organization (all of its funds).
+  ORGANIZATION
+
+  /// Applies to a single fund within the organization.
+  FUND
+}
+
+// Category of governance mandate — the kind of authored charter/policy document.
+enum MandateClass {
+  /// Strategy charter: the trading mandate's objective, universe, and style rails.
+  STRATEGY_CHARTER
+
+  /// Firm ethos: values, conduct, and qualitative operating principles.
+  FIRM_ETHOS
+
+  /// Approval matrix: who may authorize what, and the four-eyes thresholds.
+  APPROVAL_MATRIX
+
+  /// Risk policy: quantitative risk limits (exposure, concentration, drawdown).
+  RISK_POLICY
+
+  /// Standard operating procedure: a repeatable operational runbook.
+  SOP
+}
+
+// Lifecycle state of a MandateVersion as it moves through propose → approve → supersede.
+enum MandateStatus {
+  /// Work-in-progress draft, not yet submitted for approval.
+  DRAFTED
+
+  /// Submitted and awaiting four-eyes approval.
+  PROPOSED
+
+  /// Approved and in force (its rules are projected into the enforceable TradingPolicy layer).
+  APPROVED
+
+  /// Replaced by a newer approved version; retained for audit.
+  SUPERSEDED
+
+  /// Retired from use; retained for audit.
+  ARCHIVED
+}
+
+// Control gate a MandateRule imposes — how much human involvement an action requires.
+// Mirrors the platform GovActType contract (auto | notify | approval | propose | human).
+enum MandateControlGate {
+  /// Fully automated: the engine may act without human involvement.
+  AUTO
+
+  /// Automated, but a human is notified after the fact.
+  NOTIFY
+
+  /// Requires explicit human approval before acting.
+  APPROVAL
+
+  /// The system may only propose the action; a human must enact it.
+  PROPOSE
+
+  /// Human-only: no automated action is permitted.
+  HUMAN
+}
+
+// Direction/nature of a MandateRule's numeric threshold.
+enum MandateLimitKind {
+  /// An upper bound the measured quantity must not exceed.
+  MAX
+
+  /// A lower bound the measured quantity must not fall below.
+  MIN
+
+  /// A target the measured quantity should track toward.
+  TARGET
+
+  /// A trigger level at which the rule's control gate fires.
+  TRIGGER
+}
+
+// A Mandate is the org/fund-scoped, authored governance charter — the INTENT layer that sits
+// ABOVE the per-account TradingPolicy the engine enforces. It holds identity + tenancy scope +
+// owner + persona scope + a pointer to the currently-active MandateVersion. The versioned
+// propose→approve content lives in MandateVersion, its enforceable clauses in MandateRule, and
+// its four-eyes trail in MandateApproval.
+//
+// PROJECTION: on approval, the active MandateVersion's MandateRules project into the per-account
+// TradingPolicy (schema.prisma:5008), the engine's canonical enforceable envelope. The Mandate is
+// authoring/intent; TradingPolicy is enforcement — do NOT treat both as sources of truth for the
+// same rail. Mandates are authored and approved here, then projected down; the engine reads only
+// TradingPolicy.
+model Mandate {
+  /// Unique identifier for the mandate. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Whether this mandate is scoped to the whole organization or to a single fund.
+  scopeKind MandateScopeKind @default(ORGANIZATION)
+
+  /// Category of the mandate (strategy charter, firm ethos, approval matrix, risk policy, SOP).
+  klass MandateClass
+
+  /// Human-readable mandate name.
+  name String
+
+  /// Persona this mandate primarily applies to ('portfolio_manager' | 'fund_operator' | 'compliance_officer' | …); lowercase String to match the platform contract. Null = firm-wide / all personas.
+  personaScope String?
+
+  /// Foreign key referencing the owning Organization (tenancy root; always set). TYPESTRING.SKIP=true
+  organizationId String @db.Uuid
+
+  /// Relation to the owning Organization. TYPESTRING.INCLUDE=['id','name','slug'] GQL.INCLUDE=['id','name','slug']
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the Fund when scopeKind = FUND (null for organization-scoped mandates). TYPESTRING.SKIP=true
+  fundId String? @db.Uuid
+
+  /// Relation to the scoped Fund (present only when scopeKind = FUND). TYPESTRING.INCLUDE=['id','name','slug'] GQL.INCLUDE=['id','name','slug','status']
+  fund Fund? @relation(fields: [fundId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the User who owns/stewards this mandate. TYPESTRING.SKIP=true
+  ownerId String? @db.Uuid
+
+  /// Relation to the owning User. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email','image']
+  owner User? @relation("MandateOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  /// Foreign key referencing the currently-active MandateVersion (the version whose rules are in force). TYPESTRING.SKIP=true
+  activeVersionId String? @unique @db.Uuid
+
+  /// Relation to the currently-active MandateVersion. TYPESTRING.SKIP=true GQL.EXCLUDE=['mandate','activeFor']
+  activeVersion MandateVersion? @relation("MandateActiveVersion", fields: [activeVersionId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  /// All versions of this mandate — immutable propose→approve snapshots ordered by versionSeq. TYPESTRING.SKIP=true GQL.EXCLUDE=['mandate']
+  versions MandateVersion[] @relation("MandateHistory")
+
+  /// Timestamp when the mandate was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the mandate was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the mandate was soft-deleted. Null means the record is active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@index([organizationId])
+  @@index([fundId])
+  @@index([klass])
+  @@index([scopeKind])
+  @@map(name: "mandates")
+}
+
+// An immutable propose→approve unit for a Mandate. The authored content (charterBody, rules) is
+// frozen once PROPOSED; status advances through the MandateStatus lifecycle. The active version
+// is pointed to by Mandate.activeVersionId.
+model MandateVersion {
+  /// Unique identifier for the mandate version. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the parent Mandate. TYPESTRING.SKIP=true
+  mandateId String @db.Uuid
+
+  /// Relation to the parent Mandate. TYPESTRING.INCLUDE=['id','name','klass'] GQL.EXCLUDE=['versions','activeVersion']
+  mandate Mandate @relation("MandateHistory", fields: [mandateId], references: [id], onDelete: Cascade)
+
+  /// Human-readable version label (e.g. 'v1', 'v2.1', '2026-Q3').
+  versionLabel String
+
+  /// Monotonic version sequence within the mandate (1, 2, 3, …); orders the version history.
+  versionSeq Int
+
+  /// Lifecycle state of this version.
+  status MandateStatus @default(DRAFTED)
+
+  /// Short human summary of what this version establishes or changes.
+  summary String?
+
+  /// Full authored charter body — the structured rule pack / document payload (JSON). TYPESTRING.SKIP=true
+  charterBody Json?
+
+  /// Foreign key referencing the User who authored this version. TYPESTRING.SKIP=true
+  authoredById String? @db.Uuid
+
+  /// Relation to the authoring User. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email','image']
+  authoredBy User? @relation("MandateVersionAuthor", fields: [authoredById], references: [id], onDelete: SetNull)
+
+  /// Normalized, enforceable clauses belonging to this version. TYPESTRING.SKIP=true GQL.EXCLUDE=['mandateVersion']
+  rules MandateRule[]
+
+  /// Append-only four-eyes approval trail for this version. TYPESTRING.SKIP=true GQL.EXCLUDE=['mandateVersion']
+  approvals MandateApproval[]
+
+  /// Back-relation: the Mandate for which this version is currently active, if any. TYPESTRING.SKIP=true GQL.SKIP=true
+  activeFor Mandate? @relation("MandateActiveVersion")
+
+  /// Timestamp when the version was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the version was last updated (status transitions). TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@unique([mandateId, versionSeq])
+  @@unique([mandateId, versionLabel])
+  @@index([mandateId])
+  @@index([status])
+  @@map(name: "mandate_versions")
+}
+
+// A single normalized, enforceable clause extracted from a MandateVersion's charter — the
+// machine-actionable unit. On approval these PROJECT into the per-account TradingPolicy
+// (schema.prisma:5008): e.g. { limitKind: MAX, unit: '%', threshold: 15, label: 'single-name
+// concentration' } maps to TradingPolicy.maxSymbolConcentrationPct. Mirrors the platform
+// MandateRule contract { label, detail, control, threshold, unit, limitKind }.
+model MandateRule {
+  /// Unique identifier for the rule. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the parent MandateVersion. TYPESTRING.SKIP=true
+  mandateVersionId String @db.Uuid
+
+  /// Relation to the parent MandateVersion. TYPESTRING.INCLUDE=['id','versionLabel'] GQL.EXCLUDE=['rules','approvals','mandate','activeFor']
+  mandateVersion MandateVersion @relation(fields: [mandateVersionId], references: [id], onDelete: Cascade)
+
+  /// Optional charter section grouping this rule (e.g. 'risk', 'concentration', 'conduct').
+  sectionId String?
+
+  /// Short label identifying the clause (platform MandateRule.label).
+  label String
+
+  /// Human-readable clause text (platform MandateRule.detail).
+  detail String
+
+  /// Control gate this clause imposes (platform MandateRule.control / GovActType).
+  control MandateControlGate @default(APPROVAL)
+
+  /// Numeric threshold for the clause, if quantitative (platform MandateRule.threshold). Null for qualitative clauses.
+  threshold Float?
+
+  /// Unit of the threshold (e.g. '%', 'bps', 'USD', 'positions'); platform MandateRule.unit.
+  unit String?
+
+  /// Direction/nature of the threshold (MAX/MIN/TARGET/TRIGGER); platform MandateRule.limitKind. Null for qualitative clauses.
+  limitKind MandateLimitKind?
+
+  /// Ordering index of this rule within its version (ascending). TYPESTRING.SKIP=true
+  orderIdx Int @default(0)
+
+  /// Timestamp when the rule was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the rule was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  @@index([mandateVersionId])
+  @@index([mandateVersionId, orderIdx])
+  @@map(name: "mandate_rules")
+}
+
+// An append-only entry in a MandateVersion's four-eyes governance trail: who decided what, under
+// which role, and why. Never mutated after write (it is the audit record) — mirrors the engine's
+// Tier-A GovernanceInterventionDecision ledger, but for this INTENT/authoring layer.
+model MandateApproval {
+  /// Unique identifier for the approval entry. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the MandateVersion this decision applies to. TYPESTRING.SKIP=true
+  mandateVersionId String @db.Uuid
+
+  /// Relation to the MandateVersion. TYPESTRING.INCLUDE=['id','versionLabel','status'] GQL.EXCLUDE=['rules','approvals','mandate','activeFor']
+  mandateVersion MandateVersion @relation(fields: [mandateVersionId], references: [id], onDelete: Cascade)
+
+  /// Governance action taken ('propose' | 'approve' | 'reject' | 'escalate' | 'supersede' | 'archive'); lowercase String matching the platform/engine decision contract. Kept as String, not an enum, per the five-enum mandate-store spec.
+  action String
+
+  /// Foreign key referencing the deciding User. TYPESTRING.SKIP=true
+  decidedByUserId String? @db.Uuid
+
+  /// Relation to the deciding User. TYPESTRING.INCLUDE=['id','name','email'] GQL.INCLUDE=['id','name','email','image']
+  decidedBy User? @relation("MandateApprovalDecider", fields: [decidedByUserId], references: [id], onDelete: SetNull)
+
+  /// Role under which the decision was made ('compliance_officer' | 'fund_operator' | …); lowercase String to match the platform contract.
+  decidedByRole String?
+
+  /// Free-text rationale for the decision.
+  rationale String?
+
+  /// Correlation id linking this decision to the originating request / engine event, if any. TYPESTRING.SKIP=true
+  correlationId String?
+
+  /// Timestamp when the decision was recorded (append-only trail; never updated). TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  @@index([mandateVersionId])
+  @@index([mandateVersionId, createdAt])
+  @@index([decidedByUserId])
+  @@map(name: "mandate_approvals")
+}
