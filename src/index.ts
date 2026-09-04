@@ -74,6 +74,10 @@ import { LinkedProvider } from './LinkedProvider';
 import { LlmConfiguration } from './LlmConfiguration';
 import { MLModelVersion } from './MLModelVersion';
 import { MLTrainingData } from './MLTrainingData';
+import { Mandate } from './Mandate';
+import { MandateApproval } from './MandateApproval';
+import { MandateRule } from './MandateRule';
+import { MandateVersion } from './MandateVersion';
 import { MarketSentiment } from './MarketSentiment';
 import { ModelArtifact } from './ModelArtifact';
 import { ModelVersion } from './ModelVersion';
@@ -156,6 +160,10 @@ const adaptic = {
   llmConfiguration: LlmConfiguration,
   mLModelVersion: MLModelVersion,
   mLTrainingData: MLTrainingData,
+  mandate: Mandate,
+  mandateApproval: MandateApproval,
+  mandateRule: MandateRule,
+  mandateVersion: MandateVersion,
   marketSentiment: MarketSentiment,
   modelArtifact: ModelArtifact,
   modelVersion: ModelVersion,

@@ -877,6 +877,81 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 &&  props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 &&  props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          },
+        }))
+      } : undefined,
       investorProfiles: props.alpacaAccount.user.investorProfiles ? 
         Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
@@ -3064,6 +3139,145 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+      Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 && props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.ownedMandates.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            ownerId: item.ownerId !== undefined ? {
+                equals: item.ownerId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            klass: item.klass !== undefined ? {
+                set: item.klass
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            personaScope: item.personaScope !== undefined ? {
+                set: item.personaScope
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+      Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 && props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            authoredById: item.authoredById !== undefined ? {
+                equals: item.authoredById
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            versionLabel: item.versionLabel !== undefined ? {
+                set: item.versionLabel
+              } : undefined,
+            versionSeq: item.versionSeq !== undefined ? {
+                set: item.versionSeq
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            summary: item.summary !== undefined ? {
+                set: item.summary
+              } : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+      Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 && props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId
+              } : undefined,
+            decidedByUserId: item.decidedByUserId !== undefined ? {
+                equals: item.decidedByUserId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            action: item.action !== undefined ? {
+                set: item.action
+              } : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? {
+                set: item.decidedByRole
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          },
+        }))
+      } : undefined,
       investorProfiles: props.alpacaAccount.user.investorProfiles ? 
       Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 && props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.investorProfiles.map((item) => ({
@@ -3627,6 +3841,81 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 &&  props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 &&  props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           },
         }))
       } : undefined,
@@ -5107,6 +5396,81 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 &&  props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 &&  props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          },
+        }))
+      } : undefined,
       investorProfiles: props.alpacaAccount.user.investorProfiles ? 
         Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 &&  props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
           connect:        props.alpacaAccount.user.investorProfiles.map((item) => ({
@@ -6274,6 +6638,81 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 &&  props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 &&  props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           },
         }))
       } : undefined,
@@ -8134,6 +8573,145 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+      Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 && props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.ownedMandates.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            ownerId: item.ownerId !== undefined ? {
+                equals: item.ownerId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            klass: item.klass !== undefined ? {
+                set: item.klass
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            personaScope: item.personaScope !== undefined ? {
+                set: item.personaScope
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+      Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 && props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            authoredById: item.authoredById !== undefined ? {
+                equals: item.authoredById
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            versionLabel: item.versionLabel !== undefined ? {
+                set: item.versionLabel
+              } : undefined,
+            versionSeq: item.versionSeq !== undefined ? {
+                set: item.versionSeq
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            summary: item.summary !== undefined ? {
+                set: item.summary
+              } : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+      Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 && props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId
+              } : undefined,
+            decidedByUserId: item.decidedByUserId !== undefined ? {
+                equals: item.decidedByUserId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            action: item.action !== undefined ? {
+                set: item.action
+              } : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? {
+                set: item.decidedByRole
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          },
+        }))
+      } : undefined,
       investorProfiles: props.alpacaAccount.user.investorProfiles ? 
       Array.isArray(props.alpacaAccount.user.investorProfiles) && props.alpacaAccount.user.investorProfiles.length > 0 && props.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: props.alpacaAccount.user.investorProfiles.map((item) => ({
@@ -8697,6 +9275,81 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 &&  props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 &&  props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           },
         }))
       } : undefined,
@@ -10174,6 +10827,81 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      ownedMandates: props.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(props.alpacaAccount.user.ownedMandates) && props.alpacaAccount.user.ownedMandates.length > 0 &&  props.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: props.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(props.alpacaAccount.user.authoredMandateVersions) && props.alpacaAccount.user.authoredMandateVersions.length > 0 &&  props.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: props.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(props.alpacaAccount.user.mandateApprovalsDecided) && props.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  props.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           },
         }))
       } : undefined,
@@ -12194,6 +12922,145 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedMandates: prop.alpacaAccount.user.ownedMandates ? 
+      Array.isArray(prop.alpacaAccount.user.ownedMandates) && prop.alpacaAccount.user.ownedMandates.length > 0 && prop.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.ownedMandates.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name
+              } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId
+              } : undefined,
+            fundId: item.fundId !== undefined ? {
+                equals: item.fundId
+              } : undefined,
+            ownerId: item.ownerId !== undefined ? {
+                equals: item.ownerId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            scopeKind: item.scopeKind !== undefined ? {
+                set: item.scopeKind
+              } : undefined,
+            klass: item.klass !== undefined ? {
+                set: item.klass
+              } : undefined,
+            name: item.name !== undefined ? {
+                set: item.name
+              } : undefined,
+            personaScope: item.personaScope !== undefined ? {
+                set: item.personaScope
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: prop.alpacaAccount.user.authoredMandateVersions ? 
+      Array.isArray(prop.alpacaAccount.user.authoredMandateVersions) && prop.alpacaAccount.user.authoredMandateVersions.length > 0 && prop.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            authoredById: item.authoredById !== undefined ? {
+                equals: item.authoredById
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            versionLabel: item.versionLabel !== undefined ? {
+                set: item.versionLabel
+              } : undefined,
+            versionSeq: item.versionSeq !== undefined ? {
+                set: item.versionSeq
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            summary: item.summary !== undefined ? {
+                set: item.summary
+              } : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: prop.alpacaAccount.user.mandateApprovalsDecided ? 
+      Array.isArray(prop.alpacaAccount.user.mandateApprovalsDecided) && prop.alpacaAccount.user.mandateApprovalsDecided.length > 0 && prop.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId
+              } : undefined,
+            decidedByUserId: item.decidedByUserId !== undefined ? {
+                equals: item.decidedByUserId
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            action: item.action !== undefined ? {
+                set: item.action
+              } : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? {
+                set: item.decidedByRole
+              } : undefined,
+            rationale: item.rationale !== undefined ? {
+                set: item.rationale
+              } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                set: item.correlationId
+              } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
+          },
+        }))
+      } : undefined,
       investorProfiles: prop.alpacaAccount.user.investorProfiles ? 
       Array.isArray(prop.alpacaAccount.user.investorProfiles) && prop.alpacaAccount.user.investorProfiles.length > 0 && prop.alpacaAccount.user.investorProfiles.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
       connect: prop.alpacaAccount.user.investorProfiles.map((item) => ({
@@ -12757,6 +13624,81 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      ownedMandates: prop.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(prop.alpacaAccount.user.ownedMandates) && prop.alpacaAccount.user.ownedMandates.length > 0 &&  prop.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: prop.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(prop.alpacaAccount.user.authoredMandateVersions) && prop.alpacaAccount.user.authoredMandateVersions.length > 0 &&  prop.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: prop.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(prop.alpacaAccount.user.mandateApprovalsDecided) && prop.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  prop.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           },
         }))
       } : undefined,
@@ -14234,6 +15176,81 @@ import { logger } from './utils/logger';
             serviceProviders: item.serviceProviders !== undefined ? item.serviceProviders : undefined,
             tradingOverrides: item.tradingOverrides !== undefined ? item.tradingOverrides : undefined,
             deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      ownedMandates: prop.alpacaAccount.user.ownedMandates ? 
+        Array.isArray(prop.alpacaAccount.user.ownedMandates) && prop.alpacaAccount.user.ownedMandates.length > 0 &&  prop.alpacaAccount.user.ownedMandates.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.ownedMandates.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.ownedMandates.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            activeVersionId: item.activeVersionId !== undefined ? item.activeVersionId : undefined,
+            name: item.name !== undefined ? {
+                equals: item.name 
+               } : undefined,
+            organizationId: item.organizationId !== undefined ? {
+                equals: item.organizationId 
+               } : undefined,
+          },
+          create: {
+            scopeKind: item.scopeKind !== undefined ? item.scopeKind : undefined,
+            klass: item.klass !== undefined ? item.klass : undefined,
+            name: item.name !== undefined ? item.name : undefined,
+            personaScope: item.personaScope !== undefined ? item.personaScope : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      authoredMandateVersions: prop.alpacaAccount.user.authoredMandateVersions ? 
+        Array.isArray(prop.alpacaAccount.user.authoredMandateVersions) && prop.alpacaAccount.user.authoredMandateVersions.length > 0 &&  prop.alpacaAccount.user.authoredMandateVersions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.authoredMandateVersions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateId: item.mandateId !== undefined ? {
+                equals: item.mandateId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            versionLabel: item.versionLabel !== undefined ? item.versionLabel : undefined,
+            versionSeq: item.versionSeq !== undefined ? item.versionSeq : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            charterBody: item.charterBody !== undefined ? item.charterBody : undefined,
+          },
+        }))
+      } : undefined,
+      mandateApprovalsDecided: prop.alpacaAccount.user.mandateApprovalsDecided ? 
+        Array.isArray(prop.alpacaAccount.user.mandateApprovalsDecided) && prop.alpacaAccount.user.mandateApprovalsDecided.length > 0 &&  prop.alpacaAccount.user.mandateApprovalsDecided.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.alpacaAccount.user.mandateApprovalsDecided.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            mandateVersionId: item.mandateVersionId !== undefined ? {
+                equals: item.mandateVersionId 
+               } : undefined,
+            correlationId: item.correlationId !== undefined ? {
+                equals: item.correlationId 
+               } : undefined,
+          },
+          create: {
+            action: item.action !== undefined ? item.action : undefined,
+            decidedByRole: item.decidedByRole !== undefined ? item.decidedByRole : undefined,
+            rationale: item.rationale !== undefined ? item.rationale : undefined,
+            correlationId: item.correlationId !== undefined ? item.correlationId : undefined,
           },
         }))
       } : undefined,
