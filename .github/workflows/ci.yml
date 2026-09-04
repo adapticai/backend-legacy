@@ -112,6 +112,13 @@ jobs:
           node fix-import-paths.cjs
           npx ts-node src/modules/generateSelections.ts
           npx ts-node src/modules/index.ts
+          # fix-compound-unique-keys rewrites the whereUniqueInput of every
+          # model with a @@unique compound key (e.g. EquityBar's
+          # symbol_timeStamp_timespan) in the generated CRUD. The build script
+          # runs it between generate:functions and generate:strings; omitting it
+          # here regenerates those models in the naive single-key form and
+          # reports FALSE drift against the correctly-built committed surface.
+          node fix-compound-unique-keys.cjs
           npx ts-node src/modules/generateStrings.ts
 
       - name: Check for generated code drift
