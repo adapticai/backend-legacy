@@ -756,6 +756,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1372,6 +1394,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -1943,6 +1987,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -3384,6 +3450,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -6707,6 +6795,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -8581,6 +8691,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+      Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 && item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -9154,6 +9314,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -9752,6 +9934,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -10979,6 +11183,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+      Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 && item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.manager.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.manager.name !== undefined ? item.manager.name : undefined,
@@ -11534,6 +11788,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -12689,6 +12965,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+      Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 && item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.operator.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.operator.name !== undefined ? item.operator.name : undefined,
@@ -13244,6 +13570,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -16213,6 +16561,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -16784,6 +17154,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -18842,6 +19234,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+      Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 && item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -19400,6 +19842,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -21490,6 +21954,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -31646,6 +32132,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+      Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 && item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.owner.name !== undefined ? item.owner.name : undefined,
@@ -32217,6 +32753,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -34016,6 +34574,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -35082,6 +35662,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -35698,6 +36300,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -36269,6 +36893,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -37710,6 +38356,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -41036,6 +41704,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -42583,6 +43273,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+      Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 && item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -43156,6 +43896,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -43754,6 +44516,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -44981,6 +45765,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+      Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 && item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.manager.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.manager.name !== undefined ? item.manager.name : undefined,
@@ -45536,6 +46370,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -46691,6 +47547,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+      Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 && item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.operator.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.operator.name !== undefined ? item.operator.name : undefined,
@@ -47246,6 +48152,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -50215,6 +51143,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -50786,6 +51736,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -52844,6 +53816,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+      Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 && item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -53402,6 +54424,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -55492,6 +56536,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -65648,6 +66714,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+      Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 && item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.owner.name !== undefined ? item.owner.name : undefined,
@@ -66219,6 +67335,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -68018,6 +69156,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -69728,6 +70888,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+      Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 && item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -70301,6 +71511,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -70899,6 +72131,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -72126,6 +73380,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+      Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 && item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.manager.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.manager.name !== undefined ? item.manager.name : undefined,
@@ -72681,6 +73985,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -73836,6 +75162,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+      Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 && item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.operator.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.operator.name !== undefined ? item.operator.name : undefined,
@@ -74391,6 +75767,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -77360,6 +78758,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.manager.ownedStrategies ? 
+        Array.isArray(item.manager.ownedStrategies) && item.manager.ownedStrategies.length > 0 &&  item.manager.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.manager.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.manager.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -77931,6 +79351,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.operator.ownedStrategies ? 
+        Array.isArray(item.operator.ownedStrategies) && item.operator.ownedStrategies.length > 0 &&  item.operator.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.operator.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.operator.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -79989,6 +81431,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+      Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 && item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.user.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.user.name !== undefined ? item.user.name : undefined,
@@ -80547,6 +82039,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -82637,6 +84151,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.user.ownedStrategies ? 
+        Array.isArray(item.user.ownedStrategies) && item.user.ownedStrategies.length > 0 &&  item.user.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.user.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.user.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -92793,6 +94329,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+      Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 && item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.owner.name !== undefined ? item.owner.name : undefined,
@@ -93364,6 +94950,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -95160,6 +96768,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.owner.ownedStrategies ? 
+        Array.isArray(item.owner.ownedStrategies) && item.owner.ownedStrategies.length > 0 &&  item.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,

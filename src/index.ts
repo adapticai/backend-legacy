@@ -103,7 +103,9 @@ import { SignalGeneratorMetrics } from './SignalGeneratorMetrics';
 import { SignalLineage } from './SignalLineage';
 import { SignalOutcome } from './SignalOutcome';
 import { SignalPriorityQueue } from './SignalPriorityQueue';
+import { Strategy } from './Strategy';
 import { StrategyHealthSnapshot } from './StrategyHealthSnapshot';
+import { StrategySubscription } from './StrategySubscription';
 import { SyncEvent } from './SyncEvent';
 import { SystemAlert } from './SystemAlert';
 import { TaxDocument } from './TaxDocument';
@@ -189,7 +191,9 @@ const adaptic = {
   signalLineage: SignalLineage,
   signalOutcome: SignalOutcome,
   signalPriorityQueue: SignalPriorityQueue,
+  strategy: Strategy,
   strategyHealthSnapshot: StrategyHealthSnapshot,
+  strategySubscription: StrategySubscription,
   syncEvent: SyncEvent,
   systemAlert: SystemAlert,
   taxDocument: TaxDocument,

@@ -681,6 +681,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -2248,6 +2270,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 && props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -2818,6 +2890,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -3418,6 +3512,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -4198,6 +4314,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -5454,6 +5592,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+      Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 && props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.waitlistEntry.reviewedBy.name !== undefined ? props.waitlistEntry.reviewedBy.name : undefined,
@@ -6024,6 +6212,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -6624,6 +6834,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(props.waitlistEntry.reviewedBy.ownedStrategies) && props.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  props.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -8040,6 +8272,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: prop.waitlistEntry.reviewedBy.ownedStrategies ? 
+      Array.isArray(prop.waitlistEntry.reviewedBy.ownedStrategies) && prop.waitlistEntry.reviewedBy.ownedStrategies.length > 0 && prop.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.waitlistEntry.reviewedBy.name !== undefined ? prop.waitlistEntry.reviewedBy.name : undefined,
@@ -8610,6 +8892,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: prop.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.ownedStrategies) && prop.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  prop.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -9210,6 +9514,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: prop.waitlistEntry.reviewedBy.ownedStrategies ? 
+        Array.isArray(prop.waitlistEntry.reviewedBy.ownedStrategies) && prop.waitlistEntry.reviewedBy.ownedStrategies.length > 0 &&  prop.waitlistEntry.reviewedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.waitlistEntry.reviewedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,

@@ -1338,6 +1338,9 @@ model User {
   /// Notification preferences set by this user. TYPESTRING.SKIP=true GQL.SKIP=true
   notificationPreferences NotificationPreference[]
 
+  /// Strategies authored/owned by this user. TYPESTRING.SKIP=true GQL.SKIP=true
+  ownedStrategies Strategy[] @relation("StrategyOwner")
+
   @@index([customerId])
   @@map(name: "users")
 }
@@ -1604,6 +1607,9 @@ model AlpacaAccount {
 
   /// Fund-layer BrokerageAccount bridged to this engine account via BrokerageAccount.engineAccountId (SP2 org → fund tenancy). TYPESTRING.SKIP=true GQL.SKIP=true
   brokerageAccount BrokerageAccount?
+
+  /// Strategy opt-ins held by this account (Stage-2 multi-strategy). TYPESTRING.SKIP=true GQL.SKIP=true
+  strategySubscriptions StrategySubscription[]
 
   @@index([userId])
   @@map(name: "alpaca_accounts")
@@ -2120,6 +2126,13 @@ model Trade {
   /// Wave F — Typed mirror of `exitTier` (dual-write). NULL on open trades and until backfilled from the paired String; unmappable values stay NULL. Retained alongside the String until a later coordinated change drops the String. TYPESTRING.SKIP=true
   exitTierType ExitTier?
 
+  /// Stage 2 — Foreign key referencing the owning Strategy entity. NULL means the trade has NOT been attributed to a registered strategy; it is deliberately nullable and deliberately unbackfilled, so no historical row acquires a fabricated owner. Additive alongside the legacy `strategy` enum, which is NOT removed — migrating off `TradeStrategy` is a later stage. TYPESTRING.SKIP=true
+  strategyId String? @db.Uuid
+
+  /// Relation to the owning Strategy. Kept out of the generated selection sets (GQL.SKIP) so adding it does not widen every existing Trade query; consumers join on `strategyId`. TYPESTRING.SKIP=true GQL.SKIP=true
+  strategyRef Strategy? @relation(fields: [strategyId], references: [id], onDelete: Restrict)
+
+  @@index([strategyId])
   @@index([alpacaAccountId])
   @@index([alpacaAccountId, status])
   @@index([symbol])
@@ -5621,6 +5634,17 @@ model StrategyHealthSnapshot {
   id                       String   @id @default(uuid()) @db.Uuid
   alpacaAccountId          String   @db.Uuid
   alpacaAccount            AlpacaAccount @relation(fields: [alpacaAccountId], references: [id], onDelete: Cascade)
+  /// Registered strategy KEY — the same value space as `Strategy.key` and the
+  /// engine Tier A `StrategyRegistryEntry.key` (e.g. "core-equity-llm-v1").
+  ///
+  /// Stage 2 repoints this column. Rows written before Stage 2 carry an
+  /// upstream ENSEMBLE SIGNAL SOURCE ("ensemble" | "llm_only" | "manual" |
+  /// "transformer_only" | "drift_fallback") — a description of which producer
+  /// emitted the signal, which is NOT a strategy. Those rows are left in place
+  /// rather than rewritten (nothing can establish which strategy they belonged
+  /// to), so a consumer that needs "strategies" must reject keys that are not
+  /// registered `Strategy.key` values rather than assume every distinct value
+  /// here names one.
   strategyName             String
 
   currentState             StrategyState @default(ACTIVE)
@@ -7177,4 +7201,210 @@ model MandateApproval {
   @@index([mandateVersionId, createdAt])
   @@index([decidedByUserId])
   @@map(name: "mandate_approvals")
+}
+
+/// ### Multi-strategy identity (Stage 2)
+///
+/// Before this block a "strategy" was an enum label: `Trade.strategy` is a
+/// `TradeStrategy` value with a `TECHNICAL_ANALYSIS` default, so a strategy
+/// had no row, no owner, no capital, no opt-in relation and no lifecycle, and
+/// could not be created at runtime. `Strategy` + `StrategySubscription` give
+/// it all five. `TradeStrategy` is deliberately NOT removed — `Trade.strategy`
+/// and `Trade.strategyId` coexist, and migrating off the enum is a later
+/// stage.
+///
+/// SCOPE: this is IDENTITY only. Nothing routes capital, gates an order, or
+/// changes an engine decision by any column below — no consumer reads
+/// `lifecycleState`, `status` or `targetAllocationPct` yet. They are the
+/// substrate a later stage acts on, and the comments below say what each
+/// column RECORDS rather than what something enforces.
+
+/// Lifecycle stage recorded for a {@link Strategy}.
+enum StrategyLifecycleState {
+  /// Defined, with no manifest bound to it.
+  DRAFT
+
+  /// Registered for observation only — the state a newly registered strategy
+  /// is seeded in, and the one that asserts nothing about capital.
+  SHADOW
+
+  /// Declared live.
+  ACTIVE
+
+  /// Declared temporarily suspended.
+  PAUSED
+
+  /// Declared permanently withdrawn. The row is retained rather than deleted
+  /// so historical attribution on `Trade.strategyId` keeps resolving.
+  RETIRED
+}
+
+/// Provenance of a {@link Strategy} definition.
+enum StrategyOrigin {
+  /// Transcribed from what the engine already runs; owned by the platform,
+  /// not by any single user.
+  SYSTEM
+
+  /// Authored by a user through the platform.
+  USER
+
+  /// Produced by the strategy-generation pipeline.
+  AI_GENERATED
+}
+
+/// Lifecycle status recorded for one account's opt-in to a strategy.
+enum StrategySubscriptionStatus {
+  /// Opted in.
+  ACTIVE
+
+  /// Opted in, then suspended by the account owner.
+  PAUSED
+
+  /// Opted out. The row is retained rather than deleted so `realizedPL` and
+  /// `costBasis` survive as an auditable record of the closed sleeve.
+  CLOSED
+}
+
+/// A trading strategy as a first-class ENTITY: a row with an identity, an
+/// owner, a lifecycle and an opt-in relation.
+///
+/// `key` is the join to the engine's Tier A ledger — it holds exactly the
+/// same value space as `StrategyRegistryEntry.key` in
+/// `engine/prisma/engine/schema.prisma` (`String @unique @db.VarChar(64)`,
+/// e.g. `"core-equity-llm-v1"`), so Tier A telemetry and Tier B ownership
+/// join on it without coercion. There is deliberately no second identifier.
+model Strategy {
+  /// Unique identifier for the strategy. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Stable machine key, e.g. "core-equity-llm-v1". Matches the engine Tier A
+  /// `StrategyRegistryEntry.key` column type exactly.
+  key String @unique @db.VarChar(64)
+
+  /// Operator/user-facing name.
+  displayName String @db.VarChar(128)
+
+  /// Human-readable description of what the strategy does.
+  description String?
+
+  /// Where the definition came from.
+  origin StrategyOrigin @default(SYSTEM)
+
+  /// Lifecycle stage. New rows default to DRAFT so a strategy is never
+  /// recorded as live merely by virtue of existing.
+  lifecycleState StrategyLifecycleState @default(DRAFT)
+
+  /// SHA-256 (hex) of the canonical JSON manifest describing what this
+  /// strategy runs (prompt id, feature view, exit tiers). NULL means no
+  /// manifest is bound yet — it is genuinely unknown, never a placeholder.
+  manifestHash String? @db.VarChar(64)
+
+  /// Foreign key referencing the owning User. NULL for SYSTEM strategies,
+  /// which the platform owns rather than any individual. TYPESTRING.SKIP=true
+  ownerUserId String? @db.Uuid
+
+  /// Relation to the owning User. Kept OUT of the generated selection set: User
+  /// is a wide model and nesting it would pull its whole selection into every
+  /// Strategy query. Consumers resolve the owner from `ownerUserId`.
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  owner User? @relation("StrategyOwner", fields: [ownerUserId], references: [id], onDelete: SetNull)
+
+  /// Per-account opt-ins into this strategy. TYPESTRING.SKIP=true GQL.SKIP=true
+  subscriptions StrategySubscription[]
+
+  /// Trades attributed to this strategy. TYPESTRING.SKIP=true GQL.SKIP=true
+  trades Trade[]
+
+  /// Timestamp when the strategy was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the strategy was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the strategy was soft-deleted. Null means active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@index([lifecycleState])
+  @@index([ownerUserId])
+  @@map(name: "strategies")
+}
+
+/// One account's opt-in to one strategy, plus the capital that opt-in carries.
+///
+/// Modelled on {@link Holding}, NOT on {@link Allocation}:
+/// `Allocation.alpacaAccountId` is `String @unique`, so an account can have
+/// exactly ONE allocation row by construction. An account opting into N
+/// strategies needs N rows, which makes `Allocation` structurally the wrong
+/// template. `Holding` already carries the exact shape — `units`,
+/// `costBasis`, `realizedPL` typed as `Decimal` rather than `Float`, keyed by
+/// a two-column `@@unique`.
+///
+/// `@@unique([accountId, strategyId])` is what makes "opted in twice"
+/// unrepresentable rather than merely unlikely.
+model StrategySubscription {
+  /// Unique identifier for the subscription. TYPESTRING.SKIP=true
+  id String @id @default(uuid()) @db.Uuid
+
+  /// Foreign key referencing the subscribing AlpacaAccount. TYPESTRING.SKIP=true
+  accountId String @db.Uuid
+
+  /// Relation to the subscribing AlpacaAccount. TYPESTRING.SKIP=true GQL.SKIP=true
+  account AlpacaAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  /// Foreign key referencing the subscribed Strategy. TYPESTRING.SKIP=true
+  strategyId String @db.Uuid
+
+  /// Relation to the subscribed Strategy, nested in the generated selection set
+  /// so a subscription can be rendered without a second round-trip. The nested
+  /// block is Strategy's scalars only — every Strategy relation is GQL.SKIP, so
+  /// it cannot recurse. Deleting a strategy that still has subscriptions is
+  /// REFUSED rather than cascaded, because the capital columns below are an
+  /// auditable record. TYPESTRING.SKIP=true
+  strategy Strategy @relation(fields: [strategyId], references: [id], onDelete: Restrict)
+
+  /// Lifecycle status of the opt-in.
+  status StrategySubscriptionStatus @default(ACTIVE)
+
+  /// Units (sleeve shares) currently held under this subscription. A fresh
+  /// subscription genuinely holds zero, so `0` here is a true measurement and
+  /// not a stand-in for "unknown".
+  units Decimal @default(0) @db.Decimal(24, 10)
+
+  /// Cumulative net capital contributed to this sleeve, net of withdrawals.
+  costBasis Decimal @default(0) @db.Decimal(18, 6)
+
+  /// Cumulative realized P/L booked out of this sleeve.
+  realizedPL Decimal @default(0) @db.Decimal(18, 6)
+
+  /// Target share of account equity allocated to this strategy, as a 0..1
+  /// fraction. NULL means NO ALLOCATION HAS BEEN DECIDED — deliberately
+  /// nullable with NO default so that "unallocated" can never be read as a
+  /// 0% target. Consumers must render absence as absence; the platform
+  /// Strategies grid renders it as an em-dash.
+  targetAllocationPct Decimal? @db.Decimal(9, 6)
+
+  /// Base currency of the capital columns (ISO 4217).
+  currency String @default("USD")
+
+  /// When the account first opted in.
+  subscribedAt DateTime?
+
+  /// When a rebalance toward `targetAllocationPct` was last recorded against
+  /// this sleeve. NULL means none has been.
+  lastRebalancedAt DateTime?
+
+  /// Timestamp when the subscription was created. TYPESTRING.SKIP=true
+  createdAt DateTime @default(now())
+
+  /// Timestamp when the subscription was last updated. TYPESTRING.SKIP=true
+  updatedAt DateTime @updatedAt
+
+  /// Timestamp when the subscription was soft-deleted. Null means active. TYPESTRING.SKIP=true
+  deletedAt DateTime?
+
+  @@unique([accountId, strategyId])
+  @@index([accountId])
+  @@index([strategyId])
+  @@index([status])
+  @@map(name: "strategy_subscriptions")
 }

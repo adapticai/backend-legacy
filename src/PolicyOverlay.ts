@@ -488,6 +488,38 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -892,6 +924,38 @@ import { logger } from './utils/logger';
             deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -1482,6 +1546,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -3035,6 +3131,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 && props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: props.tradingPolicy.alpacaAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.type : undefined,
@@ -3314,6 +3473,38 @@ import { logger } from './utils/logger';
             deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -3697,6 +3888,38 @@ import { logger } from './utils/logger';
             deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -4771,6 +4994,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: props.riskEscalationEvent.alpacaAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.type : undefined,
@@ -5119,6 +5405,38 @@ import { logger } from './utils/logger';
             deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -6174,6 +6492,38 @@ import { logger } from './utils/logger';
             deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -7430,6 +7780,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 && item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
@@ -7778,6 +8191,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -8831,6 +9276,38 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -9602,6 +10079,38 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -10006,6 +10515,38 @@ import { logger } from './utils/logger';
             deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -10596,6 +11137,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -11823,6 +12396,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 && props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: props.tradingPolicy.alpacaAccount.type !== undefined ? props.tradingPolicy.alpacaAccount.type : undefined,
@@ -12102,6 +12738,38 @@ import { logger } from './utils/logger';
             deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -12485,6 +13153,38 @@ import { logger } from './utils/logger';
             deletedAt: props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.tradingPolicy.alpacaAccount.strategySubscriptions) && props.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  props.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -13559,6 +14259,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: props.riskEscalationEvent.alpacaAccount.type !== undefined ? props.riskEscalationEvent.alpacaAccount.type : undefined,
@@ -13907,6 +14670,38 @@ import { logger } from './utils/logger';
             deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -14962,6 +15757,38 @@ import { logger } from './utils/logger';
             deletedAt: props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? props.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: props.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(props.riskEscalationEvent.alpacaAccount.strategySubscriptions) && props.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  props.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -16218,6 +17045,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 && item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
@@ -16566,6 +17456,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -17618,6 +18540,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -19008,6 +19962,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: prop.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(prop.tradingPolicy.alpacaAccount.strategySubscriptions) && prop.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 && prop.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: prop.tradingPolicy.alpacaAccount.type !== undefined ? prop.tradingPolicy.alpacaAccount.type : undefined,
@@ -19287,6 +20304,38 @@ import { logger } from './utils/logger';
             deletedAt: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: prop.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(prop.tradingPolicy.alpacaAccount.strategySubscriptions) && prop.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  prop.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -19670,6 +20719,38 @@ import { logger } from './utils/logger';
             deletedAt: prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.tradingPolicy.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: prop.tradingPolicy.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(prop.tradingPolicy.alpacaAccount.strategySubscriptions) && prop.tradingPolicy.alpacaAccount.strategySubscriptions.length > 0 &&  prop.tradingPolicy.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.tradingPolicy.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -20744,6 +21825,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(prop.riskEscalationEvent.alpacaAccount.strategySubscriptions) && prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 && prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: prop.riskEscalationEvent.alpacaAccount.type !== undefined ? prop.riskEscalationEvent.alpacaAccount.type : undefined,
@@ -21092,6 +22236,38 @@ import { logger } from './utils/logger';
             deletedAt: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(prop.riskEscalationEvent.alpacaAccount.strategySubscriptions) && prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -22147,6 +23323,38 @@ import { logger } from './utils/logger';
             deletedAt: prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt !== undefined ? prop.riskEscalationEvent.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(prop.riskEscalationEvent.alpacaAccount.strategySubscriptions) && prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.length > 0 &&  prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.riskEscalationEvent.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -23403,6 +24611,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+      Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 && item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.alpacaAccount.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.alpacaAccount.type !== undefined ? item.alpacaAccount.type : undefined,
@@ -23751,6 +25022,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }
@@ -24803,6 +26106,38 @@ import { logger } from './utils/logger';
             deletedAt: item.alpacaAccount.brokerageAccount.deletedAt !== undefined ? item.alpacaAccount.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.alpacaAccount.strategySubscriptions ? 
+        Array.isArray(item.alpacaAccount.strategySubscriptions) && item.alpacaAccount.strategySubscriptions.length > 0 &&  item.alpacaAccount.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.alpacaAccount.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.alpacaAccount.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }

@@ -1337,6 +1337,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+        Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 &&  props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -2025,6 +2047,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -3585,6 +3639,123 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: props.authoredBy.ownedStrategies ? 
+      Array.isArray(props.authoredBy.ownedStrategies) && props.authoredBy.ownedStrategies.length > 0 &&  props.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.authoredBy.ownedStrategies.map((item) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -4226,6 +4397,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -5458,6 +5651,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+        Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 &&  props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -9057,6 +9272,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+      Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 && props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.mandate.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.mandate.owner.name !== undefined ? props.mandate.owner.name : undefined,
@@ -9628,6 +9893,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+        Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 &&  props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -11254,6 +11541,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+        Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 &&  props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -12782,6 +13091,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+      Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 && item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -13135,6 +13507,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -17586,6 +17990,396 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: props.authoredBy.ownedStrategies ? 
+    Array.isArray(props.authoredBy.ownedStrategies) && props.authoredBy.ownedStrategies.length > 0 && props.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.authoredBy.ownedStrategies.map((item) => ({
+      id: item.id
+    }))
+} : { upsert: props.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+          ownerUserId: item.ownerUserId !== undefined ? {
+              equals: item.ownerUserId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          key: item.key !== undefined ? {
+              set: item.key
+            } : undefined,
+          displayName: item.displayName !== undefined ? {
+              set: item.displayName
+            } : undefined,
+          description: item.description !== undefined ? {
+              set: item.description
+            } : undefined,
+          origin: item.origin !== undefined ? {
+              set: item.origin
+            } : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? {
+              set: item.lifecycleState
+            } : undefined,
+          manifestHash: item.manifestHash !== undefined ? {
+              set: item.manifestHash
+            } : undefined,
+          deletedAt: item.deletedAt !== undefined ? {
+              set: item.deletedAt
+            } : undefined,
+      subscriptions: item.subscriptions ? 
+      Array.isArray(item.subscriptions) && item.subscriptions.length > 0 && item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.subscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+      Array.isArray(item.trades) && item.trades.length > 0 && item.trades.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.trades.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+            supersededById: item.supersededById !== undefined ? {
+                equals: item.supersededById
+              } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                set: item.alpacaAccountId
+              } : undefined,
+            signal: item.signal !== undefined ? {
+                set: item.signal
+              } : undefined,
+            strategy: item.strategy !== undefined ? {
+                set: item.strategy
+              } : undefined,
+            analysis: item.analysis !== undefined ? {
+                set: item.analysis
+              } : undefined,
+            summary: item.summary !== undefined ? {
+                set: item.summary
+              } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence
+              } : undefined,
+            timestamp: item.timestamp !== undefined ? {
+                set: item.timestamp
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+            symbol: item.symbol !== undefined ? {
+                set: item.symbol
+              } : undefined,
+            side: item.side !== undefined ? {
+                set: item.side
+              } : undefined,
+            entryPrice: item.entryPrice !== undefined ? {
+                set: item.entryPrice
+              } : undefined,
+            exitPrice: item.exitPrice !== undefined ? {
+                set: item.exitPrice
+              } : undefined,
+            entryQty: item.entryQty !== undefined ? {
+                set: item.entryQty
+              } : undefined,
+            exitQty: item.exitQty !== undefined ? {
+                set: item.exitQty
+              } : undefined,
+            entryValue: item.entryValue !== undefined ? {
+                set: item.entryValue
+              } : undefined,
+            exitValue: item.exitValue !== undefined ? {
+                set: item.exitValue
+              } : undefined,
+            entryTime: item.entryTime !== undefined ? {
+                set: item.entryTime
+              } : undefined,
+            exitTime: item.exitTime !== undefined ? {
+                set: item.exitTime
+              } : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? {
+                set: item.pnlAmount
+              } : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? {
+                set: item.pnlPercent
+              } : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? {
+                set: item.durationMinutes
+              } : undefined,
+            marketPhase: item.marketPhase !== undefined ? {
+                set: item.marketPhase
+              } : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? {
+                set: item.marketVolatility
+              } : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? {
+                set: item.sessionHorizonMinutes
+              } : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? {
+                set: item.thresholdsJson
+              } : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? {
+                set: item.thesisVersion
+              } : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? {
+                set: item.lastReunderwrittenAt
+              } : undefined,
+            supersededById: item.supersededById !== undefined ? {
+                set: item.supersededById
+              } : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? {
+                set: item.signalSource
+              } : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? {
+                set: item.signalSourceType
+              } : undefined,
+            signalId: item.signalId !== undefined ? {
+                set: item.signalId
+              } : undefined,
+            pathway: item.pathway !== undefined ? {
+                set: item.pathway
+              } : undefined,
+            pathwayType: item.pathwayType !== undefined ? {
+                set: item.pathwayType
+              } : undefined,
+            exitTier: item.exitTier !== undefined ? {
+                set: item.exitTier
+              } : undefined,
+            exitTierType: item.exitTierType !== undefined ? {
+                set: item.exitTierType
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.authoredBy.name !== undefined ? props.authoredBy.name : undefined,
@@ -18116,6 +18910,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -19676,6 +20502,123 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: props.authoredBy.ownedStrategies ? 
+      Array.isArray(props.authoredBy.ownedStrategies) && props.authoredBy.ownedStrategies.length > 0 &&  props.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.authoredBy.ownedStrategies.map((item) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -20968,6 +21911,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+      Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 && item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.decidedBy.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.decidedBy.name !== undefined ? item.decidedBy.name : undefined,
@@ -21541,6 +22534,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -22139,6 +23154,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -25266,6 +26303,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+      Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 && props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.activeFor.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.activeFor.owner.name !== undefined ? props.activeFor.owner.name : undefined,
@@ -25837,6 +26924,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+        Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 &&  props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -27460,6 +28569,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+        Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 &&  props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -28997,6 +30128,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+        Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 &&  props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -29685,6 +30838,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -31245,6 +32430,123 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: props.authoredBy.ownedStrategies ? 
+      Array.isArray(props.authoredBy.ownedStrategies) && props.authoredBy.ownedStrategies.length > 0 &&  props.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.authoredBy.ownedStrategies.map((item) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -31886,6 +33188,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -33118,6 +34442,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+        Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 &&  props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -36399,6 +37745,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+      Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 && props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.mandate.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.mandate.owner.name !== undefined ? props.mandate.owner.name : undefined,
@@ -36970,6 +38366,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+        Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 &&  props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -38596,6 +40014,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.mandate.owner.ownedStrategies ? 
+        Array.isArray(props.mandate.owner.ownedStrategies) && props.mandate.owner.ownedStrategies.length > 0 &&  props.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -40124,6 +41564,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+      Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 && item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -40477,6 +41980,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -44928,6 +46463,396 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: props.authoredBy.ownedStrategies ? 
+    Array.isArray(props.authoredBy.ownedStrategies) && props.authoredBy.ownedStrategies.length > 0 && props.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: props.authoredBy.ownedStrategies.map((item) => ({
+      id: item.id
+    }))
+} : { upsert: props.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+          ownerUserId: item.ownerUserId !== undefined ? {
+              equals: item.ownerUserId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          key: item.key !== undefined ? {
+              set: item.key
+            } : undefined,
+          displayName: item.displayName !== undefined ? {
+              set: item.displayName
+            } : undefined,
+          description: item.description !== undefined ? {
+              set: item.description
+            } : undefined,
+          origin: item.origin !== undefined ? {
+              set: item.origin
+            } : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? {
+              set: item.lifecycleState
+            } : undefined,
+          manifestHash: item.manifestHash !== undefined ? {
+              set: item.manifestHash
+            } : undefined,
+          deletedAt: item.deletedAt !== undefined ? {
+              set: item.deletedAt
+            } : undefined,
+      subscriptions: item.subscriptions ? 
+      Array.isArray(item.subscriptions) && item.subscriptions.length > 0 && item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.subscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+      Array.isArray(item.trades) && item.trades.length > 0 && item.trades.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.trades.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+            supersededById: item.supersededById !== undefined ? {
+                equals: item.supersededById
+              } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                set: item.alpacaAccountId
+              } : undefined,
+            signal: item.signal !== undefined ? {
+                set: item.signal
+              } : undefined,
+            strategy: item.strategy !== undefined ? {
+                set: item.strategy
+              } : undefined,
+            analysis: item.analysis !== undefined ? {
+                set: item.analysis
+              } : undefined,
+            summary: item.summary !== undefined ? {
+                set: item.summary
+              } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence
+              } : undefined,
+            timestamp: item.timestamp !== undefined ? {
+                set: item.timestamp
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+            symbol: item.symbol !== undefined ? {
+                set: item.symbol
+              } : undefined,
+            side: item.side !== undefined ? {
+                set: item.side
+              } : undefined,
+            entryPrice: item.entryPrice !== undefined ? {
+                set: item.entryPrice
+              } : undefined,
+            exitPrice: item.exitPrice !== undefined ? {
+                set: item.exitPrice
+              } : undefined,
+            entryQty: item.entryQty !== undefined ? {
+                set: item.entryQty
+              } : undefined,
+            exitQty: item.exitQty !== undefined ? {
+                set: item.exitQty
+              } : undefined,
+            entryValue: item.entryValue !== undefined ? {
+                set: item.entryValue
+              } : undefined,
+            exitValue: item.exitValue !== undefined ? {
+                set: item.exitValue
+              } : undefined,
+            entryTime: item.entryTime !== undefined ? {
+                set: item.entryTime
+              } : undefined,
+            exitTime: item.exitTime !== undefined ? {
+                set: item.exitTime
+              } : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? {
+                set: item.pnlAmount
+              } : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? {
+                set: item.pnlPercent
+              } : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? {
+                set: item.durationMinutes
+              } : undefined,
+            marketPhase: item.marketPhase !== undefined ? {
+                set: item.marketPhase
+              } : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? {
+                set: item.marketVolatility
+              } : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? {
+                set: item.sessionHorizonMinutes
+              } : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? {
+                set: item.thresholdsJson
+              } : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? {
+                set: item.thesisVersion
+              } : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? {
+                set: item.lastReunderwrittenAt
+              } : undefined,
+            supersededById: item.supersededById !== undefined ? {
+                set: item.supersededById
+              } : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? {
+                set: item.signalSource
+              } : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? {
+                set: item.signalSourceType
+              } : undefined,
+            signalId: item.signalId !== undefined ? {
+                set: item.signalId
+              } : undefined,
+            pathway: item.pathway !== undefined ? {
+                set: item.pathway
+              } : undefined,
+            pathwayType: item.pathwayType !== undefined ? {
+                set: item.pathwayType
+              } : undefined,
+            exitTier: item.exitTier !== undefined ? {
+                set: item.exitTier
+              } : undefined,
+            exitTierType: item.exitTierType !== undefined ? {
+                set: item.exitTierType
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: props.authoredBy.name !== undefined ? props.authoredBy.name : undefined,
@@ -45458,6 +47383,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -47018,6 +48975,123 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: props.authoredBy.ownedStrategies ? 
+      Array.isArray(props.authoredBy.ownedStrategies) && props.authoredBy.ownedStrategies.length > 0 &&  props.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      props.authoredBy.ownedStrategies.map((item) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: props.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -48310,6 +50384,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+      Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 && item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.decidedBy.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.decidedBy.name !== undefined ? item.decidedBy.name : undefined,
@@ -48883,6 +51007,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -49481,6 +51627,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -52608,6 +54776,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+      Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 && props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: props.activeFor.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: props.activeFor.owner.name !== undefined ? props.activeFor.owner.name : undefined,
@@ -53179,6 +55397,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+        Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 &&  props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -54799,6 +57039,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: props.activeFor.owner.ownedStrategies ? 
+        Array.isArray(props.activeFor.owner.ownedStrategies) && props.activeFor.owner.ownedStrategies.length > 0 &&  props.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        props.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: props.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -58243,6 +60505,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: prop.mandate.owner.ownedStrategies ? 
+      Array.isArray(prop.mandate.owner.ownedStrategies) && prop.mandate.owner.ownedStrategies.length > 0 && prop.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.mandate.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.mandate.owner.name !== undefined ? prop.mandate.owner.name : undefined,
@@ -58814,6 +61126,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: prop.mandate.owner.ownedStrategies ? 
+        Array.isArray(prop.mandate.owner.ownedStrategies) && prop.mandate.owner.ownedStrategies.length > 0 &&  prop.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -60440,6 +62774,28 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: prop.mandate.owner.ownedStrategies ? 
+        Array.isArray(prop.mandate.owner.ownedStrategies) && prop.mandate.owner.ownedStrategies.length > 0 &&  prop.mandate.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.mandate.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.mandate.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
       }
     } : undefined,
@@ -61968,6 +64324,69 @@ import { logger } from './utils/logger';
           },
         }
       } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+      Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 && item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.strategySubscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           type: item.type !== undefined ? item.type : undefined,
@@ -62321,6 +64740,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -66772,6 +69223,396 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: prop.authoredBy.ownedStrategies ? 
+    Array.isArray(prop.authoredBy.ownedStrategies) && prop.authoredBy.ownedStrategies.length > 0 && prop.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+    connect: prop.authoredBy.ownedStrategies.map((item) => ({
+      id: item.id
+    }))
+} : { upsert: prop.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+          ownerUserId: item.ownerUserId !== undefined ? {
+              equals: item.ownerUserId
+            } : undefined,
+        },
+        update: {
+          id: item.id !== undefined ? {
+              set: item.id
+            } : undefined,
+          key: item.key !== undefined ? {
+              set: item.key
+            } : undefined,
+          displayName: item.displayName !== undefined ? {
+              set: item.displayName
+            } : undefined,
+          description: item.description !== undefined ? {
+              set: item.description
+            } : undefined,
+          origin: item.origin !== undefined ? {
+              set: item.origin
+            } : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? {
+              set: item.lifecycleState
+            } : undefined,
+          manifestHash: item.manifestHash !== undefined ? {
+              set: item.manifestHash
+            } : undefined,
+          deletedAt: item.deletedAt !== undefined ? {
+              set: item.deletedAt
+            } : undefined,
+      subscriptions: item.subscriptions ? 
+      Array.isArray(item.subscriptions) && item.subscriptions.length > 0 && item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.subscriptions.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            units: item.units !== undefined ? {
+                set: item.units
+              } : undefined,
+            costBasis: item.costBasis !== undefined ? {
+                set: item.costBasis
+              } : undefined,
+            realizedPL: item.realizedPL !== undefined ? {
+                set: item.realizedPL
+              } : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? {
+                set: item.targetAllocationPct
+              } : undefined,
+            currency: item.currency !== undefined ? {
+                set: item.currency
+              } : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? {
+                set: item.subscribedAt
+              } : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? {
+                set: item.lastRebalancedAt
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+      Array.isArray(item.trades) && item.trades.length > 0 && item.trades.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.trades.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId
+              } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status
+              } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol
+              } : undefined,
+            supersededById: item.supersededById !== undefined ? {
+                equals: item.supersededById
+              } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId
+              } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                set: item.alpacaAccountId
+              } : undefined,
+            signal: item.signal !== undefined ? {
+                set: item.signal
+              } : undefined,
+            strategy: item.strategy !== undefined ? {
+                set: item.strategy
+              } : undefined,
+            analysis: item.analysis !== undefined ? {
+                set: item.analysis
+              } : undefined,
+            summary: item.summary !== undefined ? {
+                set: item.summary
+              } : undefined,
+            confidence: item.confidence !== undefined ? {
+                set: item.confidence
+              } : undefined,
+            timestamp: item.timestamp !== undefined ? {
+                set: item.timestamp
+              } : undefined,
+            status: item.status !== undefined ? {
+                set: item.status
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+            symbol: item.symbol !== undefined ? {
+                set: item.symbol
+              } : undefined,
+            side: item.side !== undefined ? {
+                set: item.side
+              } : undefined,
+            entryPrice: item.entryPrice !== undefined ? {
+                set: item.entryPrice
+              } : undefined,
+            exitPrice: item.exitPrice !== undefined ? {
+                set: item.exitPrice
+              } : undefined,
+            entryQty: item.entryQty !== undefined ? {
+                set: item.entryQty
+              } : undefined,
+            exitQty: item.exitQty !== undefined ? {
+                set: item.exitQty
+              } : undefined,
+            entryValue: item.entryValue !== undefined ? {
+                set: item.entryValue
+              } : undefined,
+            exitValue: item.exitValue !== undefined ? {
+                set: item.exitValue
+              } : undefined,
+            entryTime: item.entryTime !== undefined ? {
+                set: item.entryTime
+              } : undefined,
+            exitTime: item.exitTime !== undefined ? {
+                set: item.exitTime
+              } : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? {
+                set: item.pnlAmount
+              } : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? {
+                set: item.pnlPercent
+              } : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? {
+                set: item.durationMinutes
+              } : undefined,
+            marketPhase: item.marketPhase !== undefined ? {
+                set: item.marketPhase
+              } : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? {
+                set: item.marketVolatility
+              } : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? {
+                set: item.sessionHorizonMinutes
+              } : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? {
+                set: item.thresholdsJson
+              } : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? {
+                set: item.thesisVersion
+              } : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? {
+                set: item.lastReunderwrittenAt
+              } : undefined,
+            supersededById: item.supersededById !== undefined ? {
+                set: item.supersededById
+              } : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? {
+                set: item.signalSource
+              } : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? {
+                set: item.signalSourceType
+              } : undefined,
+            signalId: item.signalId !== undefined ? {
+                set: item.signalId
+              } : undefined,
+            pathway: item.pathway !== undefined ? {
+                set: item.pathway
+              } : undefined,
+            pathwayType: item.pathwayType !== undefined ? {
+                set: item.pathwayType
+              } : undefined,
+            exitTier: item.exitTier !== undefined ? {
+                set: item.exitTier
+              } : undefined,
+            exitTierType: item.exitTierType !== undefined ? {
+                set: item.exitTierType
+              } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
       create: {
         name: prop.authoredBy.name !== undefined ? prop.authoredBy.name : undefined,
@@ -67302,6 +70143,38 @@ import { logger } from './utils/logger';
             deletedAt: item.brokerageAccount.deletedAt !== undefined ? item.brokerageAccount.deletedAt : undefined,
           },
         }
+      } : undefined,
+      strategySubscriptions: item.strategySubscriptions ? 
+        Array.isArray(item.strategySubscriptions) && item.strategySubscriptions.length > 0 &&  item.strategySubscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.strategySubscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.strategySubscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
       } : undefined,
         },
       }))
@@ -68862,6 +71735,123 @@ import { logger } from './utils/logger';
         },
       }))
     } : undefined,
+    ownedStrategies: prop.authoredBy.ownedStrategies ? 
+      Array.isArray(prop.authoredBy.ownedStrategies) && prop.authoredBy.ownedStrategies.length > 0 &&  prop.authoredBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+        connect:      prop.authoredBy.ownedStrategies.map((item) => ({
+           id: item.id
+        }))
+ }
+ : { connectOrCreate: prop.authoredBy.ownedStrategies.map((item) => ({
+        where: {
+          id: item.id !== undefined ? item.id : undefined,
+          key: item.key !== undefined ? item.key : undefined,
+        },
+        create: {
+          key: item.key !== undefined ? item.key : undefined,
+          displayName: item.displayName !== undefined ? item.displayName : undefined,
+          description: item.description !== undefined ? item.description : undefined,
+          origin: item.origin !== undefined ? item.origin : undefined,
+          lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+          manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+          deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+      subscriptions: item.subscriptions ? 
+        Array.isArray(item.subscriptions) && item.subscriptions.length > 0 &&  item.subscriptions.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.subscriptions.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.subscriptions.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            accountId: item.accountId !== undefined ? {
+                equals: item.accountId 
+               } : undefined,
+            strategyId: item.strategyId !== undefined ? {
+                equals: item.strategyId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+          },
+          create: {
+            status: item.status !== undefined ? item.status : undefined,
+            units: item.units !== undefined ? item.units : undefined,
+            costBasis: item.costBasis !== undefined ? item.costBasis : undefined,
+            realizedPL: item.realizedPL !== undefined ? item.realizedPL : undefined,
+            targetAllocationPct: item.targetAllocationPct !== undefined ? item.targetAllocationPct : undefined,
+            currency: item.currency !== undefined ? item.currency : undefined,
+            subscribedAt: item.subscribedAt !== undefined ? item.subscribedAt : undefined,
+            lastRebalancedAt: item.lastRebalancedAt !== undefined ? item.lastRebalancedAt : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
+      trades: item.trades ? 
+        Array.isArray(item.trades) && item.trades.length > 0 &&  item.trades.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.trades.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.trades.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            alpacaAccountId: item.alpacaAccountId !== undefined ? {
+                equals: item.alpacaAccountId 
+               } : undefined,
+            status: item.status !== undefined ? {
+                equals: item.status 
+               } : undefined,
+            symbol: item.symbol !== undefined ? {
+                equals: item.symbol 
+               } : undefined,
+            signalId: item.signalId !== undefined ? {
+                equals: item.signalId 
+               } : undefined,
+          },
+          create: {
+            alpacaAccountId: item.alpacaAccountId !== undefined ? item.alpacaAccountId : undefined,
+            signal: item.signal !== undefined ? item.signal : undefined,
+            strategy: item.strategy !== undefined ? item.strategy : undefined,
+            analysis: item.analysis !== undefined ? item.analysis : undefined,
+            summary: item.summary !== undefined ? item.summary : undefined,
+            confidence: item.confidence !== undefined ? item.confidence : undefined,
+            timestamp: item.timestamp !== undefined ? item.timestamp : undefined,
+            status: item.status !== undefined ? item.status : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+            symbol: item.symbol !== undefined ? item.symbol : undefined,
+            side: item.side !== undefined ? item.side : undefined,
+            entryPrice: item.entryPrice !== undefined ? item.entryPrice : undefined,
+            exitPrice: item.exitPrice !== undefined ? item.exitPrice : undefined,
+            entryQty: item.entryQty !== undefined ? item.entryQty : undefined,
+            exitQty: item.exitQty !== undefined ? item.exitQty : undefined,
+            entryValue: item.entryValue !== undefined ? item.entryValue : undefined,
+            exitValue: item.exitValue !== undefined ? item.exitValue : undefined,
+            entryTime: item.entryTime !== undefined ? item.entryTime : undefined,
+            exitTime: item.exitTime !== undefined ? item.exitTime : undefined,
+            pnlAmount: item.pnlAmount !== undefined ? item.pnlAmount : undefined,
+            pnlPercent: item.pnlPercent !== undefined ? item.pnlPercent : undefined,
+            durationMinutes: item.durationMinutes !== undefined ? item.durationMinutes : undefined,
+            marketPhase: item.marketPhase !== undefined ? item.marketPhase : undefined,
+            marketVolatility: item.marketVolatility !== undefined ? item.marketVolatility : undefined,
+            sessionHorizonMinutes: item.sessionHorizonMinutes !== undefined ? item.sessionHorizonMinutes : undefined,
+            thresholdsJson: item.thresholdsJson !== undefined ? item.thresholdsJson : undefined,
+            thesisVersion: item.thesisVersion !== undefined ? item.thesisVersion : undefined,
+            lastReunderwrittenAt: item.lastReunderwrittenAt !== undefined ? item.lastReunderwrittenAt : undefined,
+            supersededById: item.supersededById !== undefined ? item.supersededById : undefined,
+            rejectionMetadata: item.rejectionMetadata !== undefined ? item.rejectionMetadata : undefined,
+            signalSource: item.signalSource !== undefined ? item.signalSource : undefined,
+            signalSourceType: item.signalSourceType !== undefined ? item.signalSourceType : undefined,
+            signalId: item.signalId !== undefined ? item.signalId : undefined,
+            pathway: item.pathway !== undefined ? item.pathway : undefined,
+            pathwayType: item.pathwayType !== undefined ? item.pathwayType : undefined,
+            exitTier: item.exitTier !== undefined ? item.exitTier : undefined,
+            exitTierType: item.exitTierType !== undefined ? item.exitTierType : undefined,
+          },
+        }))
+      } : undefined,
+        },
+      }))
+    } : undefined,
       },
     }
   } : undefined,
@@ -70154,6 +73144,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+      Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 && item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: item.decidedBy.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: item.decidedBy.name !== undefined ? item.decidedBy.name : undefined,
@@ -70727,6 +73767,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -71325,6 +74387,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: item.decidedBy.ownedStrategies ? 
+        Array.isArray(item.decidedBy.ownedStrategies) && item.decidedBy.ownedStrategies.length > 0 &&  item.decidedBy.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        item.decidedBy.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: item.decidedBy.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -74452,6 +77536,56 @@ import { logger } from './utils/logger';
           },
         }))
       } : undefined,
+      ownedStrategies: prop.activeFor.owner.ownedStrategies ? 
+      Array.isArray(prop.activeFor.owner.ownedStrategies) && prop.activeFor.owner.ownedStrategies.length > 0 && prop.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && ('id' in item || 'symbol' in item) && Object.keys(item).length === 1) ? {
+      connect: prop.activeFor.owner.ownedStrategies.map((item) => ({
+        id: item.id
+      }))
+} : { upsert: prop.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+            ownerUserId: item.ownerUserId !== undefined ? {
+                equals: item.ownerUserId
+              } : undefined,
+          },
+          update: {
+            id: item.id !== undefined ? {
+                set: item.id
+              } : undefined,
+            key: item.key !== undefined ? {
+                set: item.key
+              } : undefined,
+            displayName: item.displayName !== undefined ? {
+                set: item.displayName
+              } : undefined,
+            description: item.description !== undefined ? {
+                set: item.description
+              } : undefined,
+            origin: item.origin !== undefined ? {
+                set: item.origin
+              } : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? {
+                set: item.lifecycleState
+              } : undefined,
+            manifestHash: item.manifestHash !== undefined ? {
+                set: item.manifestHash
+              } : undefined,
+            deletedAt: item.deletedAt !== undefined ? {
+                set: item.deletedAt
+              } : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
+          },
+        }))
+      } : undefined,
         },
         create: {
           name: prop.activeFor.owner.name !== undefined ? prop.activeFor.owner.name : undefined,
@@ -75023,6 +78157,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: prop.activeFor.owner.ownedStrategies ? 
+        Array.isArray(prop.activeFor.owner.ownedStrategies) && prop.activeFor.owner.ownedStrategies.length > 0 &&  prop.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
@@ -76643,6 +79799,28 @@ import { logger } from './utils/logger';
             eventId: item.eventId !== undefined ? item.eventId : undefined,
             channel: item.channel !== undefined ? item.channel : undefined,
             enabled: item.enabled !== undefined ? item.enabled : undefined,
+          },
+        }))
+      } : undefined,
+      ownedStrategies: prop.activeFor.owner.ownedStrategies ? 
+        Array.isArray(prop.activeFor.owner.ownedStrategies) && prop.activeFor.owner.ownedStrategies.length > 0 &&  prop.activeFor.owner.ownedStrategies.every((item: unknown) => typeof item === 'object' && item !== null && 'id' in item && Object.keys(item).length === 1) ? {
+          connect:        prop.activeFor.owner.ownedStrategies.map((item) => ({
+             id: item.id
+          }))
+ }
+ : { connectOrCreate: prop.activeFor.owner.ownedStrategies.map((item) => ({
+          where: {
+            id: item.id !== undefined ? item.id : undefined,
+            key: item.key !== undefined ? item.key : undefined,
+          },
+          create: {
+            key: item.key !== undefined ? item.key : undefined,
+            displayName: item.displayName !== undefined ? item.displayName : undefined,
+            description: item.description !== undefined ? item.description : undefined,
+            origin: item.origin !== undefined ? item.origin : undefined,
+            lifecycleState: item.lifecycleState !== undefined ? item.lifecycleState : undefined,
+            manifestHash: item.manifestHash !== undefined ? item.manifestHash : undefined,
+            deletedAt: item.deletedAt !== undefined ? item.deletedAt : undefined,
           },
         }))
       } : undefined,
