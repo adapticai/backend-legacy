@@ -40,7 +40,11 @@ substitutions:
 options:
   logging: CLOUD_LOGGING_ONLY
   dynamicSubstitutions: true
-  machineType: E2_HIGHCPU_8
+  # E2_HIGHCPU_8 provides only 8 GB, which cannot host the builder stage's
+  # 12 GB `tsc` heap (see Dockerfile). Cloud Build offers no 16 GB tier, so the
+  # next size up is E2_HIGHCPU_32 (32 vCPU / 32 GB); the extra cores also cut
+  # the single-threaded-dominated build's wall time.
+  machineType: E2_HIGHCPU_32
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 
 images:

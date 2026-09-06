@@ -23,9 +23,20 @@ RUN apt-get update \
   && npm install --no-audit --no-fund --include=dev
 
 FROM node:${NODE_VERSION}-bookworm-slim AS builder
+# `npm run build` type-checks the whole generated surface in one `tsc` pass —
+# every Prisma model, its TypeGraphQL resolvers, and the generated selection
+# sets and CRUD functions. That working set grows with the schema, so the heap
+# ceiling is a function of model count, not of this Dockerfile. At 6144 MB
+# `tsc` aborts with SIGABRT (exit 134, "Ineffective mark-compacts near heap
+# limit"), which surfaces as an opaque Cloud Build step failure rather than a
+# type error. Measured: 6144 aborts, 8192 completes; 12288 is that plus
+# headroom for the next models added. Keep this at least a few GB below the
+# build machine's RAM (cloudbuild.yaml `machineType`) so V8 hits its own limit
+# and reports a heap error, instead of the kernel OOM-killing the container and
+# reporting exit 137 with no diagnosis at all.
 ENV HUSKY=0 \
     SKIP_PRISMA_VERSION_CHECK=true \
-    NODE_OPTIONS=--max-old-space-size=6144
+    NODE_OPTIONS=--max-old-space-size=12288
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
