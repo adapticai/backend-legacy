@@ -1,7 +1,9 @@
 import * as TypeGraphQL from 'type-graphql';
 import * as GraphQLScalars from 'graphql-scalars';
 import type { PrismaClient, Prisma } from '@prisma/client';
+import { GraphQLError } from 'graphql';
 import { getPrismaFromContext } from '../../generated/typegraphql-prisma/helpers';
+import type { BackendPrincipal } from '../../auth/token-verifier';
 
 /**
  * Institutional trading settings — the org→fund policy-resolution layer.
@@ -203,6 +205,58 @@ export class FundTradingOverridesPayload {
 /** GraphQL resolver context carrying the Prisma client. */
 interface GraphQLContext {
   prisma: PrismaClient;
+  /**
+   * The verified caller, as `server.ts` puts it on the context: `null` for an
+   * unauthenticated request. This resolver previously declared only `prisma`
+   * and therefore never asked who was calling — which left both mutations
+   * writing any organisation's or fund's trading configuration for anyone who
+   * could reach `/graphql`.
+   */
+  principal?: BackendPrincipal | null;
+}
+
+/** Org roles entitled to configure how a fund trades. */
+const TRADING_CONFIG_ROLES: readonly string[] = [
+  'OWNER',
+  'ADMIN',
+  'PORTFOLIO_MANAGER',
+];
+
+/**
+ * Fail closed unless the caller may configure trading for `orgId`.
+ *
+ * Service and admin principals pass; a user principal must hold a membership in
+ * that organisation with a role that owns trading configuration. An absent
+ * principal is refused outright.
+ *
+ * This check does NOT rely on the `@Authorized()` auth-checker, which is
+ * deliberately shadow-first (`CORTEX_AUTHCHECKER_ENFORCE` off ⇒ a would-deny is
+ * logged and then allowed). A write that reconfigures how real money is traded
+ * cannot wait for that graduation.
+ */
+async function assertCanConfigureTrading(
+  prisma: PrismaClient,
+  principal: BackendPrincipal | null | undefined,
+  orgId: string
+): Promise<void> {
+  if (!principal) {
+    throw new GraphQLError('Authentication required.', {
+      extensions: { code: 'UNAUTHENTICATED' },
+    });
+  }
+  if (principal.kind === 'server' || principal.kind === 'admin') {
+    return;
+  }
+  const membership = await prisma.orgMembership.findFirst({
+    where: { organizationId: orgId, userId: principal.sub },
+    select: { role: true },
+  });
+  if (!membership || !TRADING_CONFIG_ROLES.includes(String(membership.role))) {
+    throw new GraphQLError(
+      'Not entitled to configure trading for this organization.',
+      { extensions: { code: 'FORBIDDEN' } }
+    );
+  }
 }
 
 /**
@@ -333,6 +387,7 @@ export class TradingSettingsResolver {
     @TypeGraphQL.Ctx() ctx: GraphQLContext
   ): Promise<OrgTradingDefaultsPayload> {
     const prisma = getPrismaFromContext(ctx) as PrismaClient;
+    await assertCanConfigureTrading(prisma, ctx.principal, orgId);
     const existing = await prisma.organization.findUnique({
       where: { id: orgId },
       select: { tradingDefaults: true },
@@ -372,11 +427,12 @@ export class TradingSettingsResolver {
     const prisma = getPrismaFromContext(ctx) as PrismaClient;
     const existing = await prisma.fund.findUnique({
       where: { id: fundId },
-      select: { tradingOverrides: true },
+      select: { tradingOverrides: true, organizationId: true },
     });
     if (!existing) {
       throw new Error(`Fund ${fundId} not found`);
     }
+    await assertCanConfigureTrading(prisma, ctx.principal, existing.organizationId);
     const merged = mergeSettings(
       toSettingsRecord(existing.tradingOverrides),
       settings

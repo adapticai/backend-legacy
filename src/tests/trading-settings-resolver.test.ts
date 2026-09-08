@@ -22,16 +22,29 @@ interface MockPrisma {
     findUnique: ReturnType<typeof vi.fn>;
     update: ReturnType<typeof vi.fn>;
   };
+  orgMembership: {
+    findFirst: ReturnType<typeof vi.fn>;
+  };
 }
 
-function makeCtx(prisma: MockPrisma): { prisma: MockPrisma } {
-  return { prisma };
+/** A caller as `server.ts` puts one on the context; omit for an anonymous request. */
+type MockPrincipal =
+  | { kind: 'server' }
+  | { kind: 'user'; sub: string; roles: string[] }
+  | { kind: 'admin'; sub: string; roles: string[] };
+
+function makeCtx(
+  prisma: MockPrisma,
+  principal: MockPrincipal | null = { kind: 'server' }
+): { prisma: MockPrisma; principal: MockPrincipal | null } {
+  return { prisma, principal };
 }
 
 function makePrisma(): MockPrisma {
   return {
     organization: { findUnique: vi.fn(), update: vi.fn() },
     fund: { findUnique: vi.fn(), update: vi.fn() },
+    orgMembership: { findFirst: vi.fn().mockResolvedValue({ role: 'ADMIN' }) },
   };
 }
 
@@ -101,6 +114,65 @@ describe('TradingSettingsResolver.effectiveTradingSettings', () => {
     );
     expect(out.tradeAllocationPct).toBe(5);
     expect(prisma.fund.findUnique).not.toHaveBeenCalled();
+  });
+});
+
+describe('TradingSettingsResolver entitlement', () => {
+  it('refuses an anonymous caller before reading or writing anything', async () => {
+    const resolver = new TradingSettingsResolver();
+    const prisma = makePrisma();
+    await expect(
+      resolver.updateOrgTradingDefaults('org-1', {}, makeCtx(prisma, null) as never)
+    ).rejects.toThrow(/Authentication required/);
+    expect(prisma.organization.findUnique).not.toHaveBeenCalled();
+    expect(prisma.organization.update).not.toHaveBeenCalled();
+  });
+
+  it('refuses a user with no membership in the target organization', async () => {
+    const resolver = new TradingSettingsResolver();
+    const prisma = makePrisma();
+    prisma.orgMembership.findFirst.mockResolvedValue(null);
+    await expect(
+      resolver.updateOrgTradingDefaults('org-1', {}, makeCtx(prisma, { kind: 'user', sub: 'u1', roles: [] }) as never)
+    ).rejects.toThrow(/Not entitled/);
+    expect(prisma.organization.update).not.toHaveBeenCalled();
+  });
+
+  it('refuses a member whose role does not own trading configuration', async () => {
+    const resolver = new TradingSettingsResolver();
+    const prisma = makePrisma();
+    prisma.orgMembership.findFirst.mockResolvedValue({ role: 'MEMBER' });
+    await expect(
+      resolver.updateOrgTradingDefaults('org-1', {}, makeCtx(prisma, { kind: 'user', sub: 'u1', roles: [] }) as never)
+    ).rejects.toThrow(/Not entitled/);
+    expect(prisma.organization.update).not.toHaveBeenCalled();
+  });
+
+  it('scopes a fund override to the fund’s OWNING organization, not one the caller names', async () => {
+    const resolver = new TradingSettingsResolver();
+    const prisma = makePrisma();
+    prisma.fund.findUnique.mockResolvedValue({ tradingOverrides: {}, organizationId: 'org-owner' });
+    prisma.orgMembership.findFirst.mockResolvedValue(null);
+    await expect(
+      resolver.updateFundTradingOverrides('fund-1', {}, makeCtx(prisma, { kind: 'user', sub: 'u1', roles: [] }) as never)
+    ).rejects.toThrow(/Not entitled/);
+    expect(prisma.orgMembership.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({ where: expect.objectContaining({ organizationId: 'org-owner', userId: 'u1' }) })
+    );
+    expect(prisma.fund.update).not.toHaveBeenCalled();
+  });
+
+  it('admits a service principal and an entitled member', async () => {
+    const resolver = new TradingSettingsResolver();
+    const prisma = makePrisma();
+    prisma.organization.findUnique.mockResolvedValue({ tradingDefaults: {} });
+    prisma.organization.update.mockResolvedValue({ id: 'org-1', name: 'Org', tradingDefaults: {} });
+    await expect(resolver.updateOrgTradingDefaults('org-1', {}, makeCtx(prisma) as never)).resolves.toBeTruthy();
+
+    prisma.orgMembership.findFirst.mockResolvedValue({ role: 'PORTFOLIO_MANAGER' });
+    await expect(
+      resolver.updateOrgTradingDefaults('org-1', {}, makeCtx(prisma, { kind: 'user', sub: 'u1', roles: [] }) as never)
+    ).resolves.toBeTruthy();
   });
 });
 
