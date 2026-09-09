@@ -50,12 +50,69 @@ export const IR_MODELS: readonly EnhanceModelName[] = [
   'TaxDocument',
 ];
 
+/**
+ * Models whose READ actions are decorated as well as their deletes.
+ *
+ * These three answer to anyone today. A read-only probe of the deployed API
+ * with no Authorization header returns a real organisation name, a real user's
+ * email address, and a real membership row, so the standing escalation is not
+ * theoretical. They were outside the checker entirely: `_all` covers the five
+ * investor-relations models, everything else got delete coverage only, and a
+ * query the checker never runs for is a query it cannot even count.
+ *
+ * Decorating them changes NO behaviour while the checker is in shadow — a
+ * would-deny is logged and counted and then allowed. What it changes is that
+ * the exposure becomes measurable. Enforcement cannot be argued from a
+ * would-deny ratio that reflects only surfaces nobody ever authenticated to,
+ * and the measurement has to exist before the decision does.
+ */
+export const TENANT_SCOPED_READ_MODELS: readonly EnhanceModelName[] = [
+  'Organization',
+  'OrgMembership',
+  'User',
+];
+
+/**
+ * Action-name prefixes that MUTATE. Everything else on a generated CRUD
+ * resolver reads.
+ *
+ * Read actions are derived by exclusion rather than listed, because the
+ * generator names them inconsistently — `organizations`, `organization`,
+ * `getOrganization`, `findFirstOrganization`, `aggregateOrganization`,
+ * `groupByOrganization` are all reads of one model. Enumerating them by hand is
+ * how a read gets missed silently; excluding the four mutation shapes cannot.
+ */
+const MUTATION_PREFIXES: readonly string[] = [
+  'create',
+  'update',
+  'delete',
+  'upsert',
+];
+
+/**
+ * The read actions a model's generated CRUD resolver actually exposes.
+ *
+ * Derived from the real prototype, so a generator rename shows up as a smaller
+ * set rather than as silently absent coverage.
+ */
+function readActionsOf(model: string): string[] {
+  const prototype = crudResolverPrototype(model);
+  if (!prototype) return [];
+  return Object.getOwnPropertyNames(prototype).filter((name) => {
+    if (name === 'constructor') return false;
+    if (typeof prototype[name] !== 'function') return false;
+    return !MUTATION_PREFIXES.some((prefix) => name.startsWith(prefix));
+  });
+}
+
 /** Summary of the coverage applied, for the boot log and tests. */
 export interface AuthorizationMapSummary {
   /** Models decorated with `_all` (full CRUD coverage). */
   readonly fullCoverageModels: number;
   /** Models whose delete mutations were decorated. */
   readonly deleteCoverageModels: number;
+  /** Models whose READ actions were decorated as well ({@link TENANT_SCOPED_READ_MODELS}). */
+  readonly readCoverageModels: number;
   /** Total decorated resolver actions (delete actions + `_all` markers). */
   readonly decoratedActions: number;
   /**
@@ -106,6 +163,25 @@ export function buildCortexAuthorizationMap(): BuiltAuthorizationMap {
     decoratedActions += 1;
   }
 
+  // Read coverage for the tenant-scoped models, applied BEFORE the delete pass
+  // so the two merge into one action config rather than overwriting it.
+  const readActionsByModel = new Map<string, Record<string, MethodDecorator[]>>();
+  let readCoverageModels = 0;
+  for (const model of TENANT_SCOPED_READ_MODELS) {
+    const actions = readActionsOf(model);
+    if (actions.length === 0) {
+      skippedActions.push(`${model}:reads`);
+      continue;
+    }
+    const config: Record<string, MethodDecorator[]> = {};
+    for (const action of actions) {
+      config[action] = [Authorized()];
+    }
+    readActionsByModel.set(model, config);
+    decoratedActions += actions.length;
+    readCoverageModels += 1;
+  }
+
   const irModelSet = new Set<string>(IR_MODELS);
   for (const model of Object.values(Prisma.ModelName)) {
     // IR models already have full coverage; decorating deletes again would
@@ -114,7 +190,9 @@ export function buildCortexAuthorizationMap(): BuiltAuthorizationMap {
       continue;
     }
     const prototype = crudResolverPrototype(model);
-    const actionsConfig: Record<string, MethodDecorator[]> = {};
+    const actionsConfig: Record<string, MethodDecorator[]> = {
+      ...(readActionsByModel.get(model) ?? {}),
+    };
     let coveredForModel = 0;
     for (const action of [`deleteOne${model}`, `deleteMany${model}`]) {
       if (prototype && typeof prototype[action] === 'function') {
@@ -124,7 +202,7 @@ export function buildCortexAuthorizationMap(): BuiltAuthorizationMap {
         skippedActions.push(action);
       }
     }
-    if (coveredForModel > 0) {
+    if (coveredForModel > 0 || Object.keys(actionsConfig).length > 0) {
       map[model as EnhanceModelName] =
         actionsConfig as ResolversEnhanceMap[EnhanceModelName];
       decoratedActions += coveredForModel;
@@ -137,6 +215,7 @@ export function buildCortexAuthorizationMap(): BuiltAuthorizationMap {
     summary: {
       fullCoverageModels: IR_MODELS.length,
       deleteCoverageModels,
+      readCoverageModels,
       decoratedActions,
       skippedActions,
     },
