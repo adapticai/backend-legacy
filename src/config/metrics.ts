@@ -185,6 +185,39 @@ export function initMetrics(): boolean {
 // ---------------------------------------------------------------------------
 
 /**
+ * The label used for a request that matched no route.
+ *
+ * One bucket, not the path that was asked for.
+ */
+export const UNMATCHED_ROUTE_LABEL = 'unmatched';
+
+/**
+ * The bounded route label for a request.
+ *
+ * `req.route.path` is the Express route PATTERN, so its value set is bounded by
+ * this application's own routing table. `req.path` is not bounded by anything —
+ * it is whatever the client asked for. Falling back from the first to the second
+ * turns a metric label into an attack surface: every unmatched path a scanner
+ * probes becomes a new permanent time series, and the registry grows without
+ * limit at the caller's discretion. Production carried 679 distinct values, 130
+ * of them probes such as `/wp-config.php` and
+ * `/@fs/proc/self/cwd/.config/gcloud/application_default_credentials.json`.
+ *
+ * A request that matched no route is therefore recorded as a single bucket. The
+ * request is still counted, with its method and status; what is discarded is the
+ * attacker's choice of string.
+ *
+ * @param req - The request being recorded.
+ * @returns The matched route pattern, or {@link UNMATCHED_ROUTE_LABEL}.
+ */
+export function routeLabel(req: Pick<Request, 'route'>): string {
+  const matched = (req as { route?: { path?: unknown } }).route?.path;
+  return typeof matched === 'string' && matched.length > 0
+    ? matched
+    : UNMATCHED_ROUTE_LABEL;
+}
+
+/**
  * Express middleware that records HTTP request metrics.
  * Tracks request count and duration for each method/route/status combination.
  *
@@ -205,7 +238,7 @@ export function metricsMiddleware(
   res.on('finish', () => {
     const durationNs = Number(process.hrtime.bigint() - start);
     const durationSeconds = durationNs / 1e9;
-    const route = req.route?.path || req.path || 'unknown';
+    const route = routeLabel(req);
     const method = req.method;
     const statusCode = String(res.statusCode);
 
