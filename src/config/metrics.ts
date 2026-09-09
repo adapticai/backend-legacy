@@ -1,3 +1,4 @@
+import { timingSafeEqual } from 'node:crypto';
 import { Request, Response, Router } from 'express';
 import {
   Registry,
@@ -351,12 +352,63 @@ export function createMetricsPlugin(): {
  * Note: This endpoint should be protected in production (e.g., by firewall rules
  * or by requiring a bearer token). It is excluded from rate limiting by default.
  */
+/**
+ * Whether the scrape endpoint requires a bearer token, and which one.
+ *
+ * Read per request rather than captured at boot so the switch can be turned on
+ * without a restart.
+ */
+function metricsScrapeToken(): string | null {
+  const token = process.env.METRICS_SCRAPE_TOKEN;
+  return typeof token === 'string' && token.length > 0 ? token : null;
+}
+
+/**
+ * Whether an `Authorization` header may read the scrape.
+ *
+ * Returns true when no token is configured, which is the state every existing
+ * deployment is in: the gate is inert until an operator sets one, so shipping it
+ * breaks no scraper and closing the endpoint stays an operator decision.
+ *
+ * The comparison is constant-time so a wrong token cannot be discovered a byte
+ * at a time from response timing. A length mismatch short-circuits, which is
+ * correct — the length is not the secret, the bytes are.
+ *
+ * @param authorization - The request's `Authorization` header, if any.
+ * @param expected - The configured token, or `null` when none is configured.
+ */
+export function scrapeAuthorized(
+  authorization: string | undefined,
+  expected: string | null
+): boolean {
+  if (expected === null) return true;
+  const header = authorization ?? '';
+  if (!header.startsWith('Bearer ')) return false;
+  const presented = Buffer.from(header.slice(7), 'utf8');
+  const wanted = Buffer.from(expected, 'utf8');
+  return presented.length === wanted.length && timingSafeEqual(presented, wanted);
+}
+
 export function createMetricsRouter(): Router {
   const router = Router();
 
   router.get(
     '/metrics',
-    async (_req: Request, res: Response): Promise<void> => {
+    async (req: Request, res: Response): Promise<void> => {
+      // Optional bearer gate. Inert until METRICS_SCRAPE_TOKEN is set, so
+      // enabling it is an operator decision and no existing scraper breaks by
+      // deploying this. When set, the endpoint stops being world-readable.
+      //
+      // This is defence in depth, not the fix. The endpoint is mounted outside
+      // Apollo and outside auth on purpose, and restricting it at the ingress
+      // remains the right control; it simply is not in place, and until it is
+      // this scrape exposes the service's whole operational posture — request
+      // volumes, error rates, and the authorization counters that reveal the
+      // checker is running in shadow — to anyone who asks.
+      if (!scrapeAuthorized(req.get('authorization'), metricsScrapeToken())) {
+        res.status(401).set('WWW-Authenticate', 'Bearer').send('Unauthorized');
+        return;
+      }
       try {
         const metrics = await metricsRegistry.metrics();
         res.set('Content-Type', metricsRegistry.contentType);
