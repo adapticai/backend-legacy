@@ -46,7 +46,14 @@ jobs:
         env:
           DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
           DIRECT_DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      # Linting walks the same ~1.3M generated lines as the type-check below
+      # and needs the same heap for the same reason. Without it the step dies
+      # at exit 134 before reporting a single rule violation, which reads in
+      # the run list as a failing lint gate but is actually no lint gate at
+      # all — every rule it would have enforced goes unchecked.
       - run: npm run lint
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
       # Type-checking the full surface incl. ~1.3M generated lines exceeds
       # the runner's default Node heap (observed OOM at exit 134); match the
       # publish workflow's allowance.
