@@ -9,7 +9,12 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
 }
 
 /**
- * Recursively removes undefined and null properties from an object or array.
+ * Recursively removes undefined properties from an object or array.
+ *
+ * Object properties whose value is `null` are PRESERVED. In a Prisma update an
+ * omitted field is left untouched while `{ set: null }` clears it, so dropping
+ * null would silently turn every "clear this field" into a no-op that still
+ * reports success.
  *
  * This utility is called by generated CRUD functions to clean GraphQL variables
  * before passing them to Apollo Client. The input objects contain Prisma-typed
@@ -40,7 +45,25 @@ export function removeUndefinedProps(
     return Object.keys(record).reduce((acc: Record<string, unknown>, key) => {
       const value = record[key];
 
-      if (value !== undefined && value !== null) {
+      // `null` is a VALUE and survives; only `undefined` is an absence.
+      //
+      // The two mean opposite things in a Prisma update: an omitted field is
+      // left alone, `{ set: null }` clears it. Treating them alike made
+      // clearing a nullable field impossible on every generated model —
+      // `update({ id, field: null })` returned the unchanged row with no error,
+      // because this function emptied `{ set: null }` to `{}` and the
+      // empty-object rule below then dropped the field entirely. A write that
+      // reports success while changing nothing is worse than one that fails.
+      //
+      // Short-circuited here rather than by relaxing the guards below, because
+      // those also govern array items and the scalar tail, where dropping null
+      // is long-standing behaviour this correction has no reason to disturb.
+      if (value === null) {
+        acc[key] = null;
+        return acc;
+      }
+
+      if (value !== undefined) {
         let cleanedValue: unknown;
 
         if (key === 'where' && isPlainObject(value)) {
