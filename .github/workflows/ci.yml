@@ -55,11 +55,13 @@ jobs:
         env:
           NODE_OPTIONS: --max-old-space-size=6144
       # Type-checking the full surface incl. ~1.3M generated lines exceeds
-      # the runner's default Node heap (observed OOM at exit 134); match the
-      # publish workflow's allowance.
+      # the runner's default Node heap (observed OOM at exit 134). 6144 MB was
+      # not enough either — it only looked sufficient while the lint step above
+      # aborted first and this one never ran. Matched to the build job, which
+      # walks the same surface and has held at this allowance.
       - run: npx tsc --noEmit
         env:
-          NODE_OPTIONS: --max-old-space-size=6144
+          NODE_OPTIONS: --max-old-space-size=8192
 
   test:
     name: Test & Coverage
