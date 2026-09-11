@@ -1685,6 +1685,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.manager.llmConfiguration.qwenApiKey !== undefined ? props.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.manager.llmConfiguration.xaiApiKey !== undefined ? props.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? props.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? props.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -3697,6 +3698,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.operator.llmConfiguration.qwenApiKey !== undefined ? props.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.operator.llmConfiguration.xaiApiKey !== undefined ? props.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? props.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? props.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -5747,6 +5749,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -8794,6 +8797,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -15148,6 +15152,9 @@ import { logger } from './utils/logger';
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? {
               set: props.manager.llmConfiguration.geminiApiKey
             } : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? {
+              set: props.manager.llmConfiguration.deepinfraApiKey
+            } : undefined,
         },
         create: {
           defaultProvider: props.manager.llmConfiguration.defaultProvider !== undefined ? props.manager.llmConfiguration.defaultProvider : undefined,
@@ -15164,6 +15171,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.manager.llmConfiguration.qwenApiKey !== undefined ? props.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.manager.llmConfiguration.xaiApiKey !== undefined ? props.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? props.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? props.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -19585,6 +19593,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.manager.llmConfiguration.qwenApiKey !== undefined ? props.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.manager.llmConfiguration.xaiApiKey !== undefined ? props.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? props.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? props.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -23031,6 +23040,9 @@ import { logger } from './utils/logger';
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? {
               set: props.operator.llmConfiguration.geminiApiKey
             } : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? {
+              set: props.operator.llmConfiguration.deepinfraApiKey
+            } : undefined,
         },
         create: {
           defaultProvider: props.operator.llmConfiguration.defaultProvider !== undefined ? props.operator.llmConfiguration.defaultProvider : undefined,
@@ -23047,6 +23059,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.operator.llmConfiguration.qwenApiKey !== undefined ? props.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.operator.llmConfiguration.xaiApiKey !== undefined ? props.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? props.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? props.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -27468,6 +27481,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.operator.llmConfiguration.qwenApiKey !== undefined ? props.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.operator.llmConfiguration.xaiApiKey !== undefined ? props.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? props.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? props.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -31337,6 +31351,9 @@ import { logger } from './utils/logger';
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? {
                 set: item.user.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: item.user.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: item.user.llmConfiguration.defaultProvider !== undefined ? item.user.llmConfiguration.defaultProvider : undefined,
@@ -31353,6 +31370,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -32236,6 +32254,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -32856,6 +32875,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -42846,6 +42866,9 @@ import { logger } from './utils/logger';
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? {
                 set: item.owner.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: item.owner.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: item.owner.llmConfiguration.defaultProvider !== undefined ? item.owner.llmConfiguration.defaultProvider : undefined,
@@ -42862,6 +42885,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -43728,6 +43752,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -45398,6 +45423,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -47733,6 +47759,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.manager.llmConfiguration.qwenApiKey !== undefined ? props.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.manager.llmConfiguration.xaiApiKey !== undefined ? props.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? props.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? props.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -49745,6 +49772,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.operator.llmConfiguration.qwenApiKey !== undefined ? props.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.operator.llmConfiguration.xaiApiKey !== undefined ? props.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? props.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? props.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -51795,6 +51823,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -54842,6 +54871,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -60866,6 +60896,9 @@ import { logger } from './utils/logger';
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? {
               set: props.manager.llmConfiguration.geminiApiKey
             } : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? {
+              set: props.manager.llmConfiguration.deepinfraApiKey
+            } : undefined,
         },
         create: {
           defaultProvider: props.manager.llmConfiguration.defaultProvider !== undefined ? props.manager.llmConfiguration.defaultProvider : undefined,
@@ -60882,6 +60915,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.manager.llmConfiguration.qwenApiKey !== undefined ? props.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.manager.llmConfiguration.xaiApiKey !== undefined ? props.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? props.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? props.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -65303,6 +65337,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.manager.llmConfiguration.qwenApiKey !== undefined ? props.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.manager.llmConfiguration.xaiApiKey !== undefined ? props.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.manager.llmConfiguration.geminiApiKey !== undefined ? props.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.manager.llmConfiguration.deepinfraApiKey !== undefined ? props.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -68749,6 +68784,9 @@ import { logger } from './utils/logger';
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? {
               set: props.operator.llmConfiguration.geminiApiKey
             } : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? {
+              set: props.operator.llmConfiguration.deepinfraApiKey
+            } : undefined,
         },
         create: {
           defaultProvider: props.operator.llmConfiguration.defaultProvider !== undefined ? props.operator.llmConfiguration.defaultProvider : undefined,
@@ -68765,6 +68803,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.operator.llmConfiguration.qwenApiKey !== undefined ? props.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.operator.llmConfiguration.xaiApiKey !== undefined ? props.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? props.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? props.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -73186,6 +73225,7 @@ import { logger } from './utils/logger';
           qwenApiKey: props.operator.llmConfiguration.qwenApiKey !== undefined ? props.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: props.operator.llmConfiguration.xaiApiKey !== undefined ? props.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: props.operator.llmConfiguration.geminiApiKey !== undefined ? props.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: props.operator.llmConfiguration.deepinfraApiKey !== undefined ? props.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -77055,6 +77095,9 @@ import { logger } from './utils/logger';
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? {
                 set: item.user.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: item.user.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: item.user.llmConfiguration.defaultProvider !== undefined ? item.user.llmConfiguration.defaultProvider : undefined,
@@ -77071,6 +77114,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -77954,6 +77998,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -78574,6 +78619,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -88564,6 +88610,9 @@ import { logger } from './utils/logger';
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? {
                 set: item.owner.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: item.owner.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: item.owner.llmConfiguration.defaultProvider !== undefined ? item.owner.llmConfiguration.defaultProvider : undefined,
@@ -88580,6 +88629,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -89446,6 +89496,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -91116,6 +91167,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -97303,6 +97355,9 @@ import { logger } from './utils/logger';
           geminiApiKey: prop.manager.llmConfiguration.geminiApiKey !== undefined ? {
               set: prop.manager.llmConfiguration.geminiApiKey
             } : undefined,
+          deepinfraApiKey: prop.manager.llmConfiguration.deepinfraApiKey !== undefined ? {
+              set: prop.manager.llmConfiguration.deepinfraApiKey
+            } : undefined,
         },
         create: {
           defaultProvider: prop.manager.llmConfiguration.defaultProvider !== undefined ? prop.manager.llmConfiguration.defaultProvider : undefined,
@@ -97319,6 +97374,7 @@ import { logger } from './utils/logger';
           qwenApiKey: prop.manager.llmConfiguration.qwenApiKey !== undefined ? prop.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: prop.manager.llmConfiguration.xaiApiKey !== undefined ? prop.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: prop.manager.llmConfiguration.geminiApiKey !== undefined ? prop.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: prop.manager.llmConfiguration.deepinfraApiKey !== undefined ? prop.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -101740,6 +101796,7 @@ import { logger } from './utils/logger';
           qwenApiKey: prop.manager.llmConfiguration.qwenApiKey !== undefined ? prop.manager.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: prop.manager.llmConfiguration.xaiApiKey !== undefined ? prop.manager.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: prop.manager.llmConfiguration.geminiApiKey !== undefined ? prop.manager.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: prop.manager.llmConfiguration.deepinfraApiKey !== undefined ? prop.manager.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -105186,6 +105243,9 @@ import { logger } from './utils/logger';
           geminiApiKey: prop.operator.llmConfiguration.geminiApiKey !== undefined ? {
               set: prop.operator.llmConfiguration.geminiApiKey
             } : undefined,
+          deepinfraApiKey: prop.operator.llmConfiguration.deepinfraApiKey !== undefined ? {
+              set: prop.operator.llmConfiguration.deepinfraApiKey
+            } : undefined,
         },
         create: {
           defaultProvider: prop.operator.llmConfiguration.defaultProvider !== undefined ? prop.operator.llmConfiguration.defaultProvider : undefined,
@@ -105202,6 +105262,7 @@ import { logger } from './utils/logger';
           qwenApiKey: prop.operator.llmConfiguration.qwenApiKey !== undefined ? prop.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: prop.operator.llmConfiguration.xaiApiKey !== undefined ? prop.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: prop.operator.llmConfiguration.geminiApiKey !== undefined ? prop.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: prop.operator.llmConfiguration.deepinfraApiKey !== undefined ? prop.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -109623,6 +109684,7 @@ import { logger } from './utils/logger';
           qwenApiKey: prop.operator.llmConfiguration.qwenApiKey !== undefined ? prop.operator.llmConfiguration.qwenApiKey : undefined,
           xaiApiKey: prop.operator.llmConfiguration.xaiApiKey !== undefined ? prop.operator.llmConfiguration.xaiApiKey : undefined,
           geminiApiKey: prop.operator.llmConfiguration.geminiApiKey !== undefined ? prop.operator.llmConfiguration.geminiApiKey : undefined,
+          deepinfraApiKey: prop.operator.llmConfiguration.deepinfraApiKey !== undefined ? prop.operator.llmConfiguration.deepinfraApiKey : undefined,
         },
       }
     } : undefined,
@@ -113492,6 +113554,9 @@ import { logger } from './utils/logger';
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? {
                 set: item.user.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: item.user.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: item.user.llmConfiguration.defaultProvider !== undefined ? item.user.llmConfiguration.defaultProvider : undefined,
@@ -113508,6 +113573,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -114391,6 +114457,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -115011,6 +115078,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.user.llmConfiguration.qwenApiKey !== undefined ? item.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.user.llmConfiguration.xaiApiKey !== undefined ? item.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.user.llmConfiguration.geminiApiKey !== undefined ? item.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.user.llmConfiguration.deepinfraApiKey !== undefined ? item.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -125001,6 +125069,9 @@ import { logger } from './utils/logger';
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? {
                 set: item.owner.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: item.owner.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: item.owner.llmConfiguration.defaultProvider !== undefined ? item.owner.llmConfiguration.defaultProvider : undefined,
@@ -125017,6 +125088,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -125883,6 +125955,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -127553,6 +127626,7 @@ import { logger } from './utils/logger';
             qwenApiKey: item.owner.llmConfiguration.qwenApiKey !== undefined ? item.owner.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: item.owner.llmConfiguration.xaiApiKey !== undefined ? item.owner.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: item.owner.llmConfiguration.geminiApiKey !== undefined ? item.owner.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: item.owner.llmConfiguration.deepinfraApiKey !== undefined ? item.owner.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,

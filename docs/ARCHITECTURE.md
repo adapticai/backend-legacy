@@ -386,7 +386,7 @@ risk-governance / ML-governance expansions) include `AutonomyMode`,
 `SignalOutcomeType`, `SignalPriorityTier`, `SignalQueueStatus`,
 `TradeExitReason`, `TradeOutcomeQuality`, plus the LLM provider/model
 enums (`AnthropicModel`, `OpenaiModel`, `DeepseekModel`, `GeminiModel`,
-`KimiModel`, `QwenModel`, `XaiModel`, `LlmProvider`).
+`KimiModel`, `QwenModel`, `XaiModel`, `DeepinfraModel`, `LlmProvider`).
 
 ## Server Architecture
 

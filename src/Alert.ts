@@ -553,6 +553,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -2724,6 +2725,9 @@ import { logger } from './utils/logger';
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? {
                 set: props.alpacaAccount.user.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
@@ -2740,6 +2744,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -3611,6 +3616,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -5354,6 +5360,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -6675,6 +6682,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -8522,6 +8530,9 @@ import { logger } from './utils/logger';
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? {
                 set: props.alpacaAccount.user.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: props.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? props.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
@@ -8538,6 +8549,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -9409,6 +9421,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -11152,6 +11165,7 @@ import { logger } from './utils/logger';
             qwenApiKey: props.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: props.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: props.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: props.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? props.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -13162,6 +13176,9 @@ import { logger } from './utils/logger';
             geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? {
                 set: prop.alpacaAccount.user.llmConfiguration.geminiApiKey
               } : undefined,
+            deepinfraApiKey: prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? {
+                set: prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey
+              } : undefined,
           },
           create: {
             defaultProvider: prop.alpacaAccount.user.llmConfiguration.defaultProvider !== undefined ? prop.alpacaAccount.user.llmConfiguration.defaultProvider : undefined,
@@ -13178,6 +13195,7 @@ import { logger } from './utils/logger';
             qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -14049,6 +14067,7 @@ import { logger } from './utils/logger';
             qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,
@@ -15792,6 +15811,7 @@ import { logger } from './utils/logger';
             qwenApiKey: prop.alpacaAccount.user.llmConfiguration.qwenApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.qwenApiKey : undefined,
             xaiApiKey: prop.alpacaAccount.user.llmConfiguration.xaiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.xaiApiKey : undefined,
             geminiApiKey: prop.alpacaAccount.user.llmConfiguration.geminiApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.geminiApiKey : undefined,
+            deepinfraApiKey: prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey !== undefined ? prop.alpacaAccount.user.llmConfiguration.deepinfraApiKey : undefined,
           },
         }
       } : undefined,

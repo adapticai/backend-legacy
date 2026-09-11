@@ -745,6 +745,60 @@ enum GeminiModel {
   GEMINI_3_1_FLASH_LITE_PREVIEW
 }
 
+/// DeepInfra-hosted open-weight language models available for text generation.
+/// DeepInfra hosts models authored by other organisations, so every id is
+/// namespaced "<org>/<model>" and preserves the author's own casing. The wire id
+/// is the quoted string below, never the member name: enum members are Postgres
+/// and GraphQL identifiers and cannot contain "/" or "." , so the member is the
+/// id uppercased with "/", "-" and "." folded to "_". Consumers that need the
+/// callable id read the documented string, which is what the free-text
+/// model-id columns store.
+enum DeepinfraModel {
+  /// DeepSeek V4 Pro (flagship; recommended for advanced/complex queries)
+  /// API model id: "deepseek-ai/DeepSeek-V4-Pro"
+  DEEPSEEK_AI_DEEPSEEK_V4_PRO
+
+  /// DeepSeek V4 Flash (mid-tier; latency-sensitive work)
+  /// API model id: "deepseek-ai/DeepSeek-V4-Flash"
+  DEEPSEEK_AI_DEEPSEEK_V4_FLASH
+
+  /// DeepSeek V4.1 Flash (newer mid-tier revision)
+  /// API model id: "deepseek-ai/DeepSeek-V4.1-Flash"
+  DEEPSEEK_AI_DEEPSEEK_V4_1_FLASH
+
+  /// GLM-5.3 (Z.ai flagship open-weight model)
+  /// API model id: "zai-org/GLM-5.3"
+  ZAI_ORG_GLM_5_3
+
+  /// GLM-5.3 Flash (fast, economical GLM-5.3)
+  /// API model id: "zai-org/GLM-5.3-Flash"
+  ZAI_ORG_GLM_5_3_FLASH
+
+  /// Kimi K3 (Moonshot open-weight flagship)
+  /// API model id: "moonshotai/Kimi-K3"
+  MOONSHOTAI_KIMI_K3
+
+  /// gpt-oss 120B (OpenAI open-weight; larger tier)
+  /// API model id: "openai/gpt-oss-120b"
+  OPENAI_GPT_OSS_120B
+
+  /// gpt-oss 20B (OpenAI open-weight; smaller, cheaper tier)
+  /// API model id: "openai/gpt-oss-20b"
+  OPENAI_GPT_OSS_20B
+
+  /// Ling 3.0 flash Fin (finance-tuned; fast tier)
+  /// API model id: "inclusionAI/Ling-3.0-flash-Fin"
+  INCLUSIONAI_LING_3_0_FLASH_FIN
+
+  /// Nemotron 3 Nano 30B A3B (NVIDIA; small mixture-of-experts)
+  /// API model id: "nvidia/Nemotron-3-Nano-30B-A3B"
+  NVIDIA_NEMOTRON_3_NANO_30B_A3B
+
+  /// Qwen3.8 2.4T A95B (Qwen flagship mixture-of-experts)
+  /// API model id: "Qwen/Qwen3.8-2.4T-A95B"
+  QWEN_QWEN3_8_2_4T_A95B
+}
+
 /// Supported LLM providers for multi-provider model routing
 enum LlmProvider {
   OPENAI
@@ -754,6 +808,12 @@ enum LlmProvider {
   QWEN
   XAI
   GEMINI
+
+  /// DeepInfra: an inference host rather than a model author. It serves
+  /// open-weight models from many organisations behind one API, so its model
+  /// ids are namespaced "<org>/<model>" and are the only ids in this schema
+  /// that carry a slash and mixed case.
+  DEEPINFRA
 }
 
 // Defines the status of model versions during their lifecycle.
@@ -1371,8 +1431,11 @@ model LlmConfiguration {
 
   /// Per-tier model overrides (null = use provider's default for that tier).
   /// These are model ID strings. The canonical sets are documented by the per-provider enums
-  /// (OpenaiModel, AnthropicModel, DeepseekModel, KimiModel, QwenModel, XaiModel, GeminiModel)
-  /// — e.g. "gpt-5.5", "claude-opus-4-7", "deepseek-v4-pro", "grok-4.3", "gemini-3.1-pro-preview".
+  /// (OpenaiModel, AnthropicModel, DeepseekModel, KimiModel, QwenModel, XaiModel, GeminiModel,
+  /// DeepinfraModel)
+  /// — e.g. "gpt-5.5", "claude-opus-4-7", "deepseek-v4-pro", "grok-4.3", "gemini-3.1-pro-preview",
+  /// "deepseek-ai/DeepSeek-V4-Pro". The column is free text precisely so a host whose ids carry
+  /// "/" and mixed case needs no schema change to be nameable.
   miniModel     String?
   normalModel   String?
   advancedModel String?
@@ -1391,6 +1454,8 @@ model LlmConfiguration {
   xaiApiKey       String?
   /// TYPESTRING.SKIP=true GQL.SKIP=true
   geminiApiKey    String?
+  /// TYPESTRING.SKIP=true GQL.SKIP=true
+  deepinfraApiKey String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

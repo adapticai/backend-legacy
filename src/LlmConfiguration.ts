@@ -83,6 +83,7 @@ import { logger } from './utils/logger';
   qwenApiKey: props.qwenApiKey !== undefined ? props.qwenApiKey : undefined,
   xaiApiKey: props.xaiApiKey !== undefined ? props.xaiApiKey : undefined,
   geminiApiKey: props.geminiApiKey !== undefined ? props.geminiApiKey : undefined,
+  deepinfraApiKey: props.deepinfraApiKey !== undefined ? props.deepinfraApiKey : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -2609,6 +2610,7 @@ import { logger } from './utils/logger';
   qwenApiKey: prop.qwenApiKey !== undefined ? prop.qwenApiKey : undefined,
   xaiApiKey: prop.xaiApiKey !== undefined ? prop.xaiApiKey : undefined,
   geminiApiKey: prop.geminiApiKey !== undefined ? prop.geminiApiKey : undefined,
+  deepinfraApiKey: prop.deepinfraApiKey !== undefined ? prop.deepinfraApiKey : undefined,
       })),
           ...(options?.skipDuplicates ? { skipDuplicates: true } : {}),
         };
@@ -2804,6 +2806,9 @@ import { logger } from './utils/logger';
            } : undefined,
   geminiApiKey: props.geminiApiKey !== undefined ? {
             set: props.geminiApiKey 
+           } : undefined,
+  deepinfraApiKey: props.deepinfraApiKey !== undefined ? {
+            set: props.deepinfraApiKey 
            } : undefined,
   createdAt: props.createdAt !== undefined ? {
             set: props.createdAt 
@@ -12284,6 +12289,7 @@ import { logger } from './utils/logger';
   qwenApiKey: props.qwenApiKey !== undefined ? props.qwenApiKey : undefined,
   xaiApiKey: props.xaiApiKey !== undefined ? props.xaiApiKey : undefined,
   geminiApiKey: props.geminiApiKey !== undefined ? props.geminiApiKey : undefined,
+  deepinfraApiKey: props.deepinfraApiKey !== undefined ? props.deepinfraApiKey : undefined,
   user: props.user ? 
     typeof props.user === 'object' && Object.keys(props.user).length === 1 && Object.keys(props.user)[0] === 'id'
     ? { connect: {
@@ -14685,6 +14691,9 @@ import { logger } from './utils/logger';
            } : undefined,
   geminiApiKey: props.geminiApiKey !== undefined ? {
             set: props.geminiApiKey 
+           } : undefined,
+  deepinfraApiKey: props.deepinfraApiKey !== undefined ? {
+            set: props.deepinfraApiKey 
            } : undefined,
   user: props.user ? 
   typeof props.user === 'object' && Object.keys(props.user).length === 1 && (Object.keys(props.user)[0] === 'id' || Object.keys(props.user)[0] === 'symbol')
@@ -24189,6 +24198,9 @@ import { logger } from './utils/logger';
            } : undefined,
   geminiApiKey: prop.geminiApiKey !== undefined ? {
             set: prop.geminiApiKey 
+           } : undefined,
+  deepinfraApiKey: prop.deepinfraApiKey !== undefined ? {
+            set: prop.deepinfraApiKey 
            } : undefined,
   createdAt: prop.createdAt !== undefined ? {
             set: prop.createdAt 
