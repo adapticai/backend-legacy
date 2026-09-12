@@ -403,14 +403,21 @@ jobs:
             done
             return 1
           }
+          # 30 x 10s. Measured, not guessed: with a 12-attempt (120s) window this
+          # step still read the previous version for the full wait and failed,
+          # while both dist-tags were correct minutes later. npm's dist-tag
+          # read-your-writes latency is simply longer than two minutes here.
+          # `--prefer-online` is required because `npm view` otherwise answers
+          # from its own metadata cache, which would re-introduce the stale read
+          # this function exists to outlast.
           converge() {
             ATTEMPT=0
             LAST=""
-            while [ "$ATTEMPT" -lt 12 ]; do
+            while [ "$ATTEMPT" -lt 30 ]; do
               ATTEMPT=$((ATTEMPT + 1))
-              LAST=$(npm view "$1" "$2" 2>/dev/null || true)
+              LAST=$(npm view --prefer-online "$1" "$2" 2>/dev/null || true)
               if [ "$LAST" = "$3" ]; then echo "$LAST"; return 0; fi
-              [ "$ATTEMPT" -lt 12 ] && sleep 10
+              [ "$ATTEMPT" -lt 30 ] && sleep 10
             done
             echo "$LAST"
             return 1
