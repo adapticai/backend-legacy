@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - stable-release
       - platform-alignment
     # Only publish-relevant inputs (anything that can alter dist/) trigger this pipeline; the dist-content
     # diff below still gates the actual publish. README-npm.md IS an input — prepare-package.mjs copies it to dist/README.md.
@@ -26,7 +25,11 @@ on:
 # `npm publish` (duplicate version) or at the post-publish `git push` — after
 # already publishing. Never cancel an in-flight publish; queue instead.
 concurrency:
-  group: publish-${{ github.ref }}
+  # Keyed on the CHANNEL, not the ref. Two branches publishing the same version
+  # train under a per-ref group do not see each other: both read the same
+  # dist-tag, derive the same next version, and the loser dies at `npm publish`
+  # with a duplicate-version 403 — after the winner has already published.
+  group: publish-${{ github.ref_name == 'platform-alignment' && 'alignment' || 'stable' }}
   cancel-in-progress: false
 
 jobs:
@@ -43,11 +46,11 @@ jobs:
         id: channel
         run: |
           BRANCH="${GITHUB_REF_NAME}"
-          # `main` is the production branch and publishes the 0.0.x production
-          # train. `stable-release` remains mapped to the same train during the
-          # cutover so a push to either branch can never fork the version line;
-          # once no consumer references stable-release it can be dropped here.
-          if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "stable-release" ]; then
+          # `main` is the production branch and sole publisher of the 0.0.x
+          # production train. stable-release is a frozen compatibility mirror
+          # and deliberately does NOT publish: a second branch feeding one
+          # version train races the first to the same version number.
+          if [ "$BRANCH" = "main" ]; then
             echo "npm_tag=stable" >> $GITHUB_OUTPUT
             echo "is_stable=true" >> $GITHUB_OUTPUT
             echo "is_alignment=false" >> $GITHUB_OUTPUT
