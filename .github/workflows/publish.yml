@@ -379,8 +379,20 @@ jobs:
           NPM_TAG: ${{ steps.channel.outputs.npm_tag }}
         run: |
           set -euo pipefail
-          # The registry is read-your-writes only after CDN propagation; retry so a
-          # few seconds of staleness cannot manufacture a false drift report.
+          # The registry is read-your-writes only after CDN propagation. Two
+          # different waits are needed, and conflating them is what made this
+          # step report false drift twice:
+          #
+          #   resolve()   — waits for a value to EXIST. Correct when no specific
+          #                 value is expected (the fileCount comparison below).
+          #   converge()  — waits for a value to become the EXPECTED one. A
+          #                 dist-tag read during propagation returns the PREVIOUS
+          #                 version: present, non-empty, and wrong. Retrying only
+          #                 on emptiness accepts that stale read on the first
+          #                 attempt and reports two correctly-published names as
+          #                 "drifted apart" — failing the job, and with it
+          #                 skipping the dist cleanup and the version-bump push
+          #                 that the following step owns.
           resolve() {
             ATTEMPT=0
             while [ "$ATTEMPT" -lt 6 ]; do
@@ -391,12 +403,26 @@ jobs:
             done
             return 1
           }
+          converge() {
+            ATTEMPT=0
+            LAST=""
+            while [ "$ATTEMPT" -lt 12 ]; do
+              ATTEMPT=$((ATTEMPT + 1))
+              LAST=$(npm view "$1" "$2" 2>/dev/null || true)
+              if [ "$LAST" = "$3" ]; then echo "$LAST"; return 0; fi
+              [ "$ATTEMPT" -lt 12 ] && sleep 10
+            done
+            echo "$LAST"
+            return 1
+          }
           for NAME in "$PACKAGE_NAME" "$MIRROR_NAME"; do
-            SEEN=$(resolve "$NAME" "dist-tags.$NPM_TAG") || SEEN=""
-            if [ "$SEEN" != "$NEW_VERSION" ]; then
-              echo "::error::$NAME has $NPM_TAG=${SEEN:-<none>}, expected $NEW_VERSION — the names have drifted apart." >&2
+            # A genuine drift still fails: converge() exhausts its window and
+            # returns the last value it actually saw, so the error below reports
+            # the real registry state rather than a propagation artifact.
+            SEEN=$(converge "$NAME" "dist-tags.$NPM_TAG" "$NEW_VERSION") || {
+              echo "::error::$NAME has $NPM_TAG=${SEEN:-<none>} after waiting for propagation, expected $NEW_VERSION — the names have drifted apart." >&2
               exit 1
-            fi
+            }
           done
           CANONICAL_FILES=$(resolve "$PACKAGE_NAME@$NEW_VERSION" dist.fileCount) \
             || { echo "::error::registry never returned dist.fileCount for $PACKAGE_NAME@$NEW_VERSION." >&2; exit 1; }
