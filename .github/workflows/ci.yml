@@ -1,8 +1,10 @@
 name: CI - Backend Legacy
 
-# stable-release is the PRODUCTION branch (publishes @stable, consumed by the
-# trading engine). It must run the same CI gate as main — its absence here meant
-# every production publish shipped with zero test/lint/codegen-drift execution
+# `main` is the PRODUCTION branch (publishes @stable, consumed by the trading
+# engine) since the 2026-09-12 cutover; `stable-release` still maps to the same
+# train during the compatibility window. Both must run the same CI gate — the
+# absence of the production branch here once meant every production publish
+# shipped with zero test/lint/codegen-drift execution
 # (audit B01-backend-legacy-01).
 on:
   pull_request:
