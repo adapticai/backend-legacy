@@ -441,8 +441,22 @@ jobs:
           fi
           echo "Lockstep OK: $PACKAGE_NAME and $MIRROR_NAME both at $NEW_VERSION, $CANONICAL_FILES files."
 
+      # `always()` because a step only runs by default when every earlier step
+      # succeeded, and the lockstep assertion above can fail for a reason that
+      # has nothing to do with this cleanup: npm makes a newly published version
+      # queryable asynchronously, and for a package this size (59,380 files,
+      # ~678 MB unpacked) the canonical name has taken over an HOUR to appear —
+      # far beyond any wait a CI job should hold open.
+      #
+      # When that happened, the job aborted here and the repository was left
+      # stranded: `dist/package.json` still committed and the `ci: bump version`
+      # commit never pushed, so the branch's recorded version drifted behind the
+      # registry and the next run re-derived a version from a stale base. The
+      # lockstep check still fails the job — that signal is worth keeping — but
+      # it must not also strand the branch. Gated on a publish having actually
+      # happened, so nothing is committed when there was nothing to publish.
       - name: Remove dist/package.json after publish and push changes
-        if: steps.should_publish.outputs.should_publish == 'true'
+        if: always() && steps.should_publish.outputs.should_publish == 'true'
         env:
           BRANCH: ${{ steps.channel.outputs.branch }}
         run: |
