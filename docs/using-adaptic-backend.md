@@ -492,14 +492,19 @@ issues), see [`docs/DEBUGGING_PLAYBOOK.md`](./DEBUGGING_PLAYBOOK.md).
 
 The package is published on every push to `main`, the production branch since
 the 2026-09-12 cutover: CI bumps the patch version, publishes the `0.0.x` train
-on dist-tag `stable`, and moves `latest` to the same version. `stable-release`
-publishes to the same train during the compatibility window but does not move
-`latest`.
+on dist-tag `stable`, and moves `latest` to the same version. `main` is the SOLE
+publisher of that train: a second branch feeding one version train races the
+first to the same number, and the loser dies on a duplicate-version 403 after
+the winner has already published.
 
-| Channel              | Use when                                                                  |
-| -------------------- | ------------------------------------------------------------------------- |
-| `@adaptic/backend@stable` | Production deploys and every in-workspace consumer   |
-| `@adaptic/backend@latest` | External installs; now tracks the same production train |
+Every release goes out under both npm names, from one build, at one version, so
+the channel you consume is the same on either name.
+
+| Channel                          | Use when                                                |
+| -------------------------------- | ------------------------------------------------------- |
+| `@adaptic/backend@stable`         | Production deploys and every in-workspace consumer      |
+| `@adaptic/backend@latest`         | External installs; tracks the same production train     |
+| `@adaptic/backend-legacy@stable`  | Consumers that have not migrated off the old name yet   |
 
 Re-verify the live versions with
 `npm view @adaptic/backend dist-tags` rather than trusting a number
