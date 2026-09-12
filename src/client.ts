@@ -730,12 +730,20 @@ export async function getApolloClient(): Promise<
     }
 
     // Determine the GraphQL endpoint.
+    //
+    // The production default is the backend's PUBLIC hostname because this
+    // client is published on npm and is consumed from outside the deployment
+    // project as well as inside it. A consumer that runs as a sibling service
+    // must override it with the project-private address via
+    // `BACKEND_HTTPS_URL` — a call from one service to another service's
+    // public hostname is turned around at the edge and rejected before it
+    // reaches the target, so the public value works only from outside.
     const isProduction = process.env.NODE_ENV === 'production';
     const httpUrl =
       process.env.NEXT_PUBLIC_BACKEND_HTTPS_URL ||
       process.env.BACKEND_HTTPS_URL ||
       (isProduction
-        ? 'https://stable-api.adaptic.ai/graphql'
+        ? 'https://api.adaptic.ai/graphql'
         : 'http://localhost:4000/graphql');
 
     // Create the HTTP link. The `fetch` global resolves to Node.js's
