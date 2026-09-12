@@ -1,5 +1,5 @@
 {
-  "name": "@adaptic/backend-legacy",
+  "name": "@adaptic/backend",
   "version": "0.0.1024",
   "description": "Backend executable CRUD functions with dynamic variables construction, and type definitions for the Adaptic AI platform.",
   "type": "module",
