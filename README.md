@@ -13,7 +13,10 @@ the `platform` frontend monorepo).
 ## Repository status
 
 - **Visibility:** private GitHub repo, public on NPM
-- **Branches:** `main` (npm dist-tag `latest`), `stable-release` (dist-tag `stable`)
+- **Branches:** `main` is the production branch since the 2026-09-12 cutover —
+  it publishes the `0.0.x` production train on npm dist-tag `stable` and moves
+  `latest` to it. `stable-release` mirrors `main` and is retained only for
+  compatibility.
 - **Publish workflow:** GitHub Actions auto-bumps version and runs
   `npm publish` on push to either branch; **no manual version bumps are
   required** in PRs.
@@ -44,7 +47,7 @@ Live (current) docs:
 | [`docs/ENVIRONMENT_SETUP.md`](./docs/ENVIRONMENT_SETUP.md)   | Local-dev env-var reference                 |
 | [`docs/using-adaptic-backend.md`](./docs/using-adaptic-backend.md) | Consumer-facing usage guide          |
 | [`docs/custom-resolvers.md`](./docs/custom-resolvers.md)         | Custom resolver authoring guide          |
-| [`docs/deployment/google-cloud-backend.md`](./docs/deployment/google-cloud-backend.md) | Cloud Run + AlloyDB runbook |
+| [`docs/deployment/railway-backend.md`](./docs/deployment/railway-backend.md) | Railway deployment runbook |
 
 Archived audit snapshots live under [`docs/audits/`](./docs/audits/). Do
 not treat them as current state.

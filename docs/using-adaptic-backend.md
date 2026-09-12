@@ -62,7 +62,7 @@ When you need a new domain model:
 
 1. Add it to `backend-legacy/prisma/schema.prisma`.
 2. Run `npm run build` (full codegen pipeline).
-3. Push to `main` (or `stable-release`) — CI publishes the npm package.
+3. Push to `main`, the production branch — CI publishes the npm package.
 4. Bump the dependency version in consumers and update their callsites.
 
 ### Tier A — Engine-system telemetry / governance (engine owns it)
@@ -484,18 +484,19 @@ issues), see [`docs/DEBUGGING_PLAYBOOK.md`](./DEBUGGING_PLAYBOOK.md).
 
 ## Versioning
 
-The package is published on every push to `main` (npm dist-tag `latest`) and
-`stable-release` (dist-tag `stable`). CI bumps the patch version and runs
-`npm publish`. Consumers track the channel that matches their stability
-posture:
+The package is published on every push to `main`, the production branch since
+the 2026-09-12 cutover: CI bumps the patch version, publishes the `0.0.x` train
+on dist-tag `stable`, and moves `latest` to the same version. `stable-release`
+publishes to the same train during the compatibility window but does not move
+`latest`.
 
 | Channel              | Use when                                                                  |
 | -------------------- | ------------------------------------------------------------------------- |
-| `@adaptic/backend-legacy@latest` | Active development; tracks `main`                            |
-| `@adaptic/backend-legacy@stable` | Production deploys; tracks the `stable-release` branch        |
+| `@adaptic/backend-legacy@stable` | Production deploys and every in-workspace consumer   |
+| `@adaptic/backend-legacy@latest` | External installs; now tracks the same production train |
 
-The current `latest` version is `0.0.984` (2026-05-22). Re-verify with
-`npm view @adaptic/backend-legacy version` rather than trusting this number
+Re-verify the live versions with
+`npm view @adaptic/backend-legacy dist-tags` rather than trusting a number
 in older copies of the doc.
 
 ---
